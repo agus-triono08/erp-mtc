@@ -1,0 +1,259 @@
+<template>
+    <div class="container-fluid" style="margin-top: 30px;">
+      <!-- Modal Input Data -->
+      <div id="app" class="modal-input" :class="{'is-visible': showModalInput}" @click.self="tutupModal">
+        <div class="modal-content-input">
+          <input-alat-error @tutup-modal="tutupModal"></input-alat-error>
+        </div>
+      </div>
+  
+      <!-- Tombol untuk membuka modal -->
+      <!--<div class="d-flex justify-content-between mb-4">
+        <div></div>
+        <div>
+          <form class="d-flex align-items-center">
+            <a @click="tambahDataError" class="btn btn-icon-split btn-plus">
+              <span class="icon text-white-50">
+                <i class="fas fa-plus-circle"></i>
+              </span>
+              <span class="text">Alat Error</span>
+            </a>
+          </form>
+        </div>
+      </div>-->
+      <diV class="row align-items-center justify-content-end mr-3 mt-3 mb-4">        
+        <!-- Search -->
+        <div class="search-wrapper">
+          <div class="input-group">
+            <input type="text" placeholder="search..." class="form-control"
+              v-model="searchQuery"
+              @input="debouncedFetchAlats"/>
+            </div>
+          </div>
+      </diV>
+      <div class="table-responsive text-wrape">
+        <table class="table table-border no-border table-custom text-center" style="overflow-x: auto;">
+          <thead>
+            <tr class="bg-table">
+              <th class="text-center text-black-1 tr-center">#</th>
+              <th class="text-center text-black-1 tr-center">No. Seri Mesin</th>
+              <th class="text-center text-black-1 tr-center">Tgl Permintaan</th>
+              <th class="text-center text-black-1 tr-center">Diminta Oleh</th>
+              <th class="text-center text-black-1 tr-center">Divisi</th>
+              <th class="text-center text-black-1">Kondisi</th>
+              <th class="text-center text-black-1 tr-center">Aksi</th>
+            </tr>
+          </thead>
+          <tbody v-if="filteredData.length===0">
+            <tr>
+              <td colspan="7" class="text-center">Tidak Ada Data</td>
+            </tr>
+          </tbody>
+          <tbody v-for="(permintaanmesin, index) in filteredData" :key="index">
+            <tr>
+              <td class="text-center">{{ index + 1 }}</td>
+              <td class="text-center">{{ permintaanmesin.no_seri_mesin ? permintaanmesin.no_seri_mesin.no_seri : '-' }}</td>              
+              <td class="text-center">{{ permintaanmesin.tanggal_permintaan || '-' }}</td>
+              <td class="text-center">{{ permintaanmesin.pemohon ? permintaanmesin.pemohon.nama_pengguna : '-' }}</td>
+              <td class="text-center">{{ permintaanmesin.pemohon ? permintaanmesin.pemohon.divisi : '-' }}</td>
+              <td 
+                class="text-center status-pill parent-element"
+                style="margin: 10px;"
+                :class="{
+                          'status-active': permintaanmesin.no_seri_mesin.status === 'Ready', 
+                          'status-rusak': permintaanmesin.status === 'Rusak', 
+                          'status-error': permintaanmesin.no_seri_mesin.status === 'Error'}"
+              >{{ permintaanmesin.no_seri_mesin ? permintaanmesin.no_seri_mesin.status : '-' }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Pagination -->
+        <div class="d-flex justify-content-between align-items-center mt-3 mb-3" style="border-radius: 10px; background-color: #f3f4f6; height: 50px; color: #000;">
+          <div class="ml-3">
+            Rows per page:
+            <span>{{ rowsPerPage }}</span>
+          </div>
+          <div class="mr-3">          
+            <span>{{ paginationInfo }}</span>
+            <button @click="prevPage" :disabled="currentPage === 1" class="btn btn-sm btn-light">
+              <i class="fas fa-angle-left"></i>
+            </button>
+            <span>  </span>
+            <button @click="nextPage" :disabled="currentPage === totalPages" class="btn btn-sm btn-light">
+              <i class="fas fa-angle-right"></i>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </template>
+  
+  <script>
+  import axios from "axios";
+  
+  export default {
+    props: {
+      kodeMesin: String
+    },
+    data() {
+      return {
+        user: {
+          nama_pengguna:'',
+          divisi: ''
+        },
+        noseri: {
+          no_seri_alat: '',
+          status: ''
+        },
+        dataPermintaanMesin: [], // Menyimpan data error
+        showModalInput: false, // Tambahkan variabel untuk mengontrol tampilan modal input
+        searchQuery: '',
+        rowsPerPage: 10,
+        currentPage: 1,
+      };
+    },
+    computed: {
+      totalPages() {
+        return Math.ceil(this.dataPermintaanMesin.length / this.rowsPerPage);
+      },
+      paginationInfo() {
+        const start = (this.currentPage - 1) * this.rowsPerPage + 1;
+        const end = Math.min(this.currentPage * this.rowsPerPage, this.dataPermintaanMesin.length);
+        return `Showing ${start} to ${end} of ${this.dataPermintaanMesin.length} entries`;
+      },
+      paginatedData() {
+        const start = (this.currentPage - 1) * this.rowsPerPage;
+        const end = start + this.rowsPerPage;
+        return this.dataPermintaanMesin.slice(start, end);
+      },
+      filteredData() {
+        return this.dataPermintaanMesin.filter(permintaanmesin => {
+          const searchQueryLower = this.searchQuery.toLowerCase();
+          const noSeriMesin = permintaanmesin.no_seri_mesin && permintaanmesin.no_seri_mesin.no_seri;
+          const namaPengguna = permintaanmesin.pemohon && permintaanmesin.pemohon.nama_pengguna;
+          const divisi = permintaanmesin.pemohon && permintaanmesin.pemohon.divisi;
+          
+          return (
+            (noSeriMesin && noSeriMesin.toLowerCase().includes(searchQueryLower)) ||
+            (namaPengguna && namaPengguna.toLowerCase().includes(searchQueryLower)) ||
+            (divisi && divisi.toLowerCase().includes(searchQueryLower))
+          );
+        });
+      },
+    },
+    methods: {
+      async fetchAlatError() {
+        try {
+          const kodeMesin = this.kodeMesin; // Kode alat di URL
+          console.log(this.kodeMesin);
+          const response = await axios.get(`/api/mesins/no-seri/sudahdigunakan/${kodeMesin}`);
+          this.dataPermintaanMesin = response.data; // Menyimpan data alat
+          //console.log(this.dataPermintaanMesin); // Debug data
+        } catch (error) {
+          console.error("Error fetching alat error detail:", error);
+          //alert("Gagal memuat detail data alat error.");
+        }
+      },
+      debouncedFetchAlats: _.debounce(function () {
+        this.fetchAlatError();
+      }, 300),
+      tambahDataError() {
+        this.showModalInput = true;
+      },
+      tutupModal() {
+        this.showModalInput = false;
+      },
+      sortStokError(order) {
+        this.errors.sort((a, b) => {
+          if (order === 'asc') {
+            return a.stok_error - b.stok_error;
+          } else {
+            return b.stok_error - a.stok_error;
+          }
+        });
+      },
+      prevPage() {
+        if (this.currentPage > 1) {
+          this.currentPage--;
+        }
+      },
+      nextPage() {
+        if (this.currentPage < this.totalPages) {
+          this.currentPage++;
+        }
+      }
+    },
+    watch: {
+      rowsPerPage() {
+        this.currentPage = 1; // Reset ke halaman pertama saat rowsPerPage berubah
+      }
+    },
+    mounted() {
+      this.fetchAlatError();
+    }
+  }
+  </script>
+  
+  <style>
+    .no-border {
+      border: none;
+    }
+  
+    .no-border th,
+    .no-border td {
+      border-top: none !important;
+      border-bottom: none !important;
+    }
+  
+    .compact-table th,
+    .compact-table td {
+      padding: 0.1rem 0.3rem;
+    }
+  
+    .compact-table tbody tr {
+      margin-bottom: 0;
+    }
+  
+    .compact-table th {
+      padding-left: 0.2rem;
+      padding-right: 0.2rem;
+    }
+  
+    .compact-table td {
+      padding-left: 0.2rem;
+      padding-right: 0.2rem;
+    }
+  
+    .text-wrap {
+      white-space: normal; /* Atau gunakan pre-wrap jika ingin mempertahankan spasi */
+      word-wrap: break-word; /* Memungkinkan kata untuk terputus jika terlalu panjang */
+      overflow-wrap: break-word; /* Memastikan kata panjang terputus */
+    }
+  
+    .modal-input {
+      display: none; /* Sembunyikan modal secara default */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5); /* Latar belakang transparan */
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+  
+    .modal-input.is-visible {
+      display: flex; /* Tampilkan modal saat is-visible aktif */
+    }
+  
+    .modal-content-input {
+      background-color: white;
+      padding: 20px;
+      border-radius: 20px;
+      max-width: max-content;
+      width: 100%;
+    }
+  </style>
