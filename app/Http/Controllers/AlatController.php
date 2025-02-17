@@ -184,11 +184,13 @@ class AlatController extends Controller
         [
             'id' => 1,
             'id_user' => 1,
+            'no_permintaan' => 'PR001',
             'kode_alat' => '1-C3-B0-2-01',
             'id_no_seri_alat' => 3,
+            'id_alat' => 1,
             'jumlah' => 1,
-            'tanggal_permintaan' => '2022-01-01',
-            'status' => 'Diterima',
+            'tanggal_permintaan' => '2025-01-01',
+            'status' => 'Proses',
             'keterangan' => 'Permintaan alat untuk kebutuhan proyek',
         ],
     ];
@@ -1020,6 +1022,57 @@ class AlatController extends Controller
         return response()->json([
             'data' => $datanoSeri,
         ]);
+    }
+
+    //Index: Permintaan Alat
+    public function indexPermintaan () {
+        $dataPermintaan = collect($this->dataDummyPermintaan)->map(function($permintaan) {
+            $pengguna = collect($this->dataDummyPengguna)->firstWhere('id', $permintaan['id_user']);
+            $alat = collect($this->dataDummy)->firstWhere('id' , $permintaan['id_alat']);
+
+            $permintaan['pengguna'] = $pengguna;
+            $permintaan['alat'] = $alat;
+
+            return $permintaan;
+        });
+        return response()->json([
+            'data' => $dataPermintaan,
+            ]);
+    }
+
+    // Show: Tampilkan data Permintaan Alat
+    public function showPermintaan ($id) {
+        $dataPermintaan = collect($this->dataDummyPermintaan)->firstWhere('id', $id);
+
+        if(!$dataPermintaan) {
+            return response()->json(['error' => 'Data tidak ditemukan'], 404);
+        }
+
+        $alat = collect($this->dataDummy)->firstWhere('id', $dataPermintaan['id_alat']);
+        $pengguna = collect($this->dataDummyPengguna)->firstWhere('id', $dataPermintaan['id_user']);
+
+        $dataPermintaan['alat'] = $alat;
+        $dataPermintaan['pengguna'] = $pengguna;
+        
+        return response()->json($dataPermintaan);
+    }
+
+    // ByNoPermintaan: Permintaan By No Permintaan 
+    public function byNoPermintaan ($noPermintaan) {
+        $dataPermintaan = collect($this->dataDummyPermintaan)->filter(function($permintaan) use ($noPermintaan) {
+            return $permintaan['no_permintaan'] == $noPermintaan && $permintaan;
+        })->map(function($permintaan) {
+            $pengguna = collect($this->dataDummyPengguna)->firstWhere('id', $permintaan['id_user']);
+            $alat = collect($this->dataDummy)->firstWhere('id' , $permintaan['id_alat']);
+            $permintaan['no_seri_alat'] = collect($this->dataDummySeri)->firstWhere('id', $permintaan['id_no_seri_alat']);
+            return $permintaan;
+        });
+
+        if ($dataPermintaan->isEmpty()) {
+            return response()->json(['error' => 'Data tidak ditemukan'], 404);
+        }
+
+        return response()->json($dataPermintaan);
     }
 
     //ByKodeAlat : Tampilkan detail data permintaan alat berdasarkan no seri alat

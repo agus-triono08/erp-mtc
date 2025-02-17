@@ -135,10 +135,10 @@ export default {
     async fetchPeminjamanAlat() {
       try {
         const noPinjam =this.noPinjam;
-        console.log(this.noPinjam);
+        //console.log(this.noPinjam);
         const response = await axios.get(`/api/peminjaman/alats/nopin/${noPinjam}`);
         this.dataPeminjamanAlat = response.data;
-        console.log(this.dataPeminjamanAlat);
+        //console.log(this.dataPeminjamanAlat);
       } catch (error) {
         console.error("Error fetching data peminjaman", error);
       }

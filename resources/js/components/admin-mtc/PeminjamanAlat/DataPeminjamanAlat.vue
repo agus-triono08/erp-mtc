@@ -293,7 +293,7 @@ export default {
         alat: peminjaman.alat,
         pengguna: peminjaman.pengguna,
       })); // Menyimpan data alat
-      console.log(this.dataPeminjaman); // Debug data
+      //console.log(this.dataPeminjaman); // Debug data
     } catch (error) {
       console.error("Error fetching alat error detail:", error);
       //alert("Gagal memuat detail data alat error.");

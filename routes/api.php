@@ -60,6 +60,9 @@ Route::get('/peminjaman/alats/dipinjam/{id}/edit', [AlatController::class, 'edit
 //Permintaan Alat
 Route::get('alats/permintaan/{kodeAlat}', [AlatController::class, 'getPermintaanAlatBykodeAlat']);
 Route::get('alats/permintaan/sudah-digunakan/{id}/edit', [AlatController::class, 'editRincianPermintaanAlat']);
+Route::get('/permintaan', [AlatController::class, 'indexPermintaan']);
+Route::get('/permintaan/{id}', [AlatController::class, 'showPermintaan']);
+Route::get('/permintaan/rincian/noper/{noPermintaan}', [AlatController::class, 'byNoPermintaan']);
 
 //Perawatan Alat
 Route::get('/perawatan/alat', [AlatController::class, 'indexPerawatanAlat']);

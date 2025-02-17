@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import { component } from 'vue/types/umd';
 
 
 /**
@@ -80,6 +79,8 @@ const DataRincianPeminjamanAlat = require('./components/admin-mtc/PeminjamanAlat
 // Permintaan Alat
 const DataPermintaanAlat = require('./components/admin-mtc/PeminjamanAlat/PermintaanAlat/DataPermintaanAlat.vue').default;
 const DetailPermintaanAlat = require('./components/admin-mtc/PeminjamanAlat/PermintaanAlat/DetailPermintaanAlat.vue').default;
+const DataRincianPermintaanAlat = require('./components/admin-mtc/PeminjamanAlat/PermintaanAlat/DataRincianPermintaanAlat.vue').default;
+const DataPengajuanPermintaanalat = require('./components/admin-mtc/PeminjamanAlat/PermintaanAlat/DetailPengajuanPermintaanAlat.vue').default;
 
 //Komponen Perawatan Alat
 const DataPerawatanAlat = require('./components/admin-mtc/PerawatanAlat/DataPerawatanAlat.vue').default;
@@ -150,6 +151,8 @@ Vue.component('data-rincian-peminjaman-alat', DataRincianPeminjamanAlat);
 
 //Permintaan Alat
 Vue.component('data-permintaan-alat', DataPermintaanAlat);
+Vue.component('data-rincian-permintaan-alat', DataRincianPermintaanAlat);
+Vue.component('data-pengajuan', DataPengajuanPermintaanalat);
 
 //Daftarkan komponen Data Mesin
 Vue.component('data-mesin', DataMesin);
@@ -223,7 +226,7 @@ const routes = [
         component: DetailPeminjamanAlat,
     },
     {
-        path: '/admin-mtc/data-alat/detail-permintaan/',
+        path: '/admin-mtc/data-alat/permintaan/detail/:id',
         component: DetailPermintaanAlat,
     },
     {
