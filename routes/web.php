@@ -66,6 +66,10 @@ Route::get('/admin-mtc/alat/data-error/input', function () {
     return view('admin-mtc.Main.component.alat.error.input');
 })->name('input.dataalaterror.adminmtc');
 
+Route::get('/user/dashboard', function () {
+    return view('admin-mtc.Main.dashboard');
+})->name('dashboard.adminmtc');
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

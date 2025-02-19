@@ -9,7 +9,7 @@
 
     <h1 class="h3 mb-4 text-gray-800"><b>Peminjaman</b></h1>
 
-    <div class="col-md-12">
+    <!-- <div class="col-md-12">
       <button 
         class="btn btn-show m-1"
         :class="{active: showAlat}"
@@ -26,7 +26,7 @@
         <span v-if="showMesin">Mesin</span>
         <span v-else>Mesin</span>
       </button>
-    </div>
+    </div> -->
 
     <!-- Data Peminjaman Alat -->
     <div v-if="showAlat">
@@ -50,35 +50,27 @@
       </div>
     </div>
     <div v-if="showPeminjaman" class="mt-4">
-    <!-- Tombol untuk membuka modal -->
-    <div class="d-flex justify-content-between mb-4">
-      <div></div>
-      <div>
-        <form class="d-flex align-items-center">
-          <input
-            type="text"
-            name="search"
-            v-model="searchQuery"
-            @input="debouncedFetchAlats"
-            style="background-color: #f3f4f6; width: max-content;"
-            class="form-control-sm border-0 mr-2 ml-2"
-            placeholder="Search by Code or Name or No Loan"
-          />
-          <!--<a @click="tambahPeminjamanAlat" class="btn btn-icon-split btn-plus">
-            <span class="icon text-white-50">
-              <i class="fas fa-plus-circle"></i>
-            </span>
-            <span class="text">Peminjaman Alat</span>
-          </a>-->
-        </form>
+      <div class="row align-items-center justify-content-end mr-3 mt-3 mb-2">
+        <div class="d-flex justify-content-between mb-2">
+          <!-- Search -->
+          <div class="search-wrapper">
+            <div class="input-group">
+              <input 
+                type="text" 
+                placeholder="search..." 
+                class="form-control"
+                v-model="searchQuery"
+                @input="debouncedFetchAlats"
+              />
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
     <div class="table-responsive">
       <table class="table table-border no-border table-custom text-wrape" style="overflow-x: auto;">
         <thead>
-          <tr class="bg-table">
+          <tr class="bg-table text-center">
             <th class="text-center text-black-1 tr-center">#</th>
-            <th class="text-center text-black-1">Kode Alat</th>
             <th class="text-center text-black-1">No. Pinjam</th>           
             <th class="text-center text-black-1">Dipinjam Oleh</th>
             <th class="text-center text-black-1">Divisi</th>
@@ -109,7 +101,6 @@
         <tbody v-for="(peminjaman, index) in filteredData" :key="index">
           <tr class="text-center">
             <td class="text-center">{{ index + 1 }}</td>
-            <td class="text-left">{{ peminjaman.kode_alat || '-' }}</td>
             <td class="text-center">{{ peminjaman.no_pinjam || '-' }}</td>            
             <td class="text-center">{{ peminjaman.pengguna ? peminjaman.pengguna.nama_pengguna : '-' }}</td>
             <td class="text-center">{{ peminjaman.pengguna ? peminjaman.pengguna.divisi : '-' }}</td>
@@ -124,16 +115,18 @@
                 </span>
               </small>
             </td>
-            <td 
-            class="text-center status-pill parent-element"
-            style="margin-top: 20px;"
-            :class="{
-              'status-active': peminjaman.status == 'Selesai',
-              'status-error': peminjaman.status == 'Barang Siap Diambil',
-              'status-rusak': peminjaman.status == 'Sedang Dipinjam',
-            }"
-            >
-              {{ peminjaman.status || '-' }}
+            <td>
+              <div
+                class="btn-sts"
+                :class="{
+                  'sts-warning': peminjaman.status === 'Sedang Dipinjam',
+                  'sts-info': peminjaman.status === 'Menunggu Persiapan Barang',
+                  'sts-success': peminjaman.status === 'Barang Siap Diambil',
+                  'sts-secondary': peminjaman.status === 'Selesai'
+                }"
+              >
+                {{ peminjaman.status }}
+              </div>
             </td>
             <td class="text-center">
               <div class="dropdown text-center">
@@ -411,5 +404,26 @@ export default {
   .compact-table td {
     padding-left: 0.2rem;
     padding-right: 0.2rem;
+  }  
+
+  .sts-warning {
+    background-color: rgba(255, 204, 0, 0.1);
+    color: #ffcc00;
   }
+
+  .sts-info {
+    background-color: rgba(23, 162, 184, 0.1);
+    color: #17a2b8;
+  }
+
+  .sts-success {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: #28a745;
+  }
+
+  .sts-secondary {
+    background-color: rgba(108, 117, 125, 0.1);
+    color: #6c757d;
+  }
+
 </style>

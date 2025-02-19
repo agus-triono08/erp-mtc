@@ -20,7 +20,6 @@
         <thead>
           <tr class="text-center bg-table">
             <th class="text-black-1 ">No Permintaan</th>
-            <th class="text-black-1 ">Kode Alat</th>
             <th class="text-black-1">Tgl Permintaan</th>
             <th class="text-black-1">Nama</th>
             <th class="text-black-1">Divisi</th>                        
@@ -35,7 +34,6 @@
         <tbody v-for="(permintaan, index) in filteredData" :key="permintaan.id">
           <tr class="text-center">
             <td>{{ permintaan.no_permintaan || '-' }}</td>
-            <td>{{ permintaan.alat ? permintaan.alat.kode_alat : '-' }}</td>
             <td>{{ permintaan.tanggal_permintaan || '-' }}</td>
             <td>{{ permintaan.pengguna ? permintaan.pengguna.nama_pengguna : '-' }}</td>
             <td>{{ permintaan.pengguna ? permintaan.pengguna.divisi : '-' }}</td>                        

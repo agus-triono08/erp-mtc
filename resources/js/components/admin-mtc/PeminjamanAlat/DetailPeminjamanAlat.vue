@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
     <!-- Page Heading -->
-    <div class="d-flex justify-content-between align-items-center mb-1">
+    <div class="d-flex justify-content-between align-items-center" style="margin-top: 25px;">
       <h1 class="h6 text-teal">
         <i 
           class="fas fa-angle-left text-teal mr-2"
@@ -84,21 +84,74 @@
     <!-- Card dengan tombol Detail -->
     <div class="card shadow mb-4" style="border-radius: 20px;">
       <div class="card-header py-3 mb-2" style="border-radius: 20px;">
+        <!-- Tombol Pengeluaran -->
+        <button
+          class="btn btn-sm btn-show"
+          :class="{active: showPengeluaran}"
+          @click="togglePengeluaran"
+        >
+          <span v-if="showPengeluaran">Pengeluaran</span>
+          <span v-else>Pengeluaran</span>
+        </button>
+        <!-- tombol Pengajuan -->
+        <button
+          class="btn btn-sm btn-show m-1"
+          :class="{active: showPengajuan}"
+          @click="togglePengajuan"
+        >
+        <span v-if="showPengajuan">Pengajuan</span>
+        <span v-else>Pengajuan</span>
+        </button>
         <!-- Tombol Peminjaman -->
         <button
-          class="btn btn-show m-1"
+          class="btn btn-sm btn-show m-1"
           :class="{active: showDetailPeminjaman}"
           @click="toggleDetailPeminjaman"
         >
           <span v-if="showDetailPeminjaman">Peminjaman</span>
           <span v-else>Peminjaman</span>
         </button>
+        <!-- Tombol Perubahan -->
+        <button
+          class="btn btn-sm btn-show m-1"
+          :class="{active: showPerubahan}"
+          @click="togglePerubahan"
+        >
+          <span v-if="showPerubahan">Perubahan</span>
+          <span v-else>Perubahan</span>
+        </button>
+        <!-- Tombol Pengembalian -->
+        <button
+          class="btn btn-sm btn-show m-1"
+          :class="{active: showPengembalian}"
+          @click="togglePengembalian"
+        >
+          <span v-if="showPengembalian">Pengembalian</span>
+          <span v-else>Pengembalian</span>
+        </button>
       </div>
 
+      <!-- Card Konten Pengeluaran -->
+      <div id="app" v-if="showPengeluaran && peminjaman.no_pinjam" class="card-body">
+        <pengeluaran-peminjaman :no-pinjam="peminjaman.no_pinjam"></pengeluaran-peminjaman>
+      </div>
+      <!-- Card Konten Pengajuan -->
+      <div id="app" v-if="showPengajuan && peminjaman.no_pinjam" class="card-body">
+        <pengajuan-peminjaman :no-pinjam="peminjaman.no_pinjam"></pengajuan-peminjaman>
+      </div>
       <!-- Card Konten Detail -->
       <div id="app" v-if="showDetailPeminjaman && peminjaman.no_pinjam" class="card-body">
         <data-rincian-peminjaman-alat :no-pinjam="peminjaman.no_pinjam"></data-rincian-peminjaman-alat>
       </div>
+      <!-- Card Konten Perubahan -->
+      <div id="app" v-if="showPerubahan && peminjaman.no_pinjam" class="card-body">
+        <perubahan-peminjaman :no-pinjam="peminjaman.no_pinjam"></perubahan-peminjaman>
+      </div>
+      <!-- Card Konten Pengembalian -->
+      <div id="app" v-if="showPengembalian && peminjaman.no_pinjam" class="card-body">
+        <pengembalian-peminjaman :no-pinjam="peminjaman.no_pinjam"></pengembalian-peminjaman>
+      </div>
+      
     </div>    
 
   </div>
@@ -113,7 +166,11 @@ export default {
   data() {
     return {
       peminjaman: {},
-      showDetailPeminjaman: true,      
+      showDetailPeminjaman: false,    
+      showPengeluaran: true,
+      showPengajuan: false,
+      showPerubahan: false,
+      showPengembalian: false,      
     }
   },
   computed:{
@@ -158,8 +215,50 @@ export default {
         alert("Gagal memuat detail alat peminjaman.");
       }
     },
+    togglePengeluaran() {
+      if (!this.showPengeluaran) {
+        this.showPengeluaran = true;
+        this.showPerubahan = false;
+        this.showPengembalian = false;
+        this.showDetailPeminjaman = false;
+        this.showPengajuan = false;
+      }
+    },
+    togglePengajuan() {
+      if (!this.showPengajuan) {
+        this.showPengajuan = true;
+        this.showPerubahan = false;
+        this.showPengembalian = false;
+        this.showDetailPeminjaman = false;
+        this.showPengeluaran = false;
+      }
+    },
     toggleDetailPeminjaman(){
-      this.showDetailPeminjaman = this.showDetailPeminjaman;
+      if (!this.showDetailPeminjaman) {
+        this.showDetailPeminjaman = true;
+        this.showPengajuan = false;
+        this.showPengembalian = false;
+        this.showPengeluaran = false;
+        this.showPerubahan = false;
+      }
+    },
+    togglePerubahan() {
+      if (!this.showPerubahan) {
+        this.showPerubahan = true;
+        this.showPengeluaran = false;
+        this.showPengembalian = false;
+        this.showDetailPeminjaman = false;
+        this.showPengajuan = false;
+      }
+    },
+    togglePengembalian() {
+      if (!this.showPengembalian) {
+        this.showPengembalian = true;
+        this.showPerubahan = false;
+        this.showPengeluaran = false;
+        this.showDetailPeminjaman = false;
+        this.showPengajuan = false;
+      }
     },
     goBack(){
       this.$router.push('/admin-mtc/peminjaman');

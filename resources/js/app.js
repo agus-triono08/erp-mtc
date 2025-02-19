@@ -75,6 +75,10 @@ const DataPeminjamanAlat = require('./components/admin-mtc/PeminjamanAlat/DataPe
 const EditPeminjamanAlat = require('./components/admin-mtc/PeminjamanAlat/EditPeminjamanAlat.vue').default;
 const DetailPeminjamanAlat = require('./components/admin-mtc/PeminjamanAlat/DetailPeminjamanAlat.vue').default;
 const DataRincianPeminjamanAlat = require('./components/admin-mtc/PeminjamanAlat/DataRincianPeminjamanAlat.vue').default;
+const DetailPengeluaranPeminjamanAlat = require('./components/admin-mtc/PeminjamanAlat/DetailPengeluaranPeminjamanAlat.vue').default;
+const DetailPengajuanPeminjamanAlat = require('./components/admin-mtc/PeminjamanAlat/DetailPengajuanPeminjamanAlat.vue').default;
+const DetailPerubahanPeminjamanAlat = require('./components/admin-mtc/PeminjamanAlat/DetailPerubahanPeminjaman.vue').default;
+const DetailPengembalianPeminjamanAlat = require('./components/admin-mtc/PeminjamanAlat/DetailPengembalianPeminjamanAlat.vue').default;
 
 // Permintaan Alat
 const DataPermintaanAlat = require('./components/admin-mtc/PeminjamanAlat/PermintaanAlat/DataPermintaanAlat.vue').default;
@@ -148,6 +152,10 @@ Vue.component('edit-rincian-perawatan-alat', EditRincianPerawatanAlat);
 Vue.component('edit-alat-dipinjam', EditAlatDipinjam);
 Vue.component('edit-peminjaman-alat', EditPeminjamanAlat);
 Vue.component('data-rincian-peminjaman-alat', DataRincianPeminjamanAlat);
+Vue.component('pengeluaran-peminjaman', DetailPengeluaranPeminjamanAlat);
+Vue.component('pengajuan-peminjaman', DetailPengajuanPeminjamanAlat);
+Vue.component('perubahan-peminjaman', DetailPerubahanPeminjamanAlat);
+Vue.component('pengembalian-peminjaman', DetailPengembalianPeminjamanAlat);
 
 //Permintaan Alat
 Vue.component('data-permintaan-alat', DataPermintaanAlat);

@@ -19,7 +19,7 @@
           <tr class="bg-table text-center">          
             <th class="text-center" style="width: 10px; color: #000;">#</th>
             <th class="text-center" style="width: 10px; color: #000;">No Pengajuan</th>
-            <th class="text-center" style="width: 10px; color: #000;">Tgl Permintaan</th>
+            <th class="text-center" style="width: 10px; color: #000;">Tgl Peminjaman</th>
             <th class="text-center" style="width: 10px; color: #000;">Status Sebelumnya</th>
             <th class="text-center" style="width: 10px; color: #000;">Alasan Ditolak</th>            
           </tr>
@@ -29,13 +29,13 @@
             <td colspan="6" class="text-center">Tidak Ada Data</td>
           </tr>
         </tbody>
-        <tbody v-for="(permintaan, index) in filteredData" :key="index">
+        <tbody v-for="(peminjaman, index) in filteredData" :key="index">
           <tr class="text-center">
             <td>{{ index + 1 }}</td>
-            <td>{{ permintaan.no_pengajuan || '-' }}</td>
-            <td>{{ permintaan.tanggal_permintaan || '-' }}</td>
-            <td>{{ permintaan.status || '-' }}</td>
-            <td>{{ permintaan.deskriksi }}</td>
+            <td>{{ peminjaman.no_pengajuan || '-' }}</td>
+            <td>{{ peminjaman.tanggal_peminjaman || '-' }}</td>
+            <td>{{ peminjaman.status || '-' }}</td>
+            <td>{{ peminjaman.deskriksi }}</td>
           </tr>
         </tbody>
       </table>
@@ -89,16 +89,16 @@
 <script>
 export default {
   props: {
-    noPermintaan: String,
+    noPinjam: String,
   },
   data() {
   return {
-    dataPermintaan: [
+    dataPeminjaman: [
     {
         no_pengajuan: "A001",
-        tanggal_permintaan: "2025-02-01",
+        tanggal_peminjaman: "2025-02-01",
         status: "Ditolak",
-        deskriksi: "Dalam pperbaikan."
+        deskriksi: "Alat dalam perbaikan"
       },
     ],
     searchQuery: '',
@@ -108,24 +108,24 @@ export default {
 },
 computed: {
   totalPages() {
-    return Math.ceil(this.dataPermintaan.length / this.rowsPerPage);
+    return Math.ceil(this.dataPeminjaman.length / this.rowsPerPage);
   },
   paginationInfo() {
     const start = (this.currentPage - 1) * this.rowsPerPage + 1;
-    const end = Math.min(this.currentPage * this.rowsPerPage, this.dataPermintaan.length);
-    return `Showing ${start} to ${end} of ${this.dataPermintaan.length} entries`;
+    const end = Math.min(this.currentPage * this.rowsPerPage, this.dataPeminjaman.length);
+    return `Showing ${start} to ${end} of ${this.dataPeminjaman.length} entries`;
   },
   paginatedData() {
     const start = (this.currentPage - 1) * this.rowsPerPage;
     const end = start + this.rowsPerPage;
-    return this.dataPermintaan.slice(start, end);
+    return this.dataPeminjaman.slice(start, end);
   },
   filteredData() {
     if (this.searchQuery) {
       return this.paginatedData.filter(item => {
         return (
           item.no_pengajuan.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-          item.tanggal_permintaan.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+          item.tanggal_peminjaman.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
           item.status.toLowerCase().includes(this.searchQuery.toLowerCase())
         );
       });
@@ -135,17 +135,17 @@ computed: {
   },
 },
 methods: {
-  async fetchPermintaan() {
+  async fetchPeminjaman() {
     try {
-      const noPermintaan = this.noPermintaan;
-      const response = await axios.get(`/api/permintaan/rincian/${noPermintaan}`);
-      this.dataPermintaan = response.data;
+      const noPinjam = this.noPinjam;
+      const response = await axios.get(`/api/Peminjaman/rincian/${noPinjam}`);
+      this.dataPeminjaman = response.data;
     } catch (error) {
       console.error("Error fetching data peminjaman", error);
     }
   },
   debouncedFetchAlats: _.debounce(function () {
-    this.fetchPermintaan();
+    this.fetchPeminjaman();
   }, 300),
   prevPage() {
     if (this.currentPage > 1) {
@@ -159,7 +159,7 @@ methods: {
   },
 },
 mounted() {
-  this.fetchPermintaan();
+  this.fetchPeminjaman();
 },
 }
 </script>

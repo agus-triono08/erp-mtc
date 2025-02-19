@@ -21,7 +21,6 @@
             <th class="text-center" style="width: 10px; color: #000;">Kode</th>
             <th class="text-center" style="width: 10px; color: #000;">Nama</th>
             <th class="text-center" style="width: 10px; color: #000;">Jumlah</th>
-            <th class="text-center" style="width: 10px; color: #000;">Tanggal Pengambilan</th>
             <th class="text-center" style="width: 10px; color: #000;">Aksi</th>
           </tr>
         </thead>
@@ -36,7 +35,6 @@
             <td>{{ item.kode }}</td>
             <td>{{ item.nama }}</td>
             <td>{{ item.jumlah }}</td>
-            <td>{{ item.tanggal_pengambilan }}</td>
             <td class="text-center">
               <button class="btn btn-info btn-sm" @click="toggleDetail(index)">
                 {{ isDetailVisible(index) ? 'Sembunyikan Detail' : 'Detail' }}
@@ -68,7 +66,7 @@
 
     <!-- Modal Tabel Detail (sub-tabel) -->
     <div v-for="(item, index) in data" :key="'detail-' + item.id" class="table-responsive p-3" v-if="isDetailVisible(index)">
-      <span style="color: #000;"><b>Nama {{ item.nama }}</b></span>
+      <span style="color: #000;"><b>{{ item.nama }}</b></span>
       <!-- Modal Tabel Detail Inner (Fitur lain seperti tombol dan search) -->
       <div class="container-fluid">
         <div class="row align-items-center justify-content-end mr-3 mb-2">
@@ -105,7 +103,7 @@
                 </th>
                 <th class="text-center" style="width: 10px; color: #000;">#</th>
                 <th class="text-center" style="width: 10px; color: #000;">No Seri Alat</th>
-                <th class="text-center" style="width: 10px; color: #000;">Tgl Permintaan</th>
+                <th class="text-center" style="width: 10px; color: #000;">Tanggal Kembali</th>
                 <th class="text-center" style="width: 10px; color: #000;">Status</th>
                 <th class="text-center" style="width: 10px; color: #000;">Aksi</th>
               </tr>
@@ -115,19 +113,19 @@
                 <td colspan="6" class="text-center">Tidak Ada Data</td>
               </tr>
             </tbody>
-            <tbody v-for="(permintaan, index) in filteredData" :key="index">
+            <tbody v-for="(peminjaman, index) in filteredData" :key="index">
               <tr class="text-center">
                 <td>
                   <input 
                     type="checkbox" 
-                    :value="permintaan.id" 
+                    :value="peminjaman.id" 
                     v-model="selectedItems"
                   />
                 </td>
                 <td>{{ index + 1 }}</td>
-                <td>{{ permintaan.no_seri_alat ? permintaan.no_seri_alat.no_seri_alat : '-' }}</td>
-                <td>{{ permintaan.tanggal_permintaan || '-' }}</td>
-                <td>{{ permintaan.status || '-' }}</td>
+                <td>{{ peminjaman.no_seri_alat ? peminjaman.no_seri_alat.no_seri_alat : '-' }}</td>
+                <td>{{ peminjaman.tanggal_kembali || '-' }}</td>
+                <td>{{ peminjaman.status || '-' }}</td>
                 <td class="text-center">
                   <div class="dropdown text-center">
                     <button
@@ -141,10 +139,10 @@
                       <i class="fas fa-ellipsis-v" style="color: #000;"></i>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">                
-                      <a class="dropdown-item" @click="setStatus(permintaan, 'menunggu diambil')">
+                      <a class="dropdown-item" @click="setStatus(peminjaman, 'menunggu diambil')">
                         <i class="fas fa-clock text-info"></i> Menunggu Diambil
                       </a>
-                      <a class="dropdown-item" @click="openRejectModal(permintaan)">
+                      <a class="dropdown-item" @click="openRejectModal(peminjaman)">
                         <i class="fas fa-times text-danger"></i> Ditolak
                       </a>
                     </div>
@@ -205,14 +203,21 @@
 <script>
 export default {
   props: {
-    noPermintaan: String,
+    noPinjam: String,
   },
   data() {
     return {
       data: [
-        { id: 1, kode: 'A001', nama: 'Alat 1', jumlah: 1, tanggal_pengambilan: '2025-02-17' },
+        { id: 1, kode: 'A001', nama: 'Clamp', jumlah: 1, tanggal_pengambilan: '2025-02-17' },
       ],
-      dataPermintaan: [],
+      dataPeminjaman: [
+        {
+          id: 1,
+          no_seri_alat: { no_seri_alat: 'A1001' },
+          tanggal_peminjaman: "2025-02-17",
+          status: "Proses",
+        },
+      ],
       searchQuery: '',
       searchQueryMain: '',
       rowsPerPage: 10,
@@ -229,24 +234,24 @@ export default {
   },
   computed: {
     totalPages() {
-      return Math.ceil(this.dataPermintaan.length / this.rowsPerPage);
+      return Math.ceil(this.dataPeminjaman.length / this.rowsPerPage);
     },
     paginationInfo() {
       const start = (this.currentPage - 1) * this.rowsPerPage + 1;
-      const end = Math.min(this.currentPage * this.rowsPerPage, this.dataPermintaan.length);
-      return `Showing ${start} to ${end} of ${this.dataPermintaan.length} entries`;
+      const end = Math.min(this.currentPage * this.rowsPerPage, this.dataPeminjaman.length);
+      return `Showing ${start} to ${end} of ${this.dataPeminjaman.length} entries`;
     },
     paginatedData() {
       const start = (this.currentPage - 1) * this.rowsPerPage;
       const end = start + this.rowsPerPage;
-      return this.dataPermintaan.slice(start, end);
+      return this.dataPeminjaman.slice(start, end);
     },
     filteredData() {
       if (this.searchQuery) {
         return this.paginatedData.filter(item => {
           return (
             item.no_seri_alat?.no_seri_alat?.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-            item.tgl_permintaan.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+            item.tgl_pinjam.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
             item.status.toLowerCase().includes(this.searchQuery.toLowerCase())
           );
         });
@@ -276,17 +281,17 @@ export default {
     },
   },
   methods: {
-    async fetchPermintaan() {
+    async fetchPeminjaman() {
       try {
-        const noPermintaan = this.noPermintaan;
-        const response = await axios.get(`/api/permintaan/rincian/noper/${noPermintaan}`);
-        this.dataPermintaan = response.data;
+        const noPinjam = this.noPinjam;
+        const response = await axios.get(`/api/peminjaman/alats/nopin/${noPinjam}`);
+        this.dataPeminjaman = response.data;
       } catch (error) {
         console.error("Error fetching data peminjaman", error);
       }
     },
     debouncedFetchAlats: _.debounce(function () {
-      this.fetchPermintaan();
+      this.fetchPeminjaman();
     }, 300),
     // Method for toggling visibility of detail modal for selected row
     isDetailVisible(index) {
@@ -310,21 +315,21 @@ export default {
       }
     },
     updateStatusToMenungguDiambil() {
-      const selectedPermintaan = this.dataPermintaan.filter(item => this.selectedItems.includes(item.id));
-      selectedPermintaan.forEach(item => {
+      const selectedPeminjaman = this.dataPeminjaman.filter(item => this.selectedItems.includes(item.id));
+      selectedPeminjaman.forEach(item => {
         item.status = 'Menunggu Diambil';
       });
 
       this.isStatusUpdated = true;
     },
-    setStatus(permintaan, status) {
-      permintaan.status = status;
+    setStatus(peminjaman, status) {
+      peminjaman.status = status;
       if (status === 'ditolak') {
-        this.openRejectModal(permintaan);
+        this.openRejectModal(peminjaman);
       }
     },
-    openRejectModal(permintaan) {
-      this.currentRejectItem = permintaan;
+    openRejectModal(peminjaman) {
+      this.currentRejectItem = peminjaman;
       this.rejectionReason = ''; // Clear previous reason
       this.isRejectModalVisible = true; // Show modal
     },
@@ -363,7 +368,7 @@ export default {
     },
   },
   mounted() {
-    this.fetchPermintaan();
+    this.fetchPeminjaman();
   },
 }
 </script>
