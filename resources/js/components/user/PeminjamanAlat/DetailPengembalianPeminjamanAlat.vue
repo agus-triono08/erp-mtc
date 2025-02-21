@@ -105,7 +105,7 @@
                 <th class="text-center" style="width: 10px; color: #000;">No Seri Alat</th>
                 <th class="text-center" style="width: 10px; color: #000;">Tanggal Kembali</th>
                 <th class="text-center" style="width: 10px; color: #000;">Status</th>
-                <th class="text-center" style="width: 10px; color: #000;">Aksi</th>
+                <!-- <th class="text-center" style="width: 10px; color: #000;">Aksi</th> -->
               </tr>
             </thead>
             <tbody v-if="filteredData.length == 0">
@@ -126,7 +126,7 @@
                 <td>{{ peminjaman.no_seri_alat ? peminjaman.no_seri_alat.no_seri_alat : '-' }}</td>
                 <td>{{ peminjaman.tanggal_kembali || '-' }}</td>
                 <td>{{ peminjaman.status || '-' }}</td>
-                <td class="text-center">
+                <!-- <td class="text-center">
                   <div class="dropdown text-center">
                     <button
                       class="btn btn-sm"
@@ -142,12 +142,12 @@
                       <a class="dropdown-item" @click="setStatus(peminjaman, 'proses')">
                         <i class="fas fa-cogs text-info"></i> Cek
                       </a>
-                      <!-- <a class="dropdown-item" @click="openRejectModal(peminjaman)">
+                      <a class="dropdown-item" @click="openRejectModal(peminjaman)">
                         <i class="fas fa-times text-danger"></i> Ditolak
-                      </a> -->
+                      </a>
                     </div>
                   </div>
-                </td>
+                </td> -->
               </tr>
             </tbody>
           </table>

@@ -1,7 +1,7 @@
 <ul class="navbar-nav bg-gradient-white sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard.adminmtc') }}">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard.user') }}">
         <div class="sidebar-brand-icon rotate-n-15"
             style="background-color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; width: 50px; height: 50px;">
             <img src="https://image1ws.indotrading.com/s3/webp/co48220/companylogo/w200-h200/sinkoprimaalloy3ecab9ce-ecdf-4b3a-b6d0-db7126ae03f4.png" 
@@ -17,8 +17,8 @@
     <!--<hr class="sidebar-divider my-0">-->
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item {{ request()->routeIs('dashboard.adminmtc') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('dashboard.adminmtc') }}">
+    <li class="nav-item {{ request()->routeIs('dashboard.user') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('dashboard.user') }}">
             <i class="fas fa-fw fa-home"></i>
             <span>Dashboard</span>
         </a>
@@ -28,9 +28,9 @@
     <!--<hr class="sidebar-divider">-->
 
     <!-- Heading -->
-    {{-- <br><div class="sidebar-heading">
-        <strong>Data Inventaris</strong>
-    </div> --}}
+    <br><div class="sidebar-heading">
+        <strong>Transfer Data</strong>
+    </div>
 
     <!-- Nav Item - Data -->
     {{-- <li class="nav-item {{ request()->routeIs('data.adminmtc') ? 'active' : '' }}">
@@ -91,12 +91,12 @@
     </div> --}}
 
     <!-- Nav Item - Peminjaman -->
-    {{-- <li class="nav-item {{ request()->routeIs('peminjaman.adminmtc') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('peminjaman.adminmtc') }}">
-            <i class="fas fa-fw {{ request()->routeIs('peminjaman.adminmtc') ? 'fa-hands-helping' : 'fa-handshake' }}"></i>
+    <li class="nav-item {{ request()->routeIs('peminjaman.user') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('peminjaman.user') }}">
+            <i class="fas fa-fw {{ request()->routeIs('peminjaman.user') ? 'fa-hands-helping' : 'fa-handshake' }}"></i>
             <span>Permintaan/Peminjaman</span>
         </a>
-    </li> --}}
+    </li>
 
     <!-- Nav Item - Perawatan -->
     {{-- <li class="nav-item {{ request()->routeIs('perawatan.adminmtc') ? 'active' : '' }}">

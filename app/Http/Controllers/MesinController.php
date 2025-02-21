@@ -74,7 +74,16 @@ class MesinController extends Controller
 
     // Data Dummy Perawatan
     private $datadummyPerawatan = [
-        []
+        [        
+            'id' => 1,
+            'no_rawat' => 'R001',
+            'id_no_seri_alat' => 10,
+            'id_alat' => 1,
+            'id_staff' => 1,
+            'detail_perawatan' => 'Perawatan alat untuk memperbaiki kerusakan',
+            'tanggal_perawatan' => '2022-01-19',
+            'status' => 'Belum',                        
+        ]
     ];
 
     //Data Dummy untuk Permintaan Mesin

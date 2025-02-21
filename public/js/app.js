@@ -15491,10 +15491,76 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_1__);
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -15554,24 +15620,48 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 //
 //
 
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    kodeAlat: String
+  },
   data: function data() {
-    return {
-      dataPerawatan: [],
+    return _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty({
+      user: {
+        nama_pengguna: '',
+        divisi: ''
+      },
+      dataPerawatanAlat: [{
+        id: 1,
+        id_alat: 101,
+        id_no_seri_alat: 201,
+        id_staff: 301,
+        detail_perawatan: 'Perawatan rutin bulan ini.',
+        tanggal_perawatan: '2025-02-20',
+        status: 'Belum',
+        alat: {
+          kode_alat: 'AL-001',
+          nama_alat: 'Mesin Bor',
+          kategori: 'Peralatan Tangan'
+        },
+        staff: {
+          nama_staff: 'John Doe',
+          divisi: 'Pemeliharaan'
+        },
+        no_seri_alat: {
+          no_seri_alat: 'NS-001'
+        }
+      }],
+      //dataPeminjaman: [], // Menyimpan data error
       showModalInput: false,
-      showModalEdit: false,
-      searchQuery: '',
-      rowsPerPage: 10,
-      currentPage: 1
-    };
+      // Tambahkan variabel untuk mengontrol tampilan modal input
+      showAlat: true,
+      idEdit: null,
+      showMesin: false
+    }, "showModalInput", false), "showModalEdit", false), "searchQuery", ''), "rowsPerPage", 10), "currentPage", 1), "currentDate", new Date().toISOString().split('T')[0]);
   },
   computed: {
-    filteredData: function filteredData() {
-      var _this = this;
-      return this.dataPerawatan.filter(function (item) {
-        return item.no_seri_alat.toLowerCase().includes(_this.searchQuery.toLowerCase()) || item.pic.toLowerCase().includes(_this.searchQuery.toLowerCase()) || item.tgl_perawatan.toLowerCase().includes(_this.searchQuery.toLowerCase()) || item.status.toLowerCase().includes(_this.searchQuery.toLowerCase());
-      });
-    },
     totalPages: function totalPages() {
       return Math.ceil(this.filteredData.length / this.rowsPerPage);
     },
@@ -15580,6 +15670,13 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       var end = Math.min(this.currentPage * this.rowsPerPage, this.filteredData.length);
       return "Showing ".concat(start, " to ").concat(end, " of ").concat(this.filteredData.length, " entries");
     },
+    filteredData: function filteredData() {
+      var _this = this;
+      return this.dataPerawatanAlat.filter(function (perawatan) {
+        var _perawatan$alat, _perawatan$no_pinjam, _perawatan$staff;
+        return ((_perawatan$alat = perawatan.alat) === null || _perawatan$alat === void 0 || (_perawatan$alat = _perawatan$alat.kode_alat) === null || _perawatan$alat === void 0 ? void 0 : _perawatan$alat.toLowerCase().includes(_this.searchQuery.toLowerCase())) || ((_perawatan$no_pinjam = perawatan.no_pinjam) === null || _perawatan$no_pinjam === void 0 ? void 0 : _perawatan$no_pinjam.toLowerCase().includes(_this.searchQuery.toLowerCase())) || ((_perawatan$staff = perawatan.staff) === null || _perawatan$staff === void 0 || (_perawatan$staff = _perawatan$staff.nama_pengguna) === null || _perawatan$staff === void 0 ? void 0 : _perawatan$staff.toLowerCase().includes(_this.searchQuery.toLowerCase()));
+      });
+    },
     paginatedData: function paginatedData() {
       var start = (this.currentPage - 1) * this.rowsPerPage;
       var end = start + this.rowsPerPage;
@@ -15587,18 +15684,18 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     },
     filteredGroupedData: function filteredGroupedData() {
       return this.paginatedData.reduce(function (groups, perawatan) {
-        var _perawatan$mesin;
-        var kodeMesin = ((_perawatan$mesin = perawatan.mesin) === null || _perawatan$mesin === void 0 ? void 0 : _perawatan$mesin.kode_mesin) || "UnCode";
-        if (!groups[kodeMesin]) {
-          groups[kodeMesin] = [];
+        var _perawatan$alat2;
+        var kodeAlat = ((_perawatan$alat2 = perawatan.alat) === null || _perawatan$alat2 === void 0 ? void 0 : _perawatan$alat2.kode_alat) || "UnCode";
+        if (!groups[kodeAlat]) {
+          groups[kodeAlat] = [];
         }
-        groups[kodeMesin].push(perawatan);
+        groups[kodeAlat].push(perawatan);
         return groups;
-      });
+      }, {});
     }
   },
   methods: {
-    fetchPerawatan: function fetchPerawatan() {
+    fetchAlatPeminjaman: function fetchAlatPeminjaman() {
       var _this2 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
         var response;
@@ -15606,39 +15703,118 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
           while (1) switch (_context.prev = _context.next) {
             case 0:
               _context.prev = 0;
-              if (!(_this2.dataPerawatan.length > 0)) {
+              if (!(_this2.dataPerawatanAlat.length > 0)) {
                 _context.next = 3;
                 break;
               }
               return _context.abrupt("return");
             case 3:
               _context.next = 5;
-              return _this2.$axios.get('api/perawatan', {
+              return axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/mesin/perawatan", {
                 params: {
                   search: _this2.searchQuery
                 }
               });
             case 5:
               response = _context.sent;
-              _this2.dataPerawatan = response.data.data;
-              console.log(_this2.dataPerawatan);
+              _this2.dataPerawatanAlat = response.data.data.map(function (perawatanalat) {
+                return {
+                  id: perawatanalat.id,
+                  id_alat: perawatanalat.id_alat,
+                  id_no_seri_alat: perawatanalat.id_no_seri_alat,
+                  id_staff: perawatanalat.id_staff,
+                  detail_perawatan: perawatanalat.detail_perawatan,
+                  tanggal_perawatan: perawatanalat.tanggal_perawatan,
+                  status: perawatanalat.status,
+                  alat: perawatanalat.alat,
+                  staff: perawatanalat.staff,
+                  no_seri: perawatanalat.no_seri_alat
+                };
+              }); // Menyimpan data alat
+              //console.log(this.dataPerawatanAlat); // Debug data
               _context.next = 12;
               break;
-            case 10:
-              _context.prev = 10;
+            case 9:
+              _context.prev = 9;
               _context.t0 = _context["catch"](0);
+              console.error("Error fetching alat error detail:", _context.t0);
+              //alert("Gagal memuat detail data alat error.");
             case 12:
             case "end":
               return _context.stop();
           }
-        }, _callee, null, [[0, 10]]);
+        }, _callee, null, [[0, 9]]);
       }))();
     },
-    debouncedFetchAlats: _.debounce(function () {
-      this.fetchPerawatan();
+    debouncedFetchAlats: lodash__WEBPACK_IMPORTED_MODULE_1___default().debounce(function () {
+      this.fetchAlatPeminjaman();
     }, 300),
+    // Tandai alat sebagai sudah perawatan
+    markAsDone: function markAsDone(index) {
+      var perawatan = this.dataPerawatanAlat[index];
+
+      // Perbarui status menjadi sudah dan jadwal berikutnya
+      perawatan.status = 'Sudah';
+      perawatan.tanggal_perawatan = this.calculateNextDate(perawatan.tanggal_perawatan, 15); // Tambahkan 15 hari
+    },
+    // Hitung tanggal berikutnya berdasarkan interval (15 hari)
+    calculateNextDate: function calculateNextDate(currentDate, interval) {
+      var date = new Date(currentDate);
+      date.setDate(date.getDate() + interval);
+      return date.toISOString().split('T')[0]; // Format yyyy-mm-dd
+    },
     tambahData: function tambahData() {
       this.showModalInput = true;
+    },
+    editData: function editData(id) {
+      this.idEdit = id;
+      this.showModalEdit = true;
+    },
+    tutupModal: function tutupModal() {
+      this.showModalInput = false;
+      this.showModalEdit = false;
+    },
+    sortJumlah: function sortJumlah(order) {
+      this.dataPeminjaman.sort(function (a, b) {
+        if (order === "asc") {
+          return a.stok_dipinjam - b.stok_dipinjam;
+        } else {
+          return b.stok_dipinjam - a.stok_dipinjam;
+        }
+      });
+    },
+    sortTanggalPinjam: function sortTanggalPinjam(order) {
+      this.dataPeminjaman.sort(function (a, b) {
+        if (order === "asc") {
+          return new Date(a.tanggal_pinjam) - new Date(b.tanggal_pinjam);
+        } else {
+          return new Date(b.tanggal_pinjam) - new Date(a.tanggal_pinjam);
+        }
+      });
+    },
+    sortTanggalkembali: function sortTanggalkembali(order) {
+      this.dataPeminjaman.sort(function (a, b) {
+        if (order === "asc") {
+          return new Date(a.tanggal_kembali) - new Date(b.tanggal_kembali);
+        } else {
+          return new Date(b.tanggal_kembali) - new Date(a.tanggal_kembali);
+        }
+      });
+    },
+    toggleAlat: function toggleAlat() {
+      if (!this.showAlat) {
+        this.showMesin = false;
+        this.showAlat = true;
+      }
+    },
+    toggleMesin: function toggleMesin() {
+      if (!this.showMesin) {
+        this.showAlat = false;
+        this.showMesin = true;
+      }
+    },
+    viewDetail: function viewDetail(id) {
+      this.$router.push("/admin-mtc/data-perawatan/detail/".concat(id));
     },
     prevPage: function prevPage() {
       if (this.currentPage > 1) {
@@ -15649,10 +15825,29 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       if (this.currentPage < this.totalPages) {
         this.currentPage++;
       }
+    },
+    updateStatus: function updateStatus() {
+      var _this3 = this;
+      this.dataPerawatanAlat.forEach(function (perawatan) {
+        if (new Date(perawatan.tanggal_perawatan) <= new Date(_this3.currentDate)) {
+          perawatan.status = 'Belum';
+        }
+      });
     }
   },
   mounted: function mounted() {
-    this.fetchPerawatan();
+    this.fetchAlatPeminjaman();
+  },
+  created: function created() {
+    var _this4 = this;
+    this.fetchAlatPeminjaman();
+    this.updateStatus();
+    this.interval = setInterval(function () {
+      _this4.updateStatus();
+    }, 86400000);
+  },
+  beforeDestroy: function beforeDestroy() {
+    clearInterval(this.interval);
   }
 });
 
@@ -18167,6 +18362,39 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -18185,7 +18413,8 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         stok: "",
         deskripsi: "",
         harga_pembelian: 0,
-        asal_usul: ""
+        asal_usul: "",
+        jadwal_perawatan: '' // Untuk menyimpan jadwal perawatan yang dipilih
       },
       gambar: null,
       gambarPreview: null,
@@ -18202,10 +18431,22 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       locations: ['Gedung A', 'Gedung B', 'Gedung C', 'Gedung D'],
       manualKategori: '',
       showManualInput: false,
-      selectedKategori: ''
+      selectedKategori: '',
+      showManualInputJadwal: false,
+      // Untuk menampilkan input manual jadwal
+      manualJadwal: '' // Untuk input manual jadwal
     };
   },
   methods: {
+    onJadwalChange: function onJadwalChange(event) {
+      if (event.target.value === 'other') {
+        this.showManualInputJadwal = true;
+        this.alat.jadwal_perawatan = ''; // Kosongkan pilihan jika memilih "Lainnya"
+      } else {
+        this.showManualInputJadwal = false;
+        this.manualJadwal = ''; // Kosongkan input manual
+      }
+    },
     kembali: function kembali() {
       this.$router.push('/admin-mtc/data-alat').then(function () {
         window.location.reload();
@@ -20204,9 +20445,49 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -20447,7 +20728,12 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       // track if the status update button has been clicked
       rejectionReason: '',
       currentRejectItem: null,
-      isRejectModalVisible: false
+      isRejectModalVisible: false,
+      isTestModalVisible: false,
+      testDate: '',
+      testResult: '',
+      testNotes: '',
+      currentTestItem: null
     };
   },
   computed: {
@@ -20496,7 +20782,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       return this.data.slice(start, end);
     }
   },
-  methods: {
+  methods: _defineProperty(_defineProperty(_defineProperty(_defineProperty({
     fetchPeminjaman: function fetchPeminjaman() {
       var _this2 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
@@ -20604,7 +20890,29 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         this.currentMainPage++;
       }
     }
-  },
+  }, "setStatus", function setStatus(peminjaman, status) {
+    peminjaman.status = status;
+    if (status === 'proses') {
+      this.openTestModal(peminjaman);
+    }
+  }), "openTestModal", function openTestModal(peminjaman) {
+    this.currentTestItem = peminjaman;
+    this.testDate = '';
+    this.testResult = '';
+    this.testNotes = '';
+    this.isTestModalVisible = true;
+  }), "closeTestModal", function closeTestModal() {
+    this.isTestModalVisible = false;
+  }), "submitTestResult", function submitTestResult() {
+    if (!this.testDate || !this.testResult) {
+      alert('Tanggal pengujian dan hasil pengujian harus diisi.');
+      return;
+    }
+    this.currentTestItem.tanggal_pengujian = this.testDate;
+    this.currentTestItem.hasil_pengujian = this.testResult;
+    this.currentTestItem.keterangan_pengujian = this.testNotes;
+    this.closeTestModal();
+  }),
   mounted: function mounted() {
     this.fetchPeminjaman();
   }
@@ -24780,6 +25088,3658 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DataPeminjamanAlat.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DataPeminjamanAlat.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_1__);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    kodeAlat: String
+  },
+  data: function data() {
+    return {
+      user: {
+        nama_pengguna: '',
+        divisi: ''
+      },
+      dataPeminjaman: [],
+      // Menyimpan data error
+      showModalInput: false,
+      // Tambahkan variabel untuk mengontrol tampilan modal input
+      showPeminjaman: true,
+      showPermintaan: false,
+      showAlat: true,
+      showMesin: false,
+      searchQuery: '',
+      rowsPerPage: 10,
+      currentPage: 1
+    };
+  },
+  computed: {
+    durasiData: function durasiData() {
+      return this.dataPeminjaman.map(function (peminjamanalat) {
+        if (peminjamanalat.tanggal_kembali) {
+          var tanggalPinjam = new Date(peminjamanalat.tanggal_pinjam);
+          var tanggalKembali = new Date(peminjamanalat.tanggal_kembali);
+          var selisihHari = Math.abs(tanggalKembali - tanggalPinjam);
+          var hari = Math.ceil(selisihHari / (1000 * 60 * 60 * 24));
+          return hari;
+        }
+      });
+    },
+    durasiDataKembali: function durasiDataKembali() {
+      return this.dataPeminjaman.map(function (peminjamanalat) {
+        if (peminjamanalat.tanggal_kembali) {
+          var tanggalTerkini = new Date();
+          var tanggalKembali = new Date(peminjamanalat.tanggal_kembali);
+          var selisihHari = Math.abs(tanggalKembali - tanggalTerkini);
+          var hari = Math.ceil(selisihHari / (1000 * 60 * 60 * 24));
+
+          // Jika tanggal terkininya kurang dari tanggal kembali
+          if (tanggalTerkini < tanggalKembali) {
+            return hari + ' Hari Lagi';
+          } else {
+            // Jika tanggal terkininya lebih dari tanggal kembali
+            var excessDays = Math.ceil((tanggalTerkini - tanggalKembali) / (1000 * 60 * 60 * 24));
+            return excessDays + ' Hari Lebih';
+          }
+        }
+      });
+    },
+    totalPages: function totalPages() {
+      return Math.ceil(this.dataPeminjaman.length / this.rowsPerPage);
+    },
+    paginationInfo: function paginationInfo() {
+      var start = (this.currentPage - 1) * this.rowsPerPage + 1;
+      var end = Math.min(this.currentPage * this.rowsPerPage, this.dataPeminjaman.length);
+      return "Showing ".concat(start, " to ").concat(end, " of ").concat(this.dataPeminjaman.length, " entries");
+    },
+    paginatedData: function paginatedData() {
+      var start = (this.currentPage - 1) * this.rowsPerPage;
+      var end = start + this.rowsPerPage;
+      return this.dataPeminjaman.slice(start, end);
+    },
+    filteredData: function filteredData() {
+      var _this = this;
+      if (this.searchQuery) {
+        return this.paginatedData.filter(function (peminjaman) {
+          return peminjaman.kode_alat.toLowerCase().includes(_this.searchQuery.toLowerCase()) || peminjaman.no_pinjam.toLowerCase().includes(_this.searchQuery.toLowerCase()) || peminjaman.pengguna && peminjaman.pengguna.nama_pengguna.toLowerCase().includes(_this.searchQuery.toLowerCase());
+        });
+      } else {
+        return this.paginatedData;
+      }
+    }
+  },
+  methods: {
+    fetchAlatPeminjaman: function fetchAlatPeminjaman() {
+      var _this2 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _context.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/peminjaman", {
+                params: {
+                  search: _this2.searchQuery
+                }
+              });
+            case 3:
+              response = _context.sent;
+              _this2.dataPeminjaman = response.data.data.map(function (peminjaman) {
+                return {
+                  id: peminjaman.id,
+                  id_alat: peminjaman.id_alat,
+                  id_user: peminjaman.id_user,
+                  kode_alat: peminjaman.kode_alat,
+                  no_pinjam: peminjaman.no_pinjam,
+                  stok_dipinjam: peminjaman.stok_dipinjam,
+                  tanggal_pinjam: peminjaman.tanggal_pinjam,
+                  tanggal_kembali: peminjaman.tanggal_kembali,
+                  keterangan: peminjaman.keterangan,
+                  status: peminjaman.status,
+                  alat: peminjaman.alat,
+                  pengguna: peminjaman.pengguna
+                };
+              }); // Menyimpan data alat
+              //console.log(this.dataPeminjaman); // Debug data
+              _context.next = 10;
+              break;
+            case 7:
+              _context.prev = 7;
+              _context.t0 = _context["catch"](0);
+              console.error("Error fetching alat error detail:", _context.t0);
+              //alert("Gagal memuat detail data alat error.");
+            case 10:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[0, 7]]);
+      }))();
+    },
+    debouncedFetchAlats: lodash__WEBPACK_IMPORTED_MODULE_1___default().debounce(function () {
+      this.fetchAlatPeminjaman();
+    }, 300),
+    tambahData: function tambahData() {
+      this.showModalInput = true;
+    },
+    tutupModal: function tutupModal() {
+      this.showModalInput = false;
+    },
+    sortJumlah: function sortJumlah(order) {
+      this.dataPeminjaman.sort(function (a, b) {
+        if (order === "asc") {
+          return a.stok_dipinjam - b.stok_dipinjam;
+        } else {
+          return b.stok_dipinjam - a.stok_dipinjam;
+        }
+      });
+    },
+    sortTanggalPinjam: function sortTanggalPinjam(order) {
+      this.dataPeminjaman.sort(function (a, b) {
+        if (order === "asc") {
+          return new Date(a.tanggal_pinjam) - new Date(b.tanggal_pinjam);
+        } else {
+          return new Date(b.tanggal_pinjam) - new Date(a.tanggal_pinjam);
+        }
+      });
+    },
+    sortTanggalkembali: function sortTanggalkembali(order) {
+      this.dataPeminjaman.sort(function (a, b) {
+        if (order === "asc") {
+          return new Date(a.tanggal_kembali) - new Date(b.tanggal_kembali);
+        } else {
+          return new Date(b.tanggal_kembali) - new Date(a.tanggal_kembali);
+        }
+      });
+    },
+    toggleAlat: function toggleAlat() {
+      if (!this.showAlat) {
+        this.showMesin = false;
+        this.showAlat = true;
+        this.showPeminjaman = true;
+        this.showPermintaan = false;
+      }
+    },
+    toggleMesin: function toggleMesin() {
+      if (!this.showMesin) {
+        this.showAlat = false;
+        this.showMesin = true;
+        this.showPermintaan = false;
+        this.showPeminjaman = false;
+      }
+    },
+    togglePeminjaman: function togglePeminjaman() {
+      if (!this.showPeminjaman) {
+        this.showPeminjaman = true;
+        this.showPermintaan = false;
+      }
+    },
+    togglePermintaan: function togglePermintaan() {
+      if (!this.showPermintaan) {
+        this.showPermintaan = true;
+        this.showPeminjaman = false;
+      }
+    },
+    viewDetail: function viewDetail(id) {
+      this.$router.push("/user/peminjaman/detail/".concat(id));
+    },
+    prevPage: function prevPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+      }
+    },
+    nextPage: function nextPage() {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+      }
+    }
+  },
+  mounted: function mounted() {
+    this.fetchAlatPeminjaman();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DataRincianPeminjamanAlat.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DataRincianPeminjamanAlat.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    noPinjam: String
+  },
+  data: function data() {
+    return {
+      noseri: {
+        no_seri_alat: ''
+      },
+      dataPeminjamanAlat: [],
+      Detail_no_seri: false,
+      searchQuery: '',
+      rowsPerPage: 10,
+      currentPage: 1
+    };
+  },
+  computed: {
+    totalPages: function totalPages() {
+      return Math.ceil(this.dataPeminjamanAlat.length / this.rowsPerPage);
+    },
+    paginationInfo: function paginationInfo() {
+      var start = (this.currentPage - 1) * this.rowsPerPage + 1;
+      var end = Math.min(this.currentPage * this.rowsPerPage, this.dataPeminjamanAlat.length);
+      return "Showing ".concat(start, " to ").concat(end, " of ").concat(this.dataPeminjamanAlat.length, " entries");
+    },
+    paginatedData: function paginatedData() {
+      var start = (this.currentPage - 1) * this.rowsPerPage;
+      var end = start + this.rowsPerPage;
+      return this.dataPeminjamanAlat.slice(start, end);
+    },
+    filteredData: function filteredData() {
+      var _this = this;
+      if (this.searchQuery) {
+        return this.paginatedData.filter(function (peminjamanalat) {
+          return peminjamanalat.kode_alat.toLowerCase().includes(_this.searchQuery.toLowerCase());
+        });
+      } else {
+        return this.paginatedData;
+      }
+    }
+  },
+  methods: {
+    fetchPeminjamanAlat: function fetchPeminjamanAlat() {
+      var _this2 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var noPinjam, response;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              noPinjam = _this2.noPinjam; //console.log(this.noPinjam);
+              _context.next = 4;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/peminjaman/alats/nopin/".concat(noPinjam));
+            case 4:
+              response = _context.sent;
+              _this2.dataPeminjamanAlat = response.data;
+              //console.log(this.dataPeminjamanAlat);
+              _context.next = 11;
+              break;
+            case 8:
+              _context.prev = 8;
+              _context.t0 = _context["catch"](0);
+              console.error("Error fetching data peminjaman", _context.t0);
+            case 11:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[0, 8]]);
+      }))();
+    },
+    toggleDetail_no_seri: function toggleDetail_no_seri() {
+      this.Detail_no_seri = !this.Detail_no_seri;
+    },
+    prevPage: function prevPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+      }
+    },
+    nextPage: function nextPage() {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+      }
+    },
+    debouncedFetchAlats: _.debounce(function () {
+      this.fetchPeminjamanAlat();
+    }, 300)
+  },
+  mounted: function mounted() {
+    this.fetchPeminjamanAlat();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DetailPeminjamanAlat.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DetailPeminjamanAlat.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    noPinjam: String
+  },
+  data: function data() {
+    return {
+      peminjaman: {},
+      showDetailPeminjaman: false,
+      showPengeluaran: true,
+      showPengajuan: false,
+      showPerubahan: false,
+      showPengembalian: false
+    };
+  },
+  computed: {
+    durasiData: function durasiData() {
+      if (this.peminjaman.tanggal_kembali) {
+        var tanggalPinjam = new Date(this.peminjaman.tanggal_pinjam);
+        var tanggalKembali = new Date(this.peminjaman.tanggal_kembali);
+        var selisihHari = Math.abs(tanggalKembali - tanggalPinjam) / (1000 * 60 * 60 * 24);
+        return Math.ceil(selisihHari);
+      } else {
+        return '-';
+      }
+    },
+    durasiDataKembali: function durasiDataKembali() {
+      if (this.peminjaman.tanggal_kembali) {
+        var tanggalTerkini = new Date();
+        var tanggalKembali = new Date(this.peminjaman.tanggal_kembali);
+        var selisihHari = Math.abs(tanggalKembali - tanggalTerkini);
+        var hari = Math.ceil(selisihHari / (1000 * 60 * 60 * 24));
+
+        //Jika tanggal terkininya kurang dari tanggal kembali
+        if (tanggalTerkini < tanggalKembali) {
+          return hari + ' Hari Lagi';
+        } else {
+          // Jika tanggal terkininya lebih dari tanggal kembali
+          var excessDays = Math.ceil((tanggalTerkini - tanggalKembali) / (1000 * 60 * 60 * 24));
+          return excessDays + ' Hari Lebih';
+        }
+      } else {
+        return '-';
+      }
+    }
+  },
+  methods: {
+    fetchAlatDetailPeminjaman: function fetchAlatDetailPeminjaman() {
+      var _this = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var id, response;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              id = _this.$route.params.id;
+              _context.next = 4;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/peminjaman/".concat(id));
+            case 4:
+              response = _context.sent;
+              _this.peminjaman = response.data;
+              console.log(_this.peminjaman);
+              _context.next = 12;
+              break;
+            case 9:
+              _context.prev = 9;
+              _context.t0 = _context["catch"](0);
+              alert("Gagal memuat detail alat peminjaman.");
+            case 12:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[0, 9]]);
+      }))();
+    },
+    togglePengeluaran: function togglePengeluaran() {
+      if (!this.showPengeluaran) {
+        this.showPengeluaran = true;
+        this.showPerubahan = false;
+        this.showPengembalian = false;
+        this.showDetailPeminjaman = false;
+        this.showPengajuan = false;
+      }
+    },
+    togglePengajuan: function togglePengajuan() {
+      if (!this.showPengajuan) {
+        this.showPengajuan = true;
+        this.showPerubahan = false;
+        this.showPengembalian = false;
+        this.showDetailPeminjaman = false;
+        this.showPengeluaran = false;
+      }
+    },
+    toggleDetailPeminjaman: function toggleDetailPeminjaman() {
+      if (!this.showDetailPeminjaman) {
+        this.showDetailPeminjaman = true;
+        this.showPengajuan = false;
+        this.showPengembalian = false;
+        this.showPengeluaran = false;
+        this.showPerubahan = false;
+      }
+    },
+    togglePerubahan: function togglePerubahan() {
+      if (!this.showPerubahan) {
+        this.showPerubahan = true;
+        this.showPengeluaran = false;
+        this.showPengembalian = false;
+        this.showDetailPeminjaman = false;
+        this.showPengajuan = false;
+      }
+    },
+    togglePengembalian: function togglePengembalian() {
+      if (!this.showPengembalian) {
+        this.showPengembalian = true;
+        this.showPerubahan = false;
+        this.showPengeluaran = false;
+        this.showDetailPeminjaman = false;
+        this.showPengajuan = false;
+      }
+    },
+    goBack: function goBack() {
+      this.$router.push('/user/peminjaman');
+    }
+  },
+  mounted: function mounted() {
+    this.fetchAlatDetailPeminjaman();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DetailPengajuanPeminjamanAlat.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DetailPengajuanPeminjamanAlat.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    noPinjam: String
+  },
+  data: function data() {
+    return {
+      dataPeminjaman: [{
+        no_pengajuan: "A001",
+        tanggal_peminjaman: "2025-02-01",
+        status: "Ditolak",
+        deskriksi: "Alat dalam perbaikan"
+      }],
+      searchQuery: '',
+      rowsPerPage: 10,
+      currentPage: 1
+    };
+  },
+  computed: {
+    totalPages: function totalPages() {
+      return Math.ceil(this.dataPeminjaman.length / this.rowsPerPage);
+    },
+    paginationInfo: function paginationInfo() {
+      var start = (this.currentPage - 1) * this.rowsPerPage + 1;
+      var end = Math.min(this.currentPage * this.rowsPerPage, this.dataPeminjaman.length);
+      return "Showing ".concat(start, " to ").concat(end, " of ").concat(this.dataPeminjaman.length, " entries");
+    },
+    paginatedData: function paginatedData() {
+      var start = (this.currentPage - 1) * this.rowsPerPage;
+      var end = start + this.rowsPerPage;
+      return this.dataPeminjaman.slice(start, end);
+    },
+    filteredData: function filteredData() {
+      var _this = this;
+      if (this.searchQuery) {
+        return this.paginatedData.filter(function (item) {
+          return item.no_pengajuan.toLowerCase().includes(_this.searchQuery.toLowerCase()) || item.tanggal_peminjaman.toLowerCase().includes(_this.searchQuery.toLowerCase()) || item.status.toLowerCase().includes(_this.searchQuery.toLowerCase());
+        });
+      } else {
+        return this.paginatedData;
+      }
+    }
+  },
+  methods: {
+    fetchPeminjaman: function fetchPeminjaman() {
+      var _this2 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var noPinjam, response;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              noPinjam = _this2.noPinjam;
+              _context.next = 4;
+              return axios.get("/api/Peminjaman/rincian/".concat(noPinjam));
+            case 4:
+              response = _context.sent;
+              _this2.dataPeminjaman = response.data;
+              _context.next = 11;
+              break;
+            case 8:
+              _context.prev = 8;
+              _context.t0 = _context["catch"](0);
+              console.error("Error fetching data peminjaman", _context.t0);
+            case 11:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[0, 8]]);
+      }))();
+    },
+    debouncedFetchAlats: _.debounce(function () {
+      this.fetchPeminjaman();
+    }, 300),
+    prevPage: function prevPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+      }
+    },
+    nextPage: function nextPage() {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+      }
+    }
+  },
+  mounted: function mounted() {
+    this.fetchPeminjaman();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DetailPengeluaranPeminjamanAlat.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DetailPengeluaranPeminjamanAlat.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    noPinjam: String
+  },
+  data: function data() {
+    return {
+      data: [{
+        id: 1,
+        kode: 'A001',
+        nama: 'Clamp',
+        jumlah: 1,
+        tanggal_pengambilan: '2025-02-17'
+      }],
+      dataPeminjaman: [],
+      searchQuery: '',
+      searchQueryMain: '',
+      rowsPerPage: 10,
+      currentPage: 1,
+      currentMainPage: 1,
+      // Current page for the main table
+      mainRowsPerPage: 10,
+      // Rows per page for the main table
+      selectedItems: [],
+      // track selected items
+      selectedMainItems: [],
+      // track selected items dalam tabel utama
+      isStatusUpdated: false,
+      // track if the status update button has been clicked
+      rejectionReason: '',
+      currentRejectItem: null,
+      isRejectModalVisible: false
+    };
+  },
+  computed: {
+    totalPages: function totalPages() {
+      return Math.ceil(this.dataPeminjaman.length / this.rowsPerPage);
+    },
+    paginationInfo: function paginationInfo() {
+      var start = (this.currentPage - 1) * this.rowsPerPage + 1;
+      var end = Math.min(this.currentPage * this.rowsPerPage, this.dataPeminjaman.length);
+      return "Showing ".concat(start, " to ").concat(end, " of ").concat(this.dataPeminjaman.length, " entries");
+    },
+    paginatedData: function paginatedData() {
+      var start = (this.currentPage - 1) * this.rowsPerPage;
+      var end = start + this.rowsPerPage;
+      return this.dataPeminjaman.slice(start, end);
+    },
+    filteredData: function filteredData() {
+      var _this = this;
+      if (this.searchQuery) {
+        return this.paginatedData.filter(function (item) {
+          var _item$no_seri_alat;
+          return ((_item$no_seri_alat = item.no_seri_alat) === null || _item$no_seri_alat === void 0 || (_item$no_seri_alat = _item$no_seri_alat.no_seri_alat) === null || _item$no_seri_alat === void 0 ? void 0 : _item$no_seri_alat.toLowerCase().includes(_this.searchQuery.toLowerCase())) || item.tgl_pinjam.toLowerCase().includes(_this.searchQuery.toLowerCase()) || item.status.toLowerCase().includes(_this.searchQuery.toLowerCase());
+        });
+      } else {
+        return this.paginatedData;
+      }
+    },
+    isAllSelected: function isAllSelected() {
+      return this.selectedItems.length === this.filteredData.length;
+    },
+    isIndeterminate: function isIndeterminate() {
+      return this.selectedItems.length > 0 && this.selectedItems.length < this.filteredData.length;
+    },
+    // Pagination info for main table
+    totalMainPages: function totalMainPages() {
+      return Math.ceil(this.data.length / this.mainRowsPerPage);
+    },
+    mainPaginationInfo: function mainPaginationInfo() {
+      var start = (this.currentMainPage - 1) * this.mainRowsPerPage + 1;
+      var end = Math.min(this.currentMainPage * this.mainRowsPerPage, this.data.length);
+      return "Showing ".concat(start, " to ").concat(end, " of ").concat(this.data.length, " entries");
+    },
+    paginatedMainData: function paginatedMainData() {
+      var start = (this.currentMainPage - 1) * this.mainRowsPerPage;
+      var end = start + this.mainRowsPerPage;
+      return this.data.slice(start, end);
+    }
+  },
+  methods: {
+    fetchPeminjaman: function fetchPeminjaman() {
+      var _this2 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var noPinjam, response;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              noPinjam = _this2.noPinjam;
+              _context.next = 4;
+              return axios.get("/api/peminjaman/alats/nopin/".concat(noPinjam));
+            case 4:
+              response = _context.sent;
+              _this2.dataPeminjaman = response.data;
+              _context.next = 11;
+              break;
+            case 8:
+              _context.prev = 8;
+              _context.t0 = _context["catch"](0);
+              console.error("Error fetching data peminjaman", _context.t0);
+            case 11:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[0, 8]]);
+      }))();
+    },
+    debouncedFetchAlats: _.debounce(function () {
+      this.fetchPeminjaman();
+    }, 300),
+    // Method for toggling visibility of detail modal for selected row
+    isDetailVisible: function isDetailVisible(index) {
+      // Cek apakah hanya satu item yang dipilih
+      return this.selectedMainItems[0] === index;
+    },
+    toggleDetail: function toggleDetail(index) {
+      if (this.selectedMainItems[0] === index) {
+        // Jika detail yang sama dipilih, maka tutup detailnya
+        this.selectedMainItems = [];
+      } else {
+        // Jika detail lain dipilih, tampilkan detail yang baru
+        this.selectedMainItems = [index];
+      }
+    },
+    toggleSelectAll: function toggleSelectAll() {
+      if (this.isAllSelected) {
+        this.selectedItems = [];
+      } else {
+        this.selectedItems = this.filteredData.map(function (item) {
+          return item.id;
+        });
+      }
+    },
+    updateStatusToMenungguDiambil: function updateStatusToMenungguDiambil() {
+      var _this3 = this;
+      var selectedPeminjaman = this.dataPeminjaman.filter(function (item) {
+        return _this3.selectedItems.includes(item.id);
+      });
+      selectedPeminjaman.forEach(function (item) {
+        item.status = 'Diambil';
+      });
+      this.isStatusUpdated = true;
+    },
+    setStatus: function setStatus(peminjaman, status) {
+      peminjaman.status = status;
+      if (status === 'ditolak') {
+        this.openRejectModal(peminjaman);
+      }
+    },
+    openRejectModal: function openRejectModal(peminjaman) {
+      this.currentRejectItem = peminjaman;
+      this.rejectionReason = ''; // Clear previous reason
+      this.isRejectModalVisible = true; // Show modal
+    },
+    closeRejectModal: function closeRejectModal() {
+      this.isRejectModalVisible = false; // Hide modal
+    },
+    submitRejection: function submitRejection() {
+      if (!this.rejectionReason.trim()) {
+        alert('Alasan penolakan tidak boleh kosong');
+        return;
+      }
+      this.currentRejectItem.status = 'Ditolak';
+      this.currentRejectItem.keteranganPenolakan = this.rejectionReason;
+      this.closeRejectModal(); // Hide modal
+    },
+    prevPage: function prevPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+      }
+    },
+    nextPage: function nextPage() {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+      }
+    },
+    // Pagination for Main Table
+    prevMainPage: function prevMainPage() {
+      if (this.currentMainPage > 1) {
+        this.currentMainPage--;
+      }
+    },
+    nextMainPage: function nextMainPage() {
+      if (this.currentMainPage < this.totalMainPages) {
+        this.currentMainPage++;
+      }
+    }
+  },
+  mounted: function mounted() {
+    this.fetchPeminjaman();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DetailPengembalianPeminjamanAlat.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DetailPengembalianPeminjamanAlat.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    noPinjam: String
+  },
+  data: function data() {
+    return {
+      data: [{
+        id: 1,
+        kode: 'A001',
+        nama: 'Clamp',
+        jumlah: 1,
+        tanggal_pengambilan: '2025-02-17'
+      }],
+      dataPeminjaman: [{
+        id: 1,
+        no_seri_alat: {
+          no_seri_alat: 'A1001'
+        },
+        tanggal_peminjaman: "2025-02-17",
+        status: "Proses"
+      }],
+      searchQuery: '',
+      searchQueryMain: '',
+      rowsPerPage: 10,
+      currentPage: 1,
+      currentMainPage: 1,
+      // Current page for the main table
+      mainRowsPerPage: 10,
+      // Rows per page for the main table
+      selectedItems: [],
+      // track selected items
+      selectedMainItems: [],
+      // track selected items dalam tabel utama
+      isStatusUpdated: false,
+      // track if the status update button has been clicked
+      rejectionReason: '',
+      currentRejectItem: null,
+      isRejectModalVisible: false,
+      isTestModalVisible: false,
+      testDate: '',
+      testResult: '',
+      testNotes: '',
+      currentTestItem: null
+    };
+  },
+  computed: {
+    totalPages: function totalPages() {
+      return Math.ceil(this.dataPeminjaman.length / this.rowsPerPage);
+    },
+    paginationInfo: function paginationInfo() {
+      var start = (this.currentPage - 1) * this.rowsPerPage + 1;
+      var end = Math.min(this.currentPage * this.rowsPerPage, this.dataPeminjaman.length);
+      return "Showing ".concat(start, " to ").concat(end, " of ").concat(this.dataPeminjaman.length, " entries");
+    },
+    paginatedData: function paginatedData() {
+      var start = (this.currentPage - 1) * this.rowsPerPage;
+      var end = start + this.rowsPerPage;
+      return this.dataPeminjaman.slice(start, end);
+    },
+    filteredData: function filteredData() {
+      var _this = this;
+      if (this.searchQuery) {
+        return this.paginatedData.filter(function (item) {
+          var _item$no_seri_alat;
+          return ((_item$no_seri_alat = item.no_seri_alat) === null || _item$no_seri_alat === void 0 || (_item$no_seri_alat = _item$no_seri_alat.no_seri_alat) === null || _item$no_seri_alat === void 0 ? void 0 : _item$no_seri_alat.toLowerCase().includes(_this.searchQuery.toLowerCase())) || item.tgl_pinjam.toLowerCase().includes(_this.searchQuery.toLowerCase()) || item.status.toLowerCase().includes(_this.searchQuery.toLowerCase());
+        });
+      } else {
+        return this.paginatedData;
+      }
+    },
+    isAllSelected: function isAllSelected() {
+      return this.selectedItems.length === this.filteredData.length;
+    },
+    isIndeterminate: function isIndeterminate() {
+      return this.selectedItems.length > 0 && this.selectedItems.length < this.filteredData.length;
+    },
+    // Pagination info for main table
+    totalMainPages: function totalMainPages() {
+      return Math.ceil(this.data.length / this.mainRowsPerPage);
+    },
+    mainPaginationInfo: function mainPaginationInfo() {
+      var start = (this.currentMainPage - 1) * this.mainRowsPerPage + 1;
+      var end = Math.min(this.currentMainPage * this.mainRowsPerPage, this.data.length);
+      return "Showing ".concat(start, " to ").concat(end, " of ").concat(this.data.length, " entries");
+    },
+    paginatedMainData: function paginatedMainData() {
+      var start = (this.currentMainPage - 1) * this.mainRowsPerPage;
+      var end = start + this.mainRowsPerPage;
+      return this.data.slice(start, end);
+    }
+  },
+  methods: _defineProperty(_defineProperty(_defineProperty(_defineProperty({
+    fetchPeminjaman: function fetchPeminjaman() {
+      var _this2 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var noPinjam, response;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              noPinjam = _this2.noPinjam;
+              _context.next = 4;
+              return axios.get("/api/peminjaman/alats/nopin/".concat(noPinjam));
+            case 4:
+              response = _context.sent;
+              _this2.dataPeminjaman = response.data;
+              _context.next = 11;
+              break;
+            case 8:
+              _context.prev = 8;
+              _context.t0 = _context["catch"](0);
+              console.error("Error fetching data peminjaman", _context.t0);
+            case 11:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[0, 8]]);
+      }))();
+    },
+    debouncedFetchAlats: _.debounce(function () {
+      this.fetchPeminjaman();
+    }, 300),
+    // Method for toggling visibility of detail modal for selected row
+    isDetailVisible: function isDetailVisible(index) {
+      // Cek apakah hanya satu item yang dipilih
+      return this.selectedMainItems[0] === index;
+    },
+    toggleDetail: function toggleDetail(index) {
+      if (this.selectedMainItems[0] === index) {
+        // Jika detail yang sama dipilih, maka tutup detailnya
+        this.selectedMainItems = [];
+      } else {
+        // Jika detail lain dipilih, tampilkan detail yang baru
+        this.selectedMainItems = [index];
+      }
+    },
+    toggleSelectAll: function toggleSelectAll() {
+      if (this.isAllSelected) {
+        this.selectedItems = [];
+      } else {
+        this.selectedItems = this.filteredData.map(function (item) {
+          return item.id;
+        });
+      }
+    },
+    updateStatusToMenungguDiambil: function updateStatusToMenungguDiambil() {
+      var _this3 = this;
+      var selectedPeminjaman = this.dataPeminjaman.filter(function (item) {
+        return _this3.selectedItems.includes(item.id);
+      });
+      selectedPeminjaman.forEach(function (item) {
+        item.status = 'Menunggu Diambil';
+      });
+      this.isStatusUpdated = true;
+    },
+    setStatus: function setStatus(peminjaman, status) {
+      peminjaman.status = status;
+      if (status === 'ditolak') {
+        this.openRejectModal(peminjaman);
+      }
+    },
+    openRejectModal: function openRejectModal(peminjaman) {
+      this.currentRejectItem = peminjaman;
+      this.rejectionReason = ''; // Clear previous reason
+      this.isRejectModalVisible = true; // Show modal
+    },
+    closeRejectModal: function closeRejectModal() {
+      this.isRejectModalVisible = false; // Hide modal
+    },
+    submitRejection: function submitRejection() {
+      if (!this.rejectionReason.trim()) {
+        alert('Alasan penolakan tidak boleh kosong');
+        return;
+      }
+      this.currentRejectItem.status = 'Ditolak';
+      this.currentRejectItem.keteranganPenolakan = this.rejectionReason;
+      this.closeRejectModal(); // Hide modal
+    },
+    prevPage: function prevPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+      }
+    },
+    nextPage: function nextPage() {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+      }
+    },
+    // Pagination for Main Table
+    prevMainPage: function prevMainPage() {
+      if (this.currentMainPage > 1) {
+        this.currentMainPage--;
+      }
+    },
+    nextMainPage: function nextMainPage() {
+      if (this.currentMainPage < this.totalMainPages) {
+        this.currentMainPage++;
+      }
+    }
+  }, "setStatus", function setStatus(peminjaman, status) {
+    peminjaman.status = status;
+    if (status === 'proses') {
+      this.openTestModal(peminjaman);
+    }
+  }), "openTestModal", function openTestModal(peminjaman) {
+    this.currentTestItem = peminjaman;
+    this.testDate = '';
+    this.testResult = '';
+    this.testNotes = '';
+    this.isTestModalVisible = true;
+  }), "closeTestModal", function closeTestModal() {
+    this.isTestModalVisible = false;
+  }), "submitTestResult", function submitTestResult() {
+    if (!this.testDate || !this.testResult) {
+      alert('Tanggal pengujian dan hasil pengujian harus diisi.');
+      return;
+    }
+    this.currentTestItem.tanggal_pengujian = this.testDate;
+    this.currentTestItem.hasil_pengujian = this.testResult;
+    this.currentTestItem.keterangan_pengujian = this.testNotes;
+    this.closeTestModal();
+  }),
+  mounted: function mounted() {
+    this.fetchPeminjaman();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DetailPerubahanPeminjaman.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DetailPerubahanPeminjaman.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    noPinjam: String
+  },
+  data: function data() {
+    return {
+      data: [{
+        id: 1,
+        no_perubahan: "PR001",
+        kode: "K001",
+        nama: "Clamp",
+        tanggal_peminjaman: "2025-02-18",
+        keterangan_peminjaman: "Peminjaman alat untuk keperluan proyek A.",
+        hasil: "Proses",
+        alasan_ditolak: null
+      }],
+      dataPeminjaman: [{
+        id: 1,
+        no_seri_alat: {
+          no_seri_alat: 'A1001'
+        },
+        tanggal_peminjaman: "2025-02-17",
+        status: "Proses"
+      }],
+      searchQuery: '',
+      searchQueryMain: '',
+      rowsPerPage: 10,
+      currentPage: 1,
+      currentMainPage: 1,
+      // Current page for the main table
+      mainRowsPerPage: 10,
+      // Rows per page for the main table
+      selectedItems: [],
+      // track selected items
+      selectedMainItems: [],
+      // track selected items dalam tabel utama
+      isStatusUpdated: false,
+      // track if the status update button has been clicked
+      rejectionReason: '',
+      currentRejectItem: null,
+      isRejectModalVisible: false,
+      isAddDataModalVisible: false,
+      // Track modal visibility
+      newTanggalPinjam: '',
+      // Disable input for Tanggal Peminjaman
+      newTanggalKembali: '',
+      // Editable input for Tanggal Kembali
+      newKeteranganPerubahan: '' // Input for change description
+    };
+  },
+  computed: {
+    totalPages: function totalPages() {
+      return Math.ceil(this.dataPeminjaman.length / this.rowsPerPage);
+    },
+    paginationInfo: function paginationInfo() {
+      var start = (this.currentPage - 1) * this.rowsPerPage + 1;
+      var end = Math.min(this.currentPage * this.rowsPerPage, this.dataPeminjaman.length);
+      return "Showing ".concat(start, " to ").concat(end, " of ").concat(this.dataPeminjaman.length, " entries");
+    },
+    paginatedData: function paginatedData() {
+      var start = (this.currentPage - 1) * this.rowsPerPage;
+      var end = start + this.rowsPerPage;
+      return this.dataPeminjaman.slice(start, end);
+    },
+    filteredData: function filteredData() {
+      var _this = this;
+      if (this.searchQuery) {
+        return this.paginatedData.filter(function (item) {
+          var _item$no_seri_alat;
+          return ((_item$no_seri_alat = item.no_seri_alat) === null || _item$no_seri_alat === void 0 || (_item$no_seri_alat = _item$no_seri_alat.no_seri_alat) === null || _item$no_seri_alat === void 0 ? void 0 : _item$no_seri_alat.toLowerCase().includes(_this.searchQuery.toLowerCase())) || item.tanggal_peminjaman.toLowerCase().includes(_this.searchQuery.toLowerCase()) || item.status.toLowerCase().includes(_this.searchQuery.toLowerCase());
+        });
+      } else {
+        return this.paginatedData;
+      }
+    },
+    isAllSelected: function isAllSelected() {
+      return this.selectedItems.length === this.filteredData.length;
+    },
+    isIndeterminate: function isIndeterminate() {
+      return this.selectedItems.length > 0 && this.selectedItems.length < this.filteredData.length;
+    },
+    // Pagination info for main table
+    totalMainPages: function totalMainPages() {
+      return Math.ceil(this.data.length / this.mainRowsPerPage);
+    },
+    mainPaginationInfo: function mainPaginationInfo() {
+      var start = (this.currentMainPage - 1) * this.mainRowsPerPage + 1;
+      var end = Math.min(this.currentMainPage * this.mainRowsPerPage, this.data.length);
+      return "Showing ".concat(start, " to ").concat(end, " of ").concat(this.data.length, " entries");
+    },
+    paginatedMainData: function paginatedMainData() {
+      var start = (this.currentMainPage - 1) * this.mainRowsPerPage;
+      var end = start + this.mainRowsPerPage;
+      return this.data.slice(start, end);
+    }
+  },
+  methods: {
+    fetchPeminjaman: function fetchPeminjaman() {
+      var _this2 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var noPinjam, response;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              noPinjam = _this2.noPinjam;
+              _context.next = 4;
+              return axios.get("/api/permintaan/rincian/noper/".concat(noPinjam));
+            case 4:
+              response = _context.sent;
+              _this2.dataPeminjaman = response.data;
+              _context.next = 11;
+              break;
+            case 8:
+              _context.prev = 8;
+              _context.t0 = _context["catch"](0);
+              console.error("Error fetching data peminjaman", _context.t0);
+            case 11:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[0, 8]]);
+      }))();
+    },
+    debouncedFetchAlats: _.debounce(function () {
+      this.fetchPeminjaman();
+    }, 300),
+    // Method for toggling visibility of detail modal for selected row
+    isDetailVisible: function isDetailVisible(index) {
+      // Cek apakah hanya satu item yang dipilih
+      return this.selectedMainItems[0] === index;
+    },
+    toggleDetail: function toggleDetail(index) {
+      if (this.selectedMainItems[0] === index) {
+        // Jika detail yang sama dipilih, maka tutup detailnya
+        this.selectedMainItems = [];
+      } else {
+        // Jika detail lain dipilih, tampilkan detail yang baru
+        this.selectedMainItems = [index];
+      }
+    },
+    toggleSelectAll: function toggleSelectAll() {
+      if (this.isAllSelected) {
+        this.selectedItems = [];
+      } else {
+        this.selectedItems = this.filteredData.map(function (item) {
+          return item.id;
+        });
+      }
+    },
+    updateStatusToMenungguDiambil: function updateStatusToMenungguDiambil() {
+      var _this3 = this;
+      var selectedPeminjaman = this.dataPeminjaman.filter(function (item) {
+        return _this3.selectedItems.includes(item.id);
+      });
+      selectedPeminjaman.forEach(function (item) {
+        item.status = 'Setuju';
+      });
+      this.isStatusUpdated = true;
+    },
+    setStatus: function setStatus(peminjaman, status) {
+      peminjaman.status = status;
+      if (status === 'Ditolak') {
+        this.openRejectModal(peminjaman);
+      }
+    },
+    openRejectModal: function openRejectModal(peminjaman) {
+      this.currentRejectItem = peminjaman;
+      this.rejectionReason = ''; // Clear previous reason
+      this.isRejectModalVisible = true; // Show modal
+    },
+    closeRejectModal: function closeRejectModal() {
+      this.isRejectModalVisible = false; // Hide modal
+    },
+    submitRejection: function submitRejection() {
+      if (!this.rejectionReason.trim()) {
+        alert('Alasan penolakan tidak boleh kosong');
+        return;
+      }
+      this.currentRejectItem.status = 'Ditolak';
+      this.currentRejectItem.keteranganPenolakan = this.rejectionReason;
+      this.closeRejectModal(); // Hide modal
+    },
+    prevPage: function prevPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+      }
+    },
+    nextPage: function nextPage() {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+      }
+    },
+    // Pagination for Main Table
+    prevMainPage: function prevMainPage() {
+      if (this.currentMainPage > 1) {
+        this.currentMainPage--;
+      }
+    },
+    nextMainPage: function nextMainPage() {
+      if (this.currentMainPage < this.totalMainPages) {
+        this.currentMainPage++;
+      }
+    },
+    // Method to open the Add Data modal
+    openAddDataModal: function openAddDataModal() {
+      this.isAddDataModalVisible = true;
+      // Set the default tanggal peminjaman as disabled
+      var firstItem = this.data[0]; // Assuming you get the first item's peminjaman
+      this.newTanggalPinjam = firstItem.tanggal_peminjaman; // Set the initial date
+      this.newTanggalKembali = ''; // Set the tanggal kembali to empty initially
+    },
+    // Method to close the Add Data modal
+    closeAddDataModal: function closeAddDataModal() {
+      this.isAddDataModalVisible = false;
+    },
+    // Method to submit the changes
+    submitAddData: function submitAddData() {
+      if (!this.newTanggalKembali.trim()) {
+        alert('Tanggal kembali tidak boleh kosong');
+        return;
+      }
+      if (!this.newKeteranganPerubahan.trim()) {
+        alert('Keterangan perubahan tidak boleh kosong');
+        return;
+      }
+
+      // You can implement further logic here to save or send this data to the server
+      console.log('Tanggal Peminjaman:', this.newTanggalPinjam);
+      console.log('Tanggal Kembali:', this.newTanggalKembali);
+      console.log('Keterangan Perubahan:', this.newKeteranganPerubahan);
+
+      // Close modal after submission
+      this.closeAddDataModal();
+    }
+  },
+  mounted: function mounted() {
+    this.fetchPeminjaman();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/InputPeminjamanAlat.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/InputPeminjamanAlat.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      form: {
+        jenis: '',
+        kode: '',
+        noSeri: '',
+        tanggalPinjam: '',
+        tanggalKembali: '',
+        tujuanPeminjaman: ''
+      },
+      kodeOptions: [],
+      noSeriOptions: [],
+      alatMesinData: {
+        alat: {
+          kode: ['A001', 'A002', 'A003'],
+          noSeri: {
+            A001: ['S001', 'S002'],
+            A002: ['S003', 'S004'],
+            A003: ['S005', 'S006']
+          }
+        },
+        mesin: {
+          kode: ['M001', 'M002', 'M003'],
+          noSeri: {
+            M001: ['M001-1', 'M001-2'],
+            M002: ['M002-1', 'M002-2'],
+            M003: ['M003-1', 'M003-2']
+          }
+        }
+      }
+    };
+  },
+  methods: {
+    tutupModal: function tutupModal() {
+      this.$emit('tutup-modal');
+    },
+    // Update the kode options based on the jenis selected
+    updateKodeOptions: function updateKodeOptions() {
+      if (this.form.jenis) {
+        this.kodeOptions = this.alatMesinData[this.form.jenis].kode;
+        this.form.kode = ''; // Reset kode and noSeri when jenis changes
+        this.form.noSeri = '';
+        this.noSeriOptions = [];
+      }
+    },
+    // Update the no seri options based on the kode selected
+    updateNoSeriOptions: function updateNoSeriOptions() {
+      if (this.form.kode) {
+        this.noSeriOptions = this.alatMesinData[this.form.jenis].noSeri[this.form.kode] || [];
+        this.form.noSeri = ''; // Reset noSeri when kode changes
+      }
+    },
+    submitAlat: function submitAlat() {
+      // Here, you can submit the form data, for example, to an API.
+      console.log('Form Submitted:', this.form);
+      // Reset form data
+      this.form = {
+        jenis: '',
+        kode: '',
+        noSeri: '',
+        tanggalPinjam: '',
+        tanggalKembali: '',
+        tujuanPeminjaman: ''
+      };
+      this.kodeOptions = [];
+      this.noSeriOptions = [];
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DataPermintaanAlat.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DataPermintaanAlat.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      searchQuery: '',
+      dataPermintaanAlat: [],
+      showModalInput: false,
+      rowsPerPage: 10,
+      currentPage: 1
+    };
+  },
+  computed: {
+    totalPages: function totalPages() {
+      return Math.ceil(this.dataPermintaanAlat.length / this.rowsPerPage);
+    },
+    paginationInfo: function paginationInfo() {
+      var start = (this.currentPage - 1) * this.rowsPerPage + 1;
+      var end = Math.min(this.currentPage * this.rowsPerPage, this.dataPermintaanAlat.length);
+      return "Showing ".concat(start, " to ").concat(end, " of ").concat(this.dataPermintaanAlat.length, " entries");
+    },
+    paginatedData: function paginatedData() {
+      var start = (this.currentPage - 1) * this.rowsPerPage;
+      var end = this.currentPage * this.rowsPerPage;
+      return this.dataPermintaanAlat.slice(start, end);
+    },
+    filteredData: function filteredData() {
+      var _this = this;
+      if (this.searchQuery) {
+        return this.paginatedData.filter(function (permintaan) {
+          var _permintaan$kode_alat, _permintaan$no_permin, _permintaan$pengguna;
+          return ((_permintaan$kode_alat = permintaan.kode_alat) === null || _permintaan$kode_alat === void 0 ? void 0 : _permintaan$kode_alat.toLowerCase().includes(_this.searchQuery.toLowerCase())) || ((_permintaan$no_permin = permintaan.no_permintaan) === null || _permintaan$no_permin === void 0 ? void 0 : _permintaan$no_permin.toLowerCase().includes(_this.searchQuery.toLowerCase())) || ((_permintaan$pengguna = permintaan.pengguna) === null || _permintaan$pengguna === void 0 || (_permintaan$pengguna = _permintaan$pengguna.nama_pengguna) === null || _permintaan$pengguna === void 0 ? void 0 : _permintaan$pengguna.toLowerCase().includes(_this.searchQuery.toLowerCase()));
+        });
+      } else {
+        return this.paginatedData;
+      }
+    }
+  },
+  methods: {
+    fetchPermintaan: function fetchPermintaan() {
+      var _this2 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _context.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/permintaan');
+            case 3:
+              response = _context.sent;
+              _this2.dataPermintaanAlat = response.data.data;
+              //console.log(this.dataPermintaanAlat);
+              _context.next = 9;
+              break;
+            case 7:
+              _context.prev = 7;
+              _context.t0 = _context["catch"](0);
+            case 9:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[0, 7]]);
+      }))();
+    },
+    debouncedFetchAlats: _.debounce(function () {
+      this.fetchPermintaan();
+    }, 300),
+    viewDetail: function viewDetail(id) {
+      this.$router.push("/user/permintaan/detail/".concat(id));
+    },
+    tambahData: function tambahData() {
+      this.showModalInput = true;
+    },
+    tutupModal: function tutupModal() {
+      this.showModalInput = false;
+    },
+    prevPage: function prevPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+      }
+    },
+    nextPage: function nextPage() {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+      }
+    }
+  },
+  mounted: function mounted() {
+    this.fetchPermintaan();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DataRincianPermintaanAlat.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DataRincianPermintaanAlat.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    noPermintaan: String
+  },
+  data: function data() {
+    return {
+      data: [{
+        id: 1,
+        kode: 'A001',
+        nama: 'Alat 1',
+        jumlah: 1,
+        tanggal_pengambilan: '2025-02-17'
+      }],
+      dataPermintaan: [],
+      searchQuery: '',
+      searchQueryMain: '',
+      rowsPerPage: 10,
+      currentPage: 1,
+      currentMainPage: 1,
+      // Current page for the main table
+      mainRowsPerPage: 10,
+      // Rows per page for the main table
+      selectedItems: [],
+      // track selected items
+      selectedMainItems: [],
+      // track selected items dalam tabel utama
+      isStatusUpdated: false,
+      // track if the status update button has been clicked
+      rejectionReason: '',
+      currentRejectItem: null,
+      isRejectModalVisible: false
+    };
+  },
+  computed: {
+    totalPages: function totalPages() {
+      return Math.ceil(this.dataPermintaan.length / this.rowsPerPage);
+    },
+    paginationInfo: function paginationInfo() {
+      var start = (this.currentPage - 1) * this.rowsPerPage + 1;
+      var end = Math.min(this.currentPage * this.rowsPerPage, this.dataPermintaan.length);
+      return "Showing ".concat(start, " to ").concat(end, " of ").concat(this.dataPermintaan.length, " entries");
+    },
+    paginatedData: function paginatedData() {
+      var start = (this.currentPage - 1) * this.rowsPerPage;
+      var end = start + this.rowsPerPage;
+      return this.dataPermintaan.slice(start, end);
+    },
+    filteredData: function filteredData() {
+      var _this = this;
+      if (this.searchQuery) {
+        return this.paginatedData.filter(function (item) {
+          var _item$no_seri_alat;
+          return ((_item$no_seri_alat = item.no_seri_alat) === null || _item$no_seri_alat === void 0 || (_item$no_seri_alat = _item$no_seri_alat.no_seri_alat) === null || _item$no_seri_alat === void 0 ? void 0 : _item$no_seri_alat.toLowerCase().includes(_this.searchQuery.toLowerCase())) || item.tgl_permintaan.toLowerCase().includes(_this.searchQuery.toLowerCase()) || item.status.toLowerCase().includes(_this.searchQuery.toLowerCase());
+        });
+      } else {
+        return this.paginatedData;
+      }
+    },
+    isAllSelected: function isAllSelected() {
+      return this.selectedItems.length === this.filteredData.length;
+    },
+    isIndeterminate: function isIndeterminate() {
+      return this.selectedItems.length > 0 && this.selectedItems.length < this.filteredData.length;
+    },
+    // Pagination info for main table
+    totalMainPages: function totalMainPages() {
+      return Math.ceil(this.data.length / this.mainRowsPerPage);
+    },
+    mainPaginationInfo: function mainPaginationInfo() {
+      var start = (this.currentMainPage - 1) * this.mainRowsPerPage + 1;
+      var end = Math.min(this.currentMainPage * this.mainRowsPerPage, this.data.length);
+      return "Showing ".concat(start, " to ").concat(end, " of ").concat(this.data.length, " entries");
+    },
+    paginatedMainData: function paginatedMainData() {
+      var start = (this.currentMainPage - 1) * this.mainRowsPerPage;
+      var end = start + this.mainRowsPerPage;
+      return this.data.slice(start, end);
+    }
+  },
+  methods: {
+    fetchPermintaan: function fetchPermintaan() {
+      var _this2 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var noPermintaan, response;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              noPermintaan = _this2.noPermintaan;
+              _context.next = 4;
+              return axios.get("/api/permintaan/rincian/noper/".concat(noPermintaan));
+            case 4:
+              response = _context.sent;
+              _this2.dataPermintaan = response.data;
+              _context.next = 11;
+              break;
+            case 8:
+              _context.prev = 8;
+              _context.t0 = _context["catch"](0);
+              console.error("Error fetching data peminjaman", _context.t0);
+            case 11:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[0, 8]]);
+      }))();
+    },
+    debouncedFetchAlats: _.debounce(function () {
+      this.fetchPermintaan();
+    }, 300),
+    // Method for toggling visibility of detail modal for selected row
+    isDetailVisible: function isDetailVisible(index) {
+      // Cek apakah hanya satu item yang dipilih
+      return this.selectedMainItems[0] === index;
+    },
+    toggleDetail: function toggleDetail(index) {
+      if (this.selectedMainItems[0] === index) {
+        // Jika detail yang sama dipilih, maka tutup detailnya
+        this.selectedMainItems = [];
+      } else {
+        // Jika detail lain dipilih, tampilkan detail yang baru
+        this.selectedMainItems = [index];
+      }
+    },
+    toggleSelectAll: function toggleSelectAll() {
+      if (this.isAllSelected) {
+        this.selectedItems = [];
+      } else {
+        this.selectedItems = this.filteredData.map(function (item) {
+          return item.id;
+        });
+      }
+    },
+    updateStatusToMenungguDiambil: function updateStatusToMenungguDiambil() {
+      var _this3 = this;
+      var selectedPermintaan = this.dataPermintaan.filter(function (item) {
+        return _this3.selectedItems.includes(item.id);
+      });
+      selectedPermintaan.forEach(function (item) {
+        item.status = 'Diterima';
+      });
+      this.isStatusUpdated = true;
+    },
+    setStatus: function setStatus(permintaan, status) {
+      permintaan.status = status;
+      if (status === 'ditolak') {
+        this.openRejectModal(permintaan);
+      }
+    },
+    openRejectModal: function openRejectModal(permintaan) {
+      this.currentRejectItem = permintaan;
+      this.rejectionReason = ''; // Clear previous reason
+      this.isRejectModalVisible = true; // Show modal
+    },
+    closeRejectModal: function closeRejectModal() {
+      this.isRejectModalVisible = false; // Hide modal
+    },
+    submitRejection: function submitRejection() {
+      if (!this.rejectionReason.trim()) {
+        alert('Alasan penolakan tidak boleh kosong');
+        return;
+      }
+      this.currentRejectItem.status = 'Ditolak';
+      this.currentRejectItem.keteranganPenolakan = this.rejectionReason;
+      this.closeRejectModal(); // Hide modal
+    },
+    prevPage: function prevPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+      }
+    },
+    nextPage: function nextPage() {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+      }
+    },
+    // Pagination for Main Table
+    prevMainPage: function prevMainPage() {
+      if (this.currentMainPage > 1) {
+        this.currentMainPage--;
+      }
+    },
+    nextMainPage: function nextMainPage() {
+      if (this.currentMainPage < this.totalMainPages) {
+        this.currentMainPage++;
+      }
+    }
+  },
+  mounted: function mounted() {
+    this.fetchPermintaan();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DetailPermintaanAlat.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DetailPermintaanAlat.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    noPermintaan: String
+  },
+  data: function data() {
+    return {
+      dataPermintaan: {},
+      showRincianPermintaan: true,
+      showPengajuan: false
+    };
+  },
+  computed: {
+    durasiData: function durasiData() {
+      if (this.dataPermintaan.tanggal_permintaan) {
+        var tanggalTerkini = new Date();
+        var tanggalPermintaan = new Date(this.dataPermintaan.tanggal_permintaan);
+        var selisih = Math.abs(tanggalTerkini - tanggalPermintaan);
+        var hari = Math.floor(selisih / (1000 * 60 * 60 * 24));
+        return hari;
+      }
+    }
+  },
+  methods: {
+    fetchDetailPermintaan: function fetchDetailPermintaan() {
+      var _this = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var id, response;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              id = _this.$route.params.id; //console.log(id);
+              _context.next = 4;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/permintaan/".concat(id));
+            case 4:
+              response = _context.sent;
+              _this.dataPermintaan = response.data;
+              //console.log(this.dataPermintaan);
+              _context.next = 11;
+              break;
+            case 8:
+              _context.prev = 8;
+              _context.t0 = _context["catch"](0);
+              alert("Gagal memuat detail alat permintaan.");
+            case 11:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[0, 8]]);
+      }))();
+    },
+    goBack: function goBack() {
+      this.$router.push('/user/peminjaman');
+    },
+    togglePengeluaran: function togglePengeluaran() {
+      if (!this.showRincianPermintaan) {
+        this.showRincianPermintaan = true;
+        this.showPengajuan = false;
+      }
+    },
+    togglePengajuan: function togglePengajuan() {
+      if (!this.showPengajuan) {
+        this.showPengajuan = true;
+        this.showRincianPermintaan = false;
+      }
+    }
+  },
+  mounted: function mounted() {
+    this.fetchDetailPermintaan();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/PermintaanAlat/InputPermintaan.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/PermintaanAlat/InputPermintaan.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      form: {
+        jenis: '',
+        kode: '',
+        noSeri: '',
+        tanggalPinta: '',
+        tanggalKembali: '',
+        tujuanPeminjaman: ''
+      },
+      kodeOptions: [],
+      noSeriOptions: [],
+      alatMesinData: {
+        alat: {
+          kode: ['A001', 'A002', 'A003'],
+          noSeri: {
+            A001: ['S001', 'S002'],
+            A002: ['S003', 'S004'],
+            A003: ['S005', 'S006']
+          }
+        },
+        mesin: {
+          kode: ['M001', 'M002', 'M003'],
+          noSeri: {
+            M001: ['M001-1', 'M001-2'],
+            M002: ['M002-1', 'M002-2'],
+            M003: ['M003-1', 'M003-2']
+          }
+        }
+      }
+    };
+  },
+  methods: {
+    tutupModal: function tutupModal() {
+      this.$emit('tutup-modal');
+    },
+    // Update the kode options based on the jenis selected
+    updateKodeOptions: function updateKodeOptions() {
+      if (this.form.jenis) {
+        this.kodeOptions = this.alatMesinData[this.form.jenis].kode;
+        this.form.kode = ''; // Reset kode and noSeri when jenis changes
+        this.form.noSeri = '';
+        this.noSeriOptions = [];
+      }
+    },
+    // Update the no seri options based on the kode selected
+    updateNoSeriOptions: function updateNoSeriOptions() {
+      if (this.form.kode) {
+        this.noSeriOptions = this.alatMesinData[this.form.jenis].noSeri[this.form.kode] || [];
+        this.form.noSeri = ''; // Reset noSeri when kode changes
+      }
+    },
+    submitAlat: function submitAlat() {
+      // Here, you can submit the form data, for example, to an API.
+      console.log('Form Submitted:', this.form);
+      // Reset form data
+      this.form = {
+        jenis: '',
+        kode: '',
+        noSeri: '',
+        tanggalPinta: '',
+        tanggalKembali: '',
+        tujuanPeminjaman: ''
+      };
+      this.kodeOptions = [];
+      this.noSeriOptions = [];
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -24907,6 +28867,20 @@ var DataPerawatanMesin = (__webpack_require__(/*! ./components/admin-mtc/DataMes
 //Komponen Data Riwayat
 var DataRiwayat = (__webpack_require__(/*! ./components/admin-mtc/Riwayat/DataRiwayat.vue */ "./resources/js/components/admin-mtc/Riwayat/DataRiwayat.vue")["default"]);
 
+// USER PEMINJAMAN & PERMINTAAN
+var UserDataPeminjaman = (__webpack_require__(/*! ./components/user/PeminjamanAlat/DataPeminjamanAlat.vue */ "./resources/js/components/user/PeminjamanAlat/DataPeminjamanAlat.vue")["default"]);
+var UserInputPeminjaman = (__webpack_require__(/*! ./components/user/PeminjamanAlat/InputPeminjamanAlat.vue */ "./resources/js/components/user/PeminjamanAlat/InputPeminjamanAlat.vue")["default"]);
+var UserDetailPeminjaman = (__webpack_require__(/*! ./components/user/PeminjamanAlat/DetailPeminjamanAlat.vue */ "./resources/js/components/user/PeminjamanAlat/DetailPeminjamanAlat.vue")["default"]);
+var UserDetailPengeluaran = (__webpack_require__(/*! ./components/user/PeminjamanAlat/DetailPengeluaranPeminjamanAlat.vue */ "./resources/js/components/user/PeminjamanAlat/DetailPengeluaranPeminjamanAlat.vue")["default"]);
+var UserDetailPengajuan = (__webpack_require__(/*! ./components/user/PeminjamanAlat/DetailPengajuanPeminjamanAlat.vue */ "./resources/js/components/user/PeminjamanAlat/DetailPengajuanPeminjamanAlat.vue")["default"]);
+var UserDetailPerubahan = (__webpack_require__(/*! ./components/user/PeminjamanAlat/DetailPerubahanPeminjaman.vue */ "./resources/js/components/user/PeminjamanAlat/DetailPerubahanPeminjaman.vue")["default"]);
+var UserDetailPengembalian = (__webpack_require__(/*! ./components/user/PeminjamanAlat/DetailPengembalianPeminjamanAlat.vue */ "./resources/js/components/user/PeminjamanAlat/DetailPengembalianPeminjamanAlat.vue")["default"]);
+var UserDetaiPeminjaman = (__webpack_require__(/*! ./components/user/PeminjamanAlat/DataRincianPeminjamanAlat.vue */ "./resources/js/components/user/PeminjamanAlat/DataRincianPeminjamanAlat.vue")["default"]);
+var UserDataPermintaan = (__webpack_require__(/*! ./components/user/PeminjamanAlat/PermintaanAlat/DataPermintaanAlat.vue */ "./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DataPermintaanAlat.vue")["default"]);
+var UserInputPermintaan = (__webpack_require__(/*! ./components/user/PeminjamanAlat/PermintaanAlat/InputPermintaan.vue */ "./resources/js/components/user/PeminjamanAlat/PermintaanAlat/InputPermintaan.vue")["default"]);
+var UserDetailPermintaan = (__webpack_require__(/*! ./components/user/PeminjamanAlat/PermintaanAlat/DetailPermintaanAlat.vue */ "./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DetailPermintaanAlat.vue")["default"]);
+var UserPermintaanPengeluaran = (__webpack_require__(/*! ./components/user/PeminjamanAlat/PermintaanAlat/DataRincianPermintaanAlat.vue */ "./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DataRincianPermintaanAlat.vue")["default"]);
+
 //Daftarkan Komponen DataAlatError
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('input-alat-error', InputAlatError);
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('edit-alat-error', EditAlatError);
@@ -24972,6 +28946,17 @@ vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('data-perawatan-mesin', Da
 
 //Daftarkan Komponen Data Riwayat
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('data-riwayat', DataRiwayat);
+
+//Komponen User Peminjaman & Permintaan
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('user-input-peminjaman', UserInputPeminjaman);
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('user-detail-pengajuan', UserDetailPengajuan);
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('user-detail-pengeluaran', UserDetailPengeluaran);
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('user-detail-pengembalian', UserDetailPengembalian);
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('user-detail-perubahan', UserDetailPerubahan);
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('user-detail-peminjaman', UserDetaiPeminjaman);
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('user-data-permintaan', UserDataPermintaan);
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('user-input-permintaan', UserInputPermintaan);
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('user-permintaan-pengeluaran', UserPermintaanPengeluaran);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -25040,6 +29025,17 @@ var routes = [{
 }, {
   path: '/admin-mtc/riwayat',
   component: DataRiwayat
+},
+// USER
+{
+  path: '/user/peminjaman',
+  component: UserDataPeminjaman
+}, {
+  path: '/user/peminjaman/detail/:id',
+  component: UserDetailPeminjaman
+}, {
+  path: '/user/permintaan/detail/:id',
+  component: UserDetailPermintaan
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   mode: 'history',
@@ -30640,6 +34636,54 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, "\n.icon-hover {\n  color: #5a5c69;\n  transition: color 0.3s ease;\n}\n.icon-hover:hover {\n  color: #169ea8;\n}\n.btn-plus {\n  background-color: #169EA8;\n  color: #fff;\n}\n.btn-plus:hover {\n  background-color: #22d3e0;\n  color: #fff;\n}\n.card-header {\n  background-color: #f8f9fc;\n  border-bottom: 1px solid #e3e6f0;\n}\n.card-body {\n  background-color: #fff;\n}\n.card {\n  border-radius: 5px;\n}\n\n/* Modal Styling */\n.modal {\n  display: none; /* Sembunyikan modal secara default */\n  position: fixed;\n  z-index: 1000;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.5); /* Latar belakang transparan */\n}\n.modal.is-visible {\n  display: flex; /* Tampilkan modal saat is-visible aktif */\n  justify-content: center;\n  align-items: center;\n}\n.modal-content {\n  background-color: #fff;\n  padding: 20px;\n  border-radius: 8px;\n  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);\n  max-width: 400px;\n  text-align: center;\n}\n.modal-content h2 {\n  margin-bottom: 10px;\n  font-size: 1.5rem;\n  color: #333;\n}\n.modal-content p {\n  margin-bottom: 20px;\n  color: #666;\n}\n.modal-content button {\n  padding: 10px 20px;\n  margin: 5px;\n  border: none;\n  border-radius: 5px;\n  cursor: pointer;\n}\n#confirmButton {\n  background-color: #169ea8;\n  color: #fff;\n}\n#cancelButton {\n  background-color: #f44336;\n  color: #fff;\n}\n.textarea-wrapper {\n  position: relative;\n}\ntextarea {\n  padding-bottom: 20px; /* Beri ruang untuk teks di bagian bawah */\n}\n.char-counter {\n  position: absolute;\n  bottom: 5px;\n  right: 10px;\n  font-size: 12px;\n  color: #6c757d; /* Warna teks abu-abu */\n  pointer-events: none; /* Supaya tidak mengganggu input */\n}\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DataPeminjamanAlat.vue?vue&type=style&index=0&lang=css&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DataPeminjamanAlat.vue?vue&type=style&index=0&lang=css& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n.no-border {\n  border: none;\n}\n.no-border th,\n.no-border td {\n  border-top: none !important;\n  border-bottom: none !important;\n}\n.compact-table th,\n.compact-table td {\n  padding: 0.1rem 0.3rem;\n}\n.compact-table tbody tr {\n  margin-bottom: 0;\n}\n.compact-table th {\n  padding-left: 0.2rem;\n  padding-right: 0.2rem;\n}\n.compact-table td {\n  padding-left: 0.2rem;\n  padding-right: 0.2rem;\n}\n.sts-warning {\n  background-color: rgba(255, 204, 0, 0.1);\n  color: #ffcc00;\n}\n.sts-info {\n  background-color: rgba(23, 162, 184, 0.1);\n  color: #17a2b8;\n}\n.sts-success {\n  background-color: rgba(40, 167, 69, 0.1);\n  color: #28a745;\n}\n.sts-secondary {\n  background-color: rgba(108, 117, 125, 0.1);\n  color: #6c757d;\n}\n\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DetailPeminjamanAlat.vue?vue&type=style&index=0&id=e6564a32&scoped=true&lang=css&":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DetailPeminjamanAlat.vue?vue&type=style&index=0&id=e6564a32&scoped=true&lang=css& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Mengubah bentuk ujung card agar lebih melengkung */\n.card[data-v-e6564a32] {\n  border-radius: 20px; /* Menambahkan border-radius untuk membuat sudut lebih melengkung */\n}\n\n/* Menghilangkan jarak antar card-body */\n.card-body[data-v-e6564a32] {\n  padding: 0; /* Menghilangkan padding pada card-body */\n}\n.no-border[data-v-e6564a32] {\n  border: none; /* Menghilangkan border tabel */\n}\n.no-border th[data-v-e6564a32], \n.no-border td[data-v-e6564a32] {\n  border-top: none !important; /* Menghilangkan garis atas pada setiap sel */\n  border-bottom: none !important; /* Menghilangkan garis bawah pada setiap sel */\n}\n.compact-table th[data-v-e6564a32],\n.compact-table td[data-v-e6564a32] {\n  padding: 0.1rem 0.3rem; /* Atur padding agar jarak kanan kiri lebih rapat */\n}\n.compact-table tbody tr[data-v-e6564a32] {\n  margin-bottom: 0; /* Hilangkan margin tambahan antar baris */\n}\n.compact-table th[data-v-e6564a32] {\n  padding-left: 0.2rem; /* Jarak kiri sedikit lebih rapat untuk th */\n  padding-right: 0.2rem; /* Jarak kanan sedikit lebih rapat untuk th */\n}\n.compact-table td[data-v-e6564a32] {\n  padding-left: 0.2rem; /* Jarak kiri sedikit lebih rapat untuk td */\n  padding-right: 0.2rem; /* Jarak kanan sedikit lebih rapat untuk td */\n}\n.text-teal[data-v-e6564a32] {\n  color: #169EA8;\n}\n.btn-show.active[data-v-e6564a32] {\n  background-color: #169EA8; /* Warna tombol saat aktif */\n  color: #fff; /* Warna teks tombol saat aktif */\n  border: 1px solid #169EA8; /* Tambahkan border agar lebih jelas */\n}\n.btn-show[data-v-e6564a32] {\n  background-color: #fff;\n  color: #000;\n  border: 1px solid transparent; /* Tambahkan border default */\n  transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;\n}\n.btn-show[data-v-e6564a32]:hover {\n  background-color: #fff; /* Warna saat hover */\n  color: #169EA8;\n  border: 1px solid #169EA8;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -49491,6 +53535,66 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DataPeminjamanAlat.vue?vue&type=style&index=0&lang=css&":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DataPeminjamanAlat.vue?vue&type=style&index=0&lang=css& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DataPeminjamanAlat_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DataPeminjamanAlat.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DataPeminjamanAlat.vue?vue&type=style&index=0&lang=css&");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DataPeminjamanAlat_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DataPeminjamanAlat_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DetailPeminjamanAlat.vue?vue&type=style&index=0&id=e6564a32&scoped=true&lang=css&":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DetailPeminjamanAlat.vue?vue&type=style&index=0&id=e6564a32&scoped=true&lang=css& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailPeminjamanAlat_vue_vue_type_style_index_0_id_e6564a32_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DetailPeminjamanAlat.vue?vue&type=style&index=0&id=e6564a32&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DetailPeminjamanAlat.vue?vue&type=style&index=0&id=e6564a32&scoped=true&lang=css&");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailPeminjamanAlat_vue_vue_type_style_index_0_id_e6564a32_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailPeminjamanAlat_vue_vue_type_style_index_0_id_e6564a32_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js":
 /*!****************************************************************************!*\
   !*** ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js ***!
@@ -52551,6 +56655,478 @@ component.options.__file = "resources/js/components/admin-mtc/UpdateAlat.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/user/PeminjamanAlat/DataPeminjamanAlat.vue":
+/*!****************************************************************************!*\
+  !*** ./resources/js/components/user/PeminjamanAlat/DataPeminjamanAlat.vue ***!
+  \****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _DataPeminjamanAlat_vue_vue_type_template_id_6f765480___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DataPeminjamanAlat.vue?vue&type=template&id=6f765480& */ "./resources/js/components/user/PeminjamanAlat/DataPeminjamanAlat.vue?vue&type=template&id=6f765480&");
+/* harmony import */ var _DataPeminjamanAlat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DataPeminjamanAlat.vue?vue&type=script&lang=js& */ "./resources/js/components/user/PeminjamanAlat/DataPeminjamanAlat.vue?vue&type=script&lang=js&");
+/* harmony import */ var _DataPeminjamanAlat_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./DataPeminjamanAlat.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/user/PeminjamanAlat/DataPeminjamanAlat.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+;
+
+
+/* normalize component */
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _DataPeminjamanAlat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _DataPeminjamanAlat_vue_vue_type_template_id_6f765480___WEBPACK_IMPORTED_MODULE_0__.render,
+  _DataPeminjamanAlat_vue_vue_type_template_id_6f765480___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/user/PeminjamanAlat/DataPeminjamanAlat.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/user/PeminjamanAlat/DataRincianPeminjamanAlat.vue":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/user/PeminjamanAlat/DataRincianPeminjamanAlat.vue ***!
+  \***********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _DataRincianPeminjamanAlat_vue_vue_type_template_id_05613542___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DataRincianPeminjamanAlat.vue?vue&type=template&id=05613542& */ "./resources/js/components/user/PeminjamanAlat/DataRincianPeminjamanAlat.vue?vue&type=template&id=05613542&");
+/* harmony import */ var _DataRincianPeminjamanAlat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DataRincianPeminjamanAlat.vue?vue&type=script&lang=js& */ "./resources/js/components/user/PeminjamanAlat/DataRincianPeminjamanAlat.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _DataRincianPeminjamanAlat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _DataRincianPeminjamanAlat_vue_vue_type_template_id_05613542___WEBPACK_IMPORTED_MODULE_0__.render,
+  _DataRincianPeminjamanAlat_vue_vue_type_template_id_05613542___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/user/PeminjamanAlat/DataRincianPeminjamanAlat.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/user/PeminjamanAlat/DetailPeminjamanAlat.vue":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/user/PeminjamanAlat/DetailPeminjamanAlat.vue ***!
+  \******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _DetailPeminjamanAlat_vue_vue_type_template_id_e6564a32_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DetailPeminjamanAlat.vue?vue&type=template&id=e6564a32&scoped=true& */ "./resources/js/components/user/PeminjamanAlat/DetailPeminjamanAlat.vue?vue&type=template&id=e6564a32&scoped=true&");
+/* harmony import */ var _DetailPeminjamanAlat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DetailPeminjamanAlat.vue?vue&type=script&lang=js& */ "./resources/js/components/user/PeminjamanAlat/DetailPeminjamanAlat.vue?vue&type=script&lang=js&");
+/* harmony import */ var _DetailPeminjamanAlat_vue_vue_type_style_index_0_id_e6564a32_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./DetailPeminjamanAlat.vue?vue&type=style&index=0&id=e6564a32&scoped=true&lang=css& */ "./resources/js/components/user/PeminjamanAlat/DetailPeminjamanAlat.vue?vue&type=style&index=0&id=e6564a32&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+;
+
+
+/* normalize component */
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _DetailPeminjamanAlat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _DetailPeminjamanAlat_vue_vue_type_template_id_e6564a32_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _DetailPeminjamanAlat_vue_vue_type_template_id_e6564a32_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "e6564a32",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/user/PeminjamanAlat/DetailPeminjamanAlat.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/user/PeminjamanAlat/DetailPengajuanPeminjamanAlat.vue":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/user/PeminjamanAlat/DetailPengajuanPeminjamanAlat.vue ***!
+  \***************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _DetailPengajuanPeminjamanAlat_vue_vue_type_template_id_f0f97488___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DetailPengajuanPeminjamanAlat.vue?vue&type=template&id=f0f97488& */ "./resources/js/components/user/PeminjamanAlat/DetailPengajuanPeminjamanAlat.vue?vue&type=template&id=f0f97488&");
+/* harmony import */ var _DetailPengajuanPeminjamanAlat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DetailPengajuanPeminjamanAlat.vue?vue&type=script&lang=js& */ "./resources/js/components/user/PeminjamanAlat/DetailPengajuanPeminjamanAlat.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _DetailPengajuanPeminjamanAlat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _DetailPengajuanPeminjamanAlat_vue_vue_type_template_id_f0f97488___WEBPACK_IMPORTED_MODULE_0__.render,
+  _DetailPengajuanPeminjamanAlat_vue_vue_type_template_id_f0f97488___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/user/PeminjamanAlat/DetailPengajuanPeminjamanAlat.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/user/PeminjamanAlat/DetailPengeluaranPeminjamanAlat.vue":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/user/PeminjamanAlat/DetailPengeluaranPeminjamanAlat.vue ***!
+  \*****************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _DetailPengeluaranPeminjamanAlat_vue_vue_type_template_id_4612406f___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DetailPengeluaranPeminjamanAlat.vue?vue&type=template&id=4612406f& */ "./resources/js/components/user/PeminjamanAlat/DetailPengeluaranPeminjamanAlat.vue?vue&type=template&id=4612406f&");
+/* harmony import */ var _DetailPengeluaranPeminjamanAlat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DetailPengeluaranPeminjamanAlat.vue?vue&type=script&lang=js& */ "./resources/js/components/user/PeminjamanAlat/DetailPengeluaranPeminjamanAlat.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _DetailPengeluaranPeminjamanAlat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _DetailPengeluaranPeminjamanAlat_vue_vue_type_template_id_4612406f___WEBPACK_IMPORTED_MODULE_0__.render,
+  _DetailPengeluaranPeminjamanAlat_vue_vue_type_template_id_4612406f___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/user/PeminjamanAlat/DetailPengeluaranPeminjamanAlat.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/user/PeminjamanAlat/DetailPengembalianPeminjamanAlat.vue":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/user/PeminjamanAlat/DetailPengembalianPeminjamanAlat.vue ***!
+  \******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _DetailPengembalianPeminjamanAlat_vue_vue_type_template_id_30ee99f4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DetailPengembalianPeminjamanAlat.vue?vue&type=template&id=30ee99f4& */ "./resources/js/components/user/PeminjamanAlat/DetailPengembalianPeminjamanAlat.vue?vue&type=template&id=30ee99f4&");
+/* harmony import */ var _DetailPengembalianPeminjamanAlat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DetailPengembalianPeminjamanAlat.vue?vue&type=script&lang=js& */ "./resources/js/components/user/PeminjamanAlat/DetailPengembalianPeminjamanAlat.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _DetailPengembalianPeminjamanAlat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _DetailPengembalianPeminjamanAlat_vue_vue_type_template_id_30ee99f4___WEBPACK_IMPORTED_MODULE_0__.render,
+  _DetailPengembalianPeminjamanAlat_vue_vue_type_template_id_30ee99f4___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/user/PeminjamanAlat/DetailPengembalianPeminjamanAlat.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/user/PeminjamanAlat/DetailPerubahanPeminjaman.vue":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/user/PeminjamanAlat/DetailPerubahanPeminjaman.vue ***!
+  \***********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _DetailPerubahanPeminjaman_vue_vue_type_template_id_3bfa01d1___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DetailPerubahanPeminjaman.vue?vue&type=template&id=3bfa01d1& */ "./resources/js/components/user/PeminjamanAlat/DetailPerubahanPeminjaman.vue?vue&type=template&id=3bfa01d1&");
+/* harmony import */ var _DetailPerubahanPeminjaman_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DetailPerubahanPeminjaman.vue?vue&type=script&lang=js& */ "./resources/js/components/user/PeminjamanAlat/DetailPerubahanPeminjaman.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _DetailPerubahanPeminjaman_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _DetailPerubahanPeminjaman_vue_vue_type_template_id_3bfa01d1___WEBPACK_IMPORTED_MODULE_0__.render,
+  _DetailPerubahanPeminjaman_vue_vue_type_template_id_3bfa01d1___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/user/PeminjamanAlat/DetailPerubahanPeminjaman.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/user/PeminjamanAlat/InputPeminjamanAlat.vue":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/user/PeminjamanAlat/InputPeminjamanAlat.vue ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _InputPeminjamanAlat_vue_vue_type_template_id_bfae9d28___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./InputPeminjamanAlat.vue?vue&type=template&id=bfae9d28& */ "./resources/js/components/user/PeminjamanAlat/InputPeminjamanAlat.vue?vue&type=template&id=bfae9d28&");
+/* harmony import */ var _InputPeminjamanAlat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./InputPeminjamanAlat.vue?vue&type=script&lang=js& */ "./resources/js/components/user/PeminjamanAlat/InputPeminjamanAlat.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _InputPeminjamanAlat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _InputPeminjamanAlat_vue_vue_type_template_id_bfae9d28___WEBPACK_IMPORTED_MODULE_0__.render,
+  _InputPeminjamanAlat_vue_vue_type_template_id_bfae9d28___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/user/PeminjamanAlat/InputPeminjamanAlat.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DataPermintaanAlat.vue":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DataPermintaanAlat.vue ***!
+  \*******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _DataPermintaanAlat_vue_vue_type_template_id_543de557___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DataPermintaanAlat.vue?vue&type=template&id=543de557& */ "./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DataPermintaanAlat.vue?vue&type=template&id=543de557&");
+/* harmony import */ var _DataPermintaanAlat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DataPermintaanAlat.vue?vue&type=script&lang=js& */ "./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DataPermintaanAlat.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _DataPermintaanAlat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _DataPermintaanAlat_vue_vue_type_template_id_543de557___WEBPACK_IMPORTED_MODULE_0__.render,
+  _DataPermintaanAlat_vue_vue_type_template_id_543de557___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/user/PeminjamanAlat/PermintaanAlat/DataPermintaanAlat.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DataRincianPermintaanAlat.vue":
+/*!**************************************************************************************************!*\
+  !*** ./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DataRincianPermintaanAlat.vue ***!
+  \**************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _DataRincianPermintaanAlat_vue_vue_type_template_id_2821433d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DataRincianPermintaanAlat.vue?vue&type=template&id=2821433d& */ "./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DataRincianPermintaanAlat.vue?vue&type=template&id=2821433d&");
+/* harmony import */ var _DataRincianPermintaanAlat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DataRincianPermintaanAlat.vue?vue&type=script&lang=js& */ "./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DataRincianPermintaanAlat.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _DataRincianPermintaanAlat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _DataRincianPermintaanAlat_vue_vue_type_template_id_2821433d___WEBPACK_IMPORTED_MODULE_0__.render,
+  _DataRincianPermintaanAlat_vue_vue_type_template_id_2821433d___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/user/PeminjamanAlat/PermintaanAlat/DataRincianPermintaanAlat.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DetailPermintaanAlat.vue":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DetailPermintaanAlat.vue ***!
+  \*********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _DetailPermintaanAlat_vue_vue_type_template_id_6709c03e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DetailPermintaanAlat.vue?vue&type=template&id=6709c03e& */ "./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DetailPermintaanAlat.vue?vue&type=template&id=6709c03e&");
+/* harmony import */ var _DetailPermintaanAlat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DetailPermintaanAlat.vue?vue&type=script&lang=js& */ "./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DetailPermintaanAlat.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _DetailPermintaanAlat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _DetailPermintaanAlat_vue_vue_type_template_id_6709c03e___WEBPACK_IMPORTED_MODULE_0__.render,
+  _DetailPermintaanAlat_vue_vue_type_template_id_6709c03e___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/user/PeminjamanAlat/PermintaanAlat/DetailPermintaanAlat.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/user/PeminjamanAlat/PermintaanAlat/InputPermintaan.vue":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/user/PeminjamanAlat/PermintaanAlat/InputPermintaan.vue ***!
+  \****************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _InputPermintaan_vue_vue_type_template_id_7c0802ae___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./InputPermintaan.vue?vue&type=template&id=7c0802ae& */ "./resources/js/components/user/PeminjamanAlat/PermintaanAlat/InputPermintaan.vue?vue&type=template&id=7c0802ae&");
+/* harmony import */ var _InputPermintaan_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./InputPermintaan.vue?vue&type=script&lang=js& */ "./resources/js/components/user/PeminjamanAlat/PermintaanAlat/InputPermintaan.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _InputPermintaan_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _InputPermintaan_vue_vue_type_template_id_7c0802ae___WEBPACK_IMPORTED_MODULE_0__.render,
+  _InputPermintaan_vue_vue_type_template_id_7c0802ae___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/user/PeminjamanAlat/PermintaanAlat/InputPermintaan.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************!*\
   !*** ./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js& ***!
@@ -53655,6 +58231,198 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/user/PeminjamanAlat/DataPeminjamanAlat.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************!*\
+  !*** ./resources/js/components/user/PeminjamanAlat/DataPeminjamanAlat.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DataPeminjamanAlat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DataPeminjamanAlat.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DataPeminjamanAlat.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DataPeminjamanAlat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/user/PeminjamanAlat/DataRincianPeminjamanAlat.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************!*\
+  !*** ./resources/js/components/user/PeminjamanAlat/DataRincianPeminjamanAlat.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DataRincianPeminjamanAlat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DataRincianPeminjamanAlat.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DataRincianPeminjamanAlat.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DataRincianPeminjamanAlat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/user/PeminjamanAlat/DetailPeminjamanAlat.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************!*\
+  !*** ./resources/js/components/user/PeminjamanAlat/DetailPeminjamanAlat.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailPeminjamanAlat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DetailPeminjamanAlat.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DetailPeminjamanAlat.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailPeminjamanAlat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/user/PeminjamanAlat/DetailPengajuanPeminjamanAlat.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************!*\
+  !*** ./resources/js/components/user/PeminjamanAlat/DetailPengajuanPeminjamanAlat.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailPengajuanPeminjamanAlat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DetailPengajuanPeminjamanAlat.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DetailPengajuanPeminjamanAlat.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailPengajuanPeminjamanAlat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/user/PeminjamanAlat/DetailPengeluaranPeminjamanAlat.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************!*\
+  !*** ./resources/js/components/user/PeminjamanAlat/DetailPengeluaranPeminjamanAlat.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailPengeluaranPeminjamanAlat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DetailPengeluaranPeminjamanAlat.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DetailPengeluaranPeminjamanAlat.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailPengeluaranPeminjamanAlat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/user/PeminjamanAlat/DetailPengembalianPeminjamanAlat.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************!*\
+  !*** ./resources/js/components/user/PeminjamanAlat/DetailPengembalianPeminjamanAlat.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailPengembalianPeminjamanAlat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DetailPengembalianPeminjamanAlat.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DetailPengembalianPeminjamanAlat.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailPengembalianPeminjamanAlat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/user/PeminjamanAlat/DetailPerubahanPeminjaman.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************!*\
+  !*** ./resources/js/components/user/PeminjamanAlat/DetailPerubahanPeminjaman.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailPerubahanPeminjaman_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DetailPerubahanPeminjaman.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DetailPerubahanPeminjaman.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailPerubahanPeminjaman_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/user/PeminjamanAlat/InputPeminjamanAlat.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************!*\
+  !*** ./resources/js/components/user/PeminjamanAlat/InputPeminjamanAlat.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_InputPeminjamanAlat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./InputPeminjamanAlat.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/InputPeminjamanAlat.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_InputPeminjamanAlat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DataPermintaanAlat.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************!*\
+  !*** ./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DataPermintaanAlat.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DataPermintaanAlat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DataPermintaanAlat.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DataPermintaanAlat.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DataPermintaanAlat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DataRincianPermintaanAlat.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************!*\
+  !*** ./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DataRincianPermintaanAlat.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DataRincianPermintaanAlat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DataRincianPermintaanAlat.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DataRincianPermintaanAlat.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DataRincianPermintaanAlat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DetailPermintaanAlat.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************!*\
+  !*** ./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DetailPermintaanAlat.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailPermintaanAlat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DetailPermintaanAlat.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DetailPermintaanAlat.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailPermintaanAlat_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/user/PeminjamanAlat/PermintaanAlat/InputPermintaan.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************!*\
+  !*** ./resources/js/components/user/PeminjamanAlat/PermintaanAlat/InputPermintaan.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_InputPermintaan_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./InputPermintaan.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/PermintaanAlat/InputPermintaan.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_InputPermintaan_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/admin-mtc/Alat/Error/DataAlatError.vue?vue&type=style&index=0&lang=css&":
 /*!*********************************************************************************************************!*\
   !*** ./resources/js/components/admin-mtc/Alat/Error/DataAlatError.vue?vue&type=style&index=0&lang=css& ***!
@@ -54236,6 +59004,32 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_UpdateAlat_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader/dist/cjs.js!../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./UpdateAlat.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/UpdateAlat.vue?vue&type=style&index=0&lang=css&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/user/PeminjamanAlat/DataPeminjamanAlat.vue?vue&type=style&index=0&lang=css&":
+/*!*************************************************************************************************************!*\
+  !*** ./resources/js/components/user/PeminjamanAlat/DataPeminjamanAlat.vue?vue&type=style&index=0&lang=css& ***!
+  \*************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DataPeminjamanAlat_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader/dist/cjs.js!../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DataPeminjamanAlat.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DataPeminjamanAlat.vue?vue&type=style&index=0&lang=css&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/user/PeminjamanAlat/DetailPeminjamanAlat.vue?vue&type=style&index=0&id=e6564a32&scoped=true&lang=css&":
+/*!***************************************************************************************************************************************!*\
+  !*** ./resources/js/components/user/PeminjamanAlat/DetailPeminjamanAlat.vue?vue&type=style&index=0&id=e6564a32&scoped=true&lang=css& ***!
+  \***************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailPeminjamanAlat_vue_vue_type_style_index_0_id_e6564a32_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/style-loader/dist/cjs.js!../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DetailPeminjamanAlat.vue?vue&type=style&index=0&id=e6564a32&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DetailPeminjamanAlat.vue?vue&type=style&index=0&id=e6564a32&scoped=true&lang=css&");
 
 
 /***/ }),
@@ -55409,6 +60203,210 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UpdateAlat_vue_vue_type_template_id_47258cfa___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UpdateAlat_vue_vue_type_template_id_47258cfa___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./UpdateAlat.vue?vue&type=template&id=47258cfa& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/UpdateAlat.vue?vue&type=template&id=47258cfa&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/user/PeminjamanAlat/DataPeminjamanAlat.vue?vue&type=template&id=6f765480&":
+/*!***********************************************************************************************************!*\
+  !*** ./resources/js/components/user/PeminjamanAlat/DataPeminjamanAlat.vue?vue&type=template&id=6f765480& ***!
+  \***********************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DataPeminjamanAlat_vue_vue_type_template_id_6f765480___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DataPeminjamanAlat_vue_vue_type_template_id_6f765480___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DataPeminjamanAlat_vue_vue_type_template_id_6f765480___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DataPeminjamanAlat.vue?vue&type=template&id=6f765480& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DataPeminjamanAlat.vue?vue&type=template&id=6f765480&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/user/PeminjamanAlat/DataRincianPeminjamanAlat.vue?vue&type=template&id=05613542&":
+/*!******************************************************************************************************************!*\
+  !*** ./resources/js/components/user/PeminjamanAlat/DataRincianPeminjamanAlat.vue?vue&type=template&id=05613542& ***!
+  \******************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DataRincianPeminjamanAlat_vue_vue_type_template_id_05613542___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DataRincianPeminjamanAlat_vue_vue_type_template_id_05613542___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DataRincianPeminjamanAlat_vue_vue_type_template_id_05613542___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DataRincianPeminjamanAlat.vue?vue&type=template&id=05613542& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DataRincianPeminjamanAlat.vue?vue&type=template&id=05613542&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/user/PeminjamanAlat/DetailPeminjamanAlat.vue?vue&type=template&id=e6564a32&scoped=true&":
+/*!*************************************************************************************************************************!*\
+  !*** ./resources/js/components/user/PeminjamanAlat/DetailPeminjamanAlat.vue?vue&type=template&id=e6564a32&scoped=true& ***!
+  \*************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailPeminjamanAlat_vue_vue_type_template_id_e6564a32_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailPeminjamanAlat_vue_vue_type_template_id_e6564a32_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailPeminjamanAlat_vue_vue_type_template_id_e6564a32_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DetailPeminjamanAlat.vue?vue&type=template&id=e6564a32&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DetailPeminjamanAlat.vue?vue&type=template&id=e6564a32&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/user/PeminjamanAlat/DetailPengajuanPeminjamanAlat.vue?vue&type=template&id=f0f97488&":
+/*!**********************************************************************************************************************!*\
+  !*** ./resources/js/components/user/PeminjamanAlat/DetailPengajuanPeminjamanAlat.vue?vue&type=template&id=f0f97488& ***!
+  \**********************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailPengajuanPeminjamanAlat_vue_vue_type_template_id_f0f97488___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailPengajuanPeminjamanAlat_vue_vue_type_template_id_f0f97488___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailPengajuanPeminjamanAlat_vue_vue_type_template_id_f0f97488___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DetailPengajuanPeminjamanAlat.vue?vue&type=template&id=f0f97488& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DetailPengajuanPeminjamanAlat.vue?vue&type=template&id=f0f97488&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/user/PeminjamanAlat/DetailPengeluaranPeminjamanAlat.vue?vue&type=template&id=4612406f&":
+/*!************************************************************************************************************************!*\
+  !*** ./resources/js/components/user/PeminjamanAlat/DetailPengeluaranPeminjamanAlat.vue?vue&type=template&id=4612406f& ***!
+  \************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailPengeluaranPeminjamanAlat_vue_vue_type_template_id_4612406f___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailPengeluaranPeminjamanAlat_vue_vue_type_template_id_4612406f___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailPengeluaranPeminjamanAlat_vue_vue_type_template_id_4612406f___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DetailPengeluaranPeminjamanAlat.vue?vue&type=template&id=4612406f& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DetailPengeluaranPeminjamanAlat.vue?vue&type=template&id=4612406f&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/user/PeminjamanAlat/DetailPengembalianPeminjamanAlat.vue?vue&type=template&id=30ee99f4&":
+/*!*************************************************************************************************************************!*\
+  !*** ./resources/js/components/user/PeminjamanAlat/DetailPengembalianPeminjamanAlat.vue?vue&type=template&id=30ee99f4& ***!
+  \*************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailPengembalianPeminjamanAlat_vue_vue_type_template_id_30ee99f4___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailPengembalianPeminjamanAlat_vue_vue_type_template_id_30ee99f4___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailPengembalianPeminjamanAlat_vue_vue_type_template_id_30ee99f4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DetailPengembalianPeminjamanAlat.vue?vue&type=template&id=30ee99f4& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DetailPengembalianPeminjamanAlat.vue?vue&type=template&id=30ee99f4&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/user/PeminjamanAlat/DetailPerubahanPeminjaman.vue?vue&type=template&id=3bfa01d1&":
+/*!******************************************************************************************************************!*\
+  !*** ./resources/js/components/user/PeminjamanAlat/DetailPerubahanPeminjaman.vue?vue&type=template&id=3bfa01d1& ***!
+  \******************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailPerubahanPeminjaman_vue_vue_type_template_id_3bfa01d1___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailPerubahanPeminjaman_vue_vue_type_template_id_3bfa01d1___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailPerubahanPeminjaman_vue_vue_type_template_id_3bfa01d1___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DetailPerubahanPeminjaman.vue?vue&type=template&id=3bfa01d1& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DetailPerubahanPeminjaman.vue?vue&type=template&id=3bfa01d1&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/user/PeminjamanAlat/InputPeminjamanAlat.vue?vue&type=template&id=bfae9d28&":
+/*!************************************************************************************************************!*\
+  !*** ./resources/js/components/user/PeminjamanAlat/InputPeminjamanAlat.vue?vue&type=template&id=bfae9d28& ***!
+  \************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_InputPeminjamanAlat_vue_vue_type_template_id_bfae9d28___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_InputPeminjamanAlat_vue_vue_type_template_id_bfae9d28___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_InputPeminjamanAlat_vue_vue_type_template_id_bfae9d28___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./InputPeminjamanAlat.vue?vue&type=template&id=bfae9d28& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/InputPeminjamanAlat.vue?vue&type=template&id=bfae9d28&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DataPermintaanAlat.vue?vue&type=template&id=543de557&":
+/*!**************************************************************************************************************************!*\
+  !*** ./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DataPermintaanAlat.vue?vue&type=template&id=543de557& ***!
+  \**************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DataPermintaanAlat_vue_vue_type_template_id_543de557___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DataPermintaanAlat_vue_vue_type_template_id_543de557___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DataPermintaanAlat_vue_vue_type_template_id_543de557___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DataPermintaanAlat.vue?vue&type=template&id=543de557& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DataPermintaanAlat.vue?vue&type=template&id=543de557&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DataRincianPermintaanAlat.vue?vue&type=template&id=2821433d&":
+/*!*********************************************************************************************************************************!*\
+  !*** ./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DataRincianPermintaanAlat.vue?vue&type=template&id=2821433d& ***!
+  \*********************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DataRincianPermintaanAlat_vue_vue_type_template_id_2821433d___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DataRincianPermintaanAlat_vue_vue_type_template_id_2821433d___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DataRincianPermintaanAlat_vue_vue_type_template_id_2821433d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DataRincianPermintaanAlat.vue?vue&type=template&id=2821433d& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DataRincianPermintaanAlat.vue?vue&type=template&id=2821433d&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DetailPermintaanAlat.vue?vue&type=template&id=6709c03e&":
+/*!****************************************************************************************************************************!*\
+  !*** ./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DetailPermintaanAlat.vue?vue&type=template&id=6709c03e& ***!
+  \****************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailPermintaanAlat_vue_vue_type_template_id_6709c03e___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailPermintaanAlat_vue_vue_type_template_id_6709c03e___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DetailPermintaanAlat_vue_vue_type_template_id_6709c03e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DetailPermintaanAlat.vue?vue&type=template&id=6709c03e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DetailPermintaanAlat.vue?vue&type=template&id=6709c03e&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/user/PeminjamanAlat/PermintaanAlat/InputPermintaan.vue?vue&type=template&id=7c0802ae&":
+/*!***********************************************************************************************************************!*\
+  !*** ./resources/js/components/user/PeminjamanAlat/PermintaanAlat/InputPermintaan.vue?vue&type=template&id=7c0802ae& ***!
+  \***********************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_InputPermintaan_vue_vue_type_template_id_7c0802ae___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_InputPermintaan_vue_vue_type_template_id_7c0802ae___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_InputPermintaan_vue_vue_type_template_id_7c0802ae___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./InputPermintaan.vue?vue&type=template&id=7c0802ae& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/PermintaanAlat/InputPermintaan.vue?vue&type=template&id=7c0802ae&");
 
 
 /***/ }),
@@ -69935,122 +74933,265 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "container-fluid", staticStyle: { "margin-top": "30px" } },
-    [
+  return _c("div", { staticClass: "container-fluid" }, [
+    _c(
+      "div",
+      {
+        staticClass: "modal-input",
+        class: { "is-visible": _vm.showModalEdit },
+        attrs: { id: "app" },
+        on: {
+          click: function ($event) {
+            if ($event.target !== $event.currentTarget) {
+              return null
+            }
+            return _vm.tutupModal.apply(null, arguments)
+          },
+        },
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-content-input" },
+          [
+            _c("edit-perawatan-alat", {
+              attrs: { id: _vm.idEdit },
+              on: { "tutup-modal": _vm.tutupModal },
+            }),
+          ],
+          1
+        ),
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass:
+          "row align-items-center justify-content-end mr-3 mt-3 mb-4",
+      },
+      [
+        _c("div", { staticClass: "search-wrapper" }, [
+          _c("div", { staticClass: "input-group" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.searchQuery,
+                  expression: "searchQuery",
+                },
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "search..." },
+              domProps: { value: _vm.searchQuery },
+              on: {
+                input: [
+                  function ($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.searchQuery = $event.target.value
+                  },
+                  _vm.debouncedFetchAlats,
+                ],
+              },
+            }),
+          ]),
+        ]),
+      ]
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "table-responsive" }, [
+      _c(
+        "table",
+        {
+          staticClass: "table table-border no-border table-custom text-wrape",
+          staticStyle: { "overflow-x": "auto" },
+        },
+        [
+          _vm._m(0),
+          _vm._v(" "),
+          _vm.filteredData.length === 0 ? _c("tbody", [_vm._m(1)]) : _vm._e(),
+          _vm._v(" "),
+          _vm._l(_vm.filteredGroupedData, function (kodeGroup, code) {
+            return _c(
+              "tbody",
+              { key: code },
+              [
+                _c("tr", [
+                  _c(
+                    "td",
+                    {
+                      staticClass: "bg-teal text-white",
+                      staticStyle: { "font-size": "16px" },
+                      attrs: { colspan: "8" },
+                    },
+                    [_c("strong", [_vm._v(_vm._s(code))])]
+                  ),
+                ]),
+                _vm._v(" "),
+                _vm._l(kodeGroup, function (perawatan, index) {
+                  return _c(
+                    "tr",
+                    { key: perawatan.id, staticClass: "text-center" },
+                    [
+                      _c("td", { staticClass: "text-center" }, [
+                        _vm._v(_vm._s(index + 1)),
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "text-center" }, [
+                        _vm._v(
+                          _vm._s(
+                            perawatan.no_seri
+                              ? perawatan.no_seri.no_seri_alat
+                              : "-"
+                          )
+                        ),
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "text-center" }, [
+                        _vm._v(
+                          _vm._s(
+                            perawatan.staff ? perawatan.staff.nama_staff : "-"
+                          )
+                        ),
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "text-center" }, [
+                        _vm._v(_vm._s(perawatan.tanggal_perawatan || "-")),
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "btn-sts",
+                            class: {
+                              "status-active": perawatan.status == "Sudah",
+                              "status-rusak": perawatan.status == "Belum",
+                            },
+                          },
+                          [
+                            _vm._v(
+                              "\n                " +
+                                _vm._s(perawatan.status) +
+                                "\n              "
+                            ),
+                          ]
+                        ),
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c("div", { staticClass: "dropdown text-center" }, [
+                          _vm._m(2, true),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass: "dropdown-menu",
+                              attrs: {
+                                "aria-labelledby": "dropdownMenuButton",
+                              },
+                            },
+                            [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "dropdown-item",
+                                  on: {
+                                    click: function ($event) {
+                                      return _vm.viewDetail(perawatan.id)
+                                    },
+                                  },
+                                },
+                                [
+                                  _c("i", {
+                                    staticClass: "fas fa-eye text-info",
+                                  }),
+                                  _vm._v(" Detail\n                  "),
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "dropdown-item",
+                                  on: {
+                                    click: function ($event) {
+                                      return _vm.editData(perawatan.id)
+                                    },
+                                  },
+                                },
+                                [
+                                  _c("i", {
+                                    staticClass: "fas fa-edit text-primary",
+                                  }),
+                                  _vm._v(" Edit\n                  "),
+                                ]
+                              ),
+                            ]
+                          ),
+                        ]),
+                      ]),
+                    ]
+                  )
+                }),
+              ],
+              2
+            )
+          }),
+        ],
+        2
+      ),
+      _vm._v(" "),
       _c(
         "div",
         {
           staticClass:
-            "row align-items-center justify-content-end mr-3 mt-3 mb-4",
+            "d-flex justify-content-between align-items-center mt-3 mb-3",
+          staticStyle: {
+            "border-radius": "10px",
+            "background-color": "#f3f4f6",
+            height: "50px",
+            color: "#000",
+          },
         },
         [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-sm btn-outline-primary mr-2 ml-1",
-              on: { click: _vm.tambahData },
-            },
-            [
-              _c("i", { staticClass: "fa fa-plus-circle" }),
-              _vm._v(" Tambah Data\n    "),
-            ]
-          ),
+          _c("div", { staticClass: "ml-3" }, [
+            _vm._v("\n          Rows per page:\n          "),
+            _c("span", [_vm._v(_vm._s(_vm.rowsPerPage))]),
+          ]),
           _vm._v(" "),
-          _c("div", { staticClass: "search-wrapper" }, [
-            _c("div", { staticClass: "input-group" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.searchQuery,
-                    expression: "searchQuery",
-                  },
-                ],
-                staticClass: "form-control",
-                attrs: { type: "text", placeholder: "search..." },
-                domProps: { value: _vm.searchQuery },
-                on: {
-                  input: [
-                    function ($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.searchQuery = $event.target.value
-                    },
-                    _vm.debouncedFetchAlats,
-                  ],
-                },
-              }),
-            ]),
+          _c("div", { staticClass: "mr-3" }, [
+            _c("span", [_vm._v(_vm._s(_vm.paginationInfo))]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-sm btn-light",
+                attrs: { disabled: _vm.currentPage === 1 },
+                on: { click: _vm.prevPage },
+              },
+              [_c("i", { staticClass: "fas fa-angle-left" })]
+            ),
+            _vm._v(" "),
+            _c("span"),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-sm btn-light",
+                attrs: { disabled: _vm.currentPage === _vm.totalPages },
+                on: { click: _vm.nextPage },
+              },
+              [_c("i", { staticClass: "fas fa-angle-right" })]
+            ),
           ]),
         ]
       ),
-      _vm._v(" "),
-      _c("div", { staticClass: "table-responsive" }, [
-        _c(
-          "table",
-          {
-            staticClass: "table table-border no-border table-custom text-wrape",
-            staticStyle: { "overflow-x": "auto" },
-          },
-          [
-            _vm._m(0),
-            _vm._v(" "),
-            _vm.filteredData.length === 0 ? _c("tbody", [_vm._m(1)]) : _vm._e(),
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass:
-              "d-flex justify-content-between align-items-center mt-3 mb-3",
-            staticStyle: {
-              "border-radius": "10px",
-              "background-color": "#f3f4f6",
-              height: "50px",
-              color: "#000",
-            },
-          },
-          [
-            _c("div", { staticClass: "ml-3" }, [
-              _vm._v("\n        Rows per page:\n        "),
-              _c("span", [_vm._v(_vm._s(_vm.rowsPerPage))]),
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "mr-3" }, [
-              _c("span", [_vm._v(_vm._s(_vm.paginationInfo))]),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-sm btn-light",
-                  attrs: { disabled: _vm.currentPage === 1 },
-                  on: { click: _vm.prevPage },
-                },
-                [_c("i", { staticClass: "fas fa-angle-left" })]
-              ),
-              _vm._v(" "),
-              _c("span"),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-sm btn-light",
-                  attrs: { disabled: _vm.currentPage === _vm.totalPages },
-                  on: { click: _vm.nextPage },
-                },
-                [_c("i", { staticClass: "fas fa-angle-right" })]
-              ),
-            ]),
-          ]
-        ),
-      ]),
-    ]
-  )
+    ]),
+  ])
 }
 var staticRenderFns = [
   function () {
@@ -70094,6 +75235,25 @@ var staticRenderFns = [
         [_vm._v("Tidak Ada Data")]
       ),
     ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-sm",
+        attrs: {
+          type: "button",
+          id: "dropdownMenuButton",
+          "data-toggle": "dropdown",
+          "aria-haspopup": "true",
+          "aria-expanded": "false",
+        },
+      },
+      [_c("i", { staticClass: "fas fa-ellipsis-v" })]
+    )
   },
 ]
 render._withStripped = true
@@ -73212,6 +78372,102 @@ var render = function () {
               _c("div", { staticClass: "form-group col-md-12" }, [
                 _vm._m(8),
                 _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.alat.jadwal_perawatan,
+                        expression: "alat.jadwal_perawatan",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    attrs: { id: "jadwal_perawatan", required: "" },
+                    on: {
+                      change: [
+                        function ($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function (o) {
+                              return o.selected
+                            })
+                            .map(function (o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.alat,
+                            "jadwal_perawatan",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        },
+                        _vm.onJadwalChange,
+                      ],
+                    },
+                  },
+                  [
+                    _c(
+                      "option",
+                      { attrs: { value: "", disabled: "", selected: "" } },
+                      [_vm._v("Pilih Interval Perawatan")]
+                    ),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "3" } }, [
+                      _vm._v("Setiap 3 Bulan"),
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "6" } }, [
+                      _vm._v("Setiap 6 Bulan"),
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "12" } }, [
+                      _vm._v("Setiap 12 Bulan"),
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "other" } }, [
+                      _vm._v("Lainnya"),
+                    ]),
+                  ]
+                ),
+              ]),
+              _vm._v(" "),
+              _vm.showManualInputJadwal
+                ? _c("div", { staticClass: "form-group col-md-12" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.manualJadwal,
+                          expression: "manualJadwal",
+                        },
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "number",
+                        placeholder: "Masukkan interval (bulan)",
+                      },
+                      domProps: { value: _vm.manualJadwal },
+                      on: {
+                        input: function ($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.manualJadwal = $event.target.value
+                        },
+                      },
+                    }),
+                  ])
+                : _vm._e(),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "form-group col-md-12" }, [
+                _vm._m(9),
+                _vm._v(" "),
                 _c("div", { staticClass: "textarea-wrapper" }, [
                   _c("textarea", {
                     staticClass: "form-control",
@@ -73236,7 +78492,7 @@ var render = function () {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
-              _vm._m(9),
+              _vm._m(10),
               _vm._v(" "),
               _c("div", { staticClass: "textarea-wrapper" }, [
                 _c("textarea", {
@@ -73277,7 +78533,7 @@ var render = function () {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
-              _vm._m(10),
+              _vm._m(11),
               _vm._v(" "),
               _c(
                 "div",
@@ -73329,7 +78585,7 @@ var render = function () {
               ),
             ]),
             _vm._v(" "),
-            _vm._m(11),
+            _vm._m(12),
           ]
         ),
       ]
@@ -73521,6 +78777,20 @@ var staticRenderFns = [
         ]
       ),
     ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticStyle: { color: "#000" }, attrs: { for: "jadwal_perawatan" } },
+      [
+        _c("b", [_vm._v("Jadwal Perawatan")]),
+        _vm._v(" "),
+        _c("sup", { staticStyle: { color: "red" } }, [_vm._v(" *")]),
+      ]
+    )
   },
   function () {
     var _vm = this
@@ -76604,9 +81874,9 @@ var render = function () {
                             "button",
                             {
                               staticClass: "btn btn-primary m-3",
-                              on: { click: _vm.updateStatusToMenungguDiambil },
+                              on: { click: _vm.updateStatusToProses },
                             },
-                            [_vm._v("\n          Siap Di Ambil\n        ")]
+                            [_vm._v("\n          Proses\n        ")]
                           )
                         : _vm._e(),
                       _vm._v(" "),
@@ -76650,127 +81920,15 @@ var render = function () {
                         staticStyle: { "overflow-x": "auto" },
                       },
                       [
-                        _c("thead", [
-                          _c("tr", { staticClass: "bg-table text-center" }, [
-                            _c(
-                              "th",
-                              {
-                                staticClass: "text-center",
-                                staticStyle: { width: "10px", color: "#000" },
-                              },
-                              [
-                                _c("input", {
-                                  attrs: {
-                                    type: "checkbox",
-                                    indeterminate: _vm.isIndeterminate,
-                                  },
-                                  domProps: { checked: _vm.isAllSelected },
-                                  on: { change: _vm.toggleSelectAll },
-                                }),
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "th",
-                              {
-                                staticClass: "text-center",
-                                staticStyle: { width: "10px", color: "#000" },
-                              },
-                              [_vm._v("#")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "th",
-                              {
-                                staticClass: "text-center",
-                                staticStyle: { width: "10px", color: "#000" },
-                              },
-                              [_vm._v("No Seri Alat")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "th",
-                              {
-                                staticClass: "text-center",
-                                staticStyle: { width: "10px", color: "#000" },
-                              },
-                              [_vm._v("Tanggal Kembali")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "th",
-                              {
-                                staticClass: "text-center",
-                                staticStyle: { width: "10px", color: "#000" },
-                              },
-                              [_vm._v("Status")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "th",
-                              {
-                                staticClass: "text-center",
-                                staticStyle: { width: "10px", color: "#000" },
-                              },
-                              [_vm._v("Aksi")]
-                            ),
-                          ]),
-                        ]),
+                        _vm._m(2, true),
                         _vm._v(" "),
                         _vm.filteredData.length == 0
-                          ? _c("tbody", [_vm._m(2, true)])
+                          ? _c("tbody", [_vm._m(3, true)])
                           : _vm._e(),
                         _vm._v(" "),
                         _vm._l(_vm.filteredData, function (peminjaman, index) {
                           return _c("tbody", { key: index }, [
                             _c("tr", { staticClass: "text-center" }, [
-                              _c("td", [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.selectedItems,
-                                      expression: "selectedItems",
-                                    },
-                                  ],
-                                  attrs: { type: "checkbox" },
-                                  domProps: {
-                                    value: peminjaman.id,
-                                    checked: Array.isArray(_vm.selectedItems)
-                                      ? _vm._i(
-                                          _vm.selectedItems,
-                                          peminjaman.id
-                                        ) > -1
-                                      : _vm.selectedItems,
-                                  },
-                                  on: {
-                                    change: function ($event) {
-                                      var $$a = _vm.selectedItems,
-                                        $$el = $event.target,
-                                        $$c = $$el.checked ? true : false
-                                      if (Array.isArray($$a)) {
-                                        var $$v = peminjaman.id,
-                                          $$i = _vm._i($$a, $$v)
-                                        if ($$el.checked) {
-                                          $$i < 0 &&
-                                            (_vm.selectedItems = $$a.concat([
-                                              $$v,
-                                            ]))
-                                        } else {
-                                          $$i > -1 &&
-                                            (_vm.selectedItems = $$a
-                                              .slice(0, $$i)
-                                              .concat($$a.slice($$i + 1)))
-                                        }
-                                      } else {
-                                        _vm.selectedItems = $$c
-                                      }
-                                    },
-                                  },
-                                }),
-                              ]),
-                              _vm._v(" "),
                               _c("td", [_vm._v(_vm._s(index + 1))]),
                               _vm._v(" "),
                               _c("td", [
@@ -76798,7 +81956,7 @@ var render = function () {
                                   "div",
                                   { staticClass: "dropdown text-center" },
                                   [
-                                    _vm._m(3, true),
+                                    _vm._m(4, true),
                                     _vm._v(" "),
                                     _c(
                                       "div",
@@ -76818,7 +81976,7 @@ var render = function () {
                                               click: function ($event) {
                                                 return _vm.setStatus(
                                                   peminjaman,
-                                                  "menunggu diambil"
+                                                  "proses"
                                                 )
                                               },
                                             },
@@ -76826,33 +81984,10 @@ var render = function () {
                                           [
                                             _c("i", {
                                               staticClass:
-                                                "fas fa-clock text-info",
+                                                "fas fa-cogs text-info",
                                             }),
                                             _vm._v(
-                                              " Menunggu Diambil\n                    "
-                                            ),
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "a",
-                                          {
-                                            staticClass: "dropdown-item",
-                                            on: {
-                                              click: function ($event) {
-                                                return _vm.openRejectModal(
-                                                  peminjaman
-                                                )
-                                              },
-                                            },
-                                          },
-                                          [
-                                            _c("i", {
-                                              staticClass:
-                                                "fas fa-times text-danger",
-                                            }),
-                                            _vm._v(
-                                              " Ditolak\n                    "
+                                              " Cek\n                    "
                                             ),
                                           ]
                                         ),
@@ -76867,157 +82002,270 @@ var render = function () {
                       ],
                       2
                     ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "d-flex justify-content-between align-items-center mt-3 mb-3",
-                        staticStyle: {
-                          "border-radius": "10px",
-                          "background-color": "#f3f4f6",
-                          height: "50px",
-                          color: "#000",
-                        },
-                      },
-                      [
-                        _c("div", { staticClass: "ml-3" }, [
-                          _vm._v("\n            Rows per page:\n            "),
-                          _c("span", [_vm._v(_vm._s(_vm.rowsPerPage))]),
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "mr-3" }, [
-                          _c("span", [_vm._v(_vm._s(_vm.paginationInfo))]),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-sm btn-light",
-                              attrs: { disabled: _vm.currentPage === 1 },
-                              on: { click: _vm.prevPage },
-                            },
-                            [_c("i", { staticClass: "fas fa-angle-left" })]
-                          ),
-                          _vm._v(" "),
-                          _c("span"),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-sm btn-light",
-                              attrs: {
-                                disabled: _vm.currentPage === _vm.totalPages,
-                              },
-                              on: { click: _vm.nextPage },
-                            },
-                            [_c("i", { staticClass: "fas fa-angle-right" })]
-                          ),
-                        ]),
-                      ]
-                    ),
                   ]),
-                ]),
-                _vm._v(" "),
-                _vm.isRejectModalVisible
-                  ? _c(
-                      "div",
-                      {
-                        staticClass: "modal fade show",
-                        staticStyle: { display: "block" },
-                        attrs: {
-                          tabindex: "-1",
-                          id: "rejectModal",
-                          "aria-labelledby": "rejectModalLabel",
-                          "aria-hidden": "true",
+                  _vm._v(" "),
+                  _vm.isTestModalVisible
+                    ? _c(
+                        "div",
+                        {
+                          staticClass: "modal fade show",
+                          staticStyle: { display: "block" },
+                          attrs: {
+                            tabindex: "-1",
+                            id: "testModal",
+                            "aria-labelledby": "testModalLabel",
+                            "aria-hidden": "true",
+                          },
                         },
-                      },
-                      [
-                        _c("div", { staticClass: "modal-dialog" }, [
-                          _c("div", { staticClass: "modal-content" }, [
-                            _c("div", { staticClass: "modal-header" }, [
-                              _c(
-                                "h5",
-                                {
-                                  staticClass: "modal-title",
-                                  attrs: { id: "rejectModalLabel" },
-                                },
-                                [_vm._v("Masukkan Alasan Penolakan")]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "close",
-                                  attrs: {
-                                    type: "button",
-                                    "aria-label": "Close",
-                                  },
-                                  on: { click: _vm.closeRejectModal },
-                                },
-                                [
+                        [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "modal-dialog",
+                              staticStyle: { width: "80%" },
+                            },
+                            [
+                              _c("div", { staticClass: "modal-content" }, [
+                                _c("div", { staticClass: "modal-header" }, [
                                   _c(
-                                    "span",
-                                    { attrs: { "aria-hidden": "true" } },
-                                    [_vm._v("×")]
+                                    "h5",
+                                    {
+                                      staticClass: "modal-title",
+                                      staticStyle: { color: "#000" },
+                                      attrs: { id: "testModalLabel" },
+                                    },
+                                    [_vm._v("Pengujian Alat")]
                                   ),
-                                ]
-                              ),
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "modal-body" }, [
-                              _c("textarea", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.rejectionReason,
-                                    expression: "rejectionReason",
-                                  },
-                                ],
-                                staticClass: "form-control",
-                                attrs: {
-                                  rows: "3",
-                                  placeholder:
-                                    "Masukkan alasan penolakan di sini...",
-                                },
-                                domProps: { value: _vm.rejectionReason },
-                                on: {
-                                  input: function ($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.rejectionReason = $event.target.value
-                                  },
-                                },
-                              }),
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "modal-footer" }, [
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-secondary",
-                                  attrs: { type: "button" },
-                                  on: { click: _vm.closeRejectModal },
-                                },
-                                [_vm._v("Batal")]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-danger",
-                                  attrs: { type: "button" },
-                                  on: { click: _vm.submitRejection },
-                                },
-                                [_vm._v("Kirim")]
-                              ),
-                            ]),
-                          ]),
-                        ]),
-                      ]
-                    )
-                  : _vm._e(),
+                                  _vm._v(" "),
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass: "close",
+                                      attrs: {
+                                        type: "button",
+                                        "aria-label": "Close",
+                                      },
+                                      on: { click: _vm.closeTestModal },
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { attrs: { "aria-hidden": "true" } },
+                                        [_vm._v("×")]
+                                      ),
+                                    ]
+                                  ),
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "modal-body" }, [
+                                  _c("div", { staticClass: "mb-3" }, [
+                                    _vm._m(5, true),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.testDate,
+                                          expression: "testDate",
+                                        },
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: { type: "date" },
+                                      domProps: { value: _vm.testDate },
+                                      on: {
+                                        input: function ($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.testDate = $event.target.value
+                                        },
+                                      },
+                                    }),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "mb-3" }, [
+                                    _vm._m(6, true),
+                                    _vm._v(" "),
+                                    _c("div", [
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "form-check form-check-inline",
+                                        },
+                                        [
+                                          _c("input", {
+                                            directives: [
+                                              {
+                                                name: "model",
+                                                rawName: "v-model",
+                                                value: _vm.testResult,
+                                                expression: "testResult",
+                                              },
+                                            ],
+                                            staticClass: "form-check-input",
+                                            attrs: {
+                                              type: "radio",
+                                              value: "Error",
+                                              id: "error",
+                                            },
+                                            domProps: {
+                                              checked: _vm._q(
+                                                _vm.testResult,
+                                                "Error"
+                                              ),
+                                            },
+                                            on: {
+                                              change: function ($event) {
+                                                _vm.testResult = "Error"
+                                              },
+                                            },
+                                          }),
+                                          _vm._v(" "),
+                                          _vm._m(7, true),
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "form-check form-check-inline",
+                                        },
+                                        [
+                                          _c("input", {
+                                            directives: [
+                                              {
+                                                name: "model",
+                                                rawName: "v-model",
+                                                value: _vm.testResult,
+                                                expression: "testResult",
+                                              },
+                                            ],
+                                            staticClass: "form-check-input",
+                                            attrs: {
+                                              type: "radio",
+                                              value: "Ready",
+                                              id: "ready",
+                                            },
+                                            domProps: {
+                                              checked: _vm._q(
+                                                _vm.testResult,
+                                                "Ready"
+                                              ),
+                                            },
+                                            on: {
+                                              change: function ($event) {
+                                                _vm.testResult = "Ready"
+                                              },
+                                            },
+                                          }),
+                                          _vm._v(" "),
+                                          _vm._m(8, true),
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "form-check form-check-inline",
+                                        },
+                                        [
+                                          _c("input", {
+                                            directives: [
+                                              {
+                                                name: "model",
+                                                rawName: "v-model",
+                                                value: _vm.testResult,
+                                                expression: "testResult",
+                                              },
+                                            ],
+                                            staticClass: "form-check-input",
+                                            attrs: {
+                                              type: "radio",
+                                              value: "Rusak",
+                                              id: "rusak",
+                                            },
+                                            domProps: {
+                                              checked: _vm._q(
+                                                _vm.testResult,
+                                                "Rusak"
+                                              ),
+                                            },
+                                            on: {
+                                              change: function ($event) {
+                                                _vm.testResult = "Rusak"
+                                              },
+                                            },
+                                          }),
+                                          _vm._v(" "),
+                                          _vm._m(9, true),
+                                        ]
+                                      ),
+                                    ]),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "mb-3" }, [
+                                    _vm._m(10, true),
+                                    _vm._v(" "),
+                                    _c("textarea", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.testNotes,
+                                          expression: "testNotes",
+                                        },
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: {
+                                        rows: "3",
+                                        placeholder:
+                                          "Masukkan keterangan di sini...",
+                                      },
+                                      domProps: { value: _vm.testNotes },
+                                      on: {
+                                        input: function ($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.testNotes = $event.target.value
+                                        },
+                                      },
+                                    }),
+                                  ]),
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "modal-footer" }, [
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn btn-danger",
+                                      attrs: { type: "button" },
+                                      on: { click: _vm.closeTestModal },
+                                    },
+                                    [_vm._v("Batal")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn btn-primary",
+                                      attrs: { type: "button" },
+                                      on: { click: _vm.submitTestResult },
+                                    },
+                                    [_vm._v("Kirim")]
+                                  ),
+                                ]),
+                              ]),
+                            ]
+                          ),
+                        ]
+                      )
+                    : _vm._e(),
+                ]),
               ]
             )
           : _vm._e()
@@ -77094,6 +82342,59 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", { staticClass: "bg-table text-center" }, [
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("#")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("No Seri Alat")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("Tanggal Kembali")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("Status")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("Aksi")]
+        ),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("tr", [
       _c("td", { staticClass: "text-center", attrs: { colspan: "6" } }, [
         _vm._v("Tidak Ada Data"),
@@ -77122,6 +82423,86 @@ var staticRenderFns = [
           staticStyle: { color: "#000" },
         }),
       ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "form-label",
+        staticStyle: { color: "#000" },
+        attrs: { for: "testDate" },
+      },
+      [_c("b", [_vm._v("Tanggal Pengujian:")])]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "form-label", staticStyle: { color: "#000" } },
+      [_c("b", [_vm._v("Hasil Pengujian:")])]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "form-check-label",
+        staticStyle: { color: "#000" },
+        attrs: { for: "error" },
+      },
+      [_c("b", [_vm._v("Error")])]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "form-check-label",
+        staticStyle: { color: "#000" },
+        attrs: { for: "ready" },
+      },
+      [_c("b", [_vm._v("Ready")])]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "form-check-label",
+        staticStyle: { color: "#000" },
+        attrs: { for: "rusak" },
+      },
+      [_c("b", [_vm._v("Rusak")])]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "form-label",
+        staticStyle: { color: "#000" },
+        attrs: { for: "testNotes" },
+      },
+      [_c("b", [_vm._v("Keterangan:")])]
     )
   },
 ]
@@ -79893,18 +85274,6 @@ var render = function () {
                   "row align-items-center justify-content-end mr-3 mt-3 mb-4",
               },
               [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-sm btn-outline-primary mr-2 ml-1",
-                    on: { click: _vm.tambahData },
-                  },
-                  [
-                    _c("i", { staticClass: "fa fa-plus-circle" }),
-                    _vm._v(" Tambah Data\n      "),
-                  ]
-                ),
-                _vm._v(" "),
                 _c("div", { staticClass: "search-wrapper" }, [
                   _c("div", { staticClass: "input-group" }, [
                     _c("input", {
@@ -82853,6 +88222,5868 @@ var staticRenderFns = [
     )
   },
 ]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DataPeminjamanAlat.vue?vue&type=template&id=6f765480&":
+/*!**************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DataPeminjamanAlat.vue?vue&type=template&id=6f765480& ***!
+  \**************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "container-fluid", staticStyle: { "margin-top": "30px" } },
+    [
+      _c(
+        "div",
+        {
+          staticClass: "modal-input",
+          class: { "is-visible": _vm.showModalInput },
+          attrs: { id: "app" },
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-content-input" },
+            [
+              _c("user-input-peminjaman", {
+                on: { "tutup-modal": _vm.tutupModal },
+              }),
+            ],
+            1
+          ),
+        ]
+      ),
+      _vm._v(" "),
+      _vm._m(0),
+      _vm._v(" "),
+      _vm.showAlat
+        ? _c("div", [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "row align-items-center justify-content-start mr-1 mt-3 ml-1",
+              },
+              [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-show m-1",
+                    class: { active: _vm.showPeminjaman },
+                    on: { click: _vm.togglePeminjaman },
+                  },
+                  [
+                    _vm.showPeminjaman
+                      ? _c("span", [_vm._v("Peminjaman")])
+                      : _c("span", [_vm._v("Peminjaman")]),
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-show m-1",
+                    class: { active: _vm.showPermintaan },
+                    on: { click: _vm.togglePermintaan },
+                  },
+                  [
+                    _vm.showPermintaan
+                      ? _c("span", [_vm._v("Permintaan")])
+                      : _c("span", [_vm._v("Permintaan")]),
+                  ]
+                ),
+              ]
+            ),
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.showPeminjaman
+        ? _c("div", { staticClass: "mt-4" }, [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "row align-items-center justify-content-end mr-3 mt-3 mb-2",
+              },
+              [
+                _c(
+                  "div",
+                  { staticClass: "d-flex justify-content-between mb-2" },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-sm btn-outline-primary mr-2 ml-1",
+                        on: { click: _vm.tambahData },
+                      },
+                      [
+                        _c("i", { staticClass: "fa fa-plus-circle" }),
+                        _vm._v(" Tambah Data\n        "),
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "search-wrapper" }, [
+                      _c("div", { staticClass: "input-group" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.searchQuery,
+                              expression: "searchQuery",
+                            },
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "text", placeholder: "search..." },
+                          domProps: { value: _vm.searchQuery },
+                          on: {
+                            input: [
+                              function ($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.searchQuery = $event.target.value
+                              },
+                              _vm.debouncedFetchAlats,
+                            ],
+                          },
+                        }),
+                      ]),
+                    ]),
+                  ]
+                ),
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "table-responsive" }, [
+              _c(
+                "table",
+                {
+                  staticClass:
+                    "table table-border no-border table-custom text-wrape",
+                  staticStyle: { "overflow-x": "auto" },
+                },
+                [
+                  _c("thead", [
+                    _c("tr", { staticClass: "bg-table text-center" }, [
+                      _c(
+                        "th",
+                        { staticClass: "text-center text-black-1 tr-center" },
+                        [_vm._v("#")]
+                      ),
+                      _vm._v(" "),
+                      _c("th", { staticClass: "text-center text-black-1" }, [
+                        _vm._v("No. Pinjam"),
+                      ]),
+                      _vm._v(" "),
+                      _c("th", { staticClass: "text-center text-black-1" }, [
+                        _vm._v("Dipinjam Oleh"),
+                      ]),
+                      _vm._v(" "),
+                      _c("th", { staticClass: "text-center text-black-1" }, [
+                        _vm._v("Divisi"),
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "th",
+                        {
+                          staticClass: "text-center text-black-1",
+                          staticStyle: {
+                            cursor: "pointer",
+                            position: "relative",
+                            "vertical-align": "middle",
+                          },
+                        },
+                        [
+                          _vm._v("\n            Tanggal Pinjam\n            "),
+                          _c("span", { staticClass: "sort-icons" }, [
+                            _c("i", {
+                              staticClass: "fas fa-sort-up",
+                              on: {
+                                click: function ($event) {
+                                  return _vm.sortTanggalPinjam("desc")
+                                },
+                              },
+                            }),
+                            _vm._v(" "),
+                            _c("i", {
+                              staticClass: "fas fa-sort-down",
+                              on: {
+                                click: function ($event) {
+                                  return _vm.sortTanggalPinjam("asc")
+                                },
+                              },
+                            }),
+                          ]),
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "th",
+                        {
+                          staticClass: "text-center text-black-1",
+                          staticStyle: {
+                            cursor: "pointer",
+                            position: "relative",
+                            "vertical-align": "middle",
+                          },
+                        },
+                        [
+                          _vm._v("\n            Tanggal Kembali\n            "),
+                          _c("span", { staticClass: "sort-icons" }, [
+                            _c("i", {
+                              staticClass: "fas fa-sort-up",
+                              on: {
+                                click: function ($event) {
+                                  return _vm.sortTanggalkembali("desc")
+                                },
+                              },
+                            }),
+                            _vm._v(" "),
+                            _c("i", {
+                              staticClass: "fas fa-sort-down",
+                              on: {
+                                click: function ($event) {
+                                  return _vm.sortTanggalkembali("asc")
+                                },
+                              },
+                            }),
+                          ]),
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("th", { staticClass: "text-center text-black-1" }, [
+                        _vm._v("Durasi"),
+                      ]),
+                      _vm._v(" "),
+                      _c("th", { staticClass: "text-center text-black-1" }, [
+                        _vm._v("Status"),
+                      ]),
+                      _vm._v(" "),
+                      _c("th", { staticClass: "text-center text-black-1" }, [
+                        _vm._v("Action"),
+                      ]),
+                    ]),
+                  ]),
+                  _vm._v(" "),
+                  _vm.filteredData.length === 0
+                    ? _c("tbody", [_vm._m(1)])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm._l(_vm.filteredData, function (peminjaman, index) {
+                    return _c("tbody", { key: index }, [
+                      _c("tr", { staticClass: "text-center" }, [
+                        _c("td", { staticClass: "text-center" }, [
+                          _vm._v(_vm._s(index + 1)),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-center" }, [
+                          _vm._v(_vm._s(peminjaman.no_pinjam || "-")),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-center" }, [
+                          _vm._v(
+                            _vm._s(
+                              peminjaman.pengguna
+                                ? peminjaman.pengguna.nama_pengguna
+                                : "-"
+                            )
+                          ),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-center" }, [
+                          _vm._v(
+                            _vm._s(
+                              peminjaman.pengguna
+                                ? peminjaman.pengguna.divisi
+                                : "-"
+                            )
+                          ),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-center" }, [
+                          _vm._v(_vm._s(peminjaman.tanggal_pinjam || "-")),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-center" }, [
+                          _vm._v(_vm._s(peminjaman.tanggal_kembali || "-")),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-center" }, [
+                          _vm._v(
+                            "\n            " +
+                              _vm._s(
+                                _vm.durasiData[index] !== "-"
+                                  ? _vm.durasiData[index] + " Hari"
+                                  : "-"
+                              ) +
+                              " "
+                          ),
+                          _c("br"),
+                          _vm._v(" "),
+                          _c("small", [
+                            _c("i", {
+                              class: {
+                                "fas fa-clock":
+                                  !_vm.durasiDataKembali[index].includes(
+                                    "Hari Lebih"
+                                  ),
+                                "fas fa-exclamation-circle text-danger":
+                                  _vm.durasiDataKembali[index].includes(
+                                    "Hari Lebih"
+                                  ),
+                              },
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              {
+                                class: {
+                                  "text-danger":
+                                    _vm.durasiDataKembali[index].includes(
+                                      "Hari Lebih"
+                                    ),
+                                },
+                              },
+                              [
+                                _vm._v(
+                                  "\n                " +
+                                    _vm._s(_vm.durasiDataKembali[index]) +
+                                    "\n              "
+                                ),
+                              ]
+                            ),
+                          ]),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "btn-sts",
+                              class: {
+                                "sts-warning":
+                                  peminjaman.status === "Sedang Dipinjam",
+                                "sts-info":
+                                  peminjaman.status ===
+                                  "Menunggu Persiapan Barang",
+                                "sts-success":
+                                  peminjaman.status === "Barang Siap Diambil",
+                                "sts-secondary":
+                                  peminjaman.status === "Selesai",
+                              },
+                            },
+                            [
+                              _vm._v(
+                                "\n              " +
+                                  _vm._s(peminjaman.status) +
+                                  "\n            "
+                              ),
+                            ]
+                          ),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-center" }, [
+                          _c("div", { staticClass: "dropdown text-center" }, [
+                            _vm._m(2, true),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "dropdown-menu",
+                                attrs: {
+                                  "aria-labelledby": "dropdownMenuButton",
+                                },
+                              },
+                              [
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass: "dropdown-item",
+                                    on: {
+                                      click: function ($event) {
+                                        return _vm.viewDetail(peminjaman.id)
+                                      },
+                                    },
+                                  },
+                                  [
+                                    _c("i", {
+                                      staticClass: "fas fa-eye text-info",
+                                    }),
+                                    _vm._v(" Detail\n                "),
+                                  ]
+                                ),
+                              ]
+                            ),
+                          ]),
+                        ]),
+                      ]),
+                    ])
+                  }),
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "d-flex justify-content-between align-items-center mt-3 mb-3",
+                  staticStyle: {
+                    "border-radius": "10px",
+                    "background-color": "#f3f4f6",
+                    height: "50px",
+                    color: "#000",
+                  },
+                },
+                [
+                  _c("div", { staticClass: "ml-3" }, [
+                    _vm._v("\n        Rows per page:\n        "),
+                    _c("span", [_vm._v(_vm._s(_vm.rowsPerPage))]),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "mr-3" }, [
+                    _c("span", [_vm._v(_vm._s(_vm.paginationInfo))]),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-sm btn-light",
+                        attrs: { disabled: _vm.currentPage === 1 },
+                        on: { click: _vm.prevPage },
+                      },
+                      [_c("i", { staticClass: "fas fa-angle-left" })]
+                    ),
+                    _vm._v(" "),
+                    _c("span"),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-sm btn-light",
+                        attrs: { disabled: _vm.currentPage === _vm.totalPages },
+                        on: { click: _vm.nextPage },
+                      },
+                      [_c("i", { staticClass: "fas fa-angle-right" })]
+                    ),
+                  ]),
+                ]
+              ),
+            ]),
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.showPermintaan
+        ? _c("div", { attrs: { id: "app" } }, [_c("user-data-permintaan")], 1)
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.showMesin ? _c("div", [_c("peminjaman-mesin")], 1) : _vm._e(),
+    ]
+  )
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h1", { staticClass: "h3 mb-4 text-gray-800" }, [
+      _c("b", [_vm._v("Peminjaman")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c(
+        "td",
+        { staticClass: "text-center text-black-1", attrs: { colspan: "10" } },
+        [_vm._v("Tidak Ada Data")]
+      ),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-sm",
+        attrs: {
+          type: "button",
+          id: "dropdownMenuButton",
+          "data-toggle": "dropdown",
+          "aria-haspopup": "true",
+          "aria-expanded": "false",
+        },
+      },
+      [_c("i", { staticClass: "fas fa-ellipsis-v" })]
+    )
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DataRincianPeminjamanAlat.vue?vue&type=template&id=05613542&":
+/*!*********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DataRincianPeminjamanAlat.vue?vue&type=template&id=05613542& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container-fluid" }, [
+    _c(
+      "div",
+      {
+        staticClass:
+          "row align-items-center justify-content-end mr-3 mt-4 mb-2",
+      },
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "search-wrapper" }, [
+          _c("div", { staticClass: "input-group" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.searchQuery,
+                  expression: "searchQuery",
+                },
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "search..." },
+              domProps: { value: _vm.searchQuery },
+              on: {
+                input: [
+                  function ($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.searchQuery = $event.target.value
+                  },
+                  _vm.debouncedFetchAlats,
+                ],
+              },
+            }),
+          ]),
+        ]),
+      ]
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "table-responsive p-3" }, [
+      _c(
+        "table",
+        {
+          staticClass: "table table-border no-border table-custom",
+          staticStyle: { "overflow-x": "auto" },
+        },
+        [
+          _vm._m(1),
+          _vm._v(" "),
+          _vm.filteredData.length === 0 ? _c("tbody", [_vm._m(2)]) : _vm._e(),
+          _vm._v(" "),
+          _vm._l(_vm.filteredData, function (peminjamanalat, index) {
+            return _c("tbody", { key: index }, [
+              _c("tr", { staticClass: "text-center" }, [
+                _c("td", [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-sm btn-outline-primary",
+                      class: { active: _vm.Detail_no_seri },
+                      on: { click: _vm.toggleDetail_no_seri },
+                    },
+                    [
+                      _vm.Detail_no_seri
+                        ? _c("span", [_vm._v("-")])
+                        : _c("span", [_vm._v("+")]),
+                    ]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(index + 1))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(peminjamanalat.kode_alat))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(peminjamanalat.stok))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(peminjamanalat.tanggal_pinjam))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(peminjamanalat.tanggal_kembali))]),
+              ]),
+              _vm._v(" "),
+              _vm.Detail_no_seri
+                ? _c(
+                    "tr",
+                    { staticStyle: { background: "rgb(244, 246, 249)" } },
+                    [
+                      _c("td", { attrs: { colspan: "100%" } }, [
+                        _c(
+                          "table",
+                          {
+                            staticClass:
+                              "table table-border no-border table-custom",
+                            staticStyle: {
+                              "overflow-x": "auto",
+                              "background-color": "#fff",
+                            },
+                          },
+                          [
+                            _vm._m(3, true),
+                            _vm._v(" "),
+                            _c(
+                              "tbody",
+                              _vm._l(
+                                _vm.dataPeminjamanAlat,
+                                function (noSeri, index) {
+                                  return _c(
+                                    "tr",
+                                    { key: index, staticClass: "text-center" },
+                                    [
+                                      _c("td", [_vm._v(_vm._s(index + 1))]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v(
+                                          _vm._s(
+                                            noSeri.no_seri_alat
+                                              ? noSeri.no_seri_alat.no_seri_alat
+                                              : "-"
+                                          )
+                                        ),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v(_vm._s(noSeri.tanggal_kembali)),
+                                      ]),
+                                    ]
+                                  )
+                                }
+                              ),
+                              0
+                            ),
+                          ]
+                        ),
+                      ]),
+                    ]
+                  )
+                : _vm._e(),
+            ])
+          }),
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass:
+            "d-flex justify-content-between align-items-center mb-3 mt-3",
+          staticStyle: {
+            "border-radius": "10px",
+            "background-color": "#f3f4f6",
+            height: "50px",
+            color: "#000",
+          },
+        },
+        [
+          _c("div", { staticClass: "ml-3" }, [
+            _vm._v("\n            Rows per page:\n            "),
+            _c("span", [_vm._v(_vm._s(_vm.rowsPerPage))]),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "mr-3" }, [
+            _c("span", [_vm._v(_vm._s(_vm.paginationInfo))]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-sm btn-light",
+                attrs: { disabled: _vm.currentPage === 1 },
+                on: { click: _vm.prevPage },
+              },
+              [_c("i", { staticClass: "fas fa-angle-left" })]
+            ),
+            _vm._v(" "),
+            _c("span"),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-sm btn-light",
+                attrs: { disabled: _vm.currentPage === _vm.totalPages },
+                on: { click: _vm.nextPage },
+              },
+              [_c("i", { staticClass: "fas fa-angle-right" })]
+            ),
+          ]),
+        ]
+      ),
+    ]),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      { staticClass: "btn btn-sm btn-outline-primary mr-2" },
+      [_c("i", { staticClass: "fas fa-print" })]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", { staticClass: "bg-table text-center" }, [
+        _c("th", {
+          staticClass: "text-center",
+          staticStyle: { width: "10px", color: "#000" },
+        }),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("#")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("Kode Alat")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("Jumlah")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("Tgl Peminjaman")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("Tgl Pengembalian")]
+        ),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", { staticClass: "text-center", attrs: { colspan: "6" } }, [
+        _vm._v("Tidak Ada Data"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", { staticClass: "bg-table text-center" }, [
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("#")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("No Seri Alat")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("Tgl Pengembalian")]
+        ),
+      ]),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DetailPeminjamanAlat.vue?vue&type=template&id=e6564a32&scoped=true&":
+/*!****************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DetailPeminjamanAlat.vue?vue&type=template&id=e6564a32&scoped=true& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container-fluid" }, [
+    _c(
+      "div",
+      {
+        staticClass: "d-flex justify-content-between align-items-center",
+        staticStyle: { "margin-top": "25px" },
+      },
+      [
+        _c("h1", { staticClass: "h6 text-teal" }, [
+          _c(
+            "i",
+            {
+              staticClass: "fas fa-angle-left text-teal mr-2",
+              staticStyle: { cursor: "pointer" },
+              on: { click: _vm.goBack },
+            },
+            [_vm._v(" Back to Peminjaman")]
+          ),
+        ]),
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "d-flex justify-content-between align-items-center mb-3" },
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "d-flex align-items-center justify-content-center" },
+          [
+            _c(
+              "div",
+              {
+                staticClass: "card shadow",
+                staticStyle: { "max-width": "auto", "border-radius": "5px" },
+              },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass: "card-body text-center",
+                    staticStyle: { "border-radius": "5px", height: "30px" },
+                  },
+                  [
+                    _c("p", [
+                      _c(
+                        "span",
+                        {
+                          staticClass: "m-2",
+                          staticStyle: { color: "#169ea8" },
+                        },
+                        [_vm._v(" Detail Peminjaman")]
+                      ),
+                      _vm._v("/\n            "),
+                      _c(
+                        "span",
+                        {
+                          staticClass: "mt-2 mb-2 mr-2 ml-1",
+                          staticStyle: { color: "#e6494b" },
+                        },
+                        [_vm._v(_vm._s(_vm.peminjaman.no_pinjam))]
+                      ),
+                    ]),
+                  ]
+                ),
+              ]
+            ),
+          ]
+        ),
+      ]
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c(
+          "div",
+          {
+            staticClass: "card shadow mb-0",
+            staticStyle: { "border-radius": "10px" },
+          },
+          [
+            _c(
+              "div",
+              {
+                staticClass: "card-body p-0",
+                staticStyle: { "border-radius": "20px" },
+              },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "d-flex justify-content-between align-items-center",
+                    staticStyle: { margin: "10px" },
+                  },
+                  [
+                    _c(
+                      "h5",
+                      {
+                        staticClass: "m-0 font-weight-bold",
+                        staticStyle: { color: "#169ea8" },
+                      },
+                      [_vm._v("Peminjaman " + _vm._s(_vm.peminjaman.no_pinjam))]
+                    ),
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "row m-1" }, [
+                  _c("div", { staticClass: "col-2" }, [
+                    _c("dd", [_vm._v("Nama Pemohon")]),
+                    _vm._v(" "),
+                    _c(
+                      "dt",
+                      {
+                        staticClass: "mb-2",
+                        staticStyle: { color: "#000", "margin-top": "-10px" },
+                      },
+                      [
+                        _vm._v(
+                          _vm._s(
+                            _vm.peminjaman.pengguna
+                              ? _vm.peminjaman.pengguna.nama_pengguna
+                              : "-"
+                          )
+                        ),
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("dd", [_vm._v("Divisi")]),
+                    _vm._v(" "),
+                    _c(
+                      "dt",
+                      { staticStyle: { color: "#000", "margin-top": "-10px" } },
+                      [
+                        _vm._v(
+                          _vm._s(
+                            _vm.peminjaman.pengguna
+                              ? _vm.peminjaman.pengguna.divisi
+                              : "-"
+                          )
+                        ),
+                      ]
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-2" }, [
+                    _c("dd", [_vm._v("Tujuan Peminjaman")]),
+                    _vm._v(" "),
+                    _c(
+                      "dt",
+                      { staticStyle: { color: "#000", "margin-top": "-10px" } },
+                      [_vm._v(_vm._s(_vm.peminjaman.detail_peminjaman))]
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-2" }, [
+                    _c("dd", [_vm._v("Tanggal Peminjaman")]),
+                    _vm._v(" "),
+                    _c(
+                      "dt",
+                      {
+                        staticClass: "mb-2",
+                        staticStyle: { color: "#000", "margin-top": "-10px" },
+                      },
+                      [_vm._v(_vm._s(_vm.peminjaman.tanggal_pinjam))]
+                    ),
+                    _vm._v(" "),
+                    _c("dd", [_vm._v("Tanggal Kebutuhan")]),
+                    _vm._v(" "),
+                    _c(
+                      "dt",
+                      {
+                        staticClass: "mb-2",
+                        staticStyle: { color: "#000", "margin-top": "-10px" },
+                      },
+                      [_vm._v(_vm._s(_vm.peminjaman.tanggal_kembali))]
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-2" }, [
+                    _c("dd", [_vm._v("Estimasi Pengembalian")]),
+                    _vm._v(" "),
+                    _c(
+                      "dt",
+                      { staticStyle: { color: "#000", "margin-top": "-10px" } },
+                      [_vm._v(_vm._s(_vm.peminjaman.tanggal_kembali))]
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-2" }, [
+                    _c("dd", { staticStyle: { "margin-bottom": "-2px" } }, [
+                      _vm._v("Status"),
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "dt",
+                      {
+                        staticClass: "status-pill parent-element",
+                        class: {
+                          "status-active": _vm.peminjaman.status == "Selesai",
+                          "status-error":
+                            _vm.peminjaman.status == "Barang Siap Diambil",
+                          "status-rusak":
+                            _vm.peminjaman.status == "Sedang Dipinjam",
+                        },
+                      },
+                      [_vm._v(_vm._s(_vm.peminjaman.status || "-"))]
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-2" }, [
+                    _c("dd", [_vm._v("Durasi")]),
+                    _vm._v(" "),
+                    _c(
+                      "dt",
+                      { staticStyle: { color: "#000", "margin-top": "-10px" } },
+                      [
+                        _vm._v(
+                          "\n                " +
+                            _vm._s(
+                              _vm.durasiData !== "-"
+                                ? _vm.durasiData + " Hari"
+                                : "-"
+                            ) +
+                            " "
+                        ),
+                        _c("br"),
+                        _vm._v(" "),
+                        _c("small", [
+                          _c("i", {
+                            class: {
+                              "fas fa-clock":
+                                !_vm.durasiDataKembali.includes("Hari Lebih"),
+                              "fas fa-exclamation-circle text-danger":
+                                _vm.durasiDataKembali.includes("Hari Lebih"),
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              class: {
+                                "text-danger":
+                                  _vm.durasiDataKembali.includes("Hari Lebih"),
+                              },
+                            },
+                            [
+                              _vm._v(
+                                "\n                    " +
+                                  _vm._s(_vm.durasiDataKembali) +
+                                  "\n                  "
+                              ),
+                            ]
+                          ),
+                        ]),
+                      ]
+                    ),
+                  ]),
+                ]),
+              ]
+            ),
+          ]
+        ),
+      ]),
+    ]),
+    _vm._v(" "),
+    _c("br"),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "card shadow mb-4",
+        staticStyle: { "border-radius": "20px" },
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "card-header py-3 mb-2",
+            staticStyle: { "border-radius": "20px" },
+          },
+          [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-sm btn-show",
+                class: { active: _vm.showPengeluaran },
+                on: { click: _vm.togglePengeluaran },
+              },
+              [
+                _vm.showPengeluaran
+                  ? _c("span", [_vm._v("Pengeluaran")])
+                  : _c("span", [_vm._v("Pengeluaran")]),
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-sm btn-show m-1",
+                class: { active: _vm.showPengajuan },
+                on: { click: _vm.togglePengajuan },
+              },
+              [
+                _vm.showPengajuan
+                  ? _c("span", [_vm._v("Pengajuan")])
+                  : _c("span", [_vm._v("Pengajuan")]),
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-sm btn-show m-1",
+                class: { active: _vm.showDetailPeminjaman },
+                on: { click: _vm.toggleDetailPeminjaman },
+              },
+              [
+                _vm.showDetailPeminjaman
+                  ? _c("span", [_vm._v("Peminjaman")])
+                  : _c("span", [_vm._v("Peminjaman")]),
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-sm btn-show m-1",
+                class: { active: _vm.showPerubahan },
+                on: { click: _vm.togglePerubahan },
+              },
+              [
+                _vm.showPerubahan
+                  ? _c("span", [_vm._v("Perubahan")])
+                  : _c("span", [_vm._v("Perubahan")]),
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-sm btn-show m-1",
+                class: { active: _vm.showPengembalian },
+                on: { click: _vm.togglePengembalian },
+              },
+              [
+                _vm.showPengembalian
+                  ? _c("span", [_vm._v("Pengembalian")])
+                  : _c("span", [_vm._v("Pengembalian")]),
+              ]
+            ),
+          ]
+        ),
+        _vm._v(" "),
+        _vm.showPengeluaran && _vm.peminjaman.no_pinjam
+          ? _c(
+              "div",
+              { staticClass: "card-body", attrs: { id: "app" } },
+              [
+                _c("user-detail-pengeluaran", {
+                  attrs: { "no-pinjam": _vm.peminjaman.no_pinjam },
+                }),
+              ],
+              1
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.showPengajuan && _vm.peminjaman.no_pinjam
+          ? _c(
+              "div",
+              { staticClass: "card-body", attrs: { id: "app" } },
+              [
+                _c("user-detail-pengajuan", {
+                  attrs: { "no-pinjam": _vm.peminjaman.no_pinjam },
+                }),
+              ],
+              1
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.showDetailPeminjaman && _vm.peminjaman.no_pinjam
+          ? _c(
+              "div",
+              { staticClass: "card-body", attrs: { id: "app" } },
+              [
+                _c("user-detail-peminjaman", {
+                  attrs: { "no-pinjam": _vm.peminjaman.no_pinjam },
+                }),
+              ],
+              1
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.showPerubahan && _vm.peminjaman.no_pinjam
+          ? _c(
+              "div",
+              { staticClass: "card-body", attrs: { id: "app" } },
+              [
+                _c("user-detail-perubahan", {
+                  attrs: { "no-pinjam": _vm.peminjaman.no_pinjam },
+                }),
+              ],
+              1
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.showPengembalian && _vm.peminjaman.no_pinjam
+          ? _c(
+              "div",
+              { staticClass: "card-body", attrs: { id: "app" } },
+              [
+                _c("user-detail-pengembalian", {
+                  attrs: { "no-pinjam": _vm.peminjaman.no_pinjam },
+                }),
+              ],
+              1
+            )
+          : _vm._e(),
+      ]
+    ),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h1", { staticClass: "h3", staticStyle: { color: "#000" } }, [
+      _c("b", [_vm._v("Detail Peminjaman Alat")]),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DetailPengajuanPeminjamanAlat.vue?vue&type=template&id=f0f97488&":
+/*!*************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DetailPengajuanPeminjamanAlat.vue?vue&type=template&id=f0f97488& ***!
+  \*************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container-fluid" }, [
+    _c(
+      "div",
+      {
+        staticClass:
+          "row align-items-center justify-content-end mr-3 mt-4 mb-2",
+      },
+      [
+        _c("div", { staticClass: "search-wrapper" }, [
+          _c("div", { staticClass: "input-group" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.searchQuery,
+                  expression: "searchQuery",
+                },
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "search..." },
+              domProps: { value: _vm.searchQuery },
+              on: {
+                input: [
+                  function ($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.searchQuery = $event.target.value
+                  },
+                  _vm.debouncedFetchAlats,
+                ],
+              },
+            }),
+          ]),
+        ]),
+      ]
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "table-responsive p-3" }, [
+      _c(
+        "table",
+        {
+          staticClass: "table table-border no-border table-custom",
+          staticStyle: { "overflow-x": "auto" },
+        },
+        [
+          _vm._m(0),
+          _vm._v(" "),
+          _vm.filteredData.length == 0 ? _c("tbody", [_vm._m(1)]) : _vm._e(),
+          _vm._v(" "),
+          _vm._l(_vm.filteredData, function (peminjaman, index) {
+            return _c("tbody", { key: index }, [
+              _c("tr", { staticClass: "text-center" }, [
+                _c("td", [_vm._v(_vm._s(index + 1))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(peminjaman.no_pengajuan || "-"))]),
+                _vm._v(" "),
+                _c("td", [
+                  _vm._v(_vm._s(peminjaman.tanggal_peminjaman || "-")),
+                ]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(peminjaman.status || "-"))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(peminjaman.deskriksi))]),
+              ]),
+            ])
+          }),
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass:
+            "d-flex justify-content-between align-items-center mt-3 mb-3",
+          staticStyle: {
+            "border-radius": "10px",
+            "background-color": "#f3f4f6",
+            height: "50px",
+            color: "#000",
+          },
+        },
+        [
+          _c("div", { staticClass: "ml-3" }, [
+            _vm._v("\n        Rows per page:\n        "),
+            _c("span", [_vm._v(_vm._s(_vm.rowsPerPage))]),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "mr-3" }, [
+            _c("span", [_vm._v(_vm._s(_vm.paginationInfo))]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-sm btn-light",
+                attrs: { disabled: _vm.currentPage === 1 },
+                on: { click: _vm.prevPage },
+              },
+              [_c("i", { staticClass: "fas fa-angle-left" })]
+            ),
+            _vm._v(" "),
+            _c("span"),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-sm btn-light",
+                attrs: { disabled: _vm.currentPage === _vm.totalPages },
+                on: { click: _vm.nextPage },
+              },
+              [_c("i", { staticClass: "fas fa-angle-right" })]
+            ),
+          ]),
+        ]
+      ),
+    ]),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", { staticClass: "bg-table text-center" }, [
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("#")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("No Pengajuan")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("Tgl Peminjaman")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("Status Sebelumnya")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("Alasan Ditolak")]
+        ),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", { staticClass: "text-center", attrs: { colspan: "6" } }, [
+        _vm._v("Tidak Ada Data"),
+      ]),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DetailPengeluaranPeminjamanAlat.vue?vue&type=template&id=4612406f&":
+/*!***************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DetailPengeluaranPeminjamanAlat.vue?vue&type=template&id=4612406f& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "container-fluid" },
+    [
+      _c(
+        "div",
+        {
+          staticClass:
+            "row align-items-center justify-content-end mr-3 mt-4 mb-2",
+        },
+        [
+          _c("div", { staticClass: "search-wrapper" }, [
+            _c("div", { staticClass: "input-group" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.searchQueryMain,
+                    expression: "searchQueryMain",
+                  },
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "search..." },
+                domProps: { value: _vm.searchQueryMain },
+                on: {
+                  input: [
+                    function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.searchQueryMain = $event.target.value
+                    },
+                    _vm.debouncedFetchAlats,
+                  ],
+                },
+              }),
+            ]),
+          ]),
+        ]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "table-responsive p-3" }, [
+        _c(
+          "table",
+          {
+            staticClass: "table table-border no-border table-custom",
+            staticStyle: { "overflow-x": "auto" },
+          },
+          [
+            _vm._m(0),
+            _vm._v(" "),
+            _vm.data.length === 0 ? _c("tbody", [_vm._m(1)]) : _vm._e(),
+            _vm._v(" "),
+            _vm._l(_vm.paginatedMainData, function (item, index) {
+              return _c("tbody", { key: item.id }, [
+                _c("tr", { staticClass: "text-center" }, [
+                  _c("td", [_vm._v(_vm._s(index + 1))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(item.kode))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(item.nama))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(item.jumlah))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(item.tanggal_pengambilan))]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-info btn-sm",
+                        on: {
+                          click: function ($event) {
+                            return _vm.toggleDetail(index)
+                          },
+                        },
+                      },
+                      [
+                        _vm._v(
+                          "\n              " +
+                            _vm._s(
+                              _vm.isDetailVisible(index)
+                                ? "Sembunyikan Detail"
+                                : "Detail"
+                            ) +
+                            "\n            "
+                        ),
+                      ]
+                    ),
+                  ]),
+                ]),
+              ])
+            }),
+          ],
+          2
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass:
+              "d-flex justify-content-between align-items-center mt-3 mb-3",
+            staticStyle: {
+              "border-radius": "10px",
+              "background-color": "#f3f4f6",
+              height: "50px",
+              color: "#000",
+            },
+          },
+          [
+            _c("div", { staticClass: "ml-3" }, [
+              _vm._v("\n        Rows per page:\n        "),
+              _c("span", [_vm._v(_vm._s(_vm.rowsPerPage))]),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "mr-3" }, [
+              _c("span", [_vm._v(_vm._s(_vm.mainPaginationInfo))]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-sm btn-light",
+                  attrs: { disabled: _vm.currentMainPage === 1 },
+                  on: { click: _vm.prevMainPage },
+                },
+                [_c("i", { staticClass: "fas fa-angle-left" })]
+              ),
+              _vm._v(" "),
+              _c("span"),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-sm btn-light",
+                  attrs: {
+                    disabled: _vm.currentMainPage === _vm.totalMainPages,
+                  },
+                  on: { click: _vm.nextMainPage },
+                },
+                [_c("i", { staticClass: "fas fa-angle-right" })]
+              ),
+            ]),
+          ]
+        ),
+      ]),
+      _vm._v(" "),
+      _vm._l(_vm.data, function (item, index) {
+        return _vm.isDetailVisible(index)
+          ? _c(
+              "div",
+              { key: "detail-" + item.id, staticClass: "table-responsive p-3" },
+              [
+                _c("span", { staticStyle: { color: "#000" } }, [
+                  _c("b", [_vm._v(_vm._s(item.nama))]),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "container-fluid" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "row align-items-center justify-content-end mr-3 mb-2",
+                    },
+                    [
+                      _vm.selectedItems.length > 0 && !_vm.isStatusUpdated
+                        ? _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary m-3",
+                              on: { click: _vm.updateStatusToMenungguDiambil },
+                            },
+                            [_vm._v("\n          Di Ambil\n        ")]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "search-wrapper" }, [
+                        _c("div", { staticClass: "input-group" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.searchQuery,
+                                expression: "searchQuery",
+                              },
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "text", placeholder: "search..." },
+                            domProps: { value: _vm.searchQuery },
+                            on: {
+                              input: [
+                                function ($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.searchQuery = $event.target.value
+                                },
+                                _vm.debouncedFetchAlats,
+                              ],
+                            },
+                          }),
+                        ]),
+                      ]),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "table-responsive p-3" }, [
+                    _c(
+                      "table",
+                      {
+                        staticClass:
+                          "table table-border no-border table-custom",
+                        staticStyle: { "overflow-x": "auto" },
+                      },
+                      [
+                        _c("thead", [
+                          _c("tr", { staticClass: "bg-table text-center" }, [
+                            _c(
+                              "th",
+                              {
+                                staticClass: "text-center",
+                                staticStyle: { width: "10px", color: "#000" },
+                              },
+                              [
+                                _c("input", {
+                                  attrs: {
+                                    type: "checkbox",
+                                    indeterminate: _vm.isIndeterminate,
+                                  },
+                                  domProps: { checked: _vm.isAllSelected },
+                                  on: { change: _vm.toggleSelectAll },
+                                }),
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "th",
+                              {
+                                staticClass: "text-center",
+                                staticStyle: { width: "10px", color: "#000" },
+                              },
+                              [_vm._v("#")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "th",
+                              {
+                                staticClass: "text-center",
+                                staticStyle: { width: "10px", color: "#000" },
+                              },
+                              [_vm._v("No Seri Alat")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "th",
+                              {
+                                staticClass: "text-center",
+                                staticStyle: { width: "10px", color: "#000" },
+                              },
+                              [_vm._v("Tgl Peminjaman")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "th",
+                              {
+                                staticClass: "text-center",
+                                staticStyle: { width: "10px", color: "#000" },
+                              },
+                              [_vm._v("Status")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "th",
+                              {
+                                staticClass: "text-center",
+                                staticStyle: { width: "10px", color: "#000" },
+                              },
+                              [_vm._v("Aksi")]
+                            ),
+                          ]),
+                        ]),
+                        _vm._v(" "),
+                        _vm.filteredData.length == 0
+                          ? _c("tbody", [_vm._m(2, true)])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm._l(_vm.filteredData, function (peminjaman, index) {
+                          return _c("tbody", { key: index }, [
+                            _c("tr", { staticClass: "text-center" }, [
+                              _c("td", [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.selectedItems,
+                                      expression: "selectedItems",
+                                    },
+                                  ],
+                                  attrs: { type: "checkbox" },
+                                  domProps: {
+                                    value: peminjaman.id,
+                                    checked: Array.isArray(_vm.selectedItems)
+                                      ? _vm._i(
+                                          _vm.selectedItems,
+                                          peminjaman.id
+                                        ) > -1
+                                      : _vm.selectedItems,
+                                  },
+                                  on: {
+                                    change: function ($event) {
+                                      var $$a = _vm.selectedItems,
+                                        $$el = $event.target,
+                                        $$c = $$el.checked ? true : false
+                                      if (Array.isArray($$a)) {
+                                        var $$v = peminjaman.id,
+                                          $$i = _vm._i($$a, $$v)
+                                        if ($$el.checked) {
+                                          $$i < 0 &&
+                                            (_vm.selectedItems = $$a.concat([
+                                              $$v,
+                                            ]))
+                                        } else {
+                                          $$i > -1 &&
+                                            (_vm.selectedItems = $$a
+                                              .slice(0, $$i)
+                                              .concat($$a.slice($$i + 1)))
+                                        }
+                                      } else {
+                                        _vm.selectedItems = $$c
+                                      }
+                                    },
+                                  },
+                                }),
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(index + 1))]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(
+                                  _vm._s(
+                                    peminjaman.no_seri_alat
+                                      ? peminjaman.no_seri_alat.no_seri_alat
+                                      : "-"
+                                  )
+                                ),
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(
+                                  _vm._s(peminjaman.tanggal_pinjam || "-")
+                                ),
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(_vm._s(peminjaman.status || "-")),
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "text-center" }, [
+                                _c(
+                                  "div",
+                                  { staticClass: "dropdown text-center" },
+                                  [
+                                    _vm._m(3, true),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass: "dropdown-menu",
+                                        attrs: {
+                                          "aria-labelledby":
+                                            "dropdownMenuButton",
+                                        },
+                                      },
+                                      [
+                                        _c(
+                                          "a",
+                                          {
+                                            staticClass: "dropdown-item",
+                                            on: {
+                                              click: function ($event) {
+                                                return _vm.setStatus(
+                                                  peminjaman,
+                                                  "Diambil"
+                                                )
+                                              },
+                                            },
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass:
+                                                "fas fa-clock text-info",
+                                            }),
+                                            _vm._v(
+                                              " Diambil\n                    "
+                                            ),
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "a",
+                                          {
+                                            staticClass: "dropdown-item",
+                                            on: {
+                                              click: function ($event) {
+                                                return _vm.openRejectModal(
+                                                  peminjaman
+                                                )
+                                              },
+                                            },
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass:
+                                                "fas fa-times text-danger",
+                                            }),
+                                            _vm._v(
+                                              " Ditolak\n                    "
+                                            ),
+                                          ]
+                                        ),
+                                      ]
+                                    ),
+                                  ]
+                                ),
+                              ]),
+                            ]),
+                          ])
+                        }),
+                      ],
+                      2
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "d-flex justify-content-between align-items-center mt-3 mb-3",
+                        staticStyle: {
+                          "border-radius": "10px",
+                          "background-color": "#f3f4f6",
+                          height: "50px",
+                          color: "#000",
+                        },
+                      },
+                      [
+                        _c("div", { staticClass: "ml-3" }, [
+                          _vm._v("\n            Rows per page:\n            "),
+                          _c("span", [_vm._v(_vm._s(_vm.rowsPerPage))]),
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "mr-3" }, [
+                          _c("span", [_vm._v(_vm._s(_vm.paginationInfo))]),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-sm btn-light",
+                              attrs: { disabled: _vm.currentPage === 1 },
+                              on: { click: _vm.prevPage },
+                            },
+                            [_c("i", { staticClass: "fas fa-angle-left" })]
+                          ),
+                          _vm._v(" "),
+                          _c("span"),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-sm btn-light",
+                              attrs: {
+                                disabled: _vm.currentPage === _vm.totalPages,
+                              },
+                              on: { click: _vm.nextPage },
+                            },
+                            [_c("i", { staticClass: "fas fa-angle-right" })]
+                          ),
+                        ]),
+                      ]
+                    ),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _vm.isRejectModalVisible
+                  ? _c(
+                      "div",
+                      {
+                        staticClass: "modal fade show",
+                        staticStyle: { display: "block" },
+                        attrs: {
+                          tabindex: "-1",
+                          id: "rejectModal",
+                          "aria-labelledby": "rejectModalLabel",
+                          "aria-hidden": "true",
+                        },
+                      },
+                      [
+                        _c("div", { staticClass: "modal-dialog" }, [
+                          _c("div", { staticClass: "modal-content" }, [
+                            _c("div", { staticClass: "modal-header" }, [
+                              _c(
+                                "h5",
+                                {
+                                  staticClass: "modal-title",
+                                  attrs: { id: "rejectModalLabel" },
+                                },
+                                [_vm._v("Masukkan Alasan Penolakan")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "close",
+                                  attrs: {
+                                    type: "button",
+                                    "aria-label": "Close",
+                                  },
+                                  on: { click: _vm.closeRejectModal },
+                                },
+                                [
+                                  _c(
+                                    "span",
+                                    { attrs: { "aria-hidden": "true" } },
+                                    [_vm._v("×")]
+                                  ),
+                                ]
+                              ),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "modal-body" }, [
+                              _c("textarea", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.rejectionReason,
+                                    expression: "rejectionReason",
+                                  },
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  rows: "3",
+                                  placeholder:
+                                    "Masukkan alasan penolakan di sini...",
+                                },
+                                domProps: { value: _vm.rejectionReason },
+                                on: {
+                                  input: function ($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.rejectionReason = $event.target.value
+                                  },
+                                },
+                              }),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "modal-footer" }, [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-secondary",
+                                  attrs: { type: "button" },
+                                  on: { click: _vm.closeRejectModal },
+                                },
+                                [_vm._v("Batal")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-danger",
+                                  attrs: { type: "button" },
+                                  on: { click: _vm.submitRejection },
+                                },
+                                [_vm._v("Kirim")]
+                              ),
+                            ]),
+                          ]),
+                        ]),
+                      ]
+                    )
+                  : _vm._e(),
+              ]
+            )
+          : _vm._e()
+      }),
+    ],
+    2
+  )
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", { staticClass: "bg-table text-center" }, [
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("#")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("Kode")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("Nama")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("Jumlah")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("Tanggal Pengambilan")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("Aksi")]
+        ),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", { staticClass: "text-center", attrs: { colspan: "6" } }, [
+        _vm._v("Tidak Ada Data"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", { staticClass: "text-center", attrs: { colspan: "6" } }, [
+        _vm._v("Tidak Ada Data"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-sm",
+        attrs: {
+          type: "button",
+          id: "dropdownMenuButton",
+          "data-toggle": "dropdown",
+          "aria-haspopup": "true",
+          "aria-expanded": "false",
+        },
+      },
+      [
+        _c("i", {
+          staticClass: "fas fa-ellipsis-v",
+          staticStyle: { color: "#000" },
+        }),
+      ]
+    )
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DetailPengembalianPeminjamanAlat.vue?vue&type=template&id=30ee99f4&":
+/*!****************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DetailPengembalianPeminjamanAlat.vue?vue&type=template&id=30ee99f4& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "container-fluid" },
+    [
+      _c(
+        "div",
+        {
+          staticClass:
+            "row align-items-center justify-content-end mr-3 mt-4 mb-2",
+        },
+        [
+          _c("div", { staticClass: "search-wrapper" }, [
+            _c("div", { staticClass: "input-group" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.searchQueryMain,
+                    expression: "searchQueryMain",
+                  },
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "search..." },
+                domProps: { value: _vm.searchQueryMain },
+                on: {
+                  input: [
+                    function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.searchQueryMain = $event.target.value
+                    },
+                    _vm.debouncedFetchAlats,
+                  ],
+                },
+              }),
+            ]),
+          ]),
+        ]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "table-responsive p-3" }, [
+        _c(
+          "table",
+          {
+            staticClass: "table table-border no-border table-custom",
+            staticStyle: { "overflow-x": "auto" },
+          },
+          [
+            _vm._m(0),
+            _vm._v(" "),
+            _vm.data.length === 0 ? _c("tbody", [_vm._m(1)]) : _vm._e(),
+            _vm._v(" "),
+            _vm._l(_vm.paginatedMainData, function (item, index) {
+              return _c("tbody", { key: item.id }, [
+                _c("tr", { staticClass: "text-center" }, [
+                  _c("td", [_vm._v(_vm._s(index + 1))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(item.kode))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(item.nama))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(item.jumlah))]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-info btn-sm",
+                        on: {
+                          click: function ($event) {
+                            return _vm.toggleDetail(index)
+                          },
+                        },
+                      },
+                      [
+                        _vm._v(
+                          "\n              " +
+                            _vm._s(
+                              _vm.isDetailVisible(index)
+                                ? "Sembunyikan Detail"
+                                : "Detail"
+                            ) +
+                            "\n            "
+                        ),
+                      ]
+                    ),
+                  ]),
+                ]),
+              ])
+            }),
+          ],
+          2
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass:
+              "d-flex justify-content-between align-items-center mt-3 mb-3",
+            staticStyle: {
+              "border-radius": "10px",
+              "background-color": "#f3f4f6",
+              height: "50px",
+              color: "#000",
+            },
+          },
+          [
+            _c("div", { staticClass: "ml-3" }, [
+              _vm._v("\n        Rows per page:\n        "),
+              _c("span", [_vm._v(_vm._s(_vm.rowsPerPage))]),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "mr-3" }, [
+              _c("span", [_vm._v(_vm._s(_vm.mainPaginationInfo))]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-sm btn-light",
+                  attrs: { disabled: _vm.currentMainPage === 1 },
+                  on: { click: _vm.prevMainPage },
+                },
+                [_c("i", { staticClass: "fas fa-angle-left" })]
+              ),
+              _vm._v(" "),
+              _c("span"),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-sm btn-light",
+                  attrs: {
+                    disabled: _vm.currentMainPage === _vm.totalMainPages,
+                  },
+                  on: { click: _vm.nextMainPage },
+                },
+                [_c("i", { staticClass: "fas fa-angle-right" })]
+              ),
+            ]),
+          ]
+        ),
+      ]),
+      _vm._v(" "),
+      _vm._l(_vm.data, function (item, index) {
+        return _vm.isDetailVisible(index)
+          ? _c(
+              "div",
+              { key: "detail-" + item.id, staticClass: "table-responsive p-3" },
+              [
+                _c("span", { staticStyle: { color: "#000" } }, [
+                  _c("b", [_vm._v(_vm._s(item.nama))]),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "container-fluid" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "row align-items-center justify-content-end mr-3 mb-2",
+                    },
+                    [
+                      _vm.selectedItems.length > 0 && !_vm.isStatusUpdated
+                        ? _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary m-3",
+                              on: { click: _vm.updateStatusToProses },
+                            },
+                            [_vm._v("\n          Proses\n        ")]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "search-wrapper" }, [
+                        _c("div", { staticClass: "input-group" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.searchQuery,
+                                expression: "searchQuery",
+                              },
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "text", placeholder: "search..." },
+                            domProps: { value: _vm.searchQuery },
+                            on: {
+                              input: [
+                                function ($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.searchQuery = $event.target.value
+                                },
+                                _vm.debouncedFetchAlats,
+                              ],
+                            },
+                          }),
+                        ]),
+                      ]),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "table-responsive p-3" }, [
+                    _c(
+                      "table",
+                      {
+                        staticClass:
+                          "table table-border no-border table-custom",
+                        staticStyle: { "overflow-x": "auto" },
+                      },
+                      [
+                        _vm._m(2, true),
+                        _vm._v(" "),
+                        _vm.filteredData.length == 0
+                          ? _c("tbody", [_vm._m(3, true)])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm._l(_vm.filteredData, function (peminjaman, index) {
+                          return _c("tbody", { key: index }, [
+                            _c("tr", { staticClass: "text-center" }, [
+                              _c("td", [_vm._v(_vm._s(index + 1))]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(
+                                  _vm._s(
+                                    peminjaman.no_seri_alat
+                                      ? peminjaman.no_seri_alat.no_seri_alat
+                                      : "-"
+                                  )
+                                ),
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(
+                                  _vm._s(peminjaman.tanggal_kembali || "-")
+                                ),
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(_vm._s(peminjaman.status || "-")),
+                              ]),
+                            ]),
+                          ])
+                        }),
+                      ],
+                      2
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _vm.isTestModalVisible
+                    ? _c(
+                        "div",
+                        {
+                          staticClass: "modal fade show",
+                          staticStyle: { display: "block" },
+                          attrs: {
+                            tabindex: "-1",
+                            id: "testModal",
+                            "aria-labelledby": "testModalLabel",
+                            "aria-hidden": "true",
+                          },
+                        },
+                        [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "modal-dialog",
+                              staticStyle: { width: "80%" },
+                            },
+                            [
+                              _c("div", { staticClass: "modal-content" }, [
+                                _c("div", { staticClass: "modal-header" }, [
+                                  _c(
+                                    "h5",
+                                    {
+                                      staticClass: "modal-title",
+                                      staticStyle: { color: "#000" },
+                                      attrs: { id: "testModalLabel" },
+                                    },
+                                    [_vm._v("Pengujian Alat")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass: "close",
+                                      attrs: {
+                                        type: "button",
+                                        "aria-label": "Close",
+                                      },
+                                      on: { click: _vm.closeTestModal },
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { attrs: { "aria-hidden": "true" } },
+                                        [_vm._v("×")]
+                                      ),
+                                    ]
+                                  ),
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "modal-body" }, [
+                                  _c("div", { staticClass: "mb-3" }, [
+                                    _vm._m(4, true),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.testDate,
+                                          expression: "testDate",
+                                        },
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: { type: "date" },
+                                      domProps: { value: _vm.testDate },
+                                      on: {
+                                        input: function ($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.testDate = $event.target.value
+                                        },
+                                      },
+                                    }),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "mb-3" }, [
+                                    _vm._m(5, true),
+                                    _vm._v(" "),
+                                    _c("div", [
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "form-check form-check-inline",
+                                        },
+                                        [
+                                          _c("input", {
+                                            directives: [
+                                              {
+                                                name: "model",
+                                                rawName: "v-model",
+                                                value: _vm.testResult,
+                                                expression: "testResult",
+                                              },
+                                            ],
+                                            staticClass: "form-check-input",
+                                            attrs: {
+                                              type: "radio",
+                                              value: "Error",
+                                              id: "error",
+                                            },
+                                            domProps: {
+                                              checked: _vm._q(
+                                                _vm.testResult,
+                                                "Error"
+                                              ),
+                                            },
+                                            on: {
+                                              change: function ($event) {
+                                                _vm.testResult = "Error"
+                                              },
+                                            },
+                                          }),
+                                          _vm._v(" "),
+                                          _vm._m(6, true),
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "form-check form-check-inline",
+                                        },
+                                        [
+                                          _c("input", {
+                                            directives: [
+                                              {
+                                                name: "model",
+                                                rawName: "v-model",
+                                                value: _vm.testResult,
+                                                expression: "testResult",
+                                              },
+                                            ],
+                                            staticClass: "form-check-input",
+                                            attrs: {
+                                              type: "radio",
+                                              value: "Ready",
+                                              id: "ready",
+                                            },
+                                            domProps: {
+                                              checked: _vm._q(
+                                                _vm.testResult,
+                                                "Ready"
+                                              ),
+                                            },
+                                            on: {
+                                              change: function ($event) {
+                                                _vm.testResult = "Ready"
+                                              },
+                                            },
+                                          }),
+                                          _vm._v(" "),
+                                          _vm._m(7, true),
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "form-check form-check-inline",
+                                        },
+                                        [
+                                          _c("input", {
+                                            directives: [
+                                              {
+                                                name: "model",
+                                                rawName: "v-model",
+                                                value: _vm.testResult,
+                                                expression: "testResult",
+                                              },
+                                            ],
+                                            staticClass: "form-check-input",
+                                            attrs: {
+                                              type: "radio",
+                                              value: "Rusak",
+                                              id: "rusak",
+                                            },
+                                            domProps: {
+                                              checked: _vm._q(
+                                                _vm.testResult,
+                                                "Rusak"
+                                              ),
+                                            },
+                                            on: {
+                                              change: function ($event) {
+                                                _vm.testResult = "Rusak"
+                                              },
+                                            },
+                                          }),
+                                          _vm._v(" "),
+                                          _vm._m(8, true),
+                                        ]
+                                      ),
+                                    ]),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "mb-3" }, [
+                                    _vm._m(9, true),
+                                    _vm._v(" "),
+                                    _c("textarea", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.testNotes,
+                                          expression: "testNotes",
+                                        },
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: {
+                                        rows: "3",
+                                        placeholder:
+                                          "Masukkan keterangan di sini...",
+                                      },
+                                      domProps: { value: _vm.testNotes },
+                                      on: {
+                                        input: function ($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.testNotes = $event.target.value
+                                        },
+                                      },
+                                    }),
+                                  ]),
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "modal-footer" }, [
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn btn-danger",
+                                      attrs: { type: "button" },
+                                      on: { click: _vm.closeTestModal },
+                                    },
+                                    [_vm._v("Batal")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn btn-primary",
+                                      attrs: { type: "button" },
+                                      on: { click: _vm.submitTestResult },
+                                    },
+                                    [_vm._v("Kirim")]
+                                  ),
+                                ]),
+                              ]),
+                            ]
+                          ),
+                        ]
+                      )
+                    : _vm._e(),
+                ]),
+              ]
+            )
+          : _vm._e()
+      }),
+    ],
+    2
+  )
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", { staticClass: "bg-table text-center" }, [
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("#")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("Kode")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("Nama")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("Jumlah")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("Aksi")]
+        ),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", { staticClass: "text-center", attrs: { colspan: "6" } }, [
+        _vm._v("Tidak Ada Data"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", { staticClass: "bg-table text-center" }, [
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("#")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("No Seri Alat")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("Tanggal Kembali")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("Status")]
+        ),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", { staticClass: "text-center", attrs: { colspan: "6" } }, [
+        _vm._v("Tidak Ada Data"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "form-label",
+        staticStyle: { color: "#000" },
+        attrs: { for: "testDate" },
+      },
+      [_c("b", [_vm._v("Tanggal Pengujian:")])]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "form-label", staticStyle: { color: "#000" } },
+      [_c("b", [_vm._v("Hasil Pengujian:")])]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "form-check-label",
+        staticStyle: { color: "#000" },
+        attrs: { for: "error" },
+      },
+      [_c("b", [_vm._v("Error")])]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "form-check-label",
+        staticStyle: { color: "#000" },
+        attrs: { for: "ready" },
+      },
+      [_c("b", [_vm._v("Ready")])]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "form-check-label",
+        staticStyle: { color: "#000" },
+        attrs: { for: "rusak" },
+      },
+      [_c("b", [_vm._v("Rusak")])]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "form-label",
+        staticStyle: { color: "#000" },
+        attrs: { for: "testNotes" },
+      },
+      [_c("b", [_vm._v("Keterangan:")])]
+    )
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DetailPerubahanPeminjaman.vue?vue&type=template&id=3bfa01d1&":
+/*!*********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/DetailPerubahanPeminjaman.vue?vue&type=template&id=3bfa01d1& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "container-fluid" },
+    [
+      _c(
+        "div",
+        {
+          staticClass:
+            "row align-items-center justify-content-end mr-3 mt-4 mb-2",
+        },
+        [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-outline-primary mr-3",
+              on: { click: _vm.openAddDataModal },
+            },
+            [_vm._v("\n      Permohonan Perubahan\n    ")]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "search-wrapper" }, [
+            _c("div", { staticClass: "input-group" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.searchQueryMain,
+                    expression: "searchQueryMain",
+                  },
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "search..." },
+                domProps: { value: _vm.searchQueryMain },
+                on: {
+                  input: [
+                    function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.searchQueryMain = $event.target.value
+                    },
+                    _vm.debouncedFetchAlats,
+                  ],
+                },
+              }),
+            ]),
+          ]),
+        ]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "table-responsive p-3" }, [
+        _c(
+          "table",
+          {
+            staticClass: "table table-border no-border table-custom",
+            staticStyle: { "overflow-x": "auto" },
+          },
+          [
+            _vm._m(0),
+            _vm._v(" "),
+            _vm.data.length === 0 ? _c("tbody", [_vm._m(1)]) : _vm._e(),
+            _vm._v(" "),
+            _vm._l(_vm.paginatedMainData, function (item, index) {
+              return _c("tbody", { key: item.id }, [
+                _c("tr", { staticClass: "text-center" }, [
+                  _c("td", [_vm._v(_vm._s(index + 1))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(item.no_perubahan))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(item.kode))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(item.nama))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(item.tanggal_peminjaman))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(item.keterangan_peminjaman))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(item.hasil))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(item.alasan_ditolak || "-"))]),
+                ]),
+              ])
+            }),
+          ],
+          2
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass:
+              "d-flex justify-content-between align-items-center mt-3 mb-3",
+            staticStyle: {
+              "border-radius": "10px",
+              "background-color": "#f3f4f6",
+              height: "50px",
+              color: "#000",
+            },
+          },
+          [
+            _c("div", { staticClass: "ml-3" }, [
+              _vm._v("\n        Rows per page:\n        "),
+              _c("span", [_vm._v(_vm._s(_vm.rowsPerPage))]),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "mr-3" }, [
+              _c("span", [_vm._v(_vm._s(_vm.mainPaginationInfo))]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-sm btn-light",
+                  attrs: { disabled: _vm.currentMainPage === 1 },
+                  on: { click: _vm.prevMainPage },
+                },
+                [_c("i", { staticClass: "fas fa-angle-left" })]
+              ),
+              _vm._v(" "),
+              _c("span"),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-sm btn-light",
+                  attrs: {
+                    disabled: _vm.currentMainPage === _vm.totalMainPages,
+                  },
+                  on: { click: _vm.nextMainPage },
+                },
+                [_c("i", { staticClass: "fas fa-angle-right" })]
+              ),
+            ]),
+          ]
+        ),
+      ]),
+      _vm._v(" "),
+      _vm._l(_vm.data, function (item, index) {
+        return _vm.isDetailVisible(index)
+          ? _c(
+              "div",
+              { key: "detail-" + item.id, staticClass: "table-responsive p-3" },
+              [
+                _c("span", { staticStyle: { color: "#000" } }, [
+                  _c("b", [_vm._v(_vm._s(item.nama))]),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "container-fluid" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "row align-items-center justify-content-end mr-3 mb-2",
+                    },
+                    [
+                      _vm.selectedItems.length > 0 && !_vm.isStatusUpdated
+                        ? _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary m-3",
+                              on: { click: _vm.updateStatusToMenungguDiambil },
+                            },
+                            [_vm._v("\n          Disetujui\n        ")]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "search-wrapper" }, [
+                        _c("div", { staticClass: "input-group" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.searchQuery,
+                                expression: "searchQuery",
+                              },
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "text", placeholder: "search..." },
+                            domProps: { value: _vm.searchQuery },
+                            on: {
+                              input: [
+                                function ($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.searchQuery = $event.target.value
+                                },
+                                _vm.debouncedFetchAlats,
+                              ],
+                            },
+                          }),
+                        ]),
+                      ]),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "table-responsive p-3" }, [
+                    _c(
+                      "table",
+                      {
+                        staticClass:
+                          "table table-border no-border table-custom",
+                        staticStyle: { "overflow-x": "auto" },
+                      },
+                      [
+                        _c("thead", [
+                          _c("tr", { staticClass: "bg-table text-center" }, [
+                            _c(
+                              "th",
+                              {
+                                staticClass: "text-center",
+                                staticStyle: { width: "10px", color: "#000" },
+                              },
+                              [
+                                _c("input", {
+                                  attrs: {
+                                    type: "checkbox",
+                                    indeterminate: _vm.isIndeterminate,
+                                  },
+                                  domProps: { checked: _vm.isAllSelected },
+                                  on: { change: _vm.toggleSelectAll },
+                                }),
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "th",
+                              {
+                                staticClass: "text-center",
+                                staticStyle: { width: "10px", color: "#000" },
+                              },
+                              [_vm._v("#")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "th",
+                              {
+                                staticClass: "text-center",
+                                staticStyle: { width: "10px", color: "#000" },
+                              },
+                              [_vm._v("No Seri Alat")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "th",
+                              {
+                                staticClass: "text-center",
+                                staticStyle: { width: "10px", color: "#000" },
+                              },
+                              [_vm._v("Tgl Perubahan")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "th",
+                              {
+                                staticClass: "text-center",
+                                staticStyle: { width: "10px", color: "#000" },
+                              },
+                              [_vm._v("Status")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "th",
+                              {
+                                staticClass: "text-center",
+                                staticStyle: { width: "10px", color: "#000" },
+                              },
+                              [_vm._v("Aksi")]
+                            ),
+                          ]),
+                        ]),
+                        _vm._v(" "),
+                        _vm.filteredData.length == 0
+                          ? _c("tbody", [_vm._m(2, true)])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm._l(_vm.filteredData, function (peminjaman, index) {
+                          return _c("tbody", { key: index }, [
+                            _c("tr", { staticClass: "text-center" }, [
+                              _c("td", [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.selectedItems,
+                                      expression: "selectedItems",
+                                    },
+                                  ],
+                                  attrs: { type: "checkbox" },
+                                  domProps: {
+                                    value: peminjaman.id,
+                                    checked: Array.isArray(_vm.selectedItems)
+                                      ? _vm._i(
+                                          _vm.selectedItems,
+                                          peminjaman.id
+                                        ) > -1
+                                      : _vm.selectedItems,
+                                  },
+                                  on: {
+                                    change: function ($event) {
+                                      var $$a = _vm.selectedItems,
+                                        $$el = $event.target,
+                                        $$c = $$el.checked ? true : false
+                                      if (Array.isArray($$a)) {
+                                        var $$v = peminjaman.id,
+                                          $$i = _vm._i($$a, $$v)
+                                        if ($$el.checked) {
+                                          $$i < 0 &&
+                                            (_vm.selectedItems = $$a.concat([
+                                              $$v,
+                                            ]))
+                                        } else {
+                                          $$i > -1 &&
+                                            (_vm.selectedItems = $$a
+                                              .slice(0, $$i)
+                                              .concat($$a.slice($$i + 1)))
+                                        }
+                                      } else {
+                                        _vm.selectedItems = $$c
+                                      }
+                                    },
+                                  },
+                                }),
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(index + 1))]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(
+                                  _vm._s(
+                                    peminjaman.no_seri_alat
+                                      ? peminjaman.no_seri_alat.no_seri_alat
+                                      : "-"
+                                  )
+                                ),
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(
+                                  _vm._s(peminjaman.tanggal_peminjaman || "-")
+                                ),
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(_vm._s(peminjaman.status || "-")),
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "text-center" }, [
+                                _c(
+                                  "div",
+                                  { staticClass: "dropdown text-center" },
+                                  [
+                                    _vm._m(3, true),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass: "dropdown-menu",
+                                        attrs: {
+                                          "aria-labelledby":
+                                            "dropdownMenuButton",
+                                        },
+                                      },
+                                      [
+                                        _c(
+                                          "a",
+                                          {
+                                            staticClass: "dropdown-item",
+                                            on: {
+                                              click: function ($event) {
+                                                return _vm.setStatus(
+                                                  peminjaman,
+                                                  "Setuju"
+                                                )
+                                              },
+                                            },
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass:
+                                                "fas fa-clock text-info",
+                                            }),
+                                            _vm._v(
+                                              " Disetujui\n                    "
+                                            ),
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "a",
+                                          {
+                                            staticClass: "dropdown-item",
+                                            on: {
+                                              click: function ($event) {
+                                                return _vm.openRejectModal(
+                                                  peminjaman
+                                                )
+                                              },
+                                            },
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass:
+                                                "fas fa-times text-danger",
+                                            }),
+                                            _vm._v(
+                                              " Ditolak\n                    "
+                                            ),
+                                          ]
+                                        ),
+                                      ]
+                                    ),
+                                  ]
+                                ),
+                              ]),
+                            ]),
+                          ])
+                        }),
+                      ],
+                      2
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "d-flex justify-content-between align-items-center mt-3 mb-3",
+                        staticStyle: {
+                          "border-radius": "10px",
+                          "background-color": "#f3f4f6",
+                          height: "50px",
+                          color: "#000",
+                        },
+                      },
+                      [
+                        _c("div", { staticClass: "ml-3" }, [
+                          _vm._v("\n            Rows per page:\n            "),
+                          _c("span", [_vm._v(_vm._s(_vm.rowsPerPage))]),
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "mr-3" }, [
+                          _c("span", [_vm._v(_vm._s(_vm.paginationInfo))]),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-sm btn-light",
+                              attrs: { disabled: _vm.currentPage === 1 },
+                              on: { click: _vm.prevPage },
+                            },
+                            [_c("i", { staticClass: "fas fa-angle-left" })]
+                          ),
+                          _vm._v(" "),
+                          _c("span"),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-sm btn-light",
+                              attrs: {
+                                disabled: _vm.currentPage === _vm.totalPages,
+                              },
+                              on: { click: _vm.nextPage },
+                            },
+                            [_c("i", { staticClass: "fas fa-angle-right" })]
+                          ),
+                        ]),
+                      ]
+                    ),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _vm.isRejectModalVisible
+                  ? _c(
+                      "div",
+                      {
+                        staticClass: "modal fade show",
+                        staticStyle: { display: "block" },
+                        attrs: {
+                          tabindex: "-1",
+                          id: "rejectModal",
+                          "aria-labelledby": "rejectModalLabel",
+                          "aria-hidden": "true",
+                        },
+                      },
+                      [
+                        _c("div", { staticClass: "modal-dialog" }, [
+                          _c("div", { staticClass: "modal-content" }, [
+                            _c("div", { staticClass: "modal-header" }, [
+                              _c(
+                                "h5",
+                                {
+                                  staticClass: "modal-title",
+                                  attrs: { id: "rejectModalLabel" },
+                                },
+                                [_vm._v("Masukkan Alasan Penolakan")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "close",
+                                  attrs: {
+                                    type: "button",
+                                    "aria-label": "Close",
+                                  },
+                                  on: { click: _vm.closeRejectModal },
+                                },
+                                [
+                                  _c(
+                                    "span",
+                                    { attrs: { "aria-hidden": "true" } },
+                                    [_vm._v("×")]
+                                  ),
+                                ]
+                              ),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "modal-body" }, [
+                              _c("textarea", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.rejectionReason,
+                                    expression: "rejectionReason",
+                                  },
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  rows: "3",
+                                  placeholder:
+                                    "Masukkan alasan penolakan di sini...",
+                                },
+                                domProps: { value: _vm.rejectionReason },
+                                on: {
+                                  input: function ($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.rejectionReason = $event.target.value
+                                  },
+                                },
+                              }),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "modal-footer" }, [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-secondary",
+                                  attrs: { type: "button" },
+                                  on: { click: _vm.closeRejectModal },
+                                },
+                                [_vm._v("Batal")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-danger",
+                                  attrs: { type: "button" },
+                                  on: { click: _vm.submitRejection },
+                                },
+                                [_vm._v("Kirim")]
+                              ),
+                            ]),
+                          ]),
+                        ]),
+                      ]
+                    )
+                  : _vm._e(),
+              ]
+            )
+          : _vm._e()
+      }),
+      _vm._v(" "),
+      _vm.isAddDataModalVisible
+        ? _c(
+            "div",
+            {
+              staticClass: "modal fade show",
+              staticStyle: { display: "block" },
+              attrs: {
+                tabindex: "-1",
+                id: "addDataModal",
+                "aria-labelledby": "addDataModalLabel",
+                "aria-hidden": "true",
+              },
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "modal-dialog",
+                  staticStyle: { "max-width": "800px", width: "100%" },
+                },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "modal-content",
+                      staticStyle: { "max-width": "800px", width: "100%" },
+                    },
+                    [
+                      _c("div", { staticClass: "modal-header" }, [
+                        _c(
+                          "h5",
+                          {
+                            staticClass: "modal-title",
+                            attrs: { id: "addDataModalLabel" },
+                          },
+                          [
+                            _vm._v(
+                              "Form Permintaan Perubahan Durasi Peminjaman"
+                            ),
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "close",
+                            attrs: { type: "button", "aria-label": "Close" },
+                            on: { click: _vm.closeAddDataModal },
+                          },
+                          [
+                            _c("span", { attrs: { "aria-hidden": "true" } }, [
+                              _vm._v("×"),
+                            ]),
+                          ]
+                        ),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "modal-body" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "tanggalPinjam" } }, [
+                            _vm._v("Tanggal Peminjaman"),
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.newTanggalPinjam,
+                                expression: "newTanggalPinjam",
+                              },
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              id: "tanggalPinjam",
+                              disabled: "",
+                            },
+                            domProps: { value: _vm.newTanggalPinjam },
+                            on: {
+                              input: function ($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.newTanggalPinjam = $event.target.value
+                              },
+                            },
+                          }),
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "tanggalKembali" } }, [
+                            _vm._v("Tanggal Kembali"),
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.newTanggalKembali,
+                                expression: "newTanggalKembali",
+                              },
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "date", id: "tanggalKembali" },
+                            domProps: { value: _vm.newTanggalKembali },
+                            on: {
+                              input: function ($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.newTanggalKembali = $event.target.value
+                              },
+                            },
+                          }),
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group" }, [
+                          _c(
+                            "label",
+                            { attrs: { for: "keteranganPerubahan" } },
+                            [_vm._v("Keterangan Perubahan")]
+                          ),
+                          _vm._v(" "),
+                          _c("textarea", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.newKeteranganPerubahan,
+                                expression: "newKeteranganPerubahan",
+                              },
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              rows: "3",
+                              placeholder: "Masukkan keterangan perubahan...",
+                            },
+                            domProps: { value: _vm.newKeteranganPerubahan },
+                            on: {
+                              input: function ($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.newKeteranganPerubahan = $event.target.value
+                              },
+                            },
+                          }),
+                        ]),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "modal-footer" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-danger",
+                            attrs: { type: "button" },
+                            on: { click: _vm.closeAddDataModal },
+                          },
+                          [_vm._v("Batal")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary",
+                            attrs: { type: "button" },
+                            on: { click: _vm.submitAddData },
+                          },
+                          [_vm._v("Simpan")]
+                        ),
+                      ]),
+                    ]
+                  ),
+                ]
+              ),
+            ]
+          )
+        : _vm._e(),
+    ],
+    2
+  )
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", { staticClass: "bg-table text-center" }, [
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("#")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("No Perubahan")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("Kode")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("Nama")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("Tanggal Pengambilan")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("Ket. Permitaan")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("Hasil")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("Alasan Ditolak")]
+        ),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", { staticClass: "text-center", attrs: { colspan: "9" } }, [
+        _vm._v("Tidak Ada Data"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", { staticClass: "text-center", attrs: { colspan: "6" } }, [
+        _vm._v("Tidak Ada Data"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-sm",
+        attrs: {
+          type: "button",
+          id: "dropdownMenuButton",
+          "data-toggle": "dropdown",
+          "aria-haspopup": "true",
+          "aria-expanded": "false",
+        },
+      },
+      [
+        _c("i", {
+          staticClass: "fas fa-ellipsis-v",
+          staticStyle: { color: "#000" },
+        }),
+      ]
+    )
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/InputPeminjamanAlat.vue?vue&type=template&id=bfae9d28&":
+/*!***************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/InputPeminjamanAlat.vue?vue&type=template&id=bfae9d28& ***!
+  \***************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "container-fluid", staticStyle: { width: "700px" } },
+    [
+      _c("div", { staticClass: "card-header py-3" }, [
+        _c(
+          "h6",
+          {
+            staticClass: "m-0 font-weight-bold",
+            staticStyle: { color: "#169ea8", "border-radius": "15px" },
+          },
+          [
+            _vm._v("\n      Form Input Peminjaman\n      "),
+            _c(
+              "button",
+              {
+                staticClass: "close",
+                attrs: { type: "button" },
+                on: { click: _vm.tutupModal },
+              },
+              [_vm._v("×")]
+            ),
+          ]
+        ),
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "card-body", staticStyle: { "border-radius": "15px" } },
+        [
+          _c(
+            "form",
+            {
+              on: {
+                submit: function ($event) {
+                  $event.preventDefault()
+                  return _vm.submitAlat.apply(null, arguments)
+                },
+              },
+            },
+            [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "jenis" } }, [_vm._v("Jenis")]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.jenis,
+                        expression: "form.jenis",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    attrs: { id: "jenis" },
+                    on: {
+                      change: [
+                        function ($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function (o) {
+                              return o.selected
+                            })
+                            .map(function (o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.form,
+                            "jenis",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        },
+                        _vm.updateKodeOptions,
+                      ],
+                    },
+                  },
+                  [
+                    _c(
+                      "option",
+                      { attrs: { value: "", disabled: "", selected: "" } },
+                      [_vm._v("Pilih Jenis Alat")]
+                    ),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "alat" } }, [
+                      _vm._v("Alat"),
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "mesin" } }, [
+                      _vm._v("Mesin"),
+                    ]),
+                  ]
+                ),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "kode" } }, [_vm._v("Kode")]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.kode,
+                        expression: "form.kode",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    attrs: { id: "kode", disabled: !_vm.form.jenis },
+                    on: {
+                      change: [
+                        function ($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function (o) {
+                              return o.selected
+                            })
+                            .map(function (o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.form,
+                            "kode",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        },
+                        _vm.updateNoSeriOptions,
+                      ],
+                    },
+                  },
+                  [
+                    _c(
+                      "option",
+                      { attrs: { value: "", disabled: "", selected: "" } },
+                      [_vm._v("Pilih Kode")]
+                    ),
+                    _vm._v(" "),
+                    _vm._l(_vm.kodeOptions, function (kode) {
+                      return _c(
+                        "option",
+                        { key: kode, domProps: { value: kode } },
+                        [_vm._v(_vm._s(kode))]
+                      )
+                    }),
+                  ],
+                  2
+                ),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "noSeri" } }, [_vm._v("No Seri")]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.noSeri,
+                        expression: "form.noSeri",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    attrs: { id: "noSeri", disabled: !_vm.form.kode },
+                    on: {
+                      change: function ($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function (o) {
+                            return o.selected
+                          })
+                          .map(function (o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.form,
+                          "noSeri",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      },
+                    },
+                  },
+                  [
+                    _c(
+                      "option",
+                      { attrs: { value: "", disabled: "", selected: "" } },
+                      [_vm._v("Pilih No Seri")]
+                    ),
+                    _vm._v(" "),
+                    _vm._l(_vm.noSeriOptions, function (noSeri) {
+                      return _c(
+                        "option",
+                        { key: noSeri, domProps: { value: noSeri } },
+                        [_vm._v(_vm._s(noSeri))]
+                      )
+                    }),
+                  ],
+                  2
+                ),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "tanggalPinjam" } }, [
+                  _vm._v("Tanggal Pinjam"),
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.tanggalPinjam,
+                      expression: "form.tanggalPinjam",
+                    },
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "date", id: "tanggalPinjam", required: "" },
+                  domProps: { value: _vm.form.tanggalPinjam },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.form, "tanggalPinjam", $event.target.value)
+                    },
+                  },
+                }),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "tanggalKembali" } }, [
+                  _vm._v("Tanggal Kembali"),
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.tanggalKembali,
+                      expression: "form.tanggalKembali",
+                    },
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "date", id: "tanggalKembali", required: "" },
+                  domProps: { value: _vm.form.tanggalKembali },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.form, "tanggalKembali", $event.target.value)
+                    },
+                  },
+                }),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "tujuanPeminjaman" } }, [
+                  _vm._v("Tujuan Peminjaman"),
+                ]),
+                _vm._v(" "),
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.tujuanPeminjaman,
+                      expression: "form.tujuanPeminjaman",
+                    },
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    id: "tujuanPeminjaman",
+                    placeholder: "Masukkan Tujuan Peminjaman",
+                    rows: "4",
+                    required: "",
+                  },
+                  domProps: { value: _vm.form.tujuanPeminjaman },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.form,
+                        "tujuanPeminjaman",
+                        $event.target.value
+                      )
+                    },
+                  },
+                }),
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "row align-items-center justify-content-end" },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary mr-3",
+                      attrs: { type: "submit" },
+                    },
+                    [_vm._v("Submit")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger",
+                      attrs: { type: "button" },
+                      on: { click: _vm.tutupModal },
+                    },
+                    [_vm._v("Batal")]
+                  ),
+                ]
+              ),
+            ]
+          ),
+        ]
+      ),
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DataPermintaanAlat.vue?vue&type=template&id=543de557&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DataPermintaanAlat.vue?vue&type=template&id=543de557& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "row align-items-center justify-content-end mr-3 mt-3 mb-4",
+    },
+    [
+      _c(
+        "div",
+        {
+          staticClass: "modal-input",
+          class: { "is-visible": _vm.showModalInput },
+          attrs: { id: "app" },
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-content-input" },
+            [
+              _c("user-input-permintaan", {
+                on: { "tutup-modal": _vm.tutupModal },
+              }),
+            ],
+            1
+          ),
+        ]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "d-flex justify-content-between mb-4" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-sm btn-outline-primary mr-2 ml-1",
+            on: { click: _vm.tambahData },
+          },
+          [
+            _c("i", { staticClass: "fa fa-plus-circle" }),
+            _vm._v(" Tambah Data\n    "),
+          ]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "search-wrapper" }, [
+          _c("div", { staticClass: "input-group" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.searchQuery,
+                  expression: "searchQuery",
+                },
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "search..." },
+              domProps: { value: _vm.searchQuery },
+              on: {
+                input: [
+                  function ($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.searchQuery = $event.target.value
+                  },
+                  _vm.debouncedFetchAlats,
+                ],
+              },
+            }),
+          ]),
+        ]),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "table-responsive" }, [
+        _c(
+          "table",
+          {
+            staticClass: "table table-border no-border table-custom text-wrape",
+            staticStyle: { "overflow-x": "auto" },
+          },
+          [
+            _vm._m(0),
+            _vm._v(" "),
+            _vm.filteredData.length === 0 ? _c("tbody", [_vm._m(1)]) : _vm._e(),
+            _vm._v(" "),
+            _vm._l(_vm.filteredData, function (permintaan, index) {
+              return _c("tbody", { key: permintaan.id }, [
+                _c("tr", { staticClass: "text-center" }, [
+                  _c("td", [_vm._v(_vm._s(permintaan.no_permintaan || "-"))]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _vm._v(_vm._s(permintaan.tanggal_permintaan || "-")),
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _vm._v(
+                      _vm._s(
+                        permintaan.pengguna
+                          ? permintaan.pengguna.nama_pengguna
+                          : "-"
+                      )
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _vm._v(
+                      _vm._s(
+                        permintaan.pengguna ? permintaan.pengguna.divisi : "-"
+                      )
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("div", { staticClass: "dropdown text-center" }, [
+                      _vm._m(2, true),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "dropdown-menu",
+                          attrs: { "aria-labelledby": "dropdownMenuButton" },
+                        },
+                        [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item",
+                              on: {
+                                click: function ($event) {
+                                  return _vm.viewDetail(permintaan.id)
+                                },
+                              },
+                            },
+                            [
+                              _c("i", { staticClass: "fas fa-eye text-info" }),
+                              _vm._v(" Detail\n                "),
+                            ]
+                          ),
+                        ]
+                      ),
+                    ]),
+                  ]),
+                ]),
+              ])
+            }),
+          ],
+          2
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass:
+              "d-flex justify-content-between align-items-center mt-3 mb-3",
+            staticStyle: {
+              "border-radius": "10px",
+              "background-color": "#f3f4f6",
+              height: "50px",
+              color: "#000",
+            },
+          },
+          [
+            _c("div", { staticClass: "ml-3" }, [
+              _vm._v("\n        Rows per page:\n        "),
+              _c("span", [_vm._v(_vm._s(_vm.rowsPerPage))]),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "mr-3" }, [
+              _c("span", [_vm._v(_vm._s(_vm.paginationInfo))]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-sm btn-light",
+                  attrs: { disabled: _vm.currentPage === 1 },
+                  on: { click: _vm.prevPage },
+                },
+                [_c("i", { staticClass: "fas fa-angle-left" })]
+              ),
+              _vm._v(" "),
+              _c("span"),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-sm btn-light",
+                  attrs: { disabled: _vm.currentPage === _vm.totalPages },
+                  on: { click: _vm.nextPage },
+                },
+                [_c("i", { staticClass: "fas fa-angle-right" })]
+              ),
+            ]),
+          ]
+        ),
+      ]),
+    ]
+  )
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", { staticClass: "text-center bg-table" }, [
+        _c("th", { staticClass: "text-black-1" }, [_vm._v("No Permintaan")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black-1" }, [_vm._v("Tgl Permintaan")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black-1" }, [_vm._v("Nama")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black-1" }, [_vm._v("Divisi")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black-1" }, [_vm._v("Aksi")]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c(
+        "td",
+        { staticClass: "text-center text-black-1", attrs: { colspan: "10" } },
+        [_vm._v("Tidak Ada Data")]
+      ),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-sm",
+        attrs: {
+          type: "button",
+          id: "dropdownMenuButton",
+          "data-toggle": "dropdown",
+          "aria-haspopup": "true",
+          "aria-expanded": "false",
+        },
+      },
+      [_c("i", { staticClass: "fa fa-ellipsis-v" })]
+    )
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DataRincianPermintaanAlat.vue?vue&type=template&id=2821433d&":
+/*!************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DataRincianPermintaanAlat.vue?vue&type=template&id=2821433d& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "container-fluid" },
+    [
+      _c(
+        "div",
+        {
+          staticClass:
+            "row align-items-center justify-content-end mr-3 mt-4 mb-2",
+        },
+        [
+          _c("div", { staticClass: "search-wrapper" }, [
+            _c("div", { staticClass: "input-group" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.searchQueryMain,
+                    expression: "searchQueryMain",
+                  },
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "search..." },
+                domProps: { value: _vm.searchQueryMain },
+                on: {
+                  input: [
+                    function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.searchQueryMain = $event.target.value
+                    },
+                    _vm.debouncedFetchAlats,
+                  ],
+                },
+              }),
+            ]),
+          ]),
+        ]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "table-responsive p-3" }, [
+        _c(
+          "table",
+          {
+            staticClass: "table table-border no-border table-custom",
+            staticStyle: { "overflow-x": "auto" },
+          },
+          [
+            _vm._m(0),
+            _vm._v(" "),
+            _vm.data.length === 0 ? _c("tbody", [_vm._m(1)]) : _vm._e(),
+            _vm._v(" "),
+            _vm._l(_vm.paginatedMainData, function (item, index) {
+              return _c("tbody", { key: item.id }, [
+                _c("tr", { staticClass: "text-center" }, [
+                  _c("td", [_vm._v(_vm._s(index + 1))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(item.kode))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(item.nama))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(item.jumlah))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(item.tanggal_pengambilan))]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-info btn-sm",
+                        on: {
+                          click: function ($event) {
+                            return _vm.toggleDetail(index)
+                          },
+                        },
+                      },
+                      [
+                        _vm._v(
+                          "\n              " +
+                            _vm._s(
+                              _vm.isDetailVisible(index)
+                                ? "Sembunyikan Detail"
+                                : "Detail"
+                            ) +
+                            "\n            "
+                        ),
+                      ]
+                    ),
+                  ]),
+                ]),
+              ])
+            }),
+          ],
+          2
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass:
+              "d-flex justify-content-between align-items-center mt-3 mb-3",
+            staticStyle: {
+              "border-radius": "10px",
+              "background-color": "#f3f4f6",
+              height: "50px",
+              color: "#000",
+            },
+          },
+          [
+            _c("div", { staticClass: "ml-3" }, [
+              _vm._v("\n        Rows per page:\n        "),
+              _c("span", [_vm._v(_vm._s(_vm.rowsPerPage))]),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "mr-3" }, [
+              _c("span", [_vm._v(_vm._s(_vm.mainPaginationInfo))]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-sm btn-light",
+                  attrs: { disabled: _vm.currentMainPage === 1 },
+                  on: { click: _vm.prevMainPage },
+                },
+                [_c("i", { staticClass: "fas fa-angle-left" })]
+              ),
+              _vm._v(" "),
+              _c("span"),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-sm btn-light",
+                  attrs: {
+                    disabled: _vm.currentMainPage === _vm.totalMainPages,
+                  },
+                  on: { click: _vm.nextMainPage },
+                },
+                [_c("i", { staticClass: "fas fa-angle-right" })]
+              ),
+            ]),
+          ]
+        ),
+      ]),
+      _vm._v(" "),
+      _vm._l(_vm.data, function (item, index) {
+        return _vm.isDetailVisible(index)
+          ? _c(
+              "div",
+              { key: "detail-" + item.id, staticClass: "table-responsive p-3" },
+              [
+                _c("span", { staticStyle: { color: "#000" } }, [
+                  _c("b", [_vm._v("Nama " + _vm._s(item.nama))]),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "container-fluid" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "row align-items-center justify-content-end mr-3 mb-2",
+                    },
+                    [
+                      _vm.selectedItems.length > 0 && !_vm.isStatusUpdated
+                        ? _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary m-3",
+                              on: { click: _vm.updateStatusToMenungguDiambil },
+                            },
+                            [_vm._v("\n          Diterima\n        ")]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "search-wrapper" }, [
+                        _c("div", { staticClass: "input-group" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.searchQuery,
+                                expression: "searchQuery",
+                              },
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "text", placeholder: "search..." },
+                            domProps: { value: _vm.searchQuery },
+                            on: {
+                              input: [
+                                function ($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.searchQuery = $event.target.value
+                                },
+                                _vm.debouncedFetchAlats,
+                              ],
+                            },
+                          }),
+                        ]),
+                      ]),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "table-responsive p-3" }, [
+                    _c(
+                      "table",
+                      {
+                        staticClass:
+                          "table table-border no-border table-custom",
+                        staticStyle: { "overflow-x": "auto" },
+                      },
+                      [
+                        _c("thead", [
+                          _c("tr", { staticClass: "bg-table text-center" }, [
+                            _c(
+                              "th",
+                              {
+                                staticClass: "text-center",
+                                staticStyle: { width: "10px", color: "#000" },
+                              },
+                              [
+                                _c("input", {
+                                  attrs: {
+                                    type: "checkbox",
+                                    indeterminate: _vm.isIndeterminate,
+                                  },
+                                  domProps: { checked: _vm.isAllSelected },
+                                  on: { change: _vm.toggleSelectAll },
+                                }),
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "th",
+                              {
+                                staticClass: "text-center",
+                                staticStyle: { width: "10px", color: "#000" },
+                              },
+                              [_vm._v("#")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "th",
+                              {
+                                staticClass: "text-center",
+                                staticStyle: { width: "10px", color: "#000" },
+                              },
+                              [_vm._v("No Seri Alat")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "th",
+                              {
+                                staticClass: "text-center",
+                                staticStyle: { width: "10px", color: "#000" },
+                              },
+                              [_vm._v("Tgl Permintaan")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "th",
+                              {
+                                staticClass: "text-center",
+                                staticStyle: { width: "10px", color: "#000" },
+                              },
+                              [_vm._v("Status")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "th",
+                              {
+                                staticClass: "text-center",
+                                staticStyle: { width: "10px", color: "#000" },
+                              },
+                              [_vm._v("Aksi")]
+                            ),
+                          ]),
+                        ]),
+                        _vm._v(" "),
+                        _vm.filteredData.length == 0
+                          ? _c("tbody", [_vm._m(2, true)])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm._l(_vm.filteredData, function (permintaan, index) {
+                          return _c("tbody", { key: index }, [
+                            _c("tr", { staticClass: "text-center" }, [
+                              _c("td", [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.selectedItems,
+                                      expression: "selectedItems",
+                                    },
+                                  ],
+                                  attrs: { type: "checkbox" },
+                                  domProps: {
+                                    value: permintaan.id,
+                                    checked: Array.isArray(_vm.selectedItems)
+                                      ? _vm._i(
+                                          _vm.selectedItems,
+                                          permintaan.id
+                                        ) > -1
+                                      : _vm.selectedItems,
+                                  },
+                                  on: {
+                                    change: function ($event) {
+                                      var $$a = _vm.selectedItems,
+                                        $$el = $event.target,
+                                        $$c = $$el.checked ? true : false
+                                      if (Array.isArray($$a)) {
+                                        var $$v = permintaan.id,
+                                          $$i = _vm._i($$a, $$v)
+                                        if ($$el.checked) {
+                                          $$i < 0 &&
+                                            (_vm.selectedItems = $$a.concat([
+                                              $$v,
+                                            ]))
+                                        } else {
+                                          $$i > -1 &&
+                                            (_vm.selectedItems = $$a
+                                              .slice(0, $$i)
+                                              .concat($$a.slice($$i + 1)))
+                                        }
+                                      } else {
+                                        _vm.selectedItems = $$c
+                                      }
+                                    },
+                                  },
+                                }),
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(index + 1))]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(
+                                  _vm._s(
+                                    permintaan.no_seri_alat
+                                      ? permintaan.no_seri_alat.no_seri_alat
+                                      : "-"
+                                  )
+                                ),
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(
+                                  _vm._s(permintaan.tanggal_permintaan || "-")
+                                ),
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(_vm._s(permintaan.status || "-")),
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "text-center" }, [
+                                _c(
+                                  "div",
+                                  { staticClass: "dropdown text-center" },
+                                  [
+                                    _vm._m(3, true),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass: "dropdown-menu",
+                                        attrs: {
+                                          "aria-labelledby":
+                                            "dropdownMenuButton",
+                                        },
+                                      },
+                                      [
+                                        _c(
+                                          "a",
+                                          {
+                                            staticClass: "dropdown-item",
+                                            on: {
+                                              click: function ($event) {
+                                                return _vm.setStatus(
+                                                  permintaan,
+                                                  "Diambil"
+                                                )
+                                              },
+                                            },
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass:
+                                                "fas fa-clock text-info",
+                                            }),
+                                            _vm._v(
+                                              " Diterima\n                    "
+                                            ),
+                                          ]
+                                        ),
+                                      ]
+                                    ),
+                                  ]
+                                ),
+                              ]),
+                            ]),
+                          ])
+                        }),
+                      ],
+                      2
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "d-flex justify-content-between align-items-center mt-3 mb-3",
+                        staticStyle: {
+                          "border-radius": "10px",
+                          "background-color": "#f3f4f6",
+                          height: "50px",
+                          color: "#000",
+                        },
+                      },
+                      [
+                        _c("div", { staticClass: "ml-3" }, [
+                          _vm._v("\n            Rows per page:\n            "),
+                          _c("span", [_vm._v(_vm._s(_vm.rowsPerPage))]),
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "mr-3" }, [
+                          _c("span", [_vm._v(_vm._s(_vm.paginationInfo))]),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-sm btn-light",
+                              attrs: { disabled: _vm.currentPage === 1 },
+                              on: { click: _vm.prevPage },
+                            },
+                            [_c("i", { staticClass: "fas fa-angle-left" })]
+                          ),
+                          _vm._v(" "),
+                          _c("span"),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-sm btn-light",
+                              attrs: {
+                                disabled: _vm.currentPage === _vm.totalPages,
+                              },
+                              on: { click: _vm.nextPage },
+                            },
+                            [_c("i", { staticClass: "fas fa-angle-right" })]
+                          ),
+                        ]),
+                      ]
+                    ),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _vm.isRejectModalVisible
+                  ? _c(
+                      "div",
+                      {
+                        staticClass: "modal fade show",
+                        staticStyle: { display: "block" },
+                        attrs: {
+                          tabindex: "-1",
+                          id: "rejectModal",
+                          "aria-labelledby": "rejectModalLabel",
+                          "aria-hidden": "true",
+                        },
+                      },
+                      [
+                        _c("div", { staticClass: "modal-dialog" }, [
+                          _c("div", { staticClass: "modal-content" }, [
+                            _c("div", { staticClass: "modal-header" }, [
+                              _c(
+                                "h5",
+                                {
+                                  staticClass: "modal-title",
+                                  attrs: { id: "rejectModalLabel" },
+                                },
+                                [_vm._v("Masukkan Alasan Penolakan")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "close",
+                                  attrs: {
+                                    type: "button",
+                                    "aria-label": "Close",
+                                  },
+                                  on: { click: _vm.closeRejectModal },
+                                },
+                                [
+                                  _c(
+                                    "span",
+                                    { attrs: { "aria-hidden": "true" } },
+                                    [_vm._v("×")]
+                                  ),
+                                ]
+                              ),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "modal-body" }, [
+                              _c("textarea", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.rejectionReason,
+                                    expression: "rejectionReason",
+                                  },
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  rows: "3",
+                                  placeholder:
+                                    "Masukkan alasan penolakan di sini...",
+                                },
+                                domProps: { value: _vm.rejectionReason },
+                                on: {
+                                  input: function ($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.rejectionReason = $event.target.value
+                                  },
+                                },
+                              }),
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "modal-footer" }, [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-secondary",
+                                  attrs: { type: "button" },
+                                  on: { click: _vm.closeRejectModal },
+                                },
+                                [_vm._v("Batal")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-danger",
+                                  attrs: { type: "button" },
+                                  on: { click: _vm.submitRejection },
+                                },
+                                [_vm._v("Kirim")]
+                              ),
+                            ]),
+                          ]),
+                        ]),
+                      ]
+                    )
+                  : _vm._e(),
+              ]
+            )
+          : _vm._e()
+      }),
+    ],
+    2
+  )
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", { staticClass: "bg-table text-center" }, [
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("#")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("Kode")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("Nama")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("Jumlah")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("Tanggal Pengambilan")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("Aksi")]
+        ),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", { staticClass: "text-center", attrs: { colspan: "6" } }, [
+        _vm._v("Tidak Ada Data"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", { staticClass: "text-center", attrs: { colspan: "6" } }, [
+        _vm._v("Tidak Ada Data"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-sm",
+        attrs: {
+          type: "button",
+          id: "dropdownMenuButton",
+          "data-toggle": "dropdown",
+          "aria-haspopup": "true",
+          "aria-expanded": "false",
+        },
+      },
+      [
+        _c("i", {
+          staticClass: "fas fa-ellipsis-v",
+          staticStyle: { color: "#000" },
+        }),
+      ]
+    )
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DetailPermintaanAlat.vue?vue&type=template&id=6709c03e&":
+/*!*******************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/PermintaanAlat/DetailPermintaanAlat.vue?vue&type=template&id=6709c03e& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container-fluid" }, [
+    _c(
+      "div",
+      {
+        staticClass:
+          "d-flex justify-content-between align-items-center mb-1 mt-3",
+      },
+      [
+        _c("h1", { staticClass: "h6 text-teal" }, [
+          _c(
+            "i",
+            {
+              staticClass: "fas fa-angle-left text-teal mr-2",
+              staticStyle: { cursor: "pointer" },
+              on: { click: _vm.goBack },
+            },
+            [_vm._v(" Back")]
+          ),
+        ]),
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "d-flex justify-content-between align-items-center mb-3" },
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "d-flex align-items-center justify-content-center" },
+          [
+            _c(
+              "div",
+              {
+                staticClass: "card shadow",
+                staticStyle: { "max-width": "auto", "border-radius": "5px" },
+              },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass: "card-body text-center",
+                    staticStyle: { "border-radius": "5px", height: "30px" },
+                  },
+                  [
+                    _c("p", [
+                      _c(
+                        "span",
+                        {
+                          staticClass: "m-2",
+                          staticStyle: { color: "#169ea8" },
+                        },
+                        [_vm._v(" Detail Permintaan")]
+                      ),
+                      _vm._v("/\n            "),
+                      _c(
+                        "span",
+                        {
+                          staticClass: "mt-2 mb-2 mr-2 ml-1",
+                          staticStyle: { color: "#e6494b" },
+                        },
+                        [
+                          _vm._v(
+                            _vm._s(_vm.dataPermintaan.no_permintaan || "-")
+                          ),
+                        ]
+                      ),
+                    ]),
+                  ]
+                ),
+              ]
+            ),
+          ]
+        ),
+      ]
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c(
+          "div",
+          {
+            staticClass: "card shadow mb-0",
+            staticStyle: { "border-radius": "10px" },
+          },
+          [
+            _c(
+              "div",
+              {
+                staticClass: "card-body p-0",
+                staticStyle: { "border-radius": "10px" },
+              },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "d-flex justify-content-between align-items-center",
+                    staticStyle: { margin: "10px" },
+                  },
+                  [
+                    _c(
+                      "h5",
+                      {
+                        staticClass: "m-0 font-weight-bold",
+                        staticStyle: { color: "#169ea8" },
+                      },
+                      [
+                        _vm._v(
+                          "Permintaan " +
+                            _vm._s(_vm.dataPermintaan.no_permintaan || "-")
+                        ),
+                      ]
+                    ),
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "row m-1" }, [
+                  _c("div", { staticClass: "col-3" }, [
+                    _c("dd", [_vm._v("Nama Pemohon")]),
+                    _vm._v(" "),
+                    _c(
+                      "dt",
+                      {
+                        staticClass: "mb-2",
+                        staticStyle: { color: "#000", "margin-top": "-10px" },
+                      },
+                      [
+                        _vm._v(
+                          _vm._s(
+                            _vm.dataPermintaan.pengguna
+                              ? _vm.dataPermintaan.pengguna.nama_pengguna
+                              : "-"
+                          )
+                        ),
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("dd", [_vm._v("Divisi")]),
+                    _vm._v(" "),
+                    _c(
+                      "dt",
+                      {
+                        staticClass: "mb-2",
+                        staticStyle: { color: "#000", "margin-top": "-10px" },
+                      },
+                      [
+                        _vm._v(
+                          _vm._s(
+                            _vm.dataPermintaan.pengguna
+                              ? _vm.dataPermintaan.pengguna.divisi
+                              : "-"
+                          )
+                        ),
+                      ]
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-3" }, [
+                    _c("dd", [_vm._v("Tujuan Permintaan")]),
+                    _vm._v(" "),
+                    _c(
+                      "dt",
+                      {
+                        staticClass: "mb-2",
+                        staticStyle: { color: "#000", "margin-top": "-10px" },
+                      },
+                      [_vm._v(_vm._s(_vm.dataPermintaan.keterangan || "-"))]
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-3" }, [
+                    _c("dd", [_vm._v("Tanggal Permintaan")]),
+                    _vm._v(" "),
+                    _c(
+                      "dt",
+                      {
+                        staticClass: "mb-2",
+                        staticStyle: { color: "#000", "margin-top": "-10px" },
+                      },
+                      [
+                        _vm._v(
+                          _vm._s(_vm.dataPermintaan.tanggal_permintaan || "-")
+                        ),
+                      ]
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-3" }, [
+                    _c("dd", [_vm._v("Durasi")]),
+                    _vm._v(" "),
+                    _c(
+                      "dt",
+                      {
+                        staticClass: "mb-2",
+                        staticStyle: { color: "red", "margin-top": "-10px" },
+                      },
+                      [
+                        _vm._v(
+                          _vm._s(
+                            _vm.durasiData !== "-"
+                              ? _vm.durasiData + " Hari"
+                              : "-"
+                          )
+                        ),
+                      ]
+                    ),
+                  ]),
+                ]),
+              ]
+            ),
+          ]
+        ),
+      ]),
+    ]),
+    _vm._v(" "),
+    _c("br"),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "card shadow mb-4",
+        staticStyle: { "border-radius": "10px" },
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "card-header py-3 mb-2",
+            staticStyle: { "border-radius": "10px" },
+          },
+          [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-sm btn-show m-1",
+                class: { active: _vm.showRincianPermintaan },
+                on: { click: _vm.togglePengeluaran },
+              },
+              [
+                _vm.showRincianPermintaan
+                  ? _c("span", [_vm._v("Pengeluaran")])
+                  : _c("span", [_vm._v("Pengeluaran")]),
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-sm btn-show m-1",
+                class: { active: _vm.showPengajuan },
+                on: { click: _vm.togglePengajuan },
+              },
+              [
+                _vm.showPengajuan
+                  ? _c("span", [_vm._v("Pengajuan")])
+                  : _c("span", [_vm._v("Pengajuan")]),
+              ]
+            ),
+          ]
+        ),
+        _vm._v(" "),
+        _vm.showRincianPermintaan && _vm.dataPermintaan.no_permintaan
+          ? _c(
+              "div",
+              { staticClass: "card_body", attrs: { id: "app" } },
+              [
+                _c("user-permintaan-pengeluaran", {
+                  attrs: { "no-permintaan": _vm.dataPermintaan.no_permintaan },
+                }),
+              ],
+              1
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.showPengajuan && _vm.dataPermintaan.no_permintaan
+          ? _c(
+              "div",
+              { staticClass: "card_body", attrs: { id: "app" } },
+              [
+                _c("data-pengajuan", {
+                  attrs: { "no-permintaan": _vm.dataPermintaan.no_permintaan },
+                }),
+              ],
+              1
+            )
+          : _vm._e(),
+      ]
+    ),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h1", { staticClass: "h3", staticStyle: { color: "#000" } }, [
+      _c("b", [_vm._v("Detail Permintaan")]),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/PermintaanAlat/InputPermintaan.vue?vue&type=template&id=7c0802ae&":
+/*!**************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/user/PeminjamanAlat/PermintaanAlat/InputPermintaan.vue?vue&type=template&id=7c0802ae& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "container-fluid", staticStyle: { width: "700px" } },
+    [
+      _c("div", { staticClass: "card-header py-3" }, [
+        _c(
+          "h6",
+          {
+            staticClass: "m-0 font-weight-bold",
+            staticStyle: { color: "#169ea8", "border-radius": "15px" },
+          },
+          [
+            _vm._v("\n      Form Input Permintaan\n      "),
+            _c(
+              "button",
+              {
+                staticClass: "close",
+                attrs: { type: "button" },
+                on: { click: _vm.tutupModal },
+              },
+              [_vm._v("×")]
+            ),
+          ]
+        ),
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "card-body", staticStyle: { "border-radius": "15px" } },
+        [
+          _c(
+            "form",
+            {
+              on: {
+                submit: function ($event) {
+                  $event.preventDefault()
+                  return _vm.submitAlat.apply(null, arguments)
+                },
+              },
+            },
+            [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "jenis" } }, [_vm._v("Jenis")]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.jenis,
+                        expression: "form.jenis",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    attrs: { id: "jenis" },
+                    on: {
+                      change: [
+                        function ($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function (o) {
+                              return o.selected
+                            })
+                            .map(function (o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.form,
+                            "jenis",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        },
+                        _vm.updateKodeOptions,
+                      ],
+                    },
+                  },
+                  [
+                    _c(
+                      "option",
+                      { attrs: { value: "", disabled: "", selected: "" } },
+                      [_vm._v("Pilih Jenis")]
+                    ),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "alat" } }, [
+                      _vm._v("Alat"),
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "mesin" } }, [
+                      _vm._v("Mesin"),
+                    ]),
+                  ]
+                ),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "kode" } }, [_vm._v("Kode")]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.kode,
+                        expression: "form.kode",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    attrs: { id: "kode", disabled: !_vm.form.jenis },
+                    on: {
+                      change: [
+                        function ($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function (o) {
+                              return o.selected
+                            })
+                            .map(function (o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.form,
+                            "kode",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        },
+                        _vm.updateNoSeriOptions,
+                      ],
+                    },
+                  },
+                  [
+                    _c(
+                      "option",
+                      { attrs: { value: "", disabled: "", selected: "" } },
+                      [_vm._v("Pilih Kode")]
+                    ),
+                    _vm._v(" "),
+                    _vm._l(_vm.kodeOptions, function (kode) {
+                      return _c(
+                        "option",
+                        { key: kode, domProps: { value: kode } },
+                        [_vm._v(_vm._s(kode))]
+                      )
+                    }),
+                  ],
+                  2
+                ),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "noSeri" } }, [_vm._v("No Seri")]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.noSeri,
+                        expression: "form.noSeri",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    attrs: { id: "noSeri", disabled: !_vm.form.kode },
+                    on: {
+                      change: function ($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function (o) {
+                            return o.selected
+                          })
+                          .map(function (o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.form,
+                          "noSeri",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      },
+                    },
+                  },
+                  [
+                    _c(
+                      "option",
+                      { attrs: { value: "", disabled: "", selected: "" } },
+                      [_vm._v("Pilih No Seri")]
+                    ),
+                    _vm._v(" "),
+                    _vm._l(_vm.noSeriOptions, function (noSeri) {
+                      return _c(
+                        "option",
+                        { key: noSeri, domProps: { value: noSeri } },
+                        [_vm._v(_vm._s(noSeri))]
+                      )
+                    }),
+                  ],
+                  2
+                ),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "tanggalPinjam" } }, [
+                  _vm._v("Tanggal Permintaan"),
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.tanggalPinta,
+                      expression: "form.tanggalPinta",
+                    },
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "date", id: "tanggalPinta", required: "" },
+                  domProps: { value: _vm.form.tanggalPinta },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.form, "tanggalPinta", $event.target.value)
+                    },
+                  },
+                }),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "tujuanPeminjaman" } }, [
+                  _vm._v("Tujuan Peminjaman"),
+                ]),
+                _vm._v(" "),
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.tujuanPeminjaman,
+                      expression: "form.tujuanPeminjaman",
+                    },
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    id: "tujuanPeminjaman",
+                    placeholder: "Masukkan Tujuan Peminjaman",
+                    rows: "4",
+                    required: "",
+                  },
+                  domProps: { value: _vm.form.tujuanPeminjaman },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.form,
+                        "tujuanPeminjaman",
+                        $event.target.value
+                      )
+                    },
+                  },
+                }),
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "row align-items-center justify-content-end" },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary mr-3",
+                      attrs: { type: "submit" },
+                    },
+                    [_vm._v("Submit")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger",
+                      attrs: { type: "button" },
+                      on: { click: _vm.tutupModal },
+                    },
+                    [_vm._v("Batal")]
+                  ),
+                ]
+              ),
+            ]
+          ),
+        ]
+      ),
+    ]
+  )
+}
+var staticRenderFns = []
 render._withStripped = true
 
 

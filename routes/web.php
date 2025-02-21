@@ -66,9 +66,17 @@ Route::get('/admin-mtc/alat/data-error/input', function () {
     return view('admin-mtc.Main.component.alat.error.input');
 })->name('input.dataalaterror.adminmtc');
 
+
+// USER
 Route::get('/user/dashboard', function () {
-    return view('admin-mtc.Main.dashboard');
-})->name('dashboard.adminmtc');
+    return view('user.Main.dashboard');
+})->name('dashboard.user');
+
+Route::get('/user/peminjaman', function () {
+    return view('user.Main.peminjaman');
+})->name('peminjaman.user');
+
+
 
 Auth::routes();
 

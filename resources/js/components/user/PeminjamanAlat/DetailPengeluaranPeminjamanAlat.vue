@@ -21,6 +21,7 @@
             <th class="text-center" style="width: 10px; color: #000;">Kode</th>
             <th class="text-center" style="width: 10px; color: #000;">Nama</th>
             <th class="text-center" style="width: 10px; color: #000;">Jumlah</th>
+            <th class="text-center" style="width: 10px; color: #000;">Tanggal Pengambilan</th>
             <th class="text-center" style="width: 10px; color: #000;">Aksi</th>
           </tr>
         </thead>
@@ -35,6 +36,7 @@
             <td>{{ item.kode }}</td>
             <td>{{ item.nama }}</td>
             <td>{{ item.jumlah }}</td>
+            <td>{{ item.tanggal_pengambilan }}</td>
             <td class="text-center">
               <button class="btn btn-info btn-sm" @click="toggleDetail(index)">
                 {{ isDetailVisible(index) ? 'Sembunyikan Detail' : 'Detail' }}
@@ -67,14 +69,15 @@
     <!-- Modal Tabel Detail (sub-tabel) -->
     <div v-for="(item, index) in data" :key="'detail-' + item.id" class="table-responsive p-3" v-if="isDetailVisible(index)">
       <span style="color: #000;"><b>{{ item.nama }}</b></span>
-
+      <!-- Modal Tabel Detail Inner (Fitur lain seperti tombol dan search) -->
       <div class="container-fluid">
         <div class="row align-items-center justify-content-end mr-3 mb-2">
+          <!-- Tombol hanya muncul jika ada item yang dipilih dan status belum diperbarui -->
           <button 
             v-if="selectedItems.length > 0 && !isStatusUpdated" 
             class="btn btn-primary m-3" 
-            @click="updateStatusToProses">
-            Proses
+            @click="updateStatusToMenungguDiambil">
+            Di Ambil
           </button>
           <div class="search-wrapper">
             <div class="input-group">
@@ -88,22 +91,21 @@
           </div>    
         </div>
 
-        <!-- Tabel Peminjaman -->
         <div class="table-responsive p-3">
           <table class="table table-border no-border table-custom" style="overflow-x: auto;">
             <thead>
               <tr class="bg-table text-center">
-                <!-- <th class="text-center" style="width: 10px; color: #000;">
+                <th class="text-center" style="width: 10px; color: #000;">
                   <input 
                     type="checkbox" 
                     @change="toggleSelectAll" 
                     :checked="isAllSelected" 
                     :indeterminate="isIndeterminate"
                   />
-                </th> -->
+                </th>
                 <th class="text-center" style="width: 10px; color: #000;">#</th>
                 <th class="text-center" style="width: 10px; color: #000;">No Seri Alat</th>
-                <th class="text-center" style="width: 10px; color: #000;">Tanggal Kembali</th>
+                <th class="text-center" style="width: 10px; color: #000;">Tgl Peminjaman</th>
                 <th class="text-center" style="width: 10px; color: #000;">Status</th>
                 <th class="text-center" style="width: 10px; color: #000;">Aksi</th>
               </tr>
@@ -115,16 +117,16 @@
             </tbody>
             <tbody v-for="(peminjaman, index) in filteredData" :key="index">
               <tr class="text-center">
-                <!-- <td>
+                <td>
                   <input 
                     type="checkbox" 
                     :value="peminjaman.id" 
                     v-model="selectedItems"
                   />
-                </td> -->
+                </td>
                 <td>{{ index + 1 }}</td>
                 <td>{{ peminjaman.no_seri_alat ? peminjaman.no_seri_alat.no_seri_alat : '-' }}</td>
-                <td>{{ peminjaman.tanggal_kembali || '-' }}</td>
+                <td>{{ peminjaman.tanggal_pinjam || '-' }}</td>
                 <td>{{ peminjaman.status || '-' }}</td>
                 <td class="text-center">
                   <div class="dropdown text-center">
@@ -139,101 +141,64 @@
                       <i class="fas fa-ellipsis-v" style="color: #000;"></i>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">                
-                      <a class="dropdown-item" @click="setStatus(peminjaman, 'proses')">
-                        <i class="fas fa-cogs text-info"></i> Cek
+                      <a class="dropdown-item" @click="setStatus(peminjaman, 'Diambil')">
+                        <i class="fas fa-clock text-info"></i> Diambil
                       </a>
-                      <!-- <a class="dropdown-item" @click="openRejectModal(peminjaman)">
+                      <a class="dropdown-item" @click="openRejectModal(peminjaman)">
                         <i class="fas fa-times text-danger"></i> Ditolak
-                      </a> -->
+                      </a>
                     </div>
                   </div>
                 </td>
               </tr>
             </tbody>
           </table>
+
+          <!-- Pagination -->
+          <div class="d-flex justify-content-between align-items-center mt-3 mb-3" style="border-radius: 10px; background-color: #f3f4f6; height: 50px; color: #000;">
+            <div class="ml-3">
+              Rows per page:
+              <span>{{ rowsPerPage }}</span>
+            </div>
+            <div class="mr-3">          
+              <span>{{ paginationInfo }}</span>
+              <button @click="prevPage" :disabled="currentPage === 1" class="btn btn-sm btn-light">
+                <i class="fas fa-angle-left"></i>
+              </button>
+              <span>  </span>
+              <button @click="nextPage" :disabled="currentPage === totalPages" class="btn btn-sm btn-light">
+                <i class="fas fa-angle-right"></i>
+              </button>
+            </div>
+          </div>          
         </div>
+      </div>
 
-        <!-- Modal Pop-up untuk Pengujian -->
-        <div v-if="isTestModalVisible" class="modal fade show" tabindex="-1" style="display: block;" id="testModal" aria-labelledby="testModalLabel" aria-hidden="true">
-          <div class="modal-dialog" style="width: 80%;"> <!-- Custom width set to 80% -->
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="testModalLabel" style="color: #000;">Pengujian Alat</h5>
-                <button type="button" class="close" @click="closeTestModal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <!-- Tanggal Pengujian -->
-                <div class="mb-3">
-                  <label for="testDate" class="form-label" style="color: #000;"><b>Tanggal Pengujian:</b></label>
-                  <input type="date" v-model="testDate" class="form-control" />
-                </div>
-
-                <!-- Hasil Pengujian -->
-                <div class="mb-3">
-                  <label class="form-label" style="color: #000;"><b>Hasil Pengujian:</b></label>
-                  <div>
-                    <div class="form-check form-check-inline">
-                      <input type="radio" v-model="testResult" value="Error" id="error" class="form-check-input" />
-                      <label class="form-check-label" for="error" style="color: #000;"><b>Error</b></label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input type="radio" v-model="testResult" value="Ready" id="ready" class="form-check-input" />
-                      <label class="form-check-label" for="ready" style="color: #000;"><b>Ready</b></label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input type="radio" v-model="testResult" value="Rusak" id="rusak" class="form-check-input" />
-                      <label class="form-check-label" for="rusak" style="color: #000;"><b>Rusak</b></label>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Keterangan -->
-                <div class="mb-3">
-                  <label for="testNotes" class="form-label" style="color: #000;"><b>Keterangan:</b></label>
-                  <textarea 
-                    v-model="testNotes" 
-                    class="form-control" 
-                    rows="3" 
-                    placeholder="Masukkan keterangan di sini..."></textarea>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-danger" @click="closeTestModal">Batal</button>
-                <button type="button" class="btn btn-primary" @click="submitTestResult">Kirim</button>
-              </div>
+      <!-- Modal Penolakan -->
+      <div v-if="isRejectModalVisible" class="modal fade show" tabindex="-1" style="display: block;" id="rejectModal" aria-labelledby="rejectModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="rejectModalLabel">Masukkan Alasan Penolakan</h5>
+              <button type="button" class="close" @click="closeRejectModal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <textarea 
+                v-model="rejectionReason" 
+                class="form-control" 
+                rows="3" 
+                placeholder="Masukkan alasan penolakan di sini..."></textarea>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" @click="closeRejectModal">Batal</button>
+              <button type="button" class="btn btn-danger" @click="submitRejection">Kirim</button>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- Modal Penolakan -->
-    <!-- <div v-if="isRejectModalVisible" class="modal fade show" tabindex="-1" style="display: block;" id="rejectModal" aria-labelledby="rejectModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="rejectModalLabel">Masukkan Alasan Penolakan</h5>
-            <button type="button" class="close" @click="closeRejectModal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <textarea 
-              v-model="rejectionReason" 
-              class="form-control" 
-              rows="3" 
-              placeholder="Masukkan alasan penolakan di sini..."></textarea>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" @click="closeRejectModal">Batal</button>
-            <button type="button" class="btn btn-danger" @click="submitRejection">Kirim</button>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
   </div>
 </template>
 
@@ -247,14 +212,7 @@ export default {
       data: [
         { id: 1, kode: 'A001', nama: 'Clamp', jumlah: 1, tanggal_pengambilan: '2025-02-17' },
       ],
-      dataPeminjaman: [
-        {
-          id: 1,
-          no_seri_alat: { no_seri_alat: 'A1001' },
-          tanggal_peminjaman: "2025-02-17",
-          status: "Proses",
-        },
-      ],
+      dataPeminjaman: [],
       searchQuery: '',
       searchQueryMain: '',
       rowsPerPage: 10,
@@ -267,11 +225,6 @@ export default {
       rejectionReason: '',
       currentRejectItem: null,
       isRejectModalVisible: false,
-      isTestModalVisible: false,
-      testDate: '',
-      testResult: '',
-      testNotes: '',
-      currentTestItem: null,
     }
   },
   computed: {
@@ -359,7 +312,7 @@ export default {
     updateStatusToMenungguDiambil() {
       const selectedPeminjaman = this.dataPeminjaman.filter(item => this.selectedItems.includes(item.id));
       selectedPeminjaman.forEach(item => {
-        item.status = 'Menunggu Diambil';
+        item.status = 'Diambil';
       });
 
       this.isStatusUpdated = true;
@@ -407,38 +360,6 @@ export default {
       if (this.currentMainPage < this.totalMainPages) {
         this.currentMainPage++;
       }
-    },
-    // Method to handle the "Proses" action
-    setStatus(peminjaman, status) {
-      peminjaman.status = status;
-      if (status === 'proses') {
-        this.openTestModal(peminjaman);
-      }
-    },
-    // Open the Test Modal
-    openTestModal(peminjaman) {
-      this.currentTestItem = peminjaman;
-      this.testDate = '';
-      this.testResult = '';
-      this.testNotes = '';
-      this.isTestModalVisible = true;
-    },
-    // Close the Test Modal
-    closeTestModal() {
-      this.isTestModalVisible = false;
-    },
-    // Submit the test result
-    submitTestResult() {
-      if (!this.testDate || !this.testResult) {
-        alert('Tanggal pengujian dan hasil pengujian harus diisi.');
-        return;
-      }
-
-      this.currentTestItem.tanggal_pengujian = this.testDate;
-      this.currentTestItem.hasil_pengujian = this.testResult;
-      this.currentTestItem.keterangan_pengujian = this.testNotes;
-
-      this.closeTestModal();
     },
   },
   mounted() {

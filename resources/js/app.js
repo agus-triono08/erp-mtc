@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 
 
+
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -119,6 +120,20 @@ const DataPerawatanMesin = require('./components/admin-mtc/DataMesin/DetailMesin
 const DataRiwayat = require('./components/admin-mtc/Riwayat/DataRiwayat.vue').default;
 
 
+// USER PEMINJAMAN & PERMINTAAN
+const UserDataPeminjaman = require('./components/user/PeminjamanAlat/DataPeminjamanAlat.vue').default;
+const UserInputPeminjaman = require('./components/user/PeminjamanAlat/InputPeminjamanAlat.vue').default;
+const UserDetailPeminjaman = require('./components/user/PeminjamanAlat/DetailPeminjamanAlat.vue').default;
+const UserDetailPengeluaran = require('./components/user/PeminjamanAlat/DetailPengeluaranPeminjamanAlat.vue').default;
+const UserDetailPengajuan = require('./components/user/PeminjamanAlat/DetailPengajuanPeminjamanAlat.vue').default;
+const UserDetailPerubahan = require('./components/user/PeminjamanAlat/DetailPerubahanPeminjaman.vue').default;
+const UserDetailPengembalian = require('./components/user/PeminjamanAlat/DetailPengembalianPeminjamanAlat.vue').default;
+const UserDetaiPeminjaman = require('./components/user/PeminjamanAlat/DataRincianPeminjamanAlat.vue').default;
+const UserDataPermintaan = require('./components/user/PeminjamanAlat/PermintaanAlat/DataPermintaanAlat.vue').default;
+const UserInputPermintaan = require('./components/user/PeminjamanAlat/PermintaanAlat/InputPermintaan.vue').default;
+const UserDetailPermintaan  = require('./components/user/PeminjamanAlat/PermintaanAlat/DetailPermintaanAlat.vue').default;
+const UserPermintaanPengeluaran = require('./components/user/PeminjamanAlat/PermintaanAlat/DataRincianPermintaanAlat.vue').default;
+
 //Daftarkan Komponen DataAlatError
 Vue.component('input-alat-error', InputAlatError);
 Vue.component('edit-alat-error', EditAlatError);
@@ -184,6 +199,17 @@ Vue.component('data-perawatan-mesin', DataPerawatanMesin);
 
 //Daftarkan Komponen Data Riwayat
 Vue.component('data-riwayat', DataRiwayat);
+
+//Komponen User Peminjaman & Permintaan
+Vue.component('user-input-peminjaman', UserInputPeminjaman);
+Vue.component('user-detail-pengajuan', UserDetailPengajuan);
+Vue.component('user-detail-pengeluaran', UserDetailPengeluaran);
+Vue.component('user-detail-pengembalian', UserDetailPengembalian);
+Vue.component('user-detail-perubahan', UserDetailPerubahan);
+Vue.component('user-detail-peminjaman', UserDetaiPeminjaman);
+Vue.component('user-data-permintaan', UserDataPermintaan);
+Vue.component('user-input-permintaan', UserInputPermintaan);
+Vue.component('user-permintaan-pengeluaran', UserPermintaanPengeluaran);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -273,7 +299,19 @@ const routes = [
         path: '/admin-mtc/riwayat',
         component: DataRiwayat,
     },
-    
+    // USER
+    {
+        path: '/user/peminjaman',
+        component: UserDataPeminjaman,
+    },
+    {
+        path: '/user/peminjaman/detail/:id',
+        component: UserDetailPeminjaman,
+    },
+    {
+        path: '/user/permintaan/detail/:id',
+        component: UserDetailPermintaan,
+    }
 ];
 
 const router = new VueRouter({

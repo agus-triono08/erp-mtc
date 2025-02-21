@@ -1,5 +1,5 @@
 <!--Template-->
-@extends('admin-mtc.app')
+@extends('user.app')
 
 <!--Title-->
 @section('title', 'Peminjaman')

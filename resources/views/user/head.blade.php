@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>@yield('title') ERP - Admin Maintenance</title>
+    <title>@yield('title') ERP - User</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('vendor/sb-admin/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">

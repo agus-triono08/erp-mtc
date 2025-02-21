@@ -3,7 +3,7 @@
 <html lang="en">
 
 <!--Head-->
-@include('admin-mtc.head')
+@include('user.head')
 
 <body id="page-top">
 
@@ -21,7 +21,7 @@
             <div id="content">
 
                 <!-- Topbar -->
-                @include('admin-mtc.topbar')
+                @include('user.topbar')
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
@@ -37,7 +37,7 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            @include('admin-mtc.footer')
+            @include('user.footer')
             <!-- End of Footer -->
 
         </div>
@@ -47,13 +47,13 @@
     <!-- End of Page Wrapper -->
 
     <!-- Scroll to Top Button-->
-    @include('admin-mtc.scroll-to-top-button')
+    @include('user.scroll-to-top-button')
 
     <!-- Logout Modal-->
-    @include('admin-mtc.logout-modal')
+    @include('user.logout-modal')
     
     <!--JavaScript-->
-    @include('admin-mtc.js')
+    @include('user.js')
 
 </body>
 

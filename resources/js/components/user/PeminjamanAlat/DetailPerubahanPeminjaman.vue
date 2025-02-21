@@ -1,45 +1,59 @@
 <template>
   <div class="container-fluid">
     <div class="row align-items-center justify-content-end mr-3 mt-4 mb-2">         
-          <div class="search-wrapper">
-            <div class="input-group">
-              <input 
-                type="text" 
-                placeholder="search..." 
-                class="form-control"
-                v-model="searchQueryMain"
-                @input="debouncedFetchAlats"/> 
-            </div>
-          </div>    
-        </div>
+      <!-- Tombol Tambah Data -->
+      <button 
+        class="btn btn-outline-primary mr-3" 
+        @click="openAddDataModal">
+        Permohonan Perubahan
+      </button>     
+      <div class="search-wrapper">
+          <div class="input-group">
+            <input 
+              type="text" 
+              placeholder="search..." 
+              class="form-control"
+              v-model="searchQueryMain"
+              @input="debouncedFetchAlats"/> 
+          </div>
+        </div>    
+      </div>
     <!-- Tabel Utama -->
     <div class="table-responsive p-3">
       <table class="table table-border no-border table-custom" style="overflow-x: auto;">
         <thead>
           <tr class="bg-table text-center">
             <th class="text-center" style="width: 10px; color: #000;">#</th>
+            <th class="text-center" style="width: 10px; color: #000;">No Perubahan</th>
             <th class="text-center" style="width: 10px; color: #000;">Kode</th>
-            <th class="text-center" style="width: 10px; color: #000;">Nama</th>
-            <th class="text-center" style="width: 10px; color: #000;">Jumlah</th>
-            <th class="text-center" style="width: 10px; color: #000;">Aksi</th>
+            <th class="text-center" style="width: 10px; color: #000;">Nama</th>            
+            <th class="text-center" style="width: 10px; color: #000;">Tanggal Pengambilan</th>
+            <th class="text-center" style="width: 10px; color: #000;">Ket. Permitaan</th>
+            <th class="text-center" style="width: 10px; color: #000;">Hasil</th>
+            <th class="text-center" style="width: 10px; color: #000;">Alasan Ditolak</th>
+            <!-- <th class="text-center" style="width: 10px; color: #000;">Aksi</th> -->
           </tr>
         </thead>
         <tbody v-if="data.length === 0">
           <tr>
-            <td colspan="6" class="text-center">Tidak Ada Data</td>
+            <td colspan="9" class="text-center">Tidak Ada Data</td>
           </tr>
         </tbody>
         <tbody v-for="(item, index) in paginatedMainData" :key="item.id">
           <tr class="text-center">
             <td>{{ index + 1 }}</td>
+            <td>{{ item.no_perubahan }}</td>
             <td>{{ item.kode }}</td>
             <td>{{ item.nama }}</td>
-            <td>{{ item.jumlah }}</td>
-            <td class="text-center">
+            <td>{{ item.tanggal_peminjaman }}</td>
+            <td>{{ item.keterangan_peminjaman }}</td>
+            <td>{{ item.hasil }}</td>
+            <td>{{ item.alasan_ditolak || '-' }}</td>
+            <!-- <td>
               <button class="btn btn-info btn-sm" @click="toggleDetail(index)">
                 {{ isDetailVisible(index) ? 'Sembunyikan Detail' : 'Detail' }}
               </button>
-            </td>
+            </td> -->
           </tr>
         </tbody>
       </table>
@@ -67,14 +81,15 @@
     <!-- Modal Tabel Detail (sub-tabel) -->
     <div v-for="(item, index) in data" :key="'detail-' + item.id" class="table-responsive p-3" v-if="isDetailVisible(index)">
       <span style="color: #000;"><b>{{ item.nama }}</b></span>
-
+      <!-- Modal Tabel Detail Inner (Fitur lain seperti tombol dan search) -->
       <div class="container-fluid">
         <div class="row align-items-center justify-content-end mr-3 mb-2">
+          <!-- Tombol hanya muncul jika ada item yang dipilih dan status belum diperbarui -->
           <button 
             v-if="selectedItems.length > 0 && !isStatusUpdated" 
             class="btn btn-primary m-3" 
-            @click="updateStatusToProses">
-            Proses
+            @click="updateStatusToMenungguDiambil">
+            Disetujui
           </button>
           <div class="search-wrapper">
             <div class="input-group">
@@ -88,22 +103,21 @@
           </div>    
         </div>
 
-        <!-- Tabel Peminjaman -->
         <div class="table-responsive p-3">
           <table class="table table-border no-border table-custom" style="overflow-x: auto;">
             <thead>
               <tr class="bg-table text-center">
-                <!-- <th class="text-center" style="width: 10px; color: #000;">
+                <th class="text-center" style="width: 10px; color: #000;">
                   <input 
                     type="checkbox" 
                     @change="toggleSelectAll" 
                     :checked="isAllSelected" 
                     :indeterminate="isIndeterminate"
                   />
-                </th> -->
+                </th>
                 <th class="text-center" style="width: 10px; color: #000;">#</th>
                 <th class="text-center" style="width: 10px; color: #000;">No Seri Alat</th>
-                <th class="text-center" style="width: 10px; color: #000;">Tanggal Kembali</th>
+                <th class="text-center" style="width: 10px; color: #000;">Tgl Perubahan</th>
                 <th class="text-center" style="width: 10px; color: #000;">Status</th>
                 <th class="text-center" style="width: 10px; color: #000;">Aksi</th>
               </tr>
@@ -115,16 +129,16 @@
             </tbody>
             <tbody v-for="(peminjaman, index) in filteredData" :key="index">
               <tr class="text-center">
-                <!-- <td>
+                <td>
                   <input 
                     type="checkbox" 
                     :value="peminjaman.id" 
                     v-model="selectedItems"
                   />
-                </td> -->
+                </td>
                 <td>{{ index + 1 }}</td>
                 <td>{{ peminjaman.no_seri_alat ? peminjaman.no_seri_alat.no_seri_alat : '-' }}</td>
-                <td>{{ peminjaman.tanggal_kembali || '-' }}</td>
+                <td>{{ peminjaman.tanggal_peminjaman || '-' }}</td>
                 <td>{{ peminjaman.status || '-' }}</td>
                 <td class="text-center">
                   <div class="dropdown text-center">
@@ -139,100 +153,111 @@
                       <i class="fas fa-ellipsis-v" style="color: #000;"></i>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">                
-                      <a class="dropdown-item" @click="setStatus(peminjaman, 'proses')">
-                        <i class="fas fa-cogs text-info"></i> Cek
+                      <a class="dropdown-item" @click="setStatus(peminjaman, 'Setuju')">
+                        <i class="fas fa-clock text-info"></i> Disetujui
                       </a>
-                      <!-- <a class="dropdown-item" @click="openRejectModal(peminjaman)">
+                      <a class="dropdown-item" @click="openRejectModal(peminjaman)">
                         <i class="fas fa-times text-danger"></i> Ditolak
-                      </a> -->
+                      </a>
                     </div>
                   </div>
                 </td>
               </tr>
             </tbody>
           </table>
+
+          <!-- Pagination -->
+          <div class="d-flex justify-content-between align-items-center mt-3 mb-3" style="border-radius: 10px; background-color: #f3f4f6; height: 50px; color: #000;">
+            <div class="ml-3">
+              Rows per page:
+              <span>{{ rowsPerPage }}</span>
+            </div>
+            <div class="mr-3">          
+              <span>{{ paginationInfo }}</span>
+              <button @click="prevPage" :disabled="currentPage === 1" class="btn btn-sm btn-light">
+                <i class="fas fa-angle-left"></i>
+              </button>
+              <span>  </span>
+              <button @click="nextPage" :disabled="currentPage === totalPages" class="btn btn-sm btn-light">
+                <i class="fas fa-angle-right"></i>
+              </button>
+            </div>
+          </div>          
         </div>
+      </div>
 
-        <!-- Modal Pop-up untuk Pengujian -->
-        <div v-if="isTestModalVisible" class="modal fade show" tabindex="-1" style="display: block;" id="testModal" aria-labelledby="testModalLabel" aria-hidden="true">
-          <div class="modal-dialog" style="width: 80%;"> <!-- Custom width set to 80% -->
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="testModalLabel" style="color: #000;">Pengujian Alat</h5>
-                <button type="button" class="close" @click="closeTestModal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <!-- Tanggal Pengujian -->
-                <div class="mb-3">
-                  <label for="testDate" class="form-label" style="color: #000;"><b>Tanggal Pengujian:</b></label>
-                  <input type="date" v-model="testDate" class="form-control" />
-                </div>
-
-                <!-- Hasil Pengujian -->
-                <div class="mb-3">
-                  <label class="form-label" style="color: #000;"><b>Hasil Pengujian:</b></label>
-                  <div>
-                    <div class="form-check form-check-inline">
-                      <input type="radio" v-model="testResult" value="Error" id="error" class="form-check-input" />
-                      <label class="form-check-label" for="error" style="color: #000;"><b>Error</b></label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input type="radio" v-model="testResult" value="Ready" id="ready" class="form-check-input" />
-                      <label class="form-check-label" for="ready" style="color: #000;"><b>Ready</b></label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input type="radio" v-model="testResult" value="Rusak" id="rusak" class="form-check-input" />
-                      <label class="form-check-label" for="rusak" style="color: #000;"><b>Rusak</b></label>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Keterangan -->
-                <div class="mb-3">
-                  <label for="testNotes" class="form-label" style="color: #000;"><b>Keterangan:</b></label>
-                  <textarea 
-                    v-model="testNotes" 
-                    class="form-control" 
-                    rows="3" 
-                    placeholder="Masukkan keterangan di sini..."></textarea>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-danger" @click="closeTestModal">Batal</button>
-                <button type="button" class="btn btn-primary" @click="submitTestResult">Kirim</button>
-              </div>
+      <!-- Modal Penolakan -->
+      <div v-if="isRejectModalVisible" class="modal fade show" tabindex="-1" style="display: block;" id="rejectModal" aria-labelledby="rejectModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="rejectModalLabel">Masukkan Alasan Penolakan</h5>
+              <button type="button" class="close" @click="closeRejectModal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <textarea 
+                v-model="rejectionReason" 
+                class="form-control" 
+                rows="3" 
+                placeholder="Masukkan alasan penolakan di sini..."></textarea>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" @click="closeRejectModal">Batal</button>
+              <button type="button" class="btn btn-danger" @click="submitRejection">Kirim</button>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Modal Penolakan -->
-    <!-- <div v-if="isRejectModalVisible" class="modal fade show" tabindex="-1" style="display: block;" id="rejectModal" aria-labelledby="rejectModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
+    <!-- Modal Tambah Data -->
+    <div v-if="isAddDataModalVisible" class="modal fade show" tabindex="-1" style="display: block;" id="addDataModal" aria-labelledby="addDataModalLabel" aria-hidden="true">
+      <div class="modal-dialog" style="max-width: 800px; width: 100%;">
+        <div class="modal-content" style="max-width: 800px; width: 100%;">
           <div class="modal-header">
-            <h5 class="modal-title" id="rejectModalLabel">Masukkan Alasan Penolakan</h5>
-            <button type="button" class="close" @click="closeRejectModal" aria-label="Close">
+            <h5 class="modal-title" id="addDataModalLabel">Form Permintaan Perubahan Durasi Peminjaman</h5>
+            <button type="button" class="close" @click="closeAddDataModal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <textarea 
-              v-model="rejectionReason" 
-              class="form-control" 
-              rows="3" 
-              placeholder="Masukkan alasan penolakan di sini..."></textarea>
+            <div class="form-group">
+              <label for="tanggalPinjam">Tanggal Peminjaman</label>
+              <input 
+                type="text" 
+                id="tanggalPinjam" 
+                class="form-control" 
+                v-model="newTanggalPinjam" 
+                disabled
+              />
+            </div>
+            <div class="form-group">
+              <label for="tanggalKembali">Tanggal Kembali</label>
+              <input 
+                type="date" 
+                id="tanggalKembali" 
+                class="form-control" 
+                v-model="newTanggalKembali" 
+              />
+            </div>
+            <div class="form-group">
+              <label for="keteranganPerubahan">Keterangan Perubahan</label>
+              <textarea 
+                v-model="newKeteranganPerubahan" 
+                class="form-control" 
+                rows="3" 
+                placeholder="Masukkan keterangan perubahan..."></textarea>
+            </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" @click="closeRejectModal">Batal</button>
-            <button type="button" class="btn btn-danger" @click="submitRejection">Kirim</button>
+            <button type="button" class="btn btn-danger" @click="closeAddDataModal">Batal</button>
+            <button type="button" class="btn btn-primary" @click="submitAddData">Simpan</button>
           </div>
         </div>
       </div>
-    </div> -->
+    </div>
 
   </div>
 </template>
@@ -245,7 +270,16 @@ export default {
   data() {
     return {
       data: [
-        { id: 1, kode: 'A001', nama: 'Clamp', jumlah: 1, tanggal_pengambilan: '2025-02-17' },
+        {
+          id: 1,
+          no_perubahan: "PR001",
+          kode: "K001",
+          nama: "Clamp",
+          tanggal_peminjaman: "2025-02-18",
+          keterangan_peminjaman: "Peminjaman alat untuk keperluan proyek A.",
+          hasil: "Proses",
+          alasan_ditolak: null,
+        },
       ],
       dataPeminjaman: [
         {
@@ -267,11 +301,10 @@ export default {
       rejectionReason: '',
       currentRejectItem: null,
       isRejectModalVisible: false,
-      isTestModalVisible: false,
-      testDate: '',
-      testResult: '',
-      testNotes: '',
-      currentTestItem: null,
+      isAddDataModalVisible: false, // Track modal visibility
+      newTanggalPinjam: '', // Disable input for Tanggal Peminjaman
+      newTanggalKembali: '', // Editable input for Tanggal Kembali
+      newKeteranganPerubahan: '', // Input for change description
     }
   },
   computed: {
@@ -293,7 +326,7 @@ export default {
         return this.paginatedData.filter(item => {
           return (
             item.no_seri_alat?.no_seri_alat?.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-            item.tgl_pinjam.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+            item.tanggal_peminjaman.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
             item.status.toLowerCase().includes(this.searchQuery.toLowerCase())
           );
         });
@@ -326,7 +359,7 @@ export default {
     async fetchPeminjaman() {
       try {
         const noPinjam = this.noPinjam;
-        const response = await axios.get(`/api/peminjaman/alats/nopin/${noPinjam}`);
+        const response = await axios.get(`/api/permintaan/rincian/noper/${noPinjam}`);
         this.dataPeminjaman = response.data;
       } catch (error) {
         console.error("Error fetching data peminjaman", error);
@@ -359,14 +392,14 @@ export default {
     updateStatusToMenungguDiambil() {
       const selectedPeminjaman = this.dataPeminjaman.filter(item => this.selectedItems.includes(item.id));
       selectedPeminjaman.forEach(item => {
-        item.status = 'Menunggu Diambil';
+        item.status = 'Setuju';
       });
 
       this.isStatusUpdated = true;
     },
     setStatus(peminjaman, status) {
       peminjaman.status = status;
-      if (status === 'ditolak') {
+      if (status === 'Ditolak') {
         this.openRejectModal(peminjaman);
       }
     },
@@ -408,37 +441,38 @@ export default {
         this.currentMainPage++;
       }
     },
-    // Method to handle the "Proses" action
-    setStatus(peminjaman, status) {
-      peminjaman.status = status;
-      if (status === 'proses') {
-        this.openTestModal(peminjaman);
+     // Method to open the Add Data modal
+    openAddDataModal() {
+      this.isAddDataModalVisible = true;
+      // Set the default tanggal peminjaman as disabled
+      const firstItem = this.data[0]; // Assuming you get the first item's peminjaman
+      this.newTanggalPinjam = firstItem.tanggal_peminjaman; // Set the initial date
+      this.newTanggalKembali = ''; // Set the tanggal kembali to empty initially
+    },
+
+    // Method to close the Add Data modal
+    closeAddDataModal() {
+      this.isAddDataModalVisible = false;
+    },
+
+    // Method to submit the changes
+    submitAddData() {
+      if (!this.newTanggalKembali.trim()) {
+        alert('Tanggal kembali tidak boleh kosong');
+        return;
       }
-    },
-    // Open the Test Modal
-    openTestModal(peminjaman) {
-      this.currentTestItem = peminjaman;
-      this.testDate = '';
-      this.testResult = '';
-      this.testNotes = '';
-      this.isTestModalVisible = true;
-    },
-    // Close the Test Modal
-    closeTestModal() {
-      this.isTestModalVisible = false;
-    },
-    // Submit the test result
-    submitTestResult() {
-      if (!this.testDate || !this.testResult) {
-        alert('Tanggal pengujian dan hasil pengujian harus diisi.');
+      if (!this.newKeteranganPerubahan.trim()) {
+        alert('Keterangan perubahan tidak boleh kosong');
         return;
       }
 
-      this.currentTestItem.tanggal_pengujian = this.testDate;
-      this.currentTestItem.hasil_pengujian = this.testResult;
-      this.currentTestItem.keterangan_pengujian = this.testNotes;
+      // You can implement further logic here to save or send this data to the server
+      console.log('Tanggal Peminjaman:', this.newTanggalPinjam);
+      console.log('Tanggal Kembali:', this.newTanggalKembali);
+      console.log('Keterangan Perubahan:', this.newKeteranganPerubahan);
 
-      this.closeTestModal();
+      // Close modal after submission
+      this.closeAddDataModal();
     },
   },
   mounted() {

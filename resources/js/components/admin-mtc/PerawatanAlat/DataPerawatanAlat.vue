@@ -38,9 +38,9 @@
     <div v-if="showAlat">
       <div class="row align-items-center justify-content-end mr-3 mt-3 mb-4">        
         <!-- Tambah Data -->
-        <button class="btn btn-sm btn-outline-primary mr-2 ml-1" @click="tambahData">
+        <!-- <button class="btn btn-sm btn-outline-primary mr-2 ml-1" @click="tambahData">
           <i class="fa fa-plus-circle"></i> Tambah Data
-        </button>
+        </button> -->
         <!-- Search -->
         <div class="search-wrapper">
           <div class="input-group">
