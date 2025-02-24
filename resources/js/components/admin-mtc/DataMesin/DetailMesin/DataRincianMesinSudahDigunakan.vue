@@ -6,6 +6,13 @@
           <input-alat-error @tutup-modal="tutupModal"></input-alat-error>
         </div>
       </div>
+
+      <!-- Modal Edit Data -->
+      <div id="app" class="modal-input" :class="{'is-visible' :showModalEdit}" @click.self="tutupModal">
+        <div class="modal-content-input">
+          <edit-alat-sudah-digunakan @tutup-modal="tutupModal" :id="idEdit"></edit-alat-sudah-digunakan>
+        </div>      
+      </div>
   
       <!-- Tombol untuk membuka modal -->
       <!--<div class="d-flex justify-content-between mb-4">
@@ -41,6 +48,7 @@
               <th class="text-center text-black-1 tr-center">Diminta Oleh</th>
               <th class="text-center text-black-1 tr-center">Divisi</th>
               <th class="text-center text-black-1">Kondisi</th>
+              <th class="text-center text-black-1">Status</th>
               <th class="text-center text-black-1 tr-center">Aksi</th>
             </tr>
           </thead>
@@ -64,6 +72,34 @@
                           'status-rusak': permintaanmesin.status === 'Rusak', 
                           'status-error': permintaanmesin.no_seri_mesin.status === 'Error'}"
               >{{ permintaanmesin.no_seri_mesin ? permintaanmesin.no_seri_mesin.status : '-' }}</td>
+              <td>
+                <div 
+                class="btn-sts"
+                :class="{
+                  'status-active': permintaanmesin.status === 'Diterima', 
+                  'status-error': permintaanmesin.status === 'Proses', 
+                  'status-rusak': permintaanmesin.status === 'Ditolak'
+                }">
+              {{ permintaanmesin.status }}</div></td>
+              <td>
+                <div class="dropdown text-center">
+                  <button
+                    class="btn btn-sm"
+                    type="button"
+                    id="dropdownMenuButton"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <i class="fas fa-ellipsis-v"></i>
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" @click="editData(permintaanmesin.id)">
+                      <i class="fas fa-edit text-primary"></i> Edit
+                    </a>
+                  </div>
+                </div>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -107,8 +143,23 @@
           no_seri_alat: '',
           status: ''
         },
-        dataPermintaanMesin: [], // Menyimpan data error
+        dataPermintaanMesin: [
+          {
+            no_seri_mesin: {
+              no_seri: "67890XYZ",
+              status: "Ready"
+            },
+            tanggal_permintaan: "2025-02-12",
+            pemohon: {
+              nama_pengguna: "Jane Smith",
+              divisi: "HR"
+            },
+            status:"Proses",
+          },
+        ], // Menyimpan data error
         showModalInput: false, // Tambahkan variabel untuk mengontrol tampilan modal input
+        showModalEdit: false,
+        idEdit: null,
         searchQuery: '',
         rowsPerPage: 10,
         currentPage: 1,
@@ -183,7 +234,15 @@
         if (this.currentPage < this.totalPages) {
           this.currentPage++;
         }
-      }
+      },
+      editData(id) {
+        this.idEdit = id;
+        this.showModalEdit = true;
+      },
+      tutupModal() {
+        this.showModalInput = false;
+        this.showModalEdit = false;
+      },
     },
     watch: {
       rowsPerPage() {

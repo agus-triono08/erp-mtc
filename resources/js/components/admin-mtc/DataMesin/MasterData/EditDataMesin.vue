@@ -111,7 +111,7 @@
 
           <div class="row">  
             <!-- Stok -->          
-            <div class="form-group col-md-4">
+            <!-- <div class="form-group col-md-4">
               <label for="stok" style="color: #000;">
                 <b>Stok</b>
                 <sup style="color:red"> *</sup>
@@ -124,9 +124,9 @@
                 placeholder="Masukkan Stok"
                 required
               />
-            </div>
+            </div> -->
             <!-- Satuan Alat -->
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-6">
               <label for="satuan_mesin" style="color: #000;">
                 <b>Satuan Mesin</b>
               </label>
@@ -142,7 +142,8 @@
             </div>
 
             <!-- Sumber Alat -->
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-6">
+
               <label for="sumber_alat" style="color: #000;">
                 <b>Sumber Alat</b>                
               </label>
@@ -159,6 +160,39 @@
               </select>
             </div> 
           </div>
+
+          <!-- Jadwal Perawatan -->
+          <div class="row">
+            <div class="form-group col-md-12">
+              <label for="jadwal_perawatan" style="color: #000;">
+                <b>Jadwal Perawatan</b>
+                <sup style="color: red;"> *</sup>
+              </label>
+              <select
+                id="jadwal_perawatan"
+                v-model="mesin.jadwal_perawatan"
+                @change="onJadwalChange"
+                class="form-control"
+                required
+              >
+                <option value="" disabled selected>Pilih Interval Perawatan</option>
+                <option value="3">Setiap 3 Bulan</option>
+                <option value="6">Setiap 6 Bulan</option>
+                <option value="12">Setiap 12 Bulan</option>
+                <option value="other">Lainnya</option>
+              </select>
+            </div>
+
+              <!-- Manual Input Jadwal (jika memilih "Lainnya") -->
+              <div v-if="showManualEditJadwal" class="form-group col-md-12">
+                <input
+                  type="number"
+                  v-model="manualJadwal"
+                  class="form-control"
+                  placeholder="Masukkan interval (bulan)"
+                />
+              </div>
+            </div>
 
           <div class="form-group">
             <label for="fungsi_mesin" style="color: #000;">
@@ -274,12 +308,15 @@ export default {
         gambar: null,
         harga: null, // Nilai asli (tanpa format)
         //asal_usul: "",
+        jadwal_perawatan: "",
       },        
         showModal: false, // Tambahkan variabel untuk mengontrol tampilan modal
         formattedHarga: '', // Nilai yang diformat (dengan format Rupiah)
         selectedLocation: '',
         manualLocationInput: '',
         showManualInputLocation: false,
+        showManualEditJadwal: false,
+          manualJadwal: false,
         locations: ['Gedung A', 'Gedung B', 'Gedung C', 'Gedung D'],
     };
   },
@@ -381,6 +418,15 @@ export default {
       } else {
         this.showManualInputLocation = false;
         this.manualLocation = '';
+      }
+    },
+    onJadwalChange(event) {
+      if (event.target.value === 'other') {
+        this.showManualEditJadwal = true;
+        this.alat.jadwal_perawatan = ''; // Kosongkan pilihan jika memilih "Lainnya"
+      } else {
+        this.showManualEditJadwal = false;
+        this.manualJadwal = ''; // Kosongkan input manual
       }
     },
   },

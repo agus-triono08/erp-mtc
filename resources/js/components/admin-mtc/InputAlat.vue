@@ -341,7 +341,7 @@
               <sup style="color: red;"> *</sup>
             </label>
             <div 
-              class="upload-box"
+              class="upload-box-1"
               @dragover.prevent
               @drop.prevent="handleDrop"
               @dragenter="dragActive = true"
@@ -382,7 +382,7 @@
           </div>-->                          
 
         <!-- Tombol Aksi -->
-        <div class="form-group d-flex justify-content-between">
+        <div class="form-group d-flex justify-content-between mt-5">
           <span></span>
           <div>
             <button type="submit" class="btn btn-plus mr-2">
@@ -651,6 +651,36 @@ export default {
     font-size: 12px;
     color: #6c757d; /* Warna teks abu-abu */
     pointer-events: none; /* Supaya tidak mengganggu input */
+  }
+  .upload-box-1 {
+    border: 2px dashed #169ea8;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    transition: border-color 0.3s ease;
+    max-width: max-content;
+    max-height: auto;
+  }
+  
+  .upload-box-1 .fa-image {
+    font-size: 36px; /* Ukuran ikon diperbesar */
+    margin-bottom: 10px;
+    color: #666;
+  }
+  
+  .upload-box-1.drag-active {
+    border-color: #22d3e0;
+  }
+  
+  .upload-box-1 .upload-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
   }
   
   </style>

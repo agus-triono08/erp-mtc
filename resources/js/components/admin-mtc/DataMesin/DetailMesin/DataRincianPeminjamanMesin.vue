@@ -6,6 +6,13 @@
           <input-alat-error @tutup-modal="tutupModal"></input-alat-error>
         </div>
       </div>
+
+      <!-- Modal Edit Data -->
+      <div id="app" class="modal-input" :class="{'is-visible' :showModalEdit}">
+        <div class="modal-content-input">
+          <edit-alat-dipinjam @tutup-modal="tutupModal" :id="idEdit"></edit-alat-dipinjam>
+        </div>      
+      </div>
   
       <!-- Tombol untuk membuka modal -->
       <!--<div class="d-flex justify-content-between mb-4">
@@ -78,6 +85,25 @@
                           'status-rusak': peminjamanmesin.status === 'Sedang Dipinjam', 
                           'status-error': peminjamanmesin.status === 'Barang Siap Diambil'}"
               >{{ peminjamanmesin.status || '-' }}</td>
+              <td>
+                <div class="dropdown text-center">
+                  <button
+                    class="btn btn-sm"
+                    type="button"
+                    id="dropdownMenuButton"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <i class="fas fa-ellipsis-v"></i>
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" @click="editData(peminjamanmesin.id)">
+                      <i class="fas fa-edit text-primary"></i> Edit
+                    </a>
+                  </div>
+                </div>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -120,11 +146,25 @@
         noseri: {
           no_seri_alat: '',
         },
-        dataPeminjamanMesin: [], // Menyimpan data error
+        dataPeminjamanMesin: [
+          {
+            no_seri_mesin: '45678JKL',
+            no_pinjam: 'PNJ004',            
+            pengguna: {
+              nama_pengguna: 'David Lee',
+              divisi: 'HR'
+            },
+            tanggal_pinjam: '2025-02-20',
+            tanggal_kembali: '2025-01-30',
+            status: 'Sedang Dipinjam'
+          },
+        ], // Menyimpan data error
         showModalInput: false, // Tambahkan variabel untuk mengontrol tampilan modal input
         searchQuery: '',
         rowsPerPage: 10,
         currentPage: 1,
+        showModalEdit: '',
+        idEdit: null,
       };
     },
     computed: {
@@ -219,7 +259,15 @@
         if (this.currentPage < this.totalPages) {
           this.currentPage++;
         }
-      }
+      },
+      editData(id) {
+        this.idEdit = id;
+        this.showModalEdit = true;
+      },
+      tutupModal() {
+        this.showModalInput = false;
+        this.showModalEdit = false;
+      },
     },    
     watch: {
       rowsPerPage() {

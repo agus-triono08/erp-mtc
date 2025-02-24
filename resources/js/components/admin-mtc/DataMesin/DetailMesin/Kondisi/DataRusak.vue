@@ -6,6 +6,13 @@
           <input-alat-rusak @tutup-modal="tutupModal"></input-alat-rusak>
         </div>
       </div>
+
+      <!-- Modal Edit Data -->
+      <div id="app" class="modal-input" :class="{'is-visible' :showModalEdit}">
+        <div class="modal-content-input">
+          <edit-alat-rusak @tutup-modal="tutupModal" :id="idEdit"></edit-alat-rusak>
+        </div>      
+      </div>
   
       <div class="row align-items-center justify-content-end mr-3 mt-3 mb-4">      
         <!-- Tambah Data -->
@@ -60,29 +67,46 @@
                           'status-error': rusak.no_seri_mesin.status === 'Error'}"
               >{{ rusak.no_seri_mesin ? rusak.no_seri_mesin.status : '-' }}</td>
               <td>
-                <button class="btn btn-plus btn-sm">
-                  <i class="fas fa-edit"></i>
-                </button>
+                <div class="dropdown text-center">
+                  <button
+                    class="btn btn-sm"
+                    type="button"
+                    id="dropdownMenuButton"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <i class="fas fa-ellipsis-v"></i>
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <!--<a class="dropdown-item" @click="viewDetail(noseri.id)">
+                      <i class="fas fa-eye text-info"></i> Riwayat
+                    </a>-->
+                    <a class="dropdown-item" @click="editData(rusak.id)">
+                      <i class="fas fa-edit text-primary"></i> Edit
+                    </a>
+                  </div>
+                </div>
               </td>
             </tr>
           </tbody>
-        </table>
-        <!-- Pagination -->
-        <div class="d-flex justify-content-between align-items-center mb-3 mt-3" style="border-radius: 10px; background-color: #f3f4f6; height: 50px; color: #000;">
-          <div class="ml-3">
-            Rows per page:
-            <span>{{ rowsPerPage }}</span>
-          </div>
-          <div class="mr-3">          
-            <span>{{ paginationInfo }}</span>
-            <button @click="prevPage" :disabled="currentPage === 1" class="btn btn-sm btn-light">
-              <i class="fas fa-angle-left"></i>
-            </button>
-              <span>  </span>
-            <button @click="nextPage" :disabled="currentPage === totalPages" class="btn btn-sm btn-light">
-              <i class="fas fa-angle-right"></i>
-            </button>
-          </div>
+        </table>        
+      </div>
+      <!-- Pagination -->
+      <div class="d-flex justify-content-between align-items-center mb-3 mt-3" style="border-radius: 10px; background-color: #f3f4f6; height: 50px; color: #000;">
+        <div class="ml-3">
+          Rows per page:
+          <span>{{ rowsPerPage }}</span>
+        </div>
+        <div class="mr-3">          
+          <span>{{ paginationInfo }}</span>
+          <button @click="prevPage" :disabled="currentPage === 1" class="btn btn-sm btn-light">
+            <i class="fas fa-angle-left"></i>
+          </button>
+            <span>  </span>
+          <button @click="nextPage" :disabled="currentPage === totalPages" class="btn btn-sm btn-light">
+            <i class="fas fa-angle-right"></i>
+          </button>
         </div>
       </div>
     </div>
@@ -99,10 +123,21 @@
         staff: {
           nama_staff: '',
         },
-        datarusak: [],
+        datarusak: [
+          {            
+            staff_kerusakan: { nama_staff: 'John Doe' },
+            tanggal_kerusakan: '2025-02-20',
+            lokasi_penyimpanan: 'Area 1',
+            deskripsi_kerusakan: 'Mesin mati total, tidak ada respon',
+            no_seri_alat: { no_seri_alat: 'A001' },
+            no_seri_mesin: { status: 'Rusak', no_seri_mesin: 'ABC123456' },
+          },
+        ],
         showModalInput: false,
         rowsPerPage: 10,
         currentPage: 1,
+        showModalEdit: false,
+        idEdit: null,
       };
     },
     computed: {
@@ -148,7 +183,15 @@
         if (this.currentPage < this.totalPages) {
           this.currentPage++;
         }
-      }
+      },
+      editData(id) {
+        this.showModalEdit = true;
+        this.idEdit = id;
+      },
+      tutupModal() {
+        this.showModalInput = false;
+        this.showModalEdit = false;
+      },
     },
     mounted() {
       this.fetchMesinRusak();

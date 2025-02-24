@@ -118,8 +118,8 @@
             :class="{ active: showRincianAlatError }"
             @click="toggleRincianAlatError"
           >
-            <span v-if="showRincianAlatError">Detail Alat Error</span>
-            <span v-else>Detail Alat Error</span>
+            <span v-if="showRincianAlatError">Detail Mesin Error</span>
+            <span v-else>Detail Mesin Error</span>
           </button>
           <!-- Tombol Detail Alat Rusak -->
           <button
@@ -127,8 +127,8 @@
             :class="{ active: showRincianAlatRusak }"
             @click="toggleRincianAlatRusak"
             >
-            <span v-if="showRincianAlatRusak">Detail Alat Rusak</span>
-            <span v-else>Detail Alat Rusak</span>
+            <span v-if="showRincianAlatRusak">Detail Mesin Rusak</span>
+            <span v-else>Detail Mesin Rusak</span>
           </button>
           <!-- Tombol Detail Alat Musnah -->
           <button
@@ -136,8 +136,8 @@
             :class="{ active: showRincianAlatMusnah }"
             @click="toggleRincianAlatMusnah"
           >
-          <span v-if="showRincianAlatMusnah">Detail Alat Musnah</span>
-          <span v-else>Detail Alat Musnah</span>
+          <span v-if="showRincianAlatMusnah">Detail Mesin Musnah</span>
+          <span v-else>Detail Mesin Musnah</span>
           </button>
           <!-- Tombol Detail Alat Hilang -->
           <button
@@ -145,8 +145,8 @@
             :class="{ active: showRincianAlatHilang }"
             @click="toggleRincianAlatHilang"
           >
-            <span v-if="showRincianAlatHilang">Detail Alat Hilang</span>
-            <span v-else>Detail Alat Hilang</span>
+            <span v-if="showRincianAlatHilang">Detail Mesin Hilang</span>
+            <span v-else>Detail Mesin Hilang</span>
           </button>
         </div>
         <!-- Konten Detail -->
@@ -256,7 +256,7 @@
         </div>
         <!-- Konten Detail Alat Hilang -->
         <div id="app" class="card-body" v-if="showRincianAlatHilang" style="border-radius: 20px;">
-          <alat-hilang :kode-alat="alat.kode_alat"></alat-hilang>
+          <mesin-hilang :kode-alat="alat.kode_alat"></mesin-hilang>
         </div>
       </div>
     </div>

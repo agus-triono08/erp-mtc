@@ -56,6 +56,11 @@
                   <iframe v-else :src="musnah.fileUrl" width="100%" height="200" style="cursor: zoom-in;"></iframe>
                 </div>
               </td>
+              <td>
+              <button class="btn btn-sm btn-outline-primary mr-2">
+                <i class="fas fa-print"></i>
+              </button>
+            </td>
             </tr>
           </tbody>
         </table>
@@ -93,7 +98,16 @@
         staff: {
           nama_staff: '',
         },
-        datamusnah: [],            
+        datamusnah: [
+          {
+            no_seri_mesin: { no_seri_mesin: 'LMN654321' },
+            staff_pemusnahan: { nama_staff: 'Bob Smith' },
+            tanggal_musnah: '2025-02-22',
+            deskripsi_musnah: 'Mesin tidak dapat diperbaiki, komponen utama rusak parah',
+            fileUrl: 'https://tehniq.com/cdn/shop/products/Mesin-Bor-Listrik-NLG-BD-450-VR-Electric-Drill_800x_crop_center.jpg?v=1619591051', // Contoh file URL gambar
+            isImage: true
+          },
+        ],            
         isImage: false,
         showModalInput: false,
         currentPage: 1,

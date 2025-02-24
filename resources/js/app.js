@@ -37,6 +37,7 @@ Vue.component('rincian-alat', require('./components/admin-mtc/DataDetailAlat/Dat
 Vue.component('rincian-alat-sudah-digunakan', require('./components/admin-mtc/DataDetailAlat/DataRincianAlat/DataRincianAlatSudahDigunakan.vue').default);
 Vue.component('rincian-alat-peminjaman', require('./components/admin-mtc/DataDetailAlat/DataRincianAlat/DataRincianAlatPeminjaman.vue').default);
 Vue.component('input-rincian-alat', require('./components/admin-mtc/InputRincianAlat.vue').default);
+Vue.component('mesin-hilang', require('./components/admin-mtc/DataMesin/DetailMesin/Kondisi/DataHilang.vue').default);
 //Vue.component('data-alat', require('./components/admin-mtc/DataAlat.vue').default);
 //Vue.component('detail-alat', require('./components/admin-mtc/DetailAlat.vue').default);
 

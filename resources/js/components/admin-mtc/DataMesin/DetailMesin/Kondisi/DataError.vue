@@ -6,6 +6,13 @@
           <input-alat-error @tutup-modal="tutupModal"></input-alat-error>
         </div>
       </div>
+
+      <!-- Modal Edit Data -->
+      <div id="app" class="modal-input" :class="{'is-visible' :showModalEdit}">
+        <div class="modal-content-input">
+          <edit-alat-error @tutup-modal="tutupModal" :id="idEdit"></edit-alat-error>
+        </div>      
+      </div>
   
       <div class="row align-items-center justify-content-end mr-3 mt-3 mb-4">      
         <!-- Tambah Data -->
@@ -60,9 +67,23 @@
                           'status-error': error.no_seri_mesin.status === 'Error'}"
               >{{ error.no_seri_mesin ? error.no_seri_mesin.status : '-' }}</td>
               <td>
-                <button class="btn btn-plus btn-sm">
-                  <i class="fas fa-edit"></i>
-                </button>
+                <div class="dropdown text-center">
+                  <button
+                    class="btn btn-sm"
+                    type="button"
+                    id="dropdownMenuButton"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <i class="fas fa-ellipsis-v"></i>
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" @click="editData(error.id)">
+                      <i class="fas fa-edit text-primary"></i> Edit
+                    </a>
+                  </div>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -100,11 +121,24 @@
         staff: {
           nama_staff:''
         },
-        errors: [], // Menyimpan data error
+        errors: [
+          {
+            no_seri_mesin: { no_seri_mesin: 'LMN456123', status: "Error" },
+            stok_error: 3,
+            staff_analisa: { nama_staff: 'Michael Brown' },
+            tanggal_error: '2025-02-22',
+            tanggal_perbaikan: '2025-02-24',
+            layout: { nama_layout: 'Layout C' },
+            deskripsi_error: 'Kebocoran pada selang hidrolik',
+            no_seri_alat: { no_seri_alat: 'C003' }
+          }
+        ], // Menyimpan data error
         showModalInput: false, // Tambahkan variabel untuk mengontrol tampilan modal input
         searchQuery: '', // Variabel untuk menyimpan query pencarian
         rowsPerPage: 10,
         currentPage: 1,
+        showModalEdit: false,
+        idEdit: null,
       };
     },
     computed: {
@@ -157,8 +191,13 @@
       tambahDataError() {
         this.showModalInput = true;
       },
+      editData(id) {
+        this.idEdit = id;
+        this.showModalEdit = true;
+      },
       tutupModal() {
         this.showModalInput = false;
+        this.showModalEdit = false;
       },
       sortStokError(order) {
         this.errors.sort((a, b) => {

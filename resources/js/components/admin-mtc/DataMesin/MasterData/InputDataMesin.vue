@@ -261,6 +261,39 @@
 
           </div>-->
 
+          <!-- Jadwal Perawatan -->
+          <div class="row">
+            <div class="form-group col-md-12">
+              <label for="jadwal_perawatan" style="color: #000;">
+                <b>Jadwal Perawatan</b>
+                <sup style="color: red;"> *</sup>
+              </label>
+              <select
+                id="jadwal_perawatan"
+                v-model="alat.jadwal_perawatan"
+                @change="onJadwalChange"
+                class="form-control"
+                required
+              >
+                <option value="" disabled selected>Pilih Interval Perawatan</option>
+                <option value="3">Setiap 3 Bulan</option>
+                <option value="6">Setiap 6 Bulan</option>
+                <option value="12">Setiap 12 Bulan</option>
+                <option value="other">Lainnya</option>
+              </select>
+            </div>
+
+            <!-- Manual Input Jadwal (jika memilih "Lainnya") -->
+            <div v-if="showManualInputJadwal" class="form-group col-md-12">
+              <input
+                type="number"
+                v-model="manualJadwal"
+                class="form-control"
+                placeholder="Masukkan interval (bulan)"
+              />
+            </div>
+          </div>
+
           <div class="form-group">
             <label for="fungsi_mesin" style="color: #000;">
               <b>Fungsi Mesin</b>
@@ -328,7 +361,7 @@
               <sup style="color: red;"> *</sup>
             </label>
             <div 
-              class="upload-box"
+              class="upload-box-1"
               @dragover.prevent
               @drop.prevent="handleDrop"
               @dragenter="dragActive = true"
@@ -369,7 +402,7 @@
           </div>-->                          
 
         <!-- Tombol Aksi -->
-        <div class="form-group d-flex justify-content-between">
+        <div class="form-group d-flex justify-content-between mt-5">
           <span></span>
           <div>
             <button type="submit" class="btn btn-plus mr-2">
@@ -406,6 +439,7 @@
           harga_pembelian: 0,
           asal_usul: "",
           fungsi: "",
+          jadwal_perawatan: "",
         },
         gambar: null,
         gambarPreview: null,
@@ -422,9 +456,20 @@
         manualKategori: '',
         showManualInput: false,
         selectedKategori: '',
+        showManualInputJadwal: false,
+        manualJadwal: false,
       };
     },
     methods: {
+      onJadwalChange(event) {
+        if (event.target.value === 'other') {
+          this.showManualInputJadwal = true;
+          this.alat.jadwal_perawatan = ''; // Kosongkan pilihan jika memilih "Lainnya"
+        } else {
+          this.showManualInputJadwal = false;
+          this.manualJadwal = ''; // Kosongkan input manual
+        }
+      },
       kembali() {
         this.$router.push('/admin-mtc/data-alat').then(() => {
           window.location.reload();
@@ -556,28 +601,28 @@
         color: #fff;
     }
     
-    .upload-box {
+    .upload-box-1 {
       border: 2px dashed #169ea8;
       padding: 20px;
       text-align: center;
       cursor: pointer;
       position: relative;
       transition: border-color 0.3s ease;
-      max-width: 100%;
+      max-width: max-content;
       max-height: auto;
     }
     
-    .upload-box .fa-image {
+    .upload-box-1 .fa-image {
       font-size: 36px; /* Ukuran ikon diperbesar */
       margin-bottom: 10px;
       color: #666;
     }
     
-    .upload-box.drag-active {
+    .upload-box-1 .drag-active {
       border-color: #22d3e0;
     }
     
-    .upload-box .upload-input {
+    .upload-box-1 .upload-input {
       position: absolute;
       top: 0;
       left: 0;
