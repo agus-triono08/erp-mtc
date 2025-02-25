@@ -88,9 +88,18 @@
             </div>-->
             <div>
               <label><strong>Kategori</strong></label>
-              <div v-for="category in availableCategory" :key="category">
-                <label><input type="checkbox" :value="category" v-model="categoryFilters"/> {{ category }}</label>
-              </div>
+              <v-select
+                v-model="categoryFilters"
+                :options="availableCategory"
+                :searchable="true"
+                :multiple="true"
+                placeholder="Pilih Kategori"
+                label="label"
+                :close-on-select="false"
+                :clearable="true"
+                class="form-control"
+              >
+              </v-select>
             </div>
           </div>
           <input
@@ -217,8 +226,13 @@
 <script>
 import axios from "axios";
 import _ from "lodash";
+import vSelect from 'vue-select';
+import 'vue-select/dist/vue-select.css';
 
 export default {
+  components: {
+    vSelect,
+  },
   data() {
     return {
       alats: [], // Data akan diisi dari API
