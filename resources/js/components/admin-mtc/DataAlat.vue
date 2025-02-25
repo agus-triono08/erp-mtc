@@ -19,7 +19,7 @@
 
     <h1 class="h3 mb-4 text-gray-900"><b>Master Data</b></h1>
 
-    <div class="col-md-12">
+    <!-- <div class="col-md-12">
       <button 
         class="btn btn-show m-1"
         :class="{active: showAlat}"
@@ -36,7 +36,7 @@
         <span v-if="showMesin">Mesin</span>
         <span v-else>Mesin</span>
       </button>
-    </div>
+    </div> -->
 
     <!-- Data Alat -->
     <div v-if="showAlat">

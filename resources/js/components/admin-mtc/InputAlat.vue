@@ -14,37 +14,51 @@
     <div class="card-body" style="border-radius: 15px;">
       <form @submit.prevent="submitAlat">
 
-        <!-- Kategori Alat -->
         <div class="row">
-            <div class="form-group col-md-12">
-              <label for="kategori" style="color: #000;">
-                <b>Kategori</b>
-                <sup style="color: red;"> *</sup>
-              </label>
-              <div>
-                <select
-                  id="kategori"
-                  v-model="selectedKategori"
-                  class="form-control"
-                  @change="onKategoriChange"
-                >
-                  <option value="" disabled selected>Pilih Kategori</option>
-                  <option value="other">Masukkan Kategori Lainnya</option>
-                  <option v-for="kategori in kategoris" :key="kategori" :value="kategori">
-                    {{ kategori }}
-                  </option>                  
-                </select>
-              </div>
-              <div v-if="showManualInput" class="mt-2">
-                <input
-                  type="text"
-                  v-model="manualKategori"
-                  class="form-control"
-                  placeholder="Masukkan kategori baru"
-                />
-              </div>
-            </div>
+          <div class="form-group col-md-12">
+            <label for="jenis" style="color: #000;">
+              <b>Jenis</b>
+              <sup style="color: red;">*</sup>
+            </label>
+            <select 
+              id="jenis"
+              class="form-control"
+            >
+              <option value="" disabled selected>Pilih Jenis</option>
+              <option value="Alat">Alat</option>
+              <option value="Mesin">Mesin</option>
+            </select>
           </div>
+        </div>
+
+        <!-- Kategori Alat -->
+<div class="row">
+  <div class="form-group col-md-12">
+    <label for="kategori" style="color: #000;">
+      <b>Kategori</b>
+      <sup style="color: red;"> *</sup>
+    </label>
+    <div>
+      <v-select
+        v-model="selectedKategori"
+        :options="kategoris"
+        label="label"
+        placeholder="Pilih Kategori"
+        @input="onKategoriChange"
+        :searchable="true"
+      >
+      </v-select>
+    </div>
+    <div v-if="showManualInput" class="mt-2">
+      <input
+        type="text"
+        v-model="manualKategori"
+        class="form-control"
+        placeholder="Masukkan kategori baru"
+      />
+    </div>
+  </div>
+</div>
 
           <!-- Nama Alat -->
           <div class="row">
@@ -400,8 +414,13 @@
 
 <script>
 import axios from "axios";
+import vSelect from 'vue-select';
+import 'vue-select/dist/vue-select.css';
 
 export default {
+  components: {
+    vSelect,
+  },
   data() {
     return {
       error: {
@@ -426,7 +445,7 @@ export default {
       showModal: false,
       selectedKodeAlat: '',
       kode_alats: [],
-      kategoris: ['CLAMP', 'POWER SUPPLY', 'GLUE GUN', 'TANG', 'WATERPASS', 'SOLDER'], // Contoh data dari database
+      kategoris: ['CLAMP', 'POWER SUPPLY', 'GLUE GUN', 'TANG', 'WATERPASS', 'SOLDER', 'Masukkan Kategori Lainnya'], // Contoh data dari database
       formattedHarga: '',
       selectedLocation: '',
       manualLocationInput: '',
@@ -550,6 +569,13 @@ export default {
         this.manualLocation = '';
       }
     },
+    onKategoriChange() {
+      if (this.selectedKategori === 'Masukkan Kategori Lainnya') {
+        this.showManualInput = true;
+      } else {
+        this.showManualInput = false;
+      }
+    }
   },
   computed: {
     finalKategori() {
