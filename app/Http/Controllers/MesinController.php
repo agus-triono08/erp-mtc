@@ -37,7 +37,7 @@ class MesinController extends Controller
             'id' => 1,
             'no_seri' => 'MSN-01',
             'no_seri_default' => '0 601 216 1K1',
-            'kode_mesin' => '2-B1-B0-1-02',
+            'id_mesin' => 1,            
             'stok' => 1,
             'harga' => 5000000,
             'tanggal_masuk' => '2025-01-01',
@@ -175,7 +175,7 @@ class MesinController extends Controller
     //ByKodeMesin No Seri Belum Digunakan: Tampilkan detail no seri berdasarkan kode mesin
     public function byKodeMesinNoSeriBelumDigunakan($kodeMesin) {
         $datanoseri = collect($this->datadummyNoSeri)->filter(function($noseri) use ($kodeMesin){
-            return $noseri['kode_mesin'] == $kodeMesin && $noseri;
+            return optional(collect($this->datadummyMesin)->firstWhere('id', $noseri['id_mesin']))['kode_mesin'] === $kodeMesin;
         });
 
         if($datanoseri->isEmpty()) {

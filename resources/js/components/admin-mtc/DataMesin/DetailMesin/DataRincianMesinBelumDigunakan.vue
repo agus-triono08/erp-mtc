@@ -251,9 +251,10 @@
       async fetchAlatError() {
         try {
           const kodeMesin = this.kodeMesin; // Kode alat di URL
+          // console.log(this.kodeMesin);
           const response = await axios.get(`/api/mesins/no-seri/belumdigunakan/${kodeMesin}`);
           this.datanoseri = response.data; // Menyimpan data alat
-          //console.log(this.datanoseri)
+          console.log(this.datanoseri)
         } catch (error) {
           console.error("Error fetching alat error detail:", error);
         }

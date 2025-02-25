@@ -13882,23 +13882,24 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
             case 0:
               _context.prev = 0;
               kodeMesin = _this2.kodeMesin; // Kode alat di URL
+              // console.log(this.kodeMesin);
               _context.next = 4;
               return axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/mesins/no-seri/belumdigunakan/".concat(kodeMesin));
             case 4:
               response = _context.sent;
               _this2.datanoseri = response.data; // Menyimpan data alat
-              //console.log(this.datanoseri)
-              _context.next = 11;
+              console.log(_this2.datanoseri);
+              _context.next = 12;
               break;
-            case 8:
-              _context.prev = 8;
+            case 9:
+              _context.prev = 9;
               _context.t0 = _context["catch"](0);
               console.error("Error fetching alat error detail:", _context.t0);
-            case 11:
+            case 12:
             case "end":
               return _context.stop();
           }
-        }, _callee, null, [[0, 8]]);
+        }, _callee, null, [[0, 9]]);
       }))();
     },
     debouncedFetchAlats: _.debounce(function () {
