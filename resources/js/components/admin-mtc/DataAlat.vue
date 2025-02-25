@@ -100,10 +100,8 @@
                 :searchable="true"
                 :multiple="true"
                 placeholder="Pilih Kategori"
-                label="label"
                 :close-on-select="false"
                 :clearable="true"
-                class="form-control"
               >
               </v-select>
             </div>

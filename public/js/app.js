@@ -7635,8 +7635,6 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 //
 //
 //
-//
-//
 
 
 
@@ -64717,13 +64715,11 @@ var render = function () {
                         _vm._m(2),
                         _vm._v(" "),
                         _c("v-select", {
-                          staticClass: "form-control",
                           attrs: {
                             options: _vm.availableCategory,
                             searchable: true,
                             multiple: true,
                             placeholder: "Pilih Kategori",
-                            label: "label",
                             "close-on-select": false,
                             clearable: true,
                           },
