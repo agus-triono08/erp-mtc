@@ -45,11 +45,17 @@
       <!-- Filter Button -->
       <div>
         
-      </div>
+      </div>      
 
       <!-- Search and Add -->
       <div>
         <form class="d-flex align-items-center">
+          <!-- Tombol Download Excel di samping kiri filter -->
+          <div>
+            <button @click="downloadExcel" class="btn btn-sm btn-primary-1 mr-3">
+              <i class="fas fa-file-excel"></i> Export
+            </button>
+          </div>
           <button
             class="btn btn-sm btn-primary-1"
             type="button"
@@ -109,13 +115,13 @@
             @input="debouncedFetchAlats"
             style="background-color: #f3f4f6;"
             class="form-control-sm border-0 mr-2 ml-2"
-            placeholder="Search by Code or Name or Merek"
+            placeholder="Search..."
           />
           <a @click="tambahData" class="btn btn-icon-split btn-plus">
             <span class="icon text-white-50">
               <i class="fas fa-plus-circle"></i>
             </span>
-            <span class="text">Add Data Alat</span>
+            <span class="text">Add Data</span>
           </a>
         </form>
       </div>
@@ -127,8 +133,8 @@
         <thead>
           <tr class="bg-table">
             <th class="text-center text-black-1">#</th>
-            <th class="text-left text-black-1">Kode Alat</th>
-            <th class="text-center text-black-1">Nama Alat</th>
+            <th class="text-left text-black-1">Kode</th>
+            <th class="text-center text-black-1">Nama</th>
             <th class="text-center text-black-1">Merek</th>
             <th class="text-center text-black-1">Tipe/Ukuran</th>                        
             <th class="text-center text-black-1" style="cursor: pointer; position: relative; vertical-align: middle;">
@@ -150,7 +156,7 @@
         </thead>
         <tbody v-if="filteredAlats.length === 0">
           <tr>
-            <td colspan="8" class="text-center">No data available</td>
+            <td colspan="8" class="text-center">Tidak Ada Data</td>
           </tr>
         </tbody>
         <tbody v-for="(categoryGroup, category) in filteredGroupedAlats" :key="category">        
@@ -228,6 +234,7 @@ import axios from "axios";
 import _ from "lodash";
 import vSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';
+import * as XLSX from 'xlsx';  // Impor XLSX dari library yang sudah diinstal
 
 export default {
   components: {
@@ -368,6 +375,35 @@ export default {
     },
     tutupModal() {
       this.showModalInput = false;
+    },
+    // Metode untuk mendownload data ke Excel
+    downloadExcel() {
+      // Memastikan data yang akan diekspor sudah ada
+      if (this.filteredAlats.length === 0) {
+        alert("Tidak ada data untuk di-download");
+        return;
+      }
+
+      // Menyiapkan data yang akan dikonversi
+      const data = this.filteredAlats.map(alat => ({
+        Kode: alat.kode_alat,
+        Nama: alat.nama_alat,
+        Merek: alat.merek_alat,
+        Tipe: alat.tipe_alat,
+        'Stok Awal': alat.stok_awal,
+        'Stok Akhir': alat.stok_akhir,
+        Kategori: alat.kategori,
+      }));
+
+      // Mengonversi data ke dalam format sheet Excel
+      const ws = XLSX.utils.json_to_sheet(data);
+      
+      // Membuat workbook dari sheet yang sudah dibuat
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Data Master');
+
+      // Menyimpan file Excel dengan nama yang ditentukan
+      XLSX.writeFile(wb, 'data_master.xlsx');
     },
   },
   mounted() {
