@@ -21251,6 +21251,10 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -83790,11 +83794,50 @@ var render = function () {
                                           _vm._m(9, true),
                                         ]
                                       ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "form-check form-check-inline",
+                                        },
+                                        [
+                                          _c("input", {
+                                            directives: [
+                                              {
+                                                name: "model",
+                                                rawName: "v-model",
+                                                value: _vm.testResult,
+                                                expression: "testResult",
+                                              },
+                                            ],
+                                            staticClass: "form-check-input",
+                                            attrs: {
+                                              type: "radio",
+                                              value: "Hilang",
+                                              id: "hilang",
+                                            },
+                                            domProps: {
+                                              checked: _vm._q(
+                                                _vm.testResult,
+                                                "Hilang"
+                                              ),
+                                            },
+                                            on: {
+                                              change: function ($event) {
+                                                _vm.testResult = "Hilang"
+                                              },
+                                            },
+                                          }),
+                                          _vm._v(" "),
+                                          _vm._m(10, true),
+                                        ]
+                                      ),
                                     ]),
                                   ]),
                                   _vm._v(" "),
                                   _c("div", { staticClass: "mb-3" }, [
-                                    _vm._m(10, true),
+                                    _vm._m(11, true),
                                     _vm._v(" "),
                                     _c("textarea", {
                                       directives: [
@@ -84022,7 +84065,7 @@ var staticRenderFns = [
         staticStyle: { color: "#000" },
         attrs: { for: "testDate" },
       },
-      [_c("b", [_vm._v("Tanggal Pengujian:")])]
+      [_c("b", [_vm._v("Tanggal Pengecekan:")])]
     )
   },
   function () {
@@ -84032,7 +84075,7 @@ var staticRenderFns = [
     return _c(
       "label",
       { staticClass: "form-label", staticStyle: { color: "#000" } },
-      [_c("b", [_vm._v("Hasil Pengujian:")])]
+      [_c("b", [_vm._v("Hasil Pengecekan:")])]
     )
   },
   function () {
@@ -84075,6 +84118,20 @@ var staticRenderFns = [
         attrs: { for: "rusak" },
       },
       [_c("b", [_vm._v("Rusak")])]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "form-check-label",
+        staticStyle: { color: "#000" },
+        attrs: { for: "hilang" },
+      },
+      [_c("b", [_vm._v("Hilang")])]
     )
   },
   function () {

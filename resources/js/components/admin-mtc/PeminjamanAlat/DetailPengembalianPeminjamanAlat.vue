@@ -166,13 +166,13 @@
               <div class="modal-body">
                 <!-- Tanggal Pengujian -->
                 <div class="mb-3">
-                  <label for="testDate" class="form-label" style="color: #000;"><b>Tanggal Pengujian:</b></label>
+                  <label for="testDate" class="form-label" style="color: #000;"><b>Tanggal Pengecekan:</b></label>
                   <input type="date" v-model="testDate" class="form-control" />
                 </div>
 
                 <!-- Hasil Pengujian -->
                 <div class="mb-3">
-                  <label class="form-label" style="color: #000;"><b>Hasil Pengujian:</b></label>
+                  <label class="form-label" style="color: #000;"><b>Hasil Pengecekan:</b></label>
                   <div>
                     <div class="form-check form-check-inline">
                       <input type="radio" v-model="testResult" value="Error" id="error" class="form-check-input" />
@@ -185,6 +185,10 @@
                     <div class="form-check form-check-inline">
                       <input type="radio" v-model="testResult" value="Rusak" id="rusak" class="form-check-input" />
                       <label class="form-check-label" for="rusak" style="color: #000;"><b>Rusak</b></label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input type="radio" v-model="testResult" value="Hilang" id="hilang" class="form-check-input" />
+                      <label class="form-check-label" for="hilang" style="color: #000;"><b>Hilang</b></label>
                     </div>
                   </div>
                 </div>
