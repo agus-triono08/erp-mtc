@@ -25,6 +25,8 @@
         "webpack-cli": "^5.1.4"
     },
     "dependencies": {
+        "jspdf": "^3.0.0",
+        "jspdf-autotable": "^3.8.4",
         "lodash.debounce": "^4.0.8",
         "pdf-viewer": "^0.8.1",
         "sweetalert2": "^11.15.10",

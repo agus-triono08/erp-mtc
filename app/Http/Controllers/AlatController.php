@@ -1136,6 +1136,7 @@ class AlatController extends Controller
         $dataPeminjamanAlat = collect($this->dataDummyPeminjaman)->filter(function($peminjamanalat) use ($noPinjam) {
             return $peminjamanalat['no_pinjam'] == $noPinjam && $peminjamanalat;
         })->map(function($peminjamanalat){
+            $peminjamanalat['alat'] = collect($this->dataDummy)->firstWhere('id', $peminjamanalat['id_alat']);
             $peminjamanalat['no_seri_alat'] = collect($this->dataDummySeri)->firstWhere('id', $peminjamanalat['id_no_seri_alat']);
             $peminjamanalat['pengguna'] = collect($this->dataDummyPengguna)->firstWhere('id', $peminjamanalat['id_user']);
             return $peminjamanalat;

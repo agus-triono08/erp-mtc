@@ -68,7 +68,7 @@
           >
             <label for="Status"><b>Status</b></label>
             <div v-for="sts in availableStatus" :key="sts">
-              <label><input type="checkbox" :value="sts" v-model="filterStatus" /> {{sts}}</label>
+              <label><input type="checkbox" :value="sts"/> {{sts}}</label>
             </div>
           </div>
           <!-- Search -->

@@ -1,8 +1,9 @@
 <template>
   <div class="container-fluid">
     <div class="row align-items-center justify-content-end mr-3 mt-4 mb-2">
-          <button class="btn btn-sm btn-outline-primary mr-2">
-            <i class="fas fa-print"></i>
+          <!-- Tombol Print PDF -->
+          <button class="btn btn-sm btn-outline-primary mr-2" @click="printPDF">
+            <i class="fas fa-print"></i> Print PDF
           </button>
           <div class="search-wrapper">
             <div class="input-group">
@@ -88,6 +89,8 @@
 </template>
 <script>
 import axios from "axios";
+import jsPDF from "jspdf";
+import 'jspdf-autotable';
 
 export default {
   props:{
@@ -159,6 +162,92 @@ export default {
     debouncedFetchAlats: _.debounce(function () {
       this.fetchPeminjamanAlat();
     }, 300),
+     // Metode untuk mencetak PDF
+    printPDF() {
+      const doc = new jsPDF();
+
+      // Menambahkan judul di tengah dan bold
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(16);
+      const title = "Laporan Peminjaman Alat";
+
+      // Menentukan posisi judul agar berada di tengah
+      const titleWidth = doc.getStringUnitWidth(title) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+      const titleX = (doc.internal.pageSize.width - titleWidth) / 2;
+      doc.text(title, titleX, 16); // Menambahkan judul
+
+      // Menambahkan Nama Peminjam di luar tabel (tidak bold)
+      doc.setFont("helvetica", "normal"); // Kembalikan ke font normal untuk nama peminjam
+      doc.setFontSize(12);
+      const namaPeminjam = this.filteredData[0]?.pengguna?.nama_pengguna || "Tidak Diketahui"; // Ambil nama peminjam pertama atau "Tidak Diketahui" jika kosong
+      doc.text(`Nama Peminjam: ${namaPeminjam}`, 14, 30); // Menampilkan nama peminjam
+
+      // Menambahkan Divisi di bawah Nama Peminjam
+      const divisi = this.filteredData[0]?.pengguna?.divisi || "Tidak Diketahui"; // Ambil divisi peminjam pertama atau "Tidak Diketahui" jika kosong
+      doc.text(`Divisi: ${divisi}`, 14, 36); // Menampilkan divisi
+
+      const tanggalPinjam = this.filteredData[0]?.tanggal_pinjam || "Tidak Diketahui";
+      doc.text(`Tanggal Peminjaman: ${tanggalPinjam}`, 100, 30);
+
+      // Menghitung Durasi (selisih antara Tanggal Peminjaman dan Tanggal Pengembalian)
+      const tanggalPeminjaman = new Date(this.filteredData[0]?.tanggal_pinjam);
+      const tanggalPengembalian = new Date(this.filteredData[0]?.tanggal_kembali);
+      const durasiInMillis = tanggalPengembalian - tanggalPeminjaman;
+      const durasiInDays = Math.floor(durasiInMillis / (1000 * 3600 * 24)); // Menghitung durasi dalam hari
+      
+      // Menambahkan Durasi di bawah Tanggal Peminjaman
+      doc.text(`Durasi: ${durasiInDays} hari`, 100, 36);
+
+      const tujuan = this.filteredData[0]?.detail_peminjaman || "Tidak Diketahui";
+      doc.text(`Keperluan Peminjaman: ${tujuan}`, 14, 42);
+
+      // Menambahkan header tabel
+      const headers = [
+        "#",
+        "Nama",
+        "Kode",
+        "Jumlah",
+        "No Seri",
+        "Kondisi",
+      ];
+      const rows = [];
+
+      // Mengisi data tabel
+      this.filteredData.forEach((item, index) => {
+        rows.push([
+          index + 1,
+          item?.alat?.nama_alat,
+          item?.alat?.kode_alat,
+          item.stok,
+          item?.no_seri_alat?.no_seri_alat,
+          item?.no_seri_alat?.status,
+        ]);
+      });
+
+      // Menambahkan tabel ke PDF
+      doc.autoTable({
+        head: [headers],
+        body: rows,
+        startY: 52, // Menyesuaikan posisi tabel setelah judul, nama peminjam, dan divisi
+      });
+
+      // Menambahkan tulisan "Peminjam" dan "Penyerahan"
+      const signatureSectionY = doc.lastAutoTable.finalY + 20; // Menentukan posisi setelah tabel
+      doc.text("Peminjam", 60, signatureSectionY); // Peminjam di kiri
+      doc.text("Penyerahan", 140, signatureSectionY); // Penyerahan di kanan
+
+      // Menambahkan garis panjang di bawah tulisan Peminjam dan Penyerahan
+      doc.setLineWidth(0.5);
+      doc.line(14, signatureSectionY + 4, 195, signatureSectionY + 4); // Garis untuk Peminjam
+
+      // Menambahkan ruang kosong setelah garis
+      const gapY = signatureSectionY + 50; // Memberi jarak untuk ruang kosong
+      doc.text(namaPeminjam, 60, gapY); // Nama Peminjam di kiri
+      doc.text("Administrator", 140, gapY); // Administrator di kanan
+
+      // Menyimpan PDF
+      doc.save("peminjaman-alat.pdf");
+    }
   },
   mounted() {
     this.fetchPeminjamanAlat();
