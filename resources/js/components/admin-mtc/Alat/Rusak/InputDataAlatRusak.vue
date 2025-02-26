@@ -23,7 +23,21 @@
             <!-- PIC Analisa Kerusakan -->
             <div class="form-group">
               <label for="pic" style="color: #000;">
-                <b>PIC</b>
+                <b>PIC 1</b>
+                <sup style="color: red;">*</sup>
+              </label>
+              <select id="pic" class="form-control" v-model="selectedPIC" required>
+                <option value="" disabled selected>Pilih PIC</option>
+                <option v-for="pic in PIC" :key="pic.id" :value="pic.nama_staff">
+                  {{ pic.nama_staff }}
+                </option>
+              </select>
+            </div>
+
+            <!-- PIC Analisa Kerusakan -->
+            <div class="form-group">
+              <label for="pic" style="color: #000;">
+                <b>PIC 2</b>
                 <sup style="color: red;">*</sup>
               </label>
               <select id="pic" class="form-control" v-model="selectedPIC" required>

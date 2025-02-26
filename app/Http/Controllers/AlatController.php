@@ -298,6 +298,7 @@ class AlatController extends Controller
             'tanggal_musnah' => '2025-01-01',
             'deskripsi_musnah' => 'Baterai lemah',
             'stok_musnah' => 1,
+            'status' => 'Proses',
             'fileUrl' => 'https://library.uns.ac.id/wp-content/uploads/2016/04/EBOOK.pdf',
             'isImage' => false,
             'id_no_seri_alat' => 6,

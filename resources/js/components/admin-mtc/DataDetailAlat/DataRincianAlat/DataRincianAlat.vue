@@ -43,9 +43,15 @@
 
     <div v-if="showBelumDigunakan">
       <div class="row align-items-center justify-content-end mr-3 mt-3 mb-4">
+        <!-- Tombol Download Excel di samping kiri filter -->
+        <div>
+          <button @click="downloadExcel" class="btn btn-sm btn-outline-primary mr-1">
+            <i class="fas fa-file-excel"></i> Export
+          </button>
+        </div>
         <!-- Filter Data -->
         <button 
-          class="btn btn-sm btn-outline-primary mr-1"
+          class="btn btn-sm btn-outline-primary mr-1 ml-1"
           type="button"
           id="filterDropdown"
           data-toggle="dropdown"
@@ -181,6 +187,7 @@
 
 <script>
 import axios from "axios";
+import * as XLSX from 'xlsx';  // Impor XLSX dari library yang sudah diinstal
 
 export default {
   props: {
@@ -305,6 +312,30 @@ export default {
     },
     formatRupiah(harga) {
       return harga ? new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(harga) : 'Rp -';
+    },
+    downloadExcel() {
+      if(this.filteredData.length === 0) {
+        alert("Tidak ada data yang dapat di download");
+        return;
+      }
+
+      const data = this.filteredData.map(item => ({
+        NoSeri : item.no_seri_alat,
+        Layout : item?.layout?.nama_lokasi,
+        TanggalMasuk : item.tanggal_masuk,
+        Harga : item.harga,
+        Kondisi : item.status,
+      }));
+
+      // Mengonversi data ke dalam format sheet Excel
+      const ws = XLSX.utils.json_to_sheet(data);
+      
+      // Membuat workbook dari sheet yang sudah dibuat
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Data No Seri Belum Digunakan');
+
+      // Menyimpan file Excel dengan nama yang ditentukan
+      XLSX.writeFile(wb, 'data_no_seri_belum_digunakan.xlsx');
     },
   },
   watch: {

@@ -54,7 +54,7 @@
             <td class="text-center">{{ index + 1 }}</td>
             <td class="text-center">{{ rusak.no_seri_alat ? rusak.no_seri_alat.no_seri_alat : '-' }}</td>
             <!--<td class="text-center">{{ rusak.stok_kerusakan || '-' }}</td>-->
-            <td class="text-center">{{ rusak.staff_kerusakan ? rusak.staff_kerusakan.nama_staff : '-' }}</td>
+            <td class="text-center">{{ rusak.staff_kerusakan ? rusak.staff_kerusakan.nama_staff : '-' }} & {{ rusak.staff_kerusakan ? rusak.staff_kerusakan.nama_staff : '-' }}</td>
             <td class="text-center">{{ rusak.tanggal_kerusakan || '-' }}</td>
             <td class="text-center">{{ rusak.lokasi_penyimpanan || '-' }}</td>                      
             <td class="text-center text-wrap">{{ rusak.deskripsi_kerusakan || '-' }}</td>

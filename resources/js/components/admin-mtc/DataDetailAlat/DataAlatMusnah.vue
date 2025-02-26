@@ -33,8 +33,9 @@
             <th class="text-center text-black-1">PIC Pemusnahan</th>
             <th class="text-center text-black-1">Tanggal Pemusnahan</th>
             <th class="text-center text-black-1">Deskripsi Pemusnahan</th>
+            <th class="text-center text-black-1">Status</th>
             <th class="text-center text-black-1">Dokument Pendukung</th>
-            <th class="text-center text-black-1">Aksi</th>
+            <!-- <th class="text-center text-black-1">Aksi</th> -->
           </tr>
         </thead>
         <tbody v-if="filteredData.length===0">
@@ -43,24 +44,36 @@
           </tr>
         </tbody>
         <tbody v-for="(musnah, index) in filteredData" :key="index">
-          <tr>
+          <tr class="text-center">
             <td class="text-center">{{ index + 1 }}</td>
             <td class="text-center">{{ musnah.no_seri_alat ? musnah.no_seri_alat.no_seri_alat : '-' }}</td>
             <!--<td class="text-center">{{ musnah.stok_musnah || '-' }}</td>-->
             <td class="text-center">{{ musnah.staff_pemusnahan ? musnah.staff_pemusnahan.nama_staff : '-' }}</td>
             <td class="text-center">{{ musnah.tanggal_musnah || '-' }}</td>
             <td class="text-center">{{ musnah.deskripsi_musnah || '-' }}</td>
+            <td>
+              <div
+                class="btn-sts"
+                :class="{
+                  'status-active' : musnah.status === 'Diterima',
+                  'status-hilang' : musnah.status === 'Proses',
+                  'status-rusak' : musnah.status === 'Ditolak',
+                }"
+              >
+                {{ musnah.status || '-' }}
+              </div>
+            </td>
             <td class="text-center">
               <div v-if="musnah.fileUrl">
                 <img v-if="musnah.isImage" :src="musnah.fileUrl" width="100%" height="200" style="cursor: zoom-in;"/>
                 <iframe v-else :src="musnah.fileUrl" width="100%" height="200" style="cursor: zoom-in;"></iframe>
               </div>
             </td>
-            <td>
+            <!-- <td>
               <button class="btn btn-sm btn-outline-primary mr-2">
                 <i class="fas fa-print"></i>
               </button>
-            </td>
+            </td> -->
           </tr>
         </tbody>
       </table>
@@ -202,4 +215,8 @@ export default {
     padding-left: 0.2rem;
     padding-right: 0.2rem;
   }
+  .status-pending {
+  background-color: rgba(117, 134, 148, 0.1); /* Hijau dengan transparansi */
+  color: rgba(117, 134, 148); 
+}
 </style>
