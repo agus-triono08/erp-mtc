@@ -41,6 +41,47 @@
         <!-- <button class="btn btn-sm btn-outline-primary mr-2 ml-1" @click="tambahData">
           <i class="fa fa-plus-circle"></i> Tambah Data
         </button> -->
+        <!-- Tombol Print PDF -->
+        <button class="btn btn-sm btn-primary-1 mr-2" @click="printPDF">
+          <i class="fas fa-print"></i> Print PDF
+        </button>
+
+        <!-- Filter -->
+        <button
+          class="btn btn-sm btn-primary-1 mr-2"
+          type="button"
+          id="filterDropdown"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          <i class="fa fa-filter"></i> Filter
+        </button>
+        <div 
+          class="dropdown-menu p-3"
+          aria-labelledby="filterDropdown"
+          style="border-radius: 8px; width: 250px;"
+          @click.stop
+        >
+          <div>
+            <label><b>Kode</b></label>
+            <v-select
+              v-model="codeFilters"
+              :options="kodeOptions"
+              :searchable="true"
+              :multiple="true"
+              placeholder="Pilih Kode"
+              :close-on-select="false"
+              :clearable="true"
+            ></v-select>
+          </div>
+          <div class="mt-2">
+            <label><b>Status</b></label>
+            <div v-for="sts in availableStatus" :key="sts">
+              <label><input type="checkbox" :value="sts" v-model="statusFilters" /> {{ sts }}</label>
+            </div>
+          </div>
+        </div>
         <!-- Search -->
         <div class="search-wrapper">
           <div class="input-group">
@@ -55,6 +96,7 @@
         <thead>
           <tr class="bg-table">
             <th class="text-center text-black-1 tr-center">#</th>
+            <th class="text-center text-black-1">Nama</th>
             <th class="text-center text-black-1">No Seri Alat</th>
             <th class="text-center text-black-1">PIC</th>                       
             <th class="text-center text-black-1">Tgl Perawatan</th>                        
@@ -73,6 +115,7 @@
           </tr>
           <tr v-for="(perawatan, index) in kodeGroup" :key="perawatan.id" class="text-center">
             <td class="text-center">{{ index + 1 }}</td>
+            <td>{{ perawatan.alat ? perawatan.alat.nama_alat : '-' }}</td>
             <td class="text-center">{{ perawatan.no_seri ? perawatan.no_seri.no_seri_alat : '-' }}</td>
             <td class="text-center">{{ perawatan.staff ? perawatan.staff.nama_staff : '-' }}</td>            
             <td class="text-center">{{ perawatan.tanggal_perawatan || '-' }}</td>            
@@ -152,8 +195,16 @@
 <script>
 import axios from "axios";
 import _ from "lodash";
+import vSelect from 'vue-select';
+import 'vue-select/dist/vue-select.css';
+import jsPDF from "jspdf";
+import 'jspdf-autotable';
+import { start } from "@popperjs/core";
 
 export default {
+  components: {
+    vSelect,
+  },
   props: {
     kodeAlat: String
   },
@@ -174,10 +225,18 @@ export default {
       searchQuery: '',
       rowsPerPage: 10,
       currentPage: 1,
+      codeFilters: [],
+      statusFilters: [],
       currentDate: new Date().toISOString().split('T')[0], 
     };
   },
   computed: {
+    availableStatus() {
+      return [...new Set(this.dataPerawatanAlat.map(item=>item.status))];
+    },
+    kodeOptions() {
+      return [...new Set(this.dataPerawatanAlat.map(item => item?.alat?.kode_alat))];
+    },
     totalPages() {
       return Math.ceil(this.filteredData.length / this.rowsPerPage);
     },
@@ -188,11 +247,12 @@ export default {
     },
     filteredData() {
       return this.dataPerawatanAlat.filter((perawatan) => {
-        return (
-          perawatan.alat?.kode_alat?.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+        const CodeMatch = this.codeFilters.length ? this.codeFilters.includes(perawatan?.alat?.kode_alat) : true;
+        const StatusMatch = this.statusFilters.length ? this.statusFilters.includes(perawatan.status) : true;
+        const SearchMatch = perawatan.alat?.kode_alat?.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
           perawatan.no_pinjam?.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
           perawatan.staff?.nama_pengguna?.toLowerCase().includes(this.searchQuery.toLowerCase())
-        );
+        return CodeMatch && StatusMatch && SearchMatch;
       });
     },
     paginatedData() {
@@ -234,7 +294,7 @@ export default {
           staff: perawatanalat.staff,
           no_seri: perawatanalat.no_seri_alat,
         })); // Menyimpan data alat
-        //console.log(this.dataPerawatanAlat); // Debug data
+        console.log(this.dataPerawatanAlat); // Debug data
       } catch (error) {
         console.error("Error fetching alat error detail:", error);
         //alert("Gagal memuat detail data alat error.");
@@ -326,7 +386,55 @@ export default {
           perawatan.status = 'Belum';
         }
       });
-    }
+    },
+    printPDF () {
+      const doc = new jsPDF();
+
+      const dataToPrint = this.filteredData;
+
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(16);
+      const title = "Laporan Perawatan Alat";
+
+      const titleWidth = doc.getStringUnitWidth(title) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+      const titleX = (doc.internal.pageSize.width - titleWidth) / 2;
+      doc.text(title, titleX, 16);
+
+      const headers = [
+        "#",
+        "Kode",
+        "Nama",
+        "No Seri",
+        "PIC",
+        "Tgl Perawatan",
+        "Detail Perawatan",
+        "Kondisi",
+        "Status",
+      ];
+      const rows = [];
+
+      this.filteredData.forEach((item, index) => {
+        rows.push([
+          index + 1,
+          item?.alat?.kode_alat,
+          item?.alat?.nama_alat,
+          item?.no_seri?.no_seri_alat,
+          item?.staff?.nama_staff,
+          item.tanggal_perawatan,
+          item.detail_perawatan,
+          item?.no_seri?.status,
+          item.status,
+        ]);
+      });
+
+      doc.autoTable({
+        head: [headers],
+        body: rows,
+        startY : 30,
+      });
+
+      doc.save("perawatan-alat.pdf");
+    },
   },
   mounted() {
     this.fetchAlatPeminjaman();

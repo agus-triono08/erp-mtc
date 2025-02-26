@@ -54,7 +54,7 @@
             <td class="text-center">{{ index + 1 }}</td>
             <td class="text-center">{{ error.no_seri_alat ? error.no_seri_alat.no_seri_alat : '-' }}</td>
             <!--<td class="text-center">{{ error.stok_error || '-' }}</td>-->
-            <td class="text-center">{{ error.staff_analisa ? error.staff_analisa.nama_staff : '-' }}</td>
+            <td class="text-center">{{ error.staff_analisa ? error.staff_analisa.nama_staff : '-'  }} & {{ error.staff_analisa ? error.staff_analisa.nama_staff : '-'  }}</td>
             <td class="text-center">{{ error.tanggal_error || '-' }}</td>
             <td class="text-center">{{ error.tanggal_perbaikan || 'Belum Selesai Diperbaiki' }}</td>
             <td class="text-center">{{ error.layout ? error.layout.nama_layout : '-' }}</td>

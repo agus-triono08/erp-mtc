@@ -5627,6 +5627,20 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -23457,10 +23471,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-select */ "./node_modules/vue-select/dist/vue-select.js");
+/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_select__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-select/dist/vue-select.css */ "./node_modules/vue-select/dist/vue-select.css");
+/* harmony import */ var jspdf__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! jspdf */ "./node_modules/jspdf/dist/jspdf.es.min.js");
+/* harmony import */ var jspdf_autotable__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! jspdf-autotable */ "./node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.js");
+/* harmony import */ var jspdf_autotable__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(jspdf_autotable__WEBPACK_IMPORTED_MODULE_5__);
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
@@ -23615,15 +23641,66 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    vSelect: (vue_select__WEBPACK_IMPORTED_MODULE_2___default())
+  },
   props: {
     kodeAlat: String
   },
   data: function data() {
-    return _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty({
+    return _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty({
       user: {
         nama_pengguna: '',
         divisi: ''
@@ -23635,9 +23712,20 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
       showAlat: true,
       idEdit: null,
       showMesin: false
-    }, "showModalInput", false), "showModalEdit", false), "searchQuery", ''), "rowsPerPage", 10), "currentPage", 1), "currentDate", new Date().toISOString().split('T')[0]);
+    }, "showModalInput", false), "showModalEdit", false), "searchQuery", ''), "rowsPerPage", 10), "currentPage", 1), "codeFilters", []), "statusFilters", []), "currentDate", new Date().toISOString().split('T')[0]);
   },
   computed: {
+    availableStatus: function availableStatus() {
+      return _toConsumableArray(new Set(this.dataPerawatanAlat.map(function (item) {
+        return item.status;
+      })));
+    },
+    kodeOptions: function kodeOptions() {
+      return _toConsumableArray(new Set(this.dataPerawatanAlat.map(function (item) {
+        var _item$alat;
+        return item === null || item === void 0 || (_item$alat = item.alat) === null || _item$alat === void 0 ? void 0 : _item$alat.kode_alat;
+      })));
+    },
     totalPages: function totalPages() {
       return Math.ceil(this.filteredData.length / this.rowsPerPage);
     },
@@ -23649,8 +23737,11 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
     filteredData: function filteredData() {
       var _this = this;
       return this.dataPerawatanAlat.filter(function (perawatan) {
-        var _perawatan$alat, _perawatan$no_pinjam, _perawatan$staff;
-        return ((_perawatan$alat = perawatan.alat) === null || _perawatan$alat === void 0 || (_perawatan$alat = _perawatan$alat.kode_alat) === null || _perawatan$alat === void 0 ? void 0 : _perawatan$alat.toLowerCase().includes(_this.searchQuery.toLowerCase())) || ((_perawatan$no_pinjam = perawatan.no_pinjam) === null || _perawatan$no_pinjam === void 0 ? void 0 : _perawatan$no_pinjam.toLowerCase().includes(_this.searchQuery.toLowerCase())) || ((_perawatan$staff = perawatan.staff) === null || _perawatan$staff === void 0 || (_perawatan$staff = _perawatan$staff.nama_pengguna) === null || _perawatan$staff === void 0 ? void 0 : _perawatan$staff.toLowerCase().includes(_this.searchQuery.toLowerCase()));
+        var _perawatan$alat, _perawatan$alat2, _perawatan$no_pinjam, _perawatan$staff;
+        var CodeMatch = _this.codeFilters.length ? _this.codeFilters.includes(perawatan === null || perawatan === void 0 || (_perawatan$alat = perawatan.alat) === null || _perawatan$alat === void 0 ? void 0 : _perawatan$alat.kode_alat) : true;
+        var StatusMatch = _this.statusFilters.length ? _this.statusFilters.includes(perawatan.status) : true;
+        var SearchMatch = ((_perawatan$alat2 = perawatan.alat) === null || _perawatan$alat2 === void 0 || (_perawatan$alat2 = _perawatan$alat2.kode_alat) === null || _perawatan$alat2 === void 0 ? void 0 : _perawatan$alat2.toLowerCase().includes(_this.searchQuery.toLowerCase())) || ((_perawatan$no_pinjam = perawatan.no_pinjam) === null || _perawatan$no_pinjam === void 0 ? void 0 : _perawatan$no_pinjam.toLowerCase().includes(_this.searchQuery.toLowerCase())) || ((_perawatan$staff = perawatan.staff) === null || _perawatan$staff === void 0 || (_perawatan$staff = _perawatan$staff.nama_pengguna) === null || _perawatan$staff === void 0 ? void 0 : _perawatan$staff.toLowerCase().includes(_this.searchQuery.toLowerCase()));
+        return CodeMatch && StatusMatch && SearchMatch;
       });
     },
     paginatedData: function paginatedData() {
@@ -23660,8 +23751,8 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
     },
     filteredGroupedData: function filteredGroupedData() {
       return this.paginatedData.reduce(function (groups, perawatan) {
-        var _perawatan$alat2;
-        var kodeAlat = ((_perawatan$alat2 = perawatan.alat) === null || _perawatan$alat2 === void 0 ? void 0 : _perawatan$alat2.kode_alat) || "UnCode";
+        var _perawatan$alat3;
+        var kodeAlat = ((_perawatan$alat3 = perawatan.alat) === null || _perawatan$alat3 === void 0 ? void 0 : _perawatan$alat3.kode_alat) || "UnCode";
         if (!groups[kodeAlat]) {
           groups[kodeAlat] = [];
         }
@@ -23707,19 +23798,19 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
                   no_seri: perawatanalat.no_seri_alat
                 };
               }); // Menyimpan data alat
-              //console.log(this.dataPerawatanAlat); // Debug data
-              _context.next = 12;
+              console.log(_this2.dataPerawatanAlat); // Debug data
+              _context.next = 13;
               break;
-            case 9:
-              _context.prev = 9;
+            case 10:
+              _context.prev = 10;
               _context.t0 = _context["catch"](0);
               console.error("Error fetching alat error detail:", _context.t0);
               //alert("Gagal memuat detail data alat error.");
-            case 12:
+            case 13:
             case "end":
               return _context.stop();
           }
-        }, _callee, null, [[0, 9]]);
+        }, _callee, null, [[0, 10]]);
       }))();
     },
     debouncedFetchAlats: lodash__WEBPACK_IMPORTED_MODULE_1___default().debounce(function () {
@@ -23809,6 +23900,28 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
           perawatan.status = 'Belum';
         }
       });
+    },
+    printPDF: function printPDF() {
+      var doc = new jspdf__WEBPACK_IMPORTED_MODULE_4__["default"]();
+      var dataToPrint = this.filteredData;
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(16);
+      var title = "Laporan Perawatan Alat";
+      var titleWidth = doc.getStringUnitWidth(title) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+      var titleX = (doc.internal.pageSize.width - titleWidth) / 2;
+      doc.text(title, titleX, 16);
+      var headers = ["#", "Kode", "Nama", "No Seri", "PIC", "Tgl Perawatan", "Detail Perawatan", "Kondisi", "Status"];
+      var rows = [];
+      this.filteredData.forEach(function (item, index) {
+        var _item$alat2, _item$alat3, _item$no_seri, _item$staff, _item$no_seri2;
+        rows.push([index + 1, item === null || item === void 0 || (_item$alat2 = item.alat) === null || _item$alat2 === void 0 ? void 0 : _item$alat2.kode_alat, item === null || item === void 0 || (_item$alat3 = item.alat) === null || _item$alat3 === void 0 ? void 0 : _item$alat3.nama_alat, item === null || item === void 0 || (_item$no_seri = item.no_seri) === null || _item$no_seri === void 0 ? void 0 : _item$no_seri.no_seri_alat, item === null || item === void 0 || (_item$staff = item.staff) === null || _item$staff === void 0 ? void 0 : _item$staff.nama_staff, item.tanggal_perawatan, item.detail_perawatan, item === null || item === void 0 || (_item$no_seri2 = item.no_seri) === null || _item$no_seri2 === void 0 ? void 0 : _item$no_seri2.status, item.status]);
+      });
+      doc.autoTable({
+        head: [headers],
+        body: rows,
+        startY: 30
+      });
+      doc.save("perawatan-alat.pdf");
     }
   },
   mounted: function mounted() {
@@ -61582,7 +61695,64 @@ var render = function () {
               ),
             ]),
             _vm._v(" "),
-            _vm._m(3),
+            _c("div", { staticClass: "form-group" }, [
+              _vm._m(3),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.selectedPIC,
+                      expression: "selectedPIC",
+                    },
+                  ],
+                  staticClass: "form-control",
+                  attrs: { id: "pic", required: "" },
+                  on: {
+                    change: function ($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function (o) {
+                          return o.selected
+                        })
+                        .map(function (o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.selectedPIC = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    },
+                  },
+                },
+                [
+                  _c(
+                    "option",
+                    { attrs: { value: "", disabled: "", selected: "" } },
+                    [_vm._v("Pilih PIC")]
+                  ),
+                  _vm._v(" "),
+                  _vm._l(_vm.PIC, function (pic) {
+                    return _c(
+                      "option",
+                      { key: pic.id, domProps: { value: pic.nama_staff } },
+                      [
+                        _vm._v(
+                          "\n            " +
+                            _vm._s(pic.nama_staff) +
+                            "\n          "
+                        ),
+                      ]
+                    )
+                  }),
+                ],
+                2
+              ),
+            ]),
+            _vm._v(" "),
+            _vm._m(4),
             _vm._v(" "),
             _c(
               "div",
@@ -61591,7 +61761,7 @@ var render = function () {
                 _c("span"),
                 _vm._v(" "),
                 _c("div", [
-                  _vm._m(4),
+                  _vm._m(5),
                   _vm._v(" "),
                   _c(
                     "button",
@@ -61652,7 +61822,21 @@ var staticRenderFns = [
       "label",
       { staticStyle: { color: "#000" }, attrs: { for: "pic" } },
       [
-        _c("b", [_vm._v("PIC")]),
+        _c("b", [_vm._v("PIC 1")]),
+        _vm._v(" "),
+        _c("sup", { staticStyle: { color: "red" } }, [_vm._v(" *")]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticStyle: { color: "#000" }, attrs: { for: "pic" } },
+      [
+        _c("b", [_vm._v("PIC 2")]),
         _vm._v(" "),
         _c("sup", { staticStyle: { color: "red" } }, [_vm._v(" *")]),
       ]
@@ -64140,7 +64324,13 @@ var render = function () {
                         error.staff_analisa
                           ? error.staff_analisa.nama_staff
                           : "-"
-                      )
+                      ) +
+                        " & " +
+                        _vm._s(
+                          error.staff_analisa
+                            ? error.staff_analisa.nama_staff
+                            : "-"
+                        )
                     ),
                   ]),
                   _vm._v(" "),
@@ -85868,6 +86058,119 @@ var render = function () {
                   "row align-items-center justify-content-end mr-3 mt-3 mb-4",
               },
               [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-sm btn-primary-1 mr-2",
+                    on: { click: _vm.printPDF },
+                  },
+                  [
+                    _c("i", { staticClass: "fas fa-print" }),
+                    _vm._v(" Print PDF\n      "),
+                  ]
+                ),
+                _vm._v(" "),
+                _vm._m(1),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "dropdown-menu p-3",
+                    staticStyle: { "border-radius": "8px", width: "250px" },
+                    attrs: { "aria-labelledby": "filterDropdown" },
+                    on: {
+                      click: function ($event) {
+                        $event.stopPropagation()
+                      },
+                    },
+                  },
+                  [
+                    _c(
+                      "div",
+                      [
+                        _vm._m(2),
+                        _vm._v(" "),
+                        _c("v-select", {
+                          attrs: {
+                            options: _vm.kodeOptions,
+                            searchable: true,
+                            multiple: true,
+                            placeholder: "Pilih Kode",
+                            "close-on-select": false,
+                            clearable: true,
+                          },
+                          model: {
+                            value: _vm.codeFilters,
+                            callback: function ($$v) {
+                              _vm.codeFilters = $$v
+                            },
+                            expression: "codeFilters",
+                          },
+                        }),
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "mt-2" },
+                      [
+                        _vm._m(3),
+                        _vm._v(" "),
+                        _vm._l(_vm.availableStatus, function (sts) {
+                          return _c("div", { key: sts }, [
+                            _c("label", [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.statusFilters,
+                                    expression: "statusFilters",
+                                  },
+                                ],
+                                attrs: { type: "checkbox" },
+                                domProps: {
+                                  value: sts,
+                                  checked: Array.isArray(_vm.statusFilters)
+                                    ? _vm._i(_vm.statusFilters, sts) > -1
+                                    : _vm.statusFilters,
+                                },
+                                on: {
+                                  change: function ($event) {
+                                    var $$a = _vm.statusFilters,
+                                      $$el = $event.target,
+                                      $$c = $$el.checked ? true : false
+                                    if (Array.isArray($$a)) {
+                                      var $$v = sts,
+                                        $$i = _vm._i($$a, $$v)
+                                      if ($$el.checked) {
+                                        $$i < 0 &&
+                                          (_vm.statusFilters = $$a.concat([
+                                            $$v,
+                                          ]))
+                                      } else {
+                                        $$i > -1 &&
+                                          (_vm.statusFilters = $$a
+                                            .slice(0, $$i)
+                                            .concat($$a.slice($$i + 1)))
+                                      }
+                                    } else {
+                                      _vm.statusFilters = $$c
+                                    }
+                                  },
+                                },
+                              }),
+                              _vm._v(" " + _vm._s(sts)),
+                            ]),
+                          ])
+                        }),
+                      ],
+                      2
+                    ),
+                  ]
+                ),
+                _vm._v(" "),
                 _c("div", { staticClass: "search-wrapper" }, [
                   _c("div", { staticClass: "input-group" }, [
                     _c("input", {
@@ -85908,10 +86211,10 @@ var render = function () {
                   staticStyle: { "overflow-x": "auto" },
                 },
                 [
-                  _vm._m(1),
+                  _vm._m(4),
                   _vm._v(" "),
                   _vm.filteredData.length === 0
-                    ? _c("tbody", [_vm._m(2)])
+                    ? _c("tbody", [_vm._m(5)])
                     : _vm._e(),
                   _vm._v(" "),
                   _vm._l(_vm.filteredGroupedData, function (kodeGroup, code) {
@@ -85938,6 +86241,16 @@ var render = function () {
                             [
                               _c("td", { staticClass: "text-center" }, [
                                 _vm._v(_vm._s(index + 1)),
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(
+                                  _vm._s(
+                                    perawatan.alat
+                                      ? perawatan.alat.nama_alat
+                                      : "-"
+                                  )
+                                ),
                               ]),
                               _vm._v(" "),
                               _c("td", { staticClass: "text-center" }, [
@@ -85993,7 +86306,7 @@ var render = function () {
                                   "div",
                                   { staticClass: "dropdown text-center" },
                                   [
-                                    _vm._m(3, true),
+                                    _vm._m(6, true),
                                     _vm._v(" "),
                                     _c(
                                       "div",
@@ -86128,11 +86441,44 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-sm btn-primary-1 mr-2",
+        attrs: {
+          type: "button",
+          id: "filterDropdown",
+          "data-toggle": "dropdown",
+          "aria-haspopup": "true",
+          "aria-expanded": "false",
+        },
+      },
+      [_c("i", { staticClass: "fa fa-filter" }), _vm._v(" Filter\n      ")]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", [_c("b", [_vm._v("Kode")])])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", [_c("b", [_vm._v("Status")])])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", { staticClass: "bg-table" }, [
         _c("th", { staticClass: "text-center text-black-1 tr-center" }, [
           _vm._v("#"),
         ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-center text-black-1" }, [_vm._v("Nama")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-center text-black-1" }, [
           _vm._v("No Seri Alat"),
