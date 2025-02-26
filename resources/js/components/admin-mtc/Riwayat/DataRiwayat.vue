@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
     <h1 class="h3 mb-4 mt-4 text-gray-900"><b>Riwayat</b></h1>
-    <div class="col-md-12">
+    <!-- <div class="col-md-12">
       <button 
         class="btn btn-show m-1"
         :class="{active: showAlat}"
@@ -18,7 +18,7 @@
         <span v-if="showMesin">Mesin</span>
         <span v-else>Mesin</span>
       </button>
-    </div>
+    </div> -->
     <div v-if="showAlat">
     <div class="row align-items-center justify-content-end mr-3 mt-4 mb-2">
       <div class="ml-2" style="border-radius: 5px;">
@@ -67,7 +67,8 @@
                 <th class="text-center" style="width: 10px; color: #000;">Tgl</th>
                 <th class="text-center" style="width: 10px; color: #000;">PIC</th>
                 <th class="text-center" style="width: 10px; color: #000;">Tujuan Divisi</th>
-                <th class="text-center" style="width: 10px; color: #000;">Kode Alat</th>                
+                <th class="text-center" style="width: 10px; color: #000;">Kode Alat</th>
+                <th class="text-center" style="width: 10px; color: #000;">No Seri</th>
                 <th class="text-center" style="width: 10px; color: #000;">Kondisi</th>                                
               </tr>
             </thead>
@@ -82,7 +83,8 @@
                 <td>{{ riwayat.tanggal || '-' }} <br> <small style="color: #444;"><i class="fas fa-clock"></i> {{ durasiData[index] !== '-' ? durasiData[index] + 'Hari' : '-' }}</small></td>                
                 <td>{{ riwayat.PIC ? riwayat.PIC.nama_staff : '-' }}</td>     
                 <td>{{ riwayat.pengguna ? riwayat.pengguna.divisi : '-' }}</td>
-                <td>{{ riwayat.alat ? riwayat.alat.kode_alat : '-' }}</td>                
+                <td>{{ riwayat.alat ? riwayat.alat.kode_alat : '-' }}</td>    
+                <td>{{ riwayat.no_seri || '-' }}</td>            
                 <td>{{ riwayat.noSeri ? riwayat.noSeri.status : '-' }}</td>
               </tr>
             </tbody>
@@ -120,7 +122,93 @@ export default {
   data() {
     return {
       searchQuery: '',
-      datariwayat: [],
+      datariwayat: [
+        {
+        id: 1,
+        id_alat: 101,
+        id_pengguna: 1,
+        no_seri: "ABC123456",
+        layout: "Layout 1",
+        pic: 1,
+        jumlah: 5,
+        tanggal: "2025-02-20",
+        PIC: { nama_staff: "John Doe" },
+        noSeri: { status: "Good" },
+        alat: { kode_alat: "ALAT001" },
+        pengguna: { divisi: "Engineering" },
+        tujuan: "Engineering",
+        jenis: "Tool",
+        kondisi: "Good",
+      },
+      {
+        id: 2,
+        id_alat: 102,
+        id_pengguna: 2,
+        no_seri: "DEF789101",
+        layout: "Layout 2",
+        pic: 2,
+        jumlah: 10,
+        tanggal: "2025-02-15",
+        PIC: { nama_staff: "Jane Smith" },
+        noSeri: { status: "Damaged" },
+        alat: { kode_alat: "ALAT002" },
+        pengguna: { divisi: "Maintenance" },
+        tujuan: "Maintenance",
+        jenis: "Machine",
+        kondisi: "Damaged",
+      },
+      {
+        id: 3,
+        id_alat: 103,
+        id_pengguna: 3,
+        no_seri: "GHI112233",
+        layout: "Layout 3",
+        pic: 3,
+        jumlah: 3,
+        tanggal: "2025-02-18",
+        PIC: { nama_staff: "Alice Johnson" },
+        noSeri: { status: "In Use" },
+        alat: { kode_alat: "ALAT003" },
+        pengguna: { divisi: "IT" },
+        tujuan: "IT Support",
+        jenis: "Machine",
+        kondisi: "In Use",
+      },
+      {
+        id: 4,
+        id_alat: 104,
+        id_pengguna: 4,
+        no_seri: "JKL345678",
+        layout: "Layout 4",
+        pic: 4,
+        jumlah: 7,
+        tanggal: "2025-02-22",
+        PIC: { nama_staff: "Bob Lee" },
+        noSeri: { status: "Broken" },
+        alat: { kode_alat: "ALAT004" },
+        pengguna: { divisi: "Logistics" },
+        tujuan: "Logistics",
+        jenis: "Tool",
+        kondisi: "Broken",
+      },
+      {
+        id: 5,
+        id_alat: 105,
+        id_pengguna: 5,
+        no_seri: "MNO567890",
+        layout: "Layout 5",
+        pic: 5,
+        jumlah: 2,
+        tanggal: "2025-02-10",
+        PIC: { nama_staff: "Charlie Brown" },
+        noSeri: { status: "Good" },
+        alat: { kode_alat: "ALAT005" },
+        pengguna: { divisi: "HR" },
+        tujuan: "HR Department",
+        jenis: "Machine",
+        kondisi: "Good",
+      },
+      ],
       rowsPerPage: 10,
       currentPage: 1,
       tanggalAwal: '',

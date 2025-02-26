@@ -41,12 +41,12 @@
     </li>
 
     <!-- Nav Item - History -->
-    <!-- <li class="nav-item {{ request()->routeIs('adminmtc-riwayat') ? 'active' : '' }}">
+    <li class="nav-item {{ request()->routeIs('adminmtc-riwayat') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('adminmtc-riwayat') }}">
             <i class="fas fa-fw {{ request()->routeIs('adminmtc-riwayat') ? 'fa-folder-open' : 'fa-history' }}"></i>
             <span>Riwayat</span>
         </a>
-    </li> -->
+    </li>
 
     <!-- Heading -->
     <!--<br><div class="sidebar-heading">
