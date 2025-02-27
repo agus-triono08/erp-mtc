@@ -50,7 +50,6 @@
       <!-- Search and Add -->
       <div>
         <form class="d-flex align-items-center">
-          <!-- Tombol Download Excel di samping kiri filter -->
           <div>
             <button @click="downloadExcel" class="btn btn-sm btn-primary-1 mr-3">
               <i class="fas fa-file-excel"></i> Export
