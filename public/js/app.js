@@ -7695,7 +7695,6 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 //
 //
 //
-//
 
 
 
@@ -18623,6 +18622,20 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -19190,6 +19203,24 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -19214,6 +19245,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         deskripsi: "",
         harga_pembelian: 0,
         asal_usul: "",
+        fungsi: "",
         jadwal_perawatan: '' // Untuk menyimpan jadwal perawatan yang dipilih
       },
       gambar: null,
@@ -35606,7 +35638,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Mengubah bentuk ujung card agar lebih melengkung */\n.card[data-v-b239ddea] {\n  border-radius: 20px; /* Menambahkan border-radius untuk membuat sudut lebih melengkung */\n}\n\n/* Menghilangkan jarak antar card-body */\n.card-body[data-v-b239ddea] {\n  padding: 0; /* Menghilangkan padding pada card-body */\n}\n\n/* Gaya untuk efek hover gambar */\n.image-container[data-v-b239ddea] {\n  position: relative;\n  overflow: hidden;\n}\n.hover-effect[data-v-b239ddea] {\n  transition: transform 0.3s ease, box-shadow 0.3s ease;\n}\n.hover-effect[data-v-b239ddea]:hover {\n  transform: scale(1.1); /* Perbesar gambar */\n  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3); /* Tambahkan bayangan */\n  z-index: 10; /* Membuatnya muncul di depan */\n  position: relative;\n}\n\n/* Gaya tombol Edit */\n.btn-icon-split .icon[data-v-b239ddea] {\n  padding: 0.5rem;\n  background-color: #f6c23e;\n  border-right: 1px solid #e6b31e;\n}\n.btn-icon-split:hover .icon[data-v-b239ddea] {\n  background-color: #e6b31e;\n}\n/* Gaya tombol Edit berbentuk bulat */\n.btn-plus[data-v-b239ddea] {\n  background-color: #169EA8;\n  color: #fff;\n  width: 45px; /* Lebar tombol */\n  height: 45px; /* Tinggi tombol sama dengan lebar */\n  border-radius: 50%; /* Membuat tombol berbentuk bulat */\n  display: flex; /* Menggunakan flexbox untuk memusatkan ikon */\n  align-items: center; /* Vertikal tengah */\n  justify-content: center; /* Horizontal tengah */\n  border: none; /* Menghilangkan border default */\n  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Tambahkan bayangan */\n  transition: background-color 0.3s ease, transform 0.3s ease;\n}\n.btn-plus[data-v-b239ddea]:hover {\n  background-color: #22d3e0; /* Warna saat hover */\n  transform: scale(1); /* Efek memperbesar */\n  color: #fff;\n}\n.btn-plus .icon[data-v-b239ddea] {\n  font-size: 1.25rem; /* Ukuran ikon */\n}\n.no-border[data-v-b239ddea] {\n  border: none; /* Menghilangkan border tabel */\n}\n.no-border th[data-v-b239ddea], \n.no-border td[data-v-b239ddea] {\n  border-top: none !important; /* Menghilangkan garis atas pada setiap sel */\n  border-bottom: none !important; /* Menghilangkan garis bawah pada setiap sel */\n}\n.compact-table th[data-v-b239ddea],\n.compact-table td[data-v-b239ddea] {\n  padding: 0.1rem 0.3rem; /* Atur padding agar jarak kanan kiri lebih rapat */\n}\n.compact-table tbody tr[data-v-b239ddea] {\n  margin-bottom: 0; /* Hilangkan margin tambahan antar baris */\n}\n.compact-table th[data-v-b239ddea] {\n  padding-left: 0.2rem; /* Jarak kiri sedikit lebih rapat untuk th */\n  padding-right: 0.2rem; /* Jarak kanan sedikit lebih rapat untuk th */\n}\n.compact-table td[data-v-b239ddea] {\n  padding-left: 0.2rem; /* Jarak kiri sedikit lebih rapat untuk td */\n  padding-right: 0.2rem; /* Jarak kanan sedikit lebih rapat untuk td */\n}\n.btn-show.active[data-v-b239ddea] {\n  background-color: #169EA8; /* Warna tombol saat aktif */\n  color: #fff; /* Warna teks tombol saat aktif */\n  border: 1px solid #169EA8; /* Tambahkan border agar lebih jelas */\n}\n.btn-show[data-v-b239ddea] {\n  background-color: #fff;\n  color: #169EA8;\n  border: 1px solid transparent; /* Tambahkan border default */\n  transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;\n}\n.btn-show[data-v-b239ddea]:hover {\n  background-color: #169EA8; /* Warna saat hover */\n  color: #fff;\n  border: 1px solid #169EA8;\n}\n.btn-show-rusak[data-v-b239ddea] {\n  background-color: #fff;\n  color: #EB5A3C;\n  border: 1px solid transparent;\n  transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;\n}\n.btn-show-rusak.active[data-v-b239ddea] {\n  background-color: #EB5A3C; /* Warna tombol saat aktif */\n  color: #fff; /* Warna teks tombol saat aktif */\n  border: 1px solid #EB5A3C; /* Tambahkan border agar lebih jelas*/\n}\n.btn-show-rusak[data-v-b239ddea]:hover {\n  background-color: #EB5A3C;\n  color: #fff;\n  border: 1px solid #EB5A3C;\n}\n.btn-show-musnah[data-v-b239ddea] {\n  background-color: #fff;\n  color: #e6494b;\n  border: 1px solid transparent;\n  transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;\n}\n.btn-show-musnah.active[data-v-b239ddea] {\n  background-color: #e6494b; /* Warna tombol saat aktif */\n  color: #fff; /* Warna teks tombol saat aktif */\n  border: 1px solid #e6494b; /* Tambahkan border agar lebih jelas */\n}\n.btn-show-musnah[data-v-b239ddea]:hover {\n  background-color: #e6494b;\n  color: #fff;\n  border: 1px solid #e6494b;\n}\n.btn-show-error[data-v-b239ddea] {\n  background-color: #fff;\n  color: #ffac32;\n  border: 1px solid transparent;\n  transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;\n}\n.btn-show-error.active[data-v-b239ddea] {\n  background-color: #ffac32; /* Warna tombol saat aktif */\n  color: #fff; /* Warna teks tombol saat aktif */\n  border: 1px solid #ffac32; /* Tambahkan border agar lebih jelas */\n}\n.btn-show-error[data-v-b239ddea]:hover {\n  background-color: #ffac32;\n  color: #fff;\n  border: 1px solid #ffac32;\n}\n.btn-show-hilang[data-v-b239ddea] {\n  background-color: #fff;\n  color: #8E1616;\n  border: 1px solid transparent;\n  transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;\n}\n.btn-show-hilang.active[data-v-b239ddea] {\n  background-color: #8E1616; /* Warna tombol saat aktif */\n  color: #fff; /* Warna teks tombol saat aktif */\n  border: 1px solid #8E1616; /* Tambahkan border agar lebih jelas */\n}\n.btn-show-hilang[data-v-b239ddea]:hover {\n  background-color: #8E1616;\n  color: #fff;\n  border: 1px solid #8E1616;\n}\n.status-active[data-v-b239ddea] {\n  background-color: rgba(40, 167, 69, 0.1); /* Hijau dengan transparansi */\n  color: rgba(40, 167, 69);\n}\n.status-rusak[data-v-b239ddea] {\n  background-color: rgba(220, 53, 69, 0.1); /* Merah dengan transparansi */\n  color: rgba(220, 53, 69);\n}\n.status-error[data-v-b239ddea] {\n  background-color: rgba(255, 193, 7, 0.1); /* Kuning dengan transparansi */\n  color: rgba(255, 193, 7);\n}\n.status-hilang[data-v-b239ddea] {\n  background-color: rgba(142, 22, 22, 0.1); /* Merah Tua dengan transparansi */\n  color: rgba(142, 22, 22);\n}\n\n/* Styling untuk status pill */\n.status-pill[data-v-b239ddea] {\n  margin: auto; /* Tengahkan baik vertikal maupun horizontal */\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  font-size: 0.85rem;\n  font-weight: bold;\n  border-radius: 20px;\n  text-align: center;\n  padding: 0.2em 0.6em;\n  height: 1rem;\n}\n.text-teal[data-v-b239ddea] {\n  color: #169EA8;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Mengubah bentuk ujung card agar lebih melengkung */\n.card[data-v-b239ddea] {\n  border-radius: 20px; /* Menambahkan border-radius untuk membuat sudut lebih melengkung */\n}\n\n/* Menghilangkan jarak antar card-body */\n.card-body[data-v-b239ddea] {\n  padding: 0; /* Menghilangkan padding pada card-body */\n}\n\n/* Gaya untuk efek hover gambar */\n.image-container[data-v-b239ddea] {\n  position: relative;\n  overflow: hidden;\n}\n.hover-effect[data-v-b239ddea] {\n  transition: transform 0.3s ease, box-shadow 0.3s ease;\n}\n.hover-effect[data-v-b239ddea]:hover {\n  transform: scale(1.1); /* Perbesar gambar */\n  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3); /* Tambahkan bayangan */\n  z-index: 10; /* Membuatnya muncul di depan */\n  position: relative;\n}\n\n/* Gaya tombol Edit */\n.btn-icon-split .icon[data-v-b239ddea] {\n  padding: 0.5rem;\n  background-color: #f6c23e;\n  border-right: 1px solid #e6b31e;\n}\n.btn-icon-split:hover .icon[data-v-b239ddea] {\n  background-color: #e6b31e;\n}\n/* Gaya tombol Edit berbentuk bulat */\n.btn-plus[data-v-b239ddea] {\n  background-color: #169EA8;\n  color: #fff;\n  width: 45px; /* Lebar tombol */\n  height: 45px; /* Tinggi tombol sama dengan lebar */\n  border-radius: 50%; /* Membuat tombol berbentuk bulat */\n  display: flex; /* Menggunakan flexbox untuk memusatkan ikon */\n  align-items: center; /* Vertikal tengah */\n  justify-content: center; /* Horizontal tengah */\n  border: none; /* Menghilangkan border default */\n  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Tambahkan bayangan */\n  transition: background-color 0.3s ease, transform 0.3s ease;\n}\n.btn-plus[data-v-b239ddea]:hover {\n  background-color: #22d3e0; /* Warna saat hover */\n  transform: scale(1); /* Efek memperbesar */\n  color: #fff;\n}\n.btn-plus .icon[data-v-b239ddea] {\n  font-size: 1.25rem; /* Ukuran ikon */\n}\n.no-border[data-v-b239ddea] {\n  border: none; /* Menghilangkan border tabel */\n}\n.no-border th[data-v-b239ddea], \n.no-border td[data-v-b239ddea] {\n  border-top: none !important; /* Menghilangkan garis atas pada setiap sel */\n  border-bottom: none !important; /* Menghilangkan garis bawah pada setiap sel */\n}\n.compact-table th[data-v-b239ddea],\n.compact-table td[data-v-b239ddea] {\n  padding: 0.1rem 0.3rem; /* Atur padding agar jarak kanan kiri lebih rapat */\n}\n.compact-table tbody tr[data-v-b239ddea] {\n  margin-bottom: 0; /* Hilangkan margin tambahan antar baris */\n}\n.compact-table th[data-v-b239ddea] {\n  padding-left: 0.2rem; /* Jarak kiri sedikit lebih rapat untuk th */\n  padding-right: 0.2rem; /* Jarak kanan sedikit lebih rapat untuk th */\n}\n.compact-table td[data-v-b239ddea] {\n  padding-left: 0.2rem; /* Jarak kiri sedikit lebih rapat untuk td */\n  padding-right: 0.2rem; /* Jarak kanan sedikit lebih rapat untuk td */\n}\n.btn-show.active[data-v-b239ddea] {\n  background-color: #169EA8; /* Warna tombol saat aktif */\n  color: #fff; /* Warna teks tombol saat aktif */\n  border: 1px solid #169EA8; /* Tambahkan border agar lebih jelas */\n}\n.btn-show[data-v-b239ddea] {\n  background-color: #fff;\n  color: #169EA8;\n  border: 1px solid transparent; /* Tambahkan border default */\n  transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;\n}\n.btn-show[data-v-b239ddea]:hover {\n  background-color: #169EA8; /* Warna saat hover */\n  color: #fff;\n  border: 1px solid #169EA8;\n}\n.btn-show-rusak[data-v-b239ddea] {\n  background-color: #fff;\n  color: #EB5A3C;\n  border: 1px solid transparent;\n  transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;\n}\n.btn-show-rusak.active[data-v-b239ddea] {\n  background-color: #EB5A3C; /* Warna tombol saat aktif */\n  color: #fff; /* Warna teks tombol saat aktif */\n  border: 1px solid #EB5A3C; /* Tambahkan border agar lebih jelas*/\n}\n.btn-show-rusak[data-v-b239ddea]:hover {\n  background-color: #EB5A3C;\n  color: #fff;\n  border: 1px solid #EB5A3C;\n}\n.btn-show-musnah[data-v-b239ddea] {\n  background-color: #fff;\n  color: #e6494b;\n  border: 1px solid transparent;\n  transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;\n}\n.btn-show-musnah.active[data-v-b239ddea] {\n  background-color: #e6494b; /* Warna tombol saat aktif */\n  color: #fff; /* Warna teks tombol saat aktif */\n  border: 1px solid #e6494b; /* Tambahkan border agar lebih jelas */\n}\n.btn-show-musnah[data-v-b239ddea]:hover {\n  background-color: #e6494b;\n  color: #fff;\n  border: 1px solid #e6494b;\n}\n.btn-show-error[data-v-b239ddea] {\n  background-color: #fff;\n  color: #ffac32;\n  border: 1px solid transparent;\n  transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;\n}\n.btn-show-error.active[data-v-b239ddea] {\n  background-color: #ffac32; /* Warna tombol saat aktif */\n  color: #fff; /* Warna teks tombol saat aktif */\n  border: 1px solid #ffac32; /* Tambahkan border agar lebih jelas */\n}\n.btn-show-error[data-v-b239ddea]:hover {\n  background-color: #ffac32;\n  color: #fff;\n  border: 1px solid #ffac32;\n}\n.btn-show-hilang[data-v-b239ddea] {\n  background-color: #fff;\n  color: #8E1616;\n  border: 1px solid transparent;\n  transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;\n}\n.btn-show-hilang.active[data-v-b239ddea] {\n  background-color: #8E1616; /* Warna tombol saat aktif */\n  color: #fff; /* Warna teks tombol saat aktif */\n  border: 1px solid #8E1616; /* Tambahkan border agar lebih jelas */\n}\n.btn-show-hilang[data-v-b239ddea]:hover {\n  background-color: #8E1616;\n  color: #fff;\n  border: 1px solid #8E1616;\n}\n.status-active[data-v-b239ddea] {\n  background-color: rgba(40, 167, 69, 0.1); /* Hijau dengan transparansi */\n  color: rgba(40, 167, 69);\n}\n.status-rusak[data-v-b239ddea] {\n  background-color: rgba(220, 53, 69, 0.1); /* Merah dengan transparansi */\n  color: rgba(220, 53, 69);\n}\n.status-error[data-v-b239ddea] {\n  background-color: rgba(255, 193, 7, 0.1); /* Kuning dengan transparansi */\n  color: rgba(255, 193, 7);\n}\n.status-hilang[data-v-b239ddea] {\n  background-color: rgba(142, 22, 22, 0.1); /* Merah Tua dengan transparansi */\n  color: rgba(142, 22, 22);\n}\n\n/* Styling untuk status pill */\n.status-pill[data-v-b239ddea] {\n  margin: auto; /* Tengahkan baik vertikal maupun horizontal */\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  font-size: 0.85rem;\n  font-weight: bold;\n  border-radius: 20px;\n  text-align: center;\n  padding: 0.2em 0.6em;\n  height: 1rem;\n}\n.text-teal[data-v-b239ddea] {\n  color: #169EA8;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -64630,53 +64662,53 @@ var render = function () {
               ],
               2
             ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "d-flex justify-content-between align-items-center mt-3",
-                staticStyle: {
-                  "border-radius": "10px",
-                  "background-color": "#f3f4f6",
-                  height: "50px",
-                  color: "#000",
-                },
-              },
-              [
-                _c("div", { staticClass: "ml-3" }, [
-                  _vm._v("\n        Rows per page:\n        "),
-                  _c("span", [_vm._v(_vm._s(_vm.rowsPerPage))]),
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "mr-3" }, [
-                  _c("span", [_vm._v(_vm._s(_vm.paginationInfo))]),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-sm btn-light",
-                      attrs: { disabled: _vm.currentPage === 1 },
-                      on: { click: _vm.prevPage },
-                    },
-                    [_c("i", { staticClass: "fas fa-angle-left" })]
-                  ),
-                  _vm._v(" "),
-                  _c("span"),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-sm btn-light",
-                      attrs: { disabled: _vm.currentPage === _vm.totalPages },
-                      on: { click: _vm.nextPage },
-                    },
-                    [_c("i", { staticClass: "fas fa-angle-right" })]
-                  ),
-                ]),
-              ]
-            ),
           ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass:
+                "d-flex justify-content-between align-items-center mt-3",
+              staticStyle: {
+                "border-radius": "10px",
+                "background-color": "#f3f4f6",
+                height: "50px",
+                color: "#000",
+              },
+            },
+            [
+              _c("div", { staticClass: "ml-3" }, [
+                _vm._v("\n      Rows per page:\n      "),
+                _c("span", [_vm._v(_vm._s(_vm.rowsPerPage))]),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "mr-3" }, [
+                _c("span", [_vm._v(_vm._s(_vm.paginationInfo))]),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-sm btn-light",
+                    attrs: { disabled: _vm.currentPage === 1 },
+                    on: { click: _vm.prevPage },
+                  },
+                  [_c("i", { staticClass: "fas fa-angle-left" })]
+                ),
+                _vm._v(" "),
+                _c("span"),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-sm btn-light",
+                    attrs: { disabled: _vm.currentPage === _vm.totalPages },
+                    on: { click: _vm.nextPage },
+                  },
+                  [_c("i", { staticClass: "fas fa-angle-right" })]
+                ),
+              ]),
+            ]
+          ),
         ])
       : _vm._e(),
     _vm._v(" "),
@@ -79291,6 +79323,27 @@ var render = function () {
                             _c("tbody", [
                               _c("tr", [
                                 _c("td", [
+                                  _vm._v(_vm._s(_vm.alat.fungsi || "-")),
+                                ]),
+                              ]),
+                            ]),
+                          ]
+                        ),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-12" }, [
+                        _c(
+                          "table",
+                          {
+                            staticClass:
+                              "table table-hover no-border compact-table",
+                          },
+                          [
+                            _vm._m(4),
+                            _vm._v(" "),
+                            _c("tbody", [
+                              _c("tr", [
+                                _c("td", [
                                   _vm._v(_vm._s(_vm.alat.deskripsi || "-")),
                                 ]),
                               ]),
@@ -79420,6 +79473,16 @@ var staticRenderFns = [
         _c("th", { staticClass: "text-left" }, [
           _vm._v("Harga Total Pembelian Alat"),
         ]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { staticStyle: { color: "#000" } }, [_vm._v("Fungsi")]),
       ]),
     ])
   },
@@ -79745,9 +79808,33 @@ var render = function () {
                 : _vm._e(),
             ]),
             _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _vm._m(10),
+              _vm._v(" "),
+              _c("div", { staticClass: "textarea-wrapper" }, [
+                _c("textarea", {
+                  staticClass: "form-control",
+                  attrs: {
+                    id: "fungsi",
+                    rows: "1",
+                    placeholder: "Masukkan Fungsi Nya (Maksimal 100 Karakter)",
+                    maxlength: "100",
+                  },
+                }),
+                _vm._v(" "),
+                _c("small", { staticClass: "text-muted char-counter" }, [
+                  _vm._v(
+                    "\n                  " +
+                      _vm._s(_vm.alat.fungsi.length) +
+                      " / 100\n                "
+                  ),
+                ]),
+              ]),
+            ]),
+            _vm._v(" "),
             _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "form-group col-md-12" }, [
-                _vm._m(10),
+                _vm._m(11),
                 _vm._v(" "),
                 _c("div", { staticClass: "textarea-wrapper" }, [
                   _c("textarea", {
@@ -79773,7 +79860,7 @@ var render = function () {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
-              _vm._m(11),
+              _vm._m(12),
               _vm._v(" "),
               _c("div", { staticClass: "textarea-wrapper" }, [
                 _c("textarea", {
@@ -79814,7 +79901,7 @@ var render = function () {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
-              _vm._m(12),
+              _vm._m(13),
               _vm._v(" "),
               _c(
                 "div",
@@ -79866,7 +79953,7 @@ var render = function () {
               ),
             ]),
             _vm._v(" "),
-            _vm._m(13),
+            _vm._m(14),
           ]
         ),
       ]
@@ -79878,7 +79965,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header py-3" }, [
+    return _c("div", { staticClass: "card-header py-3 mb-2" }, [
       _c(
         "h6",
         {
@@ -80099,6 +80186,16 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("sup", { staticStyle: { color: "red" } }, [_vm._v(" *")]),
       ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticStyle: { color: "#000" }, attrs: { for: "fungsi" } },
+      [_c("b", [_vm._v("Fungsi")])]
     )
   },
   function () {

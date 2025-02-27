@@ -8,7 +8,7 @@
           style="cursor: pointer;"
         > Back to Master Data</i>        
       </h1>
-    <div class="card-header py-3">
+    <div class="card-header py-3 mb-2">
       <h6 class="m-0 font-weight-bold" style="color: #169ea8; border-radius: 15px;">Form Input Data Mesin</h6>
     </div>
     <div class="card-body" style="border-radius: 15px;">
@@ -307,6 +307,24 @@
             </div>
           </div>
 
+          <div class="form-group">
+            <label for="fungsi" style="color: #000;">
+              <b>Fungsi</b>
+            </label>
+            <div class="textarea-wrapper">
+              <textarea
+                id="fungsi"                
+                class="form-control"
+                rows="1"
+                placeholder="Masukkan Fungsi Nya (Maksimal 100 Karakter)"
+                maxlength="100"
+                ></textarea>
+                <small class="text-muted char-counter">
+                  {{ alat.fungsi.length }} / 100
+                </small>
+            </div>
+          </div>
+
           <div class="row">
             <!-- Asal Usul -->
             <div class="form-group col-md-12">
@@ -437,6 +455,7 @@ export default {
         deskripsi: "",
         harga_pembelian: 0,
         asal_usul: "",
+        fungsi: "",
         jadwal_perawatan: '', // Untuk menyimpan jadwal perawatan yang dipilih
       },
       gambar: null,

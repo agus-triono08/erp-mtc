@@ -207,24 +207,23 @@
             </td>
           </tr>
         </tbody>
-      </table>
-
-      <!-- Pagination -->
-      <div class="d-flex justify-content-between align-items-center mt-3" style="border-radius: 10px; background-color: #f3f4f6; height: 50px; color: #000;">
-        <div class="ml-3">
-          Rows per page:
-          <span>{{ rowsPerPage }}</span>
-        </div>
-        <div class="mr-3">          
-          <span>{{ paginationInfo }}</span>
-          <button @click="prevPage" :disabled="currentPage === 1" class="btn btn-sm btn-light">
-            <i class="fas fa-angle-left"></i>
-          </button>
-          <span>  </span>
-          <button @click="nextPage" :disabled="currentPage === totalPages" class="btn btn-sm btn-light">
-            <i class="fas fa-angle-right"></i>
-          </button>
-        </div>
+      </table>      
+    </div>
+    <!-- Pagination -->
+    <div class="d-flex justify-content-between align-items-center mt-3" style="border-radius: 10px; background-color: #f3f4f6; height: 50px; color: #000;">
+      <div class="ml-3">
+        Rows per page:
+        <span>{{ rowsPerPage }}</span>
+      </div>
+      <div class="mr-3">          
+        <span>{{ paginationInfo }}</span>
+        <button @click="prevPage" :disabled="currentPage === 1" class="btn btn-sm btn-light">
+          <i class="fas fa-angle-left"></i>
+        </button>
+        <span>  </span>
+        <button @click="nextPage" :disabled="currentPage === totalPages" class="btn btn-sm btn-light">
+          <i class="fas fa-angle-right"></i>
+        </button>
       </div>
     </div>
   </div>

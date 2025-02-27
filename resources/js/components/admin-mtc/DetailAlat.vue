@@ -212,6 +212,20 @@
             <table class="table table-hover no-border compact-table">
               <thead>
                 <tr>                 
+                  <th style="color: #000">Fungsi</th>                  
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{ alat.fungsi || '-' }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-md-12">
+            <table class="table table-hover no-border compact-table">
+              <thead>
+                <tr>                 
                   <th style="color: #000">Deskripsi</th>                  
                 </tr>
               </thead>
