@@ -25,12 +25,12 @@
         </div>
       </div>        
 
-      <div class="row">
+      <div class="row" style="display: flex; align-items: stretch;">
         <!-- Card untuk Gambar (Kiri) -->
         <div class="col-md-3">
-          <div class="card  shadow" style="border-radius: 10px;">
-            <div class="card-body text-center" style="border-radius: 10px;"> <!-- Menghilangkan padding -->
-              <div class="image-container" style="width: 100%; height: 219.1px; overflow: hidden; border-radius: 10px;">
+          <div class="card shadow" style="border-radius: 10px; height: 100%;">
+            <div class="card-body text-center" style="border-radius: 10px;"> 
+              <div class="image-container" style="width: 100%; height: 220px; overflow: hidden; border-radius: 10px;">
                 <img 
                   :src="alat.gambar" 
                   class="img-fluid shadow-sm hover-effect" 
@@ -44,11 +44,10 @@
 
         <!-- Card untuk Detail Alat (Kanan) -->
         <div class="col-md-9">
-          <div class="card shadow mb-0" style="border-radius: 20px;">
-            <div class="card-body p-0" style="border-radius: 20px;"> <!-- Menghilangkan padding -->
+          <div class="card shadow mb-0" style="border-radius: 20px; height: 100%;">
+            <div class="card-body p-0" style="border-radius: 20px;"> 
               <div class="d-flex justify-content-between align-items-center" style="margin: 10px;">
                 <h5 class="m-0 font-weight-bold" style="color: #169ea8;">Tool Information</h5>
-                <!-- Tombol Edit di sebelah kanan -->
                 <button 
                   class="btn btn-plus btn-sm"
                   @click="goToEditPage"                  
@@ -56,7 +55,7 @@
                   <i class="fas fa-pencil-alt"></i>
                 </button>
               </div>
-              <!--tabel-->
+              <!-- Tabel Detail -->
               <table class="table table-hover no-border compact-table ml-2">              
                 <thead>
                   <tr>
@@ -81,7 +80,7 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td class="text-">{{ formatRupiah(alat.harga_total) }}</td>
+                    <td>{{ formatRupiah(alat.harga_total) }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -89,6 +88,7 @@
           </div>
         </div>
       </div>
+
 
     <br>
     <!-- Card dengan tombol Detail -->

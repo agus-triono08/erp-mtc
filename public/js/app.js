@@ -7881,9 +7881,11 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
         return;
       }
 
-      // Menyiapkan data yang akan dikonversi
-      var data = this.filteredAlats.map(function (alat) {
+      // Menyiapkan data yang akan dikonversi, termasuk nomor urut
+      var data = this.filteredAlats.map(function (alat, index) {
         return {
+          No: index + 1,
+          // Menambahkan nomor urut
           Kode: alat.kode_alat,
           Nama: alat.nama_alat,
           Merek: alat.merek_alat,
@@ -7896,6 +7898,23 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 
       // Mengonversi data ke dalam format sheet Excel
       var ws = xlsx__WEBPACK_IMPORTED_MODULE_4__.utils.json_to_sheet(data);
+
+      // Mengatur header agar menjadi bold
+      var range = xlsx__WEBPACK_IMPORTED_MODULE_4__.utils.decode_range(ws['!ref']); // Mendapatkan range sheet
+      for (var col = range.s.c; col <= range.e.c; col++) {
+        var address = {
+          r: range.s.r,
+          c: col
+        }; // Alamat cell header
+        var cell = ws[xlsx__WEBPACK_IMPORTED_MODULE_4__.utils.encode_cell(address)];
+        if (cell) {
+          cell.s = {
+            font: {
+              bold: true
+            }
+          }; // Mengatur style font menjadi bold
+        }
+      }
 
       // Membuat workbook dari sheet yang sudah dibuat
       var wb = xlsx__WEBPACK_IMPORTED_MODULE_4__.utils.book_new();
@@ -25449,6 +25468,12 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -25721,6 +25746,18 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
     toggleMesin: function toggleMesin() {
       this.showAlat = false;
       this.showMesin = !this.showMesin;
+    },
+    sortTanggal: function sortTanggal(order) {
+      this.datariwayat.sort(function (a, b) {
+        var dateA = new Date(a.tanggal); // Mengonversi tanggal menjadi objek Date
+        var dateB = new Date(b.tanggal); // Mengonversi tanggal menjadi objek Date
+
+        if (order === 'asc') {
+          return dateA - dateB; // Urutkan berdasarkan tanggal, ascending
+        } else {
+          return dateB - dateA; // Urutkan berdasarkan tanggal, descending
+        }
+      });
     },
     // Metode untuk mendownload data ke Excel
     downloadExcel: function downloadExcel() {
@@ -78772,168 +78809,175 @@ var render = function () {
       ]
     ),
     _vm._v(" "),
-    _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-3" }, [
-        _c(
-          "div",
-          {
-            staticClass: "card shadow",
-            staticStyle: { "border-radius": "10px" },
-          },
-          [
-            _c(
-              "div",
-              {
-                staticClass: "card-body text-center",
-                staticStyle: { "border-radius": "10px" },
-              },
-              [
-                _c(
-                  "div",
-                  {
-                    staticClass: "image-container",
-                    staticStyle: {
-                      width: "100%",
-                      height: "219.1px",
-                      overflow: "hidden",
-                      "border-radius": "10px",
-                    },
-                  },
-                  [
-                    _c("img", {
-                      staticClass: "img-fluid shadow-sm hover-effect",
+    _c(
+      "div",
+      {
+        staticClass: "row",
+        staticStyle: { display: "flex", "align-items": "stretch" },
+      },
+      [
+        _c("div", { staticClass: "col-md-3" }, [
+          _c(
+            "div",
+            {
+              staticClass: "card shadow",
+              staticStyle: { "border-radius": "10px", height: "100%" },
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "card-body text-center",
+                  staticStyle: { "border-radius": "10px" },
+                },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "image-container",
                       staticStyle: {
                         width: "100%",
-                        height: "100%",
-                        "object-fit": "cover",
-                        "border-radius": "0",
+                        height: "220px",
+                        overflow: "hidden",
+                        "border-radius": "10px",
                       },
-                      attrs: { src: _vm.alat.gambar, alt: "Gambar Alat" },
-                    }),
-                  ]
-                ),
-              ]
-            ),
-          ]
-        ),
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-9" }, [
-        _c(
-          "div",
-          {
-            staticClass: "card shadow mb-0",
-            staticStyle: { "border-radius": "20px" },
-          },
-          [
-            _c(
-              "div",
-              {
-                staticClass: "card-body p-0",
-                staticStyle: { "border-radius": "20px" },
-              },
-              [
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "d-flex justify-content-between align-items-center",
-                    staticStyle: { margin: "10px" },
-                  },
-                  [
-                    _c(
-                      "h5",
-                      {
-                        staticClass: "m-0 font-weight-bold",
-                        staticStyle: { color: "#169ea8" },
-                      },
-                      [_vm._v("Tool Information")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-plus btn-sm",
-                        on: { click: _vm.goToEditPage },
-                      },
-                      [_c("i", { staticClass: "fas fa-pencil-alt" })]
-                    ),
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "table",
-                  {
-                    staticClass:
-                      "table table-hover no-border compact-table ml-2",
-                  },
-                  [
-                    _c("thead", [
-                      _vm._m(1),
+                    },
+                    [
+                      _c("img", {
+                        staticClass: "img-fluid shadow-sm hover-effect",
+                        staticStyle: {
+                          width: "100%",
+                          height: "100%",
+                          "object-fit": "cover",
+                          "border-radius": "0",
+                        },
+                        attrs: { src: _vm.alat.gambar, alt: "Gambar Alat" },
+                      }),
+                    ]
+                  ),
+                ]
+              ),
+            ]
+          ),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-9" }, [
+          _c(
+            "div",
+            {
+              staticClass: "card shadow mb-0",
+              staticStyle: { "border-radius": "20px", height: "100%" },
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "card-body p-0",
+                  staticStyle: { "border-radius": "20px" },
+                },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "d-flex justify-content-between align-items-center",
+                      staticStyle: { margin: "10px" },
+                    },
+                    [
+                      _c(
+                        "h5",
+                        {
+                          staticClass: "m-0 font-weight-bold",
+                          staticStyle: { color: "#169ea8" },
+                        },
+                        [_vm._v("Tool Information")]
+                      ),
                       _vm._v(" "),
-                      _c("tr", [
-                        _c(
-                          "th",
-                          {
-                            staticStyle: {
-                              color: "#000",
-                              "font-size": "x-large",
-                            },
-                          },
-                          [
-                            _vm._v(
-                              "\n                    " +
-                                _vm._s(_vm.alat.nama_alat || "-") +
-                                "\n                  "
-                            ),
-                          ]
-                        ),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-plus btn-sm",
+                          on: { click: _vm.goToEditPage },
+                        },
+                        [_c("i", { staticClass: "fas fa-pencil-alt" })]
+                      ),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "table",
+                    {
+                      staticClass:
+                        "table table-hover no-border compact-table ml-2",
+                    },
+                    [
+                      _c("thead", [
+                        _vm._m(1),
                         _vm._v(" "),
-                        _c(
-                          "th",
-                          {
-                            staticClass: "ml-4",
-                            staticStyle: {
-                              color: "#000",
-                              "font-size": "x-large",
+                        _c("tr", [
+                          _c(
+                            "th",
+                            {
+                              staticStyle: {
+                                color: "#000",
+                                "font-size": "x-large",
+                              },
                             },
-                          },
-                          [
-                            _vm._v(
-                              "\n                    " +
-                                _vm._s(_vm.alat.kode_alat || "-") +
-                                "\n                  "
-                            ),
-                          ]
-                        ),
-                      ]),
-                    ]),
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "table",
-                  { staticClass: "table no-border compact-table ml-2" },
-                  [
-                    _vm._m(2),
-                    _vm._v(" "),
-                    _c("tbody", [
-                      _c("tr", [
-                        _c("td", { staticClass: "text-" }, [
-                          _vm._v(
-                            _vm._s(_vm.formatRupiah(_vm.alat.harga_total))
+                            [
+                              _vm._v(
+                                "\n                    " +
+                                  _vm._s(_vm.alat.nama_alat || "-") +
+                                  "\n                  "
+                              ),
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "th",
+                            {
+                              staticClass: "ml-4",
+                              staticStyle: {
+                                color: "#000",
+                                "font-size": "x-large",
+                              },
+                            },
+                            [
+                              _vm._v(
+                                "\n                    " +
+                                  _vm._s(_vm.alat.kode_alat || "-") +
+                                  "\n                  "
+                              ),
+                            ]
                           ),
                         ]),
                       ]),
-                    ]),
-                  ]
-                ),
-              ]
-            ),
-          ]
-        ),
-      ]),
-    ]),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "table",
+                    { staticClass: "table no-border compact-table ml-2" },
+                    [
+                      _vm._m(2),
+                      _vm._v(" "),
+                      _c("tbody", [
+                        _c("tr", [
+                          _c("td", [
+                            _vm._v(
+                              _vm._s(_vm.formatRupiah(_vm.alat.harga_total))
+                            ),
+                          ]),
+                        ]),
+                      ]),
+                    ]
+                  ),
+                ]
+              ),
+            ]
+          ),
+        ]),
+      ]
+    ),
     _vm._v(" "),
     _c("br"),
     _vm._v(" "),
@@ -88877,10 +88921,91 @@ var render = function () {
                 staticStyle: { "overflow-x": "auto" },
               },
               [
-                _vm._m(6),
+                _c("thead", [
+                  _c("tr", { staticClass: "bg-table text-center" }, [
+                    _c(
+                      "th",
+                      {
+                        staticClass: "text-center",
+                        staticStyle: { color: "#000" },
+                      },
+                      [_vm._v("#")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "th",
+                      {
+                        staticClass: "text-center text-black-1",
+                        staticStyle: {
+                          cursor: "pointer",
+                          position: "relative",
+                          "vertical-align": "middle",
+                        },
+                      },
+                      [
+                        _vm._v("\n                Tgl\n                "),
+                        _c("span", { staticClass: "sort-icons" }, [
+                          _c("i", {
+                            staticClass: "fas fa-sort-up",
+                            on: {
+                              click: function ($event) {
+                                return _vm.sortTanggal("desc")
+                              },
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("i", {
+                            staticClass: "fas fa-sort-down",
+                            on: {
+                              click: function ($event) {
+                                return _vm.sortTanggal("asc")
+                              },
+                            },
+                          }),
+                        ]),
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "th",
+                      {
+                        staticClass: "text-center",
+                        staticStyle: { color: "#000" },
+                      },
+                      [_vm._v("PIC")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "th",
+                      {
+                        staticClass: "text-center",
+                        staticStyle: { color: "#000" },
+                      },
+                      [_vm._v("Jenis")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "th",
+                      {
+                        staticClass: "text-center",
+                        staticStyle: { color: "#000" },
+                      },
+                      [_vm._v("No Seri")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "th",
+                      {
+                        staticClass: "text-center",
+                        staticStyle: { color: "#000" },
+                      },
+                      [_vm._v("Kondisi")]
+                    ),
+                  ]),
+                ]),
                 _vm._v(" "),
                 _vm.filteredData.length === 0
-                  ? _c("tbody", [_vm._m(7)])
+                  ? _c("tbody", [_vm._m(6)])
                   : _vm._e(),
                 _vm._v(" "),
                 _vm._l(_vm.filteredData, function (riwayat, index) {
@@ -89057,68 +89182,6 @@ var staticRenderFns = [
       { staticClass: "ml-2 mr-2", staticStyle: { color: "#000" } },
       [_c("b", [_vm._v("Tanggal Akhir:")])]
     )
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", { staticClass: "bg-table text-center" }, [
-        _c(
-          "th",
-          {
-            staticClass: "text-center",
-            staticStyle: { width: "10px", color: "#000" },
-          },
-          [_vm._v("#")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass: "text-center",
-            staticStyle: { width: "10px", color: "#000" },
-          },
-          [_vm._v("Tgl")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass: "text-center",
-            staticStyle: { width: "10px", color: "#000" },
-          },
-          [_vm._v("PIC")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass: "text-center",
-            staticStyle: { width: "10px", color: "#000" },
-          },
-          [_vm._v("Jenis")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass: "text-center",
-            staticStyle: { width: "10px", color: "#000" },
-          },
-          [_vm._v("No Seri")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass: "text-center",
-            staticStyle: { width: "10px", color: "#000" },
-          },
-          [_vm._v("Kondisi")]
-        ),
-      ]),
-    ])
   },
   function () {
     var _vm = this

@@ -391,33 +391,44 @@ export default {
     },
     // Metode untuk mendownload data ke Excel
     downloadExcel() {
-      // Memastikan data yang akan diekspor sudah ada
-      if (this.filteredAlats.length === 0) {
-        alert("Tidak ada data untuk di-download");
-        return;
+    // Memastikan data yang akan diekspor sudah ada
+    if (this.filteredAlats.length === 0) {
+      alert("Tidak ada data untuk di-download");
+      return;
+    }
+
+    // Menyiapkan data yang akan dikonversi, termasuk nomor urut
+    const data = this.filteredAlats.map((alat, index) => ({
+      No: index + 1,  // Menambahkan nomor urut
+      Kode: alat.kode_alat,
+      Nama: alat.nama_alat,
+      Merek: alat.merek_alat,
+      Tipe: alat.tipe_alat,
+      'Stok Awal': alat.stok_awal,
+      'Stok Akhir': alat.stok_akhir,
+      Kategori: alat.kategori,
+    }));
+
+    // Mengonversi data ke dalam format sheet Excel
+    const ws = XLSX.utils.json_to_sheet(data);
+
+    // Mengatur header agar menjadi bold
+    const range = XLSX.utils.decode_range(ws['!ref']); // Mendapatkan range sheet
+    for (let col = range.s.c; col <= range.e.c; col++) {
+      const address = { r: range.s.r, c: col }; // Alamat cell header
+      const cell = ws[XLSX.utils.encode_cell(address)];
+      if (cell) {
+        cell.s = { font: { bold: true } }; // Mengatur style font menjadi bold
       }
+    }
 
-      // Menyiapkan data yang akan dikonversi
-      const data = this.filteredAlats.map(alat => ({
-        Kode: alat.kode_alat,
-        Nama: alat.nama_alat,
-        Merek: alat.merek_alat,
-        Tipe: alat.tipe_alat,
-        'Stok Awal': alat.stok_awal,
-        'Stok Akhir': alat.stok_akhir,
-        Kategori: alat.kategori,
-      }));
+    // Membuat workbook dari sheet yang sudah dibuat
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Data Master');
 
-      // Mengonversi data ke dalam format sheet Excel
-      const ws = XLSX.utils.json_to_sheet(data);
-      
-      // Membuat workbook dari sheet yang sudah dibuat
-      const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, 'Data Master');
-
-      // Menyimpan file Excel dengan nama yang ditentukan
-      XLSX.writeFile(wb, 'data_master.xlsx');
-    },
+    // Menyimpan file Excel dengan nama yang ditentukan
+    XLSX.writeFile(wb, 'data_master.xlsx');
+  }
   },
   mounted() {
     // Fetch data saat komponen di-mount

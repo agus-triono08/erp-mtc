@@ -99,14 +99,20 @@
           <table class="table table-border no-border table-custom" style="overflow-x: auto;">
             <thead>
               <tr class="bg-table text-center">
-                <th class="text-center" style="width: 10px; color: #000;">#</th>
-                <th class="text-center" style="width: 10px; color: #000;">Tgl</th>
-                <th class="text-center" style="width: 10px; color: #000;">PIC</th>
+                <th class="text-center" style="color: #000;">#</th>
+                <th class="text-center text-black-1" style="cursor: pointer; position: relative; vertical-align: middle;">
+                  Tgl
+                  <span class="sort-icons">
+                    <i @click="sortTanggal('desc')" class="fas fa-sort-up"></i>
+                    <i @click="sortTanggal('asc')" class="fas fa-sort-down"></i>
+                  </span>
+                </th>
+                <th class="text-center" style="color: #000;">PIC</th>
                 <!-- <th class="text-center" style="width: 10px; color: #000;">Tujuan Divisi</th> -->
-                <th class="text-center" style="width: 10px; color: #000;">Jenis</th>
+                <th class="text-center" style="color: #000;">Jenis</th>
                 <!-- <th class="text-center" style="width: 10px; color: #000;">Kode Alat</th> -->
-                <th class="text-center" style="width: 10px; color: #000;">No Seri</th>
-                <th class="text-center" style="width: 10px; color: #000;">Kondisi</th>                                
+                <th class="text-center" style="color: #000;">No Seri</th>
+                <th class="text-center" style="color: #000;">Kondisi</th>                                
               </tr>
             </thead>
             <tbody v-if="filteredData.length===0">
@@ -381,6 +387,18 @@ export default {
     toggleMesin() {
       this.showAlat = false;
       this.showMesin = !this.showMesin;
+    },
+    sortTanggal(order) {
+      this.datariwayat.sort((a, b) => {
+        const dateA = new Date(a.tanggal); // Mengonversi tanggal menjadi objek Date
+        const dateB = new Date(b.tanggal); // Mengonversi tanggal menjadi objek Date
+
+        if (order === 'asc') {
+          return dateA - dateB; // Urutkan berdasarkan tanggal, ascending
+        } else {
+          return dateB - dateA; // Urutkan berdasarkan tanggal, descending
+        }
+      });
     },
     // Metode untuk mendownload data ke Excel
     downloadExcel() {
