@@ -26249,6 +26249,24 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -89810,9 +89828,11 @@ var render = function () {
               : _vm._e(),
           ]),
           _vm._v(" "),
+          _vm._m(9),
+          _vm._v(" "),
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "form-group col-md-12" }, [
-              _vm._m(9),
+              _vm._m(10),
               _vm._v(" "),
               _c("div", { staticClass: "textarea-wrapper" }, [
                 _c("textarea", {
@@ -89851,7 +89871,7 @@ var render = function () {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "form-group" }, [
-            _vm._m(10),
+            _vm._m(11),
             _vm._v(" "),
             _c("div", { staticClass: "textarea-wrapper" }, [
               _c("textarea", {
@@ -89898,7 +89918,7 @@ var render = function () {
               _c("span"),
               _vm._v(" "),
               _c("div", [
-                _vm._m(11),
+                _vm._m(12),
                 _vm._v(" "),
                 _c(
                   "button",
@@ -90019,6 +90039,34 @@ var staticRenderFns = [
         _c("sup", { staticStyle: { color: "red" } }, [_vm._v(" *")]),
       ]
     )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c(
+        "label",
+        { staticStyle: { color: "#000" }, attrs: { for: "fungsi" } },
+        [_c("b", [_vm._v("Fungsi")])]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "textarea-wrapper" }, [
+        _c("textarea", {
+          staticClass: "form-control",
+          attrs: {
+            id: "fungsi",
+            rows: "1",
+            placeholder: "Masukkan Fungsi Nya (Maksimal 100 Karakter)",
+            maxlength: "100",
+          },
+        }),
+        _vm._v(" "),
+        _c("small", { staticClass: "text-muted char-counter" }, [
+          _vm._v("\n                1 / 100\n              "),
+        ]),
+      ]),
+    ])
   },
   function () {
     var _vm = this

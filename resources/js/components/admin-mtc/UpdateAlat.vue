@@ -304,6 +304,24 @@
               </div>
             </div>
 
+            <div class="form-group">
+              <label for="fungsi" style="color: #000;">
+                <b>Fungsi</b>
+              </label>
+              <div class="textarea-wrapper">
+                <textarea
+                  id="fungsi"                
+                  class="form-control"
+                  rows="1"
+                  placeholder="Masukkan Fungsi Nya (Maksimal 100 Karakter)"
+                  maxlength="100"
+                  ></textarea>
+                  <small class="text-muted char-counter">
+                    1 / 100
+                  </small>
+              </div>
+            </div>
+
             <div class="row">
             <!-- Vendor -->
             <div class="form-group col-md-12">
