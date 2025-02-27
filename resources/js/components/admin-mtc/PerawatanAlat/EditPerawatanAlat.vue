@@ -39,7 +39,7 @@
           <select id="pic" class="form-control" required>
             <option value="" disabled selected>Pilih PIC</option>
             <option v-for="pic in PIC" :key="pic.id" :value="pic.nama_staff">
-              {{ pic.nama_staff }}
+                {{ pic.nama_staff }}
             </option>
           </select>
         </div>

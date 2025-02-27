@@ -20,8 +20,44 @@
       </button>
     </div> -->
     <div v-if="showAlat">
-    <div class="row align-items-center justify-content-end mr-3 mt-4 mb-2">
-      <div class="ml-2" style="border-radius: 5px;">
+    <div class="row align-items-center justify-content-end mt-4 mb-2">
+      <!-- Tombol Download Excel di samping kiri filter -->
+      <div>
+        <button @click="downloadExcel" class="btn btn-sm btn-primary-1 mr-2">
+          <i class="fas fa-file-excel"></i> Export
+        </button>
+      </div>
+      <!-- Filter -->
+      <button
+        class="btn btn-sm btn-primary-1"
+        type="button"
+        id="filterDropdown"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        <i class="fa fa-filter"></i> Filter
+      </button>
+      <div 
+        class="dropdown-menu p-3"
+        aria-labelledby="filterDropdown"
+        style="border-radius: 8px; width: 250px;"
+        @click.stop
+      >
+        <div>
+          <label><b>Jenis</b></label>
+          <div v-for="jenis in availableJenis" :key="jenis">
+            <label><input type="checkbox" :value="jenis" v-model="jenisFilter"/>{{ jenis }}</label>
+          </div>
+        </div>
+        <div>
+          <label><b>Kondisi</b></label>
+          <div v-for="kondisi in availablekondisi" :key="kondisi">
+            <label><input type="checkbox" :value="kondisi" v-model="kondisiFilter"/>{{ kondisi }}</label>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="ml-2" style="border-radius: 5px;">
         <div class="input-group">
           <label class="mr-2" style="color: #000;"><b>Tujuan Divisi:</b></label>
           <select class="form-control" v-model="tujuanDivisiFilter" style="border-radius: 5px;">
@@ -39,7 +75,7 @@
             <option v-for="(kondisi, index) in kondisiOptions" :key="index" :value="kondisi">{{ kondisi }}</option>
           </select>
         </div>
-      </div>      
+      </div>       -->
           <div class="search-wrapper col-3">
             <div class="input-group">
               <input type="text" placeholder="Search..." class="form-control"
@@ -66,8 +102,9 @@
                 <th class="text-center" style="width: 10px; color: #000;">#</th>
                 <th class="text-center" style="width: 10px; color: #000;">Tgl</th>
                 <th class="text-center" style="width: 10px; color: #000;">PIC</th>
-                <th class="text-center" style="width: 10px; color: #000;">Tujuan Divisi</th>
-                <th class="text-center" style="width: 10px; color: #000;">Kode Alat</th>
+                <!-- <th class="text-center" style="width: 10px; color: #000;">Tujuan Divisi</th> -->
+                <th class="text-center" style="width: 10px; color: #000;">Jenis</th>
+                <!-- <th class="text-center" style="width: 10px; color: #000;">Kode Alat</th> -->
                 <th class="text-center" style="width: 10px; color: #000;">No Seri</th>
                 <th class="text-center" style="width: 10px; color: #000;">Kondisi</th>                                
               </tr>
@@ -82,10 +119,21 @@
                 <td>{{ index + 1 }}</td>
                 <td>{{ riwayat.tanggal || '-' }} <br> <small style="color: #444;"><i class="fas fa-clock"></i> {{ durasiData[index] !== '-' ? durasiData[index] + 'Hari' : '-' }}</small></td>                
                 <td>{{ riwayat.PIC ? riwayat.PIC.nama_staff : '-' }}</td>     
-                <td>{{ riwayat.pengguna ? riwayat.pengguna.divisi : '-' }}</td>
-                <td>{{ riwayat.alat ? riwayat.alat.kode_alat : '-' }}</td>    
+                <!-- <td>{{ riwayat.pengguna ? riwayat.pengguna.divisi : '-' }}</td> -->
+                <td>{{ riwayat.jenis }}</td>
+                <!-- <td>{{ riwayat.alat ? riwayat.alat.kode_alat : '-' }}</td>     -->
                 <td>{{ riwayat.no_seri || '-' }}</td>            
-                <td>{{ riwayat.noSeri ? riwayat.noSeri.status : '-' }}</td>
+                <td>
+                  <div 
+                    class="status-pill parent-element"
+                      :class="{'status-active': riwayat.noSeri.status === 'OK', 
+                              'status-error': riwayat.noSeri.status === 'Error',
+                              'status-rusak': riwayat.noSeri.status === 'Rusak',
+                              'status-hilang': riwayat.noSeri.status === 'Hilang',
+                              'status-dipinjam': riwayat.noSeri.status === 'Musnah',
+                    }"
+                  >{{ riwayat.noSeri ? riwayat.noSeri.status : '-' }}</div>
+                  </td>
               </tr>
             </tbody>
           </table>
@@ -115,6 +163,7 @@
 </template>
 <script>
 import axios from 'axios';
+import * as XLSX from 'xlsx';  
 export default {
   props: {
     noSeri: String,
@@ -133,12 +182,12 @@ export default {
         jumlah: 5,
         tanggal: "2025-02-20",
         PIC: { nama_staff: "John Doe" },
-        noSeri: { status: "Good" },
+        noSeri: { status: "OK" },
         alat: { kode_alat: "ALAT001" },
         pengguna: { divisi: "Engineering" },
         tujuan: "Engineering",
         jenis: "Tool",
-        kondisi: "Good",
+        kondisi: "OK",
       },
       {
         id: 2,
@@ -150,12 +199,12 @@ export default {
         jumlah: 10,
         tanggal: "2025-02-15",
         PIC: { nama_staff: "Jane Smith" },
-        noSeri: { status: "Damaged" },
+        noSeri: { status: "Rusak" },
         alat: { kode_alat: "ALAT002" },
         pengguna: { divisi: "Maintenance" },
         tujuan: "Maintenance",
         jenis: "Machine",
-        kondisi: "Damaged",
+        kondisi: "Rusak",
       },
       {
         id: 3,
@@ -167,12 +216,12 @@ export default {
         jumlah: 3,
         tanggal: "2025-02-18",
         PIC: { nama_staff: "Alice Johnson" },
-        noSeri: { status: "In Use" },
+        noSeri: { status: "Error" },
         alat: { kode_alat: "ALAT003" },
         pengguna: { divisi: "IT" },
         tujuan: "IT Support",
         jenis: "Machine",
-        kondisi: "In Use",
+        kondisi: "Error",
       },
       {
         id: 4,
@@ -184,12 +233,12 @@ export default {
         jumlah: 7,
         tanggal: "2025-02-22",
         PIC: { nama_staff: "Bob Lee" },
-        noSeri: { status: "Broken" },
+        noSeri: { status: "Musnah" },
         alat: { kode_alat: "ALAT004" },
         pengguna: { divisi: "Logistics" },
         tujuan: "Logistics",
         jenis: "Tool",
-        kondisi: "Broken",
+        kondisi: "Musnah",
       },
       {
         id: 5,
@@ -201,12 +250,12 @@ export default {
         jumlah: 2,
         tanggal: "2025-02-10",
         PIC: { nama_staff: "Charlie Brown" },
-        noSeri: { status: "Good" },
+        noSeri: { status: "Hilang" },
         alat: { kode_alat: "ALAT005" },
         pengguna: { divisi: "HR" },
         tujuan: "HR Department",
         jenis: "Machine",
-        kondisi: "Good",
+        kondisi: "Hilang",
       },
       ],
       rowsPerPage: 10,
@@ -214,16 +263,23 @@ export default {
       tanggalAwal: '',
       tanggalAkhir: '',
       tujuanDivisiFilter: '',
-      jenisFilter: '',
-      kondisiFilter: '',
+      // jenisFilter: '',
+      kondisiFilter: [],
       tujuanDivisiOptions: [],
       jenisOptions: [],
       kondisiOptions: [],
       showAlat: true,
       showMesin: false,
+      jenisFilter: [],
       }
   },
   computed: {
+    availableJenis() {
+      return [...new Set(this.datariwayat.map(item=>item.jenis))];
+    },
+    availablekondisi() {
+      return [...new Set(this.datariwayat.map(item=>item?.noSeri?.status))];
+    },
     durasiData() {
       return this.datariwayat.map(noseri => {
         if (noseri.tanggal) {
@@ -266,11 +322,11 @@ export default {
           const tujuanDivisiMatch = this.tujuanDivisiFilter
             ? datariwayat.tujuan === this.tujuanDivisiFilter
             : true;
-          const jenisMatch = this.jenisFilter
-            ? datariwayat.jenis === this.jenisFilter
+          const jenisMatch = this.jenisFilter.length
+            ? this.jenisFilter.includes(datariwayat.jenis)
             : true;
-          const kondisiMatch = this.kondisiFilter
-            ? datariwayat.kondisi === this.kondisiFilter
+          const kondisiMatch = this.kondisiFilter.length
+            ? this.kondisiFilter.includes(datariwayat?.noSeri?.status)
             : true;
           return tanggalMatch && searchMatch && tujuanDivisiMatch && jenisMatch && kondisiMatch;
         });
@@ -325,6 +381,33 @@ export default {
     toggleMesin() {
       this.showAlat = false;
       this.showMesin = !this.showMesin;
+    },
+    // Metode untuk mendownload data ke Excel
+    downloadExcel() {
+      // Memastikan data yang akan diekspor sudah ada
+      if (this.filteredData.length === 0) {
+        alert("Tidak ada data untuk di-download");
+        return;
+      }
+
+      // Menyiapkan data yang akan dikonversi
+      const data = this.filteredData.map(item => ({
+        Tanggal: item.tanggal,
+        PIC: item?.PIC?.nama_staff,
+        Jenis: item.jenis,
+        NoSeri: item.no_seri,
+        Kondisi: item?.noSeri?.status,        
+      }));
+
+      // Mengonversi data ke dalam format sheet Excel
+      const ws = XLSX.utils.json_to_sheet(data);
+      
+      // Membuat workbook dari sheet yang sudah dibuat
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Riwayat');
+
+      // Menyimpan file Excel dengan nama yang ditentukan
+      XLSX.writeFile(wb, 'riwayat.xlsx');
     },
   },
   mounted() {

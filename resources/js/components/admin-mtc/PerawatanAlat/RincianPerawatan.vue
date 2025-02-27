@@ -8,9 +8,9 @@
     </div>
 
     <div class="row align-items-center justify-content-end mr-3 mt-4 mb-2">
-      <button class="btn btn-sm btn-outline-primary mr-2">
+      <!-- <button class="btn btn-sm btn-outline-primary mr-2">
         <i class="fas fa-print"></i>
-      </button>
+      </button> -->
       <div class="search-wrapper">
         <div class="input-group">
           <input type="text" placeholder="search..." 
@@ -27,6 +27,8 @@
           <tr class="bg-table text-center">
             <th class="text-center" style="width: 10px; color: #000;">#</th>
             <th class="text-center" style="width: 10px; color: #000;">No Seri Alat</th>
+            <th class="text-center" style="width: 10px; color: #000;">Waktu Mulai</th>
+            <th class="text-center" style="width: 10px; color: #000;">Waktu Selesai</th>
             <th class="text-center" style="width: 10px; color: #000;">Detail Perawatan</th>
             <th class="text-center" style="width: 10px; color: #000;">Kondisi</th>
             <th class="text-center" style="width: 10px; color: #000;">Status</th>
@@ -42,10 +44,12 @@
           <tr class="text-center">
             <td>{{ index + 1 }}</td>
             <td>{{ perawatan.noseri ? perawatan.noseri.no_seri_alat : '-' }}</td>
+            <td>{{ perawatan.waktu_mulai }}</td>
+            <td>{{ perawatan.waktu_selesai }}</td>
             <td>{{ perawatan.detail_perawatan || '-' }}</td>
             <td>
               <div
-                class="btn-sts"
+                class="status-pill parent-element"
                 :class="{
                   'status-active': perawatan.noseri.status === 'Ready',
                   'status-error' : perawatan.noseri.status === 'Error',
@@ -57,7 +61,7 @@
             </td>
             <td> 
               <div 
-                class="btn-sts"              
+                class="status-pill parent-element"              
                 :class="{
                   'status-active' : perawatan.status == 'Sudah',
                   'status-rusak' : perawatan.status == 'Belum',

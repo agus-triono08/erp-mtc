@@ -38,9 +38,9 @@
     <div v-if="showAlat">
       <div class="row align-items-center justify-content-end mr-3 mt-3 mb-4">        
         <!-- Tambah Data -->
-        <!-- <button class="btn btn-sm btn-outline-primary mr-2 ml-1" @click="tambahData">
+        <button class="btn btn-sm btn-outline-primary mr-2 ml-1" @click="tambahData">
           <i class="fa fa-plus-circle"></i> Tambah Data
-        </button> -->
+        </button>
         <!-- Tombol Print PDF -->
         <button class="btn btn-sm btn-primary-1 mr-2" @click="printPDF">
           <i class="fas fa-print"></i> Print PDF
@@ -199,7 +199,6 @@ import vSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';
 import jsPDF from "jspdf";
 import 'jspdf-autotable';
-import { start } from "@popperjs/core";
 
 export default {
   components: {

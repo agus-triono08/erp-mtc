@@ -19,6 +19,26 @@
       </form>
     </div>
 
+    <div class="row">
+      <!-- Waktu Mulai -->
+      <div class="form-group col-md-6">
+        <label for="waktu_mulai" style="color: #000;">
+          <b>Waktu Mulai</b>
+          <sup style="color: red;"> *</sup>
+        </label>
+        <input type="time" class="form-control" id="waktu_mulai" v-model="perawatan.waktu_mulai"/>
+      </div>
+
+      <!-- Waktu Selesai -->
+      <div class="form-group col-md-6">
+        <label for="waktu_selesai" style="color: #000;">
+          <b>Waktu Selesai</b>
+          <sup style="color: red;"> *</sup>
+        </label>
+        <input type="time" class="form-control" id="waktu_mulai" v-model="perawatan.waktu_selesai"/>
+      </div>
+    </div>    
+
     <!-- Detail Perawatan -->
     <div class="form-group">
       <label for="detail_perawatan" style="color: #000;">

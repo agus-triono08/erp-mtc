@@ -23751,7 +23751,6 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 
 
 
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     vSelect: (vue_select__WEBPACK_IMPORTED_MODULE_2___default())
@@ -24548,6 +24547,26 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -25124,6 +25143,10 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -25235,16 +25258,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var xlsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! xlsx */ "./node_modules/xlsx/xlsx.mjs");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
-function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 //
 //
 //
@@ -25360,6 +25384,55 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -25382,7 +25455,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
           nama_staff: "John Doe"
         },
         noSeri: {
-          status: "Good"
+          status: "OK"
         },
         alat: {
           kode_alat: "ALAT001"
@@ -25392,7 +25465,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         },
         tujuan: "Engineering",
         jenis: "Tool",
-        kondisi: "Good"
+        kondisi: "OK"
       }, {
         id: 2,
         id_alat: 102,
@@ -25406,7 +25479,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
           nama_staff: "Jane Smith"
         },
         noSeri: {
-          status: "Damaged"
+          status: "Rusak"
         },
         alat: {
           kode_alat: "ALAT002"
@@ -25416,7 +25489,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         },
         tujuan: "Maintenance",
         jenis: "Machine",
-        kondisi: "Damaged"
+        kondisi: "Rusak"
       }, {
         id: 3,
         id_alat: 103,
@@ -25430,7 +25503,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
           nama_staff: "Alice Johnson"
         },
         noSeri: {
-          status: "In Use"
+          status: "Error"
         },
         alat: {
           kode_alat: "ALAT003"
@@ -25440,7 +25513,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         },
         tujuan: "IT Support",
         jenis: "Machine",
-        kondisi: "In Use"
+        kondisi: "Error"
       }, {
         id: 4,
         id_alat: 104,
@@ -25454,7 +25527,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
           nama_staff: "Bob Lee"
         },
         noSeri: {
-          status: "Broken"
+          status: "Musnah"
         },
         alat: {
           kode_alat: "ALAT004"
@@ -25464,7 +25537,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         },
         tujuan: "Logistics",
         jenis: "Tool",
-        kondisi: "Broken"
+        kondisi: "Musnah"
       }, {
         id: 5,
         id_alat: 105,
@@ -25478,7 +25551,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
           nama_staff: "Charlie Brown"
         },
         noSeri: {
-          status: "Good"
+          status: "Hilang"
         },
         alat: {
           kode_alat: "ALAT005"
@@ -25488,23 +25561,35 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         },
         tujuan: "HR Department",
         jenis: "Machine",
-        kondisi: "Good"
+        kondisi: "Hilang"
       }],
       rowsPerPage: 10,
       currentPage: 1,
       tanggalAwal: '',
       tanggalAkhir: '',
       tujuanDivisiFilter: '',
-      jenisFilter: '',
-      kondisiFilter: '',
+      // jenisFilter: '',
+      kondisiFilter: [],
       tujuanDivisiOptions: [],
       jenisOptions: [],
       kondisiOptions: [],
       showAlat: true,
-      showMesin: false
+      showMesin: false,
+      jenisFilter: []
     };
   },
   computed: {
+    availableJenis: function availableJenis() {
+      return _toConsumableArray(new Set(this.datariwayat.map(function (item) {
+        return item.jenis;
+      })));
+    },
+    availablekondisi: function availablekondisi() {
+      return _toConsumableArray(new Set(this.datariwayat.map(function (item) {
+        var _item$noSeri;
+        return item === null || item === void 0 || (_item$noSeri = item.noSeri) === null || _item$noSeri === void 0 ? void 0 : _item$noSeri.status;
+      })));
+    },
     durasiData: function durasiData() {
       return this.datariwayat.map(function (noseri) {
         if (noseri.tanggal) {
@@ -25534,11 +25619,12 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       var _this = this;
       if (this.searchQuery || this.tanggalAwal || this.tanggalAkhir || this.tujuanDivisiFilter || this.jenisFilter || this.kondisiFilter) {
         return this.paginatedData.filter(function (datariwayat) {
+          var _datariwayat$noSeri;
           var tanggalMatch = _this.tanggalAwal && _this.tanggalAkhir ? datariwayat.tanggal >= _this.tanggalAwal && datariwayat.tanggal <= _this.tanggalAkhir : true;
           var searchMatch = _this.searchQuery ? datariwayat.no_seri && datariwayat.no_seri.toLowerCase().includes(_this.searchQuery.toLowerCase()) || datariwayat.tujuan && datariwayat.tujuan.toLowerCase().includes(_this.searchQuery.toLowerCase()) || datariwayat.nama_peminjam && datariwayat.nama_peminjam.toLowerCase().includes(_this.searchQuery.toLowerCase()) || datariwayat.staff && datariwayat.staff.nama_staff && datariwayat.staff.nama_staff.toLowerCase().includes(_this.searchQuery.toLowerCase()) : true;
           var tujuanDivisiMatch = _this.tujuanDivisiFilter ? datariwayat.tujuan === _this.tujuanDivisiFilter : true;
-          var jenisMatch = _this.jenisFilter ? datariwayat.jenis === _this.jenisFilter : true;
-          var kondisiMatch = _this.kondisiFilter ? datariwayat.kondisi === _this.kondisiFilter : true;
+          var jenisMatch = _this.jenisFilter.length ? _this.jenisFilter.includes(datariwayat.jenis) : true;
+          var kondisiMatch = _this.kondisiFilter.length ? _this.kondisiFilter.includes(datariwayat === null || datariwayat === void 0 || (_datariwayat$noSeri = datariwayat.noSeri) === null || _datariwayat$noSeri === void 0 ? void 0 : _datariwayat$noSeri.status) : true;
           return tanggalMatch && searchMatch && tujuanDivisiMatch && jenisMatch && kondisiMatch;
         });
       } else {
@@ -25618,6 +25704,36 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     toggleMesin: function toggleMesin() {
       this.showAlat = false;
       this.showMesin = !this.showMesin;
+    },
+    // Metode untuk mendownload data ke Excel
+    downloadExcel: function downloadExcel() {
+      // Memastikan data yang akan diekspor sudah ada
+      if (this.filteredData.length === 0) {
+        alert("Tidak ada data untuk di-download");
+        return;
+      }
+
+      // Menyiapkan data yang akan dikonversi
+      var data = this.filteredData.map(function (item) {
+        var _item$PIC, _item$noSeri2;
+        return {
+          Tanggal: item.tanggal,
+          PIC: item === null || item === void 0 || (_item$PIC = item.PIC) === null || _item$PIC === void 0 ? void 0 : _item$PIC.nama_staff,
+          Jenis: item.jenis,
+          NoSeri: item.no_seri,
+          Kondisi: item === null || item === void 0 || (_item$noSeri2 = item.noSeri) === null || _item$noSeri2 === void 0 ? void 0 : _item$noSeri2.status
+        };
+      });
+
+      // Mengonversi data ke dalam format sheet Excel
+      var ws = xlsx__WEBPACK_IMPORTED_MODULE_1__.utils.json_to_sheet(data);
+
+      // Membuat workbook dari sheet yang sudah dibuat
+      var wb = xlsx__WEBPACK_IMPORTED_MODULE_1__.utils.book_new();
+      xlsx__WEBPACK_IMPORTED_MODULE_1__.utils.book_append_sheet(wb, ws, 'Riwayat');
+
+      // Menyimpan file Excel dengan nama yang ditentukan
+      xlsx__WEBPACK_IMPORTED_MODULE_1__.writeFile(wb, 'riwayat.xlsx');
     }
   },
   mounted: function mounted() {
@@ -66211,24 +66327,6 @@ var render = function () {
                                   staticClass: "dropdown-item",
                                   on: {
                                     click: function ($event) {
-                                      return _vm.viewDetail(noseri.id)
-                                    },
-                                  },
-                                },
-                                [
-                                  _c("i", {
-                                    staticClass: "fas fa-eye text-info",
-                                  }),
-                                  _vm._v(" Riwayat\n                  "),
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "dropdown-item",
-                                  on: {
-                                    click: function ($event) {
                                       return _vm.editData(noseri.id)
                                     },
                                   },
@@ -86331,6 +86429,18 @@ var render = function () {
                 _c(
                   "button",
                   {
+                    staticClass: "btn btn-sm btn-outline-primary mr-2 ml-1",
+                    on: { click: _vm.tambahData },
+                  },
+                  [
+                    _c("i", { staticClass: "fa fa-plus-circle" }),
+                    _vm._v(" Tambah Data\n      "),
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
                     staticClass: "btn btn-sm btn-primary-1 mr-2",
                     on: { click: _vm.printPDF },
                   },
@@ -87170,7 +87280,7 @@ var render = function () {
                         { key: pic.id, domProps: { value: pic.nama_staff } },
                         [
                           _vm._v(
-                            "\r\n              " +
+                            "\r\n                " +
                               _vm._s(pic.nama_staff) +
                               "\r\n            "
                           ),
@@ -87425,8 +87535,62 @@ var render = function () {
         ]
       ),
       _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "form-group col-md-6" }, [
+          _vm._m(2),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.perawatan.waktu_mulai,
+                expression: "perawatan.waktu_mulai",
+              },
+            ],
+            staticClass: "form-control",
+            attrs: { type: "time", id: "waktu_mulai" },
+            domProps: { value: _vm.perawatan.waktu_mulai },
+            on: {
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.perawatan, "waktu_mulai", $event.target.value)
+              },
+            },
+          }),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group col-md-6" }, [
+          _vm._m(3),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.perawatan.waktu_selesai,
+                expression: "perawatan.waktu_selesai",
+              },
+            ],
+            staticClass: "form-control",
+            attrs: { type: "time", id: "waktu_mulai" },
+            domProps: { value: _vm.perawatan.waktu_selesai },
+            on: {
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.perawatan, "waktu_selesai", $event.target.value)
+              },
+            },
+          }),
+        ]),
+      ]),
+      _vm._v(" "),
       _c("div", { staticClass: "form-group" }, [
-        _vm._m(2),
+        _vm._m(4),
         _vm._v(" "),
         _c("div", { staticClass: "textarea-wrapper" }, [
           _c("textarea", {
@@ -87472,7 +87636,7 @@ var render = function () {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "form-group" }, [
-        _vm._m(3),
+        _vm._m(5),
         _vm._v(" "),
         _c(
           "select",
@@ -87516,7 +87680,7 @@ var render = function () {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "form-group" }, [
-        _vm._m(4),
+        _vm._m(6),
         _vm._v(" "),
         _c(
           "select",
@@ -87567,7 +87731,7 @@ var render = function () {
         },
         [
           _c("div", { staticClass: "form-group" }, [
-            _vm._m(5),
+            _vm._m(7),
             _vm._v(" "),
             _c(
               "button",
@@ -87611,6 +87775,34 @@ var staticRenderFns = [
       "label",
       { staticStyle: { color: "#000" }, attrs: { for: "no_seri_alat" } },
       [_c("b", [_vm._v("No Seri Alat")])]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticStyle: { color: "#000" }, attrs: { for: "waktu_mulai" } },
+      [
+        _c("b", [_vm._v("Waktu Mulai")]),
+        _vm._v(" "),
+        _c("sup", { staticStyle: { color: "red" } }, [_vm._v(" *")]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticStyle: { color: "#000" }, attrs: { for: "waktu_selesai" } },
+      [
+        _c("b", [_vm._v("Waktu Selesai")]),
+        _vm._v(" "),
+        _c("sup", { staticStyle: { color: "red" } }, [_vm._v(" *")]),
+      ]
     )
   },
   function () {
@@ -88018,8 +88210,6 @@ var render = function () {
           "row align-items-center justify-content-end mr-3 mt-4 mb-2",
       },
       [
-        _vm._m(0),
-        _vm._v(" "),
         _c("div", { staticClass: "search-wrapper" }, [
           _c("div", { staticClass: "input-group" }, [
             _c("input", {
@@ -88059,9 +88249,9 @@ var render = function () {
           staticStyle: { "overflow-x": "auto" },
         },
         [
-          _vm._m(1),
+          _vm._m(0),
           _vm._v(" "),
-          _vm.filteredData.length === 0 ? _c("tbody", [_vm._m(2)]) : _vm._e(),
+          _vm.filteredData.length === 0 ? _c("tbody", [_vm._m(1)]) : _vm._e(),
           _vm._v(" "),
           _vm._l(_vm.filteredData, function (perawatan, index) {
             return _c("tbody", { key: index }, [
@@ -88076,13 +88266,17 @@ var render = function () {
                   ),
                 ]),
                 _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(perawatan.waktu_mulai))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(perawatan.waktu_selesai))]),
+                _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(perawatan.detail_perawatan || "-"))]),
                 _vm._v(" "),
                 _c("td", [
                   _c(
                     "div",
                     {
-                      staticClass: "btn-sts",
+                      staticClass: "status-pill parent-element",
                       class: {
                         "status-active": perawatan.noseri.status === "Ready",
                         "status-error": perawatan.noseri.status === "Error",
@@ -88105,7 +88299,7 @@ var render = function () {
                   _c(
                     "div",
                     {
-                      staticClass: "btn-sts",
+                      staticClass: "status-pill parent-element",
                       class: {
                         "status-active": perawatan.status == "Sudah",
                         "status-rusak": perawatan.status == "Belum",
@@ -88123,7 +88317,7 @@ var render = function () {
                 _vm._v(" "),
                 _c("td", [
                   _c("div", { staticClass: "dropdown text-center" }, [
-                    _vm._m(3, true),
+                    _vm._m(2, true),
                     _vm._v(" "),
                     _c(
                       "div",
@@ -88213,16 +88407,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      { staticClass: "btn btn-sm btn-outline-primary mr-2" },
-      [_c("i", { staticClass: "fas fa-print" })]
-    )
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", { staticClass: "bg-table text-center" }, [
         _c(
@@ -88241,6 +88425,24 @@ var staticRenderFns = [
             staticStyle: { width: "10px", color: "#000" },
           },
           [_vm._v("No Seri Alat")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("Waktu Mulai")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-center",
+            staticStyle: { width: "10px", color: "#000" },
+          },
+          [_vm._v("Waktu Selesai")]
         ),
         _vm._v(" "),
         _c(
@@ -88342,161 +88544,147 @@ var render = function () {
             "div",
             {
               staticClass:
-                "row align-items-center justify-content-end mr-3 mt-4 mb-2",
+                "row align-items-center justify-content-end mt-4 mb-2",
             },
             [
+              _c("div", [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-sm btn-primary-1 mr-2",
+                    on: { click: _vm.downloadExcel },
+                  },
+                  [
+                    _c("i", { staticClass: "fas fa-file-excel" }),
+                    _vm._v(" Export\n      "),
+                  ]
+                ),
+              ]),
+              _vm._v(" "),
+              _vm._m(1),
+              _vm._v(" "),
               _c(
                 "div",
                 {
-                  staticClass: "ml-2",
-                  staticStyle: { "border-radius": "5px" },
+                  staticClass: "dropdown-menu p-3",
+                  staticStyle: { "border-radius": "8px", width: "250px" },
+                  attrs: { "aria-labelledby": "filterDropdown" },
+                  on: {
+                    click: function ($event) {
+                      $event.stopPropagation()
+                    },
+                  },
                 },
                 [
-                  _c("div", { staticClass: "input-group" }, [
-                    _vm._m(1),
-                    _vm._v(" "),
-                    _c(
-                      "select",
-                      {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.tujuanDivisiFilter,
-                            expression: "tujuanDivisiFilter",
-                          },
-                        ],
-                        staticClass: "form-control",
-                        staticStyle: { "border-radius": "5px" },
-                        on: {
-                          change: function ($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function (o) {
-                                return o.selected
-                              })
-                              .map(function (o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.tujuanDivisiFilter = $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          },
-                        },
-                      },
-                      [
-                        _c("option", { attrs: { value: "" } }, [
-                          _vm._v("Semua"),
-                        ]),
-                        _vm._v(" "),
-                        _vm._l(
-                          _vm.tujuanDivisiOptions,
-                          function (tujuan, index) {
-                            return _c(
-                              "option",
-                              { key: index, domProps: { value: tujuan } },
-                              [_vm._v(_vm._s(tujuan))]
-                            )
-                          }
-                        ),
-                      ],
-                      2
-                    ),
-                    _vm._v(" "),
-                    _vm._m(2),
-                    _vm._v(" "),
-                    _c(
-                      "select",
-                      {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.jenisFilter,
-                            expression: "jenisFilter",
-                          },
-                        ],
-                        staticClass: "form-control",
-                        staticStyle: { "border-radius": "5px" },
-                        on: {
-                          change: function ($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function (o) {
-                                return o.selected
-                              })
-                              .map(function (o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.jenisFilter = $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          },
-                        },
-                      },
-                      [
-                        _c("option", { attrs: { value: "" } }, [
-                          _vm._v("Semua"),
-                        ]),
-                        _vm._v(" "),
-                        _vm._l(_vm.jenisOptions, function (jenis, index) {
-                          return _c(
-                            "option",
-                            { key: index, domProps: { value: jenis } },
-                            [_vm._v(_vm._s(jenis))]
-                          )
-                        }),
-                      ],
-                      2
-                    ),
-                    _vm._v(" "),
-                    _vm._m(3),
-                    _vm._v(" "),
-                    _c(
-                      "select",
-                      {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.kondisiFilter,
-                            expression: "kondisiFilter",
-                          },
-                        ],
-                        staticClass: "form-control",
-                        staticStyle: { "border-radius": "5px" },
-                        on: {
-                          change: function ($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function (o) {
-                                return o.selected
-                              })
-                              .map(function (o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.kondisiFilter = $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          },
-                        },
-                      },
-                      [
-                        _c("option", { attrs: { value: "" } }, [
-                          _vm._v("Semua"),
-                        ]),
-                        _vm._v(" "),
-                        _vm._l(_vm.kondisiOptions, function (kondisi, index) {
-                          return _c(
-                            "option",
-                            { key: index, domProps: { value: kondisi } },
-                            [_vm._v(_vm._s(kondisi))]
-                          )
-                        }),
-                      ],
-                      2
-                    ),
-                  ]),
+                  _c(
+                    "div",
+                    [
+                      _vm._m(2),
+                      _vm._v(" "),
+                      _vm._l(_vm.availableJenis, function (jenis) {
+                        return _c("div", { key: jenis }, [
+                          _c("label", [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.jenisFilter,
+                                  expression: "jenisFilter",
+                                },
+                              ],
+                              attrs: { type: "checkbox" },
+                              domProps: {
+                                value: jenis,
+                                checked: Array.isArray(_vm.jenisFilter)
+                                  ? _vm._i(_vm.jenisFilter, jenis) > -1
+                                  : _vm.jenisFilter,
+                              },
+                              on: {
+                                change: function ($event) {
+                                  var $$a = _vm.jenisFilter,
+                                    $$el = $event.target,
+                                    $$c = $$el.checked ? true : false
+                                  if (Array.isArray($$a)) {
+                                    var $$v = jenis,
+                                      $$i = _vm._i($$a, $$v)
+                                    if ($$el.checked) {
+                                      $$i < 0 &&
+                                        (_vm.jenisFilter = $$a.concat([$$v]))
+                                    } else {
+                                      $$i > -1 &&
+                                        (_vm.jenisFilter = $$a
+                                          .slice(0, $$i)
+                                          .concat($$a.slice($$i + 1)))
+                                    }
+                                  } else {
+                                    _vm.jenisFilter = $$c
+                                  }
+                                },
+                              },
+                            }),
+                            _vm._v(_vm._s(jenis)),
+                          ]),
+                        ])
+                      }),
+                    ],
+                    2
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    [
+                      _vm._m(3),
+                      _vm._v(" "),
+                      _vm._l(_vm.availablekondisi, function (kondisi) {
+                        return _c("div", { key: kondisi }, [
+                          _c("label", [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.kondisiFilter,
+                                  expression: "kondisiFilter",
+                                },
+                              ],
+                              attrs: { type: "checkbox" },
+                              domProps: {
+                                value: kondisi,
+                                checked: Array.isArray(_vm.kondisiFilter)
+                                  ? _vm._i(_vm.kondisiFilter, kondisi) > -1
+                                  : _vm.kondisiFilter,
+                              },
+                              on: {
+                                change: function ($event) {
+                                  var $$a = _vm.kondisiFilter,
+                                    $$el = $event.target,
+                                    $$c = $$el.checked ? true : false
+                                  if (Array.isArray($$a)) {
+                                    var $$v = kondisi,
+                                      $$i = _vm._i($$a, $$v)
+                                    if ($$el.checked) {
+                                      $$i < 0 &&
+                                        (_vm.kondisiFilter = $$a.concat([$$v]))
+                                    } else {
+                                      $$i > -1 &&
+                                        (_vm.kondisiFilter = $$a
+                                          .slice(0, $$i)
+                                          .concat($$a.slice($$i + 1)))
+                                    }
+                                  } else {
+                                    _vm.kondisiFilter = $$c
+                                  }
+                                },
+                              },
+                            }),
+                            _vm._v(_vm._s(kondisi)),
+                          ]),
+                        ])
+                      }),
+                    ],
+                    2
+                  ),
                 ]
               ),
               _vm._v(" "),
@@ -88636,25 +88824,32 @@ var render = function () {
                         ),
                       ]),
                       _vm._v(" "),
-                      _c("td", [
-                        _vm._v(
-                          _vm._s(
-                            riwayat.pengguna ? riwayat.pengguna.divisi : "-"
-                          )
-                        ),
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(
-                          _vm._s(riwayat.alat ? riwayat.alat.kode_alat : "-")
-                        ),
-                      ]),
+                      _c("td", [_vm._v(_vm._s(riwayat.jenis))]),
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(riwayat.no_seri || "-"))]),
                       _vm._v(" "),
                       _c("td", [
-                        _vm._v(
-                          _vm._s(riwayat.noSeri ? riwayat.noSeri.status : "-")
+                        _c(
+                          "div",
+                          {
+                            staticClass: "status-pill parent-element",
+                            class: {
+                              "status-active": riwayat.noSeri.status === "OK",
+                              "status-error": riwayat.noSeri.status === "Error",
+                              "status-rusak": riwayat.noSeri.status === "Rusak",
+                              "status-hilang":
+                                riwayat.noSeri.status === "Hilang",
+                              "status-dipinjam":
+                                riwayat.noSeri.status === "Musnah",
+                            },
+                          },
+                          [
+                            _vm._v(
+                              _vm._s(
+                                riwayat.noSeri ? riwayat.noSeri.status : "-"
+                              )
+                            ),
+                          ]
                         ),
                       ]),
                     ]),
@@ -88730,30 +88925,31 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c(
-      "label",
-      { staticClass: "mr-2", staticStyle: { color: "#000" } },
-      [_c("b", [_vm._v("Tujuan Divisi:")])]
+      "button",
+      {
+        staticClass: "btn btn-sm btn-primary-1",
+        attrs: {
+          type: "button",
+          id: "filterDropdown",
+          "data-toggle": "dropdown",
+          "aria-haspopup": "true",
+          "aria-expanded": "false",
+        },
+      },
+      [_c("i", { staticClass: "fa fa-filter" }), _vm._v(" Filter\n    ")]
     )
   },
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "label",
-      { staticClass: "ml-2 mr-2", staticStyle: { color: "#000" } },
-      [_c("b", [_vm._v("Jenis:")])]
-    )
+    return _c("label", [_c("b", [_vm._v("Jenis")])])
   },
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "label",
-      { staticClass: "ml-2 mr-2", staticStyle: { color: "#000" } },
-      [_c("b", [_vm._v("Kondisi:")])]
-    )
+    return _c("label", [_c("b", [_vm._v("Kondisi")])])
   },
   function () {
     var _vm = this
@@ -88814,16 +89010,7 @@ var staticRenderFns = [
             staticClass: "text-center",
             staticStyle: { width: "10px", color: "#000" },
           },
-          [_vm._v("Tujuan Divisi")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass: "text-center",
-            staticStyle: { width: "10px", color: "#000" },
-          },
-          [_vm._v("Kode Alat")]
+          [_vm._v("Jenis")]
         ),
         _vm._v(" "),
         _c(

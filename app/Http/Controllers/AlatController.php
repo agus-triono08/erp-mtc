@@ -205,6 +205,8 @@ class AlatController extends Controller
             'id_staff' => 1,
             'detail_perawatan' => 'Perawatan alat untuk memperbaiki kerusakan',
             'tanggal_perawatan' => '2022-01-19',
+            'waktu_mulai' => '08:00:00',
+            'waktu_selesai' => '09:00:00',
             'status' => 'Belum',            
         ],
     ];
