@@ -314,29 +314,41 @@ export default {
       return harga ? new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(harga) : 'Rp -';
     },
     downloadExcel() {
-      if(this.filteredData.length === 0) {
+      if (this.filteredData.length === 0) {
         alert("Tidak ada data yang dapat di download");
         return;
       }
 
-      const data = this.filteredData.map(item => ({
-        NoSeri : item.no_seri_alat,
-        Layout : item?.layout?.nama_lokasi,
-        TanggalMasuk : item.tanggal_masuk,
-        Harga : item.harga,
-        Kondisi : item.status,
+      // Menyiapkan data yang akan dikonversi, termasuk nomor urut
+      const data = this.filteredData.map((item, index) => ({
+        No: index + 1, // Menambahkan nomor urut
+        NoSeri: item.no_seri_alat,
+        Layout: item?.layout?.nama_lokasi,
+        TanggalMasuk: item.tanggal_masuk,
+        Harga: item.harga,
+        Kondisi: item.status,
       }));
 
       // Mengonversi data ke dalam format sheet Excel
       const ws = XLSX.utils.json_to_sheet(data);
-      
+
+      // Mengatur header agar menjadi bold
+      const range = XLSX.utils.decode_range(ws['!ref']); // Mendapatkan range sheet
+      for (let col = range.s.c; col <= range.e.c; col++) {
+        const address = { r: range.s.r, c: col }; // Alamat cell header
+        const cell = ws[XLSX.utils.encode_cell(address)];
+        if (cell) {
+          cell.s = { font: { bold: true } }; // Mengatur style font menjadi bold
+        }
+      }
+
       // Membuat workbook dari sheet yang sudah dibuat
       const wb = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, ws, 'Data No Seri Belum Digunakan');
 
       // Menyimpan file Excel dengan nama yang ditentukan
       XLSX.writeFile(wb, 'data_no_seri_belum_digunakan.xlsx');
-    },
+    }
   },
   watch: {
     rowsPerPage() {

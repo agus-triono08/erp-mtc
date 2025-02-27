@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import { component } from 'vue/types/umd';
 
 
 
@@ -40,6 +41,9 @@ Vue.component('input-rincian-alat', require('./components/admin-mtc/InputRincian
 Vue.component('mesin-hilang', require('./components/admin-mtc/DataMesin/DetailMesin/Kondisi/DataHilang.vue').default);
 //Vue.component('data-alat', require('./components/admin-mtc/DataAlat.vue').default);
 //Vue.component('detail-alat', require('./components/admin-mtc/DetailAlat.vue').default);
+
+// LOGIN
+const Login = require('./components/auth/login.vue').default;
 
 /**Komponen Data Alat */
 const DataAlat = require('./components/admin-mtc/DataAlat.vue').default;
@@ -218,6 +222,10 @@ Vue.component('user-permintaan-pengeluaran', UserPermintaanPengeluaran);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 const routes = [
+    {
+        path: '/',
+        component: Login,
+    },
     {
         path: '/admin-mtc/data-alat/detail/:id',
         //name: 'DetailAlat',

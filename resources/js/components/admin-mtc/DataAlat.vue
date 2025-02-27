@@ -199,9 +199,9 @@
                   <a class="dropdown-item" @click="editData(alat.id)">
                     <i class="fas fa-edit text-primary"></i> Edit
                   </a>
-                  <a class="dropdown-item" @click="deleteData(alat.id)">
+                  <!-- <a class="dropdown-item" @click="deleteData(alat.id)">
                     <i class="fas fa-trash text-danger"></i> Hapus
-                  </a>
+                  </a> -->
                 </div>
               </div>
             </td>
@@ -399,14 +399,15 @@ export default {
 
     // Menyiapkan data yang akan dikonversi, termasuk nomor urut
     const data = this.filteredAlats.map((alat, index) => ({
-      No: index + 1,  // Menambahkan nomor urut
+      No: index + 1,  // Menambahkan nomor urut      
       Kode: alat.kode_alat,
+      Jenis: alat.jenis,
+      Kategori: alat.kategori,
       Nama: alat.nama_alat,
       Merek: alat.merek_alat,
       Tipe: alat.tipe_alat,
       'Stok Awal': alat.stok_awal,
-      'Stok Akhir': alat.stok_akhir,
-      Kategori: alat.kategori,
+      'Stok Akhir': alat.stok_akhir,      
     }));
 
     // Mengonversi data ke dalam format sheet Excel

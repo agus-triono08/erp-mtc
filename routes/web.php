@@ -14,9 +14,13 @@ use Illuminate\Support\Facades\Auth; // Add this line
 |
 */
 
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('authen.login');
+})->name('authen');
 
 Route::get('/admin-mtc/dashboard', function () {
     return view('admin-mtc.Main.dashboard');
