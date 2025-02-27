@@ -105,6 +105,13 @@
               >
               </v-select>
             </div>
+            <!-- Jenis -->
+            <div class="mt-3">
+              <label><b>Jenis</b></label>
+              <div v-for="jenis in availableJenis" :key="jenis">
+                <label><input type="checkbox" :value="jenis" v-model="jenisFilter"/>{{ jenis }}</label>
+              </div>
+            </div>
           </div>
           <input
             type="text"
@@ -132,6 +139,7 @@
           <tr class="bg-table">
             <th class="text-center text-black-1">#</th>
             <th class="text-left text-black-1">Kode</th>
+            <th class="text-center text-black-1">Jenis</th>
             <th class="text-center text-black-1">Nama</th>
             <th class="text-center text-black-1">Merek</th>
             <th class="text-center text-black-1">Tipe/Ukuran</th>                        
@@ -154,16 +162,17 @@
         </thead>
         <tbody v-if="filteredAlats.length === 0">
           <tr>
-            <td colspan="8" class="text-center">Tidak Ada Data</td>
+            <td colspan="9" class="text-center">Tidak Ada Data</td>
           </tr>
         </tbody>
         <tbody v-for="(categoryGroup, category) in filteredGroupedAlats" :key="category">        
           <tr>
-            <td colspan="8" class="bg-teal text-white" style="font-size: 16px;"><strong>{{ category }}</strong></td>
+            <td colspan="9" class="bg-teal text-white" style="font-size: 16px;"><strong>{{ category }}</strong></td>
           </tr>
           <tr v-for="(alat, index) in categoryGroup" :key="alat.id" class="tr-center">
             <td class="text-center">{{ index + 1 }}</td>
             <td class="text-left"><img :src="alat.gambar_alat" style="max-width: 50px; max-height: 50px; margin-right: 20px; border-radius: 10px;" />{{ alat.kode_alat }}</td>
+            <td class="text-center">{{ alat.jenis || '-' }}</td>
             <td class="text-center">{{ alat.nama_alat }}</td>
             <td class="text-center">{{ alat.merek_alat }}</td>
             <td class="text-center">{{ alat.tipe_alat }}</td>
@@ -251,6 +260,7 @@ export default {
       showModal: false, // Mengontrol tampilan modal
       showAlat: true,
       showMesin: false,
+      jenisFilter: [],
       showModalInput: false, // Tambahkan variabel untuk mengontrol tampilan modal input       
     };
   },
@@ -258,16 +268,20 @@ export default {
     availableCategory() {
       return [...new Set(this.alats.map(alat => alat.kategori))];
     },
+    availableJenis() {
+      return [...new Set(this.alats.map(alat => alat.jenis))];
+    },
     filteredAlats() {
       return this.alats.filter(alat => {
         const statusMatch = this.statusFilters.length ? this.statusFilters.includes(alat.status) : true;
         const unitMatch = this.unitFilters.length ? this.unitFilters.includes(alat.unit_alat) : true;
         const categoryMatch = this.categoryFilters.length ? this.categoryFilters.includes(alat.kategori) : true;
+        const jenisMatch = this.jenisFilter.length ? this.jenisFilter.includes(alat.jenis) : true;
         const searchMatch = alat.nama_alat.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
           alat.merek_alat.toLowerCase().includes(this.searchQuery.toLowerCase()) || 
           alat.kode_alat.toLowerCase().includes(this.searchQuery.toLowerCase());
 
-        return statusMatch && unitMatch && categoryMatch && searchMatch;
+        return statusMatch && unitMatch && jenisMatch && categoryMatch && searchMatch;
       });
     },
     filteredGroupedAlats() {
@@ -302,6 +316,7 @@ export default {
         this.alats = response.data.data.map((alat) => ({
           id: alat.id,
           kode_alat: alat.kode_alat,
+          jenis: alat.jenis,
           nama_alat: alat.nama_alat,
           merek_alat: alat.merek_alat,
           tipe_alat: alat.tipe_alat,

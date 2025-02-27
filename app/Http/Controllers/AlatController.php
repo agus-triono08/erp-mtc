@@ -12,6 +12,7 @@ class AlatController extends Controller
             'id' => 1,
             'kode_alat' => '1-C3-B0-2-01',
             'nama_alat' => 'Clamp',
+            'jenis' => 'Alat',
             'merek_alat' => 'BISON',
             'tipe_alat' => 'Plastik',
             'unit_alat' => 'Unit',
@@ -33,6 +34,7 @@ class AlatController extends Controller
             'id' => 2,
             'kode_alat' => '1-C3-B0-3-01',
             'nama_alat' => 'Clamp',
+            'jenis' => 'Alat',
             'merek_alat' => 'BISON',
             'tipe_alat' => '8"',
             'unit_alat' => 'Unit',
@@ -50,6 +52,26 @@ class AlatController extends Controller
             'deskripsi' => 'Clamp untuk berbagai kebutuhan.',
             'gambar' => 'https://down-id.img.susercontent.com/file/id-11134207-7r98t-llsm9985w7n857',
         ],
+        [
+            'id' => 3,
+            'kode_alat' => '2-B1-B0-1-02',
+            'nama_alat' => 'Bor Impact',
+            'jenis' => 'Mesin',
+            'merek_alat' => 'Bosch',
+            'tipe_alat' => 'GSB 10 RE Professional',
+            'unit_alat' => 'Unit',
+            'stok_awal' => 1,
+            'stok_akhir' => 1,
+            'lokasi_penyimpanan' => 'Gudang C',
+            'kategori' => 'BOR',
+            'no_seri_bawaan' => '0 601 216 1K1',
+            'pembelian' => 'import',
+            'sumber_alat' => 'Stok Baru',
+            'vendor' => 'Beli Online',
+            'deskripsi' => 'Bor impact Bosch GSB 10 RE, 10mm, 18V, 2Ah, 1.5kg',
+            'fungsi' => 'Buat mengebor kayu, beton, baja, dll.',
+            'gambar' => 'https://www.bosch-pt.co.id/id/id/ocsmedia/7669-54/application-image/1434x828/bor-impact-gsb-10-re-06012161k1.png',
+        ]
     ];
 
     //Data dummy untuk lokasi penyimpanan

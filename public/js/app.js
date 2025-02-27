@@ -7687,6 +7687,15 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -7713,6 +7722,7 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
       // Mengontrol tampilan modal
       showAlat: true,
       showMesin: false,
+      jenisFilter: [],
       showModalInput: false // Tambahkan variabel untuk mengontrol tampilan modal input       
     };
   },
@@ -7722,14 +7732,20 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
         return alat.kategori;
       })));
     },
+    availableJenis: function availableJenis() {
+      return _toConsumableArray(new Set(this.alats.map(function (alat) {
+        return alat.jenis;
+      })));
+    },
     filteredAlats: function filteredAlats() {
       var _this = this;
       return this.alats.filter(function (alat) {
         var statusMatch = _this.statusFilters.length ? _this.statusFilters.includes(alat.status) : true;
         var unitMatch = _this.unitFilters.length ? _this.unitFilters.includes(alat.unit_alat) : true;
         var categoryMatch = _this.categoryFilters.length ? _this.categoryFilters.includes(alat.kategori) : true;
+        var jenisMatch = _this.jenisFilter.length ? _this.jenisFilter.includes(alat.jenis) : true;
         var searchMatch = alat.nama_alat.toLowerCase().includes(_this.searchQuery.toLowerCase()) || alat.merek_alat.toLowerCase().includes(_this.searchQuery.toLowerCase()) || alat.kode_alat.toLowerCase().includes(_this.searchQuery.toLowerCase());
-        return statusMatch && unitMatch && categoryMatch && searchMatch;
+        return statusMatch && unitMatch && jenisMatch && categoryMatch && searchMatch;
       });
     },
     filteredGroupedAlats: function filteredGroupedAlats() {
@@ -7774,6 +7790,7 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
                 return {
                   id: alat.id,
                   kode_alat: alat.kode_alat,
+                  jenis: alat.jenis,
                   nama_alat: alat.nama_alat,
                   merek_alat: alat.merek_alat,
                   tipe_alat: alat.tipe_alat,
@@ -64096,6 +64113,62 @@ var render = function () {
                       ],
                       1
                     ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "mt-3" },
+                      [
+                        _vm._m(3),
+                        _vm._v(" "),
+                        _vm._l(_vm.availableJenis, function (jenis) {
+                          return _c("div", { key: jenis }, [
+                            _c("label", [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.jenisFilter,
+                                    expression: "jenisFilter",
+                                  },
+                                ],
+                                attrs: { type: "checkbox" },
+                                domProps: {
+                                  value: jenis,
+                                  checked: Array.isArray(_vm.jenisFilter)
+                                    ? _vm._i(_vm.jenisFilter, jenis) > -1
+                                    : _vm.jenisFilter,
+                                },
+                                on: {
+                                  change: function ($event) {
+                                    var $$a = _vm.jenisFilter,
+                                      $$el = $event.target,
+                                      $$c = $$el.checked ? true : false
+                                    if (Array.isArray($$a)) {
+                                      var $$v = jenis,
+                                        $$i = _vm._i($$a, $$v)
+                                      if ($$el.checked) {
+                                        $$i < 0 &&
+                                          (_vm.jenisFilter = $$a.concat([$$v]))
+                                      } else {
+                                        $$i > -1 &&
+                                          (_vm.jenisFilter = $$a
+                                            .slice(0, $$i)
+                                            .concat($$a.slice($$i + 1)))
+                                      }
+                                    } else {
+                                      _vm.jenisFilter = $$c
+                                    }
+                                  },
+                                },
+                              }),
+                              _vm._v(_vm._s(jenis)),
+                            ]),
+                          ])
+                        }),
+                      ],
+                      2
+                    ),
                   ]
                 ),
                 _vm._v(" "),
@@ -64136,7 +64209,7 @@ var render = function () {
                     on: { click: _vm.tambahData },
                   },
                   [
-                    _vm._m(3),
+                    _vm._m(4),
                     _vm._v(" "),
                     _c("span", { staticClass: "text" }, [_vm._v("Add Data")]),
                   ]
@@ -64158,6 +64231,10 @@ var render = function () {
                     _vm._v(" "),
                     _c("th", { staticClass: "text-left text-black-1" }, [
                       _vm._v("Kode"),
+                    ]),
+                    _vm._v(" "),
+                    _c("th", { staticClass: "text-center text-black-1" }, [
+                      _vm._v("Jenis"),
                     ]),
                     _vm._v(" "),
                     _c("th", { staticClass: "text-center text-black-1" }, [
@@ -64247,7 +64324,7 @@ var render = function () {
                 ]),
                 _vm._v(" "),
                 _vm.filteredAlats.length === 0
-                  ? _c("tbody", [_vm._m(4)])
+                  ? _c("tbody", [_vm._m(5)])
                   : _vm._e(),
                 _vm._v(" "),
                 _vm._l(
@@ -64263,7 +64340,7 @@ var render = function () {
                             {
                               staticClass: "bg-teal text-white",
                               staticStyle: { "font-size": "16px" },
-                              attrs: { colspan: "8" },
+                              attrs: { colspan: "9" },
                             },
                             [_c("strong", [_vm._v(_vm._s(category))])]
                           ),
@@ -64289,6 +64366,10 @@ var render = function () {
                                   attrs: { src: alat.gambar_alat },
                                 }),
                                 _vm._v(_vm._s(alat.kode_alat)),
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "text-center" }, [
+                                _vm._v(_vm._s(alat.jenis || "-")),
                               ]),
                               _vm._v(" "),
                               _c("td", { staticClass: "text-center" }, [
@@ -64334,7 +64415,7 @@ var render = function () {
                                   "div",
                                   { staticClass: "dropdown text-center" },
                                   [
-                                    _vm._m(5, true),
+                                    _vm._m(6, true),
                                     _vm._v(" "),
                                     _c(
                                       "div",
@@ -64509,6 +64590,12 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("label", [_c("b", [_vm._v("Jenis")])])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("span", { staticClass: "icon text-white-50" }, [
       _c("i", { staticClass: "fas fa-plus-circle" }),
     ])
@@ -64518,7 +64605,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("td", { staticClass: "text-center", attrs: { colspan: "8" } }, [
+      _c("td", { staticClass: "text-center", attrs: { colspan: "9" } }, [
         _vm._v("Tidak Ada Data"),
       ]),
     ])
