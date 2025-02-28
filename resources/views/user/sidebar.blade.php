@@ -29,16 +29,16 @@
 
     <!-- Heading -->
     <br><div class="sidebar-heading">
-        <strong>Transfer Data</strong>
+        <strong>Master Data</strong>
     </div>
 
     <!-- Nav Item - Data -->
-    {{-- <li class="nav-item {{ request()->routeIs('data.adminmtc') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('data.adminmtc') }}">
-            <i class="fas fa-fw {{ request()->routeIs('data.adminmtc') ? 'fa-tools' : 'fa-toolbox' }}"></i>
+    <li class="nav-item {{ request()->routeIs('data.user') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('data.user') }}">
+            <i class="fas fa-fw {{ request()->routeIs('data.user') ? 'fa-tools' : 'fa-toolbox' }}"></i>
             <span>Master Data</span>
         </a>
-    </li> --}}
+    </li>
 
     <!-- Nav Item - History -->
     <!-- <li class="nav-item {{ request()->routeIs('adminmtc-riwayat') ? 'active' : '' }}">
@@ -86,9 +86,9 @@
     </li>-->
 
     <!-- Heading -->
-    {{-- <br><div class="sidebar-heading">
-        <strong>Manajemen Inventaris</strong>
-    </div> --}}
+    <br><div class="sidebar-heading">
+        <strong>Transfer Data</strong>
+    </div>
 
     <!-- Nav Item - Peminjaman -->
     <li class="nav-item {{ request()->routeIs('peminjaman.user') ? 'active' : '' }}">

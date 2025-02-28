@@ -1,8 +1,8 @@
 <!--Template-->
-@extends('admin-mtc.app')
+@extends('user.app')
 
 <!--Title-->
-@section('title', 'Data Alat')
+@section('title', 'Master Data')
 
 <!--Main Content-->
 @section('content')

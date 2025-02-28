@@ -123,6 +123,8 @@ const DataPerawatanMesin = require('./components/admin-mtc/DataMesin/DetailMesin
 //Komponen Data Riwayat
 const DataRiwayat = require('./components/admin-mtc/Riwayat/DataRiwayat.vue').default;
 
+//USER DATA MASTER
+const DataMasterUser = require('./components/user/MasterData/Data.vue').default;
 
 // USER PEMINJAMAN & PERMINTAAN
 const UserDataPeminjaman = require('./components/user/PeminjamanAlat/DataPeminjamanAlat.vue').default;
@@ -308,6 +310,10 @@ const routes = [
         component: DataRiwayat,
     },
     // USER
+    {
+        path: '/user/data',
+        component: DataMasterUser,
+    },
     {
         path: '/user/peminjaman',
         component: UserDataPeminjaman,

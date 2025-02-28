@@ -121,12 +121,12 @@
             class="form-control-sm border-0 mr-2 ml-2"
             placeholder="Search..."
           />
-          <a @click="tambahData" class="btn btn-icon-split btn-plus">
+          <!-- <a @click="tambahData" class="btn btn-icon-split btn-plus">
             <span class="icon text-white-50">
               <i class="fas fa-plus-circle"></i>
             </span>
             <span class="text">Add Data</span>
-          </a>
+          </a> -->
         </form>
       </div>
     </div>    
@@ -156,7 +156,7 @@
                 <i @click="sortStokAkhir('asc')" class="fas fa-sort-down"></i>
               </span>
             </th>            
-            <th class="text-center text-black-1">Aksi</th>
+            <!-- <th class="text-center text-black-1">Aksi</th> -->
           </tr>
         </thead>
         <tbody v-if="filteredAlats.length === 0">
@@ -179,7 +179,7 @@
             <td class="text-center" :class="{ 'text-danger': alat.stok_akhir <= 2 }">{{ alat.stok_akhir }}<br>
               <span v-if="alat.stok_akhir <= 2" class="text-center"><small>Minimum Stok</small></span>
             </td>
-            <td>
+            <!-- <td>
               <div class="dropdown text-center">
                 <button
                   class="btn btn-sm"
@@ -198,12 +198,12 @@
                   <a class="dropdown-item" @click="editData(alat.id)">
                     <i class="fas fa-edit text-primary"></i> Edit
                   </a>
-                  <!-- <a class="dropdown-item" @click="deleteData(alat.id)">
+                  <a class="dropdown-item" @click="deleteData(alat.id)">
                     <i class="fas fa-trash text-danger"></i> Hapus
-                  </a> -->
+                  </a>
                 </div>
               </div>
-            </td>
+            </td> -->
           </tr>
         </tbody>
       </table>      

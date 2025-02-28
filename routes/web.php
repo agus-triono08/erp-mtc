@@ -76,6 +76,10 @@ Route::get('/user/dashboard', function () {
     return view('user.Main.dashboard');
 })->name('dashboard.user');
 
+Route::get('/user/data', function () {
+    return view('user.Main.data');
+})->name('data.user');
+
 Route::get('/user/peminjaman', function () {
     return view('user.Main.peminjaman');
 })->name('peminjaman.user');
