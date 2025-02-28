@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid" style="width: 800px;">
+    <div class="container-fluid">
       <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold" style="color: #169ea8; border-radius: 15px;">Form Input Data Alat Rusak</h6>
       </div>

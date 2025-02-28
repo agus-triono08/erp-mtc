@@ -8431,6 +8431,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var jspdf__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jspdf */ "./node_modules/jspdf/dist/jspdf.es.min.js");
+/* harmony import */ var jspdf_autotable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! jspdf-autotable */ "./node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.js");
+/* harmony import */ var jspdf_autotable__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(jspdf_autotable__WEBPACK_IMPORTED_MODULE_2__);
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
@@ -8536,6 +8539,12 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 //
 //
 //
+//
+//
+//
+//
+
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -8598,19 +8607,19 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             case 4:
               response = _context.sent;
               _this2.datamusnah = response.data;
-              //console.log(this.datamusnah);
-              _context.next = 11;
+              console.log(_this2.datamusnah);
+              _context.next = 12;
               break;
-            case 8:
-              _context.prev = 8;
+            case 9:
+              _context.prev = 9;
               _context.t0 = _context["catch"](0);
               console.error("Error fetching detail alat musnah : ", _context.t0);
               //alert("Gagal memuat detail data alat musnah.");
-            case 11:
+            case 12:
             case "end":
               return _context.stop();
           }
-        }, _callee, null, [[0, 8]]);
+        }, _callee, null, [[0, 9]]);
       }))();
     },
     debouncedFetchAlats: _.debounce(function () {
@@ -8627,6 +8636,102 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     },
     nextPage: function nextPage() {
       if (this.currentPage < this.totalPages) this.currentPage++;
+    },
+    printPDF: function printPDF() {
+      var _this$filteredData$, _this$filteredData$2;
+      var doc = new jspdf__WEBPACK_IMPORTED_MODULE_1__["default"]();
+
+      // Format tanggal
+      var tanggalString = ((_this$filteredData$ = this.filteredData[0]) === null || _this$filteredData$ === void 0 ? void 0 : _this$filteredData$.tanggal_musnah) || '-';
+      var tanggal = new Date(tanggalString);
+
+      // Menentukan hari dalam seminggu
+      var hariArr = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+      var hari = hariArr[tanggal.getDay()];
+
+      // Menentukan nama bulan
+      var bulanArr = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+      var bulan = bulanArr[tanggal.getMonth()];
+
+      // Menyusun format tanggal
+      var tanggalFormatted = "".concat(tanggal.getDate(), " ").concat(bulan, " ").concat(tanggal.getFullYear());
+
+      // Title of the document
+      var title = "Berita Acara Pemusnahan Barang";
+      var titleWidth = doc.getStringUnitWidth(title) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+      var titleX = (doc.internal.pageSize.width - titleWidth) / 2;
+      doc.text(title, titleX, 16);
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(12);
+      doc.text('Berdasarkan SK No. : ', 14, 30);
+
+      // Draw a long line next to 'SK No.'
+      var skX = 60; // X-coordinate where the line starts
+      var skY = 30; // Y-coordinate where the line should start
+      var lineLength = 50; // Length of the line
+      doc.line(skX, skY, skX + lineLength, skY); // Draw the line
+
+      doc.text("Sehubung dengan rusaknya barang maka pada : ", 14, 36);
+      doc.text("Hari", 14, 42);
+      doc.text(": ".concat(hari), 40, 42); // Menampilkan Hari
+
+      doc.text("Tanggal", 14, 48);
+      doc.text(": ".concat(tanggalFormatted), 40, 48); // Menampilkan tanggal dengan format Hari, Bulan, Tahun
+
+      // Menulis teks dengan hanya PT. Sinko Prima Alloy yang bold
+      var textBeforeBold = 'Bertempat di ';
+      var boldText = 'PT. Sinko Prima Alloy';
+      var textAfterBold = ' telah melaksanakan pemusnahan barang berupa.';
+
+      // Tulis bagian normal terlebih dahulu
+      doc.setFont("helvetica", "normal");
+      doc.text(textBeforeBold, 14, 54);
+
+      // Hitung posisi X untuk boldText (dimulai setelah textBeforeBold)
+      var textBeforeBoldWidth = doc.getStringUnitWidth(textBeforeBold) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+
+      // Tulis PT. Sinko Prima Alloy dengan bold
+      doc.setFont("helvetica", "bold");
+      var boldTextX = 14 + textBeforeBoldWidth; // Posisi setelah bagian normal
+      doc.text(boldText, boldTextX, 54);
+
+      // Hitung posisi X untuk textAfterBold (dimulai setelah boldText)
+      var boldTextWidth = doc.getStringUnitWidth(boldText) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+
+      // Tulis sisanya setelah PT. Sinko Prima Alloy
+      doc.setFont("helvetica", "normal");
+      var textAfterBoldX = boldTextX + boldTextWidth; // Posisi setelah bagian boldText
+      doc.text(textAfterBold, textAfterBoldX, 54);
+
+      // Menambahkan header tabel
+      var headers = ["#", "Kode", "No Seri", "Nama", "Keterangan", "Status"];
+      var rows = [];
+
+      // Mengisi data tabel
+      this.filteredData.forEach(function (item, index) {
+        var _item$no_seri_alat, _item$alat;
+        rows.push([index + 1, item.kode_alat, item === null || item === void 0 || (_item$no_seri_alat = item.no_seri_alat) === null || _item$no_seri_alat === void 0 ? void 0 : _item$no_seri_alat.no_seri_alat, item === null || item === void 0 || (_item$alat = item.alat) === null || _item$alat === void 0 ? void 0 : _item$alat.nama_alat, item.deskripsi_musnah, item.status]);
+      });
+
+      // Menambahkan tabel ke PDF
+      doc.autoTable({
+        head: [headers],
+        body: rows,
+        startY: 60 // Menyesuaikan posisi tabel setelah judul, nama peminjam, dan divisi
+      });
+      var textY = doc.lastAutoTable.finalY + 10;
+      doc.text("Barang tersebut telah diperiksa dan terdapat rusak/cacat sehingga tidak memungkinkan untuk ", 14, textY);
+      doc.text("digunakan kembali.", 14, textY + 6);
+      var signatureSectionY = textY + 16;
+      doc.text("Dibuat Oleh,", 14, signatureSectionY);
+      doc.text("Diperiksa Oleh,", 90, signatureSectionY);
+      doc.text("Disetujui Oleh,", 150, signatureSectionY);
+      var namaStaff = ((_this$filteredData$2 = this.filteredData[0]) === null || _this$filteredData$2 === void 0 || (_this$filteredData$2 = _this$filteredData$2.staff_pemusnahan) === null || _this$filteredData$2 === void 0 ? void 0 : _this$filteredData$2.nama_staff) || '-';
+      var gapY = signatureSectionY + 30;
+      doc.text(namaStaff, 17, gapY);
+      doc.text("Manajer", 95, gapY);
+      doc.text("Direktur", 155, gapY);
+      doc.save("Berita-Acara-Pemusnahan-Barang.pdf");
     }
   },
   mounted: function mounted() {
@@ -9313,7 +9418,6 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
-//
 //
 //
 //
@@ -63553,307 +63657,300 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "container-fluid", staticStyle: { width: "800px" } },
-    [
-      _vm._m(0),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "card-body", staticStyle: { "border-radius": "15px" } },
-        [
-          _c(
-            "form",
-            {
-              on: {
-                submit: function ($event) {
-                  $event.preventDefault()
-                  return _vm.submitAlat.apply(null, arguments)
-                },
+  return _c("div", { staticClass: "container-fluid" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "card-body", staticStyle: { "border-radius": "15px" } },
+      [
+        _c(
+          "form",
+          {
+            on: {
+              submit: function ($event) {
+                $event.preventDefault()
+                return _vm.submitAlat.apply(null, arguments)
               },
             },
-            [
-              _c("div", { staticClass: "form-group" }, [
-                _vm._m(1),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.selectedNoSeri,
-                        expression: "selectedNoSeri",
-                      },
-                    ],
-                    staticClass: "form-control",
-                    attrs: { id: "no_seri_alat", required: "" },
-                    on: {
-                      change: function ($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function (o) {
-                            return o.selected
-                          })
-                          .map(function (o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.selectedNoSeri = $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      },
+          },
+          [
+            _c("div", { staticClass: "form-group" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.selectedNoSeri,
+                      expression: "selectedNoSeri",
+                    },
+                  ],
+                  staticClass: "form-control",
+                  attrs: { id: "no_seri_alat", required: "" },
+                  on: {
+                    change: function ($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function (o) {
+                          return o.selected
+                        })
+                        .map(function (o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.selectedNoSeri = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
                     },
                   },
-                  [
-                    _c(
+                },
+                [
+                  _c(
+                    "option",
+                    { attrs: { value: "", disabled: "", selected: "" } },
+                    [_vm._v("Pilih No Seri")]
+                  ),
+                  _vm._v(" "),
+                  _vm._l(_vm.noseris, function (no_seri) {
+                    return _c(
                       "option",
-                      { attrs: { value: "", disabled: "", selected: "" } },
-                      [_vm._v("Pilih No Seri")]
-                    ),
-                    _vm._v(" "),
-                    _vm._l(_vm.noseris, function (no_seri) {
-                      return _c(
-                        "option",
-                        {
-                          key: no_seri.id,
-                          domProps: { value: no_seri.no_seri_alat },
-                        },
-                        [
-                          _vm._v(
-                            "\n            " +
-                              _vm._s(no_seri.no_seri_alat) +
-                              "\n          "
-                          ),
-                        ]
-                      )
-                    }),
-                  ],
-                  2
-                ),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-6" }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _vm._m(2),
-                    _vm._v(" "),
-                    _c(
-                      "select",
                       {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.selectedPIC,
-                            expression: "selectedPIC",
-                          },
-                        ],
-                        staticClass: "form-control",
-                        attrs: { id: "pic", required: "" },
-                        on: {
-                          change: function ($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function (o) {
-                                return o.selected
-                              })
-                              .map(function (o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.selectedPIC = $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          },
-                        },
+                        key: no_seri.id,
+                        domProps: { value: no_seri.no_seri_alat },
                       },
                       [
-                        _c(
-                          "option",
-                          { attrs: { value: "", disabled: "", selected: "" } },
-                          [_vm._v("Pilih PIC")]
+                        _vm._v(
+                          "\n            " +
+                            _vm._s(no_seri.no_seri_alat) +
+                            "\n          "
                         ),
-                        _vm._v(" "),
-                        _vm._l(_vm.PIC, function (pic) {
-                          return _c(
-                            "option",
-                            {
-                              key: pic.id,
-                              domProps: { value: pic.nama_staff },
-                            },
-                            [
-                              _vm._v(
-                                "\n                " +
-                                  _vm._s(pic.nama_staff) +
-                                  "\n              "
-                              ),
-                            ]
-                          )
-                        }),
-                      ],
-                      2
-                    ),
-                  ]),
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-6" }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _vm._m(3),
-                    _vm._v(" "),
-                    _c("input", {
+                      ]
+                    )
+                  }),
+                ],
+                2
+              ),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-6" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _vm._m(2),
+                  _vm._v(" "),
+                  _c(
+                    "select",
+                    {
                       directives: [
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.error.tanggal_error,
-                          expression: "error.tanggal_error",
+                          value: _vm.selectedPIC,
+                          expression: "selectedPIC",
                         },
                       ],
                       staticClass: "form-control",
-                      attrs: { type: "date", id: "tanggal_rusak" },
-                      domProps: { value: _vm.error.tanggal_error },
+                      attrs: { id: "pic", required: "" },
                       on: {
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.error,
-                            "tanggal_error",
-                            $event.target.value
-                          )
+                        change: function ($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function (o) {
+                              return o.selected
+                            })
+                            .map(function (o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.selectedPIC = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
                         },
                       },
-                    }),
-                  ]),
+                    },
+                    [
+                      _c(
+                        "option",
+                        { attrs: { value: "", disabled: "", selected: "" } },
+                        [_vm._v("Pilih PIC")]
+                      ),
+                      _vm._v(" "),
+                      _vm._l(_vm.PIC, function (pic) {
+                        return _c(
+                          "option",
+                          { key: pic.id, domProps: { value: pic.nama_staff } },
+                          [
+                            _vm._v(
+                              "\n                " +
+                                _vm._s(pic.nama_staff) +
+                                "\n              "
+                            ),
+                          ]
+                        )
+                      }),
+                    ],
+                    2
+                  ),
                 ]),
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _vm._m(4),
-                _vm._v(" "),
-                _c("div", { staticClass: "textarea-wrapper" }, [
-                  _c("textarea", {
+              _c("div", { staticClass: "col-md-6" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _vm._m(3),
+                  _vm._v(" "),
+                  _c("input", {
                     directives: [
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.error.detail_error,
-                        expression: "error.detail_error",
+                        value: _vm.error.tanggal_error,
+                        expression: "error.tanggal_error",
                       },
                     ],
                     staticClass: "form-control",
-                    attrs: {
-                      id: "detail-error",
-                      rows: "1",
-                      placeholder: "Masukkan Deskripsi (Maksimal 100 karakter)",
-                      maxlength: "100",
-                    },
-                    domProps: { value: _vm.error.detail_error },
+                    attrs: { type: "date", id: "tanggal_rusak" },
+                    domProps: { value: _vm.error.tanggal_error },
                     on: {
                       input: function ($event) {
                         if ($event.target.composing) {
                           return
                         }
-                        _vm.$set(_vm.error, "detail_error", $event.target.value)
+                        _vm.$set(
+                          _vm.error,
+                          "tanggal_error",
+                          $event.target.value
+                        )
                       },
                     },
                   }),
-                  _vm._v(" "),
-                  _c("small", { staticClass: "text-muted char-counter" }, [
-                    _vm._v(
-                      "\n            " +
-                        _vm._s(_vm.alat.deskripsi.length) +
-                        " / 100\n          "
-                    ),
-                  ]),
                 ]),
               ]),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _vm._m(4),
               _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _vm._m(5),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "upload-box",
-                    class: { "drag-active": _vm.dragActive },
-                    on: {
-                      dragover: function ($event) {
-                        $event.preventDefault()
-                      },
-                      drop: function ($event) {
-                        $event.preventDefault()
-                        return _vm.handleDrop.apply(null, arguments)
-                      },
-                      dragenter: function ($event) {
-                        _vm.dragActive = true
-                      },
-                      dragleave: function ($event) {
-                        _vm.dragActive = false
-                      },
+              _c("div", { staticClass: "textarea-wrapper" }, [
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.error.detail_error,
+                      expression: "error.detail_error",
+                    },
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    id: "detail-error",
+                    rows: "1",
+                    placeholder: "Masukkan Deskripsi (Maksimal 100 karakter)",
+                    maxlength: "100",
+                  },
+                  domProps: { value: _vm.error.detail_error },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.error, "detail_error", $event.target.value)
                     },
                   },
-                  [
-                    !_vm.gambarPreview
-                      ? _c("p", [
-                          _c("i", { staticClass: "fas fa-image" }),
-                          _c("br"),
-                          _vm._v("\n            Drag and drop here "),
-                          _c("br"),
-                          _vm._v("or "),
-                          _c("br"),
-                          _c("span", { staticClass: "browse-link" }, [
-                            _vm._v("Browse"),
-                          ]),
-                        ])
-                      : _c("p", [
-                          _c("img", {
-                            staticClass: "img-preview",
-                            attrs: { src: _vm.gambarPreview, alt: "Preview" },
-                          }),
-                        ]),
-                    _vm._v(" "),
-                    _c("input", {
-                      staticClass: "upload-input",
-                      attrs: { type: "file", accept: "image/*" },
-                      on: { change: _vm.onFileChange },
-                    }),
-                  ]
-                ),
+                }),
+                _vm._v(" "),
+                _c("small", { staticClass: "text-muted char-counter" }, [
+                  _vm._v(
+                    "\n            " +
+                      _vm._s(_vm.alat.deskripsi.length) +
+                      " / 100\n          "
+                  ),
+                ]),
               ]),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _vm._m(5),
               _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "form-group d-flex justify-content-between" },
+                {
+                  staticClass: "upload-box",
+                  class: { "drag-active": _vm.dragActive },
+                  on: {
+                    dragover: function ($event) {
+                      $event.preventDefault()
+                    },
+                    drop: function ($event) {
+                      $event.preventDefault()
+                      return _vm.handleDrop.apply(null, arguments)
+                    },
+                    dragenter: function ($event) {
+                      _vm.dragActive = true
+                    },
+                    dragleave: function ($event) {
+                      _vm.dragActive = false
+                    },
+                  },
+                },
                 [
-                  _c("span"),
+                  !_vm.gambarPreview
+                    ? _c("p", [
+                        _c("i", { staticClass: "fas fa-image" }),
+                        _c("br"),
+                        _vm._v("\n            Drag and drop here "),
+                        _c("br"),
+                        _vm._v("or "),
+                        _c("br"),
+                        _c("span", { staticClass: "browse-link" }, [
+                          _vm._v("Browse"),
+                        ]),
+                      ])
+                    : _c("p", [
+                        _c("img", {
+                          staticClass: "img-preview",
+                          attrs: { src: _vm.gambarPreview, alt: "Preview" },
+                        }),
+                      ]),
                   _vm._v(" "),
-                  _c("div", [
-                    _vm._m(6),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-danger",
-                        attrs: { type: "button" },
-                        on: { click: _vm.tutupModal },
-                      },
-                      [
-                        _c("i", { staticClass: "fas fa-times" }),
-                        _vm._v(" Batal\n          "),
-                      ]
-                    ),
-                  ]),
+                  _c("input", {
+                    staticClass: "upload-input",
+                    attrs: { type: "file", accept: "image/*" },
+                    on: { change: _vm.onFileChange },
+                  }),
                 ]
               ),
-            ]
-          ),
-        ]
-      ),
-    ]
-  )
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "form-group d-flex justify-content-between" },
+              [
+                _c("span"),
+                _vm._v(" "),
+                _c("div", [
+                  _vm._m(6),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger",
+                      attrs: { type: "button" },
+                      on: { click: _vm.tutupModal },
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-times" }),
+                      _vm._v(" Batal\n          "),
+                    ]
+                  ),
+                ]),
+              ]
+            ),
+          ]
+        ),
+      ]
+    ),
+  ])
 }
 var staticRenderFns = [
   function () {
@@ -66144,6 +66241,15 @@ var render = function () {
           _c(
             "button",
             {
+              staticClass: "btn btn-sm btn-outline-primary mr-2",
+              on: { click: _vm.printPDF },
+            },
+            [_c("i", { staticClass: "fa fa-print" }), _vm._v(" Print BA\n    ")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
               staticClass: "btn btn-sm btn-outline-primary mr-2 ml-1",
               on: { click: _vm.tambahDataMusnah },
             },
@@ -67120,7 +67226,7 @@ var render = function () {
                         {
                           staticClass: "text-center status-pill parent-element",
                           class: {
-                            "status-active": noseri.status === "Ready",
+                            "status-active": noseri.status === "OK",
                             "status-rusak": noseri.status === "Rusak",
                             "status-error": noseri.status === "Error",
                             "status-hilang": noseri.status === "Hilang",
@@ -67498,7 +67604,7 @@ var render = function () {
                     _c(
                       "div",
                       {
-                        staticClass: "text-center status-pill parent-element",
+                        staticClass: "btn-sts",
                         class: {
                           "status-active": peminjamanalat.status === "Selesai",
                           "status-rusak":
@@ -67506,7 +67612,6 @@ var render = function () {
                           "status-error":
                             peminjamanalat.status === "Barang Siap Diambil",
                         },
-                        staticStyle: { "margin-top": "10px" },
                       },
                       [_vm._v(_vm._s(peminjamanalat.status || "-"))]
                     ),
@@ -67835,7 +67940,7 @@ var render = function () {
                         staticClass: "btn-sts parent-element",
                         class: {
                           "status-active":
-                            permintaanalat.no_seri_alat.status === "Ready",
+                            permintaanalat.no_seri_alat.status === "OK",
                           "status-rusak":
                             permintaanalat.no_seri_alat.status === "Rusak",
                           "status-error":
@@ -89808,7 +89913,7 @@ var render = function () {
                         _c(
                           "div",
                           {
-                            staticClass: "status-pill parent-element",
+                            staticClass: "btn-sts",
                             class: {
                               "status-active": riwayat.noSeri.status === "OK",
                               "status-error": riwayat.noSeri.status === "Error",

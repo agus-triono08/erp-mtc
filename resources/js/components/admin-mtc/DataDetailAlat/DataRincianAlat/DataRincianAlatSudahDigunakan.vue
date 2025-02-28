@@ -69,7 +69,7 @@
                 <div
                 class="btn-sts parent-element"
                 :class="{
-                          'status-active': permintaanalat.no_seri_alat.status === 'Ready', 
+                          'status-active': permintaanalat.no_seri_alat.status === 'OK', 
                           'status-rusak': permintaanalat.no_seri_alat.status === 'Rusak', 
                           'status-error': permintaanalat.no_seri_alat.status === 'Error'}"
               >{{ permintaanalat.no_seri_alat ? permintaanalat.no_seri_alat.status : '-' }}</div></td>

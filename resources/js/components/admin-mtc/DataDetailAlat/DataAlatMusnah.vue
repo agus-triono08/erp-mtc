@@ -9,6 +9,10 @@
     </div>
 
     <div class="row align-items-center justify-content-end mr-3 mt-3 mb-4">      
+      <!-- Tombol Print PDF -->
+      <button class="btn btn-sm btn-outline-primary mr-2" @click="printPDF">
+        <i class="fa fa-print"></i> Print BA
+      </button>
       <!-- Tambah Data -->
       <button class="btn btn-sm btn-outline-primary mr-2 ml-1" @click="tambahDataMusnah">
         <i class="fa fa-plus-circle"></i> Tambah Data
@@ -101,6 +105,8 @@
 </template>
 <script>
 import axios from "axios";
+import jsPDF from "jspdf";
+import 'jspdf-autotable';
 
 export default {
   props: {
@@ -159,7 +165,7 @@ export default {
         //console.log(this.kodeAlat);
         const response = await axios.get(`/api/alats/datamusnah/${kodeAlat}`);
         this.datamusnah = response.data;
-        //console.log(this.datamusnah);
+        console.log(this.datamusnah);
       } catch (error) {
         console.error("Error fetching detail alat musnah : ", error);
         //alert("Gagal memuat detail data alat musnah.");
@@ -180,6 +186,125 @@ export default {
     nextPage() {
       if (this.currentPage < this.totalPages) this.currentPage++;
     },
+    printPDF() {
+      const doc = new jsPDF();
+
+      // Format tanggal
+      const tanggalString = this.filteredData[0]?.tanggal_musnah || '-';
+      const tanggal = new Date(tanggalString);
+
+      // Menentukan hari dalam seminggu
+      const hariArr = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+      const hari = hariArr[tanggal.getDay()];
+
+      // Menentukan nama bulan
+      const bulanArr = [
+          "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+      ];
+      const bulan = bulanArr[tanggal.getMonth()];
+
+      // Menyusun format tanggal
+      const tanggalFormatted = `${tanggal.getDate()} ${bulan} ${tanggal.getFullYear()}`;
+
+      // Title of the document
+      const title = "Berita Acara Pemusnahan Barang";
+      const titleWidth = doc.getStringUnitWidth(title) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+      const titleX = (doc.internal.pageSize.width - titleWidth) / 2;
+      doc.text(title, titleX, 16);
+
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(12);
+      doc.text('Berdasarkan SK No. : ', 14, 30);
+
+      // Draw a long line next to 'SK No.'
+      const skX = 60;  // X-coordinate where the line starts
+      const skY = 30;  // Y-coordinate where the line should start
+      const lineLength = 50; // Length of the line
+      doc.line(skX, skY, skX + lineLength, skY); // Draw the line
+
+      doc.text(`Sehubung dengan rusaknya barang maka pada : `, 14, 36);
+
+      doc.text(`Hari`, 14, 42);
+
+      doc.text(`: ${hari}`, 40, 42); // Menampilkan Hari
+
+      doc.text(`Tanggal`, 14, 48);
+
+      doc.text(`: ${tanggalFormatted}`, 40, 48); // Menampilkan tanggal dengan format Hari, Bulan, Tahun
+
+      // Menulis teks dengan hanya PT. Sinko Prima Alloy yang bold
+      const textBeforeBold = 'Bertempat di ';
+      const boldText = 'PT. Sinko Prima Alloy';
+      const textAfterBold = ' telah melaksanakan pemusnahan barang berupa.';
+
+      // Tulis bagian normal terlebih dahulu
+      doc.setFont("helvetica", "normal");
+      doc.text(textBeforeBold, 14, 54);
+
+      // Hitung posisi X untuk boldText (dimulai setelah textBeforeBold)
+      const textBeforeBoldWidth = doc.getStringUnitWidth(textBeforeBold) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+      
+      // Tulis PT. Sinko Prima Alloy dengan bold
+      doc.setFont("helvetica", "bold");
+      const boldTextX = 14 + textBeforeBoldWidth;  // Posisi setelah bagian normal
+      doc.text(boldText, boldTextX, 54);
+
+      // Hitung posisi X untuk textAfterBold (dimulai setelah boldText)
+      const boldTextWidth = doc.getStringUnitWidth(boldText) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+
+      // Tulis sisanya setelah PT. Sinko Prima Alloy
+      doc.setFont("helvetica", "normal");
+      const textAfterBoldX = boldTextX + boldTextWidth;  // Posisi setelah bagian boldText
+      doc.text(textAfterBold, textAfterBoldX, 54);
+
+      // Menambahkan header tabel
+      const headers = [
+        "#",
+        "Kode",
+        "No Seri",
+        "Nama",
+        "Keterangan",
+        "Status",
+      ];
+      const rows = [];
+
+      // Mengisi data tabel
+      this.filteredData.forEach((item, index) => {
+        rows.push([
+          index + 1,
+          item.kode_alat,
+          item?.no_seri_alat?.no_seri_alat,
+          item?.alat?.nama_alat,
+          item.deskripsi_musnah,
+          item.status,
+        ]);
+      });
+
+      // Menambahkan tabel ke PDF
+      doc.autoTable({
+        head: [headers],
+        body: rows,
+        startY: 60, // Menyesuaikan posisi tabel setelah judul, nama peminjam, dan divisi
+      });
+
+      const textY = doc.lastAutoTable.finalY + 10;
+      doc.text("Barang tersebut telah diperiksa dan terdapat rusak/cacat sehingga tidak memungkinkan untuk ", 14, textY);
+      doc.text("digunakan kembali.", 14, textY + 6);
+
+      const signatureSectionY = textY + 16;
+      doc.text("Dibuat Oleh,", 14, signatureSectionY);
+      doc.text("Diperiksa Oleh,", 90, signatureSectionY);
+      doc.text("Disetujui Oleh,", 150, signatureSectionY);
+
+      const namaStaff = this.filteredData[0]?.staff_pemusnahan?.nama_staff || '-';
+
+      const gapY = signatureSectionY + 30;
+      doc.text(namaStaff, 17, gapY);
+      doc.text("Manajer", 95, gapY);
+      doc.text("Direktur", 155, gapY);
+
+      doc.save("Berita-Acara-Pemusnahan-Barang.pdf");
+    }
   },
   mounted() {
     this.fetchAlatMusnah();

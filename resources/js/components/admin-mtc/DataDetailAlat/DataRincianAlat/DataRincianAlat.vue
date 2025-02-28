@@ -125,7 +125,7 @@
                 class="text-center status-pill parent-element"
                 style="margin-top: 20px;"
                 :class="{
-                          'status-active': noseri.status === 'Ready', 
+                          'status-active': noseri.status === 'OK', 
                           'status-rusak': noseri.status === 'Rusak', 
                           'status-error': noseri.status === 'Error',
                           'status-hilang': noseri.status === 'Hilang',

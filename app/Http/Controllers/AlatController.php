@@ -110,7 +110,7 @@ class AlatController extends Controller
             'kode_alat' => '1-C3-B0-2-01',
             'harga' => 5000,
             'stok' => 1,
-            'status' => 'Ready'
+            'status' => 'OK'
         ],
         [
             'id' => 4,
@@ -134,7 +134,7 @@ class AlatController extends Controller
             'kode_alat' => '1-C3-B0-2-01',
             'harga' => 5000,
             'stok' => 1,
-            'status' => 'Ready'
+            'status' => 'OK'
         ],        
         [
             'id' => 7,
@@ -150,7 +150,7 @@ class AlatController extends Controller
             'kode_alat' => '1-C3-B0-2-01',
             'harga' => 5000,
             'stok' => 1,
-            'status' => 'Dipinjam'
+            'status' => 'OK'
         ],
         [
             'id' => 9,
@@ -158,7 +158,7 @@ class AlatController extends Controller
             'kode_alat' => '1-C3-B0-2-01',
             'harga' => 5000,
             'stok' => 1,
-            'status' => 'Ready'
+            'status' => 'OK'
         ],
         [
             'id' => 10,
@@ -166,7 +166,7 @@ class AlatController extends Controller
             'kode_alat' => '1-C3-B0-2-01',
             'harga' => 5000,
             'stok' => 1,
-            'status' => 'Ready'
+            'status' => 'OK'
         ],
         [
             'id' => 11,
@@ -174,7 +174,7 @@ class AlatController extends Controller
             'kode_alat' => '1-C3-B0-2-01',
             'harga' => 5000,
             'stok' => 1,
-            'status' => 'Ready'
+            'status' => 'OK'
         ],
         [
             'id' => 12,
@@ -182,7 +182,7 @@ class AlatController extends Controller
             'kode_alat' => '1-C3-B0-2-01',
             'harga' => 5000,
             'stok' => 1,
-            'status' => 'Ready'
+            'status' => 'OK'
         ],
     ];
 

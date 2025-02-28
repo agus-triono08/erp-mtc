@@ -78,9 +78,8 @@
                 </small>
               </td>
               <td>
-              <div
-              style="margin-top: 10px;"
-                class="text-center status-pill parent-element"                
+              <div              
+                class="btn-sts"                
                 :class="{
                           'status-active': peminjamanalat.status === 'Selesai', 
                           'status-rusak': peminjamanalat.status === 'Sedang Dipinjam', 

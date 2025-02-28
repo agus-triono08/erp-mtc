@@ -131,7 +131,7 @@
                 <td>{{ riwayat.no_seri || '-' }}</td>            
                 <td>
                   <div 
-                    class="status-pill parent-element"
+                    class="btn-sts"
                       :class="{'status-active': riwayat.noSeri.status === 'OK', 
                               'status-error': riwayat.noSeri.status === 'Error',
                               'status-rusak': riwayat.noSeri.status === 'Rusak',
