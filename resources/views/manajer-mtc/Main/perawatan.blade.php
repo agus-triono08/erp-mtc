@@ -1,5 +1,5 @@
 <!--Template-->
-@extends('riwayat-mtc.app')
+@extends('manajer-mtc.app')
 
 <!--Title-->
 @section('title', 'Peminjaman')

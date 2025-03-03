@@ -191,7 +191,7 @@
     
   </div>
   <div v-if="showPermintaan">
-      <data-permintaan-alat></data-permintaan-alat>
+      <data-permintaanM></data-permintaanM>
     </div>
   <!-- Data Peminjaman Mesin-->
   <div v-if="showMesin">
@@ -379,7 +379,7 @@ export default {
       }
     },
     viewDetail(id) {
-      this.$router.push(`/admin-mtc/data-alat/detail-peminjaman/${id}`);
+      this.$router.push(`/manajer-mtc/peminjaman/detail/${id}`);
     },
     prevPage() {
       if (this.currentPage > 1) {

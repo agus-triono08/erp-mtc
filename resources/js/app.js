@@ -49,7 +49,12 @@ const EditMasterDataM = require('./components/manajer-mtc/MasterData/EditMaster.
 Vue.component('master-data-musnah', require('./components/manajer-mtc/MasterData/KondisiDataMaster/DataMasterMusnah.vue').default);
 const DataLayoutM = require('./components/manajer-mtc/Layout/DataLayout.vue').default;
 const RiwayatM = require('./components/manajer-mtc/Riwayat/DataRiwayat.vue').default;
-const PeminjamanM  = require('./components/manajer-mtc/Peminjaman/DataPeminjamanAlat.vue').default;
+const PeminjamanM  = require('./components/manajer-mtc/Peminjaman&Permintaan/Peminjaman/DataPeminjamanAlat.vue').default;
+Vue.component('data-permintaanM', require('./components/manajer-mtc/Peminjaman&Permintaan/Permintaan/DataPermintaanAlat.vue').default);
+const DetailPeminjamanM = require('./components/manajer-mtc/Peminjaman&Permintaan/Peminjaman/DetailPeminjamanAlat.vue').default;
+const DetailPermintaanM = require('./components/manajer-mtc/Peminjaman&Permintaan/Permintaan/DetailPermintaanAlat.vue').default;
+const PerawatanM = require('./components/manajer-mtc/Perawatan/DataPerawatanAlat.vue').default;
+const DetailPerawatanM = require('./components/manajer-mtc/Perawatan/DetailPerawatan.vue').default;
 
 // LOGIN
 const Login = require('./components/auth/login.vue').default;
@@ -268,6 +273,22 @@ const routes = [
     {
       path: '/manajer-mtc/peminjaman',
       component: PeminjamanM,
+    },
+    {
+      path: '/manajer-mtc/peminjaman/detail/:id',
+      component: DetailPeminjamanM,
+    },
+    {
+      path: '/manajer-mtc/permintaan/detail/:id',
+      component: DetailPermintaanM,
+    },
+    {
+      path: '/manajer-mtc/perawatan',
+      component: PerawatanM,
+    },
+    {
+      path: '/manajer-mtc/perawatan/detail/:id',
+      component: DetailPerawatanM,
     },
     // ADMIN MTC
     {
