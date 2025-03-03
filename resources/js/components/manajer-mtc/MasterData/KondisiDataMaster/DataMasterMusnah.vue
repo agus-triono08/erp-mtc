@@ -8,13 +8,25 @@
       </div>
     </div>
 
-    <div class="row align-items-center justify-content-end mr-3 mt-3 mb-4">      
-      <!-- Tombol Print PDF (Hanya tampil jika ada item yang dipilih) -->
+    <div class="row align-items-center justify-content-end mr-3 mt-3 mb-4">
+      <!-- Tombol Diterima -->
       <button v-if="selectedMusnahIds.length > 0" 
+              class="btn btn-sm btn-outline-success mr-2" 
+              @click="updateStatus('Diterima')">
+        <i class="fa fa-check"></i> Diterima
+      </button>
+      <!-- Tombol Ditolak -->
+      <button v-if="selectedMusnahIds.length > 0" 
+              class="btn btn-sm btn-outline-danger mr-2" 
+              @click="updateStatus('Ditolak')">
+        <i class="fa fa-times"></i> Ditolak
+      </button>      
+      <!-- Tombol Print PDF (Hanya tampil jika ada item yang dipilih) -->
+      <!-- <button v-if="selectedMusnahIds.length > 0" 
               class="btn btn-sm btn-outline-primary mr-2" 
               @click="printSelectedMusnah">
         <i class="fa fa-print"></i> Print BA
-      </button>
+      </button> -->
       <!-- Tambah Data -->
       <button class="btn btn-sm btn-outline-primary mr-2 ml-1" @click="tambahDataMusnah">
         <i class="fa fa-plus-circle"></i> Tambah Data
@@ -51,7 +63,7 @@
         </thead>
         <tbody v-if="filteredData.length===0">
           <tr>
-            <td colspan="6" class="text-center">Tidak Ada Data</td>
+            <td colspan="8" class="text-center">Tidak Ada Data</td>
           </tr>
         </tbody>
         <tbody v-for="(musnah, index) in filteredData" :key="index">
@@ -83,6 +95,7 @@
                 <iframe v-else :src="musnah.fileUrl" width="100%" height="200" style="cursor: zoom-in;"></iframe>
               </div>
             </td>
+            <!-- <td></td> -->
           </tr>
         </tbody>
 
@@ -193,6 +206,18 @@ export default {
     },
     nextPage() {
       if (this.currentPage < this.totalPages) this.currentPage++;
+    },
+    // Fungsi untuk memperbarui status
+    updateStatus(status) {
+      // Memperbarui status untuk setiap ID yang dipilih
+      this.selectedMusnahIds.forEach(id => {
+        const musnah = this.datamusnah.find(item => item.id === id);
+        if (musnah) {
+          musnah.status = status;
+        }
+      });
+      // Reset selectedMusnahIds setelah memperbarui status
+      this.selectedMusnahIds = [];
     },
     toggleSelectAll() {
       if (this.selectAll) {

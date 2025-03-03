@@ -88,7 +88,58 @@ Route::get('/user/peminjaman', function () {
     return view('user.Main.peminjaman');
 })->name('peminjaman.user');
 
+// MANAJER MTC
+Route::get('/manajer-mtc/dashboard', function () {
+    return view('manajer-mtc.Main.dashboard');
+})->name('dashboard.manajermtc');
 
+Route::get('/manajer-mtc/master-data', function () {
+    return view('manajer-mtc.Main.data');
+})->name('data.manajermtc');
+
+Route::get('/manajer-mtc/master-data/input', function () {
+    return view('manajer-mtc.Main.component.inputalat');
+})->name('data.input.manajermtc');
+
+Route::get('/manajer-mtc/data-rincian-alat/input', function () {
+    return view('manajer-mtc.Main.component.inputrincianalat');
+})->name('data.input.rincian.manajermtc');
+
+Route::get('/manajer-mtc/data-alat/detail', function () {
+    return view('manajer-mtc.Main.component.detailalat');
+})->name('data.detail.manajermtc');
+
+Route::get('/manajer-mtc/riwayat', function(){
+    return view('manajer-mtc.Main.riwayat');
+})->name('manajermtc-riwayat');
+
+Route::get('/manajer-mtc/peminjaman', function () {
+    return view('manajer-mtc.Main.peminjaman');
+})->name('peminjaman.manajermtc');
+
+Route::get('/manajer-mtc/permintaan', function () {
+    return view('manajer-mtc.Main.permintaan');
+})->name('permintaan.manajermtc');
+
+Route::get('/manajer-mtc/perawatan', function() {
+    return view('manajer-mtc.Main.perawatan');
+})->name('perawatan.manajermtc');
+
+Route::get('/manajer-mtc/lapor-kendala', function () {
+    return view('manajer-mtc.Main.laporkendala');
+})->name('laporkendala.manajermtc');
+
+Route::get('/manajer-mtc/alat/data-error', function () {
+    return view('manajer-mtc.Main.component.alat.error.data');
+})->name('dataalaterror.manajermtc');
+
+Route::get('/manajer-mtc/alat/data-error/input', function () {
+    return view('manajer-mtc.Main.component.alat.error.input');
+})->name('input.dataalaterror.manajermtc');
+
+Route::get('/manajer-mtc/layout', function() {
+    return view('manajer-mtc.Main.layout');
+})->name('layout.manajermtc');
 
 Auth::routes();
 

@@ -41,6 +41,14 @@ Vue.component('mesin-hilang', require('./components/admin-mtc/DataMesin/DetailMe
 //Vue.component('data-alat', require('./components/admin-mtc/DataAlat.vue').default);
 //Vue.component('detail-alat', require('./components/admin-mtc/DetailAlat.vue').default);
 
+// Manajer MTC
+const MasterDataM = require('./components/manajer-mtc/MasterData/DataMaster.vue').default;
+const InputDataM = require('./components/manajer-mtc/MasterData/InputMaster.vue').default;
+const DetailMasterDataM = require('./components/manajer-mtc/MasterData/DetailMaster.vue').default;
+const EditMasterDataM = require('./components/manajer-mtc/MasterData/EditMaster.vue').default;
+Vue.component('master-data-musnah', require('./components/manajer-mtc/MasterData/KondisiDataMaster/DataMasterMusnah.vue').default);
+
+
 // LOGIN
 const Login = require('./components/auth/login.vue').default;
 
@@ -230,6 +238,24 @@ const routes = [
         path: '/',
         component: Login,
     },
+    // MANAJER
+    {
+        path: '/manajer-mtc/master-data',
+        component: MasterDataM,
+    },
+    {
+        path: '/manajer-mtc/master-data/input',
+        component: InputDataM,
+    },
+    {
+        path: '/manajer-mtc/master-data/detail/:id',
+        component: DetailMasterDataM,
+    },
+    {
+        path: '/manajer-mtc/master-data/edit/:id',
+        component: EditMasterDataM,
+    },
+    // ADMIN MTC
     {
         path: '/admin-mtc/layout',
         component: DataLayout,
