@@ -70,6 +70,10 @@ Route::get('/admin-mtc/alat/data-error/input', function () {
     return view('admin-mtc.Main.component.alat.error.input');
 })->name('input.dataalaterror.adminmtc');
 
+Route::get('/admin-mtc/layout', function() {
+    return view('admin-mtc.Main.layout');
+})->name('layout.adminmtc');
+
 
 // USER
 Route::get('/user/dashboard', function () {

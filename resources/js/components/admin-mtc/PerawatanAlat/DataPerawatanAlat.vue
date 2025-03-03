@@ -101,7 +101,7 @@
             <th class="text-center text-black-1">PIC</th>                       
             <th class="text-center text-black-1">Tgl Perawatan</th>                        
             <th class="text-center text-black-1">Status</th>
-            <th class="text-center text-black-1">Action</th>
+            <th class="text-center text-black-1">Aksi</th>
           </tr>
         </thead>
         <tbody v-if="filteredData.length===0">

@@ -40,6 +40,14 @@
         </a>
     </li>
 
+    <!-- Nav Item - Data -->
+    <li class="nav-item {{ request()->routeIs('layout.adminmtc') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('layout.adminmtc') }}">
+            <i class="fas fa-fw {{ request()->routeIs('layout.adminmtc') ? 'fa-folder-open' : 'fa-folder' }}"></i>
+            <span>Layout</span>
+        </a>
+    </li>
+
     <!-- Nav Item - History -->
     <li class="nav-item {{ request()->routeIs('adminmtc-riwayat') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('adminmtc-riwayat') }}">

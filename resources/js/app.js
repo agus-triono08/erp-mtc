@@ -123,6 +123,9 @@ const DataPerawatanMesin = require('./components/admin-mtc/DataMesin/DetailMesin
 //Komponen Data Riwayat
 const DataRiwayat = require('./components/admin-mtc/Riwayat/DataRiwayat.vue').default;
 
+//LAYOUT
+const DataLayout = require('./components/admin-mtc/Layout/DataLayout.vue').default;
+
 //USER DATA MASTER
 const DataMasterUser = require('./components/user/MasterData/Data.vue').default;
 
@@ -226,6 +229,10 @@ const routes = [
     {
         path: '/',
         component: Login,
+    },
+    {
+        path: '/admin-mtc/layout',
+        component: DataLayout,
     },
     {
         path: '/admin-mtc/data-alat/detail/:id',
