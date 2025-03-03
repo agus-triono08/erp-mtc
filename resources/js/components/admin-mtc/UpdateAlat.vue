@@ -19,7 +19,7 @@
       </h1>
         
         <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold" style="color: #169ea8;">Form Edit Data Alat</h6>
+          <h6 class="m-0 font-weight-bold" style="color: #169ea8;">Form Edit Data Master</h6>
         </div>
         <div class="card-body">
           <form @submit.prevent="updateAlat">

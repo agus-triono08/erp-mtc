@@ -12,12 +12,12 @@
     </div>
 
       <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1 class="h3" style="color: #000;"><b>Detail Alat</b></h1>
+        <h1 class="h3" style="color: #000;"><b>Detail Master Data</b></h1>
         <div class="d-flex align-items-center justify-content-center">
           <div class="card shadow" style="max-width: auto; border-radius: 10px;">
             <div class="card-body text-center" style="border-radius: 10px; height: 30px;">
               <p>
-                <span class="m-2" style="color: #169ea8;"> Detail Alat</span>/ 
+                <span class="m-2" style="color: #169ea8;"> Detail Master data</span>/ 
                 <span class="mt-2 mb-2 mr-2 ml-1" style="color: #e6494b;">{{ alat.kode_alat || '-'}}</span>
               </p>
             </div>
@@ -59,8 +59,8 @@
               <table class="table table-hover no-border compact-table ml-2">              
                 <thead>
                   <tr>
-                    <td>Nama Alat</td>
-                    <td class="ml-4">Kode Alat</td>
+                    <td>Nama </td>
+                    <td class="ml-4">Kode </td>
                   </tr>
                   <tr>
                     <th style="color: #000; font-size: x-large;">
@@ -75,7 +75,7 @@
               <table class="table no-border compact-table ml-2">              
                 <thead>
                   <tr>
-                    <th class="text-left">Harga Total Pembelian Alat</th>
+                    <th class="text-left">Harga Total Pembelian</th>
                   </tr>                
                 </thead>
                 <tbody>
@@ -118,8 +118,8 @@
           :class="{ active: showRincianAlatError }"
           @click="toggleRincianAlatError"
         >
-          <span v-if="showRincianAlatError">Detail Alat Error</span>
-          <span v-else>Detail Alat Error</span>
+          <span v-if="showRincianAlatError">Detail Data Error</span>
+          <span v-else>Detail Data Error</span>
         </button>
         <!-- Tombol Detail Alat Rusak -->
         <button
@@ -127,8 +127,8 @@
           :class="{ active: showRincianAlatRusak }"
           @click="toggleRincianAlatRusak"
           >
-          <span v-if="showRincianAlatRusak">Detail Alat Rusak</span>
-          <span v-else>Detail Alat Rusak</span>
+          <span v-if="showRincianAlatRusak">Detail Data Rusak</span>
+          <span v-else>Detail Data Rusak</span>
         </button>
         <!-- Tombol Detail Alat Musnah -->
         <button
@@ -136,8 +136,8 @@
           :class="{ active: showRincianAlatMusnah }"
           @click="toggleRincianAlatMusnah"
         >
-        <span v-if="showRincianAlatMusnah">Detail Alat Musnah</span>
-        <span v-else>Detail Alat Musnah</span>
+        <span v-if="showRincianAlatMusnah">Detail Data Musnah</span>
+        <span v-else>Detail Data Musnah</span>
         </button>
         <!-- Tombol Detail Alat Hilang -->
         <button
@@ -145,8 +145,8 @@
           :class="{ active: showRincianAlatHilang }"
           @click="toggleRincianAlatHilang"
         >
-          <span v-if="showRincianAlatHilang">Detail Alat Hilang</span>
-          <span v-else>Detail Alat Hilang</span>
+          <span v-if="showRincianAlatHilang">Detail Data Hilang</span>
+          <span v-else>Detail Data Hilang</span>
         </button>
       </div>
       <!-- Konten Detail -->
@@ -157,16 +157,16 @@
               :class="{ active: showDetailAlat }" 
               @click="toggleDetailAlat"
             >
-              <span v-if="showDetailAlat">Detail Alat</span>
-              <span v-else>Detail Alat</span>
+              <span v-if="showDetailAlat">Detail Data Master</span>
+              <span v-else>Detail Data Master</span>
             </button>
             <button
               class="btn btn-show ml-1 mb-4 mr-1 mt-3"
               :class="{ active: showRincianAlat }"
               @click="toggleRincianAlat"
             >
-              <span v-if="showRincianAlat">Detail Rincian Alat</span>
-              <span v-else>Detail Rincian Alat</span>
+              <span v-if="showRincianAlat">Detail Rincian Data Master</span>
+              <span v-else>Detail Rincian Data Master</span>
             </button>
           </div>
         <div v-if="showDetailAlat" class="mt-3">
@@ -198,7 +198,7 @@
                   <th style="color: #000">{{ alat.unit_alat || '-' }}</th>
                 </tr>
                 <tr>
-                  <td>Sumber Alat</td>
+                  <td>Sumber</td>
                   <th style="color: #000;">{{ alat.sumber_alat || '-' }}</th>
                 </tr>
                 <tr>

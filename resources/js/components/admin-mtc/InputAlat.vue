@@ -9,7 +9,7 @@
         > Back to Master Data</i>        
       </h1>
     <div class="card-header py-3 mb-2">
-      <h6 class="m-0 font-weight-bold" style="color: #169ea8; border-radius: 15px;">Form Input Data Mesin</h6>
+      <h6 class="m-0 font-weight-bold" style="color: #169ea8; border-radius: 15px;">Form Input Data Master</h6>
     </div>
     <div class="card-body" style="border-radius: 15px;">
       <form @submit.prevent="submitAlat">

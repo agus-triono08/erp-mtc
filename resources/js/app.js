@@ -47,7 +47,9 @@ const InputDataM = require('./components/manajer-mtc/MasterData/InputMaster.vue'
 const DetailMasterDataM = require('./components/manajer-mtc/MasterData/DetailMaster.vue').default;
 const EditMasterDataM = require('./components/manajer-mtc/MasterData/EditMaster.vue').default;
 Vue.component('master-data-musnah', require('./components/manajer-mtc/MasterData/KondisiDataMaster/DataMasterMusnah.vue').default);
-
+const DataLayoutM = require('./components/manajer-mtc/Layout/DataLayout.vue').default;
+const RiwayatM = require('./components/manajer-mtc/Riwayat/DataRiwayat.vue').default;
+const PeminjamanM  = require('./components/manajer-mtc/Peminjaman/DataPeminjamanAlat.vue').default;
 
 // LOGIN
 const Login = require('./components/auth/login.vue').default;
@@ -254,6 +256,18 @@ const routes = [
     {
         path: '/manajer-mtc/master-data/edit/:id',
         component: EditMasterDataM,
+    },
+    {
+      path: '/manajer-mtc/layout',
+      component: DataLayoutM,
+    },
+    {
+      path: '/manajer-mtc/riwayat',
+      component: RiwayatM,
+    },
+    {
+      path: '/manajer-mtc/peminjaman',
+      component: PeminjamanM,
     },
     // ADMIN MTC
     {

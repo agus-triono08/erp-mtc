@@ -198,9 +198,9 @@
                   <a class="dropdown-item" @click="editData(alat.id)">
                     <i class="fas fa-edit text-primary"></i> Edit
                   </a>
-                  <!-- <a class="dropdown-item" @click="deleteData(alat.id)">
+                  <a class="dropdown-item" @click="deleteData(alat.id)">
                     <i class="fas fa-trash text-danger"></i> Hapus
-                  </a> -->
+                  </a>
                 </div>
               </div>
             </td>
