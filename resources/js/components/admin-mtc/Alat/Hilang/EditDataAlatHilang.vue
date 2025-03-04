@@ -1,5 +1,5 @@
 <template>
-  <div class="contaoner-fluid" style="width: 500px;">
+  <div class="contaoner-fluid">
     <!-- Header -->
     <div class="card-header">
         <h6 class="font-weight-bold" style="color: #169ea8; border-radius: 15px;">

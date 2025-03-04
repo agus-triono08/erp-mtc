@@ -68177,308 +68177,163 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "container-fluid", staticStyle: { width: "800px" } },
-    [
-      _vm._m(0),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "card-body", staticStyle: { "border-radius": "15px" } },
-        [
-          _c(
-            "form",
-            {
-              on: {
-                submit: function ($event) {
-                  $event.preventDefault()
-                  return _vm.submitAlat.apply(null, arguments)
-                },
+  return _c("div", { staticClass: "container-fluid" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "card-body", staticStyle: { "border-radius": "15px" } },
+      [
+        _c(
+          "form",
+          {
+            on: {
+              submit: function ($event) {
+                $event.preventDefault()
+                return _vm.submitAlat.apply(null, arguments)
               },
             },
-            [
-              _c("div", { staticClass: "form-group" }, [
-                _vm._m(1),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.selectedNoSeri,
-                        expression: "selectedNoSeri",
-                      },
-                    ],
-                    staticClass: "form-control",
-                    attrs: { id: "no_seri_alat", required: "", disabled: "" },
-                    on: {
-                      change: function ($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function (o) {
-                            return o.selected
-                          })
-                          .map(function (o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.selectedNoSeri = $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      },
+          },
+          [
+            _c("div", { staticClass: "form-group" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.selectedNoSeri,
+                      expression: "selectedNoSeri",
+                    },
+                  ],
+                  staticClass: "form-control",
+                  attrs: { id: "no_seri_alat", required: "", disabled: "" },
+                  on: {
+                    change: function ($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function (o) {
+                          return o.selected
+                        })
+                        .map(function (o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.selectedNoSeri = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
                     },
                   },
-                  [
-                    _c("option", { attrs: { value: "" } }, [
-                      _vm._v("Pilih No Seri Alat"),
-                    ]),
-                    _vm._v(" "),
-                    _vm._l(_vm.noseris, function (no_seri) {
-                      return _c(
-                        "option",
-                        {
-                          key: no_seri.id,
-                          domProps: { value: no_seri.no_seri_alat },
-                        },
-                        [
-                          _vm._v(
-                            "\n            " +
-                              _vm._s(no_seri.no_seri_alat) +
-                              "\n          "
-                          ),
-                        ]
-                      )
-                    }),
-                  ],
-                  2
-                ),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-6" }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _vm._m(2),
-                    _vm._v(" "),
-                    _c(
-                      "select",
+                },
+                [
+                  _c("option", { attrs: { value: "" } }, [
+                    _vm._v("Pilih No Seri Alat"),
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.noseris, function (no_seri) {
+                    return _c(
+                      "option",
                       {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.selectedPIC,
-                            expression: "selectedPIC",
-                          },
-                        ],
-                        staticClass: "form-control",
-                        attrs: { id: "pic", required: "" },
-                        on: {
-                          change: function ($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function (o) {
-                                return o.selected
-                              })
-                              .map(function (o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.selectedPIC = $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          },
-                        },
+                        key: no_seri.id,
+                        domProps: { value: no_seri.no_seri_alat },
                       },
                       [
-                        _c(
-                          "option",
-                          { attrs: { value: "", disabled: "", selected: "" } },
-                          [_vm._v("Pilih PIC")]
+                        _vm._v(
+                          "\n            " +
+                            _vm._s(no_seri.no_seri_alat) +
+                            "\n          "
                         ),
-                        _vm._v(" "),
-                        _vm._l(_vm.PIC, function (pic) {
-                          return _c(
-                            "option",
-                            {
-                              key: pic.id,
-                              domProps: { value: pic.nama_staff },
-                            },
-                            [
-                              _vm._v(
-                                "\n                " +
-                                  _vm._s(pic.nama_staff) +
-                                  "\n              "
-                              ),
-                            ]
-                          )
-                        }),
-                      ],
-                      2
-                    ),
-                  ]),
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-6" }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _vm._m(3),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.noseri.tanggal_error,
-                          expression: "noseri.tanggal_error",
-                        },
-                      ],
-                      staticClass: "form-control",
-                      attrs: {
-                        type: "date",
-                        id: "tanggal_error",
-                        disabled: "",
-                        required: "",
-                      },
-                      domProps: { value: _vm.noseri.tanggal_error },
-                      on: {
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.noseri,
-                            "tanggal_error",
-                            $event.target.value
-                          )
-                        },
-                      },
-                    }),
-                  ]),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-6" }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _vm._m(4),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.noseri.tanggal_perbaikan,
-                          expression: "noseri.tanggal_perbaikan",
-                        },
-                      ],
-                      staticClass: "form-control",
-                      attrs: {
-                        type: "date",
-                        id: "tanggal_perbaikan",
-                        disabled: "",
-                        required: "",
-                      },
-                      domProps: { value: _vm.noseri.tanggal_perbaikan },
-                      on: {
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.noseri,
-                            "tanggal_perbaikan",
-                            $event.target.value
-                          )
-                        },
-                      },
-                    }),
-                  ]),
-                ]),
-                _vm._v(" "),
-                _vm._m(5),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-12" }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _vm._m(6),
-                    _vm._v(" "),
-                    _c(
-                      "select",
-                      {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.statusNoseri,
-                            expression: "statusNoseri",
-                          },
-                        ],
-                        staticClass: "form-control",
-                        attrs: { id: "pic", required: "" },
-                        on: {
-                          change: function ($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function (o) {
-                                return o.selected
-                              })
-                              .map(function (o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.statusNoseri = $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          },
-                        },
-                      },
-                      [
-                        _c(
-                          "option",
-                          { attrs: { value: "", disabled: "", selected: "" } },
-                          [_vm._v("Pilih Layout")]
-                        ),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "Ready" } }, [
-                          _vm._v("Ready"),
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "Error" } }, [
-                          _vm._v("Error"),
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "Rusak" } }, [
-                          _vm._v("Rusak"),
-                        ]),
                       ]
-                    ),
-                  ]),
+                    )
+                  }),
+                ],
+                2
+              ),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-6" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _vm._m(2),
+                  _vm._v(" "),
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.selectedPIC,
+                          expression: "selectedPIC",
+                        },
+                      ],
+                      staticClass: "form-control",
+                      attrs: { id: "pic", required: "" },
+                      on: {
+                        change: function ($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function (o) {
+                              return o.selected
+                            })
+                            .map(function (o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.selectedPIC = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        },
+                      },
+                    },
+                    [
+                      _c(
+                        "option",
+                        { attrs: { value: "", disabled: "", selected: "" } },
+                        [_vm._v("Pilih PIC")]
+                      ),
+                      _vm._v(" "),
+                      _vm._l(_vm.PIC, function (pic) {
+                        return _c(
+                          "option",
+                          { key: pic.id, domProps: { value: pic.nama_staff } },
+                          [
+                            _vm._v(
+                              "\n                " +
+                                _vm._s(pic.nama_staff) +
+                                "\n              "
+                            ),
+                          ]
+                        )
+                      }),
+                    ],
+                    2
+                  ),
                 ]),
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _vm._m(7),
-                _vm._v(" "),
-                _c("div", { staticClass: "textarea-wrapper" }, [
-                  _c("textarea", {
+              _c("div", { staticClass: "col-md-6" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _vm._m(3),
+                  _vm._v(" "),
+                  _c("input", {
                     directives: [
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.noseri.deskripsi_error,
-                        expression: "noseri.deskripsi_error",
+                        value: _vm.noseri.tanggal_error,
+                        expression: "noseri.tanggal_error",
                       },
                     ],
                     staticClass: "form-control",
                     attrs: {
-                      id: "detail_error",
-                      rows: "1",
-                      placeholder:
-                        "Masukkan Detail Kerusakan (Maksimal 100 karakter)",
-                      maxlength: "100",
+                      type: "date",
+                      id: "tanggal_error",
+                      disabled: "",
                       required: "",
                     },
-                    domProps: { value: _vm.noseri.deskripsi_error },
+                    domProps: { value: _vm.noseri.tanggal_error },
                     on: {
                       input: function ($event) {
                         if ($event.target.composing) {
@@ -68486,57 +68341,195 @@ var render = function () {
                         }
                         _vm.$set(
                           _vm.noseri,
-                          "deskripsi_error",
+                          "tanggal_error",
                           $event.target.value
                         )
                       },
                     },
                   }),
+                ]),
+              ]),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-6" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _vm._m(4),
                   _vm._v(" "),
-                  _c("small", { staticClass: "text-muted char-counter" }, [
-                    _vm._v(
-                      "\n            " +
-                        _vm._s(
-                          _vm.noseri.deskripsi_error
-                            ? _vm.noseri.deskripsi_error.length
-                            : 0
-                        ) +
-                        " / 100\n          "
-                    ),
-                  ]),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.noseri.tanggal_perbaikan,
+                        expression: "noseri.tanggal_perbaikan",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "date",
+                      id: "tanggal_perbaikan",
+                      disabled: "",
+                      required: "",
+                    },
+                    domProps: { value: _vm.noseri.tanggal_perbaikan },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.noseri,
+                          "tanggal_perbaikan",
+                          $event.target.value
+                        )
+                      },
+                    },
+                  }),
                 ]),
               ]),
               _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "form-group d-flex justify-content-between" },
-                [
-                  _c("span"),
+              _vm._m(5),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-12" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _vm._m(6),
                   _vm._v(" "),
-                  _c("div", [
-                    _vm._m(8),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-danger",
-                        attrs: { type: "button" },
-                        on: { click: _vm.tutupModal },
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.statusNoseri,
+                          expression: "statusNoseri",
+                        },
+                      ],
+                      staticClass: "form-control",
+                      attrs: { id: "pic", required: "" },
+                      on: {
+                        change: function ($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function (o) {
+                              return o.selected
+                            })
+                            .map(function (o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.statusNoseri = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        },
                       },
-                      [
-                        _c("i", { staticClass: "fas fa-times" }),
-                        _vm._v(" Batal\n          "),
-                      ]
-                    ),
-                  ]),
-                ]
-              ),
-            ]
-          ),
-        ]
-      ),
-    ]
-  )
+                    },
+                    [
+                      _c(
+                        "option",
+                        { attrs: { value: "", disabled: "", selected: "" } },
+                        [_vm._v("Pilih Layout")]
+                      ),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "Ready" } }, [
+                        _vm._v("Ready"),
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "Error" } }, [
+                        _vm._v("Error"),
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "Rusak" } }, [
+                        _vm._v("Rusak"),
+                      ]),
+                    ]
+                  ),
+                ]),
+              ]),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _vm._m(7),
+              _vm._v(" "),
+              _c("div", { staticClass: "textarea-wrapper" }, [
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.noseri.deskripsi_error,
+                      expression: "noseri.deskripsi_error",
+                    },
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    id: "detail_error",
+                    rows: "1",
+                    placeholder:
+                      "Masukkan Detail Kerusakan (Maksimal 100 karakter)",
+                    maxlength: "100",
+                    required: "",
+                  },
+                  domProps: { value: _vm.noseri.deskripsi_error },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.noseri,
+                        "deskripsi_error",
+                        $event.target.value
+                      )
+                    },
+                  },
+                }),
+                _vm._v(" "),
+                _c("small", { staticClass: "text-muted char-counter" }, [
+                  _vm._v(
+                    "\n            " +
+                      _vm._s(
+                        _vm.noseri.deskripsi_error
+                          ? _vm.noseri.deskripsi_error.length
+                          : 0
+                      ) +
+                      " / 100\n          "
+                  ),
+                ]),
+              ]),
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "form-group d-flex justify-content-between" },
+              [
+                _c("span"),
+                _vm._v(" "),
+                _c("div", [
+                  _vm._m(8),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger",
+                      attrs: { type: "button" },
+                      on: { click: _vm.tutupModal },
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-times" }),
+                      _vm._v(" Batal\n          "),
+                    ]
+                  ),
+                ]),
+              ]
+            ),
+          ]
+        ),
+      ]
+    ),
+  ])
 }
 var staticRenderFns = [
   function () {
@@ -69012,89 +69005,81 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "contaoner-fluid", staticStyle: { width: "500px" } },
-    [
-      _vm._m(0),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "card-body", staticStyle: { "border-radius": "15px" } },
-        [
-          _c(
-            "form",
-            {
-              on: {
-                submit: function ($event) {
-                  $event.preventDefault()
-                  return _vm.submitAlat.apply(null, arguments)
-                },
+  return _c("div", { staticClass: "contaoner-fluid" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "card-body", staticStyle: { "border-radius": "15px" } },
+      [
+        _c(
+          "form",
+          {
+            on: {
+              submit: function ($event) {
+                $event.preventDefault()
+                return _vm.submitAlat.apply(null, arguments)
               },
             },
-            [
-              _c("div", { staticClass: "form-group" }, [
-                _vm._m(1),
+          },
+          [
+            _c("div", { staticClass: "form-group" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.noseri.tanggal_ganti,
+                    expression: "noseri.tanggal_ganti",
+                  },
+                ],
+                staticClass: "form-control",
+                attrs: { type: "date", id: "tanggal_pergantian", required: "" },
+                domProps: { value: _vm.noseri.tanggal_ganti },
+                on: {
+                  input: function ($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.noseri, "tanggal_ganti", $event.target.value)
+                  },
+                },
+              }),
+            ]),
+            _vm._v(" "),
+            _vm._m(2),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "form-group d-flex justify-content-between" },
+              [
+                _c("span"),
                 _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.noseri.tanggal_ganti,
-                      expression: "noseri.tanggal_ganti",
-                    },
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    type: "date",
-                    id: "tanggal_pergantian",
-                    required: "",
-                  },
-                  domProps: { value: _vm.noseri.tanggal_ganti },
-                  on: {
-                    input: function ($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.noseri, "tanggal_ganti", $event.target.value)
-                    },
-                  },
-                }),
-              ]),
-              _vm._v(" "),
-              _vm._m(2),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "form-group d-flex justify-content-between" },
-                [
-                  _c("span"),
+                _c("div", [
+                  _vm._m(3),
                   _vm._v(" "),
-                  _c("div", [
-                    _vm._m(3),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-danger",
-                        attrs: { type: "button" },
-                        on: { click: _vm.tutupModal },
-                      },
-                      [
-                        _c("i", { staticClass: "fas fa-times" }),
-                        _vm._v(" Batal\n            "),
-                      ]
-                    ),
-                  ]),
-                ]
-              ),
-            ]
-          ),
-        ]
-      ),
-    ]
-  )
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger",
+                      attrs: { type: "button" },
+                      on: { click: _vm.tutupModal },
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-times" }),
+                      _vm._v(" Batal\n            "),
+                    ]
+                  ),
+                ]),
+              ]
+            ),
+          ]
+        ),
+      ]
+    ),
+  ])
 }
 var staticRenderFns = [
   function () {
@@ -70009,269 +69994,163 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "contaoner-fluid", staticStyle: { width: "800px" } },
-    [
-      _vm._m(0),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "card-body", staticStyle: { "border-radius": "15px" } },
-        [
-          _c(
-            "form",
-            {
-              on: {
-                submit: function ($event) {
-                  $event.preventDefault()
-                  return _vm.submitAlat.apply(null, arguments)
-                },
+  return _c("div", { staticClass: "contaoner-fluid" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "card-body", staticStyle: { "border-radius": "15px" } },
+      [
+        _c(
+          "form",
+          {
+            on: {
+              submit: function ($event) {
+                $event.preventDefault()
+                return _vm.submitAlat.apply(null, arguments)
               },
             },
-            [
-              _c("div", { staticClass: "form-group" }, [
-                _vm._m(1),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.selectedNoSeri,
-                        expression: "selectedNoSeri",
-                      },
-                    ],
-                    staticClass: "form-control",
-                    attrs: { id: "no_seri_alat", required: "", disabled: "" },
-                    on: {
-                      change: function ($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function (o) {
-                            return o.selected
-                          })
-                          .map(function (o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.selectedNoSeri = $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      },
+          },
+          [
+            _c("div", { staticClass: "form-group" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.selectedNoSeri,
+                      expression: "selectedNoSeri",
+                    },
+                  ],
+                  staticClass: "form-control",
+                  attrs: { id: "no_seri_alat", required: "", disabled: "" },
+                  on: {
+                    change: function ($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function (o) {
+                          return o.selected
+                        })
+                        .map(function (o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.selectedNoSeri = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
                     },
                   },
-                  [
-                    _c("option", { attrs: { value: "" } }, [
-                      _vm._v("Pilih No Seri Alat"),
-                    ]),
-                    _vm._v(" "),
-                    _vm._l(_vm.noseris, function (no_seri) {
-                      return _c(
-                        "option",
-                        {
-                          key: no_seri.id,
-                          domProps: { value: no_seri.no_seri_alat },
-                        },
-                        [
-                          _vm._v(
-                            "\n              " +
-                              _vm._s(no_seri.no_seri_alat) +
-                              "\n            "
-                          ),
-                        ]
-                      )
-                    }),
-                  ],
-                  2
-                ),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-6" }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _vm._m(2),
-                    _vm._v(" "),
-                    _c(
-                      "select",
+                },
+                [
+                  _c("option", { attrs: { value: "" } }, [
+                    _vm._v("Pilih No Seri Alat"),
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.noseris, function (no_seri) {
+                    return _c(
+                      "option",
                       {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.selectedPIC,
-                            expression: "selectedPIC",
-                          },
-                        ],
-                        staticClass: "form-control",
-                        attrs: { id: "pic", required: "" },
-                        on: {
-                          change: function ($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function (o) {
-                                return o.selected
-                              })
-                              .map(function (o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.selectedPIC = $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          },
-                        },
+                        key: no_seri.id,
+                        domProps: { value: no_seri.no_seri_alat },
                       },
                       [
-                        _c(
-                          "option",
-                          { attrs: { value: "", disabled: "", selected: "" } },
-                          [_vm._v("Pilih PIC")]
+                        _vm._v(
+                          "\n              " +
+                            _vm._s(no_seri.no_seri_alat) +
+                            "\n            "
                         ),
-                        _vm._v(" "),
-                        _vm._l(_vm.PIC, function (pic) {
-                          return _c(
-                            "option",
-                            {
-                              key: pic.id,
-                              domProps: { value: pic.nama_staff },
-                            },
-                            [
-                              _vm._v(
-                                "\n                  " +
-                                  _vm._s(pic.nama_staff) +
-                                  "\n                "
-                              ),
-                            ]
-                          )
-                        }),
-                      ],
-                      2
-                    ),
-                  ]),
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-6" }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _vm._m(3),
-                    _vm._v(" "),
-                    _c("input", {
+                      ]
+                    )
+                  }),
+                ],
+                2
+              ),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-6" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _vm._m(2),
+                  _vm._v(" "),
+                  _c(
+                    "select",
+                    {
                       directives: [
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.noseri.tanggal_kerusakan,
-                          expression: "noseri.tanggal_kerusakan",
+                          value: _vm.selectedPIC,
+                          expression: "selectedPIC",
                         },
                       ],
                       staticClass: "form-control",
-                      attrs: {
-                        type: "date",
-                        id: "tanggal_error",
-                        disabled: "",
-                        required: "",
-                      },
-                      domProps: { value: _vm.noseri.tanggal_kerusakan },
+                      attrs: { id: "pic", required: "" },
                       on: {
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.noseri,
-                            "tanggal_kerusakan",
-                            $event.target.value
-                          )
+                        change: function ($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function (o) {
+                              return o.selected
+                            })
+                            .map(function (o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.selectedPIC = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
                         },
                       },
-                    }),
-                  ]),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
-                _vm._m(4),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-6" }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _vm._m(5),
-                    _vm._v(" "),
-                    _c(
-                      "select",
-                      {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.statusNoseri,
-                            expression: "statusNoseri",
-                          },
-                        ],
-                        staticClass: "form-control",
-                        attrs: { id: "kondisi", required: "" },
-                        on: {
-                          change: function ($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function (o) {
-                                return o.selected
-                              })
-                              .map(function (o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.statusNoseri = $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          },
-                        },
-                      },
-                      [
-                        _c(
+                    },
+                    [
+                      _c(
+                        "option",
+                        { attrs: { value: "", disabled: "", selected: "" } },
+                        [_vm._v("Pilih PIC")]
+                      ),
+                      _vm._v(" "),
+                      _vm._l(_vm.PIC, function (pic) {
+                        return _c(
                           "option",
-                          { attrs: { value: "", disabled: "", selected: "" } },
-                          [_vm._v("Pilih Kondisi")]
-                        ),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "Ready" } }, [
-                          _vm._v("Ready"),
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "Error" } }, [
-                          _vm._v("Error"),
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "Rusak" } }, [
-                          _vm._v("Rusak"),
-                        ]),
-                      ]
-                    ),
-                  ]),
+                          { key: pic.id, domProps: { value: pic.nama_staff } },
+                          [
+                            _vm._v(
+                              "\n                  " +
+                                _vm._s(pic.nama_staff) +
+                                "\n                "
+                            ),
+                          ]
+                        )
+                      }),
+                    ],
+                    2
+                  ),
                 ]),
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _vm._m(6),
-                _vm._v(" "),
-                _c("div", { staticClass: "textarea-wrapper" }, [
-                  _c("textarea", {
+              _c("div", { staticClass: "col-md-6" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _vm._m(3),
+                  _vm._v(" "),
+                  _c("input", {
                     directives: [
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.noseri.deskripsi_kerusakan,
-                        expression: "noseri.deskripsi_kerusakan",
+                        value: _vm.noseri.tanggal_kerusakan,
+                        expression: "noseri.tanggal_kerusakan",
                       },
                     ],
                     staticClass: "form-control",
                     attrs: {
-                      id: "detail_error",
-                      rows: "1",
-                      placeholder:
-                        "Masukkan Detail Kerusakan (Maksimal 100 karakter)",
-                      maxlength: "100",
+                      type: "date",
+                      id: "tanggal_error",
+                      disabled: "",
                       required: "",
                     },
-                    domProps: { value: _vm.noseri.deskripsi_kerusakan },
+                    domProps: { value: _vm.noseri.tanggal_kerusakan },
                     on: {
                       input: function ($event) {
                         if ($event.target.composing) {
@@ -70279,57 +70158,156 @@ var render = function () {
                         }
                         _vm.$set(
                           _vm.noseri,
-                          "deskripsi_kerusakan",
+                          "tanggal_kerusakan",
                           $event.target.value
                         )
                       },
                     },
                   }),
-                  _vm._v(" "),
-                  _c("small", { staticClass: "text-muted char-counter" }, [
-                    _vm._v(
-                      "\n              " +
-                        _vm._s(
-                          _vm.noseri.deskripsi_kerusakan
-                            ? _vm.noseri.deskripsi_kerusakan.length
-                            : 0
-                        ) +
-                        " / 100\n            "
-                    ),
-                  ]),
                 ]),
               ]),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _vm._m(4),
               _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "form-group d-flex justify-content-between" },
-                [
-                  _c("span"),
+              _c("div", { staticClass: "col-md-6" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _vm._m(5),
                   _vm._v(" "),
-                  _c("div", [
-                    _vm._m(7),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-danger",
-                        attrs: { type: "button" },
-                        on: { click: _vm.tutupModal },
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.statusNoseri,
+                          expression: "statusNoseri",
+                        },
+                      ],
+                      staticClass: "form-control",
+                      attrs: { id: "kondisi", required: "" },
+                      on: {
+                        change: function ($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function (o) {
+                              return o.selected
+                            })
+                            .map(function (o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.statusNoseri = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        },
                       },
-                      [
-                        _c("i", { staticClass: "fas fa-times" }),
-                        _vm._v(" Batal\n            "),
-                      ]
-                    ),
-                  ]),
-                ]
-              ),
-            ]
-          ),
-        ]
-      ),
-    ]
-  )
+                    },
+                    [
+                      _c(
+                        "option",
+                        { attrs: { value: "", disabled: "", selected: "" } },
+                        [_vm._v("Pilih Kondisi")]
+                      ),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "Ready" } }, [
+                        _vm._v("Ready"),
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "Error" } }, [
+                        _vm._v("Error"),
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "Rusak" } }, [
+                        _vm._v("Rusak"),
+                      ]),
+                    ]
+                  ),
+                ]),
+              ]),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _vm._m(6),
+              _vm._v(" "),
+              _c("div", { staticClass: "textarea-wrapper" }, [
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.noseri.deskripsi_kerusakan,
+                      expression: "noseri.deskripsi_kerusakan",
+                    },
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    id: "detail_error",
+                    rows: "1",
+                    placeholder:
+                      "Masukkan Detail Kerusakan (Maksimal 100 karakter)",
+                    maxlength: "100",
+                    required: "",
+                  },
+                  domProps: { value: _vm.noseri.deskripsi_kerusakan },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.noseri,
+                        "deskripsi_kerusakan",
+                        $event.target.value
+                      )
+                    },
+                  },
+                }),
+                _vm._v(" "),
+                _c("small", { staticClass: "text-muted char-counter" }, [
+                  _vm._v(
+                    "\n              " +
+                      _vm._s(
+                        _vm.noseri.deskripsi_kerusakan
+                          ? _vm.noseri.deskripsi_kerusakan.length
+                          : 0
+                      ) +
+                      " / 100\n            "
+                  ),
+                ]),
+              ]),
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "form-group d-flex justify-content-between" },
+              [
+                _c("span"),
+                _vm._v(" "),
+                _c("div", [
+                  _vm._m(7),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger",
+                      attrs: { type: "button" },
+                      on: { click: _vm.tutupModal },
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-times" }),
+                      _vm._v(" Batal\n            "),
+                    ]
+                  ),
+                ]),
+              ]
+            ),
+          ]
+        ),
+      ]
+    ),
+  ])
 }
 var staticRenderFns = [
   function () {
