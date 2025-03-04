@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth; // Add this line
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes

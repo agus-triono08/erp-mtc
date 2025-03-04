@@ -26959,12 +26959,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
-function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
-function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -27085,52 +27081,13 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 //
 //
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       searchQuery: '',
-      // Dummy Data for table
-      dummyData: [{
-        ruang: 'Ruang A',
-        lantai: '1',
-        rak: 'Rak 1'
-      }, {
-        ruang: 'Ruang B',
-        lantai: '2',
-        rak: 'Rak 2'
-      }, {
-        ruang: 'Ruang C',
-        lantai: '3',
-        rak: 'Rak 3'
-      }, {
-        ruang: 'Ruang D',
-        lantai: '4',
-        rak: 'Rak 4'
-      }, {
-        ruang: 'Ruang E',
-        lantai: '5',
-        rak: 'Rak 5'
-      }, {
-        ruang: 'Ruang F',
-        lantai: '6',
-        rak: 'Rak 6'
-      }, {
-        ruang: 'Ruang G',
-        lantai: '7',
-        rak: 'Rak 7'
-      }, {
-        ruang: 'Ruang H',
-        lantai: '8',
-        rak: 'Rak 8'
-      }, {
-        ruang: 'Ruang I',
-        lantai: '9',
-        rak: 'Rak 9'
-      }, {
-        ruang: 'Ruang J',
-        lantai: '10',
-        rak: 'Rak 10'
-      }],
+      layouts: [],
+      // Data layout dari API Laravel
       form: {
         ruang: '',
         lantai: '',
@@ -27146,10 +27103,13 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
       currentPage: 1 // Halaman saat ini
     };
   },
+  mounted: function mounted() {
+    this.getLayouts();
+  },
   computed: {
     filteredData: function filteredData() {
       var _this = this;
-      return this.dummyData.filter(function (item) {
+      return this.layouts.filter(function (item) {
         return item.ruang.toLowerCase().includes(_this.searchQuery.toLowerCase()) || item.lantai.toLowerCase().includes(_this.searchQuery.toLowerCase()) || item.rak.toLowerCase().includes(_this.searchQuery.toLowerCase());
       });
     },
@@ -27168,6 +27128,14 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
     }
   },
   methods: {
+    getLayouts: function getLayouts() {
+      var _this2 = this;
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/layouts').then(function (response) {
+        _this2.layouts = response.data;
+      })["catch"](function (error) {
+        console.error(error);
+      });
+    },
     openModal: function openModal(action) {
       var item = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
       var index = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
@@ -27192,20 +27160,32 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
       this.isModalOpen = false; // Set modal status close
     },
     saveData: function saveData() {
+      var _this3 = this;
       if (this.currentIndex === null) {
         // Tambah Data
-        this.dummyData.push(_objectSpread({}, this.form));
+        axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/layouts', this.form).then(function (response) {
+          _this3.layouts.push(response.data);
+          _this3.closeModal();
+        })["catch"](function (error) {
+          console.error(error);
+        });
       } else {
         // Edit Data
-        this.dummyData[this.currentIndex] = _objectSpread({}, this.form);
+        axios__WEBPACK_IMPORTED_MODULE_0___default().put("/api/layouts/".concat(this.currentIndex), this.form).then(function (response) {
+          _this3.layouts[_this3.currentIndex] = response.data;
+          _this3.closeModal();
+        })["catch"](function (error) {
+          console.error(error);
+        });
       }
-      this.closeModal();
     },
-    debouncedFetchNoSeri: _.debounce(function () {
-      console.log('Search Query:', this.searchQuery);
-    }, 500),
     deleteData: function deleteData(index) {
-      this.dummyData.splice(index, 1);
+      var _this4 = this;
+      axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"]("/api/layouts/".concat(index)).then(function (response) {
+        _this4.layouts.splice(index, 1);
+      })["catch"](function (error) {
+        console.error(error);
+      });
     },
     prevPage: function prevPage() {
       if (this.currentPage > 1) {
@@ -27216,7 +27196,10 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
       if (this.currentPage < this.totalPages) {
         this.currentPage++;
       }
-    }
+    },
+    debouncedFetchNoSeri: _.debounce(function () {
+      this.getLayouts();
+    }, 300)
   }
 });
 
@@ -41927,7 +41910,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* Pastikan backdrop tidak menutupi modal */\n.modal-backdrop[data-v-312d99ee] {\r\n  z-index: 1040 !important; /* Atur backdrop di bawah modal */\n}\n.modal[data-v-312d99ee] {\r\n  z-index: 1050 !important; /* Modal di atas backdrop */\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* Pastikan backdrop tidak menutupi modal */\n.modal-backdrop[data-v-312d99ee] {\r\n  z-index: 1040 !important; /* Atur backdrop di bawah modal */\n}\n.modal[data-v-312d99ee] {\r\n  z-index: 1050 !important; /* Modal di atas backdrop */\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

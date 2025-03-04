@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateStokInAlatsTable extends Migration
+class CreateLayoutTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class UpdateStokInAlatsTable extends Migration
      */
     public function up()
     {
-        Schema::table('alats', function (Blueprint $table) {
-            $table->integer('stok')->default(0)->change();
+        Schema::create('layouts', function (Blueprint $table) {
+            $table->id('id_layout');
+            $table->string('ruang');
+            $table->string('rak');
+            $table->integer('lantai');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +29,6 @@ class UpdateStokInAlatsTable extends Migration
      */
     public function down()
     {
-        Schema::table('alats', function (Blueprint $table) {
-            $table->integer('stok')->nullable()->change();
-        });
+        Schema::dropIfExists('layouts');
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\AlatController;
 use App\Http\Controllers\TechIssueController;
 use App\Http\Controllers\RincianAlatController;
 use App\Http\Controllers\MesinController;
+use App\Http\Controllers\LayoutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -109,3 +110,5 @@ Route::post('/rincian-alat', [RincianAlatController::class, 'store']);
 Route::delete('/rincian-alat/{id}', [RincianAlatController::class, 'destroy']);
 
 Route::post('tech-issue', [TechIssueController::class, 'store']);
+
+Route::apiResource('/layouts', LayoutController::class);

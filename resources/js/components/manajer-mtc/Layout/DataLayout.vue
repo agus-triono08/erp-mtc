@@ -118,23 +118,13 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
       searchQuery: '',
-      // Dummy Data for table
-      dummyData: [
-        { ruang: 'Ruang A', lantai: '1', rak: 'Rak 1' },
-        { ruang: 'Ruang B', lantai: '2', rak: 'Rak 2' },
-        { ruang: 'Ruang C', lantai: '3', rak: 'Rak 3' },
-        { ruang: 'Ruang D', lantai: '4', rak: 'Rak 4' },
-        { ruang: 'Ruang E', lantai: '5', rak: 'Rak 5' },
-        { ruang: 'Ruang F', lantai: '6', rak: 'Rak 6' },
-        { ruang: 'Ruang G', lantai: '7', rak: 'Rak 7' },
-        { ruang: 'Ruang H', lantai: '8', rak: 'Rak 8' },
-        { ruang: 'Ruang I', lantai: '9', rak: 'Rak 9' },
-        { ruang: 'Ruang J', lantai: '10', rak: 'Rak 10' }
-      ],
+      layouts: [], // Data layout dari API Laravel
       form: {
         ruang: '',
         lantai: '',
@@ -148,9 +138,12 @@ export default {
       currentPage: 1 // Halaman saat ini
     }
   },
+  mounted() {
+    this.getLayouts();
+  },
   computed: {
     filteredData() {
-      return this.dummyData.filter(item => {
+      return this.layouts.filter(item => {
         return  item.ruang.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
                 item.lantai.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
                 item.rak.toLowerCase().includes(this.searchQuery.toLowerCase());
@@ -171,6 +164,15 @@ export default {
     },
   },
   methods: {
+    getLayouts() {
+      axios.get('/api/layouts')
+        .then(response => {
+          this.layouts = response.data;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
     openModal(action, item = null, index = null) {
       if (action === 'add') {
         this.modalTitle = 'Tambah Data';
@@ -195,18 +197,34 @@ export default {
     saveData() {
       if (this.currentIndex === null) {
         // Tambah Data
-        this.dummyData.push({ ...this.form });
+        axios.post('/api/layouts', this.form)
+          .then(response => {
+            this.layouts.push(response.data);
+            this.closeModal();
+          })
+          .catch(error => {
+            console.error(error);
+          });
       } else {
         // Edit Data
-        this.dummyData[this.currentIndex] = { ...this.form };
+        axios.put(`/api/layouts/${this.currentIndex}`, this.form)
+          .then(response => {
+            this.layouts[this.currentIndex] = response.data;
+            this.closeModal();
+          })
+          .catch(error => {
+            console.error(error);
+          });
       }
-      this.closeModal();
     },
-    debouncedFetchNoSeri: _.debounce(function () {
-      console.log('Search Query:', this.searchQuery);
-    }, 500),
     deleteData(index) {
-      this.dummyData.splice(index, 1);
+      axios.delete(`/api/layouts/${index}`)
+        .then(response => {
+          this.layouts.splice(index, 1);
+        })
+        .catch(error => {
+          console.error(error);
+        });
     },
     prevPage() {
       if (this.currentPage > 1) {
@@ -218,6 +236,9 @@ export default {
         this.currentPage++;
       }
     },
+    debouncedFetchNoSeri: _.debounce(function () {
+        this.getLayouts();
+      }, 300),
   }
 }
 </script>
