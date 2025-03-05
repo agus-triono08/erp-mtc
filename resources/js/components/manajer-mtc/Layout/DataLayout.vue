@@ -53,7 +53,7 @@
                   <a class="dropdown-item" @click="openModal('edit', item, index)">
                     <i class="fas fa-edit text-primary"></i> Edit
                   </a>
-                  <a class="dropdown-item" @click="deleteData(index)">
+                  <a class="dropdown-item" @click="deleteData(index, item)">
                     <i class="fas fa-trash text-danger"></i> Hapus
                   </a>
                 </div>
@@ -181,6 +181,7 @@ export default {
         this.form.lantai = '';
         this.form.rak = '';
         this.currentIndex = null;
+        this.currentId = null;
       } else if (action === 'edit' && item) {
         this.modalTitle = 'Edit Data';
         this.modalAction = 'Update';
@@ -188,6 +189,7 @@ export default {
         this.form.lantai = item.lantai;
         this.form.rak = item.rak;
         this.currentIndex = index;
+        this.currentId = item.id;
       }
       this.isModalOpen = true; // Set modal status open
     },
@@ -201,24 +203,28 @@ export default {
           .then(response => {
             this.layouts.push(response.data);
             this.closeModal();
+            this.getLayouts();
+            this.currentPage = 1; // Tambahkan kode ini untuk reset pagination
           })
           .catch(error => {
             console.error(error);
           });
       } else {
         // Edit Data
-        axios.put(`/api/layouts/${this.currentIndex}`, this.form)
+        axios.put(`/api/layouts/${this.currentId}`, this.form)
           .then(response => {
             this.layouts[this.currentIndex] = response.data;
             this.closeModal();
+            this.getLayouts();
+            this.currentPage = 1; // Tambahkan kode ini untuk reset pagination
           })
           .catch(error => {
             console.error(error);
           });
       }
     },
-    deleteData(index) {
-      axios.delete(`/api/layouts/${index}`)
+    deleteData(index, item) {
+      axios.delete(`/api/layouts/${item.id}`)
         .then(response => {
           this.layouts.splice(index, 1);
         })

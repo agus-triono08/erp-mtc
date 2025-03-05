@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLayoutTable extends Migration
+class CreateDivisisTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateLayoutTable extends Migration
      */
     public function up()
     {
-        Schema::create('layouts', function (Blueprint $table) {
-            $table->id('id');
-            $table->string('ruang');
-            $table->string('rak');
-            $table->integer('lantai');
+        Schema::create('divisis', function (Blueprint $table) {
+            $table->id();
+            $table->string('divisi');
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ class CreateLayoutTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('layouts');
+        Schema::dropIfExists('divisis');
     }
 }

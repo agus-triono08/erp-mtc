@@ -27146,6 +27146,7 @@ __webpack_require__.r(__webpack_exports__);
         this.form.lantai = '';
         this.form.rak = '';
         this.currentIndex = null;
+        this.currentId = null;
       } else if (action === 'edit' && item) {
         this.modalTitle = 'Edit Data';
         this.modalAction = 'Update';
@@ -27153,6 +27154,7 @@ __webpack_require__.r(__webpack_exports__);
         this.form.lantai = item.lantai;
         this.form.rak = item.rak;
         this.currentIndex = index;
+        this.currentId = item.id;
       }
       this.isModalOpen = true; // Set modal status open
     },
@@ -27166,22 +27168,26 @@ __webpack_require__.r(__webpack_exports__);
         axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/layouts', this.form).then(function (response) {
           _this3.layouts.push(response.data);
           _this3.closeModal();
+          _this3.getLayouts();
+          _this3.currentPage = 1; // Tambahkan kode ini untuk reset pagination
         })["catch"](function (error) {
           console.error(error);
         });
       } else {
         // Edit Data
-        axios__WEBPACK_IMPORTED_MODULE_0___default().put("/api/layouts/".concat(this.currentIndex), this.form).then(function (response) {
+        axios__WEBPACK_IMPORTED_MODULE_0___default().put("/api/layouts/".concat(this.currentId), this.form).then(function (response) {
           _this3.layouts[_this3.currentIndex] = response.data;
           _this3.closeModal();
+          _this3.getLayouts();
+          _this3.currentPage = 1; // Tambahkan kode ini untuk reset pagination
         })["catch"](function (error) {
           console.error(error);
         });
       }
     },
-    deleteData: function deleteData(index) {
+    deleteData: function deleteData(index, item) {
       var _this4 = this;
-      axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"]("/api/layouts/".concat(index)).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"]("/api/layouts/".concat(item.id)).then(function (response) {
         _this4.layouts.splice(index, 1);
       })["catch"](function (error) {
         console.error(error);
@@ -41910,7 +41916,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* Pastikan backdrop tidak menutupi modal */\n.modal-backdrop[data-v-312d99ee] {\r\n  z-index: 1040 !important; /* Atur backdrop di bawah modal */\n}\n.modal[data-v-312d99ee] {\r\n  z-index: 1050 !important; /* Modal di atas backdrop */\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* Pastikan backdrop tidak menutupi modal */\n.modal-backdrop[data-v-312d99ee] {\r\n  z-index: 1040 !important; /* Atur backdrop di bawah modal */\n}\n.modal[data-v-312d99ee] {\r\n  z-index: 1050 !important; /* Modal di atas backdrop */\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -97480,7 +97486,7 @@ var render = function () {
                             staticClass: "dropdown-item",
                             on: {
                               click: function ($event) {
-                                return _vm.deleteData(index)
+                                return _vm.deleteData(index, item)
                               },
                             },
                           },

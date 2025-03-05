@@ -7,6 +7,8 @@ use App\Http\Controllers\TechIssueController;
 use App\Http\Controllers\RincianAlatController;
 use App\Http\Controllers\MesinController;
 use App\Http\Controllers\LayoutController;
+use App\Http\Controllers\DivisiController;
+use App\Http\Controllers\JabatanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -111,4 +113,11 @@ Route::delete('/rincian-alat/{id}', [RincianAlatController::class, 'destroy']);
 
 Route::post('tech-issue', [TechIssueController::class, 'store']);
 
-Route::apiResource('/layouts', LayoutController::class);
+// LAYOUT
+Route::apiResource('layouts', LayoutController::class);
+
+// DIVISI
+Route::apiResource('divisis', DivisiController::class);
+
+// JABATAN
+Route::apiResource('jabatans', JabatanController::class);
