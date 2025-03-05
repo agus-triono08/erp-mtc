@@ -9,6 +9,8 @@ use App\Http\Controllers\MesinController;
 use App\Http\Controllers\LayoutController;
 use App\Http\Controllers\DivisiController;
 use App\Http\Controllers\JabatanController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\Auth\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,9 +23,9 @@ use App\Http\Controllers\JabatanController;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 //Inventory
 Route::post('/alats', [AlatController::class, 'store']);
 Route::get('/alats', [AlatController::class, 'index']);
@@ -121,3 +123,7 @@ Route::apiResource('divisis', DivisiController::class);
 
 // JABATAN
 Route::apiResource('jabatans', JabatanController::class);
+
+//USER
+Route::apiResource('users', UserController::class);
+Route::post('/login', [UserController::class, 'login']);

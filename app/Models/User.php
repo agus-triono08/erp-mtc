@@ -2,39 +2,37 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Auth\Authenticatable;
 
-class User extends Authenticatable
+class User extends Model implements AuthenticatableContract
 {
-    use HasFactory, Notifiable;
+    use Authenticatable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
-        'name', 'email', 'password',
+        'divisi_id',
+        'jabatan_id',
+        'username',
+        'password',
+        'nama',
+        'foto',
+        'status',
+        'url',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    public function divisi(): BelongsTo
+    {
+        return $this->belongsTo(Divisi::class);
+    }
+
+    public function jabatan(): BelongsTo
+    {
+        return $this->belongsTo(Jabatan::class);
+    }
+    
 }

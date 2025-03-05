@@ -59,6 +59,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
@@ -68,14 +70,25 @@ export default {
   },
   methods: {
     handleLogin() {
-      // Logic for handling login goes here
-      console.log('Username:', this.username);
-      console.log('Password:', this.password);
-      // You can add your authentication logic here
+      axios.post('/api/login', {
+        username: this.username,
+        password: this.password
+      })
+      .then(response => {
+        if (response.data.success) {
+          window.location.href = response.data.redirect;
+        } else {
+          console.log('Login gagal');
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
     }
   }
 };
 </script>
+
 <style>
 .bg-primary-1 {
   background-color: rgba(22, 158, 168);

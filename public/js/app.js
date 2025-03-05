@@ -26868,6 +26868,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -26929,6 +26931,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -26938,10 +26941,18 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     handleLogin: function handleLogin() {
-      // Logic for handling login goes here
-      console.log('Username:', this.username);
-      console.log('Password:', this.password);
-      // You can add your authentication logic here
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/login', {
+        username: this.username,
+        password: this.password
+      }).then(function (response) {
+        if (response.data.success) {
+          window.location.href = response.data.redirect;
+        } else {
+          console.log('Login gagal');
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   }
 });
