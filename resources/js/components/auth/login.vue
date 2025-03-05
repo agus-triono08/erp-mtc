@@ -42,7 +42,7 @@
             </div>
             <div class="flex items-center justify-between">
               <button
-                class="bg-teal-600 hover:bg-teal-800 text-white w-full font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                class="bg-primary-1 text-white w-full font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="submit"
               >
                 Login
@@ -76,3 +76,13 @@ export default {
   }
 };
 </script>
+<style>
+.bg-primary-1 {
+  background-color: rgba(22, 158, 168);
+  color: #fff;
+}
+.bg-primary-1:hover {
+  background-color: rgba(13, 100, 106);
+  color: #fff;
+}
+</style>
