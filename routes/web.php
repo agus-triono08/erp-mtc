@@ -21,8 +21,10 @@ use Illuminate\Support\Facades\Auth; // Add this line
 
 Route::get('/', function () {
     return view('authen.login');
-})->name('authen');
+})->name('login');
 
+
+Route::group(['middleware' => 'guest'], function () {
 Route::get('/admin-mtc/dashboard', function () {
     return view('admin-mtc.Main.dashboard');
 })->name('dashboard.adminmtc');
@@ -74,8 +76,9 @@ Route::get('/admin-mtc/alat/data-error/input', function () {
 Route::get('/admin-mtc/layout', function() {
     return view('admin-mtc.Main.layout');
 })->name('layout.adminmtc');
+});
 
-
+Route::group(['middleware' => 'guest'], function () {
 // USER
 Route::get('/user/dashboard', function () {
     return view('user.Main.dashboard');
@@ -88,7 +91,9 @@ Route::get('/user/data', function () {
 Route::get('/user/peminjaman', function () {
     return view('user.Main.peminjaman');
 })->name('peminjaman.user');
+});
 
+Route::group(['middleware' => 'guest'], function () {
 // MANAJER MTC
 Route::get('/manajer-mtc/dashboard', function () {
     return view('manajer-mtc.Main.dashboard');
@@ -141,11 +146,17 @@ Route::get('/manajer-mtc/alat/data-error/input', function () {
 Route::get('/manajer-mtc/layout', function() {
     return view('manajer-mtc.Main.layout');
 })->name('layout.manajermtc');
+});
 
-Auth::routes();
+// Kondisi
+Route::get('/admin-mtc/kondisi-error', function(){
+    return view('admin-mtc.Main.Kondisi.kondisi-error');
+})->name('kondisi-error');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Auth::routes();
 
-Auth::routes();
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Auth::routes();
+
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -63,6 +63,7 @@ class UserController extends Controller
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
+            Auth::login($user);
             if ($user->jabatan_id == 1) {
                 return response()->json(['success' => true, 'message' => 'Login berhasil', 'redirect' => '/admin-mtc/dashboard']);
             } elseif ($user->jabatan_id == 2) {

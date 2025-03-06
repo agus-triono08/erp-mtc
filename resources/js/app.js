@@ -158,6 +158,13 @@ const UserInputPermintaan = require('./components/user/PeminjamanAlat/Permintaan
 const UserDetailPermintaan  = require('./components/user/PeminjamanAlat/PermintaanAlat/DetailPermintaanAlat.vue').default;
 const UserPermintaanPengeluaran = require('./components/user/PeminjamanAlat/PermintaanAlat/DataRincianPermintaanAlat.vue').default;
 
+// KONDISI
+const BaruError = require('./components/kondisi/Error/Baru-Error.vue').default;
+const ProsesError = require('./components/kondisi/Error/Proses/Proses-Error.vue').default;
+const DetailProsesError = require('./components/kondisi/Error/Proses/Detail-Proses-Error.vue').default;
+const SelesaiError = require('./components/kondisi/Error/Selesai/Selesai-Error.vue').default;
+const DetailSelesaiError = require('./components/kondisi/Error/Selesai/Detail-Selesai-Error.vue').default;
+
 //Daftarkan Komponen DataAlatError
 Vue.component('input-alat-error', InputAlatError);
 Vue.component('edit-alat-error', EditAlatError);
@@ -234,6 +241,7 @@ Vue.component('user-detail-peminjaman', UserDetaiPeminjaman);
 Vue.component('user-data-permintaan', UserDataPermintaan);
 Vue.component('user-input-permintaan', UserInputPermintaan);
 Vue.component('user-permintaan-pengeluaran', UserPermintaanPengeluaran);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -393,7 +401,33 @@ const routes = [
     {
         path: '/user/permintaan/detail/:id',
         component: UserDetailPermintaan,
-    }
+    },
+    //KONDISI
+    {
+      path: '/admin-mtc/kondisi-error',
+      component: BaruError,
+      name: 'kondisi-baru-error',
+    },
+    {
+      path: '/admin-mtc/kondisi-error/proses',
+      component: ProsesError,
+      name: 'kondisi-proses-error',
+    },
+    {
+      path: '/admin-mtc/kondisi-error/proses/:id',
+      component: DetailProsesError,
+      name: 'kondisi-detail-proses-error',
+    },
+    {
+      path: '/admin-mtc/kondisi-error/selesai',
+      component: SelesaiError,
+      name: 'kondisi-selesai-error',
+    },
+    {
+      path: '/admin-mtc/kondisi-error/selesai/:id',
+      component: DetailSelesaiError,
+      name: 'kondisi-detail-selesai-error',
+    },
 ];
 
 const router = new VueRouter({

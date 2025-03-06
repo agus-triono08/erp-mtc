@@ -144,9 +144,9 @@
                     <i class="fas fa-ellipsis-v"></i>
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <!-- <a class="dropdown-item" @click="viewDetail(noseri.id)">
+                    <a class="dropdown-item" @click="viewDetail(noseri.id)">
                       <i class="fas fa-eye text-info"></i> Riwayat
-                    </a> -->
+                    </a>
                     <a class="dropdown-item" @click="editData(noseri.id)">
                       <i class="fas fa-edit text-primary"></i> Edit
                     </a>

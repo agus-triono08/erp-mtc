@@ -99,6 +99,22 @@
     </div>
 
     <!-- Nav Item - Peminjaman -->
+    <li class="nav-item">
+    <a class="nav-link" href="#" data-toggle="collapse" data-target="#kondisi-collapse" aria-expanded="true" aria-controls="kondisi-collapse">
+        <i class="fas fa-fw fa-info-circle"></i>
+        <span>Kondisi</span>
+    </a>
+    <div id="kondisi-collapse" class="collapse" aria-labelledby="kondisi-collapse" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Kondisi</h6>
+            <a class="collapse-item {{ Request::is('kondisi-error') ? 'active' : '' }}" href="{{route('kondisi-error')}}"><i class="fas fa-fw fa-bug" style="color: #169ea8;"></i> Error</a>
+            <a class="collapse-item" href="#"><i class="fas fa-fw fa-exclamation-triangle" style="color: #169ea8;"></i> Rusak</a>
+            <a class="collapse-item" href="#"><i class="fas fa-fw fa-skull-crossbones" style="color: #169ea8;"></i> Musnah</a>
+        </div>
+    </div>
+    </li>
+
+    <!-- Nav Item - Peminjaman -->
     <li class="nav-item {{ request()->routeIs('peminjaman.adminmtc') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('peminjaman.adminmtc') }}">
             <i class="fas fa-fw {{ request()->routeIs('peminjaman.adminmtc') ? 'fa-hands-helping' : 'fa-handshake' }}"></i>
