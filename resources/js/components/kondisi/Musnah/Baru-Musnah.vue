@@ -2,13 +2,16 @@
   <div class="container-fluid">
     <h1 class="h3 mb-4 mt-4 text-gray-900"><b>Kondisi</b></h1>
     <ul id="pills-tab" role="tablist" class="nav nav-pills mb-3" style="margin-top: 1rem !important;">
-        <li role="presentation" class="nav-item">
-          <router-link id="pills-home-tab" data-toggle="pill" data-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="false" class="nav-link" :class="{ active: $route.name === 'kondisi-baru-rusak' }" :to="{ name: 'kondisi-baru-rusak' }">Baru</router-link>
-        </li>
-        <li role="presentation" class="nav-item">
-          <router-link id="pills-contact-tab" data-toggle="pill" data-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="true" class="nav-link" :class="{ active: $route.name === 'kondisi-selesai-rusak' }" :to="{ name: 'kondisi-selesai-rusak' }">Selesai</router-link>
-        </li>
-      </ul>
+      <li role="presentation" class="nav-item">
+        <router-link id="pills-home-tab" data-toggle="pill" data-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true" class="nav-link" :class="{ active: $route.name === 'kondisi-baru-musnah' }" :to="{ name: 'kondisi-baru-musnah' }">Baru</router-link>
+      </li>
+      <li role="presentation" class="nav-item">
+        <router-link id="pills-profile-tab" data-toggle="pill" data-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" class="nav-link" :class="{ active: $route.name === 'kondisi-proses-musnah' }" :to="{ name: 'kondisi-proses-musnah' }">Proses</router-link>
+      </li>
+      <li role="presentation" class="nav-item">
+        <router-link id="pills-contact-tab" data-toggle="pill" data-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false" class="nav-link" :class="{ active: $route.name === 'kondisi-selesai-musnah' }" :to="{ name: 'kondisi-selesai-musnah' }">Selesai</router-link>
+      </li>
+    </ul>
     <div class="row align-items-center justify-content-end m-3">      
       <!-- Tambah Data -->
       <!-- <button class="btn btn-sm btn-outline-primary mr-2 ml-1" @click="openModal('add')">
@@ -30,10 +33,10 @@
             <th class="text-black-1">#</th>
             <th class="text-black-1">No Seri</th>
             <th class="text-black-1">Nama</th>
-            <th class="text-black-1">Tgl Rusak</th>
+            <th class="text-black-1">Tgl Pemusnahan</th>
             <!-- <th class="text-black-1">Kondisi</th> -->
             <th class="text-black-1">Detail</th>
-            <!-- <th class="text-black-1">Target</th> -->
+            <th class="text-black-1">PIC</th>
             <th class="text-black-1">Status</th>
             <th class="text-black-1">Aksi</th>
           </tr>
@@ -59,21 +62,13 @@
               </div>
             </td> -->
             <td>{{ item.detail }}</td>
-            <!-- <td>
-              {{ item.tgl_selesai }} <br>
-              <small>
-                <i :class="{'fas fa-clock': !durasidata[index].includes('hari lewat') && !durasidata[index].includes('hari lagi'), 'fas fa-exclamation-circle text-danger': durasidata[index].includes('hari lewat') || durasidata[index].includes('hari lagi')}"></i>
-                <span :class="{'text-danger': durasidata[index].includes('hari lewat') || durasidata[index].includes('hari lagi')}">
-                  {{ durasidata[index] }}
-                </span>
-              </small>
-            </td> -->
+            <td>{{ item.pic }}</td>
             <td>
               <div 
                 class="btn-sts"
                 :class="{
                   'status-rusak': item.status === 'Belum',
-                  'status-hilang': item.status === 'Proses',
+                  'status-dipinjam': item.status === 'Proses',
                   'status-active': item.status === 'Selesai',
                 }">
                 {{ item.status }}
@@ -92,12 +87,9 @@
                   <i class="fas fa-ellipsis-v"></i>
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <!-- <a class="dropdown-item" @click="perbaikanData(index)">
-                    <i class="fas fa-check text-success"></i> Perbaikan
-                  </a> -->
-                  <router-link :to="{ name: 'kondisi-detail-selesai-rusak', params: { id: item.no_seri } }" class="dropdown-item">
-                    <i class="fas fa-eye text-info"></i> Detail
-                  </router-link>
+                  <a class="dropdown-item" @click="perbaikanData(index)">
+                    <i class="fas fa-check text-success"></i> Musnahkan
+                  </a>
                 </div>
               </div>
             </td>
@@ -214,7 +206,8 @@ export default {
         { text: 'Alice Johnson', value: 'Alice Johnson' },
       ],
       data: [
-        { no_seri: '1122wscj121', nama: 'Clamp', tgl: '2025-02-01', kondisi: 'Error', detail: 'Sensor tidak berfungsi', pic: 'John Doe', tgl_selesai: '2025-02-05', status: 'Selesai' },        
+        { no_seri: '1122wscj121', nama: 'Clamp', tgl: '2025-02-01', kondisi: 'Error', detail: 'Sensor tidak berfungsi', pic: 'John Doe', status: 'Belum' },
+        { no_seri: '1122wscj122', nama: 'Clamp', tgl: '2025-02-10', kondisi: 'Error', detail: 'Koneksi kabel terputus', pic: 'Jane Doe', status: 'Belum' },
       ],
       paginatedData: [],
       searchQuery: '',
@@ -235,30 +228,6 @@ export default {
     };
   },
   computed: {
-    durasidata() {
-      return this.data.map(item => {
-        if (item.tgl_selesai && item.tgl) {
-          const tglSelesai = new Date(item.tgl_selesai);
-          const tglSekarang = new Date(item.tgl);
-          const tglSaatIni = new Date();
-          const selisihHari = Math.abs(tglSelesai - tglSekarang);
-          const hari = Math.floor(selisihHari / (1000 * 60 * 60 * 24 ));
-
-          if (tglSaatIni > tglSelesai) {
-            const selisihHariSaatIni = Math.abs(tglSaatIni - tglSelesai);
-            const hariSaatIni = Math.floor(selisihHariSaatIni / (1000 * 60 * 60 * 24 ));
-            return hariSaatIni + ' hari lewat';
-          } else if (tglSelesai < tglSekarang) {
-            return hari + ' hari lalu';
-          } else {
-            const excessDays = Math.ceil((tglSelesai-tglSekarang) / (1000 * 60 * 60 * 24));
-            return excessDays + ' hari lagi';
-          }
-        } else {
-          return 'Tidak ada tanggal';
-        }
-      })
-    },
     totalPages() {
       return Math.ceil(this.data.length / this.rowsPerPage);
     },
@@ -313,16 +282,16 @@ export default {
     perbaikanData(index) {
       Swal.fire({
         title: 'Konfirmasi',
-        text: 'Apakah Anda yakin ingin memperbaiki data ini?',
+        text: 'Apakah Anda yakin ingin memusnahkan data ini?',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonText: 'Ya, perbaiki!',
+        confirmButtonText: 'Ya, musnahkan!',
         cancelButtonText: 'Tidak, batalkan!',
       }).then((result) => {
         if (result.isConfirmed) {
           this.data.splice(index, 1);
           this.updatePaginatedData();
-          Swal.fire('Berhasil!', 'Data telah diperbaiki.', 'success');
+          Swal.fire('Berhasil!', 'Data telah dimusnahkan.', 'success');
         }
       });
     },

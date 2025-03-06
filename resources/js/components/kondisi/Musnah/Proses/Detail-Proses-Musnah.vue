@@ -2,16 +2,16 @@
   <div class="container-fluid">
     <!-- Head -->
     <div class="row mb-2 align-items-center" >
-      <div class="col-sm-6"><h3 style="font-family: Raleway;">Detail Kondisi Rusak</h3> 
+      <div class="col-sm-6"><h3 style="font-family: Raleway;">Detail Kondisi Error</h3> 
         <h6 style="color: rgb(128, 128, 128);"></h6>
       </div> 
       <div class="col-sm-6 mt-3">
         <ol class="breadcrumb float-sm-right bg-table" style="border-radius: 10px;">
           <li class="breadcrumb-item">
-            <a style="color: #169ea8; text-decoration: none;" href="/kondisi-rusak">Kondisi Rusak</a>
+            <a style="color: #169ea8; text-decoration: none;" href="/kondisi-error">Kondisi Error</a>
           </li>
           <li class="breadcrumb-item active" style="color: red;">
-            <span>Detail Kondisi Rusak</span>
+            <span>Detail Kondisi Error</span>
           </li>
         </ol>
       </div>
@@ -23,7 +23,7 @@
           <h4 class="text-capitalize text-primary text-bold"><b>No Seri #{{ $route.params.id }}</b></h4>
         </div>
         <div class="col-3">
-          <dt style="color: #000;">PIC</dt>
+          <dt style="color: #000;">PIC Pemusnahan</dt>
           <dd>{{ data[0].pic }}</dd>
         </div>
         <div class="col-3">
@@ -50,9 +50,9 @@
     <!-- Aktivity -->
     <div class="card shadow mt-5 mb-3">
       <div class="m-2">
-        <div class="col-12">
+        <!-- <div class="col-12">
           <h4 class="text-capitalize text-primary text-bold"><b>Aktivitas</b></h4>
-        </div>        
+        </div>         -->
         <div class="row align-items-center justify-content-end m-3">          
           <!-- <button class="btn btn-primary mr-2" @click="showModal = true">Tambah Aktivitas</button> -->
           <div class="search-wrapper">
@@ -69,9 +69,9 @@
             <thead class="bg-table">
               <tr class="text-center" style="color: #000;">
                 <th>#</th>
-                <th>Tanggal</th>
+                <th>Tanggal Pemusnahan</th>
                 <th>Detail</th>
-                <th>Kondisi</th>
+                <th>Aksi</th>
               </tr>
             </thead>
             <tbody>
@@ -79,7 +79,7 @@
                 <td>{{ index + 1 }}</td>
                 <td>{{ item.tanggal }}</td>
                 <td>{{ item.detail }}</td>
-                <td>
+                <!-- <td>
                   <div 
                     class="btn-sts"
                     :class="{
@@ -89,27 +89,52 @@
                     }">
                     {{ item.kondisi }}
                     </div>
+                </td> -->
+                <td>
+                  <div class="dropdown text-center">
+                    <button
+                      class="btn btn-sm"
+                      type="button"
+                      id="dropdownMenuButton"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item" @click="downloadBA(index)">
+                        <i class="fas fa-download text-primary"></i> Download BA
+                      </a>
+                      <a class="dropdown-item" @click="uploadBA(index)">
+                        <i class="fas fa-upload text-success"></i> Upload BA
+                      </a>
+                      <a class="dropdown-item" @click="uploadBuktiPemusnahan(index)">
+                        <i class="fas fa-upload text-info"></i> Upload Bukti Pemusnahan
+                      </a>
+                    </div>
+                  </div>
                 </td>
               </tr>
             </tbody>
-          </table>
-          <!-- Pagination -->
-          <div class="d-flex justify-content-between align-items-center mt-3 mb-3" style="border-radius: 10px; background-color: #f3f4f6; height: 50px; color: #000;">
-            <div class="ml-3">
-              Rows per page:
-              <span>{{ rowsPerPage }}</span>
-            </div>
-            <div class="mr-3">          
-              <span>{{ paginationInfo }}</span>
-              <button @click="prevPage" :disabled="currentPage === 1" class="btn btn-sm btn-light">
-                <i class="fas fa-angle-left"></i>
-              </button>
-              <span>  </span>
-              <button @click="nextPage" :disabled="currentPage === totalPages" class="btn btn-sm btn-light">
-                <i class="fas fa-angle-right"></i>
-              </button>
-            </div>
-          </div>   
+          </table>            
+        </div>
+        <!-- Pagination -->
+        <div class="d-flex justify-content-between align-items-center mt-3 mb-3 ml-3 mr-3" style="border-radius: 10px; background-color: #f3f4f6; height: 50px; color: #000;">
+          <div class="ml-3">
+            Rows per page:
+            <span>{{ rowsPerPage }}</span>
+          </div>
+          <div class="mr-3">          
+            <span>{{ paginationInfo }}</span>
+            <button @click="prevPage" :disabled="currentPage === 1" class="btn btn-sm btn-light">
+              <i class="fas fa-angle-left"></i>
+            </button>
+            <span>  </span>
+            <button @click="nextPage" :disabled="currentPage === totalPages" class="btn btn-sm btn-light">
+              <i class="fas fa-angle-right"></i>
+            </button>
+          </div>
         </div> 
       </div>                  
     </div>    
@@ -165,11 +190,33 @@ export default {
         kondisi: ''
       },
       aktivitasList: [
-        { tanggal: '2025-02-01', detail: 'Contoh detail 1', kondisi: 'Error' },
-        { tanggal: '2025-02-02', detail: 'Contoh detail 2', kondisi: 'OK' }
+      {
+        id: 1,
+        tanggal: '2022-01-01',
+        detail: 'Aktivitas 1',
+        kondisi: 'OK',
+        ba: 'ba1.pdf',
+        buktiPemusnahan: 'bukti1.pdf'
+      },
+      {
+        id: 2,
+        tanggal: '2022-01-02',
+        detail: 'Aktivitas 2',
+        kondisi: 'Rusak',
+        ba: 'ba2.pdf',
+        buktiPemusnahan: 'bukti2.pdf'
+      },
+      {
+        id: 3,
+        tanggal: '2022-01-03',
+        detail: 'Aktivitas 3',
+        kondisi: 'Error',
+        ba: 'ba3.pdf',
+        buktiPemusnahan: 'bukti3.pdf'
+      }
       ],
       data: [
-        { no_seri: '1122wscj121', nama: 'Clamp', tgl: '2025-02-01', kondisi: 'Error', detail: 'Sensor tidak berfungsi', pic: 'John Doe', tgl_selesai: '2025-02-05', status: 'Selesai' },        
+        { no_seri: '1122wscj121', nama: 'Clamp', tgl: '2025-02-01', kondisi: 'Error', detail: 'Sensor tidak berfungsi', pic: 'John Doe', tgl_selesai: '2025-02-05', status: 'Proses' },        
       ],
       searchQuery: '',
       rowsPerPage: 10,
@@ -238,6 +285,18 @@ export default {
       // Implement debounce logic for search
       this.updatePaginatedData();
     },
+    downloadBA(index) {
+      // Fungsi untuk download BA
+      console.log('Download BA', this.aktivitasList[index].ba)
+    },
+    uploadBA(index) {
+      // Fungsi untuk upload BA
+      console.log('Upload BA', this.aktivitasList[index].ba)
+    },
+    uploadBuktiPemusnahan(index) {
+      // Fungsi untuk upload bukti pemusnahan
+      console.log('Upload Bukti Pemusnahan', this.aktivitasList[index].buktiPemusnahan)
+    }
   }
 }
 </script>

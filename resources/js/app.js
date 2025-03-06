@@ -170,6 +170,13 @@ const BaruRusak = require('./components/kondisi/Rusak/Baru-Rusak.vue').default;
 const SelesaiRusak = require('./components/kondisi/Rusak/Selesai/Selesai-Rusak.vue').default;
 const DetailSelesaiRusak = require('./components/kondisi/Rusak/Selesai/Detail-Selesai-Rusak.vue').default;
 
+//KONDISI MUSNAH
+const BaruMusnah = require('./components/kondisi/Musnah/Baru-Musnah.vue').default;
+const ProsesMusnah = require('./components/kondisi/Musnah/Proses/Proses-Musnah.vue').default;
+const DetailProsesMusnah = require('./components/kondisi/Musnah/Proses/Detail-Proses-Musnah.vue').default;
+const SelesaiMusnah = require('./components/kondisi/Musnah/Selesai/Selesai.Musnah.vue').default;
+const DetailSelesaiMusnah = require('./components/kondisi/Musnah/Selesai/Detail-Selesai-Musnah.vue').default;
+
 //Daftarkan Komponen DataAlatError
 Vue.component('input-alat-error', InputAlatError);
 Vue.component('edit-alat-error', EditAlatError);
@@ -448,6 +455,32 @@ const routes = [
         path: '/admin-mtc/kondisi-rusak/selesai/:id',
         component: DetailSelesaiRusak,
         name: 'kondisi-detail-selesai-rusak',
+    },
+    //KONDISI MUSNAH
+    {
+        path: '/kondisi-musnah',
+        component: BaruMusnah,
+        name: 'kondisi-baru-musnah',
+    },
+    {
+        path: '/admin-mtc/kondisi-musnah/proses',
+        component: ProsesMusnah,
+        name: 'kondisi-proses-musnah',
+    },
+    {
+        path: '/admin-mtc/kondisi-musnah/proses/:id',
+        component: DetailProsesMusnah,
+        name: 'kondisi-detail-proses-musnah',
+    },
+    {
+        path: '/admin-mtc/kondisi-musnah/selesai',
+        component: SelesaiMusnah,
+        name: 'kondisi-selesai-musnah',
+    },
+    {
+        path: '/admin-mtc/kondisi-musnah/selesai/:id',
+        component: DetailSelesaiMusnah,
+        name: 'kondisi-detail-selesai-musnah',
     },
 ];
 
