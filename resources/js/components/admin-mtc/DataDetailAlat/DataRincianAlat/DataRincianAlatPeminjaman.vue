@@ -51,7 +51,7 @@
               <th class="text-center text-black-1 tr-center">Tgl Kembali</th>
               <th class="text-center text-black-1 tr-center">Durasi</th>
               <th class="text-center text-black-1 tr-center">Status</th>
-              <th class="text-center text-black-1 tr-center">Aksi</th>
+              <!-- <th class="text-center text-black-1 tr-center">Aksi</th> -->
             </tr>
           </thead>
           <tbody v-if="filteredData.length===0">
@@ -85,7 +85,7 @@
                           'status-rusak': peminjamanalat.status === 'Sedang Dipinjam', 
                           'status-error': peminjamanalat.status === 'Barang Siap Diambil'}"
               >{{ peminjamanalat.status || '-' }}</div></td>
-              <td>
+              <!-- <td>
                 <div class="dropdown text-center">
                   <button
                     class="btn btn-sm"
@@ -98,15 +98,15 @@
                     <i class="fas fa-ellipsis-v"></i>
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <!--<a class="dropdown-item" @click="viewDetail(noseri.id)">
+                    <a class="dropdown-item" @click="viewDetail(noseri.id)">
                       <i class="fas fa-eye text-info"></i> Riwayat
-                    </a>-->
+                    </a>
                     <a class="dropdown-item" @click="editData(noseri.id)">
                       <i class="fas fa-edit text-primary"></i> Edit
                     </a>
                   </div>
                 </div>
-              </td>
+              </td> -->
             </tr>
           </tbody>          
         </table>                             

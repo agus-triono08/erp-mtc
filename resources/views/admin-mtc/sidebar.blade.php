@@ -108,8 +108,8 @@
         <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Kondisi</h6>
             <a class="collapse-item {{ Request::is('kondisi-error') ? 'active' : '' }}" href="{{route('kondisi-error')}}"><i class="fas fa-fw fa-bug" style="color: #169ea8;"></i> Error</a>
-            <a class="collapse-item" href="#"><i class="fas fa-fw fa-exclamation-triangle" style="color: #169ea8;"></i> Rusak</a>
-            <a class="collapse-item" href="#"><i class="fas fa-fw fa-skull-crossbones" style="color: #169ea8;"></i> Musnah</a>
+            <a class="collapse-item {{ Request::is('kondisi-rusak') ? 'active' : '' }}" href="{{route('kondisi-rusak')}}"><i class="fas fa-fw fa-exclamation-triangle" style="color: #169ea8;"></i> Rusak</a>
+            <a class="collapse-item {{ Request::is('kondisi-musnah') ? 'active' : '' }}" href="{{route('kondisi-musnah')}}"><i class="fas fa-fw fa-skull-crossbones" style="color: #169ea8;"></i> Musnah</a>
         </div>
     </div>
     </li>

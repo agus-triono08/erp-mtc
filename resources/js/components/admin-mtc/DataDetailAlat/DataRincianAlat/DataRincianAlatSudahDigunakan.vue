@@ -50,7 +50,7 @@
               <th class="text-center text-black-1 tr-center">Divisi</th>
               <th class="text-center text-black-1">Kondisi</th>
               <th class="text-center text-black-1">Status</th>
-              <th class="text-center text-black-1">Aksi</th>
+              <!-- <th class="text-center text-black-1">Aksi</th> -->
             </tr>
           </thead>
           <tbody v-if="filteredData.length===0">
@@ -82,7 +82,7 @@
                   'status-rusak': permintaanalat.status === 'Ditolak'
                 }">
               {{ permintaanalat.status }}</div></td>
-              <td>
+              <!-- <td>
                 <div class="dropdown text-center">
                   <button
                     class="btn btn-sm"
@@ -100,7 +100,7 @@
                     </a>
                   </div>
                 </div>
-              </td>
+              </td> -->
             </tr>
           </tbody>
         </table>

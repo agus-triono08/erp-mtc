@@ -149,9 +149,17 @@ Route::get('/manajer-mtc/layout', function() {
 });
 
 // Kondisi
-Route::get('/admin-mtc/kondisi-error', function(){
+Route::get('/kondisi-error', function(){
     return view('admin-mtc.Main.Kondisi.kondisi-error');
 })->name('kondisi-error');
+
+Route::get('/kondisi-rusak', function(){
+    return view('admin-mtc.Main.Kondisi.kondisi-rusak');
+})->name('kondisi-rusak');
+
+Route::get('/kondisi-musnah', function(){
+    return view('admin-mtc.Main.Kondisi.kondisi-musnah');
+})->name('kondisi-musnah');
 
 // Auth::routes();
 

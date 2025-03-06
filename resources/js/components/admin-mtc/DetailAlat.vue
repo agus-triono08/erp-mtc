@@ -113,41 +113,41 @@
           <span v-else>Rincian Alat</span>
         </button>-->
         <!-- Tombol Detail Alat Error -->
-        <button
+        <!-- <button
           class="btn btn-show-error m-1"
           :class="{ active: showRincianAlatError }"
           @click="toggleRincianAlatError"
         >
           <span v-if="showRincianAlatError">Detail Data Error</span>
           <span v-else>Detail Data Error</span>
-        </button>
+        </button> -->
         <!-- Tombol Detail Alat Rusak -->
-        <button
+        <!-- <button
           class="btn btn-show-rusak m-1"
           :class="{ active: showRincianAlatRusak }"
           @click="toggleRincianAlatRusak"
           >
           <span v-if="showRincianAlatRusak">Detail Data Rusak</span>
           <span v-else>Detail Data Rusak</span>
-        </button>
+        </button> -->
         <!-- Tombol Detail Alat Musnah -->
-        <button
+        <!-- <button
           class="btn btn-show-musnah m-1"
           :class="{ active: showRincianAlatMusnah }"
           @click="toggleRincianAlatMusnah"
         >
         <span v-if="showRincianAlatMusnah">Detail Data Musnah</span>
         <span v-else>Detail Data Musnah</span>
-        </button>
+        </button> -->
         <!-- Tombol Detail Alat Hilang -->
-        <button
+        <!-- <button
           class="btn btn-show-hilang m-1"
           :class="{ active: showRincianAlatHilang }"
           @click="toggleRincianAlatHilang"
         >
           <span v-if="showRincianAlatHilang">Detail Data Hilang</span>
           <span v-else>Detail Data Hilang</span>
-        </button>
+        </button> -->
       </div>
       <!-- Konten Detail -->
       <div class="card-body ml-2" v-if="showDetail" style="border-radius: 20px;">

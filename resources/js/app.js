@@ -158,12 +158,17 @@ const UserInputPermintaan = require('./components/user/PeminjamanAlat/Permintaan
 const UserDetailPermintaan  = require('./components/user/PeminjamanAlat/PermintaanAlat/DetailPermintaanAlat.vue').default;
 const UserPermintaanPengeluaran = require('./components/user/PeminjamanAlat/PermintaanAlat/DataRincianPermintaanAlat.vue').default;
 
-// KONDISI
+// KONDISI ERROR
 const BaruError = require('./components/kondisi/Error/Baru-Error.vue').default;
 const ProsesError = require('./components/kondisi/Error/Proses/Proses-Error.vue').default;
 const DetailProsesError = require('./components/kondisi/Error/Proses/Detail-Proses-Error.vue').default;
 const SelesaiError = require('./components/kondisi/Error/Selesai/Selesai-Error.vue').default;
 const DetailSelesaiError = require('./components/kondisi/Error/Selesai/Detail-Selesai-Error.vue').default;
+
+//KONDISI RUSAK
+const BaruRusak = require('./components/kondisi/Rusak/Baru-Rusak.vue').default;
+const SelesaiRusak = require('./components/kondisi/Rusak/Selesai/Selesai-Rusak.vue').default;
+const DetailSelesaiRusak = require('./components/kondisi/Rusak/Selesai/Detail-Selesai-Rusak.vue').default;
 
 //Daftarkan Komponen DataAlatError
 Vue.component('input-alat-error', InputAlatError);
@@ -402,9 +407,9 @@ const routes = [
         path: '/user/permintaan/detail/:id',
         component: UserDetailPermintaan,
     },
-    //KONDISI
+    //KONDISI ERROR
     {
-      path: '/admin-mtc/kondisi-error',
+      path: '/kondisi-error',
       component: BaruError,
       name: 'kondisi-baru-error',
     },
@@ -427,6 +432,22 @@ const routes = [
       path: '/admin-mtc/kondisi-error/selesai/:id',
       component: DetailSelesaiError,
       name: 'kondisi-detail-selesai-error',
+    },
+    //KONDISI RUSAK
+    {
+        path: '/kondisi-rusak',
+        component: BaruRusak,
+        name: 'kondisi-baru-rusak',
+    },
+    {
+        path: '/admin-mtc/kondisi-rusak/selesai',
+        component: SelesaiRusak,
+        name: 'kondisi-selesai-rusak',
+    },
+    {
+        path: '/admin-mtc/kondisi-rusak/selesai/:id',
+        component: DetailSelesaiRusak,
+        name: 'kondisi-detail-selesai-rusak',
     },
 ];
 
