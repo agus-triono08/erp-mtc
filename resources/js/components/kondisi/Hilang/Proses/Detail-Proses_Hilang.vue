@@ -122,7 +122,7 @@
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                       <!-- Tombol Serahkan Alat/Mesin -->
-                      <a class="dropdown-item" @click="serahkanAlat(item)">
+                      <a v-if="!item.isSerah" class="dropdown-item" @click="serahkanAlat(item)">
                         <i class="fas fa-share text-primary"></i> Serahkan Alat/Mesin
                       </a>
                       <!-- Tombol Diterima hanya muncul setelah Serahkan Alat/Mesin ditekan -->

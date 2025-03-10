@@ -154458,25 +154458,27 @@ var render = function () {
                             attrs: { "aria-labelledby": "dropdownMenuButton" },
                           },
                           [
-                            _c(
-                              "a",
-                              {
-                                staticClass: "dropdown-item",
-                                on: {
-                                  click: function ($event) {
-                                    return _vm.serahkanAlat(item)
+                            !item.isSerah
+                              ? _c(
+                                  "a",
+                                  {
+                                    staticClass: "dropdown-item",
+                                    on: {
+                                      click: function ($event) {
+                                        return _vm.serahkanAlat(item)
+                                      },
+                                    },
                                   },
-                                },
-                              },
-                              [
-                                _c("i", {
-                                  staticClass: "fas fa-share text-primary",
-                                }),
-                                _vm._v(
-                                  " Serahkan Alat/Mesin\n                    "
-                                ),
-                              ]
-                            ),
+                                  [
+                                    _c("i", {
+                                      staticClass: "fas fa-share text-primary",
+                                    }),
+                                    _vm._v(
+                                      " Serahkan Alat/Mesin\n                    "
+                                    ),
+                                  ]
+                                )
+                              : _vm._e(),
                             _vm._v(" "),
                             item.isSerah
                               ? _c(
