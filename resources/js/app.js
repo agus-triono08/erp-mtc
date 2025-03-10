@@ -182,8 +182,9 @@ const DetailSelesaiMusnah = require('./components/kondisi/Musnah/Selesai/Detail-
 
 // Data Hilang
 const BaruHilang = require('./components/kondisi/Hilang/Baru-Hilang.vue').default;
-// const ProsesHilang = require('./components/kondisi/Hilang/Proses/Proses-Hilang.vue').default;
-// const DetailProsesHilang = require('./components/kondisi/Hilang/Proses/Detail-Proses_Hilang.vue').default;
+const DetailBaruHilang = require('./components/kondisi/Hilang/Detail-Baru-Hilang.vue').default;
+const ProsesHilang = require('./components/kondisi/Hilang/Proses/Proses-Hilang.vue').default;
+const DetailProsesHilang = require('./components/kondisi/Hilang/Proses/Detail-Proses_Hilang.vue').default;
 const SelesaiHilang = require('./components/kondisi/Hilang/Selesai/Selesai-Hilang.vue').default;
 const DetailSelesaiHilang = require('./components/kondisi/Hilang/Selesai/Detail-Selesai-Hilang.vue').default;
 
@@ -512,6 +513,21 @@ const routes = [
         path: '/admin-mtc/data-hilang',
         component: BaruHilang,
         name: 'data-baru-hilang',
+    },
+    {
+        path: '/admin-mtc/data-hilang/:id',
+        component: DetailBaruHilang,
+        name: 'data-detail-baru-hilang',
+    },
+    {
+        path: '/admin-mtc/data-hilang/proses',
+        component: ProsesHilang,
+        name: 'data-proses-hilang',
+    },
+    {
+        path: '/admin-mtc/data-hilang/proses/:id',
+        component: DetailProsesHilang,
+        name: 'data-detail-proses-hilang',
     },
     {
         path: '/admin-mtc/data-hilang/selesai',

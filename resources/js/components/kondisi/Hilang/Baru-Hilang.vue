@@ -1,9 +1,12 @@
 <template>
   <div class="container-fluid">
-    <h1 class="h3 mb-4 mt-4 text-gray-900"><b>Kondisi</b></h1>
+    <h1 class="h3 mb-4 mt-4 text-gray-900"><b>Penggantian Alat/Mesin</b></h1>
     <ul id="pills-tab" role="tablist" class="nav nav-pills mb-3" style="margin-top: 1rem !important;">
       <li role="presentation" class="nav-item">
         <router-link id="pills-home-tab" data-toggle="pill" data-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true" class="nav-link" :class="{ active: $route.name === 'data-baru-hilang' }" :to="{ name: 'data-baru-hilang' }">Baru</router-link>
+      </li>
+      <li role="presentation" class="nav-item">
+        <router-link id="pills-profile-tab" data-toggle="pill" data-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" class="nav-link" :class="{ active: $route.name === 'data-proses-hilang' }" :to="{ name: 'data-proses-hilang' }">Proses</router-link>
       </li>
       <li role="presentation" class="nav-item">
         <router-link id="pills-contact-tab" data-toggle="pill" data-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false" class="nav-link" :class="{ active: $route.name === 'data-selesai-hilang' }" :to="{ name: 'data-selesai-hilang' }">Selesai</router-link>
@@ -28,12 +31,13 @@
         <thead>
           <tr class="bg-table text-center">
             <th class="text-black-1">#</th>
+            <th class="text-black-1">No Penggantian</th>
             <th class="text-black-1">No Seri</th>
-            <th class="text-black-1">Nama</th>
+            <th class="text-black-1">Nama Alat/Mesin</th>
             <th class="text-black-1">Tgl Hilang</th>
             <!-- <th class="text-black-1">Kondisi</th> -->
-            <th class="text-black-1">Detail</th>
-            <th class="text-black-1">Peminjam</th>
+            <!-- <th class="text-black-1">Detail</th> -->
+            <th class="text-black-1">Nama Peminjam</th>
             <!-- <th class="text-black-1">Status</th> -->
             <th class="text-black-1">Aksi</th>
           </tr>
@@ -46,6 +50,7 @@
         <tbody v-for="(item, index) in paginatedData" :key="index">
           <tr class="text-center">
             <td>{{ index + 1 }}</td>
+            <td>{{ item.no_ganti }}</td>
             <td>{{ item.no_seri }}</td>
             <td>{{ item.nama }}</td>
             <td>{{ item.tgl }}</td>
@@ -58,7 +63,7 @@
                 {{ item.kondisi }}
               </div>
             </td> -->
-            <td>{{ item.detail }}</td>
+            <!-- <td>{{ item.detail }}</td> -->
             <td>{{ item.pic }}</td>
             <!-- <td>
               <div 
@@ -84,9 +89,12 @@
                   <i class="fas fa-ellipsis-v"></i>
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" @click="perbaikanData(index)">
+                  <!-- <a class="dropdown-item" @click="perbaikanData(index)">
                     <i class="fas fa-check text-success"></i> Diganti
-                  </a>
+                  </a> -->
+                  <router-link :to="{ name: 'data-detail-baru-hilang', params: { id: item.no_ganti } }" class="dropdown-item">
+                    <i class="fas fa-eye text-info"></i> Detail
+                  </router-link>
                 </div>
               </div>
             </td>
@@ -203,8 +211,8 @@ export default {
         { text: 'Alice Johnson', value: 'Alice Johnson' },
       ],
       data: [
-        { no_seri: '1122wscj121', nama: 'Clamp', tgl: '2025-02-01', kondisi: 'Error', detail: 'Sensor tidak berfungsi', pic: 'John Doe', status: 'Belum' },
-        { no_seri: '1122wscj122', nama: 'Clamp', tgl: '2025-02-10', kondisi: 'Error', detail: 'Koneksi kabel terputus', pic: 'Jane Doe', status: 'Belum' },
+        { no_ganti: 'NPG-001', no_seri: '1122wscj121', nama: 'Clamp', tgl: '2025-02-01', kondisi: 'Error', detail: 'Sensor tidak berfungsi', pic: 'John Doe', status: 'Belum' },
+        { no_ganti: 'NPG-002', no_seri: '1122wscj122', nama: 'Clamp', tgl: '2025-02-10', kondisi: 'Error', detail: 'Koneksi kabel terputus', pic: 'Jane Doe', status: 'Belum' },
       ],
       paginatedData: [],
       searchQuery: '',

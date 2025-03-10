@@ -8,7 +8,7 @@
       <div class="col-sm-6 mt-3">
         <ol class="breadcrumb float-sm-right bg-table" style="border-radius: 10px;">
           <li class="breadcrumb-item">
-            <a style="color: #169ea8; text-decoration: none;" href="javascript:history.back()">Pemusnahan Alat/Mesin</a>
+            <a style="color: #169ea8; text-decoration: none;" href="javascript:history.back()">Kerusakan Alat/Mesin</a>
           </li>
           <li class="breadcrumb-item active" style="color: red;">
             <span>Detail Kerusakan Alat/Mesin</span>

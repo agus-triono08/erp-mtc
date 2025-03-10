@@ -32,7 +32,7 @@
           <tr class="bg-table text-center">
             <th class="text-black-1">#</th>
             <th class="text-black-1">No Seri</th>
-            <th class="text-black-1">Nama</th>
+            <th class="text-black-1">Nama Alat/Mesin</th>
             <th class="text-black-1">Tgl Error</th>
             <!-- <th class="text-black-1">Kondisi</th> -->
             <th class="text-black-1">Detail</th>

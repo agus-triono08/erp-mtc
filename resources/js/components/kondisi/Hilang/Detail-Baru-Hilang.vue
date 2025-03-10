@@ -74,7 +74,7 @@
         <div class="row align-items-center justify-content-end m-3">
           <!-- <button class="btn btn-primary mr-2" @click="downloadBukti(aktivitasList.length - 1)"><i class="fas fa-download"></i> Download Bukti Pertanggung Jawaban</button> -->
           <!-- Tombol Tambah Aktivitas akan hilang jika aktivitas sudah selesai -->
-          <button v-if="shouldShowTambahAktivitas" class="btn btn-primary mr-2" @click="showModal = true" :disabled="isAktivitasSelesai || isAllAktivitasCompleted">Tambah Aktivitas</button>      
+          <!-- <button v-if="shouldShowTambahAktivitas" class="btn btn-primary mr-2" @click="showModal = true" :disabled="isAktivitasSelesai || isAllAktivitasCompleted">Tambah Aktivitas</button>       -->
           <!-- Tombol Selesai hanya muncul jika kondisi aktivitas terakhir adalah OK atau Rusak -->
           <button v-if="isLastAktivitasCompleted && !isAktivitasSelesai" class="btn btn-success mr-2" @click="selesaiAktivitas" :disabled="!isLastAktivitasCompleted">Selesai</button>
           <div class="search-wrapper">
@@ -91,27 +91,26 @@
             <thead class="bg-table">
               <tr class="text-center" style="color: #000;">
                 <th>#</th>
-                <th>Tanggal Penggantian Alat/Mesin</th>
-                <th>No Seri Lama</th>
-                <th>No Seri Baru</th>
-                <th>Harga</th>
-                <th>Status</th>
+                <th>Tanggal Pengajuan Ganti Alat/Mesin</th>
+                <th>Bukti Pertanggung Jawaban</th>
+                <th>Alasan Penolakan</th>
                 <th>Aksi</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody >
               <tr v-for="(item, index) in aktivitasList" :key="index" class="text-center">
                 <td>{{ index + 1 }}</td>
                 <td>{{ item.tanggal }}</td>
-                <td>{{ item.no_seri_lama }}</td>
-                <td>{{ item.no_seri_baru }}</td>
-                <td>{{ item.harga }}</td>
-                <td>{{ item.status }}</td>
                 <td>
-                  <!-- Dropdown yang berfungsi dengan benar -->
-                  <div class="dropdown text-center">
+                  <div style="text-align: center;">
+                    <pdf :src="item.BuktiPertanggungJawaban" :page="1" :rotate="0" @num-pages="numPages = $event" @page-loaded="currentPage = $event" @link-clicked="currentPage = $event" style="width: max-content; height: max-content; margin: 0 auto;"/>
+                  </div>
+                </td>          
+                <td>{{ item.alasanPenolakan }}</td>
+                <td>
+                  <div class="dropdown text-center" v-if="item.status === 'Menunggu Persetujuan Atasan'">
                     <button
-                      class="btn btn-sm btn-primary"
+                      class="btn btn-sm"
                       type="button"
                       id="dropdownMenuButton"
                       data-toggle="dropdown"
@@ -121,13 +120,14 @@
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <!-- Tombol Serahkan Alat/Mesin -->
-                      <a class="dropdown-item" @click="serahkanAlat(item)">
-                        <i class="fas fa-share text-primary"></i> Serahkan Alat/Mesin
+                      <a class="dropdown-item" @click="downloadBuktiPertanggungJawaban(item)">
+                        <i class="fas fa-download text-primary"></i> Download Bukti Pertanggung Jawaban
                       </a>
-                      <!-- Tombol Diterima hanya muncul setelah Serahkan Alat/Mesin ditekan -->
-                      <a v-if="item.isSerah" class="dropdown-item" @click="terimaAktivitas(item)">
-                        <i class="fas fa-check text-success"></i> Diterima
+                      <a v-if="shouldShowDiterima" class="dropdown-item" @click="terimaAktivitas(index)">
+                        <i class="fas fa-check text-success"></i> Proses
+                      </a>
+                      <a v-if="shouldShowDitolak" class="dropdown-item" @click="tolakAktivitas(index)">
+                        <i class="fas fa-times text-danger"></i> Tolak
                       </a>
                     </div>
                   </div>
@@ -171,23 +171,11 @@
                 <label for="tanggal" class="text-black-10"><b>Tanggal Penggantian Alat/Mesin <sup class="text-danger"> *</sup> </b></label>
                 <input type="date" class="form-control" id="tanggal" v-model="aktivitas.tanggal" required>
               </div>
-              <div class="form-group">
-                <label for="noSeriLama" class="text-black-10"><b>No Seri Lama <sup class="text-danger"> *</sup> </b></label>
-                <input type="text" class="form-control" id="noSeriLama" v-model="aktivitas.no_seri_lama" required>
-              </div>
-              <div class="form-group">
-                <label for="noSeriBaru" class="text-black-10"><b>No Seri Baru <sup class="text-danger"> *</sup> </b></label>
-                <input type="text" class="form-control" id="noSeriBaru" v-model="aktivitas.no_seri_baru" required>
-              </div>
-              <div class="form-group">
-                <label for="harga" class="text-black-10"><b>Harga <sup class="text-danger"> *</sup> </b></label>
-                <input type="text" class="form-control" id="harga" v-model="aktivitas.harga" required>
-              </div>
-              <!-- <form @submit.prevent="handleUploadBA">
+              <form @submit.prevent="handleUploadBA">
               <div class="form-group">
                 <label for="baFile">Pilih File Bukti Pertanggung Jawaban (PDF)</label>
                 
-                Area Drag and Drop
+                <!-- Area Drag and Drop -->
                 <div 
                   class="drag-drop-area" 
                   @dragover.prevent="onDragOver" 
@@ -200,10 +188,10 @@
                   <p v-else>{{ file.name }}</p>
                 </div>
 
-                Hidden Input File for Selecting File
+                <!-- Hidden Input File for Selecting File -->
                 <input type="file" class="form-control" id="baFile" ref="fileInput" @change="onBAFileChange" accept="application/pdf" style="display: none;" required>
               </div>
-            </form> -->
+            </form>
               <!-- <div class="form-group"> 
                 <label for="waktu" class="text-black-10"><b>Waktu Pemusnahan (Mulai - Selesai) <sup class="text-danger"> *</sup> </b></label> 
                 <div class="input-group"> <input type="time" class="form-control" id="waktu_mulai" v-model="aktivitas.waktu_mulai" required>
@@ -331,21 +319,10 @@ export default {
         pic: '',
         detail: '',
         kondisi: '',
-        alasanPenolakan: '',
-        harga: '',
-        no_seri_lama: '',
-        no_seri_baru: '',
+        alasanPenolakan: ''
       },
       aktivitasList: [
-      { 
-        tanggal: '2025-02-01', 
-        no_seri_lama: '1122wscj121', 
-        no_seri_baru: '1122wscj122', 
-        harga: 'Rp 6.000', 
-        BuktiPertanggungJawaban: '/file/Berita-Acara-Pemusnahan-Barang.pdf', 
-        status: 'Menunggu Konfirmasi',
-        isSerah: false        
-      },  
+        { tanggal: '2025-02-01', waktu_mulai: '08:00', waktu_selesai: '12:00', pic: 'Jane Doe', detail: 'Contoh detail 1', kondisi: 'Rusak', status: 'Menunggu Persetujuan Atasan', BuktiPertanggungJawaban: '/file/Berita-Acara-Pemusnahan-Barang.pdf' },      
       ],
       data: [
         { no_seri: '1122wscj121', nama: 'Clamp', layout: 'E7', tgl: '2025-02-01', kondisi: 'Error', detail: 'Lupa di taroh dimana', pic: 'John Doe', divisi: 'Maintenance', tgl_selesai: '2025-02-05', status: 'Proses' },        
@@ -364,10 +341,10 @@ export default {
   computed: {
     isLastAktivitasCompleted() {
       const lastAktivitas = this.aktivitasList[this.aktivitasList.length - 1];
-      return lastAktivitas && (lastAktivitas.kondisi === 'Musnah' && lastAktivitas.status === 'Diterima');
+      return lastAktivitas && (lastAktivitas.kondisi === 'Musnah' && lastAktivitas.status === 'Proses');
     },
     isAllAktivitasCompleted() {
-      return this.aktivitasList.every(item => item.kondisi === 'Musnah' && item.status === 'Diterima');
+      return this.aktivitasList.every(item => item.kondisi === 'Musnah' && item.status === 'Proses');
     },
     // Hanya tampilkan tombol "Tambah Aktivitas" jika aktivitas tidak selesai
     shouldShowTambahAktivitas() {
@@ -416,10 +393,7 @@ export default {
     addAktivitas() {      
       this.aktivitasList.push({ 
         tanggal: this.aktivitas.tanggal,  
-        // BuktiPertanggungJawaban: URL.createObjectURL(this.file),
-        no_seri_lama: this.aktivitas.no_seri_lama,
-        no_seri_baru: this.aktivitas.no_seri_baru,
-        harga: this.aktivitas.harga,      
+        BuktiPertanggungJawaban: URL.createObjectURL(this.file),      
         // waktu_mulai: this.aktivitas.waktu_mulai,
         // waktu_selesai: this.aktivitas.waktu_selesai,
         // pic: this.aktivitas.pic,
@@ -497,10 +471,12 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           // Lakukan aksi selesai aktivitas disini
-          this.data[0].status = 'Diterima';
-          // Update the underlying data instead of assigning to isLastAktivitasCompleted
-          this.aktivitasList[this.aktivitasList.length - 1].kondisi = 'Musnah';
-          this.aktivitasList[this.aktivitasList.length - 1].status = 'Diterima';
+          this.data[0].status = 'Proses';
+          
+          // Setelah aktivitas selesai, kita set isAktivitasSelesai menjadi true
+          this.isAktivitasSelesai = true;
+          this.showSelesaiModal = false;
+          this.isLastAktivitasCompleted = false; // tambahkan ini untuk membuat tombol selesai hilang
           Swal.fire('Berhasil!', 'Aktivitas telah selesai.', 'success');
           this.$router.push('/admin-mtc/data-hilang');
         }
@@ -527,7 +503,7 @@ export default {
       this.updatePaginatedData();
     },
     terimaAktivitas(index) {
-      this.aktivitasList[index].status = 'Diterima';
+      this.aktivitasList[index].status = 'Proses';
       this.aktivitasList[index].kondisi = 'Musnah';
     },
     tolakAktivitas(index) {
@@ -540,19 +516,6 @@ export default {
       this.aktivitasList[this.tolakIndex].alasanPenolakan = this.alasanPenolakan;
       this.showTolakModal = false;
       this.alasanPenolakan = '';
-    },
-    serahkanAlat(item) {
-      // Update the status to 'Serah' (or any state you choose)
-      item.status = 'Serah';
-      // Here you can implement any logic for when the item is 'Serah'
-      item.isSerah = true;
-    },
-    terimaAktivitas(item) {
-      // Update the status to 'Diterima'
-      item.status = 'Diterima';
-
-      // Redirect to the /admin-mtc/data-hilang page
-      this.$router.push('/admin-mtc/data-hilang');
     },
     downloadBukti(index) {
       const ba = this.aktivitasList[index].ba;
