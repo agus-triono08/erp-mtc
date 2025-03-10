@@ -1,9 +1,9 @@
 <template>
   <div class="container-fluid">
-    <h1 class="h3 mb-4 mt-4 text-gray-900"><b>Kondisi</b></h1>
+    <h1 class="h3 mb-4 mt-4 text-gray-900"><b>Kerusakan Alat/Mesin</b></h1>
     <ul id="pills-tab" role="tablist" class="nav nav-pills mb-3" style="margin-top: 1rem !important;">
       <li role="presentation" class="nav-item">
-        <router-link id="pills-home-tab" data-toggle="pill" data-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="false" class="nav-link" :class="{ active: $route.name === 'kondisi-baru-musnah' }" :to="{ name: 'kondisi-baru-musnah' }">Baru</router-link>
+        <router-link id="pills-home-tab" data-toggle="pill" data-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="false" class="nav-link" :class="{ active: $route.name === 'kondisi-baru-rusak' }" :to="{ name: 'kondisi-baru-rusak' }">Baru</router-link>
       </li>
       <li role="presentation" class="nav-item">
         <router-link id="pills-profile-tab" data-toggle="pill" data-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="true" class="nav-link" :class="{ active: $route.name === 'kondisi-proses-musnah' }" :to="{ name: 'kondisi-proses-musnah' }">Proses</router-link>
@@ -32,10 +32,10 @@
           <tr class="bg-table text-center">
             <th class="text-black-1">#</th>
             <th class="text-black-1">No Seri</th>
-            <th class="text-black-1">Nama</th>
+            <th class="text-black-1">Nama Alat/Mesin</th>
             <th class="text-black-1">Tgl Pemusnahan</th>
             <!-- <th class="text-black-1">Kondisi</th> -->
-            <th class="text-black-1">Detail</th>
+            <!-- <th class="text-black-1">Detail</th> -->
             <!-- <th class="text-black-1">Target</th> -->
             <th class="text-black-1">Status</th>
             <th class="text-black-1">Aksi</th>
@@ -61,7 +61,7 @@
                 {{ item.kondisi }}
               </div>
             </td> -->
-            <td>{{ item.detail }}</td>
+            <!-- <td>{{ item.detail }}</td> -->
             <!-- <td>
               {{ item.tgl_selesai }} <br>
               <small>

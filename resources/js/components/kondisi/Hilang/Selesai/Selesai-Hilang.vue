@@ -1,17 +1,14 @@
 <template>
   <div class="container-fluid">
-    <h1 class="h3 mb-4 mt-4 text-gray-900"><b>Kerusakan Alat/Mesin</b></h1>
+    <h1 class="h3 mb-4 mt-4 text-gray-900"><b>Kondisi</b></h1>
     <ul id="pills-tab" role="tablist" class="nav nav-pills mb-3" style="margin-top: 1rem !important;">
-      <li role="presentation" class="nav-item">
-        <router-link id="pills-home-tab" data-toggle="pill" data-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="false" class="nav-link" :class="{ active: $route.name === 'kondisi-baru-rusak' }" :to="{ name: 'kondisi-baru-rusak' }">Baru</router-link>
-      </li>
-      <li role="presentation" class="nav-item">
-        <router-link id="pills-profile-tab" data-toggle="pill" data-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" class="nav-link" :class="{ active: $route.name === 'kondisi-proses-musnah' }" :to="{ name: 'kondisi-proses-musnah' }">Proses</router-link>
-      </li>
-      <li role="presentation" class="nav-item">
-        <router-link id="pills-contact-tab" data-toggle="pill" data-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="true" class="nav-link" :class="{ active: $route.name === 'kondisi-selesai-musnah' }" :to="{ name: 'kondisi-selesai-musnah' }">Selesai</router-link>
-      </li>
-    </ul>
+        <li role="presentation" class="nav-item">
+          <router-link id="pills-home-tab" data-toggle="pill" data-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="false" class="nav-link" :class="{ active: $route.name === 'data-baru-hilang' }" :to="{ name: 'data-baru-hilang' }">Baru</router-link>
+        </li>
+        <li role="presentation" class="nav-item">
+          <router-link id="pills-contact-tab" data-toggle="pill" data-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="true" class="nav-link" :class="{ active: $route.name === 'data-selesai-hilang' }" :to="{ name: 'data-selesai-hilang' }">Selesai</router-link>
+        </li>
+      </ul>
     <div class="row align-items-center justify-content-end m-3">      
       <!-- Tambah Data -->
       <!-- <button class="btn btn-sm btn-outline-primary mr-2 ml-1" @click="openModal('add')">
@@ -32,8 +29,8 @@
           <tr class="bg-table text-center">
             <th class="text-black-1">#</th>
             <th class="text-black-1">No Seri</th>
-            <th class="text-black-1">Nama Alat/Mesin</th>
-            <th class="text-black-1">Tgl Pemusnahan</th>
+            <th class="text-black-1">Nama</th>
+            <th class="text-black-1">Tgl Ganti</th>
             <!-- <th class="text-black-1">Kondisi</th> -->
             <!-- <th class="text-black-1">Detail</th> -->
             <!-- <th class="text-black-1">Target</th> -->
@@ -98,7 +95,7 @@
                   <!-- <a class="dropdown-item" @click="perbaikanData(index)">
                     <i class="fas fa-check text-success"></i> Perbaikan
                   </a> -->
-                  <router-link :to="{ name: 'kondisi-detail-selesai-musnah', params: { id: item.no_seri } }" class="dropdown-item">
+                  <router-link :to="{ name: 'data-detail-selesai-hilang', params: { id: item.no_seri } }" class="dropdown-item">
                     <i class="fas fa-eye text-info"></i> Detail
                   </router-link>
                 </div>

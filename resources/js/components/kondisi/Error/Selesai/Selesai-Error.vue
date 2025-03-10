@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <h1 class="h3 mb-4 mt-4 text-gray-900"><b>Kondisi</b></h1>
+    <h1 class="h3 mb-4 mt-4 text-gray-900"><b>Perbaikan Alat/Mesin</b></h1>
     <ul id="pills-tab" role="tablist" class="nav nav-pills mb-3" style="margin-top: 1rem !important;">
       <li role="presentation" class="nav-item">
         <router-link id="pills-home-tab" data-toggle="pill" data-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="false" class="nav-link" :class="{ active: $route.name === 'kondisi-baru-error' }" :to="{ name: 'kondisi-baru-error' }">Baru</router-link>

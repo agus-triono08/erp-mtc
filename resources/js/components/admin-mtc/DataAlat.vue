@@ -524,6 +524,11 @@ input[type="checkbox"]:checked::after {
   color: rgba(220, 53, 69);
 }
 
+.status-musnah {
+  background-color: rgba(247, 0, 255, 0.1);
+  color: rgba(247, 0, 255);
+}
+
 .status-error {
   background-color: rgba(255, 193, 7, 0.1); /* Kuning dengan transparansi */
   color: rgba(255, 193, 7);

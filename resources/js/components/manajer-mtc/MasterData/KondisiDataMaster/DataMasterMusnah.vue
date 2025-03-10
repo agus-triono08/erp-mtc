@@ -22,11 +22,11 @@
         <i class="fa fa-times"></i> Ditolak
       </button>      
       <!-- Tombol Print PDF (Hanya tampil jika ada item yang dipilih) -->
-      <!-- <button v-if="selectedMusnahIds.length > 0" 
+      <button v-if="selectedMusnahIds.length > 0" 
               class="btn btn-sm btn-outline-primary mr-2" 
               @click="printSelectedMusnah">
         <i class="fa fa-print"></i> Print BA
-      </button> -->
+      </button>
       <!-- Tambah Data -->
       <button class="btn btn-sm btn-outline-primary mr-2 ml-1" @click="tambahDataMusnah">
         <i class="fa fa-plus-circle"></i> Tambah Data

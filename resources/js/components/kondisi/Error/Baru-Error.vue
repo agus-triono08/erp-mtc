@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <h1 class="h3 mb-4 mt-4 text-gray-900"><b>Kondisi</b></h1>
+    <h1 class="h3 mb-4 mt-4 text-gray-900"><b>Perbaikan Alat/Mesin</b></h1>
     <ul id="pills-tab" role="tablist" class="nav nav-pills mb-3" style="margin-top: 1rem !important;">
       <li role="presentation" class="nav-item">
         <router-link id="pills-home-tab" data-toggle="pill" data-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true" class="nav-link" :class="{ active: $route.name === 'kondisi-baru-error' }" :to="{ name: 'kondisi-baru-error' }">Baru</router-link>
@@ -160,7 +160,7 @@
               <label for="detail">Detail</label>
               <input type="text" class="form-control" id="detail" v-model="form.detail">
             </div>
-            <div class="form-group">0
+            <!-- <div class="form-group">0
               <label for="pic">PIC</label>
               <v-select
                 :options="picOptions"
@@ -169,7 +169,7 @@
                 label="text"
                 :reduce="(pic) => pic.value"
               />
-            </div>
+            </div> -->
             <div class="form-group">
               <label for="status">Status</label>
               <select class="form-control" id="status" v-model="form.status">
@@ -282,7 +282,7 @@ export default {
     perbaikanData(index) {
       Swal.fire({
         title: 'Konfirmasi',
-        text: 'Apakah Anda yakin ingin memperbaiki data ini?',
+        text: 'Apakah Anda yakin ingin memulai proses perbaikan?',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Ya, perbaiki!',

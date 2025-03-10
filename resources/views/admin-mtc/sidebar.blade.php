@@ -29,14 +29,14 @@
 
     <!-- Heading -->
     <br><div class="sidebar-heading">
-        <strong>Data Inventaris</strong>
+        <strong>Alat & Mesin</strong>
     </div>
 
     <!-- Nav Item - Data -->
     <li class="nav-item {{ request()->routeIs('data.adminmtc') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('data.adminmtc') }}">
             <i class="fas fa-fw {{ request()->routeIs('data.adminmtc') ? 'fa-tools' : 'fa-toolbox' }}"></i>
-            <span>Master Data</span>
+            <span>Alat & Mesin</span>
         </a>
     </li>
 
@@ -45,6 +45,14 @@
         <a class="nav-link" href="{{ route('layout.adminmtc') }}">
             <i class="fas fa-fw {{ request()->routeIs('layout.adminmtc') ? 'fa-folder-open' : 'fa-folder' }}"></i>
             <span>Layout</span>
+        </a>
+    </li>
+
+    {{-- Nav Item - Data Hilang --}}
+    <li class="nav-item {{ request()->routeIs('datahilang.adminmtc') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('datahilang.adminmtc') }}">
+            <i class="fas fa-fw {{ request()->routeIs('datahilang.adminmtc') ? 'fa-search-minus' : 'fa-minus-circle' }}"></i>
+            <span>Data Hilang</span>
         </a>
     </li>
 
@@ -95,11 +103,11 @@
 
     <!-- Heading -->
     <br><div class="sidebar-heading">
-        <strong>Manajemen Inventaris</strong>
+        <strong>Permintaan & Peminjaman</strong>
     </div>
 
     <!-- Nav Item - Peminjaman -->
-    <li class="nav-item">
+    {{-- <li class="nav-item">
     <a class="nav-link" href="#" data-toggle="collapse" data-target="#kondisi-collapse" aria-expanded="true" aria-controls="kondisi-collapse">
         <i class="fas fa-fw fa-info-circle"></i>
         <span>Kondisi</span>
@@ -112,13 +120,34 @@
             <a class="collapse-item {{ Request::is('kondisi-musnah') ? 'active' : '' }}" href="{{route('kondisi-musnah')}}"><i class="fas fa-fw fa-skull-crossbones" style="color: #169ea8;"></i> Musnah</a>
         </div>
     </div>
-    </li>
+    </li> --}}
 
     <!-- Nav Item - Peminjaman -->
     <li class="nav-item {{ request()->routeIs('peminjaman.adminmtc') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('peminjaman.adminmtc') }}">
             <i class="fas fa-fw {{ request()->routeIs('peminjaman.adminmtc') ? 'fa-hands-helping' : 'fa-handshake' }}"></i>
             <span>Permintaan/Peminjaman</span>
+        </a>
+    </li>
+
+    <!-- Heading -->
+    <br><div class="sidebar-heading">
+        <strong>Perbaikan & Perawatan</strong>
+    </div>
+
+    <!-- Nav Item - Perbaikan -->
+    <li class="nav-item {{ request()->routeIs('kondisi-error') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('kondisi-error') }}">
+            <i class="fas fa-fw {{ request()->routeIs('kondisi-error') ? 'fa-tools' : 'fa-wrench' }}"></i>
+            <span>Perbaikan</span>
+        </a>
+    </li>
+
+    <!-- Nav Item - Kerusakan -->
+    <li class="nav-item {{ request()->routeIs('kondisi-rusak') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('kondisi-rusak') }}">
+            <i class="fas fa-fw {{ request()->routeIs('kondisi-rusak') ? 'fa-exclamation-circle' : 'fa-exclamation-triangle' }}"></i>
+            <span>Kerusakan</span>
         </a>
     </li>
 

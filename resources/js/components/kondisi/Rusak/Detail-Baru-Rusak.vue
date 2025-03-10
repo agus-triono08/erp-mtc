@@ -2,16 +2,16 @@
   <div class="container-fluid">
     <!-- Head -->
     <div class="row mb-2 align-items-center" >
-      <div class="col-sm-6"><h3 style="font-family: Raleway;" class="text-black-10">Detail Perbaikan Alat/Mesin</h3> 
+      <div class="col-sm-6"><h3 class="text-black-10" style="font-family: Raleway;">Detail Kerusakan Alat/Mesin</h3> 
         <h6 style="color: rgb(128, 128, 128);"></h6>
       </div> 
       <div class="col-sm-6 mt-3">
         <ol class="breadcrumb float-sm-right bg-table" style="border-radius: 10px;">
           <li class="breadcrumb-item">
-            <a style="color: #169ea8; text-decoration: none;" href="javascript:history.back()">Perbaikan Alat/Mesin</a>
+            <a style="color: #169ea8; text-decoration: none;" href="javascript:history.back()">Pemusnahan Alat/Mesin</a>
           </li>
           <li class="breadcrumb-item active" style="color: red;">
-            <span>Detail Perbaikan Alat/Mesin</span>
+            <span>Detail Kerusakan Alat/Mesin</span>
           </li>
         </ol>
       </div>
@@ -23,16 +23,20 @@
           <h4 class="text-capitalize text-primary text-bold"><b>No Seri #{{ $route.params.id }}</b></h4>
         </div>
         <div class="col-3">
-          <dt style="color: #000;">PIC</dt>
+          <dt style="color: #000;">PIC Kerusakan</dt>
           <dd>{{ data[0].pic }}</dd>
         </div>
         <div class="col-3">
-          <dt style="color: #000;">Nama Produk</dt>
+          <dt style="color: #000;">Nama Alat/Mesin</dt>
           <dd>{{ data[0].nama }}</dd>
           <dt class="text-black-10">Layout</dt>
           <dd>{{ data[0].layout }}</dd>
         </div>
         <div class="col-3">
+          <dt style="color: #000;">Tanggal Kerusakan</dt>
+          <dd>{{ data[0].tgl }}</dd>          
+        </div>
+        <!-- <div class="col-3">
           <dt style="color: #000;">Target</dt>
           <dd>{{ data[0].tgl_selesai }} <br>
             <small>
@@ -42,8 +46,8 @@
               </span>
             </small>
           </dd>
-        </div>
-        <div class="col-3">
+        </div> -->
+        <!-- <div class="col-3">
           <dt style="color: #000;">Status</dt>
           <dd>
             <div 
@@ -54,14 +58,14 @@
               {{ data[0].status }}
             </div>
           </dd>
-        </div>
+        </div> -->
       </div>        
     </div>
     <!-- Aktivity -->
     <div class="card shadow mt-5 mb-3">
       <div class="m-2">
         <div class="col-12">
-          <h4 class="text-capitalize text-primary text-bold"><b>Aktivitas Perbaikan</b></h4>
+          <h4 class="text-capitalize text-primary text-bold"><b>Aktivitas Pemusnahan</b></h4>
         </div>        
         <div class="row align-items-center justify-content-end m-3">          
           <!-- Tombol Tambah Aktivitas akan hilang jika aktivitas sudah selesai -->
@@ -82,11 +86,12 @@
             <thead class="bg-table">
               <tr class="text-center" style="color: #000;">
                 <th>#</th>
-                <th>Tanggal Perbaikan</th>
-                <th>Waktu Perbaikan</th>
-                <th>PIC</th>
-                <th>Detail</th>
+                <th>Tanggal Pemusnahan</th>
+                <th>Waktu Pemusnahan</th>
+                <th>PIC Pemusnahan</th>
                 <th>Kondisi</th>
+                <th>Status</th>
+                <th>Alasan Penolakan</th>
               </tr>
             </thead>
             <tbody>
@@ -95,18 +100,30 @@
                 <td>{{ item.tanggal }}</td>
                 <td>{{ item.waktu_mulai }} - {{ item.waktu_selesai }}</td>
                 <td>{{ item.pic }}</td>
-                <td>{{ item.detail }}</td>
                 <td>
                   <div 
-                    class="btn-sts"
+                    class="badge"
                     :class="{
                       'status-rusak': item.kondisi === 'Rusak',
                       'status-active': item.kondisi === 'OK',
                       'status-error': item.kondisi === 'Error',
+                      'status-musnah': item.kondisi === 'Musnah',
                     }">
                     {{ item.kondisi }}
                     </div>
                 </td>
+                <td>
+                  <div 
+                    class="badge"
+                    :class="{
+                      'status-rusak': item.status === 'Ditolak',
+                      'status-active': item.status === 'Diterima',
+                      'status-hilang': item.status === 'Menunggu Persetujuan Atasan',
+                    }">
+                    {{ item.status }}
+                    </div>
+                </td>
+                <td>{{ item.alasanPenolakan }}</td>
               </tr>
             </tbody>
           </table>
@@ -135,7 +152,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="modalAktivitasLabel">Aktivitas Perbaikan</h5>
+            <h5 class="modal-title" id="modalAktivitasLabel">Aktivitas Pemusnahan</h5>
             <button type="button" class="close" @click="showModal = false" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -143,18 +160,18 @@
           <div class="modal-body">
             <form>
               <div class="form-group">
-                <label for="tanggal" class="text-black-10"><b>Tanggal <sup class="text-danger"> *</sup> </b></label>
+                <label for="tanggal" class="text-black-10"><b>Tanggal Pemusnahan <sup class="text-danger"> *</sup> </b></label>
                 <input type="date" class="form-control" id="tanggal" v-model="aktivitas.tanggal" required>
               </div>
               <div class="form-group"> 
-                <label for="waktu" class="text-black-10"><b>Waktu (Mulai - Selesai) <sup class="text-danger"> *</sup> </b></label> 
+                <label for="waktu" class="text-black-10"><b>Waktu Pemusnahan (Mulai - Selesai) <sup class="text-danger"> *</sup> </b></label> 
                 <div class="input-group"> <input type="time" class="form-control" id="waktu_mulai" v-model="aktivitas.waktu_mulai" required>
                   <span class="input-group-text">-</span> 
                   <input type="time" class="form-control" id="waktu_selesai" v-model="aktivitas.waktu_selesai" required> 
                 </div> 
               </div>
               <div class="form-group">
-                <label for="pic" class="text-black-10"><b>PIC</b></label>
+                <label for="pic" class="text-black-10"><b>PIC Pemusnahan</b></label>
                 <v-select
                   :options="picOptions"
                   v-model="aktivitas.pic"
@@ -163,23 +180,34 @@
                   :reduce="(pic) => pic.value"
                 />
               </div>
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <label for="detail" class="text-black-10"><b>Detail <sup class="text-danger"> *</sup></b></label>
                 <textarea class="form-control" id="detail" v-model="aktivitas.detail" required></textarea>
-              </div>
-              <div class="form-group">
+              </div> -->
+              <!-- <div class="form-group">
                 <label for="kondisi" class="text-black-10"><b>Kondisi <sup class="text-danger"> *</sup></b></label>
                 <select class="form-control" id="kondisi" v-model="aktivitas.kondisi" required>
-                  <option value="">Pilih Kondisi</option>
-                  <option value="OK">OK</option>
-                  <option value="Rusak">Rusak</option>
+                  <option value="" disabled>Pilih Kondisi</option>
+                  <option value="Musnah">Musnah</option>
+                  <option value="OK">OK</option>            
                   <option value="Error">Error</option>
+                  <option value="Rusak">Rusak</option>
                 </select>
-              </div>
+              </div> -->
+              <!-- <div class="form-group">
+                <label for="status" class="text-black-10"><b>Status <sup class="text-danger"> *</sup></b></label>
+                <select class="form-control" id="status" v-model="aktivitas.staus" required>
+                  <option value="" disabled>Pilih Status</option>
+                  <option value="Musnah">Musnah</option>
+                  <option value="OK">OK</option>            
+                  <option value="Error">Error</option>
+                  <option value="Rusak">Rusak</option>
+                </select>
+              </div> -->
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" @click="showModal = false">Batal</button>
+            <button type="button" class="btn btn-danger" @click="showModal = false">Batal</button>
             <button type="button" class="btn btn-primary" @click="addAktivitas">Simpan</button>
           </div>
         </div>
@@ -235,7 +263,7 @@ export default {
         kondisi: ''
       },
       aktivitasList: [
-        { tanggal: '2025-02-01', waktu_mulai: '08:00', waktu_selesai: '12:00', pic: 'Jane Doe', detail: 'Contoh detail 1', kondisi: 'Error' },      
+        { tanggal: '2025-02-01', waktu_mulai: '08:00', waktu_selesai: '12:00', pic: 'Jane Doe', detail: 'Contoh detail 1', kondisi: 'Rusak', status: 'Menunggu Persetujuan Atasan' },      
       ],
       data: [
         { no_seri: '1122wscj121', nama: 'Clamp', layout: 'E7', tgl: '2025-02-01', kondisi: 'Error', detail: 'Sensor tidak berfungsi', pic: 'John Doe', tgl_selesai: '2025-02-05', status: 'Proses' },        
@@ -249,10 +277,10 @@ export default {
   computed: {
     isLastAktivitasCompleted() {
       const lastAktivitas = this.aktivitasList[this.aktivitasList.length - 1];
-      return lastAktivitas && (lastAktivitas.kondisi === 'OK' || lastAktivitas.kondisi === 'Rusak');
+      return lastAktivitas && (lastAktivitas.kondisi === 'Musnah' && lastAktivitas.status === 'Diterima');
     },
     isAllAktivitasCompleted() {
-      return this.aktivitasList.every(item => item.kondisi === 'OK' || item.kondisi === 'Rusak');
+      return this.aktivitasList.every(item => item.kondisi === 'Musnah' && item.status === 'Diterima');
     },
     // Hanya tampilkan tombol "Tambah Aktivitas" jika aktivitas tidak selesai
     shouldShowTambahAktivitas() {
@@ -293,12 +321,18 @@ export default {
   },
   methods: {
     addAktivitas() {      
-      this.aktivitasList.push({ ...this.aktivitas });
+      this.aktivitasList.push({ 
+        tanggal: this.aktivitas.tanggal,        
+        waktu_mulai: this.aktivitas.waktu_mulai,
+        waktu_selesai: this.aktivitas.waktu_selesai,
+        pic: this.aktivitas.pic,
+        kondisi: 'Rusak',
+        status: 'Menunggu Persetujuan Atasan' // tambahkan status menjadi "Proses"
+      });
       this.aktivitas.tanggal = '';
       this.aktivitas.waktu_mulai = '';
       this.aktivitas.waktu_selesai = '';
       this.aktivitas.pic = '';
-      this.aktivitas.detail = '';
       this.aktivitas.kondisi = '';
       this.showModal = false;
     },
@@ -313,14 +347,14 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           // Lakukan aksi selesai aktivitas disini
-          this.data[0].status = 'Selesai';
+          this.data[0].status = 'Proses';
           
           // Setelah aktivitas selesai, kita set isAktivitasSelesai menjadi true
           this.isAktivitasSelesai = true;
           this.showSelesaiModal = false;
           this.isLastAktivitasCompleted = false; // tambahkan ini untuk membuat tombol selesai hilang
           Swal.fire('Berhasil!', 'Aktivitas telah selesai.', 'success');
-          this.$router.push('/kondisi-error');
+          this.$router.push('/kondisi-rusak');
         }
       });
     },

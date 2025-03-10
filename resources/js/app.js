@@ -167,8 +167,11 @@ const DetailSelesaiError = require('./components/kondisi/Error/Selesai/Detail-Se
 
 //KONDISI RUSAK
 const BaruRusak = require('./components/kondisi/Rusak/Baru-Rusak.vue').default;
+const DetailBaruRusak = require('./components/kondisi/Rusak/Detail-Baru-Rusak.vue').default;
 const SelesaiRusak = require('./components/kondisi/Rusak/Selesai/Selesai-Rusak.vue').default;
 const DetailSelesaiRusak = require('./components/kondisi/Rusak/Selesai/Detail-Selesai-Rusak.vue').default;
+const MBaruRusak = require('./components/kondisi/Manager/Rusak/Baru-Rusak.vue').default;
+const MDetailBaruRusak = require('./components/kondisi/Manager/Rusak/Detail-Baru-Rusak.vue').default;
 
 //KONDISI MUSNAH
 const BaruMusnah = require('./components/kondisi/Musnah/Baru-Musnah.vue').default;
@@ -176,6 +179,13 @@ const ProsesMusnah = require('./components/kondisi/Musnah/Proses/Proses-Musnah.v
 const DetailProsesMusnah = require('./components/kondisi/Musnah/Proses/Detail-Proses-Musnah.vue').default;
 const SelesaiMusnah = require('./components/kondisi/Musnah/Selesai/Selesai.Musnah.vue').default;
 const DetailSelesaiMusnah = require('./components/kondisi/Musnah/Selesai/Detail-Selesai-Musnah.vue').default;
+
+// Data Hilang
+const BaruHilang = require('./components/kondisi/Hilang/Baru-Hilang.vue').default;
+// const ProsesHilang = require('./components/kondisi/Hilang/Proses/Proses-Hilang.vue').default;
+// const DetailProsesHilang = require('./components/kondisi/Hilang/Proses/Detail-Proses_Hilang.vue').default;
+const SelesaiHilang = require('./components/kondisi/Hilang/Selesai/Selesai-Hilang.vue').default;
+const DetailSelesaiHilang = require('./components/kondisi/Hilang/Selesai/Detail-Selesai-Hilang.vue').default;
 
 //Daftarkan Komponen DataAlatError
 Vue.component('input-alat-error', InputAlatError);
@@ -442,9 +452,24 @@ const routes = [
     },
     //KONDISI RUSAK
     {
+        path: '/manager-mtc/kondisi-rusak',
+        component: MBaruRusak,
+        name: 'm-kondisi-baru-rusak',
+    },
+    {
+        path: '/manager-mtc/kondisi-rusak/:id',
+        component: MDetailBaruRusak,
+        name: 'm-kondisi-detail-rusak',
+    },
+    {
         path: '/kondisi-rusak',
         component: BaruRusak,
         name: 'kondisi-baru-rusak',
+    },
+    {
+        path: '/admin-mtc/kondisi-rusak/:id',
+        component: DetailBaruRusak,
+        name: 'kondisi-detail-baru-rusak',
     },
     {
         path: '/admin-mtc/kondisi-rusak/selesai',
@@ -481,6 +506,22 @@ const routes = [
         path: '/admin-mtc/kondisi-musnah/selesai/:id',
         component: DetailSelesaiMusnah,
         name: 'kondisi-detail-selesai-musnah',
+    },
+    // DATA HILANG
+    {
+        path: '/admin-mtc/data-hilang',
+        component: BaruHilang,
+        name: 'data-baru-hilang',
+    },
+    {
+        path: '/admin-mtc/data-hilang/selesai',
+        component: SelesaiHilang,
+        name: 'data-selesai-hilang',
+    },
+    {
+        path: '/admin-mtc/data-hilang/selesai/:id',
+        component: DetailSelesaiHilang,
+        name: 'data-detail-selesai-hilang',
     },
 ];
 

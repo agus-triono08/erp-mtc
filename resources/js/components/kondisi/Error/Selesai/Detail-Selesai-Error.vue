@@ -2,16 +2,16 @@
   <div class="container-fluid">
     <!-- Head -->
     <div class="row mb-2 align-items-center" >
-      <div class="col-sm-6"><h3 style="font-family: Raleway;">Detail Kondisi Error</h3> 
+      <div class="col-sm-6"><h3 style="font-family: Raleway; color: #000;">Detail Perbaikan Alat/Mesin</h3> 
         <h6 style="color: rgb(128, 128, 128);"></h6>
       </div> 
       <div class="col-sm-6 mt-3">
         <ol class="breadcrumb float-sm-right bg-table" style="border-radius: 10px;">
           <li class="breadcrumb-item">
-            <a style="color: #169ea8; text-decoration: none;" href="/kondisi-error">Kondisi Error</a>
+            <a style="color: #169ea8; text-decoration: none;" href="javascript:history.back()">Perbaikan Alat/Mesin</a>
           </li>
           <li class="breadcrumb-item active" style="color: red;">
-            <span>Detail Kondisi Error</span>
+            <span>Detail Perbaikan Alat/Mesin</span>
           </li>
         </ol>
       </div>
@@ -29,6 +29,8 @@
         <div class="col-3">
           <dt style="color: #000;">Nama Produk</dt>
           <dd>{{ data[0].nama }}</dd>
+          <dt style="color: #000;">Layout</dt>
+          <dd>{{ data[0].layout }}</dd>
         </div>
         <div class="col-3">
           <dt style="color: #000;">Target</dt>
@@ -43,7 +45,13 @@
         </div>
         <div class="col-3">
           <dt style="color: #000;">Status</dt>
-          <dd>{{ data[0].status }}</dd>
+          <dd>
+            <div 
+              class="badge"
+              :class="{'status-active': data[0].status === 'Selesai',}">
+              {{ data[0].status }}
+            </div>
+          </dd>
         </div>
       </div>        
     </div>
@@ -70,6 +78,8 @@
               <tr class="text-center" style="color: #000;">
                 <th>#</th>
                 <th>Tanggal</th>
+                <th>Waktu Perbaikan</th>
+                <th>PIC</th>
                 <th>Detail</th>
                 <th>Kondisi</th>
               </tr>
@@ -78,6 +88,8 @@
               <tr v-for="(item, index) in aktivitasList" :key="index" class="text-center">
                 <td>{{ index + 1 }}</td>
                 <td>{{ item.tanggal }}</td>
+                <td>{{ item.waktu_mulai }} - {{ item.waktu_selesai }}</td>
+                <td>{{ item.pic }}</td>
                 <td>{{ item.detail }}</td>
                 <td>
                   <div 
@@ -165,11 +177,11 @@ export default {
         kondisi: ''
       },
       aktivitasList: [
-        { tanggal: '2025-02-01', detail: 'Contoh detail 1', kondisi: 'Error' },
-        { tanggal: '2025-02-02', detail: 'Contoh detail 2', kondisi: 'OK' }
+        { tanggal: '2025-02-01', waktu_mulai: '08:00', waktu_selesai: '12:00', pic: 'Jane Doe', detail: 'Contoh detail 1', kondisi: 'Error' },
+        { tanggal: '2025-02-02', waktu_mulai: '09:00', waktu_selesai: '10:00', pic: 'Jane Doe', detail: 'Contoh detail 2', kondisi: 'Rusak' }
       ],
       data: [
-        { no_seri: '1122wscj121', nama: 'Clamp', tgl: '2025-02-01', kondisi: 'Error', detail: 'Sensor tidak berfungsi', pic: 'John Doe', tgl_selesai: '2025-02-05', status: 'Selesai' },        
+        { no_seri: '1122wscj121',  nama: 'Clamp', layout: 'E7', tgl: '2025-02-01', kondisi: 'Error', detail: 'Sensor tidak berfungsi', pic: 'John Doe', tgl_selesai: '2025-02-05', status: 'Selesai' },        
       ],
       searchQuery: '',
       rowsPerPage: 10,

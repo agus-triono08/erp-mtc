@@ -153,6 +153,10 @@ Route::get('/kondisi-error', function(){
     return view('admin-mtc.Main.Kondisi.kondisi-error');
 })->name('kondisi-error');
 
+Route::get('manager-mtc/kondisi-rusak', function(){
+    return view('manajer-mtc.Main.Kondisi.kondisi-rusak');
+})->name('kondisirusak.managermtc');
+
 Route::get('/kondisi-rusak', function(){
     return view('admin-mtc.Main.Kondisi.kondisi-rusak');
 })->name('kondisi-rusak');
@@ -160,6 +164,11 @@ Route::get('/kondisi-rusak', function(){
 Route::get('/kondisi-musnah', function(){
     return view('admin-mtc.Main.Kondisi.kondisi-musnah');
 })->name('kondisi-musnah');
+
+// DATA HILANG
+Route::get('/admin-mtc/data-hilang', function(){
+    return view('admin-mtc.Main.Kondisi.data-hilang');
+})->name('datahilang.adminmtc');
 
 // Auth::routes();
 

@@ -114,6 +114,14 @@
         </a>
     </li>
 
+    <!-- Nav Item - Kerusakan -->
+    <li class="nav-item {{ request()->routeIs('kondisirusak.managermtc') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('kondisirusak.managermtc') }}">
+            <i class="fas fa-fw {{ request()->routeIs('kondisirusak.managermtc') ? 'fa-exclamation-circle' : 'fa-exclamation-triangle' }}"></i>
+            <span>Kerusakan</span>
+        </a>
+    </li>
+
     <!-- Divider -->
     <!--<hr class="sidebar-divider d-none d-md-block">-->
 
