@@ -74,9 +74,9 @@
         <div class="row align-items-center justify-content-end m-3">
           <!-- <button class="btn btn-primary mr-2" @click="downloadBukti(aktivitasList.length - 1)"><i class="fas fa-download"></i> Download Bukti Pertanggung Jawaban</button> -->
           <!-- Tombol Tambah Aktivitas akan hilang jika aktivitas sudah selesai -->
-          <button v-if="shouldShowTambahAktivitas" class="btn btn-primary mr-2" @click="showModal = true" :disabled="isAktivitasSelesai || isAllAktivitasCompleted">Tambah Aktivitas</button>      
+          <!-- <button v-if="shouldShowTambahAktivitas" class="btn btn-primary mr-2" @click="showModal = true" :disabled="isAktivitasSelesai || isAllAktivitasCompleted">Tambah Aktivitas</button>       -->
           <!-- Tombol Selesai hanya muncul jika kondisi aktivitas terakhir adalah OK atau Rusak -->
-          <button v-if="isLastAktivitasCompleted && !isAktivitasSelesai" class="btn btn-success mr-2" @click="selesaiAktivitas" :disabled="!isLastAktivitasCompleted">Selesai</button>
+          <!-- <button v-if="isLastAktivitasCompleted && !isAktivitasSelesai" class="btn btn-success mr-2" @click="selesaiAktivitas" :disabled="!isLastAktivitasCompleted">Selesai</button> -->
           <div class="search-wrapper">
             <div class="input-group">
               <input type="text" placeholder="Search..." class="form-control"

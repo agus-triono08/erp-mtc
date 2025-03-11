@@ -156866,22 +156866,6 @@ var render = function () {
       "div",
       { staticClass: "row align-items-center justify-content-end m-3" },
       [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-sm btn-outline-primary mr-2 ml-1",
-            on: {
-              click: function ($event) {
-                return _vm.openModal("add")
-              },
-            },
-          },
-          [
-            _c("i", { staticClass: "fa fa-plus-circle" }),
-            _vm._v(" Tambah Data\n    "),
-          ]
-        ),
-        _vm._v(" "),
         _c("div", { staticClass: "search-wrapper" }, [
           _c("div", { staticClass: "input-group" }, [
             _c("input", {
@@ -158164,37 +158148,6 @@ var render = function () {
           "div",
           { staticClass: "row align-items-center justify-content-end m-3" },
           [
-            _vm.shouldShowTambahAktivitas
-              ? _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-primary mr-2",
-                    attrs: {
-                      disabled:
-                        _vm.isAktivitasSelesai || _vm.isAllAktivitasCompleted,
-                    },
-                    on: {
-                      click: function ($event) {
-                        _vm.showModal = true
-                      },
-                    },
-                  },
-                  [_vm._v("Tambah Aktivitas")]
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.isLastAktivitasCompleted && !_vm.isAktivitasSelesai
-              ? _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-success mr-2",
-                    attrs: { disabled: !_vm.isLastAktivitasCompleted },
-                    on: { click: _vm.selesaiAktivitas },
-                  },
-                  [_vm._v("Selesai")]
-                )
-              : _vm._e(),
-            _vm._v(" "),
             _c("div", { staticClass: "search-wrapper" }, [
               _c("div", { staticClass: "input-group" }, [
                 _c("input", {
