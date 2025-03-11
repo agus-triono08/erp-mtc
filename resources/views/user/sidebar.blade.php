@@ -98,6 +98,19 @@
         </a>
     </li>
 
+    <!-- Heading -->
+    <br><div class="sidebar-heading">
+        <strong>Pengantian</strong>
+    </div>
+
+    {{-- Nav Item - Data Hilang --}}
+    <li class="nav-item {{ request()->routeIs('datahilang.user') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('datahilang.user') }}">
+            <i class="fas fa-fw {{ request()->routeIs('datahilang.user') ? 'fa-search-minus' : 'fa-minus-circle' }}"></i>
+            <span>Pengantian Alat/Mesin</span>
+        </a>
+    </li>
+
     <!-- Nav Item - Perawatan -->
     {{-- <li class="nav-item {{ request()->routeIs('perawatan.adminmtc') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('perawatan.adminmtc') }}">

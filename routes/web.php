@@ -170,6 +170,10 @@ Route::get('/admin-mtc/data-hilang', function(){
     return view('admin-mtc.Main.Kondisi.data-hilang');
 })->name('datahilang.adminmtc');
 
+Route::get('/user/data-hilang', function(){
+    return view('user.Main.Kondisi.data-hilang');
+})->name('datahilang.user');
+
 // Auth::routes();
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -187,6 +187,12 @@ const ProsesHilang = require('./components/kondisi/Hilang/Proses/Proses-Hilang.v
 const DetailProsesHilang = require('./components/kondisi/Hilang/Proses/Detail-Proses_Hilang.vue').default;
 const SelesaiHilang = require('./components/kondisi/Hilang/Selesai/Selesai-Hilang.vue').default;
 const DetailSelesaiHilang = require('./components/kondisi/Hilang/Selesai/Detail-Selesai-Hilang.vue').default;
+const UBaruHilang = require('./components/kondisi/User/Hilang/Baru-Hilang.vue').default;
+const UDetailBaruHilang = require('./components/kondisi/User/Hilang/Detail-Baru-Hilang.vue').default;
+const UProsesHilang = require('./components/kondisi/User/Hilang/Proses/Proses-Hilang.vue').default;
+const UDetailProsesHilang = require('./components/kondisi/User/Hilang/Proses/Detail-Proses_Hilang.vue').default;
+const USelesaiHilang = require('./components/kondisi/User/Hilang/Selesai/Selesai-Hilang.vue').default;
+const UDetailSelesaiHilang = require('./components/kondisi/User/Hilang/Selesai/Detail-Selesai-Hilang.vue').default;
 
 //Daftarkan Komponen DataAlatError
 Vue.component('input-alat-error', InputAlatError);
@@ -538,6 +544,36 @@ const routes = [
         path: '/admin-mtc/data-hilang/selesai/:id',
         component: DetailSelesaiHilang,
         name: 'data-detail-selesai-hilang',
+    },
+    {
+        path: '/user/data-hilang/',
+        component: UBaruHilang,
+        name: 'user-data-baru-hilang',
+    },
+    {
+        path: '/user/data-hilang/:id',
+        component: UDetailBaruHilang,
+        name: 'user-data-detail-baru-hilang',
+    },
+    {
+        path: '/user/data-hilang/proses',
+        component: UProsesHilang,
+        name: 'user-data-proses-hilang',
+    },
+    {
+        path: '/user/data-hilang/proses/:id',
+        component: UDetailProsesHilang,
+        name: 'user-data-detail-proses-hilang',
+    },
+    {
+        path: '/user/data-hilang/selesai',
+        component: USelesaiHilang,
+        name: 'user-data-selesai-hilang',
+    },
+    {
+        path: '/user/data-hilang/selesai/:id',
+        component: UDetailSelesaiHilang,
+        name: 'user-data-detail-selesai-hilang',
     },
 ];
 
