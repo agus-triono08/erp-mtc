@@ -179,6 +179,10 @@ const ProsesMusnah = require('./components/kondisi/Musnah/Proses/Proses-Musnah.v
 const DetailProsesMusnah = require('./components/kondisi/Musnah/Proses/Detail-Proses-Musnah.vue').default;
 const SelesaiMusnah = require('./components/kondisi/Musnah/Selesai/Selesai.Musnah.vue').default;
 const DetailSelesaiMusnah = require('./components/kondisi/Musnah/Selesai/Detail-Selesai-Musnah.vue').default;
+const MProsesMusnah = require('./components/kondisi/Manager/Rusak/Proses/Proses-Musnah.vue').default;
+const MDetailProsesMusnah = require('./components/kondisi/Manager/Rusak/Proses/Detail-Proses-Musnah.vue').default;
+const MSelesaiMusnah = require('./components/kondisi/Manager/Rusak/Selesai/Selesai.Musnah.vue').default;
+const MDetailSelesaiMusnah = require('./components/kondisi/Manager/Rusak/Selesai/Detail-Selesai-Musnah.vue').default;
 
 // Data Hilang
 const BaruHilang = require('./components/kondisi/Hilang/Baru-Hilang.vue').default;
@@ -513,6 +517,26 @@ const routes = [
         path: '/admin-mtc/kondisi-musnah/selesai/:id',
         component: DetailSelesaiMusnah,
         name: 'kondisi-detail-selesai-musnah',
+    },
+    {
+        path: '/manager-mtc/kondisi-musnah/proses',
+        component: MProsesMusnah,
+        name: 'm-kondisi-proses-musnah',
+    },
+    {
+        path: '/manager-mtc/kondisi-musnah/:id',
+        component: MDetailProsesMusnah,
+        name: 'm-kondisi-detail-proses-musnah',
+    },
+    {
+        path: '/manager-mtc/kondisi-musnah/selesai',
+        component: MSelesaiMusnah,
+        name: 'm-kondisi-selesai-musnah',
+    },
+    {
+        path: '/manager-mtc/kondisi-musnah/selesai/:id',
+        component: MDetailSelesaiMusnah,
+        name: 'm-kondisi-detail-selesai-musnah',
     },
     // DATA HILANG
     {

@@ -71,11 +71,11 @@
         </div>         -->
         <div class="row align-items-center justify-content-end m-3">          
           <!-- <button class="btn btn-primary mr-2" @click="showModal = true">Tambah</button> -->
-          <!-- <div class="btn-group">
+          <div class="btn-group">
             <button class="btn btn-primary mr-2" @click="downloadBA(aktivitasList.length - 1)">Download BA</button>
             <button class="btn btn-success mr-2" @click="uploadBA(aktivitasList.length - 1)">Upload BA</button>
             <button class="btn btn-info mr-2" @click="uploadBuktiPemusnahan(aktivitasList.length - 1)">Upload Bukti Pemusnahan</button>
-          </div> -->
+          </div>
           <div class="search-wrapper">
             <div class="input-group">
               <input type="text" placeholder="Search..." class="form-control"
@@ -93,7 +93,7 @@
                 <th>Dokumen Musnah</th>
                 <th>Berita Acara</th>
                 <th>Detail</th>
-                <!-- <th>Aksi</th> -->
+                <th>Aksi</th>
               </tr>
             </thead>
             <tbody>
@@ -140,7 +140,7 @@
                     {{ item.status }}
                     </div>
                 </td> -->
-                <!-- <td>
+                <td>
                   <div class="dropdown text-center">
                     <button
                       class="btn btn-sm"
@@ -153,7 +153,7 @@
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" @click="downloadBA(index)">
+                      <!-- <a class="dropdown-item" @click="downloadBA(index)">
                         <i class="fas fa-download text-primary"></i> Download BA
                       </a>
                       <a class="dropdown-item" @click="uploadBA(index)">
@@ -161,13 +161,13 @@
                       </a>
                       <a class="dropdown-item" @click="uploadBuktiPemusnahan(index)">
                         <i class="fas fa-upload text-info"></i> Upload Bukti Pemusnahan
-                      </a>
+                      </a> -->
                       <a class="dropdown-item" @click="editAktivitas(index)">
                         <i class="fas fa-edit text-warning"></i> Edit
                       </a>
                     </div>
                   </div>
-                </td> -->
+                </td>
               </tr>
             </tbody>
           </table>            
@@ -322,15 +322,15 @@
           </div>
           <div class="modal-body">
             <form>
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <label for="tanggal">Tanggal</label>
                 <input type="date" class="form-control" id="tanggal" v-model="aktivitasList[selectedIndex].tanggal">
-              </div>
+              </div> -->
               <div class="form-group">
                 <label for="detail">Detail</label>
                 <textarea class="form-control" id="detail" v-model="aktivitasList[selectedIndex].detail"></textarea>
               </div>
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <label for="kondisi">Kondisi</label>
                 <select class="form-control" id="kondisi" v-model="aktivitasList[selectedIndex].kondisi">
                   <option value="">Pilih Kondisi</option>
@@ -338,7 +338,7 @@
                   <option value="Rusak">Rusak</option>
                   <option value="Error">Error</option>
                 </select>
-              </div>
+              </div> -->
             </form>
           </div>
           <div class="modal-footer">
@@ -381,7 +381,7 @@ export default {
       }
       ],
       data: [
-        { no_seri: '1122wscj121', waktu_mulai: '08:00', waktu_selesai: '12:00', nama: 'Clamp', layout: 'E7', tgl: '2025-02-01', kondisi: 'Musnah', detail: 'Sensor tidak berfungsi', pic: 'John Doe', tgl_selesai: '2025-02-05', status: 'Selesai' },        
+        { no_seri: '1122wscj121', waktu_mulai: '08:00', waktu_selesai: '12:00', nama: 'Clamp', layout: 'E7', tgl: '2025-02-01', kondisi: 'Musnah', detail: 'Sensor tidak berfungsi', pic: 'John Doe', tgl_selesai: '2025-02-05', status: 'Proses' },        
       ],
       searchQuery: '',
       rowsPerPage: 10,
@@ -570,6 +570,10 @@ export default {
         alert('Harap pilih file terlebih dahulu!');
       }
     },
+    editAktivitas(index) {
+      this.selectedIndex = index;
+      this.showEditModal = true;
+    },
     saveEditAktivitas() {
       // Simpan perubahan data
       this.showEditModal = false;
@@ -616,18 +620,24 @@ export default {
       const titleWidth = pdf.getStringUnitWidth(title) * pdf.getFontSize() / pdf.internal.scaleFactor;
       const pageWidth = pdf.internal.pageSize.width;
       const xPos = (pageWidth - titleWidth) / 2;
-      pdf.text(title, xPos, 10);
+      pdf.text(title, xPos, 16);
 
-      // Set font menjadi normal untuk teks berikutnya
-      pdf.setFont('helvetica', 'normal');
+      pdf.setFont("helvetica", "normal");
       pdf.setFontSize(12);
+      pdf.text('Berdasarkan SK No. : ', 14, 30);
+
+      // Draw a long line next to 'SK No.'
+      const skX = 60;  // X-coordinate where the line starts
+      const skY = 30;  // Y-coordinate where the line should start
+      const lineLength = 50; // Length of the line
+      pdf.line(skX, skY, skX + lineLength, skY); // Draw the line
 
       // Menambahkan informasi lainnya
-      pdf.text(`Sehubung dengan rusaknya barang maka pada : `, 14, 20);
-      pdf.text(`Hari`, 14, 26);
-      pdf.text(`: ${hari}`, 40, 26);
-      pdf.text(`Tanggal`, 14, 32);
-      pdf.text(`: ${tanggalFormatted}`, 40, 32);
+      pdf.text(`Sehubung dengan rusaknya barang maka pada : `, 14, 36);
+      pdf.text(`Hari`, 14, 42);
+      pdf.text(`: ${hari}`, 40, 42);
+      pdf.text(`Tanggal`, 14, 48);
+      pdf.text(`: ${tanggalFormatted}`, 40, 48);
       // pdf.text('Tanggal: ' + this.aktivitasList[index].tanggal, 14, 26);
       // pdf.text('Detail: ' + this.aktivitasList[index].detail, 14, 32);
 
@@ -637,19 +647,19 @@ export default {
 
       // Tulis bagian normal terlebih dahulu
       pdf.setFont("helvetica", "normal");
-      pdf.text(textBeforeBold, 14, 38);
+      pdf.text(textBeforeBold, 14, 54);
 
       const textBeforeBoldWidth = pdf.getStringUnitWidth(textBeforeBold) * pdf.internal.getFontSize() / pdf.internal.scaleFactor;
 
       pdf.setFont("helvetica", "bold");
       const boldTextX = 14 + textBeforeBoldWidth;  // Posisi setelah bagian normal
-      pdf.text(boldText, boldTextX, 38);
+      pdf.text(boldText, boldTextX, 54);
 
       const boldTextWidth = pdf.getStringUnitWidth(boldText) * pdf.internal.getFontSize() / pdf.internal.scaleFactor;
 
       pdf.setFont("helvetica", "normal");
       const textAfterBoldX = boldTextX + boldTextWidth;  // Posisi setelah bagian boldText
-      pdf.text(textAfterBold, textAfterBoldX, 38);
+      pdf.text(textAfterBold, textAfterBoldX, 54);
       
       const headers = [
         "#",
@@ -671,7 +681,7 @@ export default {
       pdf.autoTable({
         head: [headers],
         body: rows,
-        startY: 50, // Menyesuaikan posisi tabel setelah judul, nama peminjam, dan divisi
+        startY: 62, // Menyesuaikan posisi tabel setelah judul, nama peminjam, dan divisi
       });
 
       const textY = pdf.lastAutoTable.finalY + 10;

@@ -1,15 +1,15 @@
 <template>
     <div class="container-fluid">
-      <h1 class="h3 mb-4 mt-4 text-gray-900"><b>Kerusakan Alat & Mesin</b></h1>
+      <h1 class="h3 mb-4 mt-4 text-gray-900"><b>Kerusakan Alat/Mesin</b></h1>
       <ul id="pills-tab" role="tablist" class="nav nav-pills mb-3" style="margin-top: 1rem !important;">
         <li role="presentation" class="nav-item">
           <router-link id="pills-home-tab" data-toggle="pill" data-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true" class="nav-link" :class="{ active: $route.name === 'm-kondisi-baru-rusak' }" :to="{ name: 'm-kondisi-baru-rusak' }">Baru</router-link>
         </li>
         <li role="presentation" class="nav-item">
-          <router-link id="pills-profile-tab" data-toggle="pill" data-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" class="nav-link" :class="{ active: $route.name === 'kondisi-proses-error' }" :to="{ name: 'kondisi-proses-error' }">Proses</router-link>
+          <router-link id="pills-profile-tab" data-toggle="pill" data-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" class="nav-link" :class="{ active: $route.name === 'm-kondisi-proses-musnah' }" :to="{ name: 'm-kondisi-proses-musnah' }">Proses</router-link>
         </li>
         <li role="presentation" class="nav-item">
-          <router-link id="pills-contact-tab" data-toggle="pill" data-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false" class="nav-link" :class="{ active: $route.name === 'kondisi-selesai-rusak' }" :to="{ name: 'kondisi-selesai-rusak' }">Selesai</router-link>
+          <router-link id="pills-contact-tab" data-toggle="pill" data-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false" class="nav-link" :class="{ active: $route.name === 'm-kondisi-selesai-musnah' }" :to="{ name: 'm-kondisi-selesai-musnah' }">Selesai</router-link>
         </li>
       </ul>
       <div class="row align-items-center justify-content-end m-3">      
