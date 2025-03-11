@@ -37,7 +37,7 @@
               <!-- <th class="text-black-1">Kondisi</th> -->
               <th class="text-black-1">Detail</th>
               <th class="text-black-1">PIC</th>
-              <!-- <th class="text-black-1">Status</th> -->
+              <th class="text-black-1">Status</th>
               <th class="text-black-1">Aksi</th>
             </tr>
           </thead>
@@ -63,17 +63,17 @@
               </td> -->
               <td>{{ item.detail }}</td>
               <td>{{ item.pic }}</td>
-              <!-- <td>
+              <td>
                 <div 
                   class="btn-sts"
                   :class="{
                     'status-rusak': item.status === 'Belum',
-                    'status-dipinjam': item.status === 'Proses',
+                    'status-hilang': item.status === 'Menunggu Persetujuan',
                     'status-active': item.status === 'Selesai',
                   }">
                   {{ item.status }}
                 </div>
-              </td> -->
+              </td>
               <td>
                 <div class="dropdown text-center">
                   <button
@@ -209,7 +209,7 @@
           { text: 'Alice Johnson', value: 'Alice Johnson' },
         ],
         data: [
-          { no_seri: '1122wscj121', nama: 'Clamp', tgl: '2025-02-01', kondisi: 'Error', detail: 'Sensor tidak berfungsi', pic: 'John Doe', status: 'Belum' },
+          { no_seri: '1122wscj121', nama: 'Clamp', tgl: '2025-02-01', kondisi: 'Error', detail: 'Sensor tidak berfungsi', pic: 'John Doe', status: 'Menunggu Persetujuan' },
           { no_seri: '1122wscj122', nama: 'Clamp', tgl: '2025-02-10', kondisi: 'Error', detail: 'Koneksi kabel terputus', pic: 'Jane Doe', status: 'Belum' },
         ],
         paginatedData: [],

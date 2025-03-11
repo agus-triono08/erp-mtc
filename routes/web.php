@@ -57,9 +57,14 @@ Route::get('/admin-mtc/permintaan', function () {
     return view('admin-mtc.Main.permintaan');
 })->name('permintaan.adminmtc');
 
+// PERAWATAN
 Route::get('/admin-mtc/perawatan', function() {
     return view('admin-mtc.Main.perawatan');
 })->name('perawatan.adminmtc');
+
+Route::get('/admin-mtc/jadwal-perawatan', function() {
+    return view('admin-mtc.Main.jadwal-perawatan');
+})->name('jadwalperawatan.adminmtc');
 
 Route::get('/admin-mtc/lapor-kendala', function () {
     return view('admin-mtc.Main.laporkendala');

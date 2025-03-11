@@ -25496,6 +25496,300 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Tabel.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Tabel.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      jadwalPerawatan: [{
+        id: 1,
+        nama_alat: 'Bor',
+        no_seri: 'B-01',
+        tanggal_perawatan: [6]
+      }, {
+        id: 2,
+        nama_alat: 'Bor',
+        no_seri: 'B-02',
+        tanggal_perawatan: [13]
+      }, {
+        id: 3,
+        nama_alat: 'Bor',
+        no_seri: 'B-03',
+        tanggal_perawatan: [19]
+      }
+      // tambahkan data lainnya
+      ],
+      currentPage: 1,
+      pages: [],
+      perPage: 10,
+      // jumlah data per halaman
+      search: '',
+      tanggal: '',
+      nama_alat: '',
+      no_seri: '',
+      isModalOpen: false,
+      modalTitle: 'Tambah Jadwal Perawatan'
+    };
+  },
+  computed: {
+    currentMonth: function currentMonth() {
+      var date = new Date();
+      return date.toLocaleString('default', {
+        month: 'long'
+      });
+    },
+    currentYear: function currentYear() {
+      var date = new Date();
+      return date.getFullYear();
+    },
+    last_date: function last_date() {
+      // Menghitung jumlah hari dalam bulan saat ini
+      var date = new Date(this.currentYear, this.getMonthNumber(this.currentMonth) + 1, 0);
+      return date.getDate(); // Mendapatkan tanggal terakhir dalam bulan
+    },
+    weekend_date: function weekend_date() {
+      var date = new Date(this.currentYear, this.getMonthNumber(this.currentMonth), 1); // Tanggal 1 bulan ini
+      var weekendDates = [];
+      for (var i = 0; i < this.last_date; i++) {
+        date.setDate(i + 1); // Mengatur tanggal hari ini
+        // Menyimpan hari Sabtu (6) dan Minggu (0)
+        if (date.getDay() === 0 || date.getDay() === 6) {
+          weekendDates.push(i + 1);
+        }
+      }
+      return weekendDates;
+    },
+    filteredJadwalPerawatan: function filteredJadwalPerawatan() {
+      var search = this.search.toLowerCase();
+      return this.jadwalPerawatan.filter(function (item) {
+        return item.nama_alat.toLowerCase().includes(search) || item.no_seri.toLowerCase().includes(search);
+      });
+    },
+    totalPages: function totalPages() {
+      return Math.ceil(this.filteredJadwalPerawatan.length / this.perPage);
+    },
+    paginationInfo: function paginationInfo() {
+      var start = (this.currentPage - 1) * this.perPage + 1;
+      var end = this.currentPage * this.perPage;
+      return "".concat(start, " - ").concat(end, " dari ").concat(this.filteredJadwalPerawatan.length);
+    }
+  },
+  methods: {
+    isDate: function isDate(tanggal, hari) {
+      return tanggal.includes(hari);
+    },
+    prevPage: function prevPage() {
+      this.currentPage--;
+    },
+    nextPage: function nextPage() {
+      this.currentPage++;
+    },
+    nowPage: function nowPage(paginate) {
+      this.currentPage = paginate;
+    },
+    getMonthNumber: function getMonthNumber(monthName) {
+      var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      return monthNames.indexOf(monthName);
+    },
+    showModalTambah: function showModalTambah() {
+      this.isModalOpen = true;
+    },
+    closeModal: function closeModal() {
+      this.isModalOpen = false;
+    },
+    tambahJadwalPerawatan: function tambahJadwalPerawatan() {
+      var jadwalPerawatanBaru = {
+        id: this.jadwalPerawatan.length + 1,
+        tanggal_perawatan: [this.tanggal],
+        nama_alat: this.nama_alat,
+        no_seri: this.no_seri
+      };
+      this.jadwalPerawatan.push(jadwalPerawatanBaru);
+      this.hideModalTambah();
+    },
+    exportToExcel: function exportToExcel() {
+      this.convertToExcel("export_table", "Jadwal Perawatan");
+    },
+    convertToExcel: function convertToExcel(table, name) {
+      var uri = "data:application/vnd.ms-excel;base64,",
+        template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',
+        base64 = function base64(s) {
+          return window.btoa(unescape(encodeURIComponent(s)));
+        },
+        format = function format(s, c) {
+          return s.replace(/{(\w+)}/g, function (m, p) {
+            return c[p];
+          });
+        };
+      if (!table.nodeType) table = document.getElementById(table);
+      var ctx = {
+        worksheet: name || "Worksheet",
+        table: table.innerHTML
+      };
+      window.location.href = uri + base64(format(template, ctx));
+    }
+  },
+  watch: {
+    nama_alat: function nama_alat() {
+      if (this.nama_alat === 'Bor') {
+        this.no_seri = 'B-01';
+      } else if (this.nama_alat === 'Gergaji') {
+        this.no_seri = 'G-01';
+      } else if (this.nama_alat === 'Pahat') {
+        this.no_seri = 'P-01';
+      } else {
+        this.no_seri = '';
+      }
+    },
+    search: function search() {
+      this.currentPage = 1;
+    }
+  },
+  mounted: function mounted() {
+    this.pages = Array.from({
+      length: Math.ceil(this.jadwalPerawatan.length / this.perPage)
+    }, function (_, i) {
+      return i + 1;
+    });
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/Kondisi/Baru/index.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/Kondisi/Baru/index.vue?vue&type=script&lang=js& ***!
@@ -39844,7 +40138,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         kondisi: 'Error',
         detail: 'Sensor tidak berfungsi',
         pic: 'John Doe',
-        status: 'Belum'
+        status: 'Menunggu Persetujuan'
       }, {
         no_seri: '1122wscj122',
         nama: 'Clamp',
@@ -61120,6 +61414,30 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, "\n.icon-hover {\r\n    color: #5a5c69;\r\n    transition: color 0.3s ease;\n}\n.icon-hover:hover {\r\n    color: #169ea8;\n}\n.btn-plus {\r\n    background-color: #169EA8;\r\n    color: #fff;\n}\n.btn-plus:hover {\r\n    background-color: #22d3e0;\r\n    color: #fff;\n}\n.upload-box {\r\n    border: 2px dashed #169ea8;\r\n    padding: 20px;\r\n    text-align: center;\r\n    cursor: pointer;\r\n    position: relative;\r\n    transition: border-color 0.3s ease;\r\n    max-width: 200px;\r\n    max-height: auto;\n}\n.upload-box .fa-image {\r\n    font-size: 36px; /* Ukuran ikon diperbesar */\r\n    margin-bottom: 10px;\r\n    color: #666;\n}\n.upload-box.drag-active {\r\n    border-color: #22d3e0;\n}\n.upload-box .upload-input {\r\n    position: absolute;\r\n    top: 0;\r\n    left: 0;\r\n    width: 100%;\r\n    height: 100%;\r\n    opacity: 0;\r\n    cursor: pointer;\n}\n.browse-link {\r\n    color: #169ea8;\r\n    text-decoration: underline;\r\n    cursor: pointer;\n}\n.img-preview {\r\n    max-width: 150px;\r\n    max-height: 150px;\r\n    border-radius: 5px;\r\n    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);\n}\r\n\r\n/* Modal Styling */\n.modal {\r\n    display: none; /* Sembunyikan modal secara default */\r\n    position: fixed;\r\n    z-index: 1000;\r\n    left: 0;\r\n    top: 0;\r\n    width: 100%;\r\n    height: 100%;\r\n    background-color: rgba(0, 0, 0, 0.5); /* Latar belakang transparan */\n}\n.modal.is-visible {\r\n    display: flex; /* Tampilkan modal saat is-visible aktif */\r\n    justify-content: center;\r\n    align-items: center;\n}\n.modal-content {\r\n    background-color: #fff;\r\n    padding: 20px;\r\n    border-radius: 8px;\r\n    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);\r\n    max-width: 400px;\r\n    text-align: center;\n}\n.modal-content h2 {\r\n    margin-bottom: 10px;\r\n    font-size: 1.5rem;\r\n    color: #333;\n}\n.modal-content p {\r\n    margin-bottom: 20px;\r\n    color: #666;\n}\n.modal-content button {\r\n    padding: 10px 20px;\r\n    margin: 5px;\r\n    border: none;\r\n    border-radius: 5px;\r\n    cursor: pointer;\n}\n#confirmButton {\r\n    background-color: #169ea8;\r\n    color: #fff;\n}\n#cancelButton {\r\n    background-color: #f44336;\r\n    color: #fff;\n}\n.textarea-wrapper {\r\n    position: relative;\n}\ntextarea {\r\n    padding-bottom: 20px; /* Beri ruang untuk teks di bagian bawah */\n}\n.char-counter {\r\n    position: absolute;\r\n    bottom: 5px;\r\n    right: 10px;\r\n    font-size: 12px;\r\n    color: #6c757d; /* Warna teks abu-abu */\r\n    pointer-events: none; /* Supaya tidak mengganggu input */\n}\r\n\r\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Tabel.vue?vue&type=style&index=0&id=69bbc481&scoped=true&lang=css&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Tabel.vue?vue&type=style&index=0&id=69bbc481&scoped=true&lang=css& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* Tambahkan CSS untuk garis bawah */\n.table td[data-v-69bbc481] {\r\n  border: 1px solid #fff;\n}\n#pills-tab .nav-link[data-v-69bbc481] {\r\n  color: #000;\n}\n#pills-tab .nav-link.active[data-v-69bbc481] {\r\n  background-color: #169ea8;\r\n  color: #fff;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -121579,6 +121897,36 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Tabel.vue?vue&type=style&index=0&id=69bbc481&scoped=true&lang=css&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Tabel.vue?vue&type=style&index=0&id=69bbc481&scoped=true&lang=css& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Tabel_vue_vue_type_style_index_0_id_69bbc481_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Tabel.vue?vue&type=style&index=0&id=69bbc481&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Tabel.vue?vue&type=style&index=0&id=69bbc481&scoped=true&lang=css&");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Tabel_vue_vue_type_style_index_0_id_69bbc481_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Tabel_vue_vue_type_style_index_0_id_69bbc481_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/Kondisi/Baru/index.vue?vue&type=style&index=0&id=eaf558ee&scoped=true&lang=css&":
 /*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/Kondisi/Baru/index.vue?vue&type=style&index=0&id=eaf558ee&scoped=true&lang=css& ***!
@@ -156267,6 +156615,511 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Tabel.vue?vue&type=template&id=69bbc481&scoped=true&":
+/*!*********************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Tabel.vue?vue&type=template&id=69bbc481&scoped=true& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container-fluid" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c(
+      "ul",
+      {
+        staticClass: "nav nav-pills mb-3",
+        staticStyle: { "margin-top": "1rem !important" },
+        attrs: { id: "pills-tab", role: "tablist" },
+      },
+      [
+        _c(
+          "li",
+          { staticClass: "nav-item", attrs: { role: "presentation" } },
+          [
+            _c(
+              "router-link",
+              {
+                staticClass: "nav-link",
+                class: { active: _vm.$route.name === "tabel-jadwal-perawatan" },
+                attrs: {
+                  id: "pills-home-tab",
+                  "data-toggle": "pill",
+                  "data-target": "#pills-home",
+                  type: "button",
+                  role: "tab",
+                  "aria-controls": "pills-home",
+                  "aria-selected": "true",
+                  to: { name: "tabel-jadwal-perawatan" },
+                },
+              },
+              [_vm._v("Tabel")]
+            ),
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "li",
+          { staticClass: "nav-item", attrs: { role: "presentation" } },
+          [
+            _c(
+              "router-link",
+              {
+                staticClass: "nav-link",
+                class: { active: _vm.$route.name === "kondisi-proses-musnah" },
+                attrs: {
+                  id: "pills-profile-tab",
+                  "data-toggle": "pill",
+                  "data-target": "#pills-profile",
+                  type: "button",
+                  role: "tab",
+                  "aria-controls": "pills-profile",
+                  "aria-selected": "false",
+                  to: { name: "kondisi-proses-musnah" },
+                },
+              },
+              [_vm._v("Proses")]
+            ),
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "li",
+          { staticClass: "nav-item", attrs: { role: "presentation" } },
+          [
+            _c(
+              "router-link",
+              {
+                staticClass: "nav-link",
+                class: { active: _vm.$route.name === "kondisi-selesai-musnah" },
+                attrs: {
+                  id: "pills-contact-tab",
+                  "data-toggle": "pill",
+                  "data-target": "#pills-contact",
+                  type: "button",
+                  role: "tab",
+                  "aria-controls": "pills-contact",
+                  "aria-selected": "false",
+                  to: { name: "kondisi-selesai-musnah" },
+                },
+              },
+              [_vm._v("Selesai")]
+            ),
+          ],
+          1
+        ),
+      ]
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "row mb-2 mt-2 align-items-center" }, [
+      _c("div", { staticClass: "col-sm-6" }, [
+        _c("h5", { staticStyle: { color: "#000" } }, [
+          _c("b", [
+            _vm._v(_vm._s(_vm.currentMonth) + " " + _vm._s(_vm.currentYear)),
+          ]),
+        ]),
+      ]),
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "row align-items-center justify-content-end mr-3" },
+      [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-sm btn-primary mr-2",
+            on: { click: _vm.showModalTambah },
+          },
+          [_vm._v("Tambah")]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-sm btn-success mr-2",
+            on: { click: _vm.exportToExcel },
+          },
+          [_vm._v("Export")]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "search-wrapper" }, [
+          _c("div", { staticClass: "input-group" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.search,
+                  expression: "search",
+                },
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "Search..." },
+              domProps: { value: _vm.search },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.search = $event.target.value
+                },
+              },
+            }),
+          ]),
+        ]),
+      ]
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-12 table-responsive p-3" }, [
+      _vm._m(1),
+      _vm._v(" "),
+      _c(
+        "table",
+        {
+          staticClass: "table table-custom has-text-centered is-bordered",
+          staticStyle: { "white-space": "nowrap" },
+          attrs: { id: "export_table" },
+        },
+        [
+          _c("thead", { staticClass: "bg-table" }, [
+            _c("tr", { staticStyle: { color: "#000" } }, [
+              _c("th", { attrs: { rowspan: "2" } }, [
+                _vm._v("Nama Alat/Mesin"),
+              ]),
+              _vm._v(" "),
+              _c("th", { attrs: { rowspan: "2" } }, [_vm._v("No Seri")]),
+              _vm._v(" "),
+              _c("th", { attrs: { colspan: _vm.last_date } }, [
+                _vm._v("Tanggal"),
+              ]),
+            ]),
+            _vm._v(" "),
+            _c(
+              "tr",
+              _vm._l(Array.from(Array(_vm.last_date).keys()), function (i) {
+                return _c("th", { key: i, staticStyle: { color: "#000" } }, [
+                  _vm._v("\n            " + _vm._s(i + 1) + "\n          "),
+                ])
+              }),
+              0
+            ),
+          ]),
+          _vm._v(" "),
+          _vm.filteredJadwalPerawatan.length > 0
+            ? _c(
+                "tbody",
+                _vm._l(
+                  _vm.filteredJadwalPerawatan.slice(
+                    (_vm.currentPage - 1) * _vm.perPage,
+                    _vm.currentPage * _vm.perPage
+                  ),
+                  function (item) {
+                    return _c(
+                      "tr",
+                      { key: item.id },
+                      [
+                        _c("td", [_vm._v(_vm._s(item.nama_alat))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(item.no_seri))]),
+                        _vm._v(" "),
+                        _vm._l(
+                          Array.from(Array(_vm.last_date).keys()),
+                          function (i) {
+                            return _c("td", {
+                              key: i,
+                              style: {
+                                backgroundColor:
+                                  _vm.weekend_date.indexOf(i + 1) !== -1
+                                    ? "black"
+                                    : _vm.isDate(item.tanggal_perawatan, i + 1)
+                                    ? "yellow"
+                                    : "",
+                              },
+                            })
+                          }
+                        ),
+                      ],
+                      2
+                    )
+                  }
+                ),
+                0
+              )
+            : _c("tbody", [
+                _c("tr", [
+                  _c("td", { attrs: { colspan: _vm.last_date + 3 } }, [
+                    _vm._v("Tidak ada data"),
+                  ]),
+                ]),
+              ]),
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass:
+            "d-flex justify-content-between align-items-center mt-3 mb-3",
+          staticStyle: {
+            "border-radius": "10px",
+            "background-color": "#f3f4f6",
+            height: "50px",
+            color: "#000",
+          },
+        },
+        [
+          _c("div", { staticClass: "ml-3" }, [
+            _vm._v("\n        Rows per page:\n        "),
+            _c("span", [_vm._v(_vm._s(_vm.perPage))]),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "mr-3" }, [
+            _c("span", [_vm._v(_vm._s(_vm.paginationInfo))]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-sm btn-light",
+                attrs: { disabled: _vm.currentPage === 1 },
+                on: { click: _vm.prevPage },
+              },
+              [_c("i", { staticClass: "fas fa-angle-left" })]
+            ),
+            _vm._v(" "),
+            _c("span"),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-sm btn-light",
+                attrs: { disabled: _vm.currentPage === _vm.totalPages },
+                on: { click: _vm.nextPage },
+              },
+              [_c("i", { staticClass: "fas fa-angle-right" })]
+            ),
+          ]),
+        ]
+      ),
+    ]),
+    _vm._v(" "),
+    _vm.isModalOpen
+      ? _c(
+          "div",
+          {
+            staticClass: "modal fade show",
+            staticStyle: { display: "block" },
+            attrs: { tabindex: "-1", role: "dialog", "aria-hidden": "true" },
+          },
+          [
+            _c(
+              "div",
+              { staticClass: "modal-dialog", attrs: { role: "document" } },
+              [
+                _c("div", { staticClass: "modal-content" }, [
+                  _c("div", { staticClass: "modal-header" }, [
+                    _c("h5", { staticClass: "modal-title" }, [
+                      _vm._v(_vm._s(_vm.modalTitle)),
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "close",
+                        attrs: { type: "button" },
+                        on: { click: _vm.closeModal },
+                      },
+                      [
+                        _c("span", { attrs: { "aria-hidden": "true" } }, [
+                          _vm._v("×"),
+                        ]),
+                      ]
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-body" }, [
+                    _c("form", [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", [_vm._v("Tanggal")]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.tanggal,
+                              expression: "tanggal",
+                            },
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "date" },
+                          domProps: { value: _vm.tanggal },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.tanggal = $event.target.value
+                            },
+                          },
+                        }),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", [_vm._v("Nama Alat/Mesin")]),
+                        _vm._v(" "),
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.nama_alat,
+                                expression: "nama_alat",
+                              },
+                            ],
+                            staticClass: "form-control",
+                            on: {
+                              change: function ($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function (o) {
+                                    return o.selected
+                                  })
+                                  .map(function (o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.nama_alat = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              },
+                            },
+                          },
+                          [
+                            _c("option", { attrs: { value: "" } }, [
+                              _vm._v("Pilih Nama Alat/Mesin"),
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "Bor" } }, [
+                              _vm._v("Bor"),
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "Gergaji" } }, [
+                              _vm._v("Gergaji"),
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "Pahat" } }, [
+                              _vm._v("Pahat"),
+                            ]),
+                          ]
+                        ),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", [_vm._v("No Seri")]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.no_seri,
+                              expression: "no_seri",
+                            },
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            disabled: _vm.nama_alat === "",
+                          },
+                          domProps: { value: _vm.no_seri },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.no_seri = $event.target.value
+                            },
+                          },
+                        }),
+                      ]),
+                    ]),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-footer" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-secondary",
+                        attrs: { type: "button" },
+                        on: { click: _vm.closeModal },
+                      },
+                      [_vm._v("Batal")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "button" },
+                        on: { click: _vm.tambahJadwalPerawatan },
+                      },
+                      [_vm._v("Simpan")]
+                    ),
+                  ]),
+                ]),
+              ]
+            ),
+          ]
+        )
+      : _vm._e(),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row mb-2 align-items-center" }, [
+      _c("div", { staticClass: "col-sm-6" }, [
+        _c(
+          "h3",
+          {
+            staticClass: "text-black-10 mt-5",
+            staticStyle: { "font-family": "Raleway", color: "#000" },
+          },
+          [_c("b", [_vm._v("Jadwal Perawatan Alat/Mesin")])]
+        ),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h5", { staticStyle: { color: "#000" } }, [
+      _c("b", [_vm._v("Perencanaan")]),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/Kondisi/Baru/index.vue?vue&type=template&id=eaf558ee&scoped=true&":
 /*!******************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/Kondisi/Baru/index.vue?vue&type=template&id=eaf558ee&scoped=true& ***!
@@ -178038,6 +178891,27 @@ var render = function () {
                 _c("td", [_vm._v(_vm._s(item.pic))]),
                 _vm._v(" "),
                 _c("td", [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "btn-sts",
+                      class: {
+                        "status-rusak": item.status === "Belum",
+                        "status-hilang": item.status === "Menunggu Persetujuan",
+                        "status-active": item.status === "Selesai",
+                      },
+                    },
+                    [
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(item.status) +
+                          "\n            "
+                      ),
+                    ]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("td", [
                   _c("div", { staticClass: "dropdown text-center" }, [
                     _vm._m(3, true),
                     _vm._v(" "),
@@ -178469,6 +179343,8 @@ var staticRenderFns = [
         _c("th", { staticClass: "text-black-1" }, [_vm._v("Detail")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-black-1" }, [_vm._v("PIC")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black-1" }, [_vm._v("Status")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-black-1" }, [_vm._v("Aksi")]),
       ]),
@@ -237817,6 +238693,8 @@ var ProsesPerawatan = (__webpack_require__(/*! ./components/admin-mtc/PerawatanA
 var DetailProsesPerawatan = (__webpack_require__(/*! ./components/admin-mtc/PerawatanAlat/Kondisi/Proses/detail.vue */ "./resources/js/components/admin-mtc/PerawatanAlat/Kondisi/Proses/detail.vue")["default"]);
 var SelesaiPerawatan = (__webpack_require__(/*! ./components/admin-mtc/PerawatanAlat/Kondisi/Selesai/index.vue */ "./resources/js/components/admin-mtc/PerawatanAlat/Kondisi/Selesai/index.vue")["default"]);
 var DetailSelesaiPerawatan = (__webpack_require__(/*! ./components/admin-mtc/PerawatanAlat/Kondisi/Selesai/detail.vue */ "./resources/js/components/admin-mtc/PerawatanAlat/Kondisi/Selesai/detail.vue")["default"]);
+// Jadwal Perawatan
+var TabelPerawatan = (__webpack_require__(/*! ./components/admin-mtc/PerawatanAlat/JadwalPerawatan/Tabel.vue */ "./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Tabel.vue")["default"]);
 
 /**Komponen Data Mesin */
 var DataMesin = (__webpack_require__(/*! ./components/admin-mtc/DataMesin/MasterData/DataMesin.vue */ "./resources/js/components/admin-mtc/DataMesin/MasterData/DataMesin.vue")["default"]);
@@ -238107,6 +238985,12 @@ var routes = [{
   path: '/admin-mtc/perawatan/selesai/:id',
   component: DetailSelesaiPerawatan,
   name: 'detail-selesai-perawatan'
+},
+// JADWAL Perawatan
+{
+  path: '/admin-mtc/jadwal-perawatan',
+  component: TabelPerawatan,
+  name: 'tabel-jadwal-perawatan'
 }, {
   path: '/admin-mtc/perawatan/{id}/edit',
   component: EditPerawatanAlat
@@ -243899,6 +244783,93 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_InputPerawatanAlat_vue_vue_type_template_id_0c528cc1___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_InputPerawatanAlat_vue_vue_type_template_id_0c528cc1___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./InputPerawatanAlat.vue?vue&type=template&id=0c528cc1& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/InputPerawatanAlat.vue?vue&type=template&id=0c528cc1&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Tabel.vue":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Tabel.vue ***!
+  \***********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Tabel_vue_vue_type_template_id_69bbc481_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Tabel.vue?vue&type=template&id=69bbc481&scoped=true& */ "./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Tabel.vue?vue&type=template&id=69bbc481&scoped=true&");
+/* harmony import */ var _Tabel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Tabel.vue?vue&type=script&lang=js& */ "./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Tabel.vue?vue&type=script&lang=js&");
+/* harmony import */ var _Tabel_vue_vue_type_style_index_0_id_69bbc481_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Tabel.vue?vue&type=style&index=0&id=69bbc481&scoped=true&lang=css& */ "./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Tabel.vue?vue&type=style&index=0&id=69bbc481&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+;
+
+
+/* normalize component */
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _Tabel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Tabel_vue_vue_type_template_id_69bbc481_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _Tabel_vue_vue_type_template_id_69bbc481_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "69bbc481",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Tabel.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Tabel.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************!*\
+  !*** ./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Tabel.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Tabel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Tabel.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Tabel.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Tabel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Tabel.vue?vue&type=style&index=0&id=69bbc481&scoped=true&lang=css&":
+/*!********************************************************************************************************************************************!*\
+  !*** ./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Tabel.vue?vue&type=style&index=0&id=69bbc481&scoped=true&lang=css& ***!
+  \********************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Tabel_vue_vue_type_style_index_0_id_69bbc481_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/style-loader/dist/cjs.js!../../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Tabel.vue?vue&type=style&index=0&id=69bbc481&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Tabel.vue?vue&type=style&index=0&id=69bbc481&scoped=true&lang=css&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Tabel.vue?vue&type=template&id=69bbc481&scoped=true&":
+/*!******************************************************************************************************************************!*\
+  !*** ./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Tabel.vue?vue&type=template&id=69bbc481&scoped=true& ***!
+  \******************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Tabel_vue_vue_type_template_id_69bbc481_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Tabel_vue_vue_type_template_id_69bbc481_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Tabel_vue_vue_type_template_id_69bbc481_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Tabel.vue?vue&type=template&id=69bbc481&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Tabel.vue?vue&type=template&id=69bbc481&scoped=true&");
 
 
 /***/ }),

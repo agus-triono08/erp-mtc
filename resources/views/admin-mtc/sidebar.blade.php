@@ -129,7 +129,7 @@
 
     <!-- Heading -->
     <br><div class="sidebar-heading">
-        <strong>Perbaikan & Perawatan</strong>
+        <strong>Perbaikan & Kerusakan</strong>
     </div>
 
     <!-- Nav Item - Perbaikan -->
@@ -146,13 +146,26 @@
             <i class="fas fa-fw {{ request()->routeIs('kondisi-rusak') ? 'fa-exclamation-circle' : 'fa-exclamation-triangle' }}"></i>
             <span>Kerusakan</span>
         </a>
-    </li>
+    </li>    
+
+    <!-- Heading -->
+    <br><div class="sidebar-heading">
+        <strong>Jadwal Perawatan</strong>
+    </div>
 
     <!-- Nav Item - Perawatan -->
     <li class="nav-item {{ request()->routeIs('perawatan.adminmtc') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('perawatan.adminmtc') }}">
             <i class="fas fa-fw {{ request()->routeIs('perawatan.adminmtc') ? 'fa-cogs' : 'fa-cog' }}"></i>
             <span>Perawatan</span>
+        </a>
+    </li>
+
+    <!-- Nav Item - Perawatan -->
+    <li class="nav-item {{ request()->routeIs('jadwalperawatan.adminmtc') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('jadwalperawatan.adminmtc') }}">
+            <i class="bi {{ request()->routeIs('jadwalperawatan.adminmtc') ? 'bi-calendar-check' : 'bi-calendar-check-fill' }}"></i>
+            <span>Jadwal Perawatan</span>
         </a>
     </li>
 
