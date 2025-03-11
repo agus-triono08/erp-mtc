@@ -2,7 +2,7 @@
 @extends('admin-mtc.app')
 
 <!--Title-->
-@section('title', 'Peminjaman')
+@section('title', 'Perawatan')
 
 <!--Main Content-->
 @section('content')

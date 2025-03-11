@@ -113,6 +113,13 @@ const EditPerawatanAlat = require('./components/admin-mtc/PerawatanAlat/EditPera
 const DetailPerawatanAlat = require('./components/admin-mtc/PerawatanAlat/DetailPerawatan.vue').default;
 const DetailRincianPerawatanAlat = require('./components/admin-mtc/PerawatanAlat/RincianPerawatan.vue').default;
 const EditRincianPerawatanAlat = require('./components/admin-mtc/PerawatanAlat/EditRincianPerawatanAlat.vue').default;
+// BARU
+const BaruPerawatan = require('./components/admin-mtc/PerawatanAlat/Kondisi/Baru/index.vue').default;
+const DetailBaruPerawatan = require('./components/admin-mtc/PerawatanAlat/Kondisi/Baru/detail.vue').default;
+const ProsesPerawatan = require('./components/admin-mtc/PerawatanAlat/Kondisi/Proses/index.vue').default;
+const DetailProsesPerawatan = require('./components/admin-mtc/PerawatanAlat/Kondisi/Proses/detail.vue').default;
+const SelesaiPerawatan = require('./components/admin-mtc/PerawatanAlat/Kondisi/Selesai/index.vue').default;
+const DetailSelesaiPerawatan = require('./components/admin-mtc/PerawatanAlat/Kondisi/Selesai/detail.vue').default;
 
 /**Komponen Data Mesin */
 const DataMesin = require('./components/admin-mtc/DataMesin/MasterData/DataMesin.vue').default;
@@ -402,9 +409,40 @@ const routes = [
         path: '/admin-mtc/data-mesin/belum-digunakan/detail/:id',
         component: DetailDataMesinBelumDigunakan,
     },
+    // {
+    //     path: '/admin-mtc/perawatan',
+    //     component: DataPerawatanAlat,
+    // },
+    // KONDISI BARU PERAWATAN
     {
         path: '/admin-mtc/perawatan',
-        component: DataPerawatanAlat,
+        component: BaruPerawatan,
+        name: 'baru-perawatan',
+    },
+    {
+        path: '/admin-mtc/perawatan/:id',
+        component: DetailBaruPerawatan,
+        name: 'detail-baru-perawatan',
+    },
+    {
+        path: '/admin-mtc/perawatan/proses',
+        component: ProsesPerawatan,
+        name: 'proses-perawatan',
+    },
+    {
+        path: '/admin-mtc/perawatan/proses/:id',
+        component: DetailProsesPerawatan,
+        name: 'detail-proses-perawatan',
+    },
+    {
+        path: '/admin-mtc/perawatan/selesai',
+        component: SelesaiPerawatan,
+        name: 'selesai-perawatan',
+    },
+    {
+        path: '/admin-mtc/perawatan/selesai/:id',
+        component: DetailSelesaiPerawatan,
+        name: 'detail-selesai-perawatan',
     },
     {
         path: '/admin-mtc/perawatan/{id}/edit',
