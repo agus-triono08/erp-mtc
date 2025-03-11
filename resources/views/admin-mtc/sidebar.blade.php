@@ -164,8 +164,8 @@
     {{-- Nav Item - Data Hilang --}}
     <li class="nav-item {{ request()->routeIs('datahilang.adminmtc') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('datahilang.adminmtc') }}">
-            <i class="fas fa-fw {{ request()->routeIs('datahilang.adminmtc') ? 'fa-search-minus' : 'fa-minus-circle' }}"></i>
-            <span>Pengantian Alat/Mesin</span>
+            <i class="fas fa-fw {{ request()->routeIs('datahilang.adminmtc') ? 'fa-hand-holding-heart' : 'fa-hand-holding' }}"></i>
+            <span>Penggantian Alat/Mesin</span>
         </a>
     </li>
 
