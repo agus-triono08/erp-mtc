@@ -10880,7 +10880,6 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 //
 //
 //
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -30983,9 +30982,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-select */ "./node_modules/vue-select/dist/vue-select.js");
+/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_select__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vue_pdf__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-pdf */ "./node_modules/vue-pdf/src/vuePdfNoSss.vue");
+/* harmony import */ var jspdf__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! jspdf */ "./node_modules/jspdf/dist/jspdf.es.min.js");
+/* harmony import */ var jspdf_autotable__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! jspdf-autotable */ "./node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.js");
+/* harmony import */ var jspdf_autotable__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(jspdf_autotable__WEBPACK_IMPORTED_MODULE_4__);
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
-function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
@@ -31205,39 +31210,186 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    vSelect: (vue_select__WEBPACK_IMPORTED_MODULE_0___default()),
+    pdf: vue_pdf__WEBPACK_IMPORTED_MODULE_2__["default"]
+  },
   data: function data() {
     return {
+      picOptions: [{
+        text: 'John Doe',
+        value: 'John Doe'
+      }, {
+        text: 'Jane Doe',
+        value: 'Jane Doe'
+      }, {
+        text: 'Bob Smith',
+        value: 'Bob Smith'
+      }, {
+        text: 'Alice Johnson',
+        value: 'Alice Johnson'
+      }],
       showModal: false,
+      showSelesaiModal: false,
       aktivitas: {
         tanggal: '',
+        waktu_mulai: '',
+        waktu_selesai: '',
+        pic: '',
         detail: '',
-        kondisi: ''
+        kondisi: '',
+        alasanPenolakan: '',
+        harga: '',
+        no_seri_lama: '',
+        no_seri_baru: ''
       },
       aktivitasList: [{
-        tanggal: '2025-03-01',
-        no_seri: '1122wscj121',
-        kondisi: 'OK'
+        tanggal: '2025-02-01',
+        no_seri_lama: '1122wscj121',
+        no_seri_baru: '1122wscj122',
+        harga: 'Rp 6.000',
+        BuktiPertanggungJawaban: '/file/Berita-Acara-Pemusnahan-Barang.pdf',
+        status: 'Diterima',
+        isSerah: false
       }],
       data: [{
         no_seri: '1122wscj121',
         nama: 'Clamp',
+        layout: 'E7',
         tgl: '2025-02-01',
         kondisi: 'Error',
-        detail: 'Sensor tidak berfungsi',
+        detail: 'Lupa di taroh dimana',
         pic: 'John Doe',
-        divisi: 'Maintenace',
-        tgl_ganti: '2025-03-01',
+        divisi: 'Maintenance',
         tgl_selesai: '2025-02-05',
         status: 'Selesai'
       }],
       searchQuery: '',
       rowsPerPage: 10,
-      currentPage: 1
+      currentPage: 1,
+      isAktivitasSelesai: false,
+      showTolakModal: false,
+      tolakIndex: null,
+      alasanPenolakan: '',
+      file: [],
+      isDragging: false
     };
   },
   computed: {
+    isLastAktivitasCompleted: function isLastAktivitasCompleted() {
+      var lastAktivitas = this.aktivitasList[this.aktivitasList.length - 1];
+      return lastAktivitas && lastAktivitas.kondisi === 'Musnah' && lastAktivitas.status === 'Diterima';
+    },
+    isAllAktivitasCompleted: function isAllAktivitasCompleted() {
+      return this.aktivitasList.every(function (item) {
+        return item.kondisi === 'Musnah' && item.status === 'Diterima';
+      });
+    },
+    // Hanya tampilkan tombol "Tambah Aktivitas" jika aktivitas tidak selesai
+    shouldShowTambahAktivitas: function shouldShowTambahAktivitas() {
+      return !this.isLastAktivitasCompleted && !this.isAllAktivitasCompleted;
+    },
+    shouldShowDiterima: function shouldShowDiterima() {
+      return this.aktivitasList.length > 0 && this.aktivitasList[this.aktivitasList.length - 1].status === 'Menunggu Persetujuan Atasan';
+    },
+    shouldShowDitolak: function shouldShowDitolak() {
+      return this.aktivitasList.length > 0 && this.aktivitasList[this.aktivitasList.length - 1].status === 'Menunggu Persetujuan Atasan';
+    },
     durasidata: function durasidata() {
       return this.data.map(function (item) {
         if (item.tgl_selesai && item.tgl) {
@@ -31270,13 +31422,95 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
       return "Menampilkan ".concat(start, " - ").concat(end, " dari ").concat(this.aktivitasList.length, " data");
     }
   },
-  methods: {
+  methods: _defineProperty(_defineProperty({
     addAktivitas: function addAktivitas() {
-      this.aktivitasList.push(_objectSpread({}, this.aktivitas));
+      this.aktivitasList.push({
+        tanggal: this.aktivitas.tanggal,
+        // BuktiPertanggungJawaban: URL.createObjectURL(this.file),
+        no_seri_lama: this.aktivitas.no_seri_lama,
+        no_seri_baru: this.aktivitas.no_seri_baru,
+        harga: this.aktivitas.harga
+        // waktu_mulai: this.aktivitas.waktu_mulai,
+        // waktu_selesai: this.aktivitas.waktu_selesai,
+        // pic: this.aktivitas.pic,
+        // kondisi: 'Rusak',
+        // status: 'Menunggu Persetujuan Atasan' // tambahkan status menjadi "Proses"
+      });
       this.aktivitas.tanggal = '';
-      this.aktivitas.detail = '';
-      this.aktivitas.kondisi = '';
+      // this.aktivitas.waktu_mulai = '';
+      // this.aktivitas.waktu_selesai = '';
+      // this.aktivitas.pic = '';
+      // this.aktivitas.kondisi = '';
       this.showModal = false;
+    },
+    // Fungsi untuk menangani event dragover
+    onDragOver: function onDragOver(event) {
+      event.preventDefault(); // Mencegah perilaku default
+      this.isDragging = true; // Menandakan bahwa file sedang di-drag
+    },
+    // Fungsi untuk menangani event dragleave
+    onDragLeave: function onDragLeave(event) {
+      this.isDragging = false; // Menandakan bahwa file tidak lagi di-drag
+    },
+    // Fungsi untuk menangani event drop
+    onDrop: function onDrop(event) {
+      this.isDragging = false; // Menandakan bahwa file sudah dijatuhkan
+      var droppedFile = event.dataTransfer.files[0]; // Mengambil file yang dijatuhkan
+      if (droppedFile && droppedFile.type === 'application/pdf') {
+        this.file = droppedFile; // Menyimpan file jika valid
+      } else {
+        alert('Hanya file PDF yang diperbolehkan!');
+      }
+    },
+    // Fungsi untuk memicu input file ketika area drag-and-drop diklik
+    triggerFileInput: function triggerFileInput() {
+      this.$refs.fileInput.click(); // Men-trigger click pada input file
+    },
+    // Fungsi untuk menangani perubahan file melalui file explorer
+    onBAFileChange: function onBAFileChange(event) {
+      var selectedFile = event.target.files[0];
+      if (selectedFile && selectedFile.type === 'application/pdf') {
+        this.file = selectedFile; // Menyimpan file yang dipilih
+      } else {
+        alert('Hanya file PDF yang diperbolehkan!');
+      }
+    },
+    // Fungsi untuk meng-handle upload
+    handleUploadBA: function handleUploadBA() {
+      if (this.file) {
+        // Implementasikan logika untuk meng-upload file
+        alert('File berhasil di-upload: ' + this.file.name);
+        this.showSelesaiModal = false; // Tambahkan kode ini untuk menutup modal
+      } else {
+        alert('Harap pilih file PDF terlebih dahulu!');
+      }
+    },
+    downloadBuktiPertanggungJawaban: function downloadBuktiPertanggungJawaban(item) {
+      var link = document.createElement('a');
+      link.href = item.BuktiPertanggungJawaban;
+      link.download = 'Bukti Pertanggung Jawaban.pdf';
+      link.click();
+    },
+    selesaiAktivitas: function selesaiAktivitas() {
+      var _this = this;
+      sweetalert2__WEBPACK_IMPORTED_MODULE_1___default().fire({
+        title: 'Selesai Aktivitas?',
+        text: 'Apakah Anda yakin ingin melanjutkan aktivitas ini ke tahapan proses?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ya',
+        cancelButtonText: 'Tidak'
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          // Lakukan aksi selesai aktivitas disini
+          _this.data[0].status = 'Diterima';
+          // Update the underlying data instead of assigning to isLastAktivitasCompleted
+          _this.aktivitasList[_this.aktivitasList.length - 1].kondisi = 'Musnah';
+          _this.aktivitasList[_this.aktivitasList.length - 1].status = 'Diterima';
+          sweetalert2__WEBPACK_IMPORTED_MODULE_1___default().fire('Berhasil!', 'Aktivitas telah selesai.', 'success');
+          _this.$router.push('/admin-mtc/data-hilang');
+        }
+      });
     },
     updatePaginatedData: function updatePaginatedData() {
       var start = (this.currentPage - 1) * this.rowsPerPage;
@@ -31297,8 +31531,114 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
     debouncedFetchNoSeri: function debouncedFetchNoSeri() {
       // Implement debounce logic for search
       this.updatePaginatedData();
+    },
+    terimaAktivitas: function terimaAktivitas(index) {
+      this.aktivitasList[index].status = 'Diterima';
+      this.aktivitasList[index].kondisi = 'Musnah';
+    },
+    tolakAktivitas: function tolakAktivitas(index) {
+      this.showTolakModal = true;
+      this.tolakIndex = index;
+    },
+    simpanTolakAktivitas: function simpanTolakAktivitas() {
+      this.aktivitasList[this.tolakIndex].status = 'Ditolak';
+      this.aktivitasList[this.tolakIndex].kondisi = 'Rusak';
+      this.aktivitasList[this.tolakIndex].alasanPenolakan = this.alasanPenolakan;
+      this.showTolakModal = false;
+      this.alasanPenolakan = '';
+    },
+    serahkanAlat: function serahkanAlat(item) {
+      // Update the status to 'Serah' (or any state you choose)
+      item.status = 'Serah';
+      // Here you can implement any logic for when the item is 'Serah'
+      item.isSerah = true;
     }
-  }
+  }, "terimaAktivitas", function terimaAktivitas(item) {
+    // Update the status to 'Diterima'
+    item.status = 'Diterima';
+
+    // Redirect to the /admin-mtc/data-hilang page
+    this.$router.push('/admin-mtc/data-hilang');
+  }), "downloadBukti", function downloadBukti(index) {
+    var ba = this.aktivitasList[index].ba;
+    var filename = 'Bukti-Pertanggung-Jawaban.pdf';
+
+    // Buat elemen canvas untuk render PDF
+    var canvas = document.createElement('canvas');
+    var ctx = canvas.getContext('2d');
+
+    // Membuat objek jsPDF
+    var pdf = new jspdf__WEBPACK_IMPORTED_MODULE_3__["default"]();
+
+    // Set font menjadi bold dan ukuran 16
+    pdf.setFont('helvetica', 'bold');
+    pdf.setFontSize(16);
+
+    // Menambahkan judul Berita Acara Pemusnahan Barang dengan teks di tengah
+    var title = 'SURAT PERNYATAAN PERTANGGUNG JAWABAN GANTI RUGI';
+    var titleWidth = pdf.getStringUnitWidth(title) * pdf.getFontSize() / pdf.internal.scaleFactor;
+    var pageWidth = pdf.internal.pageSize.width;
+    var xPos = (pageWidth - titleWidth) / 2;
+    pdf.text(title, xPos, 16);
+
+    // Set font menjadi normal untuk teks berikutnya
+    pdf.setFont('helvetica', 'normal');
+    pdf.setFontSize(12);
+
+    // Menambahkan informasi lainnya
+    pdf.text("Yang bertanda tangan di bawah ini : ", 25, 30);
+    pdf.text("Nama", 14, 36);
+    pdf.text("Jabatan", 14, 42);
+    pdf.text("Divisi", 14, 48);
+    pdf.text(":", 40, 36);
+    pdf.text(":", 40, 42);
+    pdf.text(":", 40, 48);
+
+    // Menambahkan garis panjang
+    pdf.line(43, 38, 100, 38); // garis panjang untuk nama
+    pdf.line(43, 44, 100, 44); // garis panjang untuk jabatan
+    pdf.line(43, 50, 100, 50); // garis panjang untuk divisi
+
+    pdf.text("Dengan ini menyatakan bahwa saya bertanggung jawab atas penghilangan alat/mesin yang", 25, 56);
+    pdf.text("terjadi pada tanggal ", 14, 62);
+    pdf.line(53, 63, 100, 63); // garis panjang untuk tanggal
+    pdf.text("di area PT SINKO PRIMA ALLOY. ", 102, 62);
+    pdf.text("Adapun alat/mesin yang hilang antara lain:", 18, 68);
+    var headers = ["#", "Nama Alat/Mesin", "No Seri"];
+    var rows = [];
+    this.data.forEach(function (item, index) {
+      rows.push([index + 1, item.nama, item === null || item === void 0 ? void 0 : item.no_seri]);
+    });
+    pdf.autoTable({
+      head: [headers],
+      body: rows,
+      startY: 75 // Menyesuaikan posisi tabel setelah judul, nama peminjam, dan divisi
+    });
+    var textY = pdf.lastAutoTable.finalY + 10;
+    pdf.text("Saya menyatakan bahwa saya bertanggung jawab atas ganti rugi atas penghilangan ", 25, textY);
+    pdf.text("alat/mesin tersebut dan saya berkomitmen untuk menganti alat/mesin tersebut dengan alat/mesin ", 14, textY + 6);
+    pdf.text("yang sama atau yang lebih baik kepada PT SINKO PRIMA ALLOY.", 14, textY + 12);
+    pdf.text("Saya menyatakan bahwa pernyataan ini dibuat dengan sadar dan tanpa paksaan dari pihak", 25, textY + 18);
+    pdf.text("manapun.", 14, textY + 24);
+    pdf.text("Demikian pernyataan ini saya buat dengan sebenar-benarnya.", 25, textY + 30);
+    var signatureSectionY = textY + 38;
+    pdf.text("Dibuat Oleh,", 155, signatureSectionY);
+    var gapY = signatureSectionY + 30;
+    pdf.line(150, gapY, 190, gapY);
+
+    // Simpan PDF ke dalam file
+    var pdfData = pdf.output('blob');
+    var url = URL.createObjectURL(pdfData);
+
+    // Buat elemen link untuk download file
+    var link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    link.click();
+
+    // Hapus elemen link setelah download selesai
+    link.remove();
+  })
 });
 
 /***/ }),
@@ -31523,6 +31863,13 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -31546,6 +31893,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         value: 'Alice Johnson'
       }],
       data: [{
+        no_ganti: 'NPG-001',
         no_seri: '1122wscj121',
         nama: 'Clamp',
         tgl: '2025-02-01',
@@ -53752,7 +54100,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.modal[data-v-ec8f6504] {\r\n  display: block;\r\n  z-index: 1000;\r\n  position: fixed;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  height: 100%;\r\n  background-color: rgba(0, 0, 0, 0.5);\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.modal[data-v-ec8f6504] {\r\n  display: block;\r\n  z-index: 1000;\r\n  position: fixed;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  height: 100%;\r\n  background-color: rgba(0, 0, 0, 0.5);\n}\n.text-black-10[data-v-ec8f6504] {\r\n  color: #000;\n}\n.drag-drop-area[data-v-ec8f6504] {\r\n  border: 2px dashed #ccc;\r\n  padding: 20px;\r\n  text-align: center;\r\n  cursor: pointer;\r\n  background-color: #fff;\n}\n.dragging[data-v-ec8f6504] {\r\n  border-color: #169ea8;\r\n  background-color: #e9f7ff;\n}\n.drag-drop-area p[data-v-ec8f6504] {\r\n  margin: 0;\r\n  font-size: 16px;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -53776,7 +54124,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* Pastikan backdrop tidak menutupi modal */\n.modal-backdrop[data-v-30648926] {\r\n  z-index: 1040 !important; /* Atur backdrop di bawah modal */\n}\n.modal[data-v-30648926] {\r\n  z-index: 1050 !important; /* Modal di atas backdrop */\n}\n#pills-tab .nav-link[data-v-30648926] {\r\n  color: #000;\n}\n#pills-tab .nav-link.active[data-v-30648926] {\r\n  background-color: #169ea8;\r\n  color: #fff;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* Pastikan backdrop tidak menutupi modal */\n.modal-backdrop[data-v-30648926] {\r\n  z-index: 1040 !important; /* Atur backdrop di bawah modal */\n}\n.modal[data-v-30648926] {\r\n  z-index: 1050 !important; /* Modal di atas backdrop */\n}\n#pills-tab .nav-link[data-v-30648926] {\r\n  color: #000;\n}\n#pills-tab .nav-link.active[data-v-30648926] {\r\n  background-color: #169ea8;\r\n  color: #fff;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -127530,8 +127878,7 @@ var staticRenderFns = [
         attrs: {
           type: "text",
           id: "no_seri_alat",
-          placeholder: "Terisi Otomatis",
-          disabled: "",
+          placeholder: "Masukkan No Seri",
         },
       }),
     ])
@@ -153037,6 +153384,22 @@ var render = function () {
       "div",
       { staticClass: "row align-items-center justify-content-end m-3" },
       [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-sm btn-outline-primary mr-2 ml-1",
+            on: {
+              click: function ($event) {
+                return _vm.openModal("add")
+              },
+            },
+          },
+          [
+            _c("i", { staticClass: "fa fa-plus-circle" }),
+            _vm._v(" Tambah Data\n    "),
+          ]
+        ),
+        _vm._v(" "),
         _c("div", { staticClass: "search-wrapper" }, [
           _c("div", { staticClass: "input-group" }, [
             _c("input", {
@@ -153275,7 +153638,9 @@ var render = function () {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "nama" } }, [_vm._v("Nama")]),
+                      _c("label", { attrs: { for: "nama" } }, [
+                        _vm._v("Nama Alat/Mesin"),
+                      ]),
                       _vm._v(" "),
                       _c(
                         "select",
@@ -153332,7 +153697,7 @@ var render = function () {
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
                       _c("label", { attrs: { for: "tgl" } }, [
-                        _vm._v("Tgl Error"),
+                        _vm._v("Tgl Penggantian"),
                       ]),
                       _vm._v(" "),
                       _c("input", {
@@ -153360,7 +153725,7 @@ var render = function () {
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
                       _c("label", { attrs: { for: "detail" } }, [
-                        _vm._v("Detail"),
+                        _vm._v("Detail Alat/Mesin Hilang"),
                       ]),
                       _vm._v(" "),
                       _c("input", {
@@ -153390,8 +153755,9 @@ var render = function () {
                       "div",
                       { staticClass: "form-group" },
                       [
-                        _vm._v("0\n            "),
-                        _c("label", { attrs: { for: "pic" } }, [_vm._v("PIC")]),
+                        _c("label", { attrs: { for: "pic" } }, [
+                          _vm._v("Nama Peminjam"),
+                        ]),
                         _vm._v(" "),
                         _c("v-select", {
                           attrs: {
@@ -153413,56 +153779,6 @@ var render = function () {
                       ],
                       1
                     ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "status" } }, [
-                        _vm._v("Status"),
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "select",
-                        {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.form.status,
-                              expression: "form.status",
-                            },
-                          ],
-                          staticClass: "form-control",
-                          attrs: { id: "status" },
-                          on: {
-                            change: function ($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function (o) {
-                                  return o.selected
-                                })
-                                .map(function (o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.$set(
-                                _vm.form,
-                                "status",
-                                $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              )
-                            },
-                          },
-                        },
-                        [
-                          _c("option", { attrs: { value: "", disabled: "" } }, [
-                            _vm._v("Pilih Status"),
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "Belum" } }, [
-                            _vm._v("Belum"),
-                          ]),
-                        ]
-                      ),
-                    ]),
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "modal-footer" }, [
@@ -153589,7 +153905,9 @@ var render = function () {
       _c("div", { staticClass: "row m-1" }, [
         _c("div", { staticClass: "col-12" }, [
           _c("h4", { staticClass: "text-capitalize text-primary text-bold" }, [
-            _c("b", [_vm._v("No Seri #" + _vm._s(_vm.$route.params.id))]),
+            _c("b", [
+              _vm._v("No Penggantian #" + _vm._s(_vm.$route.params.id)),
+            ]),
           ]),
         ]),
         _vm._v(" "),
@@ -154312,7 +154630,9 @@ var render = function () {
       _c("div", { staticClass: "row m-1" }, [
         _c("div", { staticClass: "col-12" }, [
           _c("h4", { staticClass: "text-capitalize text-primary text-bold" }, [
-            _c("b", [_vm._v("No Seri #" + _vm._s(_vm.$route.params.id))]),
+            _c("b", [
+              _vm._v("No Penggantian #" + _vm._s(_vm.$route.params.id)),
+            ]),
           ]),
         ]),
         _vm._v(" "),
@@ -154912,7 +155232,7 @@ var staticRenderFns = [
                 "a",
                 {
                   staticStyle: { color: "#169ea8", "text-decoration": "none" },
-                  attrs: { href: "javascript:history.back()" },
+                  attrs: { href: "/admin-mtc/data-hilang" },
                 },
                 [_vm._v("Penggantian Alat/Mesin")]
               ),
@@ -154970,7 +155290,7 @@ var staticRenderFns = [
     return _c(
       "button",
       {
-        staticClass: "btn btn-sm btn-primary",
+        staticClass: "btn btn-sm",
         attrs: {
           type: "button",
           id: "dropdownMenuButton",
@@ -155752,11 +156072,13 @@ var render = function () {
       _c("div", { staticClass: "row m-1" }, [
         _c("div", { staticClass: "col-12" }, [
           _c("h4", { staticClass: "text-capitalize text-primary text-bold" }, [
-            _c("b", [_vm._v("No Seri #" + _vm._s(_vm.$route.params.id))]),
+            _c("b", [
+              _vm._v("No Penggantian #" + _vm._s(_vm.$route.params.id)),
+            ]),
           ]),
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-3" }, [
+        _c("div", { staticClass: "col-2" }, [
           _c("dt", { staticStyle: { color: "#000" } }, [
             _vm._v("Nama Peminjam"),
           ]),
@@ -155768,24 +156090,50 @@ var render = function () {
           _c("dd", [_vm._v(_vm._s(_vm.data[0].divisi))]),
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-3" }, [
-          _c("dt", { staticStyle: { color: "#000" } }, [_vm._v("Nama Produk")]),
+        _c("div", { staticClass: "col-2" }, [
+          _c("dt", { staticStyle: { color: "#000" } }, [
+            _vm._v("Nama Alat/Mesin"),
+          ]),
           _vm._v(" "),
           _c("dd", [_vm._v(_vm._s(_vm.data[0].nama))]),
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-3" }, [
+        _c("div", { staticClass: "col-2" }, [
           _c("dt", { staticStyle: { color: "#000" } }, [
-            _vm._v("Tanggal Ganti"),
+            _vm._v("Detail Alat/Mesin Hilang"),
           ]),
           _vm._v(" "),
-          _c("dd", [_vm._v(_vm._s(_vm.data[0].tgl_ganti))]),
+          _c("dd", [_vm._v(_vm._s(_vm.data[0].detail))]),
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-3" }, [
+        _c("div", { staticClass: "col-2" }, [
+          _c("dt", { staticStyle: { color: "#000" } }, [
+            _vm._v("Tanggal Hilang Alat/Mesin"),
+          ]),
+          _vm._v(" "),
+          _c("dd", [_vm._v(_vm._s(_vm.data[0].tgl))]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-2" }, [
           _c("dt", { staticStyle: { color: "#000" } }, [_vm._v("Status")]),
           _vm._v(" "),
-          _c("dd", [_vm._v(_vm._s(_vm.data[0].status))]),
+          _c("dd", [
+            _c(
+              "div",
+              {
+                staticClass: "badge",
+                class: {
+                  "status-active": _vm.data[0].status === "Selesai",
+                  "status-hilang": _vm.data[0].status === "Proses",
+                },
+              },
+              [
+                _vm._v(
+                  "\n            " + _vm._s(_vm.data[0].status) + "\n          "
+                ),
+              ]
+            ),
+          ]),
         ]),
       ]),
     ]),
@@ -155798,6 +156146,18 @@ var render = function () {
           "div",
           { staticClass: "row align-items-center justify-content-end m-3" },
           [
+            _vm.isLastAktivitasCompleted && !_vm.isAktivitasSelesai
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-success mr-2",
+                    attrs: { disabled: !_vm.isLastAktivitasCompleted },
+                    on: { click: _vm.selesaiAktivitas },
+                  },
+                  [_vm._v("Selesai")]
+                )
+              : _vm._e(),
+            _vm._v(" "),
             _c("div", { staticClass: "search-wrapper" }, [
               _c("div", { staticClass: "input-group" }, [
                 _c("input", {
@@ -155844,137 +156204,66 @@ var render = function () {
                     _vm._v(" "),
                     _c("td", [_vm._v(_vm._s(item.tanggal))]),
                     _vm._v(" "),
-                    _c("td", [
-                      _vm._v(_vm._s(item.no_seri) + " "),
-                      _c("sup", { staticStyle: { color: "red" } }, [
-                        _c("b", [
-                          _vm._v(
-                            " ```javascript\n// Add a method to handle pagination\nmethods: {\n  // ...\n  updatePaginatedData() {\n    const start = (this.currentPage - 1) * this.rowsPerPage;\n    this.paginatedData = this.aktivitasList.slice(start, start + this.rowsPerPage);\n  },\n  // ...\n}\n\n// Use the paginated data in the table\n"
-                          ),
-                          _c(
-                            "tbody",
-                            _vm._l(_vm.paginatedData, function (item, index) {
-                              return _c(
-                                "tr",
-                                { key: index, staticClass: "text-center" },
-                                [
-                                  _c("td", [_vm._v(_vm._s(index + 1))]),
-                                  _vm._v(" "),
-                                  _c("td", [_vm._v(_vm._s(item.tanggal))]),
-                                  _vm._v(" "),
-                                  _c("td", [
-                                    _vm._v(_vm._s(item.no_seri) + " "),
-                                    _vm._m(3, true),
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("td", [
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass: "btn-sts",
-                                        class: {
-                                          "status-rusak":
-                                            item.kondisi === "Rusak",
-                                          "status-active":
-                                            item.kondisi === "OK",
-                                          "status-error":
-                                            item.kondisi === "Error",
-                                        },
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n        " +
-                                            _vm._s(item.kondisi) +
-                                            "\n      "
-                                        ),
-                                      ]
-                                    ),
-                                  ]),
-                                ]
-                              )
-                            }),
-                            0
-                          ),
-                          _vm._v(
-                            "\n\n// Initialize paginatedData in data\ndata() {\n  return {\n    // ...\n    paginatedData: [],\n    // ...\n  }\n}\n\n// Call updatePaginatedData when the component is mounted\nmounted() {\n  this.updatePaginatedData();\n}\n\n// Call updatePaginatedData when the currentPage or rowsPerPage changes\nwatch: {\n  currentPage() {\n    this.updatePaginatedData();\n  },\n  rowsPerPage() {\n    this.updatePaginatedData();\n  }\n}\n```Change"
-                          ),
-                        ]),
-                      ]),
-                    ]),
+                    _c("td", [_vm._v(_vm._s(item.no_seri_lama))]),
                     _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "div",
-                        {
-                          staticClass: "btn-sts",
-                          class: {
-                            "status-rusak": item.kondisi === "Rusak",
-                            "status-active": item.kondisi === "OK",
-                            "status-error": item.kondisi === "Error",
-                          },
-                        },
-                        [
-                          _vm._v(
-                            "\n                    " +
-                              _vm._s(item.kondisi) +
-                              "\n                    "
-                          ),
-                        ]
-                      ),
-                    ]),
+                    _c("td", [_vm._v(_vm._s(item.no_seri_baru))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(item.harga))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(item.status))]),
                   ])
                 }),
                 0
               ),
             ]
           ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass:
-                "d-flex justify-content-between align-items-center mt-3 mb-3",
-              staticStyle: {
-                "border-radius": "10px",
-                "background-color": "#f3f4f6",
-                height: "50px",
-                color: "#000",
-              },
-            },
-            [
-              _c("div", { staticClass: "ml-3" }, [
-                _vm._v("\n              Rows per page:\n              "),
-                _c("span", [_vm._v(_vm._s(_vm.rowsPerPage))]),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "mr-3" }, [
-                _c("span", [_vm._v(_vm._s(_vm.paginationInfo))]),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-sm btn-light",
-                    attrs: { disabled: _vm.currentPage === 1 },
-                    on: { click: _vm.prevPage },
-                  },
-                  [_c("i", { staticClass: "fas fa-angle-left" })]
-                ),
-                _vm._v(" "),
-                _c("span"),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-sm btn-light",
-                    attrs: { disabled: _vm.currentPage === _vm.totalPages },
-                    on: { click: _vm.nextPage },
-                  },
-                  [_c("i", { staticClass: "fas fa-angle-right" })]
-                ),
-              ]),
-            ]
-          ),
         ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass:
+              "d-flex justify-content-between align-items-center m-3",
+            staticStyle: {
+              "border-radius": "10px",
+              "background-color": "#f3f4f6",
+              height: "50px",
+              color: "#000",
+            },
+          },
+          [
+            _c("div", { staticClass: "ml-3" }, [
+              _vm._v("\n          Rows per page:\n          "),
+              _c("span", [_vm._v(_vm._s(_vm.rowsPerPage))]),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "mr-3" }, [
+              _c("span", [_vm._v(_vm._s(_vm.paginationInfo))]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-sm btn-light",
+                  attrs: { disabled: _vm.currentPage === 1 },
+                  on: { click: _vm.prevPage },
+                },
+                [_c("i", { staticClass: "fas fa-angle-left" })]
+              ),
+              _vm._v(" "),
+              _c("span"),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-sm btn-light",
+                  attrs: { disabled: _vm.currentPage === _vm.totalPages },
+                  on: { click: _vm.nextPage },
+                },
+                [_c("i", { staticClass: "fas fa-angle-right" })]
+              ),
+            ]),
+          ]
+        ),
       ]),
     ]),
     _vm._v(" "),
@@ -156003,7 +156292,7 @@ var render = function () {
                         staticClass: "modal-title",
                         attrs: { id: "modalAktivitasLabel" },
                       },
-                      [_vm._v("Tambah Aktivitas")]
+                      [_vm._v("Aktivitas Penggantian Alat/Mesin")]
                     ),
                     _vm._v(" "),
                     _c(
@@ -156028,9 +156317,7 @@ var render = function () {
                   _c("div", { staticClass: "modal-body" }, [
                     _c("form", [
                       _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "tanggal" } }, [
-                          _vm._v("Tanggal"),
-                        ]),
+                        _vm._m(3),
                         _vm._v(" "),
                         _c("input", {
                           directives: [
@@ -156042,7 +156329,7 @@ var render = function () {
                             },
                           ],
                           staticClass: "form-control",
-                          attrs: { type: "date", id: "tanggal" },
+                          attrs: { type: "date", id: "tanggal", required: "" },
                           domProps: { value: _vm.aktivitas.tanggal },
                           on: {
                             input: function ($event) {
@@ -156060,22 +156347,24 @@ var render = function () {
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "detail" } }, [
-                          _vm._v("Detail"),
-                        ]),
+                        _vm._m(4),
                         _vm._v(" "),
-                        _c("textarea", {
+                        _c("input", {
                           directives: [
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.aktivitas.detail,
-                              expression: "aktivitas.detail",
+                              value: _vm.aktivitas.no_seri_lama,
+                              expression: "aktivitas.no_seri_lama",
                             },
                           ],
                           staticClass: "form-control",
-                          attrs: { id: "detail" },
-                          domProps: { value: _vm.aktivitas.detail },
+                          attrs: {
+                            type: "text",
+                            id: "noSeriLama",
+                            required: "",
+                          },
+                          domProps: { value: _vm.aktivitas.no_seri_lama },
                           on: {
                             input: function ($event) {
                               if ($event.target.composing) {
@@ -156083,7 +156372,7 @@ var render = function () {
                               }
                               _vm.$set(
                                 _vm.aktivitas,
-                                "detail",
+                                "no_seri_lama",
                                 $event.target.value
                               )
                             },
@@ -156092,61 +156381,67 @@ var render = function () {
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "kondisi" } }, [
-                          _vm._v("Kondisi"),
-                        ]),
+                        _vm._m(5),
                         _vm._v(" "),
-                        _c(
-                          "select",
-                          {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.aktivitas.kondisi,
-                                expression: "aktivitas.kondisi",
-                              },
-                            ],
-                            staticClass: "form-control",
-                            attrs: { id: "kondisi" },
-                            on: {
-                              change: function ($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function (o) {
-                                    return o.selected
-                                  })
-                                  .map(function (o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.$set(
-                                  _vm.aktivitas,
-                                  "kondisi",
-                                  $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                )
-                              },
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.aktivitas.no_seri_baru,
+                              expression: "aktivitas.no_seri_baru",
+                            },
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            id: "noSeriBaru",
+                            required: "",
+                          },
+                          domProps: { value: _vm.aktivitas.no_seri_baru },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.aktivitas,
+                                "no_seri_baru",
+                                $event.target.value
+                              )
                             },
                           },
-                          [
-                            _c("option", { attrs: { value: "" } }, [
-                              _vm._v("Pilih Kondisi"),
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "OK" } }, [
-                              _vm._v("OK"),
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "Rusak" } }, [
-                              _vm._v("Rusak"),
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "Error" } }, [
-                              _vm._v("Error"),
-                            ]),
-                          ]
-                        ),
+                        }),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group" }, [
+                        _vm._m(6),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.aktivitas.harga,
+                              expression: "aktivitas.harga",
+                            },
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "text", id: "harga", required: "" },
+                          domProps: { value: _vm.aktivitas.harga },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.aktivitas,
+                                "harga",
+                                $event.target.value
+                              )
+                            },
+                          },
+                        }),
                       ]),
                     ]),
                   ]),
@@ -156155,7 +156450,7 @@ var render = function () {
                     _c(
                       "button",
                       {
-                        staticClass: "btn btn-secondary",
+                        staticClass: "btn btn-danger",
                         attrs: { type: "button" },
                         on: {
                           click: function ($event) {
@@ -156182,6 +156477,115 @@ var render = function () {
           ]
         )
       : _vm._e(),
+    _vm._v(" "),
+    _vm.showTolakModal
+      ? _c(
+          "div",
+          {
+            staticClass: "modal fade show",
+            attrs: {
+              id: "modalTolakAktivitas",
+              tabindex: "-1",
+              role: "dialog",
+              "aria-labelledby": "modalTolakAktivitasLabel",
+            },
+          },
+          [
+            _c(
+              "div",
+              { staticClass: "modal-dialog", attrs: { role: "document" } },
+              [
+                _c("div", { staticClass: "modal-content" }, [
+                  _c("div", { staticClass: "modal-header" }, [
+                    _c(
+                      "h5",
+                      {
+                        staticClass: "modal-title",
+                        attrs: { id: "modalTolakAktivitasLabel" },
+                      },
+                      [_vm._v("Alasan Penolakan")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "close",
+                        attrs: { type: "button", "aria-label": "Close" },
+                        on: {
+                          click: function ($event) {
+                            _vm.showTolakModal = false
+                          },
+                        },
+                      },
+                      [
+                        _c("span", { attrs: { "aria-hidden": "true" } }, [
+                          _vm._v("×"),
+                        ]),
+                      ]
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-body" }, [
+                    _c("form", [
+                      _c("div", { staticClass: "form-group" }, [
+                        _vm._m(7),
+                        _vm._v(" "),
+                        _c("textarea", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.alasanPenolakan,
+                              expression: "alasanPenolakan",
+                            },
+                          ],
+                          staticClass: "form-control",
+                          attrs: { id: "alasan", required: "" },
+                          domProps: { value: _vm.alasanPenolakan },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.alasanPenolakan = $event.target.value
+                            },
+                          },
+                        }),
+                      ]),
+                    ]),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-footer" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-secondary",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function ($event) {
+                            _vm.showTolakModal = false
+                          },
+                        },
+                      },
+                      [_vm._v("Batal")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "button" },
+                        on: { click: _vm.simpanTolakAktivitas },
+                      },
+                      [_vm._v("Simpan")]
+                    ),
+                  ]),
+                ]),
+              ]
+            ),
+          ]
+        )
+      : _vm._e(),
   ])
 }
 var staticRenderFns = [
@@ -156191,9 +156595,14 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row mb-2 align-items-center" }, [
       _c("div", { staticClass: "col-sm-6" }, [
-        _c("h3", { staticStyle: { "font-family": "Raleway" } }, [
-          _vm._v("Detail Data Hilang"),
-        ]),
+        _c(
+          "h3",
+          {
+            staticClass: "text-black-10",
+            staticStyle: { "font-family": "Raleway" },
+          },
+          [_vm._v("Detail Penggantian Alat/Mesin")]
+        ),
         _vm._v(" "),
         _c("h6", { staticStyle: { color: "rgb(128, 128, 128)" } }),
       ]),
@@ -156213,7 +156622,7 @@ var staticRenderFns = [
                   staticStyle: { color: "#169ea8", "text-decoration": "none" },
                   attrs: { href: "/admin-mtc/data-hilang" },
                 },
-                [_vm._v("Data Hilang")]
+                [_vm._v("Penggantian Alat/Mesin")]
               ),
             ]),
             _vm._v(" "),
@@ -156223,7 +156632,7 @@ var staticRenderFns = [
                 staticClass: "breadcrumb-item active",
                 staticStyle: { color: "red" },
               },
-              [_c("span", [_vm._v("Detail Data Hilang")])]
+              [_c("span", [_vm._v("Detail Penggantian Alat/Mesin")])]
             ),
           ]
         ),
@@ -156236,7 +156645,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-12" }, [
       _c("h4", { staticClass: "text-capitalize text-primary text-bold" }, [
-        _c("b", [_vm._v("Aktivitas")]),
+        _c("b", [_vm._v("Aktivitas Penggantian Alat/Mesin")]),
       ]),
     ])
   },
@@ -156248,11 +156657,15 @@ var staticRenderFns = [
       _c("tr", { staticClass: "text-center", staticStyle: { color: "#000" } }, [
         _c("th", [_vm._v("#")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Tanggal Masuk")]),
+        _c("th", [_vm._v("Tanggal Penggantian Alat/Mesin")]),
         _vm._v(" "),
-        _c("th", [_vm._v("No Seri")]),
+        _c("th", [_vm._v("No Seri Lama")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Kondisi")]),
+        _c("th", [_vm._v("No Seri Baru")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Harga")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Status")]),
       ]),
     ])
   },
@@ -156260,9 +156673,76 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("sup", { staticStyle: { color: "red" } }, [
-      _c("b", [_vm._v(" Change")]),
-    ])
+    return _c(
+      "label",
+      { staticClass: "text-black-10", attrs: { for: "tanggal" } },
+      [
+        _c("b", [
+          _vm._v("Tanggal Penggantian Alat/Mesin "),
+          _c("sup", { staticClass: "text-danger" }, [_vm._v(" *")]),
+        ]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "text-black-10", attrs: { for: "noSeriLama" } },
+      [
+        _c("b", [
+          _vm._v("No Seri Lama "),
+          _c("sup", { staticClass: "text-danger" }, [_vm._v(" *")]),
+        ]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "text-black-10", attrs: { for: "noSeriBaru" } },
+      [
+        _c("b", [
+          _vm._v("No Seri Baru "),
+          _c("sup", { staticClass: "text-danger" }, [_vm._v(" *")]),
+        ]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "text-black-10", attrs: { for: "harga" } },
+      [
+        _c("b", [
+          _vm._v("Harga "),
+          _c("sup", { staticClass: "text-danger" }, [_vm._v(" *")]),
+        ]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "text-black-10", attrs: { for: "alasan" } },
+      [
+        _c("b", [
+          _vm._v("Alasan Penolakan "),
+          _c("sup", { staticClass: "text-danger" }, [_vm._v(" *")]),
+        ]),
+      ]
+    )
   },
 ]
 render._withStripped = true
@@ -156319,6 +156799,32 @@ var render = function () {
                 },
               },
               [_vm._v("Baru")]
+            ),
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "li",
+          { staticClass: "nav-item", attrs: { role: "presentation" } },
+          [
+            _c(
+              "router-link",
+              {
+                staticClass: "nav-link",
+                class: { active: _vm.$route.name === "data-proses-hilang" },
+                attrs: {
+                  id: "pills-profile-tab",
+                  "data-toggle": "pill",
+                  "data-target": "#pills-profile",
+                  type: "button",
+                  role: "tab",
+                  "aria-controls": "pills-profile",
+                  "aria-selected": "false",
+                  to: { name: "data-proses-hilang" },
+                },
+              },
+              [_vm._v("Proses")]
             ),
           ],
           1
@@ -156404,11 +156910,15 @@ var render = function () {
               _c("tr", { staticClass: "text-center" }, [
                 _c("td", [_vm._v(_vm._s(index + 1))]),
                 _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(item.no_ganti))]),
+                _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(item.no_seri))]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(item.nama))]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(item.tgl))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(item.pic))]),
                 _vm._v(" "),
                 _c("td", [
                   _c(
@@ -156449,7 +156959,7 @@ var render = function () {
                             attrs: {
                               to: {
                                 name: "data-detail-selesai-hilang",
-                                params: { id: item.no_seri },
+                                params: { id: item.no_ganti },
                               },
                             },
                           },
@@ -156843,7 +157353,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("h1", { staticClass: "h3 mb-4 mt-4 text-gray-900" }, [
-      _c("b", [_vm._v("Kondisi")]),
+      _c("b", [_vm._v("Penggantian Alat/Mesin")]),
     ])
   },
   function () {
@@ -156854,11 +157364,17 @@ var staticRenderFns = [
       _c("tr", { staticClass: "bg-table text-center" }, [
         _c("th", { staticClass: "text-black-1" }, [_vm._v("#")]),
         _vm._v(" "),
+        _c("th", { staticClass: "text-black-1" }, [_vm._v("No Penggantian")]),
+        _vm._v(" "),
         _c("th", { staticClass: "text-black-1" }, [_vm._v("No Seri")]),
         _vm._v(" "),
-        _c("th", { staticClass: "text-black-1" }, [_vm._v("Nama")]),
+        _c("th", { staticClass: "text-black-1" }, [_vm._v("Nama Alat/Mesin")]),
         _vm._v(" "),
-        _c("th", { staticClass: "text-black-1" }, [_vm._v("Tgl Ganti")]),
+        _c("th", { staticClass: "text-black-1" }, [
+          _vm._v("Tgl Penggantian Alat/Mesin"),
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black-1" }, [_vm._v("Nama Peminjam")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-black-1" }, [_vm._v("Status")]),
         _vm._v(" "),

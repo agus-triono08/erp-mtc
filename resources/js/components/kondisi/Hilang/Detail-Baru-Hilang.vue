@@ -20,7 +20,7 @@
     <div class="card shadow">
       <div class="row m-1">
         <div class="col-12">
-          <h4 class="text-capitalize text-primary text-bold"><b>No Seri #{{ $route.params.id }}</b></h4>
+          <h4 class="text-capitalize text-primary text-bold"><b>No Penggantian #{{ $route.params.id }}</b></h4>
         </div>
         <div class="col-3">
           <dt style="color: #000;">Nama Peminjam</dt>

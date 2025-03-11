@@ -1,14 +1,17 @@
 <template>
   <div class="container-fluid">
-    <h1 class="h3 mb-4 mt-4 text-gray-900"><b>Kondisi</b></h1>
+    <h1 class="h3 mb-4 mt-4 text-gray-900"><b>Penggantian Alat/Mesin</b></h1>
     <ul id="pills-tab" role="tablist" class="nav nav-pills mb-3" style="margin-top: 1rem !important;">
-        <li role="presentation" class="nav-item">
-          <router-link id="pills-home-tab" data-toggle="pill" data-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="false" class="nav-link" :class="{ active: $route.name === 'data-baru-hilang' }" :to="{ name: 'data-baru-hilang' }">Baru</router-link>
-        </li>
-        <li role="presentation" class="nav-item">
-          <router-link id="pills-contact-tab" data-toggle="pill" data-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="true" class="nav-link" :class="{ active: $route.name === 'data-selesai-hilang' }" :to="{ name: 'data-selesai-hilang' }">Selesai</router-link>
-        </li>
-      </ul>
+      <li role="presentation" class="nav-item">
+        <router-link id="pills-home-tab" data-toggle="pill" data-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="false" class="nav-link" :class="{ active: $route.name === 'data-baru-hilang' }" :to="{ name: 'data-baru-hilang' }">Baru</router-link>
+      </li>
+      <li role="presentation" class="nav-item">
+        <router-link id="pills-profile-tab" data-toggle="pill" data-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" class="nav-link" :class="{ active: $route.name === 'data-proses-hilang' }" :to="{ name: 'data-proses-hilang' }">Proses</router-link>
+      </li>
+      <li role="presentation" class="nav-item">
+        <router-link id="pills-contact-tab" data-toggle="pill" data-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="true" class="nav-link" :class="{ active: $route.name === 'data-selesai-hilang' }" :to="{ name: 'data-selesai-hilang' }">Selesai</router-link>
+      </li>
+    </ul>
     <div class="row align-items-center justify-content-end m-3">      
       <!-- Tambah Data -->
       <!-- <button class="btn btn-sm btn-outline-primary mr-2 ml-1" @click="openModal('add')">
@@ -28,12 +31,14 @@
         <thead>
           <tr class="bg-table text-center">
             <th class="text-black-1">#</th>
+            <th class="text-black-1">No Penggantian</th>
             <th class="text-black-1">No Seri</th>
-            <th class="text-black-1">Nama</th>
-            <th class="text-black-1">Tgl Ganti</th>
+            <th class="text-black-1">Nama Alat/Mesin</th>
+            <th class="text-black-1">Tgl Penggantian Alat/Mesin</th>
             <!-- <th class="text-black-1">Kondisi</th> -->
             <!-- <th class="text-black-1">Detail</th> -->
             <!-- <th class="text-black-1">Target</th> -->
+             <th class="text-black-1">Nama Peminjam</th>
             <th class="text-black-1">Status</th>
             <th class="text-black-1">Aksi</th>
           </tr>
@@ -46,6 +51,7 @@
         <tbody v-for="(item, index) in paginatedData" :key="index">
           <tr class="text-center">
             <td>{{ index + 1 }}</td>
+            <td>{{ item.no_ganti }}</td>
             <td>{{ item.no_seri }}</td>
             <td>{{ item.nama }}</td>
             <td>{{ item.tgl }}</td>
@@ -68,6 +74,7 @@
                 </span>
               </small>
             </td> -->
+            <td>{{ item.pic }}</td>
             <td>
               <div 
                 class="btn-sts"
@@ -95,7 +102,7 @@
                   <!-- <a class="dropdown-item" @click="perbaikanData(index)">
                     <i class="fas fa-check text-success"></i> Perbaikan
                   </a> -->
-                  <router-link :to="{ name: 'data-detail-selesai-hilang', params: { id: item.no_seri } }" class="dropdown-item">
+                  <router-link :to="{ name: 'data-detail-selesai-hilang', params: { id: item.no_ganti } }" class="dropdown-item">
                     <i class="fas fa-eye text-info"></i> Detail
                   </router-link>
                 </div>
@@ -214,7 +221,7 @@ export default {
         { text: 'Alice Johnson', value: 'Alice Johnson' },
       ],
       data: [
-        { no_seri: '1122wscj121', nama: 'Clamp', tgl: '2025-02-01', kondisi: 'Error', detail: 'Sensor tidak berfungsi', pic: 'John Doe', tgl_selesai: '2025-02-05', status: 'Selesai' },        
+        { no_ganti: 'NPG-001', no_seri: '1122wscj121', nama: 'Clamp', tgl: '2025-02-01', kondisi: 'Error', detail: 'Sensor tidak berfungsi', pic: 'John Doe', tgl_selesai: '2025-02-05', status: 'Selesai' },        
       ],
       paginatedData: [],
       searchQuery: '',

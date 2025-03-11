@@ -15,8 +15,7 @@
               type="text"
               id="no_seri_alat"              
               class="form-control"
-              placeholder="Terisi Otomatis"              
-              disabled
+              placeholder="Masukkan No Seri"                            
             />
           </div>
 

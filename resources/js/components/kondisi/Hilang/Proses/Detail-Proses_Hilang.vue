@@ -8,7 +8,7 @@
       <div class="col-sm-6 mt-3">
         <ol class="breadcrumb float-sm-right bg-table" style="border-radius: 10px;">
           <li class="breadcrumb-item">
-            <a style="color: #169ea8; text-decoration: none;" href="javascript:history.back()">Penggantian Alat/Mesin</a>
+            <a style="color: #169ea8; text-decoration: none;" href="/admin-mtc/data-hilang">Penggantian Alat/Mesin</a>
           </li>
           <li class="breadcrumb-item active" style="color: red;">
             <span>Detail Penggantian Alat/Mesin</span>
@@ -20,7 +20,7 @@
     <div class="card shadow">
       <div class="row m-1">
         <div class="col-12">
-          <h4 class="text-capitalize text-primary text-bold"><b>No Seri #{{ $route.params.id }}</b></h4>
+          <h4 class="text-capitalize text-primary text-bold"><b>No Penggantian #{{ $route.params.id }}</b></h4>
         </div>
         <div class="col-3">
           <dt style="color: #000;">Nama Peminjam</dt>
@@ -111,7 +111,7 @@
                   <!-- Dropdown yang berfungsi dengan benar -->
                   <div class="dropdown text-center">
                     <button
-                      class="btn btn-sm btn-primary"
+                      class="btn btn-sm"
                       type="button"
                       id="dropdownMenuButton"
                       data-toggle="dropdown"

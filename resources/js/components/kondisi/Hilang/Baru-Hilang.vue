@@ -14,9 +14,9 @@
     </ul>
     <div class="row align-items-center justify-content-end m-3">      
       <!-- Tambah Data -->
-      <!-- <button class="btn btn-sm btn-outline-primary mr-2 ml-1" @click="openModal('add')">
+      <button class="btn btn-sm btn-outline-primary mr-2 ml-1" @click="openModal('add')">
         <i class="fa fa-plus-circle"></i> Tambah Data
-      </button> -->
+      </button>
       <div class="search-wrapper">
         <div class="input-group">
           <input type="text" placeholder="Search..." class="form-control"
@@ -142,7 +142,7 @@
               </select>
             </div>
             <div class="form-group">
-              <label for="nama">Nama</label>
+              <label for="nama">Nama Alat/Mesin</label>
               <select class="form-control" id="nama" v-model="form.nama">
                 <option value="" disabled>Pilih Nama</option>
                 <option value="Clamp">Clamp</option>
@@ -151,7 +151,7 @@
               </select>
             </div>
             <div class="form-group">
-              <label for="tgl">Tgl Error</label>
+              <label for="tgl">Tgl Penggantian</label>
               <input type="date" class="form-control" id="tgl" v-model="form.tgl">
             </div>
             <!-- <div class="form-group">
@@ -162,11 +162,11 @@
               </select>
             </div> -->
             <div class="form-group">
-              <label for="detail">Detail</label>
+              <label for="detail">Detail Alat/Mesin Hilang</label>
               <input type="text" class="form-control" id="detail" v-model="form.detail">
             </div>
-            <div class="form-group">0
-              <label for="pic">PIC</label>
+            <div class="form-group">
+              <label for="pic">Nama Peminjam</label>
               <v-select
                 :options="picOptions"
                 v-model="form.pic"
@@ -175,13 +175,13 @@
                 :reduce="(pic) => pic.value"
               />
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
               <label for="status">Status</label>
               <select class="form-control" id="status" v-model="form.status">
                 <option value="" disabled>Pilih Status</option>
                 <option value="Belum">Belum</option>
               </select>
-            </div>
+            </div> -->
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" @click="closeModal">Tutup</button>
