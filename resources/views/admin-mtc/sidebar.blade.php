@@ -154,18 +154,26 @@
     </div>
 
     <!-- Nav Item - Perawatan -->
-    <li class="nav-item {{ request()->routeIs('perawatan.adminmtc') ? 'active' : '' }}">
+    {{-- <li class="nav-item {{ request()->routeIs('perawatan.adminmtc') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('perawatan.adminmtc') }}">
             <i class="fas fa-fw {{ request()->routeIs('perawatan.adminmtc') ? 'fa-cogs' : 'fa-cog' }}"></i>
             <span>Perawatan</span>
         </a>
-    </li>
+    </li> --}}
 
     <!-- Nav Item - Perawatan -->
     <li class="nav-item {{ request()->routeIs('jadwalperawatan.adminmtc') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('jadwalperawatan.adminmtc') }}">
             <i class="bi {{ request()->routeIs('jadwalperawatan.adminmtc') ? 'bi-calendar-check' : 'bi-calendar-check-fill' }}"></i>
             <span>Jadwal Perawatan</span>
+        </a>
+    </li>
+
+    <!-- Nav Item - Perawatan -->
+    <li class="nav-item {{ request()->routeIs('riwayatperawatan.adminmtc') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('riwayatperawatan.adminmtc') }}">
+            <i class="bi {{ request()->routeIs('riwayatperawatan.adminmtc') ? 'bi-clock-history' : 'bi-clock-fill' }}"></i>
+            <span>Riwayat Perawatan</span>
         </a>
     </li>
 

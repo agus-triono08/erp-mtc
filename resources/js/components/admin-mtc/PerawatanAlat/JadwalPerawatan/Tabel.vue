@@ -11,10 +11,7 @@
         <router-link id="pills-home-tab" data-toggle="pill" data-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true" class="nav-link" :class="{ active: $route.name === 'tabel-jadwal-perawatan' }" :to="{ name: 'tabel-jadwal-perawatan' }">Tabel</router-link>
       </li>
       <li role="presentation" class="nav-item">
-        <router-link id="pills-profile-tab" data-toggle="pill" data-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" class="nav-link" :class="{ active: $route.name === 'kondisi-proses-musnah' }" :to="{ name: 'kondisi-proses-musnah' }">Proses</router-link>
-      </li>
-      <li role="presentation" class="nav-item">
-        <router-link id="pills-contact-tab" data-toggle="pill" data-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false" class="nav-link" :class="{ active: $route.name === 'kondisi-selesai-musnah' }" :to="{ name: 'kondisi-selesai-musnah' }">Selesai</router-link>
+        <router-link id="pills-profile-tab" data-toggle="pill" data-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" class="nav-link" :class="{ active: $route.name === 'kalender-perawatan' }" :to="{ name: 'kalender-perawatan' }">Kalender</router-link>
       </li>
     </ul>
     <div class="row mb-2 mt-2 align-items-center">
@@ -23,17 +20,17 @@
       </div>      
     </div>
     <div class="row align-items-center justify-content-end mr-3">
-        <button @click="showModalTambah" class="btn btn-sm btn-primary mr-2">Tambah</button>
-        <button @click="exportToExcel" class="btn btn-sm btn-success mr-2">Export</button>
-        <div class="search-wrapper">
-          <div class="input-group">
-            <input type="text" placeholder="Search..." class="form-control"
-              v-model="search"
-            />
-          </div>
+      <button @click="showModalTambah" class="btn btn-sm btn-primary mr-2">Tambah</button>
+      <button @click="exportToExcel" class="btn btn-sm btn-success mr-2">Export</button>
+      <div class="search-wrapper">
+        <div class="input-group">
+          <input type="text" placeholder="Search..." class="form-control"
+            v-model="search"
+          />
         </div>
-        <!-- <input v-model="search" type="text" class="form-control form-control-sm" placeholder="Cari..."> -->
-      </div>
+      </div>        
+    </div>
+    <!-- Perencanaan -->
     <div class="col-12 table-responsive p-3">
       <h5 style="color: #000;"><b>Perencanaan</b></h5>
       <table class="table table-custom has-text-centered is-bordered" style="white-space: nowrap" id="export_table">
@@ -53,6 +50,79 @@
           <tr v-for="item in filteredJadwalPerawatan.slice((currentPage - 1) * perPage, currentPage * perPage)" :key="item.id">
             <td>{{ item.nama_alat }}</td>
             <td>{{ item.no_seri }}</td>
+            <td v-for="i in Array.from(Array(last_date).keys())" :key="i" :style="{ backgroundColor: weekend_date.indexOf(i + 1) !== -1 ? 'black' : isDate(item.tanggal_perawatan, i + 1) ? 'yellow' : '' }">
+            </td>
+          </tr>
+        </tbody>
+        <tbody v-else>
+          <tr>
+            <td :colspan="last_date + 3">Tidak ada data</td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- Pagination -->
+      <div class="d-flex justify-content-between align-items-center mt-3 mb-3" style="border-radius: 10px; background-color: #f3f4f6; height: 50px; color: #000;">
+        <div class="ml-3">
+          Rows per page:
+          <span>{{ perPage }}</span>
+        </div>
+        <div class="mr-3">          
+          <span>{{ paginationInfo }}</span>
+          <button @click="prevPage" :disabled="currentPage === 1" class="btn btn-sm btn-light">
+            <i class="fas fa-angle-left"></i>
+          </button>
+          <span>  </span>
+          <button @click="nextPage" :disabled="currentPage === totalPages" class="btn btn-sm btn-light">
+            <i class="fas fa-angle-right"></i>
+          </button>
+        </div>
+      </div>   
+    </div>
+    <!-- Pelaksanaan  -->
+    <div class="row align-items-center justify-content-end mr-3">      
+      <div class="search-wrapper">
+        <div class="input-group">
+          <input type="text" placeholder="Search..." class="form-control"
+            v-model="search"
+          />
+        </div>
+      </div>        
+    </div>
+    <div class="col-12 table-responsive p-3">
+      <h5 style="color: #000;"><b>Pelaksanaan</b></h5>
+      <table class="table table-custom has-text-centered is-bordered" style="white-space: nowrap" id="export_table">
+        <thead class="bg-table">
+          <tr style="color: #000;">
+            <th rowspan="2">Nama Alat/Mesin</th>
+            <th rowspan="2">No Seri</th>
+            <th rowspan="2">Progres</th>
+            <th rowspan="2">Selesai</th>
+            <th rowspan="2">Aksi</th>
+            <th :colspan="last_date">Tanggal</th>
+          </tr>
+          <tr>
+            <th v-for="i in Array.from(Array(last_date).keys())" :key="i" style="color: #000;">
+              {{ i + 1 }}
+            </th>
+          </tr>
+        </thead>
+        <tbody v-if="filteredJadwalPerawatan.length > 0">
+          <tr v-for="item in filteredJadwalPerawatan.slice((currentPage - 1) * perPage, currentPage * perPage)" :key="item.id">
+            <td>{{ item.nama_alat }}</td>
+            <td>{{ item.no_seri }}</td>
+            <td class="text-center">
+              <i class="fas fa-check" v-if="item.status === 'Belum Selesai'" style="color: green;"></i>
+              <!-- <i class="fas fa-times" v-if="item.status === 'Belum Selesai'" style="color: red;"></i> -->
+            </td>
+            <td class="text-center">
+              <i class="fas fa-check" v-if="item.status === 'Selesai'" style="color: green;"></i>
+              <!-- <i class="fas fa-times" v-if="item.status === 'Belum Selesai'" style="color: red;"></i> -->
+            </td>
+            <td>
+              <button @click="editJadwal(item)" class="btn btn-sm btn-warning">
+                <i class="fas fa-edit"></i>
+              </button>
+            </td>
             <td v-for="i in Array.from(Array(last_date).keys())" :key="i" :style="{ backgroundColor: weekend_date.indexOf(i + 1) !== -1 ? 'black' : isDate(item.tanggal_perawatan, i + 1) ? 'yellow' : '' }">
             </td>
           </tr>
@@ -119,34 +189,122 @@
         </div>
       </div>
     </div>
+    <!-- Modal untuk Pelaksanaan -->
+    <div v-if="isModalOpen" class="modal fade show" style="display: block;" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">{{ modalTitle }}</h5>
+            <button type="button" class="close" @click="closeModal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label><b>Tanggal Pengerjaan <sup class="text-danger"> *</sup> </b></label>
+                <input v-model="tanggal_perawatan" type="date" class="form-control">
+              </div>
+              <div class="form-group"> 
+                <label for="waktu"><b>Waktu (Mulai - Selesai) <sup class="text-danger"> *</sup> </b></label> 
+                <div class="input-group"> <input type="time" class="form-control" id="waktu_mulai" v-model="jadwalPerawatan.waktu_mulai" required>
+                  <span class="input-group-text">-</span> 
+                  <input type="time" class="form-control" id="waktu_selesai" v-model="jadwalPerawatan.waktu_selesai" required> 
+                </div> 
+              </div>
+              <div class="form-group">
+                <label for="pic"><b>PIC <sup class="text-danger"> *</sup> </b></label>
+                <v-select
+                  :options="picOptions"
+                  v-model="jadwalPerawatan.pic"
+                  multiple
+                  label="text"
+                  :reduce="(pic) => pic.value"
+                />
+              </div>
+              <div class="form-group">
+                <label><b>Detail <sup class="text-danger"> *</sup></b></label>
+                <textarea v-model="detail" class="form-control"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="kondisi" class="text-black-10"><b>Kondisi <sup class="text-danger"> *</sup></b></label>
+                <select class="form-control" id="kondisi" v-model="jadwalPerawatan.kondisi" required>
+                  <option value="">Pilih Kondisi</option>
+                  <option value="OK">OK</option>
+                  <option value="Rusak">Rusak</option>
+                  <option value="Error">Error</option>
+                </select>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" @click="closeModal">Batal</button>
+            <button type="button" class="btn btn-primary" @click="simpanJadwalPerawatan" v-if="jadwalPerawatan.status !== 'Selesai'">Simpan</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import vSelect from 'vue-select';
+
 export default {
+  components: {
+    vSelect,
+  },
   data() {
     return {
+      picOptions: [
+        { text: 'John Doe', value: 'John Doe' },
+        { text: 'Jane Doe', value: 'Jane Doe' },
+        { text: 'Bob Smith', value: 'Bob Smith' },
+        { text: 'Alice Johnson', value: 'Alice Johnson' },
+      ],
       jadwalPerawatan: [
-        {
+        {          
           id: 1,
+          no_perawatan: 'R-01',
           nama_alat: 'Bor',
           no_seri: 'B-01',
           tanggal_perawatan: [6],
+          waktu_mulai: '',
+          waktu_selesai: '',
+          pic: '',
+          detail: '',
+          kondisi: '',
+          status: 'Belum Selesai'
         },
-        {
+        {          
           id: 2,
+          no_perawatan: 'R-02',
           nama_alat: 'Bor',
           no_seri: 'B-02',
           tanggal_perawatan: [13],
+          waktu_mulai: '',
+          waktu_selesai: '',
+          pic: '',
+          detail: '',
+          kondisi: '',
+          status: 'Belum Selesai'
         },
-        {
+        {                    
           id: 3,
+          no_perawatan: 'R-03',
           nama_alat: 'Bor',
           no_seri: 'B-03',
           tanggal_perawatan: [19],
+          waktu_mulai: '',
+          waktu_selesai: '',
+          pic: '',
+          detail: '',
+          kondisi: '',
+          status: 'Belum Selesai'
         },
         // tambahkan data lainnya
       ],
+      status: '',
       currentPage: 1,
       pages: [],
       perPage: 10, // jumlah data per halaman
@@ -161,7 +319,8 @@ export default {
   computed: {
     currentMonth() {
       const date = new Date();
-      return date.toLocaleString('default', { month: 'long' });
+      const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+      return monthNames[date.getMonth()];
     },
     currentYear() {
       const date = new Date();
@@ -232,6 +391,34 @@ export default {
       };
       this.jadwalPerawatan.push(jadwalPerawatanBaru);
       this.hideModalTambah();
+    },
+    simpanJadwalPerawatan() {
+      const index = this.jadwalPerawatan.findIndex((item) => item.id === this.id);
+      if (index !== -1) {
+        this.jadwalPerawatan[index].tanggal_perawatan = this.tanggal_perawatan;
+        this.jadwalPerawatan[index].waktu_mulai = this.waktu_mulai;
+        this.jadwalPerawatan[index].waktu_selesai = this.waktu_selesai;
+        this.jadwalPerawatan[index].pic = this.pic;
+        this.jadwalPerawatan[index].detail = this.detail;
+        this.jadwalPerawatan[index].kondisi = this.kondisi;
+        this.jadwalPerawatan[index].status = 'Selesai';
+        // Update tanggal pengerjaan pada tabel
+        const tanggalPerawatan = this.tanggal_perawatan.split('-');
+        const tanggal = tanggalPerawatan[2];
+        this.jadwalPerawatan[index].tanggal_perawatan = [parseInt(tanggal)];
+      }
+      this.closeModal();
+    },
+    editJadwal(item) {
+      this.id = item.id;
+      this.tanggal_perawatan = item.tanggal_perawatan;
+      this.waktu_mulai = item.waktu_mulai;
+      this.waktu_selesai = item.waktu_selesai;
+      this.pic = item.pic;
+      this.detail = item.detail;
+      this.kondisi = item.kondisi;
+      this.modalTitle = 'Edit Jadwal Perawatan';
+      this.showModalTambah();
     },
     exportToExcel() {
       this.convertToExcel("export_table", "Jadwal Perawatan");

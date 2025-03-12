@@ -25,6 +25,12 @@
         "webpack-cli": "^5.1.4"
     },
     "dependencies": {
+        "@fullcalendar/core": "^6.1.15",
+        "@fullcalendar/daygrid": "^6.1.15",
+        "@fullcalendar/interaction": "^6.1.15",
+        "@fullcalendar/list": "^6.1.15",
+        "@fullcalendar/timegrid": "^6.1.15",
+        "@fullcalendar/vue": "^6.1.15",
         "jspdf": "^3.0.0",
         "jspdf-autotable": "^3.8.4",
         "lodash.debounce": "^4.0.8",
