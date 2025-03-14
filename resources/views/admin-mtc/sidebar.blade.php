@@ -162,11 +162,30 @@
     </li> --}}
 
     <!-- Nav Item - Perawatan -->
-    <li class="nav-item {{ request()->routeIs('jadwalperawatan.adminmtc') ? 'active' : '' }}">
+    {{-- <li class="nav-item {{ request()->routeIs('jadwalperawatan.adminmtc') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('jadwalperawatan.adminmtc') }}">
             <i class="bi {{ request()->routeIs('jadwalperawatan.adminmtc') ? 'bi-calendar-check' : 'bi-calendar-check-fill' }}"></i>
             <span>Jadwal Perawatan</span>
         </a>
+    </li> --}}
+
+    <li class="nav-item">
+        <a class="nav-link" href="#" data-toggle="collapse" data-target="#jadwal-collapse" aria-expanded="true" aria-controls="jadwal-collapse">
+            <i class="bi bi-calendar-check "></i>
+            <span>Jadwal Perawatan</span>
+        </a>
+        <ul id="jadwal-collapse" class="collapse" aria-labelledby="jadwal-collapse" data-parent="#accordionSidebar">
+            <li class="nav-item {{ request()->routeIs('perencanaanjadwalperawatan.adminmtc') ? 'active' : '' }}">
+                <a class="nav-link" href="{{route('perencanaanjadwalperawatan.adminmtc')}}">
+                    {{-- <i class="fas fa-fw fa-bug" style="color: #169ea8;"></i> --}} Perencanaan
+                </a>
+            </li>
+            <li class="nav-item {{ request()->routeIs('jadwalperawatan.adminmtc') ? 'active' : '' }}">
+                <a class="nav-link" href="{{route('jadwalperawatan.adminmtc')}}">
+                    {{-- <i class="fas fa-fw fa-exclamation-triangle" style="color: #169ea8;"></i> --}} Pelaksanaan 
+                </a>
+            </li>
+        </ul>
     </li>
 
     <!-- Nav Item - Perawatan -->

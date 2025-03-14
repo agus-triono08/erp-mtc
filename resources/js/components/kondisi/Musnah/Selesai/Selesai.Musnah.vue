@@ -77,7 +77,7 @@
                 :class="{
                   'status-rusak': item.status === 'Belum',
                   'status-hilang': item.status === 'Proses',
-                  'status-active': item.status === 'Selesai',
+                  'status-active': item.status === 'Selesai Pemusnahan',
                 }">
                 {{ item.status }}
               </div>
@@ -217,7 +217,7 @@ export default {
         { text: 'Alice Johnson', value: 'Alice Johnson' },
       ],
       data: [
-        { no_seri: '1122wscj121', nama: 'Clamp', tgl: '2025-02-01', kondisi: 'Error', detail: 'Sensor tidak berfungsi', pic: 'John Doe', tgl_selesai: '2025-02-05', status: 'Selesai' },        
+        { no_seri: '1122wscj121', nama: 'Clamp', tgl: '2025-02-01', kondisi: 'Error', detail: 'Sensor tidak berfungsi', pic: 'John Doe', tgl_selesai: '2025-02-05', status: 'Selesai Pemusnahan' },        
       ],
       paginatedData: [],
       searchQuery: '',

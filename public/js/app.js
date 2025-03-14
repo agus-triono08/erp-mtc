@@ -38089,7 +38089,7 @@ var locale = {
         pic: '',
         detail: '',
         kondisi: '',
-        status: 'Belum Selesai'
+        status: 'Selesai'
       }, {
         id: 2,
         no_perawatan: 'R-02',
@@ -38101,7 +38101,7 @@ var locale = {
         pic: '',
         detail: '',
         kondisi: '',
-        status: 'Belum Selesai'
+        status: 'Pelaksanaan'
       }, {
         id: 3,
         no_perawatan: 'R-03',
@@ -38144,6 +38144,152 @@ var locale = {
             start: new Date(new Date().getFullYear(), new Date().getMonth(), tanggal),
             end: new Date(new Date().getFullYear(), new Date().getMonth(), tanggal),
             allDay: true,
+            backgroundColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
+            borderColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
+            display: 'block'
+          };
+        });
+      }),
+      select: function select(arg) {
+        var tanggalPerawatan = _this.jadwalPerawatan.find(function (item) {
+          return item.tanggal_perawatan.includes(arg.start.getDate());
+        });
+        if (tanggalPerawatan) {
+          alert('Tanggal ini sudah terblokir');
+          return false;
+        }
+      }
+    });
+    calendar.render();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Kalender.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Kalender.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _fullcalendar_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @fullcalendar/core */ "./node_modules/@fullcalendar/core/index.js");
+/* harmony import */ var _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fullcalendar/daygrid */ "./node_modules/@fullcalendar/daygrid/index.js");
+/* harmony import */ var _fullcalendar_timegrid__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fullcalendar/timegrid */ "./node_modules/@fullcalendar/timegrid/index.js");
+/* harmony import */ var _fullcalendar_list__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fullcalendar/list */ "./node_modules/@fullcalendar/list/index.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+// Tambahkan kode berikut untuk mendefinisikan nama bulan Indonesia
+var locale = {
+  id: 'id',
+  firstDay: 0,
+  // hari pertama dalam seminggu (0 = Minggu, 1 = Senin)
+  dayNames: ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'],
+  dayNamesShort: ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'],
+  monthNames: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
+  monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
+  titleFormat: {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      jadwalPerawatan: [{
+        id: 1,
+        no_perawatan: 'R-01',
+        nama_alat: 'Bor',
+        no_seri: 'B-01',
+        tanggal_perawatan: [6],
+        waktu_mulai: '',
+        waktu_selesai: '',
+        pic: '',
+        detail: '',
+        kondisi: '',
+        status: 'Belum Selesai'
+      }, {
+        id: 2,
+        no_perawatan: 'R-02',
+        nama_alat: 'Bor',
+        no_seri: 'B-02',
+        tanggal_perawatan: [13],
+        waktu_mulai: '',
+        waktu_selesai: '',
+        pic: '',
+        detail: '',
+        kondisi: '',
+        status: 'Belum Selesai'
+      }, {
+        id: 3,
+        no_perawatan: 'R-03',
+        nama_alat: 'Bor',
+        no_seri: 'B-03',
+        tanggal_perawatan: [19],
+        waktu_mulai: '',
+        waktu_selesai: '',
+        pic: '',
+        detail: '',
+        kondisi: '',
+        status: 'Belum Selesai'
+      }
+      // tambahkan data lainnya
+      ]
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new _fullcalendar_core__WEBPACK_IMPORTED_MODULE_0__.Calendar(calendarEl, {
+      plugins: [_fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_1__["default"], _fullcalendar_timegrid__WEBPACK_IMPORTED_MODULE_2__["default"], _fullcalendar_list__WEBPACK_IMPORTED_MODULE_3__["default"]],
+      headerToolbar: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+      },
+      initialDate: new Date(new Date().getMonth() === 11 ? new Date().getFullYear() + 1 : new Date().getFullYear(), new Date().getMonth() === 11 ? 0 : new Date().getMonth() + 1, 1),
+      navLinks: true,
+      // can click day/week names to navigate views
+      editable: true,
+      dayMaxEvents: true,
+      // allow "more" link when too many events
+      locale: 'id',
+      // tambahkan opsi locale
+      events: this.jadwalPerawatan.flatMap(function (item) {
+        return item.tanggal_perawatan.map(function (tanggal) {
+          return {
+            title: "".concat(item.nama_alat, " - ").concat(item.no_seri),
+            start: new Date(new Date().getFullYear(), new Date().getMonth(), tanggal),
+            end: new Date(new Date().getFullYear(), new Date().getMonth(), tanggal),
+            allDay: true,
             backgroundColor: item.status === 'Belum Selesai' ? '#dc3545' : '#169ea8',
             borderColor: item.status === 'Belum Selesai' ? '#dc3545' : '#169ea8',
             display: 'block'
@@ -38161,6 +38307,330 @@ var locale = {
       }
     });
     calendar.render();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Tabel.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Tabel.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-select */ "./node_modules/vue-select/dist/vue-select.js");
+/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_select__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    vSelect: (vue_select__WEBPACK_IMPORTED_MODULE_0___default())
+  },
+  data: function data() {
+    return {
+      picOptions: [{
+        text: 'John Doe',
+        value: 'John Doe'
+      }, {
+        text: 'Jane Doe',
+        value: 'Jane Doe'
+      }, {
+        text: 'Bob Smith',
+        value: 'Bob Smith'
+      }, {
+        text: 'Alice Johnson',
+        value: 'Alice Johnson'
+      }],
+      jadwalPerawatan: [],
+      status: '',
+      currentPage: 1,
+      pages: [],
+      perPage: 10,
+      // jumlah data per halaman
+      search: '',
+      tanggal: '',
+      nama_alat: '',
+      no_seri: '',
+      isModalTambahOpen: false,
+      isModalEditOpen: false,
+      isModalSelesaiOpen: false,
+      modalTitle: 'Tambah Jadwal Perawatan'
+    };
+  },
+  computed: {
+    currentMonth: function currentMonth() {
+      var date = new Date();
+      var monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+      var nextMonth = date.getMonth() + 1;
+      return monthNames[nextMonth];
+    },
+    currentYear: function currentYear() {
+      var date = new Date();
+      var nextMonth = date.getMonth() + 1;
+      if (nextMonth === 0) {
+        return date.getFullYear() + 1;
+      } else {
+        return date.getFullYear();
+      }
+    },
+    last_date: function last_date() {
+      var date = new Date(this.currentYear, this.getMonthNumber(this.currentMonth) + 1, 0);
+      return date.getDate(); // Returns the last day of the current month
+    },
+    weekend_date: function weekend_date() {
+      var date = new Date(this.currentYear, this.getMonthNumber(this.currentMonth), 1); // Tanggal 1 bulan ini
+      var weekendDates = [];
+      for (var i = 0; i < this.last_date; i++) {
+        date.setDate(i + 1); // Mengatur tanggal hari ini
+        // Menyimpan hari Sabtu (6) dan Minggu (0)
+        if (date.getDay() === 0 || date.getDay() === 6) {
+          weekendDates.push(i + 1);
+        }
+      }
+      return weekendDates;
+    },
+    filteredJadwalPerawatan: function filteredJadwalPerawatan() {
+      var search = this.search.toLowerCase();
+      return this.jadwalPerawatan.filter(function (item) {
+        return item.nama_alat.toLowerCase().includes(search) || item.no_seri.toLowerCase().includes(search);
+      });
+    },
+    totalPages: function totalPages() {
+      return Math.ceil(this.filteredJadwalPerawatan.length / this.perPage);
+    },
+    paginationInfo: function paginationInfo() {
+      var start = (this.currentPage - 1) * this.perPage + 1;
+      var end = this.currentPage * this.perPage;
+      return "".concat(start, " - ").concat(end, " dari ").concat(this.filteredJadwalPerawatan.length);
+    }
+  },
+  methods: {
+    isDate: function isDate(tanggal, hari) {
+      // Cek apakah tanggal adalah string
+      if (typeof tanggal === 'string') {
+        // Jika tanggal adalah string, cek apakah tanggal mengandung hari
+        if (tanggal.includes(hari)) {
+          return true;
+        }
+      } else {
+        // Jika tanggal bukan string, asumsikan tanggal adalah objek Date
+        var date = new Date(tanggal);
+        // Cek apakah tanggal sama dengan hari
+        if (date.getDate() === hari) {
+          return true;
+        }
+      }
+      // Jika tidak ada kondisi yang terpenuhi, return false
+      return false;
+    },
+    prevPage: function prevPage() {
+      this.currentPage--;
+    },
+    nextPage: function nextPage() {
+      this.currentPage++;
+    },
+    nowPage: function nowPage(paginate) {
+      this.currentPage = paginate;
+    },
+    getMonthNumber: function getMonthNumber(monthName) {
+      var monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+      return monthNames.indexOf(monthName);
+    },
+    showModalTambah: function showModalTambah() {
+      this.isModalTambahOpen = true;
+    },
+    closeModalTambah: function closeModalTambah() {
+      this.isModalTambahOpen = false;
+    },
+    tambahJadwalPerawatan: function tambahJadwalPerawatan() {
+      var jadwalPerawatanBaru = {
+        id: this.jadwalPerawatan.length + 1,
+        tanggal_perawatan: [this.tanggal],
+        nama_alat: this.nama_alat,
+        no_seri: this.no_seri
+      };
+      this.jadwalPerawatan.push(jadwalPerawatanBaru);
+      this.closeModalTambah(); // Change hideModalTambah to closeModalTambah
+    },
+    exportToExcel: function exportToExcel() {
+      this.convertToExcel("export_table", "Jadwal Perawatan");
+    },
+    convertToExcel: function convertToExcel(table, name) {
+      var uri = "data:application/vnd.ms-excel;base64,",
+        template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',
+        base64 = function base64(s) {
+          return window.btoa(unescape(encodeURIComponent(s)));
+        },
+        format = function format(s, c) {
+          return s.replace(/{(\w+)}/g, function (m, p) {
+            return c[p];
+          });
+        };
+      if (!table.nodeType) table = document.getElementById(table);
+      var ctx = {
+        worksheet: name || "Worksheet",
+        table: table.innerHTML
+      };
+      window.location.href = uri + base64(format(template, ctx));
+    },
+    dateFormatter: function dateFormatter() {
+      var real_month = this.getMonthNumber(this.currentMonth) + 1;
+      real_month = real_month.toString();
+      if (real_month.length == 1) {
+        real_month = "0" + real_month;
+      }
+      var real_date = this.last_date.toString();
+      if (real_date.length == 1) {
+        real_date = "0" + real_date;
+      }
+      var result = this.currentYear.toString() + "-" + real_month + "-" + real_date;
+      return result;
+    }
+  },
+  watch: {
+    nama_alat: function nama_alat() {
+      if (this.nama_alat === 'Bor') {
+        this.no_seri = 'B-01';
+      } else if (this.nama_alat === 'Gergaji') {
+        this.no_seri = 'G-01';
+      } else if (this.nama_alat === 'Pahat') {
+        this.no_seri = 'P-01';
+      } else {
+        this.no_seri = '';
+      }
+    },
+    search: function search() {
+      this.currentPage = 1;
+    }
+  },
+  mounted: function mounted() {
+    this.pages = [];
   }
 });
 
@@ -38700,6 +39170,58 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -38726,7 +39248,7 @@ __webpack_require__.r(__webpack_exports__);
         no_perawatan: 'R-01',
         nama_alat: 'Bor',
         no_seri: 'B-01',
-        tanggal_perawatan: [6],
+        tanggal_perawatan: '6',
         waktu_mulai: '',
         waktu_selesai: '',
         pic: '',
@@ -38738,7 +39260,7 @@ __webpack_require__.r(__webpack_exports__);
         no_perawatan: 'R-02',
         nama_alat: 'Bor',
         no_seri: 'B-02',
-        tanggal_perawatan: [13],
+        tanggal_perawatan: '20',
         waktu_mulai: '',
         waktu_selesai: '',
         pic: '',
@@ -38750,16 +39272,14 @@ __webpack_require__.r(__webpack_exports__);
         no_perawatan: 'R-03',
         nama_alat: 'Bor',
         no_seri: 'B-03',
-        tanggal_perawatan: [19],
+        tanggal_perawatan: '19',
         waktu_mulai: '',
         waktu_selesai: '',
         pic: '',
         detail: '',
         kondisi: '',
         status: 'Belum Selesai'
-      }
-      // tambahkan data lainnya
-      ],
+      }],
       status: '',
       currentPage: 1,
       pages: [],
@@ -38769,7 +39289,9 @@ __webpack_require__.r(__webpack_exports__);
       tanggal: '',
       nama_alat: '',
       no_seri: '',
-      isModalOpen: false,
+      isModalTambahOpen: false,
+      isModalEditOpen: false,
+      isModalSelesaiOpen: false,
       modalTitle: 'Tambah Jadwal Perawatan'
     };
   },
@@ -38784,9 +39306,9 @@ __webpack_require__.r(__webpack_exports__);
       return date.getFullYear();
     },
     last_date: function last_date() {
-      // Menghitung jumlah hari dalam bulan saat ini
+      // Fixing last_date calculation to be more robust.
       var date = new Date(this.currentYear, this.getMonthNumber(this.currentMonth) + 1, 0);
-      return date.getDate(); // Mendapatkan tanggal terakhir dalam bulan
+      return date.getDate(); // Returns the last day of the current month
     },
     weekend_date: function weekend_date() {
       var date = new Date(this.currentYear, this.getMonthNumber(this.currentMonth), 1); // Tanggal 1 bulan ini
@@ -38817,7 +39339,22 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     isDate: function isDate(tanggal, hari) {
-      return tanggal.includes(hari);
+      // Cek apakah tanggal adalah string
+      if (typeof tanggal === 'string') {
+        // Jika tanggal adalah string, cek apakah tanggal mengandung hari
+        if (tanggal.includes(hari)) {
+          return true;
+        }
+      } else {
+        // Jika tanggal bukan string, asumsikan tanggal adalah objek Date
+        var date = new Date(tanggal);
+        // Cek apakah tanggal sama dengan hari
+        if (date.getDate() === hari) {
+          return true;
+        }
+      }
+      // Jika tidak ada kondisi yang terpenuhi, return false
+      return false;
     },
     prevPage: function prevPage() {
       this.currentPage--;
@@ -38829,14 +39366,36 @@ __webpack_require__.r(__webpack_exports__);
       this.currentPage = paginate;
     },
     getMonthNumber: function getMonthNumber(monthName) {
-      var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      var monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
       return monthNames.indexOf(monthName);
     },
     showModalTambah: function showModalTambah() {
-      this.isModalOpen = true;
+      this.isModalTambahOpen = true;
     },
-    closeModal: function closeModal() {
-      this.isModalOpen = false;
+    closeModalTambah: function closeModalTambah() {
+      this.isModalTambahOpen = false;
+    },
+    showModalEdit: function showModalEdit(item) {
+      this.id = item.id;
+      this.tanggal_perawatan = item.tanggal_perawatan;
+      this.waktu_mulai = item.waktu_mulai;
+      this.waktu_selesai = item.waktu_selesai;
+      this.pic = item.pic;
+      this.detail = item.detail;
+      this.kondisi = item.kondisi;
+      this.isModalEditOpen = true;
+    },
+    closeModalEdit: function closeModalEdit() {
+      this.isModalEditOpen = false;
+    },
+    showModalSelesai: function showModalSelesai(item) {
+      this.id = item.id;
+      this.keterangan_perawatan = '';
+      this.kondisi = '';
+      this.isModalSelesaiOpen = true;
+    },
+    closeModalSelesai: function closeModalSelesai() {
+      this.isModalSelesaiOpen = false;
     },
     tambahJadwalPerawatan: function tambahJadwalPerawatan() {
       var jadwalPerawatanBaru = {
@@ -38846,12 +39405,25 @@ __webpack_require__.r(__webpack_exports__);
         no_seri: this.no_seri
       };
       this.jadwalPerawatan.push(jadwalPerawatanBaru);
-      this.hideModalTambah();
+      this.closeModalTambah(); // Change hideModalTambah to closeModalTambah
     },
-    simpanJadwalPerawatan: function simpanJadwalPerawatan() {
+    simpanSelesai: function simpanSelesai() {
       var _this = this;
       var index = this.jadwalPerawatan.findIndex(function (item) {
         return item.id === _this.id;
+      });
+      if (index !== -1) {
+        this.jadwalPerawatan[index].keterangan_perawatan = this.keterangan_perawatan;
+        this.jadwalPerawatan[index].kondisi = this.kondisi;
+        this.jadwalPerawatan[index].status = 'Selesai';
+      }
+      this.closeModalSelesai();
+      this.isModalSelesaiOpen = false;
+    },
+    simpanJadwalPerawatan: function simpanJadwalPerawatan() {
+      var _this2 = this;
+      var index = this.jadwalPerawatan.findIndex(function (item) {
+        return item.id === _this2.id;
       });
       if (index !== -1) {
         this.jadwalPerawatan[index].tanggal_perawatan = this.tanggal_perawatan;
@@ -38860,13 +39432,13 @@ __webpack_require__.r(__webpack_exports__);
         this.jadwalPerawatan[index].pic = this.pic;
         this.jadwalPerawatan[index].detail = this.detail;
         this.jadwalPerawatan[index].kondisi = this.kondisi;
-        this.jadwalPerawatan[index].status = 'Selesai';
+        this.jadwalPerawatan[index].status = 'Pelaksanaan';
         // Update tanggal pengerjaan pada tabel
         var tanggalPerawatan = this.tanggal_perawatan.split('-');
         var tanggal = tanggalPerawatan[2];
         this.jadwalPerawatan[index].tanggal_perawatan = [parseInt(tanggal)];
       }
-      this.closeModal();
+      this.closeModalEdit();
     },
     editJadwal: function editJadwal(item) {
       this.id = item.id;
@@ -50870,173 +51442,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jspdf__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jspdf */ "./node_modules/jspdf/dist/jspdf.es.min.js");
 /* harmony import */ var jspdf_autotable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! jspdf-autotable */ "./node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.js");
 /* harmony import */ var jspdf_autotable__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(jspdf_autotable__WEBPACK_IMPORTED_MODULE_2__);
-var _methods;
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -51242,19 +51653,23 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
     return {
       showModal: false,
       aktivitas: {
-        tanggal: '',
         detail: '',
-        kondisi: ''
+        ba: null,
+        // BA file (PDF)
+        buktiPemusnahan: []
       },
-      aktivitasList: [{
-        id: 1,
-        tanggal: '2022-01-01',
-        detail: 'Aktivitas 1',
-        kondisi: 'OK',
-        status: 'Menunggu Persetujuan',
-        ba: '/file/Berita-Acara-Pemusnahan-Barang.pdf',
-        buktiPemusnahan: ['/file/tang.jpeg', '/file/Berita-Acara-Pemusnahan-Barang.pdf']
-      }],
+      aktivitasList: [
+        // {
+        //   id: 1,
+        //   tanggal: '2022-01-01',
+        //   detail: 'Aktivitas 1',
+        //   kondisi: 'OK',
+        //   status: 'Menunggu Persetujuan',
+        //   ba: '/file/Berita-Acara-Pemusnahan-Barang.pdf',
+        //   buktiPemusnahan: ['/file/tang.jpeg',         
+        //   '/file/Berita-Acara-Pemusnahan-Barang.pdf']
+        // }
+      ],
       data: [{
         no_seri: '1122wscj121',
         waktu_mulai: '08:00',
@@ -51270,18 +51685,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
       }],
       searchQuery: '',
       rowsPerPage: 10,
-      currentPage: 1,
-      showUploadBAModal: false,
-      // Mengatur visibilitas modal upload BA
-      selectedBAFile: null,
-      // File yang dipilih untuk upload
-      files: [],
-      isDragging: false,
-      // Status apakah file sedang di-drag
-      showUploadBuktiPemusnahanModal: false,
-      buktiPemusnahanFile: null,
-      showEditModal: false,
-      selectedIndex: null
+      currentPage: 1
     };
   },
   computed: {
@@ -51317,12 +51721,63 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
       return "Menampilkan ".concat(start, " - ").concat(end, " dari ").concat(this.aktivitasList.length, " data");
     }
   },
-  methods: (_methods = {
+  methods: {
+    handleBAUpload: function handleBAUpload(event) {
+      var file = event.target.files[0];
+      if (file && file.type === 'application/pdf') {
+        // Mengonversi file PDF menjadi URL objek yang dapat diakses oleh komponen
+        this.aktivitas.ba = URL.createObjectURL(file);
+        console.log('Berita Acara berhasil diunggah:', this.aktivitas.ba);
+      } else {
+        alert("Hanya file PDF yang diperbolehkan untuk Berita Acara!");
+        this.aktivitas.ba = null;
+      }
+    },
+    // Method untuk menangani upload Bukti Pemusnahan (Multiple files, gambar/PDF)
+    handleBuktiPemusnahanUpload: function handleBuktiPemusnahanUpload(event) {
+      var files = event.target.files;
+      var validFiles = [];
+      for (var i = 0; i < files.length; i++) {
+        var file = files[i];
+        if (file.type === 'application/pdf' || file.type.startsWith('image/')) {
+          // Mengonversi file menjadi URL objek
+          validFiles.push(URL.createObjectURL(file));
+        } else {
+          alert("Hanya file PDF atau gambar yang diperbolehkan untuk Bukti Pemusnahan!");
+        }
+      }
+
+      // Memperbarui buktiPemusnahan dengan file yang valid (URL objek)
+      this.aktivitas.buktiPemusnahan = validFiles;
+      console.log('Bukti Pemusnahan berhasil diunggah:', this.aktivitas.buktiPemusnahan);
+    },
+    // Method untuk menangani upload Bukti Pemusnahan (Multiple files, hanya PDF)
+    // handleBuktiPemusnahanUpload(event) {
+    //   const file = event.target.files[0];
+    //   if (file && file.type === 'application/pdf') {
+    //     // Mengonversi file PDF menjadi URL objek yang dapat diakses oleh komponen
+    //     this.aktivitas.buktiPemusnahan = URL.createObjectURL(file);
+    //     console.log('Berita Acara berhasil diunggah:', this.aktivitas.buktiPemusnahan);
+    //   } else {
+    //     alert("Hanya file PDF yang diperbolehkan untuk Berita Acara!");
+    //     this.aktivitas.buktiPemusnahan = null;
+    //   }
+    // },
     addAktivitas: function addAktivitas() {
+      if (!this.aktivitas.ba || this.aktivitas.buktiPemusnahan.length === 0) {
+        alert("Harap unggah Berita Acara (BA) dan Bukti Pemusnahan!");
+        return;
+      }
+
+      // Create a new activity object with the uploaded files
       this.aktivitasList.push(_objectSpread({}, this.aktivitas));
-      this.aktivitas.tanggal = '';
-      this.aktivitas.detail = '';
-      this.aktivitas.kondisi = '';
+
+      // Reset form fields
+      this.aktivitas = {
+        detail: '',
+        ba: null,
+        buktiPemusnahan: []
+      };
       this.showModal = false;
     },
     updatePaginatedData: function updatePaginatedData() {
@@ -51345,211 +51800,128 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
       // Implement debounce logic for search
       this.updatePaginatedData();
     },
-    // Upload Berita Acara (BA)
-    uploadBA: function uploadBA(index) {
-      this.openUploadBAModal(index); // Open modal to upload BA for a specific activity
+    isImage: function isImage(url) {
+      // Memastikan bahwa url adalah string sebelum menggunakan match
+      return typeof url === 'string' && url.match(/\.(jpeg|jpg|gif|png)$/) !== null;
     },
-    // Menampilkan modal untuk upload BA
-    openUploadBAModal: function openUploadBAModal(index) {
-      this.showUploadBAModal = true;
-      this.selectedIndex = index; // Menyimpan index dari aktivitas yang akan di-upload BA
+    isPdf: function isPdf(url) {
+      // Memastikan bahwa url adalah string sebelum menggunakan match
+      return typeof url === 'string' && url.match(/\.(pdf)$/) !== null;
     },
-    // Menangani perubahan file yang di-upload
-    onBAFileChange: function onBAFileChange(event) {
-      var file = event.target.files[0];
-      if (file && file.type === 'application/pdf') {
-        this.selectedBAFile = file;
-      } else {
-        alert('Harap pilih file PDF!');
-      }
+    fileUrl: function fileUrl(url) {
+      return URL.createObjectURL(url);
     },
-    // Menangani upload Berita Acara (BA)
-    // handleUploadBA() {
-    //   if (!this.selectedBAFile) {
-    //     alert('Pilih file BA terlebih dahulu!');
-    //     return;
-    //   }
-    //   const formData = new FormData();
-    //   formData.append('ba', this.selectedBAFile);
-    //   // Contoh pengiriman ke server untuk disimpan
-    //   // Misalnya menggunakan axios:
-    //   // axios.post('/upload-ba', formData).then(response => {
-    //   //   console.log('File berhasil diupload:', response);
-    //   // });
-    //   // Menyimpan file ke array aktivitasList (sebagai contoh)
-    //   this.aktivitasList[this.selectedIndex].ba = URL.createObjectURL(this.selectedBAFile);
-    //   // Menutup modal setelah berhasil upload
-    //   this.showUploadBAModal = false;
-    //   this.selectedBAFile = null;
-    //   alert('Berita Acara berhasil diupload!');
+    // isPdf(url) {
+    //   return url.endsWith('.pdf');
     // },
-    // Fungsi untuk menangani event dragover
-    onDragOver: function onDragOver(event) {
-      event.preventDefault(); // Mencegah perilaku default
-      this.isDragging = true; // Menandakan bahwa file sedang di-drag
-    },
-    // Fungsi untuk menangani event dragleave
-    onDragLeave: function onDragLeave(event) {
-      this.isDragging = false; // Menandakan bahwa file tidak lagi di-drag
-    },
-    // Fungsi untuk menangani event drop
-    onDrop: function onDrop(event) {
-      this.isDragging = false; // Menandakan bahwa file sudah dijatuhkan
-      var droppedFile = event.dataTransfer.files[0]; // Mengambil file yang dijatuhkan
-      if (droppedFile && droppedFile.type === 'application/pdf') {
-        this.file = droppedFile; // Menyimpan file jika valid
-      } else {
-        alert('Hanya file PDF yang diperbolehkan!');
-      }
-    },
-    // Fungsi untuk memicu input file ketika area drag-and-drop diklik
-    triggerFileInput: function triggerFileInput() {
-      this.$refs.fileInput.click(); // Men-trigger click pada input file
+    // fileUrl(url) {
+    //   return url;
+    // },
+    downloadBA: function downloadBA(index) {
+      var ba = this.data[index].ba;
+      var filename = "BA_".concat(index, ".pdf");
+
+      // Buat elemen canvas untuk render PDF
+      var canvas = document.createElement('canvas');
+      var ctx = canvas.getContext('2d');
+
+      // Membuat objek jsPDF
+      var pdf = new jspdf__WEBPACK_IMPORTED_MODULE_1__["default"]();
+      var tanggalString = this.data[index].tgl || '-';
+      var tanggal = new Date(tanggalString);
+
+      // Menentukan hari dalam seminggu
+      var hariArr = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+      var hari = hariArr[tanggal.getDay()];
+
+      // Menentukan nama bulan
+      var bulanArr = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+      var bulan = bulanArr[tanggal.getMonth()];
+
+      // Menyusun format tanggal
+      var tanggalFormatted = "".concat(tanggal.getDate(), " ").concat(bulan, " ").concat(tanggal.getFullYear());
+
+      // Set font menjadi bold dan ukuran 16
+      pdf.setFont('helvetica', 'bold');
+      pdf.setFontSize(16);
+
+      // Menambahkan judul Berita Acara Pemusnahan Barang dengan teks di tengah
+      var title = 'Berita Acara Pemusnahan Barang';
+      var titleWidth = pdf.getStringUnitWidth(title) * pdf.getFontSize() / pdf.internal.scaleFactor;
+      var pageWidth = pdf.internal.pageSize.width;
+      var xPos = (pageWidth - titleWidth) / 2;
+      pdf.text(title, xPos, 16);
+      pdf.setFont("helvetica", "normal");
+      pdf.setFontSize(12);
+      pdf.text('Berdasarkan SK No. : ', 14, 30);
+
+      // Draw a long line next to 'SK No.'
+      var skX = 60; // X-coordinate where the line starts
+      var skY = 30; // Y-coordinate where the line should start
+      var lineLength = 50; // Length of the line
+      pdf.line(skX, skY, skX + lineLength, skY); // Draw the line
+
+      // Menambahkan informasi lainnya
+      pdf.text("Sehubung dengan rusaknya barang maka pada : ", 14, 36);
+      pdf.text("Hari", 14, 42);
+      pdf.text(": ".concat(hari), 40, 42);
+      pdf.text("Tanggal", 14, 48);
+      pdf.text(": ".concat(tanggalFormatted), 40, 48);
+      // pdf.text('Tanggal: ' + this.aktivitasList[index].tanggal, 14, 26);
+      // pdf.text('Detail: ' + this.aktivitasList[index].detail, 14, 32);
+
+      var textBeforeBold = 'Bertempat di ';
+      var boldText = 'PT. Sinko Prima Alloy';
+      var textAfterBold = ' telah melaksanakan pemusnahan barang berupa.';
+
+      // Tulis bagian normal terlebih dahulu
+      pdf.setFont("helvetica", "normal");
+      pdf.text(textBeforeBold, 14, 54);
+      var textBeforeBoldWidth = pdf.getStringUnitWidth(textBeforeBold) * pdf.internal.getFontSize() / pdf.internal.scaleFactor;
+      pdf.setFont("helvetica", "bold");
+      var boldTextX = 14 + textBeforeBoldWidth; // Posisi setelah bagian normal
+      pdf.text(boldText, boldTextX, 54);
+      var boldTextWidth = pdf.getStringUnitWidth(boldText) * pdf.internal.getFontSize() / pdf.internal.scaleFactor;
+      pdf.setFont("helvetica", "normal");
+      var textAfterBoldX = boldTextX + boldTextWidth; // Posisi setelah bagian boldText
+      pdf.text(textAfterBold, textAfterBoldX, 54);
+      var headers = ["#", "Nama Alat/Mesin", "No Seri", "Keterangan"];
+      var rows = [];
+      this.data.forEach(function (item, index) {
+        rows.push([index + 1, item.nama, item === null || item === void 0 ? void 0 : item.no_seri, item.detail]);
+      });
+      pdf.autoTable({
+        head: [headers],
+        body: rows,
+        startY: 62 // Menyesuaikan posisi tabel setelah judul, nama peminjam, dan divisi
+      });
+      var textY = pdf.lastAutoTable.finalY + 10;
+      pdf.text("Barang tersebut telah diperiksa dan terdapat rusak/cacat sehingga tidak memungkinkan untuk ", 14, textY);
+      pdf.text("digunakan kembali.", 14, textY + 6);
+      var signatureSectionY = textY + 16;
+      pdf.text("Dibuat Oleh,", 14, signatureSectionY);
+      pdf.text("Diperiksa Oleh,", 90, signatureSectionY);
+      pdf.text("Disetujui Oleh,", 150, signatureSectionY);
+      var namaStaff = this.data[0].pic || '-';
+      var gapY = signatureSectionY + 30;
+      pdf.text(namaStaff, 17, gapY);
+      pdf.text("Manajer", 95, gapY);
+      pdf.text("Direktur", 155, gapY);
+
+      // Simpan PDF ke dalam file
+      var pdfData = pdf.output('blob');
+      var url = URL.createObjectURL(pdfData);
+
+      // Buat elemen link untuk download file
+      var link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      link.click();
+
+      // Hapus elemen link setelah download selesai
+      link.remove();
     }
-  }, _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_methods, "onBAFileChange", function onBAFileChange(event) {
-    var selectedFile = event.target.files[0];
-    if (selectedFile && selectedFile.type === 'application/pdf') {
-      this.file = selectedFile; // Menyimpan file yang dipilih
-    } else {
-      alert('Hanya file PDF yang diperbolehkan!');
-    }
-  }), "handleUploadBA", function handleUploadBA() {
-    if (this.file) {
-      // Implementasikan logika untuk meng-upload file
-      alert('File berhasil di-upload: ' + this.file.name);
-      this.showUploadBAModal = false; // Tambahkan kode ini untuk menutup modal
-    } else {
-      alert('Harap pilih file PDF terlebih dahulu!');
-    }
-  }), "uploadBuktiPemusnahan", function uploadBuktiPemusnahan(index) {
-    this.openUploadBuktiPemusnahanModal(index);
-  }), "openUploadBuktiPemusnahanModal", function openUploadBuktiPemusnahanModal(index) {
-    this.showUploadBuktiPemusnahanModal = true;
-    this.selectedIndex = index;
-  }), "onBuktiPemusnahanFileChange", function onBuktiPemusnahanFileChange(event) {
-    this.files = event.target.files;
-  }), "handleUploadBuktiPemusnahan", function handleUploadBuktiPemusnahan() {
-    if (this.files.length > 0) {
-      // Implementasikan logika untuk meng-upload file
-      alert('File berhasil di-upload: ' + this.files.length + ' file');
-      this.showUploadBuktiPemusnahanModal = false;
-    } else {
-      alert('Harap pilih file terlebih dahulu!');
-    }
-  }), "editAktivitas", function editAktivitas(index) {
-    this.selectedIndex = index;
-    this.showEditModal = true;
-  }), "saveEditAktivitas", function saveEditAktivitas() {
-    // Simpan perubahan data
-    this.showEditModal = false;
-  }), "isImage", function isImage(url) {
-    return url.match(/\.(jpeg|jpg|gif|png)$/) !== null;
-  }), "isPdf", function isPdf(url) {
-    return url.match(/\.(pdf)$/) !== null;
-  }), _defineProperty(_methods, "downloadBA", function downloadBA(index) {
-    var ba = this.aktivitasList[index].ba;
-    var filename = "BA_".concat(index, ".pdf");
-
-    // Buat elemen canvas untuk render PDF
-    var canvas = document.createElement('canvas');
-    var ctx = canvas.getContext('2d');
-
-    // Membuat objek jsPDF
-    var pdf = new jspdf__WEBPACK_IMPORTED_MODULE_1__["default"]();
-    var tanggalString = this.aktivitasList[index].tanggal || '-';
-    var tanggal = new Date(tanggalString);
-
-    // Menentukan hari dalam seminggu
-    var hariArr = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
-    var hari = hariArr[tanggal.getDay()];
-
-    // Menentukan nama bulan
-    var bulanArr = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
-    var bulan = bulanArr[tanggal.getMonth()];
-
-    // Menyusun format tanggal
-    var tanggalFormatted = "".concat(tanggal.getDate(), " ").concat(bulan, " ").concat(tanggal.getFullYear());
-
-    // Set font menjadi bold dan ukuran 16
-    pdf.setFont('helvetica', 'bold');
-    pdf.setFontSize(16);
-
-    // Menambahkan judul Berita Acara Pemusnahan Barang dengan teks di tengah
-    var title = 'Berita Acara Pemusnahan Barang';
-    var titleWidth = pdf.getStringUnitWidth(title) * pdf.getFontSize() / pdf.internal.scaleFactor;
-    var pageWidth = pdf.internal.pageSize.width;
-    var xPos = (pageWidth - titleWidth) / 2;
-    pdf.text(title, xPos, 16);
-    pdf.setFont("helvetica", "normal");
-    pdf.setFontSize(12);
-    pdf.text('Berdasarkan SK No. : ', 14, 30);
-
-    // Draw a long line next to 'SK No.'
-    var skX = 60; // X-coordinate where the line starts
-    var skY = 30; // Y-coordinate where the line should start
-    var lineLength = 50; // Length of the line
-    pdf.line(skX, skY, skX + lineLength, skY); // Draw the line
-
-    // Menambahkan informasi lainnya
-    pdf.text("Sehubung dengan rusaknya barang maka pada : ", 14, 36);
-    pdf.text("Hari", 14, 42);
-    pdf.text(": ".concat(hari), 40, 42);
-    pdf.text("Tanggal", 14, 48);
-    pdf.text(": ".concat(tanggalFormatted), 40, 48);
-    // pdf.text('Tanggal: ' + this.aktivitasList[index].tanggal, 14, 26);
-    // pdf.text('Detail: ' + this.aktivitasList[index].detail, 14, 32);
-
-    var textBeforeBold = 'Bertempat di ';
-    var boldText = 'PT. Sinko Prima Alloy';
-    var textAfterBold = ' telah melaksanakan pemusnahan barang berupa.';
-
-    // Tulis bagian normal terlebih dahulu
-    pdf.setFont("helvetica", "normal");
-    pdf.text(textBeforeBold, 14, 54);
-    var textBeforeBoldWidth = pdf.getStringUnitWidth(textBeforeBold) * pdf.internal.getFontSize() / pdf.internal.scaleFactor;
-    pdf.setFont("helvetica", "bold");
-    var boldTextX = 14 + textBeforeBoldWidth; // Posisi setelah bagian normal
-    pdf.text(boldText, boldTextX, 54);
-    var boldTextWidth = pdf.getStringUnitWidth(boldText) * pdf.internal.getFontSize() / pdf.internal.scaleFactor;
-    pdf.setFont("helvetica", "normal");
-    var textAfterBoldX = boldTextX + boldTextWidth; // Posisi setelah bagian boldText
-    pdf.text(textAfterBold, textAfterBoldX, 54);
-    var headers = ["#", "Nama Alat/Mesin", "No Seri", "Keterangan"];
-    var rows = [];
-    this.data.forEach(function (item, index) {
-      rows.push([index + 1, item.nama, item === null || item === void 0 ? void 0 : item.no_seri, item.detail]);
-    });
-    pdf.autoTable({
-      head: [headers],
-      body: rows,
-      startY: 62 // Menyesuaikan posisi tabel setelah judul, nama peminjam, dan divisi
-    });
-    var textY = pdf.lastAutoTable.finalY + 10;
-    pdf.text("Barang tersebut telah diperiksa dan terdapat rusak/cacat sehingga tidak memungkinkan untuk ", 14, textY);
-    pdf.text("digunakan kembali.", 14, textY + 6);
-    var signatureSectionY = textY + 16;
-    pdf.text("Dibuat Oleh,", 14, signatureSectionY);
-    pdf.text("Diperiksa Oleh,", 90, signatureSectionY);
-    pdf.text("Disetujui Oleh,", 150, signatureSectionY);
-    var namaStaff = this.data[0].pic || '-';
-    var gapY = signatureSectionY + 30;
-    pdf.text(namaStaff, 17, gapY);
-    pdf.text("Manajer", 95, gapY);
-    pdf.text("Direktur", 155, gapY);
-
-    // Simpan PDF ke dalam file
-    var pdfData = pdf.output('blob');
-    var url = URL.createObjectURL(pdfData);
-
-    // Buat elemen link untuk download file
-    var link = document.createElement('a');
-    link.href = url;
-    link.download = filename;
-    link.click();
-
-    // Hapus elemen link setelah download selesai
-    link.remove();
-  }))
+  }
 });
 
 /***/ }),
@@ -51807,7 +52179,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         detail: 'Sensor tidak berfungsi',
         pic: 'John Doe',
         tgl_selesai: '2025-02-05',
-        status: 'Proses'
+        status: 'Proses Pemusnahan'
       }],
       paginatedData: [],
       searchQuery: '',
@@ -52891,7 +53263,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         detail: 'Sensor tidak berfungsi',
         pic: 'John Doe',
         tgl_selesai: '2025-02-05',
-        status: 'Selesai'
+        status: 'Selesai Pemusnahan'
       }],
       paginatedData: [],
       searchQuery: '',
@@ -53276,7 +53648,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         kondisi: 'Error',
         detail: 'Sensor tidak berfungsi',
         pic: 'John Doe',
-        status: 'Menunggu Persetujuan'
+        status: 'Menunggu Persetujuan Pemusnahan'
       }, {
         no_seri: '1122wscj122',
         nama: 'Clamp',
@@ -74582,6 +74954,54 @@ ___CSS_LOADER_EXPORT___.push([module.id, "\n#calendar {\n  width: 100%;\n  heigh
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Kalender.vue?vue&type=style&index=0&lang=css&":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Kalender.vue?vue&type=style&index=0&lang=css& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n#calendar {\n  width: 100%;\n  height: 600px;\n}\n#pills-tab .nav-link {\n  color: #000;\n}\n#pills-tab .nav-link.active {\n  background-color: #169ea8;\n  color: #fff;\n}\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Tabel.vue?vue&type=style&index=0&id=32cb6d16&scoped=true&lang=css&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Tabel.vue?vue&type=style&index=0&id=32cb6d16&scoped=true&lang=css& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* Tambahkan CSS untuk garis bawah */\n.table td[data-v-32cb6d16] {\r\n  border: 1px solid #fff;\n}\n#pills-tab .nav-link[data-v-32cb6d16] {\r\n  color: #000;\n}\n#pills-tab .nav-link.active[data-v-32cb6d16] {\r\n  background-color: #169ea8;\r\n  color: #fff;\n}\r\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Tabel.vue?vue&type=style&index=0&id=69bbc481&scoped=true&lang=css&":
 /*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Tabel.vue?vue&type=style&index=0&id=69bbc481&scoped=true&lang=css& ***!
@@ -74599,7 +75019,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* Tambahkan CSS untuk garis bawah */\n.table td[data-v-69bbc481] {\r\n  border: 1px solid #fff;\n}\n#pills-tab .nav-link[data-v-69bbc481] {\r\n  color: #000;\n}\n#pills-tab .nav-link.active[data-v-69bbc481] {\r\n  background-color: #169ea8;\r\n  color: #fff;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* Tambahkan CSS untuk garis bawah */\n.table td[data-v-69bbc481] {\r\n  border: 1px solid #fff;\n}\n#pills-tab .nav-link[data-v-69bbc481] {\r\n  color: #000;\n}\n#pills-tab .nav-link.active[data-v-69bbc481] {\r\n  background-color: #169ea8;\r\n  color: #fff;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -135207,6 +135627,66 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Kalender.vue?vue&type=style&index=0&lang=css&":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Kalender.vue?vue&type=style&index=0&lang=css& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Kalender_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Kalender.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Kalender.vue?vue&type=style&index=0&lang=css&");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Kalender_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Kalender_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Tabel.vue?vue&type=style&index=0&id=32cb6d16&scoped=true&lang=css&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Tabel.vue?vue&type=style&index=0&id=32cb6d16&scoped=true&lang=css& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Tabel_vue_vue_type_style_index_0_id_32cb6d16_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Tabel.vue?vue&type=style&index=0&id=32cb6d16&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Tabel.vue?vue&type=style&index=0&id=32cb6d16&scoped=true&lang=css&");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Tabel_vue_vue_type_style_index_0_id_32cb6d16_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Tabel_vue_vue_type_style_index_0_id_32cb6d16_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Tabel.vue?vue&type=style&index=0&id=69bbc481&scoped=true&lang=css&":
 /*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Tabel.vue?vue&type=style&index=0&id=69bbc481&scoped=true&lang=css& ***!
@@ -170034,6 +170514,605 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Kalender.vue?vue&type=template&id=279a0788&":
+/*!************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Kalender.vue?vue&type=template&id=279a0788& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container-fluid" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c(
+      "ul",
+      {
+        staticClass: "nav nav-pills mb-3",
+        staticStyle: { "margin-top": "1rem !important" },
+        attrs: { id: "pills-tab", role: "tablist" },
+      },
+      [
+        _c(
+          "li",
+          { staticClass: "nav-item", attrs: { role: "presentation" } },
+          [
+            _c(
+              "router-link",
+              {
+                staticClass: "nav-link",
+                class: {
+                  active:
+                    _vm.$route.name === "tabel-perencanaan-jadwal-perawatan",
+                },
+                attrs: {
+                  id: "pills-home-tab",
+                  "data-toggle": "pill",
+                  "data-target": "#pills-home",
+                  type: "button",
+                  role: "tab",
+                  "aria-controls": "pills-home",
+                  "aria-selected": "false",
+                  to: { name: "tabel-perencanaan-jadwal-perawatan" },
+                },
+              },
+              [_vm._v("Tabel")]
+            ),
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "li",
+          { staticClass: "nav-item", attrs: { role: "presentation" } },
+          [
+            _c(
+              "router-link",
+              {
+                staticClass: "nav-link",
+                class: {
+                  active: _vm.$route.name === "kalender-perencanaan-perawatan",
+                },
+                attrs: {
+                  id: "pills-profile-tab",
+                  "data-toggle": "pill",
+                  "data-target": "#pills-profile",
+                  type: "button",
+                  role: "tab",
+                  "aria-controls": "pills-profile",
+                  "aria-selected": "true",
+                  to: { name: "kalender-perencanaan-perawatan" },
+                },
+              },
+              [_vm._v("Kalender")]
+            ),
+          ],
+          1
+        ),
+      ]
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "mb-5 mt-2 mr-3", attrs: { id: "calendar" } }),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row mb-2 align-items-center" }, [
+      _c("div", { staticClass: "col-sm-6" }, [
+        _c(
+          "h3",
+          {
+            staticClass: "text-black-10 mt-5",
+            staticStyle: { "font-family": "Raleway", color: "#000" },
+          },
+          [_c("b", [_vm._v("Jadwal Perawatan Alat/Mesin")])]
+        ),
+      ]),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Tabel.vue?vue&type=template&id=32cb6d16&scoped=true&":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Tabel.vue?vue&type=template&id=32cb6d16&scoped=true& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container-fluid" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c(
+      "ul",
+      {
+        staticClass: "nav nav-pills mb-3",
+        staticStyle: { "margin-top": "1rem !important" },
+        attrs: { id: "pills-tab", role: "tablist" },
+      },
+      [
+        _c(
+          "li",
+          { staticClass: "nav-item", attrs: { role: "presentation" } },
+          [
+            _c(
+              "router-link",
+              {
+                staticClass: "nav-link",
+                class: {
+                  active:
+                    _vm.$route.name === "tabel-perencanaan-jadwal-perawatan",
+                },
+                attrs: {
+                  id: "pills-home-tab",
+                  "data-toggle": "pill",
+                  "data-target": "#pills-home",
+                  type: "button",
+                  role: "tab",
+                  "aria-controls": "pills-home",
+                  "aria-selected": "true",
+                  to: { name: "tabel-perencanaan-jadwal-perawatan" },
+                },
+              },
+              [_vm._v("Tabel")]
+            ),
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "li",
+          { staticClass: "nav-item", attrs: { role: "presentation" } },
+          [
+            _c(
+              "router-link",
+              {
+                staticClass: "nav-link",
+                class: {
+                  active: _vm.$route.name === "kalender-perencanaan-perawatan",
+                },
+                attrs: {
+                  id: "pills-profile-tab",
+                  "data-toggle": "pill",
+                  "data-target": "#pills-profile",
+                  type: "button",
+                  role: "tab",
+                  "aria-controls": "pills-profile",
+                  "aria-selected": "false",
+                  to: { name: "kalender-perencanaan-perawatan" },
+                },
+              },
+              [_vm._v("Kalender")]
+            ),
+          ],
+          1
+        ),
+      ]
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "row mb-2 mt-2 align-items-center" }, [
+      _c("div", { staticClass: "col-sm-6" }, [
+        _c("h5", { staticStyle: { color: "#000" } }, [
+          _c("b", [
+            _vm._v(_vm._s(_vm.currentMonth) + " " + _vm._s(_vm.currentYear)),
+          ]),
+        ]),
+      ]),
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "row align-items-center justify-content-end mr-3" },
+      [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-sm btn-primary mr-2",
+            on: { click: _vm.showModalTambah },
+          },
+          [_vm._v("Tambah")]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-sm btn-success mr-2",
+            attrs: { disabled: _vm.filteredJadwalPerawatan.length === 0 },
+            on: { click: _vm.exportToExcel },
+          },
+          [_vm._v("Export")]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "search-wrapper" }, [
+          _c("div", { staticClass: "input-group" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.search,
+                  expression: "search",
+                },
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "Search..." },
+              domProps: { value: _vm.search },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.search = $event.target.value
+                },
+              },
+            }),
+          ]),
+        ]),
+      ]
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-12 table-responsive p-3" }, [
+      _vm._m(1),
+      _vm._v(" "),
+      _c(
+        "table",
+        {
+          staticClass: "table table-custom has-text-centered is-bordered",
+          staticStyle: { "white-space": "nowrap" },
+          attrs: { id: "export_table" },
+        },
+        [
+          _c("thead", { staticClass: "bg-table" }, [
+            _c("tr", { staticStyle: { color: "#000" } }, [
+              _c("th", { attrs: { rowspan: "2" } }, [
+                _vm._v("Nama Alat/Mesin"),
+              ]),
+              _vm._v(" "),
+              _c("th", { attrs: { rowspan: "2" } }, [_vm._v("No Seri")]),
+              _vm._v(" "),
+              _c("th", { attrs: { colspan: _vm.last_date } }, [
+                _vm._v("Tanggal"),
+              ]),
+            ]),
+            _vm._v(" "),
+            _c(
+              "tr",
+              _vm._l(Array.from(Array(_vm.last_date).keys()), function (i) {
+                return _c("th", { key: i, staticStyle: { color: "#000" } }, [
+                  _vm._v("\n            " + _vm._s(i + 1) + "\n          "),
+                ])
+              }),
+              0
+            ),
+          ]),
+          _vm._v(" "),
+          _vm.filteredJadwalPerawatan.length > 0
+            ? _c(
+                "tbody",
+                _vm._l(
+                  _vm.filteredJadwalPerawatan.slice(
+                    (_vm.currentPage - 1) * _vm.perPage,
+                    _vm.currentPage * _vm.perPage
+                  ),
+                  function (item) {
+                    return _c(
+                      "tr",
+                      { key: item.id },
+                      [
+                        _c("td", [_vm._v(_vm._s(item.nama_alat))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(item.no_seri))]),
+                        _vm._v(" "),
+                        _vm._l(
+                          Array.from(Array(_vm.last_date).keys()),
+                          function (i) {
+                            return _c("td", {
+                              key: i,
+                              style: {
+                                backgroundColor:
+                                  _vm.weekend_date.indexOf(i + 1) !== -1
+                                    ? "black"
+                                    : _vm.isDate(item.tanggal_perawatan, i + 1)
+                                    ? "yellow"
+                                    : "",
+                              },
+                            })
+                          }
+                        ),
+                      ],
+                      2
+                    )
+                  }
+                ),
+                0
+              )
+            : _c("tbody", [
+                _c("tr", [
+                  _c("td", { attrs: { colspan: _vm.last_date + 3 } }, [
+                    _vm._v("Tidak ada data"),
+                  ]),
+                ]),
+              ]),
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass:
+            "d-flex justify-content-between align-items-center mt-3 mb-3",
+          staticStyle: {
+            "border-radius": "10px",
+            "background-color": "#f3f4f6",
+            height: "50px",
+            color: "#000",
+          },
+        },
+        [
+          _c("div", { staticClass: "ml-3" }, [
+            _vm._v("\n        Rows per page:\n        "),
+            _c("span", [_vm._v(_vm._s(_vm.perPage))]),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "mr-3" }, [
+            _c("span", [_vm._v(_vm._s(_vm.paginationInfo))]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-sm btn-light",
+                attrs: { disabled: _vm.currentPage === 1 },
+                on: { click: _vm.prevPage },
+              },
+              [_c("i", { staticClass: "fas fa-angle-left" })]
+            ),
+            _vm._v(" "),
+            _c("span"),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-sm btn-light",
+                attrs: { disabled: _vm.currentPage === _vm.totalPages },
+                on: { click: _vm.nextPage },
+              },
+              [_c("i", { staticClass: "fas fa-angle-right" })]
+            ),
+          ]),
+        ]
+      ),
+    ]),
+    _vm._v(" "),
+    _vm.isModalTambahOpen
+      ? _c(
+          "div",
+          {
+            staticClass: "modal fade show",
+            staticStyle: { display: "block" },
+            attrs: { tabindex: "-1", role: "dialog", "aria-hidden": "true" },
+          },
+          [
+            _c(
+              "div",
+              { staticClass: "modal-dialog", attrs: { role: "document" } },
+              [
+                _c("div", { staticClass: "modal-content" }, [
+                  _c("div", { staticClass: "modal-header" }, [
+                    _c("h5", { staticClass: "modal-title" }, [
+                      _vm._v("Tambah Jadwal Perawatan"),
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "close",
+                        attrs: { type: "button" },
+                        on: { click: _vm.closeModalTambah },
+                      },
+                      [
+                        _c("span", { attrs: { "aria-hidden": "true" } }, [
+                          _vm._v("×"),
+                        ]),
+                      ]
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-body" }, [
+                    _c("form", [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", [_vm._v("Tanggal")]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.tanggal,
+                              expression: "tanggal",
+                            },
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "date", max: _vm.dateFormatter() },
+                          domProps: { value: _vm.tanggal },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.tanggal = $event.target.value
+                            },
+                          },
+                        }),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", [_vm._v("Nama Alat/Mesin")]),
+                        _vm._v(" "),
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.nama_alat,
+                                expression: "nama_alat",
+                              },
+                            ],
+                            staticClass: "form-control",
+                            on: {
+                              change: function ($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function (o) {
+                                    return o.selected
+                                  })
+                                  .map(function (o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.nama_alat = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              },
+                            },
+                          },
+                          [
+                            _c("option", { attrs: { value: "" } }, [
+                              _vm._v("Pilih Nama Alat/Mesin"),
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "Bor" } }, [
+                              _vm._v("Bor"),
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "Gergaji" } }, [
+                              _vm._v("Gergaji"),
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "Pahat" } }, [
+                              _vm._v("Pahat"),
+                            ]),
+                          ]
+                        ),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", [_vm._v("No Seri")]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.no_seri,
+                              expression: "no_seri",
+                            },
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            disabled: _vm.nama_alat === "",
+                          },
+                          domProps: { value: _vm.no_seri },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.no_seri = $event.target.value
+                            },
+                          },
+                        }),
+                      ]),
+                    ]),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-footer" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-secondary",
+                        attrs: { type: "button" },
+                        on: { click: _vm.closeModalTambah },
+                      },
+                      [_vm._v("Batal")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "button" },
+                        on: { click: _vm.tambahJadwalPerawatan },
+                      },
+                      [_vm._v("Simpan")]
+                    ),
+                  ]),
+                ]),
+              ]
+            ),
+          ]
+        )
+      : _vm._e(),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row mb-2 align-items-center" }, [
+      _c("div", { staticClass: "col-sm-6" }, [
+        _c(
+          "h3",
+          {
+            staticClass: "text-black-10 mt-5",
+            staticStyle: { "font-family": "Raleway", color: "#000" },
+          },
+          [_c("b", [_vm._v("Jadwal Perawatan Alat/Mesin")])]
+        ),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h5", { staticStyle: { color: "#000" } }, [
+      _c("b", [_vm._v("Perencanaan")]),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/RiwayatPerawatan.vue?vue&type=template&id=0a233c73&":
 /*!********************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/RiwayatPerawatan.vue?vue&type=template&id=0a233c73& ***!
@@ -170307,7 +171386,7 @@ var render = function () {
                     },
                   },
                   [
-                    _vm._v("\n            Detail\n            "),
+                    _vm._v("\n            Keterangan Perawatan\n            "),
                     _c("i", {
                       staticClass: "fas",
                       class: {
@@ -170881,7 +171960,7 @@ var render = function () {
                         _c("td", [_vm._v(_vm._s(item.no_seri))]),
                         _vm._v(" "),
                         _c("td", { staticClass: "text-center" }, [
-                          item.status === "Belum Selesai"
+                          item.status === "Pelaksanaan"
                             ? _c("i", {
                                 staticClass: "fas fa-check",
                                 staticStyle: { color: "green" },
@@ -170899,18 +171978,65 @@ var render = function () {
                         ]),
                         _vm._v(" "),
                         _c("td", [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-sm btn-warning",
-                              on: {
-                                click: function ($event) {
-                                  return _vm.editJadwal(item)
+                          _c("div", { staticClass: "dropdown text-center" }, [
+                            _vm._m(3, true),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "dropdown-menu",
+                                attrs: {
+                                  "aria-labelledby": "dropdownMenuButton",
                                 },
                               },
-                            },
-                            [_c("i", { staticClass: "fas fa-edit" })]
-                          ),
+                              [
+                                item.status !== "Pelaksanaan" &&
+                                item.status !== "Selesai"
+                                  ? _c(
+                                      "a",
+                                      {
+                                        staticClass: "dropdown-item",
+                                        on: {
+                                          click: function ($event) {
+                                            return _vm.showModalEdit(item)
+                                          },
+                                        },
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass: "bi bi-clock text-info",
+                                        }),
+                                        _vm._v(
+                                          " Pelaksanaan\n                "
+                                        ),
+                                      ]
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                item.status === "Pelaksanaan" ||
+                                item.status === "Selesai"
+                                  ? _c(
+                                      "a",
+                                      {
+                                        staticClass: "dropdown-item",
+                                        on: {
+                                          click: function ($event) {
+                                            return _vm.showModalSelesai(item)
+                                          },
+                                        },
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass:
+                                            "bi bi-check text-success",
+                                        }),
+                                        _vm._v(" Selesai\n                "),
+                                      ]
+                                    )
+                                  : _vm._e(),
+                              ]
+                            ),
+                          ]),
                         ]),
                         _vm._v(" "),
                         _vm._l(
@@ -170945,55 +172071,55 @@ var render = function () {
               ]),
         ]
       ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass:
-            "d-flex justify-content-between align-items-center mt-3 mb-3",
-          staticStyle: {
-            "border-radius": "10px",
-            "background-color": "#f3f4f6",
-            height: "50px",
-            color: "#000",
-          },
-        },
-        [
-          _c("div", { staticClass: "ml-3" }, [
-            _vm._v("\n        Rows per page:\n        "),
-            _c("span", [_vm._v(_vm._s(_vm.perPage))]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "mr-3" }, [
-            _c("span", [_vm._v(_vm._s(_vm.paginationInfo))]),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-sm btn-light",
-                attrs: { disabled: _vm.currentPage === 1 },
-                on: { click: _vm.prevPage },
-              },
-              [_c("i", { staticClass: "fas fa-angle-left" })]
-            ),
-            _vm._v(" "),
-            _c("span"),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-sm btn-light",
-                attrs: { disabled: _vm.currentPage === _vm.totalPages },
-                on: { click: _vm.nextPage },
-              },
-              [_c("i", { staticClass: "fas fa-angle-right" })]
-            ),
-          ]),
-        ]
-      ),
     ]),
     _vm._v(" "),
-    _vm.isModalOpen
+    _c(
+      "div",
+      {
+        staticClass:
+          "table-responsive d-flex justify-content-between align-items-center mt-3 mb-3",
+        staticStyle: {
+          "border-radius": "10px",
+          "background-color": "#f3f4f6",
+          height: "50px",
+          color: "#000",
+        },
+      },
+      [
+        _c("div", { staticClass: "ml-3" }, [
+          _vm._v("\n      Rows per page:\n      "),
+          _c("span", [_vm._v(_vm._s(_vm.perPage))]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "mr-3" }, [
+          _c("span", [_vm._v(_vm._s(_vm.paginationInfo))]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-sm btn-light",
+              attrs: { disabled: _vm.currentPage === 1 },
+              on: { click: _vm.prevPage },
+            },
+            [_c("i", { staticClass: "fas fa-angle-left" })]
+          ),
+          _vm._v(" "),
+          _c("span"),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-sm btn-light",
+              attrs: { disabled: _vm.currentPage === _vm.totalPages },
+              on: { click: _vm.nextPage },
+            },
+            [_c("i", { staticClass: "fas fa-angle-right" })]
+          ),
+        ]),
+      ]
+    ),
+    _vm._v(" "),
+    _vm.isModalTambahOpen
       ? _c(
           "div",
           {
@@ -171009,7 +172135,7 @@ var render = function () {
                 _c("div", { staticClass: "modal-content" }, [
                   _c("div", { staticClass: "modal-header" }, [
                     _c("h5", { staticClass: "modal-title" }, [
-                      _vm._v(_vm._s(_vm.modalTitle)),
+                      _vm._v("Tambah Jadwal Perawatan"),
                     ]),
                     _vm._v(" "),
                     _c(
@@ -171017,7 +172143,7 @@ var render = function () {
                       {
                         staticClass: "close",
                         attrs: { type: "button" },
-                        on: { click: _vm.closeModal },
+                        on: { click: _vm.closeModalTambah },
                       },
                       [
                         _c("span", { attrs: { "aria-hidden": "true" } }, [
@@ -171143,7 +172269,7 @@ var render = function () {
                       {
                         staticClass: "btn btn-secondary",
                         attrs: { type: "button" },
-                        on: { click: _vm.closeModal },
+                        on: { click: _vm.closeModalTambah },
                       },
                       [_vm._v("Batal")]
                     ),
@@ -171165,7 +172291,7 @@ var render = function () {
         )
       : _vm._e(),
     _vm._v(" "),
-    _vm.isModalOpen
+    _vm.isModalEditOpen
       ? _c(
           "div",
           {
@@ -171181,7 +172307,7 @@ var render = function () {
                 _c("div", { staticClass: "modal-content" }, [
                   _c("div", { staticClass: "modal-header" }, [
                     _c("h5", { staticClass: "modal-title" }, [
-                      _vm._v(_vm._s(_vm.modalTitle)),
+                      _vm._v("Edit Jadwal Perawatan"),
                     ]),
                     _vm._v(" "),
                     _c(
@@ -171189,7 +172315,7 @@ var render = function () {
                       {
                         staticClass: "close",
                         attrs: { type: "button" },
-                        on: { click: _vm.closeModal },
+                        on: { click: _vm.closeModalEdit },
                       },
                       [
                         _c("span", { attrs: { "aria-hidden": "true" } }, [
@@ -171202,7 +172328,7 @@ var render = function () {
                   _c("div", { staticClass: "modal-body" }, [
                     _c("form", [
                       _c("div", { staticClass: "form-group" }, [
-                        _vm._m(3),
+                        _c("label", [_vm._v("Tanggal Pengerjaan")]),
                         _vm._v(" "),
                         _c("input", {
                           directives: [
@@ -171228,7 +172354,7 @@ var render = function () {
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "form-group" }, [
-                        _vm._m(4),
+                        _c("label", [_vm._v("Waktu (Mulai - Selesai)")]),
                         _vm._v(" "),
                         _c("div", { staticClass: "input-group" }, [
                           _c("input", {
@@ -171236,8 +172362,8 @@ var render = function () {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.jadwalPerawatan.waktu_mulai,
-                                expression: "jadwalPerawatan.waktu_mulai",
+                                value: _vm.waktu_mulai,
+                                expression: "waktu_mulai",
                               },
                             ],
                             staticClass: "form-control",
@@ -171246,19 +172372,13 @@ var render = function () {
                               id: "waktu_mulai",
                               required: "",
                             },
-                            domProps: {
-                              value: _vm.jadwalPerawatan.waktu_mulai,
-                            },
+                            domProps: { value: _vm.waktu_mulai },
                             on: {
                               input: function ($event) {
                                 if ($event.target.composing) {
                                   return
                                 }
-                                _vm.$set(
-                                  _vm.jadwalPerawatan,
-                                  "waktu_mulai",
-                                  $event.target.value
-                                )
+                                _vm.waktu_mulai = $event.target.value
                               },
                             },
                           }),
@@ -171272,8 +172392,8 @@ var render = function () {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.jadwalPerawatan.waktu_selesai,
-                                expression: "jadwalPerawatan.waktu_selesai",
+                                value: _vm.waktu_selesai,
+                                expression: "waktu_selesai",
                               },
                             ],
                             staticClass: "form-control",
@@ -171282,19 +172402,13 @@ var render = function () {
                               id: "waktu_selesai",
                               required: "",
                             },
-                            domProps: {
-                              value: _vm.jadwalPerawatan.waktu_selesai,
-                            },
+                            domProps: { value: _vm.waktu_selesai },
                             on: {
                               input: function ($event) {
                                 if ($event.target.composing) {
                                   return
                                 }
-                                _vm.$set(
-                                  _vm.jadwalPerawatan,
-                                  "waktu_selesai",
-                                  $event.target.value
-                                )
+                                _vm.waktu_selesai = $event.target.value
                               },
                             },
                           }),
@@ -171305,7 +172419,7 @@ var render = function () {
                         "div",
                         { staticClass: "form-group" },
                         [
-                          _vm._m(5),
+                          _c("label", [_vm._v("PIC")]),
                           _vm._v(" "),
                           _c("v-select", {
                             attrs: {
@@ -171327,34 +172441,102 @@ var render = function () {
                         ],
                         1
                       ),
-                      _vm._v(" "),
+                    ]),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-footer" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-danger",
+                        attrs: { type: "button" },
+                        on: { click: _vm.closeModalEdit },
+                      },
+                      [_vm._v("Batal")]
+                    ),
+                    _vm._v(" "),
+                    _vm.jadwalPerawatan.status !== "Selesai"
+                      ? _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary",
+                            attrs: { type: "button" },
+                            on: { click: _vm.simpanJadwalPerawatan },
+                          },
+                          [_vm._v("Simpan")]
+                        )
+                      : _vm._e(),
+                  ]),
+                ]),
+              ]
+            ),
+          ]
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.isModalSelesaiOpen
+      ? _c(
+          "div",
+          {
+            staticClass: "modal fade show",
+            staticStyle: { display: "block" },
+            attrs: { tabindex: "-1", role: "dialog", "aria-hidden": "true" },
+          },
+          [
+            _c(
+              "div",
+              { staticClass: "modal-dialog", attrs: { role: "document" } },
+              [
+                _c("div", { staticClass: "modal-content" }, [
+                  _c("div", { staticClass: "modal-header" }, [
+                    _c("h5", { staticClass: "modal-title" }, [
+                      _vm._v("Selesai Jadwal Perawatan"),
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "close",
+                        attrs: { type: "button" },
+                        on: { click: _vm.closeModalSelesai },
+                      },
+                      [
+                        _c("span", { attrs: { "aria-hidden": "true" } }, [
+                          _vm._v("×"),
+                        ]),
+                      ]
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-body" }, [
+                    _c("form", [
                       _c("div", { staticClass: "form-group" }, [
-                        _vm._m(6),
+                        _c("label", [_vm._v("Keterangan Perawatan")]),
                         _vm._v(" "),
                         _c("textarea", {
                           directives: [
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.detail,
-                              expression: "detail",
+                              value: _vm.keterangan_perawatan,
+                              expression: "keterangan_perawatan",
                             },
                           ],
                           staticClass: "form-control",
-                          domProps: { value: _vm.detail },
+                          domProps: { value: _vm.keterangan_perawatan },
                           on: {
                             input: function ($event) {
                               if ($event.target.composing) {
                                 return
                               }
-                              _vm.detail = $event.target.value
+                              _vm.keterangan_perawatan = $event.target.value
                             },
                           },
                         }),
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "form-group" }, [
-                        _vm._m(7),
+                        _c("label", [_vm._v("Kondisi")]),
                         _vm._v(" "),
                         _c(
                           "select",
@@ -171363,8 +172545,8 @@ var render = function () {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.jadwalPerawatan.kondisi,
-                                expression: "jadwalPerawatan.kondisi",
+                                value: _vm.kondisi,
+                                expression: "kondisi",
                               },
                             ],
                             staticClass: "form-control",
@@ -171379,13 +172561,9 @@ var render = function () {
                                     var val = "_value" in o ? o._value : o.value
                                     return val
                                   })
-                                _vm.$set(
-                                  _vm.jadwalPerawatan,
-                                  "kondisi",
-                                  $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                )
+                                _vm.kondisi = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
                               },
                             },
                           },
@@ -171417,22 +172595,20 @@ var render = function () {
                       {
                         staticClass: "btn btn-danger",
                         attrs: { type: "button" },
-                        on: { click: _vm.closeModal },
+                        on: { click: _vm.closeModalSelesai },
                       },
                       [_vm._v("Batal")]
                     ),
                     _vm._v(" "),
-                    _vm.jadwalPerawatan.status !== "Selesai"
-                      ? _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-primary",
-                            attrs: { type: "button" },
-                            on: { click: _vm.simpanJadwalPerawatan },
-                          },
-                          [_vm._v("Simpan")]
-                        )
-                      : _vm._e(),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "button" },
+                        on: { click: _vm.simpanSelesai },
+                      },
+                      [_vm._v("Simpan")]
+                    ),
                   ]),
                 ]),
               ]
@@ -171480,59 +172656,19 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("label", [
-      _c("b", [
-        _vm._v("Tanggal Pengerjaan "),
-        _c("sup", { staticClass: "text-danger" }, [_vm._v(" *")]),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "waktu" } }, [
-      _c("b", [
-        _vm._v("Waktu (Mulai - Selesai) "),
-        _c("sup", { staticClass: "text-danger" }, [_vm._v(" *")]),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "pic" } }, [
-      _c("b", [
-        _vm._v("PIC "),
-        _c("sup", { staticClass: "text-danger" }, [_vm._v(" *")]),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", [
-      _c("b", [
-        _vm._v("Detail "),
-        _c("sup", { staticClass: "text-danger" }, [_vm._v(" *")]),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c(
-      "label",
-      { staticClass: "text-black-10", attrs: { for: "kondisi" } },
-      [
-        _c("b", [
-          _vm._v("Kondisi "),
-          _c("sup", { staticClass: "text-danger" }, [_vm._v(" *")]),
-        ]),
-      ]
+      "button",
+      {
+        staticClass: "btn btn-sm",
+        attrs: {
+          type: "button",
+          id: "dropdownMenuButton",
+          "data-toggle": "dropdown",
+          "aria-haspopup": "true",
+          "aria-expanded": "false",
+        },
+      },
+      [_c("i", { staticClass: "fas fa-ellipsis-v" })]
     )
   },
 ]
@@ -189787,6 +190923,19 @@ var render = function () {
           "div",
           { staticClass: "row align-items-center justify-content-end m-3" },
           [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary mr-2",
+                on: {
+                  click: function ($event) {
+                    _vm.showModal = true
+                  },
+                },
+              },
+              [_vm._v("Tambah")]
+            ),
+            _vm._v(" "),
             _c("div", { staticClass: "btn-group" }, [
               _c(
                 "button",
@@ -189799,34 +190948,6 @@ var render = function () {
                   },
                 },
                 [_vm._v("Download BA")]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-success mr-2",
-                  on: {
-                    click: function ($event) {
-                      return _vm.uploadBA(_vm.aktivitasList.length - 1)
-                    },
-                  },
-                },
-                [_vm._v("Upload BA")]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-info mr-2",
-                  on: {
-                    click: function ($event) {
-                      return _vm.uploadBuktiPemusnahan(
-                        _vm.aktivitasList.length - 1
-                      )
-                    },
-                  },
-                },
-                [_vm._v("Upload Bukti Pemusnahan")]
               ),
             ]),
             _vm._v(" "),
@@ -189874,71 +190995,22 @@ var render = function () {
                   return _c("tr", { key: index, staticClass: "text-center" }, [
                     _c("td", [_vm._v(_vm._s(index + 1))]),
                     _vm._v(" "),
-                    _c("td", [
-                      item.buktiPemusnahan && item.buktiPemusnahan.length > 0
-                        ? _c(
-                            "div",
-                            _vm._l(
-                              item.buktiPemusnahan,
-                              function (image, imgIndex) {
-                                return _c("div", { key: imgIndex }, [
-                                  _vm.isImage(image)
-                                    ? _c("img", {
-                                        staticClass: "img-fluid",
-                                        staticStyle: {
-                                          "max-width": "100px",
-                                          margin: "5px",
-                                        },
-                                        attrs: {
-                                          src: image,
-                                          alt: "Bukti Pemusnahan",
-                                        },
-                                      })
-                                    : _vm.isPdf(image)
-                                    ? _c(
-                                        "div",
-                                        {
-                                          staticStyle: {
-                                            "text-align": "center",
-                                          },
-                                        },
-                                        [
-                                          _c("pdf", {
-                                            staticStyle: {
-                                              width: "max-content",
-                                              height: "max-content",
-                                              margin: "0 auto",
-                                            },
-                                            attrs: {
-                                              src: image,
-                                              page: 1,
-                                              rotate: 0,
-                                            },
-                                            on: {
-                                              "num-pages": function ($event) {
-                                                _vm.numPages = $event
-                                              },
-                                              "page-loaded": function ($event) {
-                                                _vm.currentPage = $event
-                                              },
-                                              "link-clicked": function (
-                                                $event
-                                              ) {
-                                                _vm.currentPage = $event
-                                              },
-                                            },
-                                          }),
-                                        ],
-                                        1
-                                      )
-                                    : _vm._e(),
-                                ])
-                              }
-                            ),
-                            0
-                          )
-                        : _c("div", [_c("span", [_vm._v("No Bukti")])]),
-                    ]),
+                    _c(
+                      "td",
+                      _vm._l(item.buktiPemusnahan, function (image, index) {
+                        return _c("div", { key: index }, [
+                          _c("iframe", {
+                            staticStyle: { margin: "5px" },
+                            attrs: {
+                              src: image,
+                              frameborder: "0",
+                              height: "500",
+                            },
+                          }),
+                        ])
+                      }),
+                      0
+                    ),
                     _vm._v(" "),
                     _c("td", [
                       _c(
@@ -189970,39 +191042,6 @@ var render = function () {
                     ]),
                     _vm._v(" "),
                     _c("td", [_vm._v(_vm._s(item.detail))]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c("div", { staticClass: "dropdown text-center" }, [
-                        _vm._m(2, true),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            staticClass: "dropdown-menu",
-                            attrs: { "aria-labelledby": "dropdownMenuButton" },
-                          },
-                          [
-                            _c(
-                              "a",
-                              {
-                                staticClass: "dropdown-item",
-                                on: {
-                                  click: function ($event) {
-                                    return _vm.editAktivitas(index)
-                                  },
-                                },
-                              },
-                              [
-                                _c("i", {
-                                  staticClass: "fas fa-edit text-warning",
-                                }),
-                                _vm._v(" Edit\n                    "),
-                              ]
-                            ),
-                          ]
-                        ),
-                      ]),
-                    ]),
                   ])
                 }),
                 0
@@ -190107,561 +191146,106 @@ var render = function () {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "modal-body" }, [
-                    _c("form", [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "tanggal" } }, [
-                          _vm._v("Tanggal"),
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.aktivitas.tanggal,
-                              expression: "aktivitas.tanggal",
-                            },
-                          ],
-                          staticClass: "form-control",
-                          attrs: { type: "date", id: "tanggal" },
-                          domProps: { value: _vm.aktivitas.tanggal },
-                          on: {
-                            input: function ($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.aktivitas,
-                                "tanggal",
-                                $event.target.value
-                              )
-                            },
+                    _c(
+                      "form",
+                      {
+                        on: {
+                          submit: function ($event) {
+                            $event.preventDefault()
+                            return _vm.addAktivitas.apply(null, arguments)
                           },
-                        }),
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "detail" } }, [
-                          _vm._v("Detail"),
-                        ]),
-                        _vm._v(" "),
-                        _c("textarea", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.aktivitas.detail,
-                              expression: "aktivitas.detail",
-                            },
-                          ],
-                          staticClass: "form-control",
-                          attrs: { id: "detail" },
-                          domProps: { value: _vm.aktivitas.detail },
-                          on: {
-                            input: function ($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.aktivitas,
-                                "detail",
-                                $event.target.value
-                              )
-                            },
-                          },
-                        }),
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "kondisi" } }, [
-                          _vm._v("Kondisi"),
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "select",
-                          {
+                        },
+                      },
+                      [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "detail" } }, [
+                            _vm._v("Detail"),
+                          ]),
+                          _vm._v(" "),
+                          _c("textarea", {
                             directives: [
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.aktivitas.kondisi,
-                                expression: "aktivitas.kondisi",
+                                value: _vm.aktivitas.detail,
+                                expression: "aktivitas.detail",
                               },
                             ],
                             staticClass: "form-control",
-                            attrs: { id: "kondisi" },
+                            attrs: { id: "detail" },
+                            domProps: { value: _vm.aktivitas.detail },
                             on: {
-                              change: function ($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function (o) {
-                                    return o.selected
-                                  })
-                                  .map(function (o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
+                              input: function ($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
                                 _vm.$set(
                                   _vm.aktivitas,
-                                  "kondisi",
-                                  $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
+                                  "detail",
+                                  $event.target.value
                                 )
                               },
                             },
-                          },
-                          [
-                            _c("option", { attrs: { value: "" } }, [
-                              _vm._v("Pilih Kondisi"),
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "OK" } }, [
-                              _vm._v("OK"),
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "Rusak" } }, [
-                              _vm._v("Rusak"),
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "Error" } }, [
-                              _vm._v("Error"),
-                            ]),
-                          ]
-                        ),
-                      ]),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "modal-footer" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-secondary",
-                        attrs: { type: "button" },
-                        on: {
-                          click: function ($event) {
-                            _vm.showModal = false
-                          },
-                        },
-                      },
-                      [_vm._v("Batal")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-primary",
-                        attrs: { type: "button" },
-                        on: { click: _vm.addAktivitas },
-                      },
-                      [_vm._v("Simpan")]
-                    ),
-                  ]),
-                ]),
-              ]
-            ),
-          ]
-        )
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.showUploadBAModal
-      ? _c(
-          "div",
-          {
-            staticClass: "modal fade show",
-            attrs: {
-              id: "modalUploadBA",
-              tabindex: "-1",
-              role: "dialog",
-              "aria-labelledby": "modalUploadBALabel",
-            },
-          },
-          [
-            _c(
-              "div",
-              { staticClass: "modal-dialog", attrs: { role: "document" } },
-              [
-                _c("div", { staticClass: "modal-content" }, [
-                  _c("div", { staticClass: "modal-header" }, [
-                    _c(
-                      "h5",
-                      {
-                        staticClass: "modal-title",
-                        attrs: { id: "modalUploadBALabel" },
-                      },
-                      [_vm._v("Upload Berita Acara")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "close",
-                        attrs: { type: "button", "aria-label": "Close" },
-                        on: {
-                          click: function ($event) {
-                            _vm.showUploadBAModal = false
-                          },
-                        },
-                      },
-                      [
-                        _c("span", { attrs: { "aria-hidden": "true" } }, [
-                          _vm._v("×"),
-                        ]),
-                      ]
-                    ),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "modal-body" }, [
-                    _c(
-                      "form",
-                      {
-                        on: {
-                          submit: function ($event) {
-                            $event.preventDefault()
-                            return _vm.handleUploadBA.apply(null, arguments)
-                          },
-                        },
-                      },
-                      [
-                        _c("div", { staticClass: "form-group" }, [
-                          _c("label", { attrs: { for: "baFile" } }, [
-                            _vm._v("Pilih File Berita Acara (PDF)"),
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass: "drag-drop-area",
-                              class: { dragging: _vm.isDragging },
-                              on: {
-                                dragover: function ($event) {
-                                  $event.preventDefault()
-                                  return _vm.onDragOver.apply(null, arguments)
-                                },
-                                dragleave: _vm.onDragLeave,
-                                drop: _vm.onDrop,
-                                click: _vm.triggerFileInput,
-                              },
-                            },
-                            [
-                              !_vm.file
-                                ? _c("p", [
-                                    _vm._v(
-                                      "Seret dan jatuhkan file PDF di sini, atau klik untuk memilih"
-                                    ),
-                                  ])
-                                : _c("p", [_vm._v(_vm._s(_vm.file.name))]),
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c("input", {
-                            ref: "fileInput",
-                            staticClass: "form-control",
-                            staticStyle: { display: "none" },
-                            attrs: {
-                              type: "file",
-                              id: "baFile",
-                              accept: "application/pdf",
-                              required: "",
-                            },
-                            on: { change: _vm.onBAFileChange },
                           }),
-                        ]),
-                      ]
-                    ),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "modal-footer" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-danger",
-                        attrs: { type: "button" },
-                        on: {
-                          click: function ($event) {
-                            _vm.showUploadBAModal = false
-                          },
-                        },
-                      },
-                      [_vm._v("Batal")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-primary",
-                        attrs: { type: "button" },
-                        on: { click: _vm.handleUploadBA },
-                      },
-                      [_vm._v("Upload")]
-                    ),
-                  ]),
-                ]),
-              ]
-            ),
-          ]
-        )
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.showUploadBuktiPemusnahanModal
-      ? _c(
-          "div",
-          {
-            staticClass: "modal fade show",
-            attrs: {
-              id: "modalUploadBuktiPemusnahan",
-              tabindex: "-1",
-              role: "dialog",
-              "aria-labelledby": "modalUploadBuktiPemusnahanLabel",
-            },
-          },
-          [
-            _c(
-              "div",
-              { staticClass: "modal-dialog", attrs: { role: "document" } },
-              [
-                _c("div", { staticClass: "modal-content" }, [
-                  _c("div", { staticClass: "modal-header" }, [
-                    _c(
-                      "h5",
-                      {
-                        staticClass: "modal-title",
-                        attrs: { id: "modalUploadBuktiPemusnahanLabel" },
-                      },
-                      [_vm._v("Upload Bukti Pemusnahan")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "close",
-                        attrs: { type: "button", "aria-label": "Close" },
-                        on: {
-                          click: function ($event) {
-                            _vm.showUploadBuktiPemusnahanModal = false
-                          },
-                        },
-                      },
-                      [
-                        _c("span", { attrs: { "aria-hidden": "true" } }, [
-                          _vm._v("×"),
-                        ]),
-                      ]
-                    ),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "modal-body" }, [
-                    _c(
-                      "form",
-                      {
-                        on: {
-                          submit: function ($event) {
-                            $event.preventDefault()
-                            return _vm.handleUploadBuktiPemusnahan.apply(
-                              null,
-                              arguments
-                            )
-                          },
-                        },
-                      },
-                      [
-                        _c("div", { staticClass: "form-group" }, [
-                          _c(
-                            "label",
-                            { attrs: { for: "buktiPemusnahanFile" } },
-                            [_vm._v("Pilih File Bukti Pemusnahan (Image/PDF)")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass: "drag-drop-area",
-                              class: { dragging: _vm.isDragging },
-                              on: {
-                                dragover: function ($event) {
-                                  $event.preventDefault()
-                                  return _vm.onDragOver.apply(null, arguments)
-                                },
-                                dragleave: _vm.onDragLeave,
-                                drop: _vm.onDrop,
-                                click: _vm.triggerFileInput,
-                              },
-                            },
-                            [
-                              !_vm.files
-                                ? _c("p", [
-                                    _vm._v(
-                                      "Seret dan jatuhkan file di sini, atau klik untuk memilih"
-                                    ),
-                                  ])
-                                : _c("p", [
-                                    _vm._v(
-                                      _vm._s(_vm.files.length) +
-                                        " file terpilih"
-                                    ),
-                                  ]),
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c("input", {
-                            ref: "fileInput",
-                            staticClass: "form-control",
-                            staticStyle: { display: "none" },
-                            attrs: {
-                              type: "file",
-                              id: "buktiPemusnahanFile",
-                              accept: "image/jpeg, image/png, application/pdf",
-                              multiple: "",
-                              required: "",
-                            },
-                            on: { change: _vm.onBuktiPemusnahanFileChange },
-                          }),
-                        ]),
-                      ]
-                    ),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "modal-footer" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-danger",
-                        attrs: { type: "button" },
-                        on: {
-                          click: function ($event) {
-                            _vm.showUploadBuktiPemusnahanModal = false
-                          },
-                        },
-                      },
-                      [_vm._v("Batal")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-primary",
-                        attrs: { type: "button" },
-                        on: { click: _vm.handleUploadBuktiPemusnahan },
-                      },
-                      [_vm._v("Upload")]
-                    ),
-                  ]),
-                ]),
-              ]
-            ),
-          ]
-        )
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.showEditModal
-      ? _c(
-          "div",
-          {
-            staticClass: "modal fade show",
-            attrs: {
-              id: "modalEditAktivitas",
-              tabindex: "-1",
-              role: "dialog",
-              "aria-labelledby": "modalEditAktivitasLabel",
-            },
-          },
-          [
-            _c(
-              "div",
-              { staticClass: "modal-dialog", attrs: { role: "document" } },
-              [
-                _c("div", { staticClass: "modal-content" }, [
-                  _c("div", { staticClass: "modal-header" }, [
-                    _c(
-                      "h5",
-                      {
-                        staticClass: "modal-title",
-                        attrs: { id: "modalEditAktivitasLabel" },
-                      },
-                      [_vm._v("Edit Aktivitas")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "close",
-                        attrs: { type: "button", "aria-label": "Close" },
-                        on: {
-                          click: function ($event) {
-                            _vm.showEditModal = false
-                          },
-                        },
-                      },
-                      [
-                        _c("span", { attrs: { "aria-hidden": "true" } }, [
-                          _vm._v("×"),
-                        ]),
-                      ]
-                    ),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "modal-body" }, [
-                    _c("form", [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "detail" } }, [
-                          _vm._v("Detail"),
                         ]),
                         _vm._v(" "),
-                        _c("textarea", {
-                          directives: [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "ba" } }, [
+                            _vm._v("Upload Berita Acara (BA) - PDF Only"),
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "file",
+                              id: "ba",
+                              accept: "application/pdf",
+                            },
+                            on: { change: _vm.handleBAUpload },
+                          }),
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "buktiPemusnahan" } }, [
+                            _vm._v("Upload Bukti Pemusnahan - Images/PDF"),
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "file",
+                              id: "buktiPemusnahan",
+                              multiple: "",
+                            },
+                            on: { change: _vm.handleBuktiPemusnahanUpload },
+                          }),
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "modal-footer" }, [
+                          _c(
+                            "button",
                             {
-                              name: "model",
-                              rawName: "v-model",
-                              value:
-                                _vm.aktivitasList[_vm.selectedIndex].detail,
-                              expression: "aktivitasList[selectedIndex].detail",
+                              staticClass: "btn btn-secondary",
+                              attrs: { type: "button" },
+                              on: {
+                                click: function ($event) {
+                                  _vm.showModal = false
+                                },
+                              },
                             },
-                          ],
-                          staticClass: "form-control",
-                          attrs: { id: "detail" },
-                          domProps: {
-                            value: _vm.aktivitasList[_vm.selectedIndex].detail,
-                          },
-                          on: {
-                            input: function ($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.aktivitasList[_vm.selectedIndex],
-                                "detail",
-                                $event.target.value
-                              )
+                            [_vm._v("Batal")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary",
+                              attrs: { type: "submit" },
                             },
-                          },
-                        }),
-                      ]),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "modal-footer" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-secondary",
-                        attrs: { type: "button" },
-                        on: {
-                          click: function ($event) {
-                            _vm.showEditModal = false
-                          },
-                        },
-                      },
-                      [_vm._v("Batal")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-primary",
-                        attrs: { type: "button" },
-                        on: { click: _vm.saveEditAktivitas },
-                      },
-                      [_vm._v("Simpan")]
+                            [_vm._v("Simpan")]
+                          ),
+                        ]),
+                      ]
                     ),
                   ]),
                 ]),
@@ -190731,29 +191315,8 @@ var staticRenderFns = [
         _c("th", [_vm._v("Berita Acara")]),
         _vm._v(" "),
         _c("th", [_vm._v("Detail")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Aksi")]),
       ]),
     ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "btn btn-sm",
-        attrs: {
-          type: "button",
-          id: "dropdownMenuButton",
-          "data-toggle": "dropdown",
-          "aria-haspopup": "true",
-          "aria-expanded": "false",
-        },
-      },
-      [_c("i", { staticClass: "fas fa-ellipsis-v" })]
-    )
   },
 ]
 render._withStripped = true
@@ -190934,7 +191497,7 @@ var render = function () {
                       staticClass: "btn-sts",
                       class: {
                         "status-rusak": item.status === "Belum",
-                        "status-hilang": item.status === "Proses",
+                        "status-hilang": item.status === "Proses Pemusnahan",
                         "status-active": item.status === "Selesai",
                       },
                     },
@@ -192661,7 +193224,7 @@ var render = function () {
                       class: {
                         "status-rusak": item.status === "Belum",
                         "status-hilang": item.status === "Proses",
-                        "status-active": item.status === "Selesai",
+                        "status-active": item.status === "Selesai Pemusnahan",
                       },
                     },
                     [
@@ -193319,7 +193882,8 @@ var render = function () {
                       staticClass: "btn-sts",
                       class: {
                         "status-rusak": item.status === "Belum",
-                        "status-hilang": item.status === "Menunggu Persetujuan",
+                        "status-hilang":
+                          item.status === "Menunggu Persetujuan Pemusnahan",
                         "status-active": item.status === "Selesai",
                       },
                     },
@@ -253117,7 +253681,9 @@ var SelesaiPerawatan = (__webpack_require__(/*! ./components/admin-mtc/Perawatan
 var DetailSelesaiPerawatan = (__webpack_require__(/*! ./components/admin-mtc/PerawatanAlat/Kondisi/Selesai/detail.vue */ "./resources/js/components/admin-mtc/PerawatanAlat/Kondisi/Selesai/detail.vue")["default"]);
 // Jadwal Perawatan
 var TabelPerawatan = (__webpack_require__(/*! ./components/admin-mtc/PerawatanAlat/JadwalPerawatan/Tabel.vue */ "./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Tabel.vue")["default"]);
+var TabelPerencanaanPerawatan = (__webpack_require__(/*! ./components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Tabel.vue */ "./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Tabel.vue")["default"]);
 var KalenderPerawatan = (__webpack_require__(/*! ./components/admin-mtc/PerawatanAlat/JadwalPerawatan/Kalender.vue */ "./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Kalender.vue")["default"]);
+var KalenderPerencanaanPerawatan = (__webpack_require__(/*! ./components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Kalender.vue */ "./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Kalender.vue")["default"]);
 var RiwayatPerawatan = (__webpack_require__(/*! ./components/admin-mtc/PerawatanAlat/JadwalPerawatan/RiwayatPerawatan.vue */ "./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/RiwayatPerawatan.vue")["default"]);
 
 /**Komponen Data Mesin */
@@ -253416,9 +253982,17 @@ var routes = [{
   component: TabelPerawatan,
   name: 'tabel-jadwal-perawatan'
 }, {
+  path: '/admin-mtc/perencanaan/jadwal-perawatan',
+  component: TabelPerencanaanPerawatan,
+  name: 'tabel-perencanaan-jadwal-perawatan'
+}, {
   path: '/admin-mtc/jadwal-perawatan/kalender',
   component: KalenderPerawatan,
   name: 'kalender-perawatan'
+}, {
+  path: '/admin-mtc/perencanaan/jadwal-perawatan/kalender',
+  component: KalenderPerencanaanPerawatan,
+  name: 'kalender-perencanaan-perawatan'
 }, {
   path: '/admin-mtc/riwayat-perawatan',
   component: RiwayatPerawatan,
@@ -259302,6 +259876,180 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Kalender_vue_vue_type_template_id_7266f43d___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Kalender_vue_vue_type_template_id_7266f43d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Kalender.vue?vue&type=template&id=7266f43d& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Kalender.vue?vue&type=template&id=7266f43d&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Kalender.vue":
+/*!**************************************************************************************************!*\
+  !*** ./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Kalender.vue ***!
+  \**************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Kalender_vue_vue_type_template_id_279a0788___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Kalender.vue?vue&type=template&id=279a0788& */ "./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Kalender.vue?vue&type=template&id=279a0788&");
+/* harmony import */ var _Kalender_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Kalender.vue?vue&type=script&lang=js& */ "./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Kalender.vue?vue&type=script&lang=js&");
+/* harmony import */ var _Kalender_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Kalender.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Kalender.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+;
+
+
+/* normalize component */
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _Kalender_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Kalender_vue_vue_type_template_id_279a0788___WEBPACK_IMPORTED_MODULE_0__.render,
+  _Kalender_vue_vue_type_template_id_279a0788___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Kalender.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Kalender.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************!*\
+  !*** ./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Kalender.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Kalender_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Kalender.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Kalender.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Kalender_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Kalender.vue?vue&type=style&index=0&lang=css&":
+/*!***********************************************************************************************************************************!*\
+  !*** ./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Kalender.vue?vue&type=style&index=0&lang=css& ***!
+  \***********************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Kalender_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../node_modules/style-loader/dist/cjs.js!../../../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Kalender.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Kalender.vue?vue&type=style&index=0&lang=css&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Kalender.vue?vue&type=template&id=279a0788&":
+/*!*********************************************************************************************************************************!*\
+  !*** ./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Kalender.vue?vue&type=template&id=279a0788& ***!
+  \*********************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Kalender_vue_vue_type_template_id_279a0788___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Kalender_vue_vue_type_template_id_279a0788___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Kalender_vue_vue_type_template_id_279a0788___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Kalender.vue?vue&type=template&id=279a0788& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Kalender.vue?vue&type=template&id=279a0788&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Tabel.vue":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Tabel.vue ***!
+  \***********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Tabel_vue_vue_type_template_id_32cb6d16_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Tabel.vue?vue&type=template&id=32cb6d16&scoped=true& */ "./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Tabel.vue?vue&type=template&id=32cb6d16&scoped=true&");
+/* harmony import */ var _Tabel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Tabel.vue?vue&type=script&lang=js& */ "./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Tabel.vue?vue&type=script&lang=js&");
+/* harmony import */ var _Tabel_vue_vue_type_style_index_0_id_32cb6d16_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Tabel.vue?vue&type=style&index=0&id=32cb6d16&scoped=true&lang=css& */ "./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Tabel.vue?vue&type=style&index=0&id=32cb6d16&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+;
+
+
+/* normalize component */
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _Tabel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Tabel_vue_vue_type_template_id_32cb6d16_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _Tabel_vue_vue_type_template_id_32cb6d16_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "32cb6d16",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Tabel.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Tabel.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************!*\
+  !*** ./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Tabel.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Tabel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Tabel.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Tabel.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Tabel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Tabel.vue?vue&type=style&index=0&id=32cb6d16&scoped=true&lang=css&":
+/*!********************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Tabel.vue?vue&type=style&index=0&id=32cb6d16&scoped=true&lang=css& ***!
+  \********************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Tabel_vue_vue_type_style_index_0_id_32cb6d16_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../node_modules/style-loader/dist/cjs.js!../../../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Tabel.vue?vue&type=style&index=0&id=32cb6d16&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Tabel.vue?vue&type=style&index=0&id=32cb6d16&scoped=true&lang=css&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Tabel.vue?vue&type=template&id=32cb6d16&scoped=true&":
+/*!******************************************************************************************************************************************!*\
+  !*** ./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Tabel.vue?vue&type=template&id=32cb6d16&scoped=true& ***!
+  \******************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Tabel_vue_vue_type_template_id_32cb6d16_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Tabel_vue_vue_type_template_id_32cb6d16_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Tabel_vue_vue_type_template_id_32cb6d16_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Tabel.vue?vue&type=template&id=32cb6d16&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Tabel.vue?vue&type=template&id=32cb6d16&scoped=true&");
 
 
 /***/ }),

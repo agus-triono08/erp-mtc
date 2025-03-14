@@ -111,7 +111,7 @@
             <td>{{ item.nama_alat }}</td>
             <td>{{ item.no_seri }}</td>
             <td class="text-center">
-              <i class="fas fa-check" v-if="item.status === 'Belum Selesai'" style="color: green;"></i>
+              <i class="fas fa-check" v-if="item.status === 'Pelaksanaan'" style="color: green;"></i>
               <!-- <i class="fas fa-times" v-if="item.status === 'Belum Selesai'" style="color: red;"></i> -->
             </td>
             <td class="text-center">
@@ -119,9 +119,26 @@
               <!-- <i class="fas fa-times" v-if="item.status === 'Belum Selesai'" style="color: red;"></i> -->
             </td>
             <td>
-              <button @click="editJadwal(item)" class="btn btn-sm btn-warning">
-                <i class="fas fa-edit"></i>
-              </button>
+              <div class="dropdown text-center">
+                <button
+                  class="btn btn-sm"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <i class="fas fa-ellipsis-v"></i>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" @click="showModalEdit(item)" v-if="item.status !== 'Pelaksanaan' && item.status !== 'Selesai'">
+                    <i class="bi bi-clock text-info"></i> Pelaksanaan
+                  </a>
+                  <a class="dropdown-item" @click="showModalSelesai(item)" v-if="item.status === 'Pelaksanaan' || item.status === 'Selesai'">
+                    <i class="bi bi-check text-success"></i> Selesai
+                  </a>
+                </div>
+              </div>
             </td>
             <td v-for="i in Array.from(Array(last_date).keys())" :key="i" :style="{ backgroundColor: weekend_date.indexOf(i + 1) !== -1 ? 'black' : isDate(item.tanggal_perawatan, i + 1) ? 'yellow' : '' }">
             </td>
@@ -132,32 +149,32 @@
             <td :colspan="last_date + 3">Tidak ada data</td>
           </tr>
         </tbody>
-      </table>
-      <!-- Pagination -->
-      <div class="d-flex justify-content-between align-items-center mt-3 mb-3" style="border-radius: 10px; background-color: #f3f4f6; height: 50px; color: #000;">
-        <div class="ml-3">
-          Rows per page:
-          <span>{{ perPage }}</span>
-        </div>
-        <div class="mr-3">          
-          <span>{{ paginationInfo }}</span>
-          <button @click="prevPage" :disabled="currentPage === 1" class="btn btn-sm btn-light">
-            <i class="fas fa-angle-left"></i>
-          </button>
-          <span>  </span>
-          <button @click="nextPage" :disabled="currentPage === totalPages" class="btn btn-sm btn-light">
-            <i class="fas fa-angle-right"></i>
-          </button>
-        </div>
-      </div>   
-    </div> 
-    <!-- Modal untuk Input dan Edit Data -->
-    <div v-if="isModalOpen" class="modal fade show" style="display: block;" tabindex="-1" role="dialog" aria-hidden="true">
+      </table>      
+    </div>
+    <!-- Pagination -->
+    <div class="table-responsive d-flex justify-content-between align-items-center mt-3 mb-3" style="border-radius: 10px; background-color: #f3f4f6; height: 50px; color: #000;">
+      <div class="ml-3">
+        Rows per page:
+        <span>{{ perPage }}</span>
+      </div>
+      <div class="mr-3">          
+        <span>{{ paginationInfo }}</span>
+        <button @click="prevPage" :disabled="currentPage === 1" class="btn btn-sm btn-light">
+          <i class="fas fa-angle-left"></i>
+        </button>
+        <span>  </span>
+        <button @click="nextPage" :disabled="currentPage === totalPages" class="btn btn-sm btn-light">
+          <i class="fas fa-angle-right"></i>
+        </button>
+      </div>
+    </div>    
+    <!-- Modal untuk Tambah Data -->
+    <div v-if="isModalTambahOpen" class="modal fade show" style="display: block;" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">{{ modalTitle }}</h5>
-            <button type="button" class="close" @click="closeModal">
+            <h5 class="modal-title">Tambah Jadwal Perawatan</h5>
+            <button type="button" class="close" @click="closeModalTambah">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -183,37 +200,38 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" @click="closeModal">Batal</button>
+            <button type="button" class="btn btn-secondary" @click="closeModalTambah">Batal</button>
             <button type="button" class="btn btn-primary" @click="tambahJadwalPerawatan">Simpan</button>
           </div>
         </div>
       </div>
     </div>
-    <!-- Modal untuk Pelaksanaan -->
-    <div v-if="isModalOpen" class="modal fade show" style="display: block;" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Modal untuk Edit Data -->
+    <div v-if="isModalEditOpen" class="modal fade show" style="display: block;" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">{{ modalTitle }}</h5>
-            <button type="button" class="close" @click="closeModal">
+            <h5 class="modal-title">Edit Jadwal Perawatan</h5>
+            <button type="button" class="close" @click="closeModalEdit">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
             <form>
               <div class="form-group">
-                <label><b>Tanggal Pengerjaan <sup class="text-danger"> *</sup> </b></label>
+                <label>Tanggal Pengerjaan</label>
                 <input v-model="tanggal_perawatan" type="date" class="form-control">
               </div>
-              <div class="form-group"> 
-                <label for="waktu"><b>Waktu (Mulai - Selesai) <sup class="text-danger"> *</sup> </b></label> 
-                <div class="input-group"> <input type="time" class="form-control" id="waktu_mulai" v-model="jadwalPerawatan.waktu_mulai" required>
-                  <span class="input-group-text">-</span> 
-                  <input type="time" class="form-control" id="waktu_selesai" v-model="jadwalPerawatan.waktu_selesai" required> 
-                </div> 
+              <div class="form-group">
+                <label>Waktu (Mulai - Selesai)</label>
+                <div class="input-group">
+                  <input type="time" class="form-control" id="waktu_mulai" v-model="waktu_mulai" required>
+                  <span class="input-group-text">-</span>
+                  <input type="time" class="form-control" id="waktu_selesai" v-model="waktu_selesai" required>
+                </div>
               </div>
               <div class="form-group">
-                <label for="pic"><b>PIC <sup class="text-danger"> *</sup> </b></label>
+                <label>PIC</label>
                 <v-select
                   :options="picOptions"
                   v-model="jadwalPerawatan.pic"
@@ -222,13 +240,47 @@
                   :reduce="(pic) => pic.value"
                 />
               </div>
-              <div class="form-group">
-                <label><b>Detail <sup class="text-danger"> *</sup></b></label>
+              <!-- <div class="form-group">
+                <label>Keterangan Perawatan</label>
                 <textarea v-model="detail" class="form-control"></textarea>
               </div>
               <div class="form-group">
-                <label for="kondisi" class="text-black-10"><b>Kondisi <sup class="text-danger"> *</sup></b></label>
-                <select class="form-control" id="kondisi" v-model="jadwalPerawatan.kondisi" required>
+                <label>Kondisi</label>
+                <select class="form-control" id="kondisi" v-model="kondisi" required>
+                  <option value="">Pilih Kondisi</option>
+                  <option value="OK">OK</option>
+                  <option value="Rusak">Rusak</option>
+                  <option value="Error">Error</option>
+                </select>
+              </div> -->
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" @click="closeModalEdit">Batal</button>
+            <button type="button" class="btn btn-primary" @click="simpanJadwalPerawatan" v-if="jadwalPerawatan.status !== 'Selesai'">Simpan</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal untuk Selesai -->
+    <div v-if="isModalSelesaiOpen" class="modal fade show" style="display: block;" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Selesai Jadwal Perawatan</h5>
+            <button type="button" class="close" @click="closeModalSelesai">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label>Keterangan Perawatan</label>
+                <textarea v-model="keterangan_perawatan" class="form-control"></textarea>
+              </div>
+              <div class="form-group">
+                <label>Kondisi</label>
+                <select class="form-control" id="kondisi" v-model="kondisi" required>
                   <option value="">Pilih Kondisi</option>
                   <option value="OK">OK</option>
                   <option value="Rusak">Rusak</option>
@@ -238,8 +290,8 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-danger" @click="closeModal">Batal</button>
-            <button type="button" class="btn btn-primary" @click="simpanJadwalPerawatan" v-if="jadwalPerawatan.status !== 'Selesai'">Simpan</button>
+            <button type="button" class="btn btn-danger" @click="closeModalSelesai">Batal</button>
+            <button type="button" class="btn btn-primary" @click="simpanSelesai">Simpan</button>
           </div>
         </div>
       </div>
@@ -268,7 +320,7 @@ export default {
           no_perawatan: 'R-01',
           nama_alat: 'Bor',
           no_seri: 'B-01',
-          tanggal_perawatan: [6],
+          tanggal_perawatan: '6',
           waktu_mulai: '',
           waktu_selesai: '',
           pic: '',
@@ -281,7 +333,7 @@ export default {
           no_perawatan: 'R-02',
           nama_alat: 'Bor',
           no_seri: 'B-02',
-          tanggal_perawatan: [13],
+          tanggal_perawatan: '20',
           waktu_mulai: '',
           waktu_selesai: '',
           pic: '',
@@ -294,7 +346,7 @@ export default {
           no_perawatan: 'R-03',
           nama_alat: 'Bor',
           no_seri: 'B-03',
-          tanggal_perawatan: [19],
+          tanggal_perawatan: '19',
           waktu_mulai: '',
           waktu_selesai: '',
           pic: '',
@@ -302,7 +354,6 @@ export default {
           kondisi: '',
           status: 'Belum Selesai'
         },
-        // tambahkan data lainnya
       ],
       status: '',
       currentPage: 1,
@@ -312,7 +363,9 @@ export default {
       tanggal: '',
       nama_alat: '',
       no_seri: '',
-      isModalOpen: false,
+      isModalTambahOpen: false,
+      isModalEditOpen: false,
+      isModalSelesaiOpen: false,
       modalTitle: 'Tambah Jadwal Perawatan',
     }
   },
@@ -327,9 +380,9 @@ export default {
       return date.getFullYear();
     },
     last_date() {
-      // Menghitung jumlah hari dalam bulan saat ini
+      // Fixing last_date calculation to be more robust.
       const date = new Date(this.currentYear, this.getMonthNumber(this.currentMonth) + 1, 0);
-      return date.getDate(); // Mendapatkan tanggal terakhir dalam bulan
+      return date.getDate(); // Returns the last day of the current month
     },
     weekend_date() {
       const date = new Date(this.currentYear, this.getMonthNumber(this.currentMonth), 1); // Tanggal 1 bulan ini
@@ -361,7 +414,22 @@ export default {
   },
   methods: {
     isDate(tanggal, hari) {
-      return tanggal.includes(hari)
+      // Cek apakah tanggal adalah string
+      if (typeof tanggal === 'string') {
+        // Jika tanggal adalah string, cek apakah tanggal mengandung hari
+        if (tanggal.includes(hari)) {
+          return true;
+        }
+      } else {
+        // Jika tanggal bukan string, asumsikan tanggal adalah objek Date
+        const date = new Date(tanggal);
+        // Cek apakah tanggal sama dengan hari
+        if (date.getDate() === hari) {
+          return true;
+        }
+      }
+      // Jika tidak ada kondisi yang terpenuhi, return false
+      return false;
     },
     prevPage() {
       this.currentPage--;
@@ -373,14 +441,36 @@ export default {
       this.currentPage = paginate;
     },
     getMonthNumber(monthName) {
-      const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
       return monthNames.indexOf(monthName);
     },
     showModalTambah() {
-      this.isModalOpen = true;
+      this.isModalTambahOpen = true;
     },
-    closeModal() {
-      this.isModalOpen = false;
+    closeModalTambah() {
+      this.isModalTambahOpen = false;
+    },
+    showModalEdit(item) {
+      this.id = item.id;
+      this.tanggal_perawatan = item.tanggal_perawatan;
+      this.waktu_mulai = item.waktu_mulai;
+      this.waktu_selesai = item.waktu_selesai;
+      this.pic = item.pic;
+      this.detail = item.detail;
+      this.kondisi = item.kondisi;
+      this.isModalEditOpen = true;
+    },
+    closeModalEdit() {
+      this.isModalEditOpen = false;
+    },
+    showModalSelesai(item) {
+      this.id = item.id;
+      this.keterangan_perawatan = '';
+      this.kondisi = '';
+      this.isModalSelesaiOpen = true;
+    },
+    closeModalSelesai() {
+      this.isModalSelesaiOpen = false;
     },
     tambahJadwalPerawatan() {
       const jadwalPerawatanBaru = {
@@ -390,7 +480,17 @@ export default {
         no_seri: this.no_seri,
       };
       this.jadwalPerawatan.push(jadwalPerawatanBaru);
-      this.hideModalTambah();
+      this.closeModalTambah();  // Change hideModalTambah to closeModalTambah
+    },
+    simpanSelesai() {
+      const index = this.jadwalPerawatan.findIndex((item) => item.id === this.id);
+      if (index !== -1) {
+        this.jadwalPerawatan[index].keterangan_perawatan = this.keterangan_perawatan;
+        this.jadwalPerawatan[index].kondisi = this.kondisi;
+        this.jadwalPerawatan[index].status = 'Selesai';
+      }
+      this.closeModalSelesai();
+      this.isModalSelesaiOpen = false;
     },
     simpanJadwalPerawatan() {
       const index = this.jadwalPerawatan.findIndex((item) => item.id === this.id);
@@ -401,13 +501,13 @@ export default {
         this.jadwalPerawatan[index].pic = this.pic;
         this.jadwalPerawatan[index].detail = this.detail;
         this.jadwalPerawatan[index].kondisi = this.kondisi;
-        this.jadwalPerawatan[index].status = 'Selesai';
+        this.jadwalPerawatan[index].status = 'Pelaksanaan';
         // Update tanggal pengerjaan pada tabel
         const tanggalPerawatan = this.tanggal_perawatan.split('-');
         const tanggal = tanggalPerawatan[2];
         this.jadwalPerawatan[index].tanggal_perawatan = [parseInt(tanggal)];
       }
-      this.closeModal();
+      this.closeModalEdit();
     },
     editJadwal(item) {
       this.id = item.id;

@@ -66,6 +66,10 @@ Route::get('/admin-mtc/jadwal-perawatan', function() {
     return view('admin-mtc.Main.jadwal-perawatan');
 })->name('jadwalperawatan.adminmtc');
 
+Route::get('/admin-mtc/perencanaan/jadwal-perawatan', function() {
+    return view('admin-mtc.Main.perencanaan-jadwal-perawatan');
+})->name('perencanaanjadwalperawatan.adminmtc');
+
 Route::get('/admin-mtc/riwayat-perawatan', function() {
     return view('admin-mtc.Main.riwayat-perawatan');
 })->name('riwayatperawatan.adminmtc');

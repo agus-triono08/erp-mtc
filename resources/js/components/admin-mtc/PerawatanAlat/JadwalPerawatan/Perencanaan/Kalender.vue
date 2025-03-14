@@ -8,10 +8,10 @@
     </div>
     <ul id="pills-tab" role="tablist" class="nav nav-pills mb-3" style="margin-top: 1rem !important;">
       <li role="presentation" class="nav-item">
-        <router-link id="pills-home-tab" data-toggle="pill" data-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="false" class="nav-link" :class="{ active: $route.name === 'tabel-jadwal-perawatan' }" :to="{ name: 'tabel-jadwal-perawatan' }">Tabel</router-link>
+        <router-link id="pills-home-tab" data-toggle="pill" data-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="false" class="nav-link" :class="{ active: $route.name === 'tabel-perencanaan-jadwal-perawatan' }" :to="{ name: 'tabel-perencanaan-jadwal-perawatan' }">Tabel</router-link>
       </li>
       <li role="presentation" class="nav-item">
-        <router-link id="pills-profile-tab" data-toggle="pill" data-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="true" class="nav-link" :class="{ active: $route.name === 'kalender-perawatan' }" :to="{ name: 'kalender-perawatan' }">Kalender</router-link>
+        <router-link id="pills-profile-tab" data-toggle="pill" data-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="true" class="nav-link" :class="{ active: $route.name === 'kalender-perencanaan-perawatan' }" :to="{ name: 'kalender-perencanaan-perawatan' }">Kalender</router-link>
       </li>
     </ul>
     <div class="mb-5 mt-2 mr-3" id="calendar"></div>
@@ -49,7 +49,7 @@ export default {
           pic: '',
           detail: '',
           kondisi: '',
-          status: 'Selesai'
+          status: 'Belum Selesai'
         },
         {
           id: 2,
@@ -62,7 +62,7 @@ export default {
           pic: '',
           detail: '',
           kondisi: '',
-          status: 'Pelaksanaan'
+          status: 'Belum Selesai'
         },
         {
           id: 3,
@@ -83,14 +83,14 @@ export default {
   },
   mounted() {
     const calendarEl = document.getElementById('calendar');
-    const calendar = new Calendar(calendarEl, {
+    const calendar = new Calendar(calendarEl, {      
       plugins: [dayGridPlugin, timeGridPlugin, listPlugin],
       headerToolbar: {
         left: 'prev,next today',
         center: 'title',
         right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
       },
-      initialDate: new Date(),
+      initialDate: new Date(new Date().getMonth() === 11 ? new Date().getFullYear() + 1 : new Date().getFullYear(), new Date().getMonth() === 11 ? 0 : new Date().getMonth() + 1, 1),
       navLinks: true, // can click day/week names to navigate views
       editable: true,
       dayMaxEvents: true, // allow "more" link when too many events
@@ -102,8 +102,8 @@ export default {
             start: new Date(new Date().getFullYear(), new Date().getMonth(), tanggal),
             end: new Date(new Date().getFullYear(), new Date().getMonth(), tanggal),
             allDay: true,
-            backgroundColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
-            borderColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
+            backgroundColor: item.status === 'Belum Selesai' ? '#dc3545' : '#169ea8',
+            borderColor: item.status === 'Belum Selesai' ? '#dc3545' : '#169ea8',
             display: 'block',
           }
         })

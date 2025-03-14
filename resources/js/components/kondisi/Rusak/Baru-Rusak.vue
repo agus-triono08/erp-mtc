@@ -68,7 +68,7 @@
                   class="btn-sts"
                   :class="{
                     'status-rusak': item.status === 'Belum',
-                    'status-hilang': item.status === 'Menunggu Persetujuan',
+                    'status-hilang': item.status === 'Menunggu Persetujuan Pemusnahan',
                     'status-active': item.status === 'Selesai',
                   }">
                   {{ item.status }}
@@ -209,7 +209,7 @@
           { text: 'Alice Johnson', value: 'Alice Johnson' },
         ],
         data: [
-          { no_seri: '1122wscj121', nama: 'Clamp', tgl: '2025-02-01', kondisi: 'Error', detail: 'Sensor tidak berfungsi', pic: 'John Doe', status: 'Menunggu Persetujuan' },
+          { no_seri: '1122wscj121', nama: 'Clamp', tgl: '2025-02-01', kondisi: 'Error', detail: 'Sensor tidak berfungsi', pic: 'John Doe', status: 'Menunggu Persetujuan Pemusnahan' },
           { no_seri: '1122wscj122', nama: 'Clamp', tgl: '2025-02-10', kondisi: 'Error', detail: 'Koneksi kabel terputus', pic: 'Jane Doe', status: 'Belum' },
         ],
         paginatedData: [],

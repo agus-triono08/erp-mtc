@@ -51,7 +51,7 @@
               <i class="fas" :class="{'fa-sort-up': sortKey === 'pic' && sortDirection === 'asc', 'fa-sort-down': sortKey === 'pic' && sortDirection === 'desc'}"></i>
             </th>
             <th @click="sortBy('detail')">
-              Detail
+              Keterangan Perawatan
               <i class="fas" :class="{'fa-sort-up': sortKey === 'detail' && sortDirection === 'asc', 'fa-sort-down': sortKey === 'detail' && sortDirection === 'desc'}"></i>
             </th>
             <th @click="sortBy('kondisi')">

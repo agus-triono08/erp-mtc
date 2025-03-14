@@ -70,11 +70,9 @@
           <h4 class="text-capitalize text-primary text-bold"><b>Aktivitas</b></h4>
         </div>         -->
         <div class="row align-items-center justify-content-end m-3">          
-          <!-- <button class="btn btn-primary mr-2" @click="showModal = true">Tambah</button> -->
+          <button class="btn btn-primary mr-2" @click="showModal = true">Tambah</button>
           <div class="btn-group">
-            <button class="btn btn-primary mr-2" @click="downloadBA(aktivitasList.length - 1)">Download BA</button>
-            <button class="btn btn-success mr-2" @click="uploadBA(aktivitasList.length - 1)">Upload BA</button>
-            <button class="btn btn-info mr-2" @click="uploadBuktiPemusnahan(aktivitasList.length - 1)">Upload Bukti Pemusnahan</button>
+            <button class="btn btn-primary mr-2" @click="downloadBA(aktivitasList.length - 1)">Download BA</button>            
           </div>
           <div class="search-wrapper">
             <div class="input-group">
@@ -93,81 +91,42 @@
                 <th>Dokumen Musnah</th>
                 <th>Berita Acara</th>
                 <th>Detail</th>
-                <th>Aksi</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="(item, index) in aktivitasList" :key="index" class="text-center">
                 <td>{{ index + 1 }}</td>
                 <td>
-                  <div v-if="item.buktiPemusnahan && item.buktiPemusnahan.length > 0">
+                  <!-- <div v-if="item.buktiPemusnahan && item.buktiPemusnahan.length > 0">
                     <div v-for="(image, imgIndex) in item.buktiPemusnahan" :key="imgIndex">
                       <img v-if="isImage(image)" :src="image" alt="Bukti Pemusnahan" class="img-fluid" style="max-width: 100px; margin: 5px;" />
                       <div v-else-if="isPdf(image)" style="text-align: center;">
                         <pdf :src="image" :page="1" :rotate="0" @num-pages="numPages = $event" @page-loaded="currentPage = $event" @link-clicked="currentPage = $event" style="width: max-content; height: max-content; margin: 0 auto;"/>
+                        <iframe :src="image" frameborder="0"></iframe>
                       </div>
                     </div>
                   </div>
                   <div v-else>
                     <span>No Bukti</span>
-                  </div>
+                  </div> -->
+                  <!-- <div v-for="(image, index) in item.buktiPemusnahan" :key="index">
+                    <pdf v-if="isPdf(image)" :src="image" :page="1" :rotate="0" @num-pages="numPages = $event" @page-loaded="currentPage = $event" @link-clicked="currentPage = $event" style="width: max-content; height: max-content; margin: 0 auto;" />
+                    <img v-if="isImage(image)" :src="image" alt="Gambar" width="100" height="100" style="margin: 5px;">
+                  </div> -->
+                  <div v-for="(image, index) in item.buktiPemusnahan" :key="index">
+                    <!-- <img :src="image" alt="Gambar" width="100" height="100" style="margin: 5px;"> -->
+                    <iframe :src="image" frameborder="0"height="500" style="margin: 5px;"></iframe>
+                    <!-- <pdf :src="image" :page="1" :rotate="0" @num-pages="numPages = $event" @page-loaded="currentPage = $event" @link-clicked="currentPage = $event" style="width: max-content; height: max-content; margin: 0 auto;" /> -->
+                  </div>                  
                 </td>
                 <td>
                   <div style="text-align: center;">
-                    <pdf :src="item.ba" :page="1" :rotate="0" @num-pages="numPages = $event" @page-loaded="currentPage = $event" @link-clicked="currentPage = $event" style="width: max-content; height: max-content; margin: 0 auto;"/>
+                    <pdf :src="item.ba" :page="1" :rotate="0" @num-pages="numPages = $event" @page-loaded="currentPage = $event" @link-clicked="currentPage = $event" style="width: max-content; height: max-content; margin: 0 auto;" />
+                    <!-- <a v-else :href="item.ba" target="_blank" download>{{ item.ba }}</a> -->
+                    <!-- <iframe :src="item.ba" frameborder="0"></iframe> -->
                   </div>
                 </td>
                 <td>{{ item.detail }}</td>
-                <!-- <td>
-                  <div 
-                    class="btn-sts"
-                    :class="{
-                      'status-rusak': item.kondisi === 'Rusak',
-                      'status-active': item.kondisi === 'OK',
-                      'status-error': item.kondisi === 'Error',
-                    }">
-                    {{ item.kondisi }}
-                    </div>
-                </td> -->
-                <!-- <td>
-                  <div 
-                    class="badge"
-                    :class="{
-                      'status-rusak': item.status === 'Ditolak',
-                      'status-active': item.status === 'Disetujui',
-                      'status-hilang': item.status === 'Menunggu Persetujuan',
-                    }">
-                    {{ item.status }}
-                    </div>
-                </td> -->
-                <td>
-                  <div class="dropdown text-center">
-                    <button
-                      class="btn btn-sm"
-                      type="button"
-                      id="dropdownMenuButton"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      <i class="fas fa-ellipsis-v"></i>
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <!-- <a class="dropdown-item" @click="downloadBA(index)">
-                        <i class="fas fa-download text-primary"></i> Download BA
-                      </a>
-                      <a class="dropdown-item" @click="uploadBA(index)">
-                        <i class="fas fa-upload text-success"></i> Upload BA
-                      </a>
-                      <a class="dropdown-item" @click="uploadBuktiPemusnahan(index)">
-                        <i class="fas fa-upload text-info"></i> Upload Bukti Pemusnahan
-                      </a> -->
-                      <a class="dropdown-item" @click="editAktivitas(index)">
-                        <i class="fas fa-edit text-warning"></i> Edit
-                      </a>
-                    </div>
-                  </div>
-                </td>
               </tr>
             </tbody>
           </table>            
@@ -202,148 +161,29 @@
             </button>
           </div>
           <div class="modal-body">
-            <form>
-              <div class="form-group">
-                <label for="tanggal">Tanggal</label>
-                <input type="date" class="form-control" id="tanggal" v-model="aktivitas.tanggal">
-              </div>
+            <form @submit.prevent="addAktivitas">
               <div class="form-group">
                 <label for="detail">Detail</label>
                 <textarea class="form-control" id="detail" v-model="aktivitas.detail"></textarea>
               </div>
-              <div class="form-group">
-                <label for="kondisi">Kondisi</label>
-                <select class="form-control" id="kondisi" v-model="aktivitas.kondisi">
-                  <option value="">Pilih Kondisi</option>
-                  <option value="OK">OK</option>
-                  <option value="Rusak">Rusak</option>
-                  <option value="Error">Error</option>
-                </select>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" @click="showModal = false">Batal</button>
-            <button type="button" class="btn btn-primary" @click="addAktivitas">Simpan</button>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <!-- Modal Upload BA -->
-    <div class="modal fade show" id="modalUploadBA" tabindex="-1" role="dialog" aria-labelledby="modalUploadBALabel" v-if="showUploadBAModal">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modalUploadBALabel">Upload Berita Acara</h5>
-            <button type="button" class="close" @click="showUploadBAModal = false" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form @submit.prevent="handleUploadBA">
+              <!-- Upload Berita Acara (BA) - PDF only -->
               <div class="form-group">
-                <label for="baFile">Pilih File Berita Acara (PDF)</label>
-                
-                <!-- Area Drag and Drop -->
-                <div 
-                  class="drag-drop-area" 
-                  @dragover.prevent="onDragOver" 
-                  @dragleave="onDragLeave" 
-                  @drop="onDrop" 
-                  @click="triggerFileInput"
-                  :class="{'dragging': isDragging}"
-                  >
-                  <p v-if="!file">Seret dan jatuhkan file PDF di sini, atau klik untuk memilih</p>
-                  <p v-else>{{ file.name }}</p>
-                </div>
+                <label for="ba">Upload Berita Acara (BA) - PDF Only</label>
+                <input type="file" id="ba" @change="handleBAUpload" accept="application/pdf" class="form-control" />
+              </div>
 
-                <!-- Hidden Input File for Selecting File -->
-                <input type="file" class="form-control" id="baFile" ref="fileInput" @change="onBAFileChange" accept="application/pdf" style="display: none;" required>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger" @click="showUploadBAModal = false">Batal</button>
-            <button type="button" class="btn btn-primary" @click="handleUploadBA">Upload</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Modal Upload Bukti Pemusnahan -->
-    <div class="modal fade show" id="modalUploadBuktiPemusnahan" tabindex="-1" role="dialog" aria-labelledby="modalUploadBuktiPemusnahanLabel" v-if="showUploadBuktiPemusnahanModal">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modalUploadBuktiPemusnahanLabel">Upload Bukti Pemusnahan</h5>
-            <button type="button" class="close" @click="showUploadBuktiPemusnahanModal = false" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form @submit.prevent="handleUploadBuktiPemusnahan">
+              <!-- Upload Bukti Pemusnahan - Multiple Files (Image/PDF) -->
               <div class="form-group">
-                <label for="buktiPemusnahanFile">Pilih File Bukti Pemusnahan (Image/PDF)</label>
-                
-                <!-- Area Drag and Drop -->
-                <div 
-                  class="drag-drop-area" 
-                  @dragover.prevent="onDragOver" 
-                  @dragleave="onDragLeave" 
-                  @drop="onDrop" 
-                  @click="triggerFileInput"
-                  :class="{'dragging': isDragging}"
-                  >
-                  <p v-if="!files">Seret dan jatuhkan file di sini, atau klik untuk memilih</p>
-                  <p v-else>{{ files.length }} file terpilih</p>
-                </div>
+                <label for="buktiPemusnahan">Upload Bukti Pemusnahan - Images/PDF</label>
+                <input type="file" id="buktiPemusnahan" @change="handleBuktiPemusnahanUpload" multiple class="form-control" />
+              </div>
 
-                <!-- Hidden Input File for Selecting File -->
-                <input type="file" class="form-control" id="buktiPemusnahanFile" ref="fileInput" @change="onBuktiPemusnahanFileChange" accept="image/jpeg, image/png, application/pdf" multiple style="display: none;" required>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" @click="showModal = false">Batal</button>
+                <button type="submit" class="btn btn-primary">Simpan</button>
               </div>
             </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger" @click="showUploadBuktiPemusnahanModal = false">Batal</button>
-            <button type="button" class="btn btn-primary" @click="handleUploadBuktiPemusnahan">Upload</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Modal Edit Aktivitas -->
-    <div class="modal fade show" id="modalEditAktivitas" tabindex="-1" role="dialog" aria-labelledby="modalEditAktivitasLabel" v-if="showEditModal">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modalEditAktivitasLabel">Edit Aktivitas</h5>
-            <button type="button" class="close" @click="showEditModal = false" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <!-- <div class="form-group">
-                <label for="tanggal">Tanggal</label>
-                <input type="date" class="form-control" id="tanggal" v-model="aktivitasList[selectedIndex].tanggal">
-              </div> -->
-              <div class="form-group">
-                <label for="detail">Detail</label>
-                <textarea class="form-control" id="detail" v-model="aktivitasList[selectedIndex].detail"></textarea>
-              </div>
-              <!-- <div class="form-group">
-                <label for="kondisi">Kondisi</label>
-                <select class="form-control" id="kondisi" v-model="aktivitasList[selectedIndex].kondisi">
-                  <option value="">Pilih Kondisi</option>
-                  <option value="OK">OK</option>
-                  <option value="Rusak">Rusak</option>
-                  <option value="Error">Error</option>
-                </select>
-              </div> -->
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" @click="showEditModal = false">Batal</button>
-            <button type="button" class="btn btn-primary" @click="saveEditAktivitas">Simpan</button>
           </div>
         </div>
       </div>
@@ -363,22 +203,22 @@ export default {
   data() {
     return {
       showModal: false,
-      aktivitas: {
-        tanggal: '',
+      aktivitas: {                
         detail: '',
-        kondisi: ''
+        ba: null, // BA file (PDF)
+        buktiPemusnahan: [],
       },
       aktivitasList: [
-      {
-        id: 1,
-        tanggal: '2022-01-01',
-        detail: 'Aktivitas 1',
-        kondisi: 'OK',
-        status: 'Menunggu Persetujuan',
-        ba: '/file/Berita-Acara-Pemusnahan-Barang.pdf',
-        buktiPemusnahan: ['/file/tang.jpeg',         
-        '/file/Berita-Acara-Pemusnahan-Barang.pdf']
-      }
+      // {
+      //   id: 1,
+      //   tanggal: '2022-01-01',
+      //   detail: 'Aktivitas 1',
+      //   kondisi: 'OK',
+      //   status: 'Menunggu Persetujuan',
+      //   ba: '/file/Berita-Acara-Pemusnahan-Barang.pdf',
+      //   buktiPemusnahan: ['/file/tang.jpeg',         
+      //   '/file/Berita-Acara-Pemusnahan-Barang.pdf']
+      // }
       ],
       data: [
         { no_seri: '1122wscj121', waktu_mulai: '08:00', waktu_selesai: '12:00', nama: 'Clamp', layout: 'E7', tgl: '2025-02-01', kondisi: 'Musnah', detail: 'Sensor tidak berfungsi', pic: 'John Doe', tgl_selesai: '2025-02-05', status: 'Proses' },        
@@ -386,14 +226,6 @@ export default {
       searchQuery: '',
       rowsPerPage: 10,
       currentPage: 1,
-      showUploadBAModal: false, // Mengatur visibilitas modal upload BA
-      selectedBAFile: null, // File yang dipilih untuk upload
-      files: [],
-      isDragging: false, // Status apakah file sedang di-drag
-      showUploadBuktiPemusnahanModal: false,
-      buktiPemusnahanFile: null,
-      showEditModal: false,
-      selectedIndex: null,
     }
   },
   computed: {
@@ -431,11 +263,65 @@ export default {
     }
   },
   methods: {
+    handleBAUpload(event) {
+      const file = event.target.files[0];
+      if (file && file.type === 'application/pdf') {
+        // Mengonversi file PDF menjadi URL objek yang dapat diakses oleh komponen
+        this.aktivitas.ba = URL.createObjectURL(file);
+        console.log('Berita Acara berhasil diunggah:', this.aktivitas.ba);
+      } else {
+        alert("Hanya file PDF yang diperbolehkan untuk Berita Acara!");
+        this.aktivitas.ba = null;
+      }
+    },
+
+    // Method untuk menangani upload Bukti Pemusnahan (Multiple files, gambar/PDF)
+    handleBuktiPemusnahanUpload(event) {
+      const files = event.target.files;
+      const validFiles = [];
+
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        if (file.type === 'application/pdf' || file.type.startsWith('image/')) {
+          // Mengonversi file menjadi URL objek
+          validFiles.push(URL.createObjectURL(file));
+        } else {
+          alert("Hanya file PDF atau gambar yang diperbolehkan untuk Bukti Pemusnahan!");
+        }
+      }
+
+      // Memperbarui buktiPemusnahan dengan file yang valid (URL objek)
+      this.aktivitas.buktiPemusnahan = validFiles;
+      console.log('Bukti Pemusnahan berhasil diunggah:', this.aktivitas.buktiPemusnahan);
+    },
+    // Method untuk menangani upload Bukti Pemusnahan (Multiple files, hanya PDF)
+    // handleBuktiPemusnahanUpload(event) {
+    //   const file = event.target.files[0];
+    //   if (file && file.type === 'application/pdf') {
+    //     // Mengonversi file PDF menjadi URL objek yang dapat diakses oleh komponen
+    //     this.aktivitas.buktiPemusnahan = URL.createObjectURL(file);
+    //     console.log('Berita Acara berhasil diunggah:', this.aktivitas.buktiPemusnahan);
+    //   } else {
+    //     alert("Hanya file PDF yang diperbolehkan untuk Berita Acara!");
+    //     this.aktivitas.buktiPemusnahan = null;
+    //   }
+    // },
     addAktivitas() {
+      if (!this.aktivitas.ba || this.aktivitas.buktiPemusnahan.length === 0) {
+        alert("Harap unggah Berita Acara (BA) dan Bukti Pemusnahan!");
+        return;
+      }
+
+      // Create a new activity object with the uploaded files
       this.aktivitasList.push({ ...this.aktivitas });
-      this.aktivitas.tanggal = '';
-      this.aktivitas.detail = '';
-      this.aktivitas.kondisi = '';
+
+      // Reset form fields
+      this.aktivitas = {
+        detail: '',
+        ba: null,
+        buktiPemusnahan: [],
+      };
+
       this.showModal = false;
     },
     updatePaginatedData() {
@@ -458,134 +344,25 @@ export default {
       // Implement debounce logic for search
       this.updatePaginatedData();
     },
-     // Upload Berita Acara (BA)
-    uploadBA(index) {
-      this.openUploadBAModal(index);  // Open modal to upload BA for a specific activity
-    },
-
-    // Menampilkan modal untuk upload BA
-    openUploadBAModal(index) {
-      this.showUploadBAModal = true;
-      this.selectedIndex = index; // Menyimpan index dari aktivitas yang akan di-upload BA
-    },
-
-    // Menangani perubahan file yang di-upload
-    onBAFileChange(event) {
-      const file = event.target.files[0];
-      if (file && file.type === 'application/pdf') {
-        this.selectedBAFile = file;
-      } else {
-        alert('Harap pilih file PDF!');
-      }
-    },
-
-    // Menangani upload Berita Acara (BA)
-    // handleUploadBA() {
-    //   if (!this.selectedBAFile) {
-    //     alert('Pilih file BA terlebih dahulu!');
-    //     return;
-    //   }
-
-    //   const formData = new FormData();
-    //   formData.append('ba', this.selectedBAFile);
-
-    //   // Contoh pengiriman ke server untuk disimpan
-    //   // Misalnya menggunakan axios:
-    //   // axios.post('/upload-ba', formData).then(response => {
-    //   //   console.log('File berhasil diupload:', response);
-    //   // });
-
-    //   // Menyimpan file ke array aktivitasList (sebagai contoh)
-    //   this.aktivitasList[this.selectedIndex].ba = URL.createObjectURL(this.selectedBAFile);
-
-    //   // Menutup modal setelah berhasil upload
-    //   this.showUploadBAModal = false;
-    //   this.selectedBAFile = null;
-    //   alert('Berita Acara berhasil diupload!');
-    // },
-
-    // Fungsi untuk menangani event dragover
-    onDragOver(event) {
-      event.preventDefault(); // Mencegah perilaku default
-      this.isDragging = true; // Menandakan bahwa file sedang di-drag
-    },
-
-    // Fungsi untuk menangani event dragleave
-    onDragLeave(event) {
-      this.isDragging = false; // Menandakan bahwa file tidak lagi di-drag
-    },
-
-    // Fungsi untuk menangani event drop
-    onDrop(event) {
-      this.isDragging = false; // Menandakan bahwa file sudah dijatuhkan
-      const droppedFile = event.dataTransfer.files[0]; // Mengambil file yang dijatuhkan
-      if (droppedFile && droppedFile.type === 'application/pdf') {
-        this.file = droppedFile; // Menyimpan file jika valid
-      } else {
-        alert('Hanya file PDF yang diperbolehkan!');
-      }
-    },
-
-    // Fungsi untuk memicu input file ketika area drag-and-drop diklik
-    triggerFileInput() {
-      this.$refs.fileInput.click(); // Men-trigger click pada input file
-    },
-
-    // Fungsi untuk menangani perubahan file melalui file explorer
-    onBAFileChange(event) {
-      const selectedFile = event.target.files[0];
-      if (selectedFile && selectedFile.type === 'application/pdf') {
-        this.file = selectedFile; // Menyimpan file yang dipilih
-      } else {
-        alert('Hanya file PDF yang diperbolehkan!');
-      }
-    },
-
-    // Fungsi untuk meng-handle upload
-    handleUploadBA() {
-      if (this.file) {
-        // Implementasikan logika untuk meng-upload file
-        alert('File berhasil di-upload: ' + this.file.name);
-        this.showUploadBAModal = false; // Tambahkan kode ini untuk menutup modal
-      } else {
-        alert('Harap pilih file PDF terlebih dahulu!');
-      }
-    },
-    uploadBuktiPemusnahan(index) {
-      this.openUploadBuktiPemusnahanModal(index);
-    },
-    openUploadBuktiPemusnahanModal(index) {
-      this.showUploadBuktiPemusnahanModal = true;
-      this.selectedIndex = index;
-    },
-    onBuktiPemusnahanFileChange(event) {
-      this.files = event.target.files;
-    },
-    handleUploadBuktiPemusnahan() {
-      if (this.files.length > 0) {
-        // Implementasikan logika untuk meng-upload file
-        alert('File berhasil di-upload: ' + this.files.length + ' file');
-        this.showUploadBuktiPemusnahanModal = false;
-      } else {
-        alert('Harap pilih file terlebih dahulu!');
-      }
-    },
-    editAktivitas(index) {
-      this.selectedIndex = index;
-      this.showEditModal = true;
-    },
-    saveEditAktivitas() {
-      // Simpan perubahan data
-      this.showEditModal = false;
-    },
     isImage(url) {
-      return url.match(/\.(jpeg|jpg|gif|png)$/) !== null;
+      // Memastikan bahwa url adalah string sebelum menggunakan match
+      return typeof url === 'string' && url.match(/\.(jpeg|jpg|gif|png)$/) !== null;
     },
     isPdf(url) {
-      return url.match(/\.(pdf)$/) !== null;
+      // Memastikan bahwa url adalah string sebelum menggunakan match
+      return typeof url === 'string' && url.match(/\.(pdf)$/) !== null;
     },
+    fileUrl(url) {
+      return URL.createObjectURL(url);
+    },
+    // isPdf(url) {
+    //   return url.endsWith('.pdf');
+    // },
+    // fileUrl(url) {
+    //   return url;
+    // },
     downloadBA(index) {
-      const ba = this.aktivitasList[index].ba;
+      const ba = this.data[index].ba;
       const filename = `BA_${index}.pdf`;
 
       // Buat elemen canvas untuk render PDF
@@ -595,7 +372,7 @@ export default {
       // Membuat objek jsPDF
       const pdf = new jsPDF();
 
-      const tanggalString = this.aktivitasList[index].tanggal || '-';
+      const tanggalString = this.data[index].tgl || '-';
       const tanggal = new Date(tanggalString);
 
       // Menentukan hari dalam seminggu
