@@ -95,6 +95,7 @@
           <tr style="color: #000;">
             <th rowspan="2">Nama Alat/Mesin</th>
             <th rowspan="2">No Seri</th>
+            <th rowspan="2" class="text-center">Rentang Waktu</th>
             <th rowspan="2">Progres</th>
             <th rowspan="2">Selesai</th>
             <th rowspan="2">Aksi</th>
@@ -107,9 +108,12 @@
           </tr>
         </thead>
         <tbody v-if="filteredJadwalPerawatan.length > 0">
-          <tr v-for="item in filteredJadwalPerawatan.slice((currentPage - 1) * perPage, currentPage * perPage)" :key="item.id">
+          <tr v-for="(item, index) in filteredJadwalPerawatan.slice((currentPage - 1) * perPage, currentPage * perPage)" :key="item.id">
             <td>{{ item.nama_alat }}</td>
             <td>{{ item.no_seri }}</td>
+            <td class="text-center">{{ getTanggalStart(item) | formatDate }} - {{ getTanggalEnd(item) | formatDate }} <br>
+              <small>{{ durasiDataPerawatan[index].status }}</small>
+            </td>
             <td class="text-center">
               <i class="fas fa-check" v-if="item.status === 'Pelaksanaan'" style="color: green;"></i>
               <!-- <i class="fas fa-times" v-if="item.status === 'Belum Selesai'" style="color: red;"></i> -->
@@ -140,7 +144,7 @@
                 </div>
               </div>
             </td>
-            <td v-for="i in Array.from(Array(last_date).keys())" :key="i" :style="{ backgroundColor: weekend_date.indexOf(i + 1) !== -1 ? 'black' : isDate(item.tanggal_perawatan, i + 1) ? 'yellow' : '' }">
+            <td v-for="i in Array.from(Array(last_date).keys())" :key="i" :style="{ backgroundColor: getBackgroundColor(item, i + 1) }">
             </td>
           </tr>
         </tbody>
@@ -218,7 +222,7 @@
           </div>
           <div class="modal-body">
             <form>
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <label>Tanggal Pengerjaan</label>
                 <input v-model="tanggal_perawatan" type="date" class="form-control">
               </div>
@@ -229,7 +233,11 @@
                   <span class="input-group-text">-</span>
                   <input type="time" class="form-control" id="waktu_selesai" v-model="waktu_selesai" required>
                 </div>
-              </div>
+              </div> -->
+              <!-- <div class="form-group">
+                <label>Tanggal Start</label>
+                <input v-model="tanggal_start" type="date" class="form-control">
+              </div> -->
               <div class="form-group">
                 <label>PIC</label>
                 <v-select
@@ -273,7 +281,11 @@
             </button>
           </div>
           <div class="modal-body">
-            <form>
+            <form>              
+              <!-- <div class="form-group">
+                <label>Tanggal End</label>
+                <input v-model="tanggal_end" type="date" class="form-control">
+              </div> -->
               <div class="form-group">
                 <label>Keterangan Perawatan</label>
                 <textarea v-model="keterangan_perawatan" class="form-control"></textarea>
@@ -308,6 +320,7 @@ export default {
   },
   data() {
     return {
+      getOnlyTanggal: [],
       picOptions: [
         { text: 'John Doe', value: 'John Doe' },
         { text: 'Jane Doe', value: 'Jane Doe' },
@@ -321,6 +334,8 @@ export default {
           nama_alat: 'Bor',
           no_seri: 'B-01',
           tanggal_perawatan: '6',
+          tanggal_start: '',
+          tanggal_end: '',
           waktu_mulai: '',
           waktu_selesai: '',
           pic: '',
@@ -334,6 +349,8 @@ export default {
           nama_alat: 'Bor',
           no_seri: 'B-02',
           tanggal_perawatan: '20',
+          tanggal_start: '',
+          tanggal_end: '',
           waktu_mulai: '',
           waktu_selesai: '',
           pic: '',
@@ -347,6 +364,8 @@ export default {
           nama_alat: 'Bor',
           no_seri: 'B-03',
           tanggal_perawatan: '19',
+          tanggal_start: '',
+          tanggal_end: '',
           waktu_mulai: '',
           waktu_selesai: '',
           pic: '',
@@ -360,7 +379,9 @@ export default {
       pages: [],
       perPage: 10, // jumlah data per halaman
       search: '',
-      tanggal: '',
+      tanggal: null,
+      tanggal_start: '',
+      tanggal_end: '',
       nama_alat: '',
       no_seri: '',
       isModalTambahOpen: false,
@@ -370,6 +391,110 @@ export default {
     }
   },
   computed: {
+    durasiData() {
+      return this.jadwalPerawatan.map(item => {
+        if (item.tanggal_perawatan) {
+          const tanggalStart = new Date(item.tanggal_start);
+          const tanggalEnd = new Date(item.tanggal_end);
+          return {
+            tanggalStart,
+            tanggalEnd
+          };
+        }
+      })
+    },
+    // durasiDataPerawatan() {
+    //   return this.jadwalPerawatan.map(item => {
+    //     if (item.tanggal_perawatan) {
+    //       const tanggalStart = new Date(item.tanggal_start);
+    //       const tanggalEnd = new Date(item.tanggal_end);
+    //       const tanggalPerawatan = new Date(item.tanggal_perawatan);
+
+    //       if (tanggalPerawatan < tanggalStart) {
+    //         return {
+    //           status: 'Maju',
+    //         };
+    //       }
+    //     }
+    //   })
+    // },
+    durasiDataPerawatan() {
+      return this.jadwalPerawatan.map((item, index) => {
+    if (item.tanggal_perawatan) {
+      // const tanggalStart = item.tanggal_start ? item.tanggal_start : null;
+      const tanggalStart = item.tanggal_start;
+      const tanggalEnd = item.tanggal_end ? item.tanggal_end : null;
+      const tanggalPerawatan = item.tanggal_perawatan;
+      let tanggalNow = this.getOnlyTanggal[index] ? this.getOnlyTanggal[index] : null
+      // console.log(this.getOnlyTanggal);
+      if (!tanggalStart && !tanggalEnd) {
+        return {
+          status: '-',
+        };
+      }
+
+      // Jika tanggal_start lebih besar dari tanggal_perawatan, berarti telat
+      if (tanggalEnd && tanggalNow > tanggalPerawatan) {
+        return {
+          status: 'Telat',
+        };
+      }
+
+      // Jika tanggal_end lebih kecil dari tanggal_perawatan, berarti maju
+      if (tanggalEnd && tanggalNow < tanggalPerawatan) {
+        return {
+          status: 'Maju',
+        };
+      }
+
+      // Jika tidak ada kondisi yang memenuhi, statusnya -
+      return {
+        status: '-',
+      };
+    } else {
+      return {
+        status: '-',
+        tanggalPerawatan: 'Tidak ada data',
+      };
+    }
+  });
+},
+
+    // durasiDataPerawatan() {
+    //   return this.jadwalPerawatan.map(item => {
+    //     if (item.tanggal_perawatan) {
+    //       const tanggalStart = item.tanggal_start ? new Date(item.tanggal_start).getTime() : null;
+    //       const tanggalEnd = item.tanggal_end ? new Date(item.tanggal_end).getTime() : null;
+    //       const tanggalPerawatan = new Date(item.tanggal_perawatan).getTime();
+
+    //       if (tanggalStart && tanggalEnd) {
+    //         if (tanggalPerawatan >= tanggalStart && tanggalPerawatan <= tanggalEnd) {
+    //           return {
+    //             status: 'Maju',
+    //           };
+    //         } else if (tanggalPerawatan > tanggalStart) {
+    //           return {
+    //             status: 'Telat',
+    //           };
+    //         } else {
+    //           return {
+    //             status: '-',
+    //           };
+    //         }
+    //       } else {
+    //         return {
+    //           status: '-',
+    //           tanggalPerawatan: 'Tidak ada data'
+    //         };
+    //       }
+    //     } else {
+    //       return {
+    //         status: '-',
+    //         tanggalPerawatan: 'Tidak ada data'
+    //       };
+    //     }
+    //   });
+    // },
     currentMonth() {
       const date = new Date();
       const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
@@ -413,7 +538,53 @@ export default {
     },
   },
   methods: {
-    isDate(tanggal, hari) {
+    getTanggalStart(item) {
+      if (item.tanggal_start) {
+        return new Date(item.tanggal_start);
+      }
+      return null;
+    },
+
+    getTanggalEnd(item) {
+      if (item.tanggal_end) {
+        return new Date(item.tanggal_end);
+      }
+      return null;
+    },
+    // isDate(tanggal, hari) {
+    //   // Cek apakah tanggal adalah string
+    //   if (typeof tanggal === 'string') {
+    //     // Jika tanggal adalah string, cek apakah tanggal mengandung hari
+    //     if (tanggal.includes(hari)) {
+    //       return true;
+    //     }
+    //   } else {
+    //     // Jika tanggal bukan string, asumsikan tanggal adalah objek Date
+    //     const date = new Date(tanggal);
+    //     // Cek apakah tanggal sama dengan hari
+    //     if (date.getDate() === hari) {
+    //       return true;
+    //     }
+    //   }
+    //   // Jika tidak ada kondisi yang terpenuhi, return false
+    //   return false;
+    // },
+    // isDate(tanggal, hari, tanggal_start, tanggal_end) {
+    //   // Cek apakah tanggal adalah string
+    //   if (typeof tanggal === 'string') {
+    //     // Jika tanggal adalah string, cek apakah tanggal mengandung hari
+    //     if (tanggal.includes(hari)) {
+    //       return true;
+    //     }
+    //   } else {
+    //     // Jika tanggal bukan string, asumsikan tanggal adalah objek Date
+    //     const date = new Date(tanggal);
+    //     // Cek apakah tanggal sama dengan hari
+    //     if (date.getDate() === hari) {
+    //       return true;
+    //     }
+    // //   }
+    isDate(tanggal, hari, tanggal_start, tanggal_end) {
       // Cek apakah tanggal adalah string
       if (typeof tanggal === 'string') {
         // Jika tanggal adalah string, cek apakah tanggal mengandung hari
@@ -421,16 +592,28 @@ export default {
           return true;
         }
       } else {
-        // Jika tanggal bukan string, asumsikan tanggal adalah objek Date
-        const date = new Date(tanggal);
-        // Cek apakah tanggal sama dengan hari
-        if (date.getDate() === hari) {
+        const isStartDate = tanggal_start && new Date(tanggal_start).getDate() === hari;
+        const isEndDate = tanggal_end && new Date(tanggal_end).getDate() === hari;
+
+        if (isStartDate || isEndDate) {
           return true;
         }
+
+        const date = new Date(tanggal);
+        return date.getDate() === hari;
       }
-      // Jika tidak ada kondisi yang terpenuhi, return false
-      return false;
     },
+    // isDate(tanggal, hari, tanggal_start, tanggal_end) {
+    //   const isStartDate = tanggal_start && new Date(tanggal_start).getDate() === hari;
+    //   const isEndDate = tanggal_end && new Date(tanggal_end).getDate() === hari;
+
+    //   if (isStartDate || isEndDate) {
+    //     return true;
+    //   }
+
+    //   const date = new Date(tanggal);
+    //   return date.getDate() === hari;
+    // },
     prevPage() {
       this.currentPage--;
     },
@@ -444,6 +627,135 @@ export default {
       const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
       return monthNames.indexOf(monthName);
     },
+    // getBackgroundColor(item, tanggal) {
+    //   if (this.weekend_date.indexOf(tanggal) !== -1) {
+    //     return 'black';
+    //   } else if (this.isDate(item.tanggal_perawatan, tanggal, item.tanggal_start, item.tanggal_end)) {
+    //     return 'yellow';
+    //   } else {
+    //     return '';
+    //   }
+    // },
+    // getBackgroundColor(item, tanggal) {
+    //   const day = parseInt(tanggal, 10); // Convert to integer for comparison
+      
+    //   // Highlight weekends
+    //   if (this.weekend_date.includes(day)) {
+    //     return 'black';
+    //   }
+      
+    //   // Highlight date within the start-end range
+    //   const startDay = item.tanggal_start ? new Date(item.tanggal_start).getDate() : null;
+    //   const endDay = item.tanggal_end ? new Date(item.tanggal_end).getDate() : null;
+      
+    //   if (startDay && endDay && day >= startDay && day <= endDay) {
+    //     return 'yellow';
+    //   }
+      
+    //   // Default color
+    //   return '';
+    // },
+    // getBackgroundColor(item, tanggal) {
+    //   const day = parseInt(tanggal, 10); // Ubah ke angka untuk perbandingan
+
+    //   // Highlight akhir pekan
+    //   if (this.weekend_date.includes(day)) {
+    //     return 'black';
+    //   }
+
+    //   // Highlight tanggal_start ke tanggal_perawatan
+    //   const startDay = item.tanggal_start ? new Date(item.tanggal_start).getDate() : null;
+    //   const perawatanDay = item.tanggal_perawatan ? new Date(item.tanggal_perawatan).getDate() : null;
+    //   const endDay = item.tanggal_end ? new Date(item.tanggal_end).getDate() : null;
+
+    //   // Dari tanggal_start ke tanggal_perawatan
+    //   if (startDay && perawatanDay && day >= startDay && day <= perawatanDay) {
+    //     return 'blue'; // Warna untuk tanggal_start ke tanggal_perawatan
+    //   }
+
+    //   // Dari tanggal_perawatan ke tanggal_end
+    //   if (perawatanDay && endDay && day > perawatanDay && day <= endDay) {
+    //     return 'yellow'; // Warna untuk tanggal_perawatan ke tanggal_end
+    //   }
+
+    //   // Warna default
+    //   return '';
+    // },
+    getBackgroundColor(item, tanggal) {
+      const day = parseInt(tanggal, 10); // Convert to integer for comparison
+      // console.log(item,tanggal);
+      // Highlight tanggal perawatan jika tidak ada tanggal start dan end
+      if (!item.tanggal_start && !item.tanggal_end && item.tanggal_perawatan === String(day)) {
+        return 'yellow';
+      }
+
+      // if (item.tanggal_perawatan === String(day)) {
+      //   return 'yellow';
+      // }
+      
+      // Highlight tanggal perawatan jika berada dalam rentang tanggal start dan end
+      if (item.tanggal_perawatan && item.tanggal_start && item.tanggal_end) {
+        const tanggalPerawatan = new Date(item.tanggal_perawatan).getDate();
+        const startDay = new Date(item.tanggal_start).getDate();
+        const endDay = new Date(item.tanggal_end).getDate();
+        
+        if (tanggalPerawatan >= startDay && tanggalPerawatan <= endDay && tanggalPerawatan === day) {
+          return 'yellow';
+        }
+      }
+      
+      // Highlight weekends
+      if (this.weekend_date.includes(day)) {
+        return 'black';
+      }
+      
+      // Highlight date within the start-end range
+      const startDay = item.tanggal_start ? new Date(item.tanggal_start).getDate() : null;
+      const endDay = item.tanggal_end ? new Date(item.tanggal_end).getDate() : null;
+      
+      if (startDay && endDay && day >= startDay && day <= endDay) {
+        return 'yellow';
+      }
+      
+      // Default color
+      return '';
+    },
+    // getBackgroundColor(item, tanggal) {
+    //   const day = parseInt(tanggal, 10); // Convert to integer for comparison
+      
+    //   // Highlight tanggal perawatan
+    //   if ((item.tanggal_perawatan === String(day) || item.tanggal_start === String(day)) 
+    //       && (!item.tanggal_start || new Date(item.tanggal_start).getDate() <= parseInt(item.tanggal_perawatan)) 
+    //       && (!item.tanggal_end || new Date(item.tanggal_end).getDate() >= parseInt(item.tanggal_perawatan))) {
+    //       return 'yellow';
+    //   }
+      
+    //   // Highlight weekends
+    //   if (this.weekend_date.includes(day)) {
+    //     return 'black';
+    //   }
+      
+    //   // Highlight date within the start-end range
+    //   const startDay = item.tanggal_start ? new Date(item.tanggal_start).getDate() : null;
+    //   const endDay = item.tanggal_end ? new Date(item.tanggal_end).getDate() : null;
+    //   const perawatanDay = item.tanggal_perawatan ? parseInt(item.tanggal_perawatan) : null;
+      
+    //   if (startDay && endDay && day >= startDay && day <= endDay) {
+    //     return 'yellow';
+    //   } else if (startDay && day >= startDay && day < perawatanDay) {
+    //     return 'yellow';
+    //   } else if (startDay && endDay && day >= startDay && day <= endDay) {
+    //     return 'yellow';
+    //   } else if (perawatanDay && endDay && day > perawatanDay && day <= endDay) {
+    //     return 'yellow';
+    //   } else if (endDay <= perawatanDay && startDay && day >= startDay && day <= endDay) {
+    //     return 'yellow';
+    //   }  
+
+      
+    //   // Default color
+    //   return '';
+    // },
     showModalTambah() {
       this.isModalTambahOpen = true;
     },
@@ -485,27 +797,71 @@ export default {
     simpanSelesai() {
       const index = this.jadwalPerawatan.findIndex((item) => item.id === this.id);
       if (index !== -1) {
-        this.jadwalPerawatan[index].keterangan_perawatan = this.keterangan_perawatan;
+        this.jadwalPerawatan[index].detail = this.detail;
+        this.jadwalPerawatan[index].tanggal_end = this.tanggal_end;
+        const tanggalSekarang = new Date();
+        this.getOnlyTanggal[index] = tanggalSekarang.getDate();
+        // console.log(this.getOnlyTanggal[index]);
+        const tanggalEnd = tanggalSekarang.toISOString().split('T')[0];
+        this.jadwalPerawatan[index].tanggal_end = tanggalEnd;
         this.jadwalPerawatan[index].kondisi = this.kondisi;
         this.jadwalPerawatan[index].status = 'Selesai';
       }
       this.closeModalSelesai();
       this.isModalSelesaiOpen = false;
     },
+    // simpanSelesai() {
+    //   const index = this.jadwalPerawatan.findIndex((item) => item.id === this.id);
+    //   if (index !== -1) {
+    //     this.jadwalPerawatan[index].detail = this.detail;
+    //     // this.jadwalPerawatan[index].tanggal_end = this.tanggal_end;
+    //     const tanggalSekarang = new Date();
+    //     this.getOnlyTanggal[index] = tanggalSekarang.getDate();
+    //     // console.log(this.getOnlyTanggal[index]);
+    //     const tanggalEnd = this.tanggal_end.toISOString().split('T')[0];
+    //     // const tanggalSekarang = new Date();
+    //     // const tanggalEnd = this.tanggal_end.split('-')[2];
+    //     // this.getOnlyTanggal[index] = this.tanggal_end.split('-')[2];
+    //     // console.log(this.getOnlyTanggal)
+    //     this.jadwalPerawatan[index].tanggal_end = tanggalEnd;
+    //     this.jadwalPerawatan[index].kondisi = this.kondisi;
+    //     this.jadwalPerawatan[index].status = 'Selesai';
+    //   }
+    //   this.closeModalSelesai();
+    //   this.isModalSelesaiOpen = false;
+    // },
+    // simpanJadwalPerawatan() {
+    //   const index = this.jadwalPerawatan.findIndex((item) => item.id === this.id);
+    //   if (index !== -1) {
+    //     this.jadwalPerawatan[index].tanggal_perawatan = this.tanggal_perawatan;
+    //     this.jadwalPerawatan[index].tanggal_start = this.tanggal_start;
+    //     this.jadwalPerawatan[index].waktu_mulai = this.waktu_mulai;
+    //     this.jadwalPerawatan[index].waktu_selesai = this.waktu_selesai;
+    //     this.jadwalPerawatan[index].pic = this.pic;
+    //     this.jadwalPerawatan[index].detail = this.detail;
+    //     this.jadwalPerawatan[index].kondisi = this.kondisi;
+    //     this.jadwalPerawatan[index].status = 'Pelaksanaan';
+    //     // Update tanggal pengerjaan pada tabel
+    //     const tanggalPerawatan = this.tanggal_perawatan.split('-');
+    //     const tanggal = tanggalPerawatan[2];
+    //     this.jadwalPerawatan[index].tanggal_perawatan = [parseInt(tanggal)];
+    //   }
+    //   this.closeModalEdit();
+    // },
     simpanJadwalPerawatan() {
       const index = this.jadwalPerawatan.findIndex((item) => item.id === this.id);
       if (index !== -1) {
         this.jadwalPerawatan[index].tanggal_perawatan = this.tanggal_perawatan;
+        this.jadwalPerawatan[index].tanggal_start = this.tanggal_start;
+        const tanggalSekarang = new Date();
+        const tanggalStart = tanggalSekarang.toISOString().split('T')[0];
+        this.jadwalPerawatan[index].tanggal_start = tanggalStart;        
         this.jadwalPerawatan[index].waktu_mulai = this.waktu_mulai;
         this.jadwalPerawatan[index].waktu_selesai = this.waktu_selesai;
         this.jadwalPerawatan[index].pic = this.pic;
         this.jadwalPerawatan[index].detail = this.detail;
         this.jadwalPerawatan[index].kondisi = this.kondisi;
         this.jadwalPerawatan[index].status = 'Pelaksanaan';
-        // Update tanggal pengerjaan pada tabel
-        const tanggalPerawatan = this.tanggal_perawatan.split('-');
-        const tanggal = tanggalPerawatan[2];
-        this.jadwalPerawatan[index].tanggal_perawatan = [parseInt(tanggal)];
       }
       this.closeModalEdit();
     },
@@ -558,6 +914,14 @@ export default {
     },
     search() {
       this.currentPage = 1;
+    },
+  },
+  filters: {
+    formatDate(date) {
+      if (date) {
+        return date.toLocaleDateString('id-ID');
+      }
+      return '-';
     },
   },
   mounted() {

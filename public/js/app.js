@@ -39222,6 +39222,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -39230,6 +39242,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      getOnlyTanggal: [],
       picOptions: [{
         text: 'John Doe',
         value: 'John Doe'
@@ -39249,6 +39262,8 @@ __webpack_require__.r(__webpack_exports__);
         nama_alat: 'Bor',
         no_seri: 'B-01',
         tanggal_perawatan: '6',
+        tanggal_start: '',
+        tanggal_end: '',
         waktu_mulai: '',
         waktu_selesai: '',
         pic: '',
@@ -39261,6 +39276,8 @@ __webpack_require__.r(__webpack_exports__);
         nama_alat: 'Bor',
         no_seri: 'B-02',
         tanggal_perawatan: '20',
+        tanggal_start: '',
+        tanggal_end: '',
         waktu_mulai: '',
         waktu_selesai: '',
         pic: '',
@@ -39273,6 +39290,8 @@ __webpack_require__.r(__webpack_exports__);
         nama_alat: 'Bor',
         no_seri: 'B-03',
         tanggal_perawatan: '19',
+        tanggal_start: '',
+        tanggal_end: '',
         waktu_mulai: '',
         waktu_selesai: '',
         pic: '',
@@ -39286,7 +39305,9 @@ __webpack_require__.r(__webpack_exports__);
       perPage: 10,
       // jumlah data per halaman
       search: '',
-      tanggal: '',
+      tanggal: null,
+      tanggal_start: '',
+      tanggal_end: '',
       nama_alat: '',
       no_seri: '',
       isModalTambahOpen: false,
@@ -39296,6 +39317,108 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   computed: {
+    durasiData: function durasiData() {
+      return this.jadwalPerawatan.map(function (item) {
+        if (item.tanggal_perawatan) {
+          var tanggalStart = new Date(item.tanggal_start);
+          var tanggalEnd = new Date(item.tanggal_end);
+          return {
+            tanggalStart: tanggalStart,
+            tanggalEnd: tanggalEnd
+          };
+        }
+      });
+    },
+    // durasiDataPerawatan() {
+    //   return this.jadwalPerawatan.map(item => {
+    //     if (item.tanggal_perawatan) {
+    //       const tanggalStart = new Date(item.tanggal_start);
+    //       const tanggalEnd = new Date(item.tanggal_end);
+    //       const tanggalPerawatan = new Date(item.tanggal_perawatan);
+    //       if (tanggalPerawatan < tanggalStart) {
+    //         return {
+    //           status: 'Maju',
+    //         };
+    //       }
+    //     }
+    //   })
+    // },
+    durasiDataPerawatan: function durasiDataPerawatan() {
+      var _this = this;
+      return this.jadwalPerawatan.map(function (item, index) {
+        if (item.tanggal_perawatan) {
+          // const tanggalStart = item.tanggal_start ? item.tanggal_start : null;
+          var tanggalStart = item.tanggal_start;
+          var tanggalEnd = item.tanggal_end ? item.tanggal_end : null;
+          var tanggalPerawatan = item.tanggal_perawatan;
+          var tanggalNow = _this.getOnlyTanggal[index] ? _this.getOnlyTanggal[index] : null;
+          // console.log(this.getOnlyTanggal);
+          if (!tanggalStart && !tanggalEnd) {
+            return {
+              status: '-'
+            };
+          }
+
+          // Jika tanggal_start lebih besar dari tanggal_perawatan, berarti telat
+          if (tanggalEnd && tanggalNow > tanggalPerawatan) {
+            return {
+              status: 'Telat'
+            };
+          }
+
+          // Jika tanggal_end lebih kecil dari tanggal_perawatan, berarti maju
+          if (tanggalEnd && tanggalNow < tanggalPerawatan) {
+            return {
+              status: 'Maju'
+            };
+          }
+
+          // Jika tidak ada kondisi yang memenuhi, statusnya -
+          return {
+            status: '-'
+          };
+        } else {
+          return {
+            status: '-',
+            tanggalPerawatan: 'Tidak ada data'
+          };
+        }
+      });
+    },
+    // durasiDataPerawatan() {
+    //   return this.jadwalPerawatan.map(item => {
+    //     if (item.tanggal_perawatan) {
+    //       const tanggalStart = item.tanggal_start ? new Date(item.tanggal_start).getTime() : null;
+    //       const tanggalEnd = item.tanggal_end ? new Date(item.tanggal_end).getTime() : null;
+    //       const tanggalPerawatan = new Date(item.tanggal_perawatan).getTime();
+    //       if (tanggalStart && tanggalEnd) {
+    //         if (tanggalPerawatan >= tanggalStart && tanggalPerawatan <= tanggalEnd) {
+    //           return {
+    //             status: 'Maju',
+    //           };
+    //         } else if (tanggalPerawatan > tanggalStart) {
+    //           return {
+    //             status: 'Telat',
+    //           };
+    //         } else {
+    //           return {
+    //             status: '-',
+    //           };
+    //         }
+    //       } else {
+    //         return {
+    //           status: '-',
+    //           tanggalPerawatan: 'Tidak ada data'
+    //         };
+    //       }
+    //     } else {
+    //       return {
+    //         status: '-',
+    //         tanggalPerawatan: 'Tidak ada data'
+    //       };
+    //     }
+    //   });
+    // },
     currentMonth: function currentMonth() {
       var date = new Date();
       var monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
@@ -39338,7 +39461,52 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    isDate: function isDate(tanggal, hari) {
+    getTanggalStart: function getTanggalStart(item) {
+      if (item.tanggal_start) {
+        return new Date(item.tanggal_start);
+      }
+      return null;
+    },
+    getTanggalEnd: function getTanggalEnd(item) {
+      if (item.tanggal_end) {
+        return new Date(item.tanggal_end);
+      }
+      return null;
+    },
+    // isDate(tanggal, hari) {
+    //   // Cek apakah tanggal adalah string
+    //   if (typeof tanggal === 'string') {
+    //     // Jika tanggal adalah string, cek apakah tanggal mengandung hari
+    //     if (tanggal.includes(hari)) {
+    //       return true;
+    //     }
+    //   } else {
+    //     // Jika tanggal bukan string, asumsikan tanggal adalah objek Date
+    //     const date = new Date(tanggal);
+    //     // Cek apakah tanggal sama dengan hari
+    //     if (date.getDate() === hari) {
+    //       return true;
+    //     }
+    //   }
+    //   // Jika tidak ada kondisi yang terpenuhi, return false
+    //   return false;
+    // },
+    // isDate(tanggal, hari, tanggal_start, tanggal_end) {
+    //   // Cek apakah tanggal adalah string
+    //   if (typeof tanggal === 'string') {
+    //     // Jika tanggal adalah string, cek apakah tanggal mengandung hari
+    //     if (tanggal.includes(hari)) {
+    //       return true;
+    //     }
+    //   } else {
+    //     // Jika tanggal bukan string, asumsikan tanggal adalah objek Date
+    //     const date = new Date(tanggal);
+    //     // Cek apakah tanggal sama dengan hari
+    //     if (date.getDate() === hari) {
+    //       return true;
+    //     }
+    // //   }
+    isDate: function isDate(tanggal, hari, tanggal_start, tanggal_end) {
       // Cek apakah tanggal adalah string
       if (typeof tanggal === 'string') {
         // Jika tanggal adalah string, cek apakah tanggal mengandung hari
@@ -39346,16 +39514,24 @@ __webpack_require__.r(__webpack_exports__);
           return true;
         }
       } else {
-        // Jika tanggal bukan string, asumsikan tanggal adalah objek Date
-        var date = new Date(tanggal);
-        // Cek apakah tanggal sama dengan hari
-        if (date.getDate() === hari) {
+        var isStartDate = tanggal_start && new Date(tanggal_start).getDate() === hari;
+        var isEndDate = tanggal_end && new Date(tanggal_end).getDate() === hari;
+        if (isStartDate || isEndDate) {
           return true;
         }
+        var date = new Date(tanggal);
+        return date.getDate() === hari;
       }
-      // Jika tidak ada kondisi yang terpenuhi, return false
-      return false;
     },
+    // isDate(tanggal, hari, tanggal_start, tanggal_end) {
+    //   const isStartDate = tanggal_start && new Date(tanggal_start).getDate() === hari;
+    //   const isEndDate = tanggal_end && new Date(tanggal_end).getDate() === hari;
+    //   if (isStartDate || isEndDate) {
+    //     return true;
+    //   }
+    //   const date = new Date(tanggal);
+    //   return date.getDate() === hari;
+    // },
     prevPage: function prevPage() {
       this.currentPage--;
     },
@@ -39369,6 +39545,118 @@ __webpack_require__.r(__webpack_exports__);
       var monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
       return monthNames.indexOf(monthName);
     },
+    // getBackgroundColor(item, tanggal) {
+    //   if (this.weekend_date.indexOf(tanggal) !== -1) {
+    //     return 'black';
+    //   } else if (this.isDate(item.tanggal_perawatan, tanggal, item.tanggal_start, item.tanggal_end)) {
+    //     return 'yellow';
+    //   } else {
+    //     return '';
+    //   }
+    // },
+    // getBackgroundColor(item, tanggal) {
+    //   const day = parseInt(tanggal, 10); // Convert to integer for comparison
+    //   // Highlight weekends
+    //   if (this.weekend_date.includes(day)) {
+    //     return 'black';
+    //   }
+    //   // Highlight date within the start-end range
+    //   const startDay = item.tanggal_start ? new Date(item.tanggal_start).getDate() : null;
+    //   const endDay = item.tanggal_end ? new Date(item.tanggal_end).getDate() : null;
+    //   if (startDay && endDay && day >= startDay && day <= endDay) {
+    //     return 'yellow';
+    //   }
+    //   // Default color
+    //   return '';
+    // },
+    // getBackgroundColor(item, tanggal) {
+    //   const day = parseInt(tanggal, 10); // Ubah ke angka untuk perbandingan
+    //   // Highlight akhir pekan
+    //   if (this.weekend_date.includes(day)) {
+    //     return 'black';
+    //   }
+    //   // Highlight tanggal_start ke tanggal_perawatan
+    //   const startDay = item.tanggal_start ? new Date(item.tanggal_start).getDate() : null;
+    //   const perawatanDay = item.tanggal_perawatan ? new Date(item.tanggal_perawatan).getDate() : null;
+    //   const endDay = item.tanggal_end ? new Date(item.tanggal_end).getDate() : null;
+    //   // Dari tanggal_start ke tanggal_perawatan
+    //   if (startDay && perawatanDay && day >= startDay && day <= perawatanDay) {
+    //     return 'blue'; // Warna untuk tanggal_start ke tanggal_perawatan
+    //   }
+    //   // Dari tanggal_perawatan ke tanggal_end
+    //   if (perawatanDay && endDay && day > perawatanDay && day <= endDay) {
+    //     return 'yellow'; // Warna untuk tanggal_perawatan ke tanggal_end
+    //   }
+    //   // Warna default
+    //   return '';
+    // },
+    getBackgroundColor: function getBackgroundColor(item, tanggal) {
+      var day = parseInt(tanggal, 10); // Convert to integer for comparison
+      // console.log(item,tanggal);
+      // Highlight tanggal perawatan jika tidak ada tanggal start dan end
+      if (!item.tanggal_start && !item.tanggal_end && item.tanggal_perawatan === String(day)) {
+        return 'yellow';
+      }
+
+      // if (item.tanggal_perawatan === String(day)) {
+      //   return 'yellow';
+      // }
+
+      // Highlight tanggal perawatan jika berada dalam rentang tanggal start dan end
+      if (item.tanggal_perawatan && item.tanggal_start && item.tanggal_end) {
+        var tanggalPerawatan = new Date(item.tanggal_perawatan).getDate();
+        var _startDay = new Date(item.tanggal_start).getDate();
+        var _endDay = new Date(item.tanggal_end).getDate();
+        if (tanggalPerawatan >= _startDay && tanggalPerawatan <= _endDay && tanggalPerawatan === day) {
+          return 'yellow';
+        }
+      }
+
+      // Highlight weekends
+      if (this.weekend_date.includes(day)) {
+        return 'black';
+      }
+
+      // Highlight date within the start-end range
+      var startDay = item.tanggal_start ? new Date(item.tanggal_start).getDate() : null;
+      var endDay = item.tanggal_end ? new Date(item.tanggal_end).getDate() : null;
+      if (startDay && endDay && day >= startDay && day <= endDay) {
+        return 'yellow';
+      }
+
+      // Default color
+      return '';
+    },
+    // getBackgroundColor(item, tanggal) {
+    //   const day = parseInt(tanggal, 10); // Convert to integer for comparison
+    //   // Highlight tanggal perawatan
+    //   if ((item.tanggal_perawatan === String(day) || item.tanggal_start === String(day)) 
+    //       && (!item.tanggal_start || new Date(item.tanggal_start).getDate() <= parseInt(item.tanggal_perawatan)) 
+    //       && (!item.tanggal_end || new Date(item.tanggal_end).getDate() >= parseInt(item.tanggal_perawatan))) {
+    //       return 'yellow';
+    //   }
+    //   // Highlight weekends
+    //   if (this.weekend_date.includes(day)) {
+    //     return 'black';
+    //   }
+    //   // Highlight date within the start-end range
+    //   const startDay = item.tanggal_start ? new Date(item.tanggal_start).getDate() : null;
+    //   const endDay = item.tanggal_end ? new Date(item.tanggal_end).getDate() : null;
+    //   const perawatanDay = item.tanggal_perawatan ? parseInt(item.tanggal_perawatan) : null;
+    //   if (startDay && endDay && day >= startDay && day <= endDay) {
+    //     return 'yellow';
+    //   } else if (startDay && day >= startDay && day < perawatanDay) {
+    //     return 'yellow';
+    //   } else if (startDay && endDay && day >= startDay && day <= endDay) {
+    //     return 'yellow';
+    //   } else if (perawatanDay && endDay && day > perawatanDay && day <= endDay) {
+    //     return 'yellow';
+    //   } else if (endDay <= perawatanDay && startDay && day >= startDay && day <= endDay) {
+    //     return 'yellow';
+    //   }  
+    //   // Default color
+    //   return '';
+    // },
     showModalTambah: function showModalTambah() {
       this.isModalTambahOpen = true;
     },
@@ -39408,35 +39696,79 @@ __webpack_require__.r(__webpack_exports__);
       this.closeModalTambah(); // Change hideModalTambah to closeModalTambah
     },
     simpanSelesai: function simpanSelesai() {
-      var _this = this;
+      var _this2 = this;
       var index = this.jadwalPerawatan.findIndex(function (item) {
-        return item.id === _this.id;
+        return item.id === _this2.id;
       });
       if (index !== -1) {
-        this.jadwalPerawatan[index].keterangan_perawatan = this.keterangan_perawatan;
+        this.jadwalPerawatan[index].detail = this.detail;
+        this.jadwalPerawatan[index].tanggal_end = this.tanggal_end;
+        var tanggalSekarang = new Date();
+        this.getOnlyTanggal[index] = tanggalSekarang.getDate();
+        // console.log(this.getOnlyTanggal[index]);
+        var tanggalEnd = tanggalSekarang.toISOString().split('T')[0];
+        this.jadwalPerawatan[index].tanggal_end = tanggalEnd;
         this.jadwalPerawatan[index].kondisi = this.kondisi;
         this.jadwalPerawatan[index].status = 'Selesai';
       }
       this.closeModalSelesai();
       this.isModalSelesaiOpen = false;
     },
+    // simpanSelesai() {
+    //   const index = this.jadwalPerawatan.findIndex((item) => item.id === this.id);
+    //   if (index !== -1) {
+    //     this.jadwalPerawatan[index].detail = this.detail;
+    //     // this.jadwalPerawatan[index].tanggal_end = this.tanggal_end;
+    //     const tanggalSekarang = new Date();
+    //     this.getOnlyTanggal[index] = tanggalSekarang.getDate();
+    //     // console.log(this.getOnlyTanggal[index]);
+    //     const tanggalEnd = this.tanggal_end.toISOString().split('T')[0];
+    //     // const tanggalSekarang = new Date();
+    //     // const tanggalEnd = this.tanggal_end.split('-')[2];
+    //     // this.getOnlyTanggal[index] = this.tanggal_end.split('-')[2];
+    //     // console.log(this.getOnlyTanggal)
+    //     this.jadwalPerawatan[index].tanggal_end = tanggalEnd;
+    //     this.jadwalPerawatan[index].kondisi = this.kondisi;
+    //     this.jadwalPerawatan[index].status = 'Selesai';
+    //   }
+    //   this.closeModalSelesai();
+    //   this.isModalSelesaiOpen = false;
+    // },
+    // simpanJadwalPerawatan() {
+    //   const index = this.jadwalPerawatan.findIndex((item) => item.id === this.id);
+    //   if (index !== -1) {
+    //     this.jadwalPerawatan[index].tanggal_perawatan = this.tanggal_perawatan;
+    //     this.jadwalPerawatan[index].tanggal_start = this.tanggal_start;
+    //     this.jadwalPerawatan[index].waktu_mulai = this.waktu_mulai;
+    //     this.jadwalPerawatan[index].waktu_selesai = this.waktu_selesai;
+    //     this.jadwalPerawatan[index].pic = this.pic;
+    //     this.jadwalPerawatan[index].detail = this.detail;
+    //     this.jadwalPerawatan[index].kondisi = this.kondisi;
+    //     this.jadwalPerawatan[index].status = 'Pelaksanaan';
+    //     // Update tanggal pengerjaan pada tabel
+    //     const tanggalPerawatan = this.tanggal_perawatan.split('-');
+    //     const tanggal = tanggalPerawatan[2];
+    //     this.jadwalPerawatan[index].tanggal_perawatan = [parseInt(tanggal)];
+    //   }
+    //   this.closeModalEdit();
+    // },
     simpanJadwalPerawatan: function simpanJadwalPerawatan() {
-      var _this2 = this;
+      var _this3 = this;
       var index = this.jadwalPerawatan.findIndex(function (item) {
-        return item.id === _this2.id;
+        return item.id === _this3.id;
       });
       if (index !== -1) {
         this.jadwalPerawatan[index].tanggal_perawatan = this.tanggal_perawatan;
+        this.jadwalPerawatan[index].tanggal_start = this.tanggal_start;
+        var tanggalSekarang = new Date();
+        var tanggalStart = tanggalSekarang.toISOString().split('T')[0];
+        this.jadwalPerawatan[index].tanggal_start = tanggalStart;
         this.jadwalPerawatan[index].waktu_mulai = this.waktu_mulai;
         this.jadwalPerawatan[index].waktu_selesai = this.waktu_selesai;
         this.jadwalPerawatan[index].pic = this.pic;
         this.jadwalPerawatan[index].detail = this.detail;
         this.jadwalPerawatan[index].kondisi = this.kondisi;
         this.jadwalPerawatan[index].status = 'Pelaksanaan';
-        // Update tanggal pengerjaan pada tabel
-        var tanggalPerawatan = this.tanggal_perawatan.split('-');
-        var tanggal = tanggalPerawatan[2];
-        this.jadwalPerawatan[index].tanggal_perawatan = [parseInt(tanggal)];
       }
       this.closeModalEdit();
     },
@@ -39487,6 +39819,14 @@ __webpack_require__.r(__webpack_exports__);
     },
     search: function search() {
       this.currentPage = 1;
+    }
+  },
+  filters: {
+    formatDate: function formatDate(date) {
+      if (date) {
+        return date.toLocaleDateString('id-ID');
+      }
+      return '-';
     }
   },
   mounted: function mounted() {
@@ -75019,7 +75359,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* Tambahkan CSS untuk garis bawah */\n.table td[data-v-69bbc481] {\r\n  border: 1px solid #fff;\n}\n#pills-tab .nav-link[data-v-69bbc481] {\r\n  color: #000;\n}\n#pills-tab .nav-link.active[data-v-69bbc481] {\r\n  background-color: #169ea8;\r\n  color: #fff;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* Tambahkan CSS untuk garis bawah */\n.table td[data-v-69bbc481] {\r\n  border: 1px solid #fff;\n}\n#pills-tab .nav-link[data-v-69bbc481] {\r\n  color: #000;\n}\n#pills-tab .nav-link.active[data-v-69bbc481] {\r\n  background-color: #169ea8;\r\n  color: #fff;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -171920,6 +172260,12 @@ var render = function () {
               _vm._v(" "),
               _c("th", { attrs: { rowspan: "2" } }, [_vm._v("No Seri")]),
               _vm._v(" "),
+              _c(
+                "th",
+                { staticClass: "text-center", attrs: { rowspan: "2" } },
+                [_vm._v("Rentang Waktu")]
+              ),
+              _vm._v(" "),
               _c("th", { attrs: { rowspan: "2" } }, [_vm._v("Progres")]),
               _vm._v(" "),
               _c("th", { attrs: { rowspan: "2" } }, [_vm._v("Selesai")]),
@@ -171950,7 +172296,7 @@ var render = function () {
                     (_vm.currentPage - 1) * _vm.perPage,
                     _vm.currentPage * _vm.perPage
                   ),
-                  function (item) {
+                  function (item, index) {
                     return _c(
                       "tr",
                       { key: item.id },
@@ -171958,6 +172304,26 @@ var render = function () {
                         _c("td", [_vm._v(_vm._s(item.nama_alat))]),
                         _vm._v(" "),
                         _c("td", [_vm._v(_vm._s(item.no_seri))]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-center" }, [
+                          _vm._v(
+                            _vm._s(
+                              _vm._f("formatDate")(_vm.getTanggalStart(item))
+                            ) +
+                              " - " +
+                              _vm._s(
+                                _vm._f("formatDate")(_vm.getTanggalEnd(item))
+                              ) +
+                              " "
+                          ),
+                          _c("br"),
+                          _vm._v(" "),
+                          _c("small", [
+                            _vm._v(
+                              _vm._s(_vm.durasiDataPerawatan[index].status)
+                            ),
+                          ]),
+                        ]),
                         _vm._v(" "),
                         _c("td", { staticClass: "text-center" }, [
                           item.status === "Pelaksanaan"
@@ -172045,12 +172411,10 @@ var render = function () {
                             return _c("td", {
                               key: i,
                               style: {
-                                backgroundColor:
-                                  _vm.weekend_date.indexOf(i + 1) !== -1
-                                    ? "black"
-                                    : _vm.isDate(item.tanggal_perawatan, i + 1)
-                                    ? "yellow"
-                                    : "",
+                                backgroundColor: _vm.getBackgroundColor(
+                                  item,
+                                  i + 1
+                                ),
                               },
                             })
                           }
@@ -172327,94 +172691,6 @@ var render = function () {
                   _vm._v(" "),
                   _c("div", { staticClass: "modal-body" }, [
                     _c("form", [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", [_vm._v("Tanggal Pengerjaan")]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.tanggal_perawatan,
-                              expression: "tanggal_perawatan",
-                            },
-                          ],
-                          staticClass: "form-control",
-                          attrs: { type: "date" },
-                          domProps: { value: _vm.tanggal_perawatan },
-                          on: {
-                            input: function ($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.tanggal_perawatan = $event.target.value
-                            },
-                          },
-                        }),
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", [_vm._v("Waktu (Mulai - Selesai)")]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "input-group" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.waktu_mulai,
-                                expression: "waktu_mulai",
-                              },
-                            ],
-                            staticClass: "form-control",
-                            attrs: {
-                              type: "time",
-                              id: "waktu_mulai",
-                              required: "",
-                            },
-                            domProps: { value: _vm.waktu_mulai },
-                            on: {
-                              input: function ($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.waktu_mulai = $event.target.value
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "input-group-text" }, [
-                            _vm._v("-"),
-                          ]),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.waktu_selesai,
-                                expression: "waktu_selesai",
-                              },
-                            ],
-                            staticClass: "form-control",
-                            attrs: {
-                              type: "time",
-                              id: "waktu_selesai",
-                              required: "",
-                            },
-                            domProps: { value: _vm.waktu_selesai },
-                            on: {
-                              input: function ($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.waktu_selesai = $event.target.value
-                              },
-                            },
-                          }),
-                        ]),
-                      ]),
-                      _vm._v(" "),
                       _c(
                         "div",
                         { staticClass: "form-group" },
