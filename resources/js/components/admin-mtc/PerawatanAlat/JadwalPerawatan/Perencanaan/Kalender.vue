@@ -43,33 +43,36 @@ export default {
           no_perawatan: 'R-01',
           nama_alat: 'Bor',
           no_seri: 'B-01',
-          tanggal_perawatan: [6],
+          tanggal_start: new Date(new Date().getFullYear(), new Date().getMonth(), 6),
+          tanggal_end: new Date(new Date().getFullYear(), new Date().getMonth(), 10),
           waktu_mulai: '',
           waktu_selesai: '',
           pic: '',
           detail: '',
           kondisi: '',
-          status: 'Belum Selesai'
+          status: 'Selesai'
         },
         {
           id: 2,
           no_perawatan: 'R-02',
           nama_alat: 'Bor',
           no_seri: 'B-02',
-          tanggal_perawatan: [13],
+          tanggal_start: new Date(new Date().getFullYear(), new Date().getMonth(), 13),
+          tanggal_end: new Date(new Date().getFullYear(), new Date().getMonth(), 15),
           waktu_mulai: '',
           waktu_selesai: '',
           pic: '',
           detail: '',
           kondisi: '',
-          status: 'Belum Selesai'
+          status: 'Pelaksanaan'
         },
         {
           id: 3,
           no_perawatan: 'R-03',
           nama_alat: 'Bor',
           no_seri: 'B-03',
-          tanggal_perawatan: [19],
+          tanggal_start: new Date(new Date().getFullYear(), new Date().getMonth(), 19),
+          tanggal_end: new Date(new Date().getFullYear(), new Date().getMonth(), 25),
           waktu_mulai: '',
           waktu_selesai: '',
           pic: '',
@@ -83,7 +86,7 @@ export default {
   },
   mounted() {
     const calendarEl = document.getElementById('calendar');
-    const calendar = new Calendar(calendarEl, {      
+    const calendar = new Calendar(calendarEl, {
       plugins: [dayGridPlugin, timeGridPlugin, listPlugin],
       headerToolbar: {
         left: 'prev,next today',
@@ -95,21 +98,22 @@ export default {
       editable: true,
       dayMaxEvents: true, // allow "more" link when too many events
       locale: 'id', // tambahkan opsi locale
-      events: this.jadwalPerawatan.flatMap((item) => {
-        return item.tanggal_perawatan.map((tanggal) => {
-          return {
-            title: `${item.nama_alat} - ${item.no_seri}`,
-            start: new Date(new Date().getFullYear(), new Date().getMonth(), tanggal),
-            end: new Date(new Date().getFullYear(), new Date().getMonth(), tanggal),
-            allDay: true,
-            backgroundColor: item.status === 'Belum Selesai' ? '#dc3545' : '#169ea8',
-            borderColor: item.status === 'Belum Selesai' ? '#dc3545' : '#169ea8',
-            display: 'block',
-          }
-        })
+      hiddenDays: [0, 6],
+      events: this.jadwalPerawatan.map((item) => {
+        return {
+          title: `${item.nama_alat} - ${item.no_seri}`,
+          start: item.tanggal_start,
+          end: item.tanggal_end,
+          allDay: true,
+          backgroundColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
+          borderColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
+          display: 'block',
+        }
       }),
       select: (arg) => {
-        const tanggalPerawatan = this.jadwalPerawatan.find((item) => item.tanggal_perawatan.includes(arg.start.getDate()));
+        const tanggalPerawatan = this.jadwalPerawatan.find((item) => {
+          return (arg.start >= item.tanggal_start && arg.start <= item.tanggal_end) || (arg.end >= item.tanggal_start && arg.end <= item.tanggal_end);
+        });
         if (tanggalPerawatan) {
           alert('Tanggal ini sudah terblokir');
           return false;

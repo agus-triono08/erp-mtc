@@ -38083,7 +38083,8 @@ var locale = {
         no_perawatan: 'R-01',
         nama_alat: 'Bor',
         no_seri: 'B-01',
-        tanggal_perawatan: [6],
+        tanggal_start: new Date(new Date().getFullYear(), new Date().getMonth(), 6),
+        tanggal_end: new Date(new Date().getFullYear(), new Date().getMonth(), 10),
         waktu_mulai: '',
         waktu_selesai: '',
         pic: '',
@@ -38095,7 +38096,8 @@ var locale = {
         no_perawatan: 'R-02',
         nama_alat: 'Bor',
         no_seri: 'B-02',
-        tanggal_perawatan: [13],
+        tanggal_start: new Date(new Date().getFullYear(), new Date().getMonth(), 13),
+        tanggal_end: new Date(new Date().getFullYear(), new Date().getMonth(), 15),
         waktu_mulai: '',
         waktu_selesai: '',
         pic: '',
@@ -38107,7 +38109,8 @@ var locale = {
         no_perawatan: 'R-03',
         nama_alat: 'Bor',
         no_seri: 'B-03',
-        tanggal_perawatan: [19],
+        tanggal_start: new Date(new Date().getFullYear(), new Date().getMonth(), 19),
+        tanggal_end: new Date(new Date().getFullYear(), new Date().getMonth(), 25),
         waktu_mulai: '',
         waktu_selesai: '',
         pic: '',
@@ -38137,22 +38140,21 @@ var locale = {
       // allow "more" link when too many events
       locale: 'id',
       // tambahkan opsi locale
-      events: this.jadwalPerawatan.flatMap(function (item) {
-        return item.tanggal_perawatan.map(function (tanggal) {
-          return {
-            title: "".concat(item.nama_alat, " - ").concat(item.no_seri),
-            start: new Date(new Date().getFullYear(), new Date().getMonth(), tanggal),
-            end: new Date(new Date().getFullYear(), new Date().getMonth(), tanggal),
-            allDay: true,
-            backgroundColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
-            borderColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
-            display: 'block'
-          };
-        });
+      hiddenDays: [0, 6],
+      events: this.jadwalPerawatan.map(function (item) {
+        return {
+          title: "".concat(item.nama_alat, " - ").concat(item.no_seri),
+          start: item.tanggal_start,
+          end: item.tanggal_end,
+          allDay: true,
+          backgroundColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
+          borderColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
+          display: 'block'
+        };
       }),
       select: function select(arg) {
         var tanggalPerawatan = _this.jadwalPerawatan.find(function (item) {
-          return item.tanggal_perawatan.includes(arg.start.getDate());
+          return arg.start >= item.tanggal_start && arg.start <= item.tanggal_end || arg.end >= item.tanggal_start && arg.end <= item.tanggal_end;
         });
         if (tanggalPerawatan) {
           alert('Tanggal ini sudah terblokir');
@@ -38229,31 +38231,34 @@ var locale = {
         no_perawatan: 'R-01',
         nama_alat: 'Bor',
         no_seri: 'B-01',
-        tanggal_perawatan: [6],
+        tanggal_start: new Date(new Date().getFullYear(), new Date().getMonth(), 6),
+        tanggal_end: new Date(new Date().getFullYear(), new Date().getMonth(), 10),
         waktu_mulai: '',
         waktu_selesai: '',
         pic: '',
         detail: '',
         kondisi: '',
-        status: 'Belum Selesai'
+        status: 'Selesai'
       }, {
         id: 2,
         no_perawatan: 'R-02',
         nama_alat: 'Bor',
         no_seri: 'B-02',
-        tanggal_perawatan: [13],
+        tanggal_start: new Date(new Date().getFullYear(), new Date().getMonth(), 13),
+        tanggal_end: new Date(new Date().getFullYear(), new Date().getMonth(), 15),
         waktu_mulai: '',
         waktu_selesai: '',
         pic: '',
         detail: '',
         kondisi: '',
-        status: 'Belum Selesai'
+        status: 'Pelaksanaan'
       }, {
         id: 3,
         no_perawatan: 'R-03',
         nama_alat: 'Bor',
         no_seri: 'B-03',
-        tanggal_perawatan: [19],
+        tanggal_start: new Date(new Date().getFullYear(), new Date().getMonth(), 19),
+        tanggal_end: new Date(new Date().getFullYear(), new Date().getMonth(), 25),
         waktu_mulai: '',
         waktu_selesai: '',
         pic: '',
@@ -38283,22 +38288,21 @@ var locale = {
       // allow "more" link when too many events
       locale: 'id',
       // tambahkan opsi locale
-      events: this.jadwalPerawatan.flatMap(function (item) {
-        return item.tanggal_perawatan.map(function (tanggal) {
-          return {
-            title: "".concat(item.nama_alat, " - ").concat(item.no_seri),
-            start: new Date(new Date().getFullYear(), new Date().getMonth(), tanggal),
-            end: new Date(new Date().getFullYear(), new Date().getMonth(), tanggal),
-            allDay: true,
-            backgroundColor: item.status === 'Belum Selesai' ? '#dc3545' : '#169ea8',
-            borderColor: item.status === 'Belum Selesai' ? '#dc3545' : '#169ea8',
-            display: 'block'
-          };
-        });
+      hiddenDays: [0, 6],
+      events: this.jadwalPerawatan.map(function (item) {
+        return {
+          title: "".concat(item.nama_alat, " - ").concat(item.no_seri),
+          start: item.tanggal_start,
+          end: item.tanggal_end,
+          allDay: true,
+          backgroundColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
+          borderColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
+          display: 'block'
+        };
       }),
       select: function select(arg) {
         var tanggalPerawatan = _this.jadwalPerawatan.find(function (item) {
-          return item.tanggal_perawatan.includes(arg.start.getDate());
+          return arg.start >= item.tanggal_start && arg.start <= item.tanggal_end || arg.end >= item.tanggal_start && arg.end <= item.tanggal_end;
         });
         if (tanggalPerawatan) {
           alert('Tanggal ini sudah terblokir');
@@ -42235,6 +42239,13 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -42378,7 +42389,9 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
       kondisiOptions: [],
       showAlat: true,
       showMesin: false,
-      jenisFilter: []
+      jenisFilter: [],
+      sortKey: '',
+      sortDirection: 'asc'
     };
   },
   computed: {
@@ -42429,10 +42442,25 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
           var jenisMatch = _this.jenisFilter.length ? _this.jenisFilter.includes(datariwayat.jenis) : true;
           var kondisiMatch = _this.kondisiFilter.length ? _this.kondisiFilter.includes(datariwayat === null || datariwayat === void 0 || (_datariwayat$noSeri = datariwayat.noSeri) === null || _datariwayat$noSeri === void 0 ? void 0 : _datariwayat$noSeri.status) : true;
           return tanggalMatch && searchMatch && tujuanDivisiMatch && jenisMatch && kondisiMatch;
+        }).sort(function (a, b) {
+          if (_this.sortDirection === 'asc') {
+            return a[_this.sortKey] > b[_this.sortKey] ? 1 : -1;
+          } else {
+            return a[_this.sortKey] < b[_this.sortKey] ? 1 : -1;
+          }
         });
       } else {
-        return this.paginatedData;
+        return this.datariwayat.sort(function (a, b) {
+          if (_this.sortDirection === 'asc') {
+            return a[_this.sortKey] > b[_this.sortKey] ? 1 : -1;
+          } else {
+            return a[_this.sortKey] < b[_this.sortKey] ? 1 : -1;
+          }
+        });
       }
+      // } else {
+      //   return this.paginatedData;
+      // }
     }
   },
   methods: {
@@ -42519,6 +42547,10 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
           return dateB - dateA; // Urutkan berdasarkan tanggal, descending
         }
       });
+    },
+    sortBy: function sortBy(key) {
+      this.sortKey = key;
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
     },
     // Metode untuk mendownload data ke Excel
     downloadExcel: function downloadExcel() {
@@ -176949,87 +176981,142 @@ var render = function () {
                 staticStyle: { "overflow-x": "auto" },
               },
               [
-                _c("thead", [
-                  _c("tr", { staticClass: "bg-table text-center" }, [
-                    _c(
-                      "th",
-                      {
-                        staticClass: "text-center",
-                        staticStyle: { color: "#000" },
-                      },
-                      [_vm._v("#")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "th",
-                      {
-                        staticClass: "text-center text-black-1",
-                        staticStyle: {
-                          cursor: "pointer",
-                          position: "relative",
-                          "vertical-align": "middle",
+                _c("thead", { staticClass: "bg-table" }, [
+                  _c(
+                    "tr",
+                    {
+                      staticClass: "text-center",
+                      staticStyle: { color: "#000" },
+                    },
+                    [
+                      _c("th", [_vm._v("#")]),
+                      _vm._v(" "),
+                      _c(
+                        "th",
+                        {
+                          on: {
+                            click: function ($event) {
+                              return _vm.sortBy("tanggal")
+                            },
+                          },
                         },
-                      },
-                      [
-                        _vm._v("\n                Tgl\n                "),
-                        _c("span", { staticClass: "sort-icons" }, [
+                        [
+                          _vm._v("\n                Tanggal\n                "),
                           _c("i", {
-                            staticClass: "fas fa-sort-up",
-                            on: {
-                              click: function ($event) {
-                                return _vm.sortTanggal("desc")
-                              },
+                            staticClass: "fas",
+                            class: {
+                              "fa-sort-up":
+                                _vm.sortKey === "tanggal" &&
+                                _vm.sortDirection === "asc",
+                              "fa-sort-down":
+                                _vm.sortKey === "tanggal" &&
+                                _vm.sortDirection === "desc",
                             },
                           }),
-                          _vm._v(" "),
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "th",
+                        {
+                          on: {
+                            click: function ($event) {
+                              return _vm.sortBy("PIC")
+                            },
+                          },
+                        },
+                        [
+                          _vm._v("\n                PIC\n                "),
                           _c("i", {
-                            staticClass: "fas fa-sort-down",
-                            on: {
-                              click: function ($event) {
-                                return _vm.sortTanggal("asc")
-                              },
+                            staticClass: "fas",
+                            class: {
+                              "fa-sort-up":
+                                _vm.sortKey === "PIC" &&
+                                _vm.sortDirection === "asc",
+                              "fa-sort-down":
+                                _vm.sortKey === "PIC" &&
+                                _vm.sortDirection === "desc",
                             },
                           }),
-                        ]),
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "th",
-                      {
-                        staticClass: "text-center",
-                        staticStyle: { color: "#000" },
-                      },
-                      [_vm._v("PIC")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "th",
-                      {
-                        staticClass: "text-center",
-                        staticStyle: { color: "#000" },
-                      },
-                      [_vm._v("Jenis")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "th",
-                      {
-                        staticClass: "text-center",
-                        staticStyle: { color: "#000" },
-                      },
-                      [_vm._v("No Seri")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "th",
-                      {
-                        staticClass: "text-center",
-                        staticStyle: { color: "#000" },
-                      },
-                      [_vm._v("Kondisi")]
-                    ),
-                  ]),
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "th",
+                        {
+                          on: {
+                            click: function ($event) {
+                              return _vm.sortBy("jenis")
+                            },
+                          },
+                        },
+                        [
+                          _vm._v("\n                Jenis\n                "),
+                          _c("i", {
+                            staticClass: "fas",
+                            class: {
+                              "fa-sort-up":
+                                _vm.sortKey === "jenis" &&
+                                _vm.sortDirection === "asc",
+                              "fa-sort-down":
+                                _vm.sortKey === "jenis" &&
+                                _vm.sortDirection === "desc",
+                            },
+                          }),
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "th",
+                        {
+                          on: {
+                            click: function ($event) {
+                              return _vm.sortBy("no_seri")
+                            },
+                          },
+                        },
+                        [
+                          _vm._v("\n                No Seri\n                "),
+                          _c("i", {
+                            staticClass: "fas",
+                            class: {
+                              "fa-sort-up":
+                                _vm.sortKey === "no_seri" &&
+                                _vm.sortDirection === "asc",
+                              "fa-sort-down":
+                                _vm.sortKey === "no_seri" &&
+                                _vm.sortDirection === "desc",
+                            },
+                          }),
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "th",
+                        {
+                          on: {
+                            click: function ($event) {
+                              return _vm.sortBy("kondisi")
+                            },
+                          },
+                        },
+                        [
+                          _vm._v("\n                Kondisi\n                "),
+                          _c("i", {
+                            staticClass: "fas",
+                            class: {
+                              "fa-sort-up":
+                                _vm.sortKey === "kondisi" &&
+                                _vm.sortDirection === "asc",
+                              "fa-sort-down":
+                                _vm.sortKey === "kondisi" &&
+                                _vm.sortDirection === "desc",
+                            },
+                          }),
+                        ]
+                      ),
+                    ]
+                  ),
                 ]),
                 _vm._v(" "),
                 _vm.filteredData.length === 0
@@ -209287,29 +209374,6 @@ var render = function () {
                                             }),
                                             _vm._v(
                                               " Diambil\n                    "
-                                            ),
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "a",
-                                          {
-                                            staticClass: "dropdown-item",
-                                            on: {
-                                              click: function ($event) {
-                                                return _vm.openRejectModal(
-                                                  peminjaman
-                                                )
-                                              },
-                                            },
-                                          },
-                                          [
-                                            _c("i", {
-                                              staticClass:
-                                                "fas fa-times text-danger",
-                                            }),
-                                            _vm._v(
-                                              " Ditolak\n                    "
                                             ),
                                           ]
                                         ),

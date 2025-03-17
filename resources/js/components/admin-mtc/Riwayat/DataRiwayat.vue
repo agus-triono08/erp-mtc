@@ -97,22 +97,29 @@
     </div>
         <div class="table-responsive p-3">
           <table class="table table-border no-border table-custom" style="overflow-x: auto;">
-            <thead>
-              <tr class="bg-table text-center">
-                <th class="text-center" style="color: #000;">#</th>
-                <th class="text-center text-black-1" style="cursor: pointer; position: relative; vertical-align: middle;">
-                  Tgl
-                  <span class="sort-icons">
-                    <i @click="sortTanggal('desc')" class="fas fa-sort-up"></i>
-                    <i @click="sortTanggal('asc')" class="fas fa-sort-down"></i>
-                  </span>
+            <thead class="bg-table">
+              <tr style="color: #000;" class="text-center">
+                <th>#</th>
+                <th @click="sortBy('tanggal')">
+                  Tanggal
+                  <i class="fas" :class="{'fa-sort-up': sortKey === 'tanggal' && sortDirection === 'asc', 'fa-sort-down': sortKey === 'tanggal' && sortDirection === 'desc'}"></i>
                 </th>
-                <th class="text-center" style="color: #000;">PIC</th>
-                <!-- <th class="text-center" style="width: 10px; color: #000;">Tujuan Divisi</th> -->
-                <th class="text-center" style="color: #000;">Jenis</th>
-                <!-- <th class="text-center" style="width: 10px; color: #000;">Kode Alat</th> -->
-                <th class="text-center" style="color: #000;">No Seri</th>
-                <th class="text-center" style="color: #000;">Kondisi</th>                                
+                <th @click="sortBy('PIC')">
+                  PIC
+                  <i class="fas" :class="{'fa-sort-up': sortKey === 'PIC' && sortDirection === 'asc', 'fa-sort-down': sortKey === 'PIC' && sortDirection === 'desc'}"></i>
+                </th>
+                <th @click="sortBy('jenis')">
+                  Jenis
+                  <i class="fas" :class="{'fa-sort-up': sortKey === 'jenis' && sortDirection === 'asc', 'fa-sort-down': sortKey === 'jenis' && sortDirection === 'desc'}"></i>
+                </th>
+                <th @click="sortBy('no_seri')">
+                  No Seri
+                  <i class="fas" :class="{'fa-sort-up': sortKey === 'no_seri' && sortDirection === 'asc', 'fa-sort-down': sortKey === 'no_seri' && sortDirection === 'desc'}"></i>
+                </th>
+                <th @click="sortBy('kondisi')">
+                  Kondisi
+                  <i class="fas" :class="{'fa-sort-up': sortKey === 'kondisi' && sortDirection === 'asc', 'fa-sort-down': sortKey === 'kondisi' && sortDirection === 'desc'}"></i>
+                </th>
               </tr>
             </thead>
             <tbody v-if="filteredData.length===0">
@@ -277,6 +284,8 @@ export default {
       showAlat: true,
       showMesin: false,
       jenisFilter: [],
+      sortKey: '',
+      sortDirection: 'asc',
       }
   },
   computed: {
@@ -335,10 +344,25 @@ export default {
             ? this.kondisiFilter.includes(datariwayat?.noSeri?.status)
             : true;
           return tanggalMatch && searchMatch && tujuanDivisiMatch && jenisMatch && kondisiMatch;
-        });
+        }).sort((a, b) => {
+          if (this.sortDirection === 'asc') {
+            return a[this.sortKey] > b[this.sortKey] ? 1 : -1
+          } else {
+            return a[this.sortKey] < b[this.sortKey] ? 1 : -1
+          }
+        })
       } else {
-        return this.paginatedData;
+        return this.datariwayat.sort((a, b) => {
+          if (this.sortDirection === 'asc') {
+            return a[this.sortKey] > b[this.sortKey] ? 1 : -1
+          } else {
+            return a[this.sortKey] < b[this.sortKey] ? 1 : -1
+          }
+        })
       }
+      // } else {
+      //   return this.paginatedData;
+      // }
     }
   },
   methods: {
@@ -399,6 +423,10 @@ export default {
           return dateB - dateA; // Urutkan berdasarkan tanggal, descending
         }
       });
+    },
+    sortBy(key) {
+      this.sortKey = key
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc'
     },
     // Metode untuk mendownload data ke Excel
     downloadExcel() {

@@ -144,9 +144,9 @@
                       <a class="dropdown-item" @click="setStatus(peminjaman, 'Diambil')">
                         <i class="fas fa-clock text-info"></i> Diambil
                       </a>
-                      <a class="dropdown-item" @click="openRejectModal(peminjaman)">
+                      <!-- <a class="dropdown-item" @click="openRejectModal(peminjaman)">
                         <i class="fas fa-times text-danger"></i> Ditolak
-                      </a>
+                      </a> -->
                     </div>
                   </div>
                 </td>
