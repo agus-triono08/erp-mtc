@@ -168,17 +168,37 @@
           <div class="modal-body">
             <form>
               <div class="form-group">
+                <label for="merekAlat" class="text-black-10"><b>Merek Alat <sup class="text-danger"> *</sup> </b></label>
+                <select class="form-control" id="merekAlat" v-model="aktivitas.merek_alat" required>
+                  <option value="" disabled>Pilih Merek Alat</option>
+                  <option value="Merek 1">Merek 1</option>
+                  <option value="Merek 2">Merek 2</option>
+                  <option value="Merek 3">Merek 3</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="tipeAlat" class="text-black-10"><b>Tipe Alat <sup class="text-danger"> *</sup> </b></label>
+                <select class="form-control" id="tipeAlat" v-model="aktivitas.tipe_alat" required>
+                  <option value="" disabled>Pilih Tipe Alat</option>
+                  <option value="Tipe 1">Tipe 1</option>
+                  <option value="Tipe 2">Tipe 2</option>
+                  <option value="Tipe 3">Tipe 3</option>
+                </select>
+              </div>
+              <div class="form-group">
                 <label for="tanggal" class="text-black-10"><b>Tanggal Penggantian Alat/Mesin <sup class="text-danger"> *</sup> </b></label>
                 <input type="date" class="form-control" id="tanggal" v-model="aktivitas.tanggal" required>
               </div>
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <label for="noSeriLama" class="text-black-10"><b>No Seri Lama <sup class="text-danger"> *</sup> </b></label>
                 <input type="text" class="form-control" id="noSeriLama" v-model="aktivitas.no_seri_lama" required>
-              </div>
-              <div class="form-group">
+              </div> -->
+
+              <!-- <div class="form-group">
                 <label for="noSeriBaru" class="text-black-10"><b>No Seri Baru <sup class="text-danger"> *</sup> </b></label>
                 <input type="text" class="form-control" id="noSeriBaru" v-model="aktivitas.no_seri_baru" required>
-              </div>
+              </div> -->
               <div class="form-group">
                 <label for="harga" class="text-black-10"><b>Harga <sup class="text-danger"> *</sup> </b></label>
                 <input type="text" class="form-control" id="harga" v-model="aktivitas.harga" required>

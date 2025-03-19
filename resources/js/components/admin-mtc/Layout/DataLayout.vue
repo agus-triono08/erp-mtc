@@ -1,5 +1,13 @@
 <template>
   <div class="container-fluid">
+    <!-- Loader -->
+    <div class="loader" v-if="isLoading">
+      <div class="loading-overlay">
+        <div class="loading-spinner">
+            <span class="sr-only">Loading...</span>          
+        </div>
+      </div>
+    </div>
     <h1 class="h3 mb-4 mt-4 text-gray-900"><b>Layout</b></h1>
     <div class="row align-items-center justify-content-end m-3">
       <!-- Tambah Data -->
@@ -23,6 +31,7 @@
             <th class="text-black-1">Ruang</th>
             <th class="text-black-1">Lantai</th>
             <th class="text-black-1">Rak</th>
+            <th class="text-black-1">Koordinat</th>
             <th class="text-black-1">Aksi</th>
           </tr>
         </thead>
@@ -34,9 +43,10 @@
         <tbody v-for="(item, index) in paginatedData" :key="index">
           <tr class="text-center">
             <td>{{ index + 1 }}</td>
-            <td>{{ item.ruang }}</td>
-            <td>{{ item.lantai }}</td>
-            <td>{{ item.rak }}</td>
+            <td>{{ item.ruang || '-' }}</td>
+            <td>{{ item.lantai || '-' }}</td>
+            <td>{{ item.rak || '-' }}</td>
+            <td>{{ item.koordinat || '-' }}</td>
             <td>
               <div class="dropdown text-center">
                 <button
@@ -53,9 +63,9 @@
                   <a class="dropdown-item" @click="openModal('edit', item, index)">
                     <i class="fas fa-edit text-primary"></i> Edit
                   </a>
-                  <a class="dropdown-item" @click="deleteData(index, item)">
+                  <!-- <a class="dropdown-item" @click="deleteData(index, item)">
                     <i class="fas fa-trash text-danger"></i> Hapus
-                  </a>
+                  </a> -->
                 </div>
               </div>
             </td>
@@ -105,6 +115,10 @@
               <label for="rak">Rak</label>
               <input type="text" class="form-control" id="rak" v-model="form.rak">
             </div>
+            <div class="form-group">
+              <label for="rak">Koordinat</label>
+              <input type="text" class="form-control" id="koordinat" v-model="form.koordinat">
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" @click="closeModal">Tutup</button>
@@ -128,17 +142,20 @@ export default {
       form: {
         ruang: '',
         lantai: '',
-        rak: ''
+        rak: '',
+        koordinat: '',
       },
       currentIndex: null,
       modalTitle: '',
       modalAction: '',
       isModalOpen: false, // Flag untuk modal open/close
       rowsPerPage: 10, // Menentukan jumlah item per halaman
-      currentPage: 1 // Halaman saat ini
+      currentPage: 1, // Halaman saat ini
+      isLoading: false,
     }
   },
   mounted() {
+    this.isLoading = true;
     this.getLayouts();
   },
   computed: {
@@ -168,9 +185,11 @@ export default {
       axios.get('/api/layouts')
         .then(response => {
           this.layouts = response.data;
+          this.isLoading = false;
         })
         .catch(error => {
           console.error(error);
+          this.isLoading = false;
         });
     },
     openModal(action, item = null, index = null) {
@@ -180,6 +199,7 @@ export default {
         this.form.ruang = '';
         this.form.lantai = '';
         this.form.rak = '';
+        this.form.koordinat = '';
         this.currentIndex = null;
         this.currentId = null;
       } else if (action === 'edit' && item) {
@@ -188,6 +208,7 @@ export default {
         this.form.ruang = item.ruang;
         this.form.lantai = item.lantai;
         this.form.rak = item.rak;
+        this.form.koordinat = item.koordinat;
         this.currentIndex = index;
         this.currentId = item.id;
       }

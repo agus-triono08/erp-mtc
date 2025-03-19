@@ -167,10 +167,31 @@
                 <textarea class="form-control" id="detail" v-model="aktivitas.detail"></textarea>
               </div>
 
-              <!-- Upload Berita Acara (BA) - PDF only -->
+              <!-- Upload Berita Acara (BA) - Drag and Drop + PDF Only -->
+              <!-- <div class="form-group">
+                <label for="ba">Upload Berita Acara (BA) - PDF Only</label>
+                <div
+                  class="drop-zone"
+                  @dragover.prevent="handleDragOver"
+                  @dragleave="handleDragLeave"
+                  @drop.prevent="handleDrop"
+                  @click="triggerBAInput"
+                  :class="{ 'drag-over': isDragging }"
+                >
+                <p v-if="!baPreview">
+                  <i class="fas fa-file-pdf"></i><br>
+                  Drag and drop your PDF file here <br>or <br><span class="browse-link">Browse</span>
+                </p>
+                <p v-else>
+                  <pdf :src="baPreview" :page="1" :rotate="0" />
+                </p>
+                </div>
+                <input type="file" id="ba" ref="baInput" @change="handleBAUpload" accept="application/pdf" style="display: none;" />              
+              </div> -->
+
               <div class="form-group">
                 <label for="ba">Upload Berita Acara (BA) - PDF Only</label>
-                <input type="file" id="ba" @change="handleBAUpload" accept="application/pdf" class="form-control" />
+                <input type="file" id="ba" @change="handleBAUpload" accept="application/pdf" class="form-control"/>                              
               </div>
 
               <!-- Upload Bukti Pemusnahan - Multiple Files (Image/PDF) -->
@@ -179,8 +200,31 @@
                 <input type="file" id="buktiPemusnahan" @change="handleBuktiPemusnahanUpload" multiple class="form-control" />
               </div>
 
+              <!-- Upload Bukti Pemusnahan - Multiple Files (Image/PDF) -->
+              <!-- <div class="form-group">
+                <label for="buktiPemusnahan">Upload Bukti Pemusnahan - Images/PDF</label>
+                <div
+                  class="drop-zone"
+                  @dragover.prevent="handleDragOverBuktiPemusnahan"
+                  @dragleave="handleDragLeaveBuktiPemusnahan"
+                  @drop.prevent="handleDropBuktiPemusnahan"
+                  @click="triggerBuktiPemusnahanInput"
+                  :class="{ 'drag-over': isDraggingBuktiPemusnahan }"
+                >
+                  <p v-if="!buktiPemusnahanPreview">
+                    <i class="fas fa-file-pdf"></i><br>
+                    Drag and drop your PDF file here <br>or <br><span class="browse-link">Browse</span>
+                  </p>
+                  <p v-else>
+                    <img v-if="isImage(buktiPemusnahanPreview)" :src="buktiPemusnahanPreview" alt="Gambar" width="100" height="100" style="margin: 5px;">
+                    <pdf v-if="isPdf(buktiPemusnahanPreview)" :src="buktiPemusnahanPreview" :page="1" :rotate="0" />
+                  </p>
+                </div>
+                <input type="file" id="buktiPemusnahan" @change="handleBuktiPemusnahanUpload" multiple class="form-control" style="display: none;" />
+              </div> -->
+
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" @click="showModal = false">Batal</button>
+                <button type="button" class="btn btn-danger" @click="showModal = false">Batal</button>
                 <button type="submit" class="btn btn-primary">Simpan</button>
               </div>
             </form>
@@ -226,6 +270,10 @@ export default {
       searchQuery: '',
       rowsPerPage: 10,
       currentPage: 1,
+      isDragging: false,
+      baPreview: null,
+      isDraggingBuktiPemusnahan: false,
+      buktiPemusnahanPreview: null,
     }
   },
   computed: {
@@ -263,17 +311,81 @@ export default {
     }
   },
   methods: {
+    // handleBAUpload(event) {
+    //   const file = event.target.files[0];
+    //   if (file && file.type === 'application/pdf') {
+    //     // Mengonversi file PDF menjadi URL objek yang dapat diakses oleh komponen
+    //     this.aktivitas.ba = URL.createObjectURL(file);
+    //     console.log('Berita Acara berhasil diunggah:', this.aktivitas.ba);
+    //   } else {
+    //     alert("Hanya file PDF yang diperbolehkan untuk Berita Acara!");
+    //     this.aktivitas.ba = null;
+    //   }
+    // },
+
+    // handleDragOver() {
+    //   this.isDragging = true;
+    // },
+    // handleDragLeave() {
+    //   this.isDragging = false;
+    // },
+    // handleDrop(event) {
+    //   this.isDragging = false;
+    //   const file = event.dataTransfer.files[0];
+    //   if (file && file.type === "application/pdf") {
+    //     // Mengonversi file PDF menjadi URL objek yang dapat diakses oleh komponen
+    //     this.aktivitas.ba = URL.createObjectURL(file);
+    //     // console.log("Berita Acara berhasil diunggah:", this.aktivitas.ba);
+    //     // alert(`File "${file.name}" uploaded successfully!`);
+    //   } else {
+    //     alert("Hanya file PDF yang diperbolehkan untuk Berita Acara!");
+    //     this.aktivitas.ba = null;
+    //   }
+    // },
+    // triggerBAInput() {
+    //   this.$refs.baInput.click();
+    // },
     handleBAUpload(event) {
       const file = event.target.files[0];
-      if (file && file.type === 'application/pdf') {
+      if (file && file.type === "application/pdf") {
         // Mengonversi file PDF menjadi URL objek yang dapat diakses oleh komponen
         this.aktivitas.ba = URL.createObjectURL(file);
-        console.log('Berita Acara berhasil diunggah:', this.aktivitas.ba);
+        // console.log("Berita Acara berhasil diunggah:", this.aktivitas.ba);
+        // alert(`File "${file.name}" uploaded successfully!`);
       } else {
         alert("Hanya file PDF yang diperbolehkan untuk Berita Acara!");
         this.aktivitas.ba = null;
       }
     },
+
+    // handleDragOverBuktiPemusnahan() {
+    //   this.isDraggingBuktiPemusnahan = true;
+    // },
+    // handleDragLeaveBuktiPemusnahan() {
+    //   this.isDraggingBuktiPemusnahan = false;
+    // },
+    // handleDropBuktiPemusnahan(event) {
+    //   this.isDraggingBuktiPemusnahan = false;
+    //   const files = event.dataTransfer.files;
+    //   const validFiles = [];
+
+    //   for (let i = 0; i < files.length; i++) {
+    //     const file = files[i];
+    //     if (file.type === 'application/pdf' || file.type.startsWith('image/')) {
+    //       // Mengonversi file menjadi URL objek
+    //       validFiles.push(URL.createObjectURL(file));
+    //     } else {
+    //       alert("Hanya file PDF atau gambar yang diperbolehkan untuk Bukti Pemusnahan!");
+    //     }
+    //   }
+
+    //   // Memperbarui buktiPemusnahan dengan file yang valid (URL objek)
+    //   this.aktivitas.buktiPemusnahan = validFiles;
+    //   this.buktiPemusnahanPreview = validFiles[0];
+    // },
+    // triggerBuktiPemusnahanInput() {
+    //   this.$refs.buktiPemusnahanInput.click();
+    // },
 
     // Method untuk menangani upload Bukti Pemusnahan (Multiple files, gambar/PDF)
     handleBuktiPemusnahanUpload(event) {
@@ -292,8 +404,9 @@ export default {
 
       // Memperbarui buktiPemusnahan dengan file yang valid (URL objek)
       this.aktivitas.buktiPemusnahan = validFiles;
-      console.log('Bukti Pemusnahan berhasil diunggah:', this.aktivitas.buktiPemusnahan);
+      // console.log('Bukti Pemusnahan berhasil diunggah:', this.aktivitas.buktiPemusnahan);
     },
+
     // Method untuk menangani upload Bukti Pemusnahan (Multiple files, hanya PDF)
     // handleBuktiPemusnahanUpload(event) {
     //   const file = event.target.files[0];
@@ -362,7 +475,11 @@ export default {
     //   return url;
     // },
     downloadBA(index) {
-      const ba = this.data[index].ba;
+      // const ba = this.data[index].ba;
+      if (this.data.length === 0) {
+        console.error('No data available');
+        return;
+      }
       const filename = `BA_${index}.pdf`;
 
       // Buat elemen canvas untuk render PDF
@@ -370,9 +487,10 @@ export default {
       const ctx = canvas.getContext('2d');
 
       // Membuat objek jsPDF
-      const pdf = new jsPDF();
+      const pdf = new jsPDF();      
 
-      const tanggalString = this.data[index].tgl || '-';
+      const tanggalString = this.data[0].tgl || '-';
+      console.log(tanggalString);
       const tanggal = new Date(tanggalString);
 
       // Menentukan hari dalam seminggu
@@ -506,21 +624,28 @@ export default {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-.drag-drop-area {
-  border: 2px dashed #ccc;
-  padding: 20px;
-  text-align: center;
+.drop-zone {
+  width: 100%;
+  height: 150px;
+  border: 2px dashed #169ea8;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  font-size: 18px;
   cursor: pointer;
-  background-color: #fff;
+  transition: background-color 0.3s, border-color 0.3s;
 }
-
-.dragging {
-  border-color: #169ea8;
-  background-color: #e9f7ff;
+.drop-zone.drag-over {
+  border-color: #007bff;
+  background-color: #f0f8ff;
+  color: #007bff;
 }
-
-.drag-drop-area p {
-  margin: 0;
-  font-size: 16px;
+.preview-mini {
+  width: 100px;
+  height: 100px;
+  border: 1px solid #ddd;
+  margin-top: 10px;
 }
 </style>

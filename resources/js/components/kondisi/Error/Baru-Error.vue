@@ -14,9 +14,9 @@
     </ul>
     <div class="row align-items-center justify-content-end m-3">      
       <!-- Tambah Data -->
-      <button class="btn btn-sm btn-outline-primary mr-2 ml-1" @click="openModal('add')">
+      <!-- <button class="btn btn-sm btn-outline-primary mr-2 ml-1" @click="openModal('add')">
         <i class="fa fa-plus-circle"></i> Tambah Data
-      </button>
+      </button> -->
       <div class="search-wrapper">
         <div class="input-group">
           <input type="text" placeholder="Search..." class="form-control"
@@ -251,7 +251,7 @@ export default {
           tgl: '',
           kondisi: '',
           detail: '',
-          pic: '',
+          pic: 'admin',
           status: ''
         };
       }

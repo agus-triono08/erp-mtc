@@ -150,6 +150,9 @@ const DataPerawatanMesin = require('./components/admin-mtc/DataMesin/DetailMesin
 
 //Komponen Data Riwayat
 const DataRiwayat = require('./components/admin-mtc/Riwayat/DataRiwayat.vue').default;
+const DataRiwayatPeminjaman = require('./components/admin-mtc/Riwayat/DataRiwayatPeminjaman.vue').default;
+const DataRiwayatPermintaan = require('./components/admin-mtc/Riwayat/DataRiwayatPermintaan.vue').default;
+const DataRiwayatPenggantian = require('./components/admin-mtc/Riwayat/DataRiwayatPenggantian.vue').default;
 
 //LAYOUT
 const DataLayout = require('./components/admin-mtc/Layout/DataLayout.vue').default;
@@ -487,6 +490,22 @@ const routes = [
     {
         path: '/admin-mtc/riwayat',
         component: DataRiwayat,
+        name: 'data-riwayat-perkondisi',
+    },
+    {
+        path: '/admin-mtc/riwayat',
+        component: DataRiwayatPeminjaman,
+        name: 'data-riwayat-peminjaman',
+    },
+    {
+        path: '/admin-mtc/riwayat',
+        component: DataRiwayatPermintaan,
+        name: 'data-riwayat-permintaan',
+    },
+    {
+        path: '/admin-mtc/riwayat',
+        component: DataRiwayatPenggantian,
+        name: 'data-riwayat-penggantian',
     },
     // USER
     {
@@ -494,7 +513,15 @@ const routes = [
         component: DataMasterUser,
     },
     {
+        path: '/user-mtc/data',
+        component: DataMasterUser,
+    },
+    {
         path: '/user/peminjaman',
+        component: UserDataPeminjaman,
+    },
+    {
+        path: '/user-mtc/peminjaman',
         component: UserDataPeminjaman,
     },
     {

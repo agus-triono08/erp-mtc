@@ -37,6 +37,9 @@
         <a class="nav-link" href="{{ route('data.adminmtc') }}">
             <i class="fas fa-fw {{ request()->routeIs('data.adminmtc') ? 'fa-tools' : 'fa-toolbox' }}"></i>
             <span>Alat & Mesin</span>
+            <div class="spinner-border spinner-border-sm d-none" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
         </a>
     </li>
 
@@ -45,6 +48,9 @@
         <a class="nav-link" href="{{ route('adminmtc-riwayat') }}">
             <i class="fas fa-fw {{ request()->routeIs('adminmtc-riwayat') ? 'fa-folder-open' : 'fa-history' }}"></i>
             <span>Riwayat</span>
+            <div class="spinner-border spinner-border-sm d-none" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
         </a>
     </li>
     
@@ -56,7 +62,7 @@
     <!-- Nav Item - Data -->
     <li class="nav-item {{ request()->routeIs('layout.adminmtc') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('layout.adminmtc') }}">
-            <i class="fas fa-fw {{ request()->routeIs('layout.adminmtc') ? 'fa-folder-open' : 'fa-folder' }}"></i>
+            <i class="bi {{ request()->routeIs('layout.adminmtc') ? 'bi-door-open-fill' : 'bi-door-closed-fill' }}"></i>
             <span>Layout</span>
         </a>
     </li>
@@ -204,7 +210,7 @@
     {{-- Nav Item - Data Hilang --}}
     <li class="nav-item {{ request()->routeIs('datahilang.adminmtc') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('datahilang.adminmtc') }}">
-            <i class="fas fa-fw {{ request()->routeIs('datahilang.adminmtc') ? 'fa-hand-holding-heart' : 'fa-hand-holding' }}"></i>
+            <i class="bi {{ request()->routeIs('datahilang.adminmtc') ? 'bi-repeat' : 'bi-arrow-repeat' }}"></i>
             <span>Penggantian Alat/Mesin</span>
         </a>
     </li>

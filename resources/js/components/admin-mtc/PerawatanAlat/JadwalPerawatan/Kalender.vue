@@ -14,6 +14,9 @@
         <router-link id="pills-profile-tab" data-toggle="pill" data-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="true" class="nav-link" :class="{ active: $route.name === 'kalender-perawatan' }" :to="{ name: 'kalender-perawatan' }">Kalender</router-link>
       </li>
     </ul>
+    <div class="row align-items-center justify-content-end mr-3">
+      <button class="btn btn-sm btn-outline-primary mr-2" @click="exportToExcel"><i class="bi bi-filetype-exe"></i>Export</button>
+    </div>    
     <div class="mb-5 mt-2 mr-3" id="calendar"></div>
   </div>
 </template>
@@ -22,6 +25,8 @@ import { Calendar } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
+import * as XLSX from 'xlsx';
+// import mixins from "./mix";
 
 // Tambahkan kode berikut untuk mendefinisikan nama bulan Indonesia
 const locale = {
@@ -35,6 +40,7 @@ const locale = {
 };
 
 export default {
+  // mixins: [mixins],
   data() {
     return {
       jadwalPerawatan: [
@@ -73,6 +79,20 @@ export default {
           no_seri: 'B-03',
           tanggal_start: new Date(new Date().getFullYear(), new Date().getMonth(), 19),
           tanggal_end: new Date(new Date().getFullYear(), new Date().getMonth(), 25),
+          waktu_mulai: '',
+          waktu_selesai: '',
+          pic: '',
+          detail: '',
+          kondisi: '',
+          status: 'Belum Selesai'
+        },
+        {
+          id: 4,
+          no_perawatan: 'R-04',
+          nama_alat: 'Bor',
+          no_seri: 'B-04',
+          tanggal_start: new Date(new Date().getFullYear(), 11, 1),
+          tanggal_end: new Date(new Date().getFullYear(), 11, 5),
           waktu_mulai: '',
           waktu_selesai: '',
           pic: '',
@@ -121,7 +141,21 @@ export default {
       }
     });
     calendar.render();
-  }
+  },
+  methods: {
+    exportToExcel() {
+      const tahun = new Date().getFullYear();
+      const data = this.jadwalPerawatan.filter((item) => {
+        return item.tanggal_start.getFullYear() === tahun;
+      });
+
+      const worksheet = XLSX.utils.json_to_sheet(data);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, 'Jadwal Perawatan');
+
+      XLSX.writeFile(workbook, `Jadwal Perawatan ${tahun}.xlsx`);
+    }
+  },
 }
 </script>
 <style>

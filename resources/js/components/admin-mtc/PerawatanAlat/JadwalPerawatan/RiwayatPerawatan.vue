@@ -1,5 +1,13 @@
 <template>
   <div class="container-fluid">
+    <!-- Loader -->
+    <div class="loader" v-if="isLoading">
+      <div class="loading-overlay">
+        <div class="loading-spinner">
+            <span class="sr-only">Loading...</span>          
+        </div>
+      </div>
+    </div>
     <!-- Riwayat Perawatan -->
     <div class="table-responsive p-3">
       <h5 style="color: #000;"><b>Riwayat Perawatan</b></h5>
@@ -38,14 +46,15 @@
               Tanggal Perawatan
               <i class="fas" :class="{'fa-sort-up': sortKey === 'tanggal_perawatan' && sortDirection === 'asc', 'fa-sort-down': sortKey === 'tanggal_perawatan' && sortDirection === 'desc'}"></i>
             </th>
-            <th @click="sortBy('waktu_mulai')">
+            <th>Rentang Waktu</th>
+            <!-- <th @click="sortBy('waktu_mulai')">
               Waktu Mulai
               <i class="fas" :class="{'fa-sort-up': sortKey === 'waktu_mulai' && sortDirection === 'asc', 'fa-sort-down': sortKey === 'waktu_mulai' && sortDirection === 'desc'}"></i>
             </th>
             <th @click="sortBy('waktu_selesai')">
               Waktu Selesai
               <i class="fas" :class="{'fa-sort-up': sortKey === 'waktu_selesai' && sortDirection === 'asc', 'fa-sort-down': sortKey === 'waktu_selesai' && sortDirection === 'desc'}"></i>
-            </th>
+            </th> -->
             <th @click="sortBy('pic')">
               PIC
               <i class="fas" :class="{'fa-sort-up': sortKey === 'pic' && sortDirection === 'asc', 'fa-sort-down': sortKey === 'pic' && sortDirection === 'desc'}"></i>
@@ -69,8 +78,10 @@
             <td>{{ item.nama_alat }}</td>
             <td>{{ item.no_seri }}</td>
             <td>{{ item.tanggal_perawatan }}</td>
-            <td>{{ item.waktu_mulai }}</td>
-            <td>{{ item.waktu_selesai }}</td>
+            <td>{{ item.rentang_waktu }} <br>
+            <small>{{ item.tanggal_start }} to {{ item.tanggal_end }}</small> </td>
+            <!-- <td>{{ item.waktu_mulai }}</td>
+            <td>{{ item.waktu_selesai }}</td> -->
             <td>{{ item.pic }}</td>
             <td>{{ item.detail }}</td>
             <td>
@@ -125,6 +136,8 @@
 </template>
 
 <script>
+import { sortBy } from 'lodash';
+
 export default {
   data() {
     return {
@@ -141,6 +154,8 @@ export default {
           nama_alat: 'Bor',
           no_seri: 'B-01',
           tanggal_perawatan: '2025-03-06',
+          tanggal_start: '2025-03-04',
+          tanggal_end: '2025-03-07',
           waktu_mulai: '08:00',
           waktu_selesai: '11:00',
           pic: 'John Doe',
@@ -154,6 +169,8 @@ export default {
           nama_alat: 'Bor',
           no_seri: 'B-02',
           tanggal_perawatan: '2025-03-13',
+          tanggal_start: '2025-03-13',
+          tanggal_end: '2025-03-15',
           waktu_mulai: '08:30',
           waktu_selesai: '09:45',
           pic: 'Jane Doe',
@@ -167,6 +184,8 @@ export default {
           nama_alat: 'Bor',
           no_seri: 'B-03',
           tanggal_perawatan: '2025-03-19',
+          tanggal_start: '2025-03-17',
+          tanggal_end: '2025-03-21',
           waktu_mulai: '10:00',
           waktu_selesai: '12:00',
           pic: 'Bob Smith',
@@ -189,9 +208,20 @@ export default {
       modalTitle: 'Tambah Jadwal Perawatan',
       sortKey: '',
       sortDirection: 'asc',
+      isLoading: false,
     }
   },
   methods: {
+    async loadData() {
+      this.isLoading = true;
+      try {
+        // kode untuk load data
+      } catch (error) {
+        console.error(error);
+      } finally {
+        this.isLoading = false;
+      }
+    },
     sortBy(key) {
       this.sortKey = key
       this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc'
@@ -223,7 +253,7 @@ export default {
   },
   computed: {
     filteredRiwayatPerawatan() {
-      return this.riwayatPerawatan.filter(item => {
+      return this.riwayatPerawatanWithRentang.filter(item => {
         return Object.values(item).some(value => {
           return String(value).toLowerCase().includes(this.search.toLowerCase())
         }) && this.filterTanggal(item.tanggal_perawatan)
@@ -247,7 +277,18 @@ export default {
       const start = (this.currentPage - 1) * this.perPage
       const end = this.currentPage * this.perPage
       return this.filteredRiwayatPerawatan.slice(start, end)
-    }
+    },
+    riwayatPerawatanWithRentang() {
+      return this.riwayatPerawatan.map(item => {
+        const tanggalStart = new Date(item.tanggal_start);
+        const tanggalEnd = new Date(item.tanggal_end);
+        const rentangWaktu = Math.abs(tanggalEnd - tanggalStart) / (1000 * 60 * 60 * 24);
+        return {
+          ...item,
+          rentang_waktu: `${rentangWaktu} hari`
+        }
+      })
+    },
   }
 }
 </script>

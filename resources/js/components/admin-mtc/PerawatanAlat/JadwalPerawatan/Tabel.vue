@@ -1,5 +1,13 @@
 <template>
   <div class="container-fluid">
+    <!-- Loader -->
+    <div class="loader" v-if="isLoading">
+      <div class="loading-overlay">
+        <div class="loading-spinner">
+            <span class="sr-only">Loading...</span>          
+        </div>
+      </div>
+    </div>
     <!-- Head -->
     <div class="row mb-2 align-items-center">
       <div class="col-sm-6">
@@ -388,6 +396,7 @@ export default {
       isModalEditOpen: false,
       isModalSelesaiOpen: false,
       modalTitle: 'Tambah Jadwal Perawatan',
+      isLoading: false,
     }
   },
   computed: {

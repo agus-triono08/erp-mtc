@@ -91,6 +91,19 @@ Route::get('/admin-mtc/layout', function() {
 })->name('layout.adminmtc');
 });
 
+// USER MAINTENANCE
+Route::get('/user-mtc/dashboard', function () {
+    return view('user-mtc.Main.dashboard');
+})->name('dashboard.user-mtc');
+
+Route::get('/user-mtc/data', function () {
+    return view('user-mtc.Main.data');
+})->name('data.user-mtc');
+
+Route::get('/user-mtc/peminjaman', function () {
+    return view('user-mtc.Main.peminjaman');
+})->name('peminjaman.user-mtc');
+
 Route::group(['middleware' => 'guest'], function () {
 // USER
 Route::get('/user/dashboard', function () {

@@ -1,5 +1,13 @@
 <template>
   <div class="container-fluid mt-3 mr-3 mb-3">
+    <!-- Loader -->
+    <div class="loader" v-if="isLoading">
+      <div class="loading-overlay">
+        <div class="loading-spinner">
+            <span class="sr-only">Loading...</span>          
+        </div>
+      </div>
+    </div>
     <!-- Modal Konfirmasi -->
     <div class="modal" :class="{ 'is-visible': showModal }">
         <div class="modal-content">
@@ -259,6 +267,7 @@ export default {
       showAlat: true,
       showMesin: false,
       jenisFilter: [],
+      isLoading: false,
       showModalInput: false, // Tambahkan variabel untuk mengontrol tampilan modal input       
     };
   },
@@ -309,6 +318,7 @@ export default {
   },
   methods: {
     async fetchAlats() {
+      this.isLoading = true;
       try {
         const response = await axios.get(`/api/alats`);
         this.alats = response.data.data.map((alat) => ({
@@ -328,6 +338,8 @@ export default {
         //console.log(this.alats);
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        this.isLoading = false; // Hilangkan loader
       }
     },
     sortStokAwal(order) {
@@ -685,5 +697,41 @@ input[type="checkbox"]:checked::after {
     max-width: 800px;
     width: 100%;
   }
+  .loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.5);
+  z-index: 1000;
+}
+
+.loading-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.loading-spinner {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  border: 10px solid rgba(220, 53, 69, 0.1);
+  border-top-color: #dc3545;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 
 </style>

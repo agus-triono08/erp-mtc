@@ -11,13 +11,13 @@
     <h1 class="h3 mb-4 mt-4 text-gray-900"><b>Riwayat</b></h1>
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item" role="presentation">
-        <router-link class="nav-link" id="kondisi-tab" data-toggle="tab" role="tab" aria-controls="kondisi" aria-selected="true" :class="{active: $route.name === 'data-riwayat-perkondisi'}" :to="{name: 'data-riwayat-perkondisi'}">Per Kondisi</router-link>
+        <router-link class="nav-link" id="kondisi-tab" data-toggle="tab" role="tab" aria-controls="kondisi" aria-selected="false" :class="{active: $route.name === 'data-riwayat-perkondisi'}" :to="{name: 'data-riwayat-perkondisi'}">Per Kondisi</router-link>
       </li>
       <li class="nav-item" role="presentation">
         <router-link class="nav-link" id="peminjaman-tab" data-toggle="tab" role="tab" aria-controls="peminjaman" aria-selected="false" :class="{active: $route.name === 'data-riwayat-peminjaman'}" :to="{name: 'data-riwayat-peminjaman'}">Peminjaman</router-link>
       </li>
       <li class="nav-item" role="presentation">
-        <router-link class="nav-link" id="permintaan-tab" data-toggle="tab" role="tab" aria-controls="permintaan" aria-selected="false" :class="{active: $route.name === 'data-riwayat-permintaan'}" :to="{name: 'data-riwayat-permintaan'}">Permintaan</router-link>
+        <router-link class="nav-link" id="permintaan-tab" data-toggle="tab" role="tab" aria-controls="permintaan" aria-selected="true" :class="{active: $route.name === 'data-riwayat-permintaan'}" :to="{name: 'data-riwayat-permintaan'}">Permintaan</router-link>
       </li>
       <li class="nav-item" role="presentation">
         <router-link class="nav-link" id="penggantian-tab" data-toggle="tab" role="tab" aria-controls="penggantian" aria-selected="false" :class="{active: $route.name === 'data-riwayat-penggantian'}" :to="{name: 'data-riwayat-penggantian'}">Penggantian Alat/Mesin Hilang</router-link>
@@ -66,7 +66,7 @@
         style="border-radius: 8px; width: 250px;"
         @click.stop
       >
-        <div>
+        <!-- <div>
           <label><b>Jenis</b></label>
           <div v-for="jenis in availableJenis" :key="jenis">
             <label><input type="checkbox" :value="jenis" v-model="jenisFilter"/>{{ jenis }}</label>
@@ -76,6 +76,12 @@
           <label><b>Kondisi</b></label>
           <div v-for="kondisi in availablekondisi" :key="kondisi">
             <label><input type="checkbox" :value="kondisi" v-model="kondisiFilter"/>{{ kondisi }}</label>
+          </div>
+        </div> -->
+        <div>
+          <label><b>Tujuan Divisi</b></label>
+          <div v-for="item in availabledivisi" :key="item">
+            <label><input type="checkbox" :value="item" v-model="tujuanDivisiFilter"/>{{ item }}</label>
           </div>
         </div>
       </div>
@@ -127,20 +133,24 @@
                   <i class="fas" :class="{'fa-sort-up': sortKey === 'tanggal' && sortDirection === 'asc', 'fa-sort-down': sortKey === 'tanggal' && sortDirection === 'desc'}"></i>
                 </th>
                 <th @click="sortBy('PIC.nama_staff')">
-                  PIC
+                  Dipinjam Oleh
                   <i class="fas" :class="{'fa-sort-up': sortKey === 'PIC.nama_staff' && sortDirection === 'asc', 'fa-sort-down': sortKey === 'PIC.nama_staff' && sortDirection === 'desc'}"></i>
                 </th>
-                <th @click="sortBy('jenis')">
-                  Jenis
-                  <i class="fas" :class="{'fa-sort-up': sortKey === 'jenis' && sortDirection === 'asc', 'fa-sort-down': sortKey === 'jenis' && sortDirection === 'desc'}"></i>
+                <th @click="sortBy('tujuan')">
+                  Tujuan Divisi
+                  <i class="fas" :class="{'fa-sort-up': sortKey === 'tujuan' && sortDirection === 'asc', 'fa-sort-down': sortKey === 'tujuan' && sortDirection === 'desc'}"></i>
                 </th>
-                <th @click="sortBy('no_seri')">
-                  No Seri
-                  <i class="fas" :class="{'fa-sort-up': sortKey === 'no_seri' && sortDirection === 'asc', 'fa-sort-down': sortKey === 'no_seri' && sortDirection === 'desc'}"></i>
+                <th @click="sortBy('no_permintaan')">
+                  No Permintaan
+                  <i class="fas" :class="{'fa-sort-up': sortKey === 'no_permintaan' && sortDirection === 'asc', 'fa-sort-down': sortKey === 'no_permintaan' && sortDirection === 'desc'}"></i>
                 </th>
-                <th @click="sortBy('kondisi')">
-                  Kondisi
-                  <i class="fas" :class="{'fa-sort-up': sortKey === 'kondisi' && sortDirection === 'asc', 'fa-sort-down': sortKey === 'kondisi' && sortDirection === 'desc'}"></i>
+                <th @click="sortBy('alat.nama_alat')">
+                  Nama Alat/Mesin
+                  <i class="fas" :class="{'fa-sort-up': sortKey === 'alat.nama_alat' && sortDirection === 'asc', 'fa-sort-down': sortKey === 'alat.nama_alat' && sortDirection === 'desc'}"></i>
+                </th>
+                <th @click="sortBy('jumlah')">
+                  Jumlah
+                  <i class="fas" :class="{'fa-sort-up': sortKey === 'jumlah' && sortDirection === 'asc', 'fa-sort-down': sortKey === 'jumlah' && sortDirection === 'desc'}"></i>
                 </th>
               </tr>
             </thead>
@@ -155,10 +165,10 @@
                 <td>{{ riwayat.tanggal || '-' }} <br> <small style="color: #444;"><i class="fas fa-clock"></i> {{ durasiData[index] !== '-' ? durasiData[index] + 'Hari' : '-' }}</small></td>                
                 <td>{{ riwayat.PIC ? riwayat.PIC.nama_staff : '-' }}</td>     
                 <!-- <td>{{ riwayat.pengguna ? riwayat.pengguna.divisi : '-' }}</td> -->
-                <td>{{ riwayat.jenis }}</td>
+                <td>{{ riwayat.tujuan }}</td>
                 <!-- <td>{{ riwayat.alat ? riwayat.alat.kode_alat : '-' }}</td>     -->
-                <td>{{ riwayat.no_seri || '-' }}</td>            
-                <td>
+                <td>{{ riwayat.no_permintaan || '-' }}</td>            
+                <!-- <td>
                   <div 
                     class="btn-sts"
                       :class="{'status-active': riwayat.noSeri.status === 'OK', 
@@ -168,7 +178,9 @@
                               'status-dipinjam': riwayat.noSeri.status === 'Musnah',
                     }"
                   >{{ riwayat.noSeri ? riwayat.noSeri.status : '-' }}</div>
-                  </td>
+                  </td> -->
+                  <td>{{ riwayat.alat ? riwayat.alat.nama_alat : '-' }}</td>
+                  <td>{{ riwayat.jumlah }}</td>
               </tr>
             </tbody>
           </table>
@@ -212,13 +224,15 @@ export default {
         id_alat: 101,
         id_pengguna: 1,
         no_seri: "ABC123456",
+        no_pinjam: "P001",
+        no_permintaan: "PR001",
         layout: "Layout 1",
         pic: 1,
         jumlah: 5,
         tanggal: "2025-02-20",
         PIC: { nama_staff: "John Doe" },
         noSeri: { status: "OK" },
-        alat: { kode_alat: "ALAT001" },
+        alat: { kode_alat: "ALAT001", nama_alat: "Alat 1" },
         pengguna: { divisi: "Engineering" },
         tujuan: "Engineering",
         jenis: "Tool",
@@ -229,13 +243,15 @@ export default {
         id_alat: 102,
         id_pengguna: 2,
         no_seri: "DEF789101",
+        no_pinjam: "P002",
+        no_permintaan: "PR002",
         layout: "Layout 2",
         pic: 2,
         jumlah: 10,
         tanggal: "2025-02-15",
         PIC: { nama_staff: "Jane Smith" },
         noSeri: { status: "Rusak" },
-        alat: { kode_alat: "ALAT002" },
+        alat: { kode_alat: "ALAT002", nama_alat: "Alat 2" },
         pengguna: { divisi: "Maintenance" },
         tujuan: "Maintenance",
         jenis: "Machine",
@@ -246,13 +262,15 @@ export default {
         id_alat: 103,
         id_pengguna: 3,
         no_seri: "GHI112233",
+        no_pinjam: "P003",
+        no_permintaan: "PR003",
         layout: "Layout 3",
         pic: 3,
         jumlah: 3,
         tanggal: "2025-02-18",
         PIC: { nama_staff: "Alice Johnson" },
         noSeri: { status: "Error" },
-        alat: { kode_alat: "ALAT003" },
+        alat: { kode_alat: "ALAT003", nama_alat: "Alat 3" },
         pengguna: { divisi: "IT" },
         tujuan: "IT Support",
         jenis: "Machine",
@@ -263,13 +281,15 @@ export default {
         id_alat: 104,
         id_pengguna: 4,
         no_seri: "JKL345678",
+        no_pinjam: "P004",
+        no_permintaan: "PR004",
         layout: "Layout 4",
         pic: 4,
         jumlah: 7,
         tanggal: "2025-02-22",
         PIC: { nama_staff: "Bob Lee" },
         noSeri: { status: "Musnah" },
-        alat: { kode_alat: "ALAT004" },
+        alat: { kode_alat: "ALAT004", nama_alat: "Alat 4" },
         pengguna: { divisi: "Logistics" },
         tujuan: "Logistics",
         jenis: "Tool",
@@ -280,13 +300,15 @@ export default {
         id_alat: 105,
         id_pengguna: 5,
         no_seri: "MNO567890",
+        no_pinjam: "P005",
+        no_permintaan: "PR005",
         layout: "Layout 5",
         pic: 5,
         jumlah: 2,
         tanggal: "2025-02-10",
         PIC: { nama_staff: "Charlie Brown" },
         noSeri: { status: "Hilang" },
-        alat: { kode_alat: "ALAT005" },
+        alat: { kode_alat: "ALAT005", nama_alat: "Alat 5" },
         pengguna: { divisi: "HR" },
         tujuan: "HR Department",
         jenis: "Machine",
@@ -297,9 +319,10 @@ export default {
       currentPage: 1,
       tanggalAwal: '',
       tanggalAkhir: '',
-      tujuanDivisiFilter: '',
+      tujuanDivisiFilter: [],
       // jenisFilter: '',
       kondisiFilter: [],
+      divisiFilter: [],
       tujuanDivisiOptions: [],
       jenisOptions: [],
       kondisiOptions: [],
@@ -317,6 +340,9 @@ export default {
     },
     availablekondisi() {
       return [...new Set(this.datariwayat.map(item=>item?.noSeri?.status))];
+    },
+    availabledivisi() {
+      return [...new Set(this.datariwayat.map(item=>item.tujuan))];
     },
     durasiData() {
       return this.datariwayat.map(noseri => {
@@ -357,8 +383,8 @@ export default {
               (datariwayat.staff && datariwayat.staff.nama_staff && datariwayat.staff.nama_staff.toLowerCase().includes(this.searchQuery.toLowerCase()))
             )
             : true;
-          const tujuanDivisiMatch = this.tujuanDivisiFilter
-            ? datariwayat.tujuan === this.tujuanDivisiFilter
+          const tujuanDivisiMatch = this.tujuanDivisiFilter.length
+            ? this.tujuanDivisiFilter.includes(datariwayat.tujuan)
             : true;
           const jenisMatch = this.jenisFilter.length
             ? this.jenisFilter.includes(datariwayat.jenis)
@@ -368,7 +394,11 @@ export default {
             : true;
           return tanggalMatch && searchMatch && tujuanDivisiMatch && jenisMatch && kondisiMatch;
         }).sort((a, b) => {
-          if (this.sortKey === 'PIC.nama_staff') {
+          if (this.sortKey === 'alat.nama_alat') {
+            const namaAlatA = a.alat ? a.alat.nama_alat : '';
+            const namaAlatB = b.alat ? b.alat.nama_alat : '';
+            return this.sortDirection === 'asc' ? namaAlatA.localeCompare(namaAlatB) : namaAlatB.localeCompare(namaAlatA);
+          } else if (this.sortKey === 'PIC.nama_staff') {
             const picA = a.PIC ? a.PIC.nama_staff : '';
             const picB = b.PIC ? b.PIC.nama_staff : '';
             return this.sortDirection === 'asc' ? picA.localeCompare(picB) : picB.localeCompare(picA);
@@ -382,7 +412,11 @@ export default {
         });
       } else {
         return this.datariwayat.sort((a, b) => {
-          if (this.sortKey === 'PIC.nama_staff') {
+          if (this.sortKey === 'alat.nama_alat') {
+            const namaAlatA = a.alat ? a.alat.nama_alat : '';
+            const namaAlatB = b.alat ? b.alat.nama_alat : '';
+            return this.sortDirection === 'asc' ? namaAlatA.localeCompare(namaAlatB) : namaAlatB.localeCompare(namaAlatA);
+          } else if (this.sortKey === 'PIC.nama_staff') {
             const picA = a.PIC ? a.PIC.nama_staff : '';
             const picB = b.PIC ? b.PIC.nama_staff : '';
             return this.sortDirection === 'asc' ? picA.localeCompare(picB) : picB.localeCompare(picA);
@@ -474,10 +508,11 @@ export default {
       // Menyiapkan data yang akan dikonversi
       const data = this.filteredData.map(item => ({
         Tanggal: item.tanggal,
-        PIC: item?.PIC?.nama_staff,
-        Jenis: item.jenis,
-        NoSeri: item.no_seri,
-        Kondisi: item?.noSeri?.status,        
+        'Dipinjam Oleh': item?.PIC?.nama_staff,
+        'Tujuan Divisi': item.tujuan,
+        'No Permintaan': item.no_permintaan,
+        'Nama Alat/Mesin': item?.alat?.nama_alat,        
+        Jumlah: item.jumlah,
       }));
 
       // Mengonversi data ke dalam format sheet Excel
@@ -485,10 +520,10 @@ export default {
       
       // Membuat workbook dari sheet yang sudah dibuat
       const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, 'Riwayat');
+      XLSX.utils.book_append_sheet(wb, ws, 'Riwayat Permintaan');
 
       // Menyimpan file Excel dengan nama yang ditentukan
-      XLSX.writeFile(wb, 'riwayat.xlsx');
+      XLSX.writeFile(wb, 'riwayat-permintaan.xlsx');
     },
   },
   mounted() {
