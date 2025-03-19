@@ -530,11 +530,21 @@ export default {
       // Menambahkan informasi lainnya
       pdf.text(`Sehubung dengan rusaknya barang maka pada : `, 14, 36);
       pdf.text(`Hari`, 14, 42);
-      pdf.text(`: ${hari}`, 40, 42);
+      pdf.text(`: ${hari}`, 52, 42);
       pdf.text(`Tanggal`, 14, 48);
-      pdf.text(`: ${tanggalFormatted}`, 40, 48);
+      pdf.text(`: ${tanggalFormatted}`, 52, 48);
       // pdf.text('Tanggal: ' + this.aktivitasList[index].tanggal, 14, 26);
       // pdf.text('Detail: ' + this.aktivitasList[index].detail, 14, 32);
+
+      pdf.setFont("helvetica", "normal");
+      pdf.setFontSize(12);
+      pdf.text('Jenis Pemusnahan', 14, 54);
+      pdf.text(':', 52, 54);
+      // Draw a long line next to 'SK No.'
+      const jpX = 55;  // X-coordinate where the line starts
+      const jpY = 54;  // Y-coordinate where the line should start
+      const lineLengthjp = 55; // Length of the line
+      pdf.line(jpX, jpY, jpX + lineLengthjp, jpY); // Draw the line
 
       const textBeforeBold = 'Bertempat di ';
       const boldText = 'PT. Sinko Prima Alloy';
@@ -542,19 +552,19 @@ export default {
 
       // Tulis bagian normal terlebih dahulu
       pdf.setFont("helvetica", "normal");
-      pdf.text(textBeforeBold, 14, 54);
+      pdf.text(textBeforeBold, 14, 60);
 
       const textBeforeBoldWidth = pdf.getStringUnitWidth(textBeforeBold) * pdf.internal.getFontSize() / pdf.internal.scaleFactor;
 
       pdf.setFont("helvetica", "bold");
       const boldTextX = 14 + textBeforeBoldWidth;  // Posisi setelah bagian normal
-      pdf.text(boldText, boldTextX, 54);
+      pdf.text(boldText, boldTextX, 60);
 
       const boldTextWidth = pdf.getStringUnitWidth(boldText) * pdf.internal.getFontSize() / pdf.internal.scaleFactor;
 
       pdf.setFont("helvetica", "normal");
       const textAfterBoldX = boldTextX + boldTextWidth;  // Posisi setelah bagian boldText
-      pdf.text(textAfterBold, textAfterBoldX, 54);
+      pdf.text(textAfterBold, textAfterBoldX, 60);
       
       const headers = [
         "#",
@@ -576,7 +586,7 @@ export default {
       pdf.autoTable({
         head: [headers],
         body: rows,
-        startY: 62, // Menyesuaikan posisi tabel setelah judul, nama peminjam, dan divisi
+        startY: 68, // Menyesuaikan posisi tabel setelah judul, nama peminjam, dan divisi
       });
 
       const textY = pdf.lastAutoTable.finalY + 10;

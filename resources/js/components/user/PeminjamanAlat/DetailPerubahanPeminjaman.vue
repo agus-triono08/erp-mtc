@@ -263,6 +263,7 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2';
 export default {
   props: {
     noPinjam: String,
@@ -455,24 +456,49 @@ export default {
       this.isAddDataModalVisible = false;
     },
 
-    // Method to submit the changes
+    // // Method to submit the changes
+    // submitAddData() {
+    //   if (!this.newTanggalKembali.trim()) {
+    //     alert('Tanggal kembali tidak boleh kosong');
+    //     return;
+    //   }
+    //   if (!this.newKeteranganPerubahan.trim()) {
+    //     alert('Keterangan perubahan tidak boleh kosong');
+    //     return;
+    //   }
+
+    //   // You can implement further logic here to save or send this data to the server
+    //   console.log('Tanggal Peminjaman:', this.newTanggalPinjam);
+    //   console.log('Tanggal Kembali:', this.newTanggalKembali);
+    //   console.log('Keterangan Perubahan:', this.newKeteranganPerubahan);
+
+    //   // Close modal after submission
+    //   this.closeAddDataModal();
+    // },
     submitAddData() {
-      if (!this.newTanggalKembali.trim()) {
-        alert('Tanggal kembali tidak boleh kosong');
-        return;
-      }
-      if (!this.newKeteranganPerubahan.trim()) {
-        alert('Keterangan perubahan tidak boleh kosong');
-        return;
-      }
+      Swal.fire({
+        title: 'Konfirmasi',
+        text: 'Apakah Anda yakin ingin menambahkan data?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, tambahkan!',
+        cancelButtonText: 'Tidak, batalkan!',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          if (!this.newTanggalKembali || !this.newKeteranganPerubahan) {
+            alert('Tanggal kembali dan keterangan perubahan harus diisi.');
+            return;
+          }
 
-      // You can implement further logic here to save or send this data to the server
-      console.log('Tanggal Peminjaman:', this.newTanggalPinjam);
-      console.log('Tanggal Kembali:', this.newTanggalKembali);
-      console.log('Keterangan Perubahan:', this.newKeteranganPerubahan);
+          // Proses penambahan data
+          console.log('Tanggal Peminjaman:', this.newTanggalPinjam);
+          console.log('Tanggal Kembali:', this.newTanggalKembali);
+          console.log('Keterangan Perubahan:', this.newKeteranganPerubahan);
 
-      // Close modal after submission
-      this.closeAddDataModal();
+          this.closeAddDataModal();
+          Swal.fire('Berhasil!', 'Data telah ditambahkan.', 'success');
+        }
+      });
     },
   },
   mounted() {

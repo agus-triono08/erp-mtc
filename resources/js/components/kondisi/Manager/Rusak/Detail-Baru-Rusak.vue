@@ -92,6 +92,7 @@
                 <th>Kondisi</th>
                 <th>Status</th>
                 <th>Alasan Penolakan</th>
+                <th>Catatan</th>
                 <th>Aksi</th>
               </tr>
             </thead>
@@ -125,6 +126,7 @@
                     </div>
                 </td>
                 <td>{{ item.alasanPenolakan }}</td>
+                <td>{{ item.catatan }}</td>
                 <td>
                   <div class="dropdown text-center" v-if="item.status === 'Menunggu Persetujuan Atasan'">
                     <button
@@ -309,7 +311,8 @@ export default {
         pic: '',
         detail: '',
         kondisi: '',
-        alasanPenolakan: ''
+        alasanPenolakan: '',
+        catatan: '',
       },
       aktivitasList: [
         { tanggal: '2025-02-01', waktu_mulai: '08:00', waktu_selesai: '12:00', pic: 'Jane Doe', detail: 'Contoh detail 1', kondisi: 'Rusak', status: 'Menunggu Persetujuan Atasan' },      
@@ -324,6 +327,7 @@ export default {
       showTolakModal: false,
       tolakIndex: null,
       alasanPenolakan: '',
+      catatan: '',
     }
   },
   computed: {
@@ -436,9 +440,33 @@ export default {
       // Implement debounce logic for search
       this.updatePaginatedData();
     },
+    // terimaAktivitas(index) {
+    //   this.aktivitasList[index].status = 'Diterima';
+    //   this.aktivitasList[index].kondisi = 'Musnah';
+    // },
     terimaAktivitas(index) {
-      this.aktivitasList[index].status = 'Diterima';
-      this.aktivitasList[index].kondisi = 'Musnah';
+      Swal.fire({
+        title: 'Konfirmasi',
+        text: 'Apakah Anda yakin ingin menerima aktivitas ini?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, terima!',
+        cancelButtonText: 'Tidak, batalkan!',
+        input: 'textarea',
+        inputPlaceholder: 'Masukkan catatan',
+        inputValidator: (value) => {
+          if (!value) {
+            return 'Harap masukkan catatan!'
+          }
+        }
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.aktivitasList[index].status = 'Diterima';
+          this.aktivitasList[index].kondisi = 'Musnah';
+          this.aktivitasList[index].catatan = result.value;
+          Swal.fire('Berhasil!', 'Aktivitas telah diterima.', 'success');
+        }
+      });
     },
     tolakAktivitas(index) {
       this.showTolakModal = true;

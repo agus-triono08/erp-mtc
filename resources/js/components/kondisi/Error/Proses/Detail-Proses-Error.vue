@@ -131,7 +131,7 @@
       </div>                  
     </div>    
     <!-- Modal -->
-    <div class="modal fade show" id="modalAktivitas" tabindex="-1" role="dialog" aria-labelledby="modalAktivitasLabel" v-if="showModal">
+    <div class="modal fade show" id="modalAktivitas" tabindex="-1" role="dialog" aria-labelledby="modalAktivitasLabel" v-if="showModal" style="overflow-y: auto;">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -176,10 +176,19 @@
                   <option value="Error">Error</option>
                 </select>
               </div>
+              <div class="form-group" v-if="aktivitas.kondisi === 'Rusak'">
+                <label for="layout" class="text-black-10"><b>Layout</b></label>
+                <select class="form-control" id="layout" v-model="aktivitas.layout">
+                  <option value="">Pilih Layout</option>
+                  <option value="Layout 1">Layout 1</option>
+                  <option value="Layout 2">Layout 2</option>
+                  <option value="Layout 3">Layout 3</option>
+                </select>
+              </div>
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" @click="showModal = false">Batal</button>
+            <button type="button" class="btn btn-danger" @click="showModal = false">Batal</button>
             <button type="button" class="btn btn-primary" @click="addAktivitas">Simpan</button>
           </div>
         </div>
@@ -232,10 +241,11 @@ export default {
         waktu_selesai: '',
         pic: '',
         detail: '',
-        kondisi: ''
+        kondisi: '',
+        layout: '',
       },
       aktivitasList: [
-        { tanggal: '2025-02-01', waktu_mulai: '08:00', waktu_selesai: '12:00', pic: 'Jane Doe', detail: 'Contoh detail 1', kondisi: 'Error' },      
+        { tanggal: '2025-02-01', waktu_mulai: '08:00', waktu_selesai: '12:00', pic: 'Jane Doe', detail: 'Contoh detail 1', kondisi: 'Error', layout: ''  },      
       ],
       data: [
         { no_seri: '1122wscj121', nama: 'Clamp', layout: 'E7', tgl: '2025-02-01', kondisi: 'Error', detail: 'Sensor tidak berfungsi', pic: 'John Doe', tgl_selesai: '2025-02-05', status: 'Proses' },        
@@ -292,7 +302,11 @@ export default {
     }
   },
   methods: {
-    addAktivitas() {      
+    addAktivitas() {    
+      if (this.aktivitas.kondisi === 'Rusak' && !this.aktivitas.layout) {
+        Swal.fire('Error', 'Layout harus diisi jika status adalah "Rusak"', 'error');
+        return;
+      }  
       this.aktivitasList.push({ ...this.aktivitas });
       this.aktivitas.tanggal = '';
       this.aktivitas.waktu_mulai = '';

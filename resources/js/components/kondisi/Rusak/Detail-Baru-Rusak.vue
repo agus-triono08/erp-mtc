@@ -92,6 +92,7 @@
                 <th>Kondisi</th>
                 <th>Status</th>
                 <th>Alasan Penolakan</th>
+                <th>Catatan</th>
               </tr>
             </thead>
             <tbody>
@@ -124,6 +125,7 @@
                     </div>
                 </td>
                 <td>{{ item.alasanPenolakan }}</td>
+                <td>{{ item.catatan }}</td>
               </tr>
             </tbody>
           </table>

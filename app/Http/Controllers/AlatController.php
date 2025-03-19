@@ -184,6 +184,16 @@ class AlatController extends Controller
             'stok' => 1,
             'status' => 'OK'
         ],
+        [
+            'id' => 13,
+            'no_seri_alat' => 'B001',
+            'kode_alat' => '2-B1-B0-1-02',
+            'id_layout' => 1,
+            'tanggal_masuk' => '2025-01-01',
+            'harga' => 1800000,
+            'stok' => 1,
+            'status' => 'OK'
+        ],
     ];
 
     //Data dummy untuk peminjaman alat

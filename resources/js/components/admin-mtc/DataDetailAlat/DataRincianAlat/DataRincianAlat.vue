@@ -120,7 +120,12 @@
               <td class="text-center">{{ noseri.tanggal_masuk }} <br>
                 <small style="color: #444;"><i class="fas fa-clock"></i> {{ durasiData[index] !== '-' ? durasiData[index] + ' Hari' : '-' }}</small>
               </td>
-              <td>{{ formatRupiah(noseri.harga) }}</td>
+              <td>{{ formatRupiah(noseri.harga) }} <br>
+                <small v-if="noseri.kode_alat && noseri.kode_alat.startsWith('2-')">                  
+                  <!-- {{ formatRupiah(getNilaiBuku(noseri)) }} -->
+                  <span :style="{ color: getNilaiBuku(noseri) === 'Sudah Tidak Bernilai' ? 'red' : '' }">Depresiasi: {{ getNilaiBuku(noseri) }}</span>
+                </small>
+              </td>
               <td 
                 class="text-center status-pill parent-element"
                 style="margin-top: 20px;"
@@ -313,6 +318,64 @@ export default {
     formatRupiah(harga) {
       return harga ? new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(harga) : 'Rp -';
     },
+    depresiasiMesin(noseri) {
+      if (noseri.kode_alat && noseri.kode_alat.startsWith('2-')) {
+        const harga = noseri.harga;
+        const depresiasi = harga / (8 * 12);
+        return `Rp ${this.formatRupiah(depresiasi)}`;
+      } else {
+        return '-';
+      }
+    },
+    // getNilaiBuku(noseri) {
+    //   if (noseri.kode_alat && noseri.kode_alat.startsWith('2-')) {
+    //     const harga = noseri.harga;
+    //     const tanggalMasuk = new Date(noseri.tanggal_masuk);
+    //     const tanggalSekarang = new Date();
+    //     const bulanMasuk = tanggalMasuk.getMonth();
+    //     const bulanSekarang = tanggalSekarang.getMonth();
+    //     const tahunMasuk = tanggalMasuk.getFullYear();
+    //     const tahunSekarang = tanggalSekarang.getFullYear();
+    //     const depresiasi = harga / (8 * 12);
+    //     let nilaiBuku = harga;
+
+    //     if (tahunSekarang > tahunMasuk) {
+    //       nilaiBuku -= depresiasi * (bulanSekarang + (tahunSekarang - tahunMasuk - 1) * 12);
+    //     } else if (bulanSekarang > bulanMasuk) {
+    //       nilaiBuku -= depresiasi * (bulanSekarang - bulanMasuk);
+    //     }
+
+    //     return nilaiBuku;
+    //   } else {
+    //     return noseri.harga;
+    //   }
+    // },
+    getNilaiBuku(noseri) {
+      if (noseri.kode_alat && noseri.kode_alat.startsWith('2-')) {
+        const harga = noseri.harga;
+        const tanggalMasuk = new Date(noseri.tanggal_masuk);
+        const tanggalSekarang = new Date();
+        const bulanMasuk = tanggalMasuk.getMonth();
+        const bulanSekarang = tanggalSekarang.getMonth();
+        const tahunMasuk = tanggalMasuk.getFullYear();
+        const tahunSekarang = tanggalSekarang.getFullYear();
+        const depresiasi = harga / (8 * 12);
+        let nilaiBuku = harga;
+
+        const tahunBerlalu = tahunSekarang - tahunMasuk;
+        const bulanBerlalu = (tahunSekarang - tahunMasuk) * 12 + bulanSekarang - bulanMasuk;
+
+        nilaiBuku -= depresiasi * bulanBerlalu;
+
+        if (nilaiBuku <= 0) {
+          return 'Sudah Tidak Bernilai';
+        } else {
+          return `${this.formatRupiah(nilaiBuku)}`;
+        }
+      } else {
+        return noseri.harga;
+      }
+    },
     downloadExcel() {
       if (this.filteredData.length === 0) {
         alert("Tidak ada data yang dapat di download");
@@ -325,7 +388,8 @@ export default {
         NoSeri: item.no_seri_alat,
         Layout: item?.layout?.nama_lokasi,
         TanggalMasuk: item.tanggal_masuk,
-        Harga: item.harga,
+        Harga: `${this.formatRupiah(item.harga)}`,
+        Depresiasi: this.getNilaiBuku(item),
         Kondisi: item.status,
       }));
 

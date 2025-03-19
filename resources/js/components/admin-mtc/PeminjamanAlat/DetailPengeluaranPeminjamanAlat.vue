@@ -77,7 +77,7 @@
             v-if="selectedItems.length > 0 && !isStatusUpdated" 
             class="btn btn-primary m-3" 
             @click="updateStatusToMenungguDiambil">
-            Siap Di Ambil
+            Menunggu Diambil
           </button>
           <div class="search-wrapper">
             <div class="input-group">
@@ -141,7 +141,7 @@
                       <i class="fas fa-ellipsis-v" style="color: #000;"></i>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">                
-                      <a class="dropdown-item" @click="setStatus(peminjaman, 'menunggu diambil')">
+                      <a class="dropdown-item" @click="setStatus(peminjaman, 'Menunggu Diambil')">
                         <i class="fas fa-clock text-info"></i> Menunggu Diambil
                       </a>
                       <a class="dropdown-item" @click="openRejectModal(peminjaman)">
@@ -203,6 +203,7 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2';
 export default {
   props: {
     noPinjam: String,
@@ -309,19 +310,55 @@ export default {
         this.selectedItems = this.filteredData.map(item => item.id);
       }
     },
-    updateStatusToMenungguDiambil() {
-      const selectedPeminjaman = this.dataPeminjaman.filter(item => this.selectedItems.includes(item.id));
-      selectedPeminjaman.forEach(item => {
-        item.status = 'Menunggu Diambil';
-      });
+    // updateStatusToMenungguDiambil() {
+    //   const selectedPeminjaman = this.dataPeminjaman.filter(item => this.selectedItems.includes(item.id));
+    //   selectedPeminjaman.forEach(item => {
+    //     item.status = 'Menunggu Diambil';
+    //   });
 
-      this.isStatusUpdated = true;
+    //   this.isStatusUpdated = true;
+    // },
+    updateStatusToMenungguDiambil() {
+      Swal.fire({
+        title: 'Konfirmasi',
+        text: 'Apakah Anda yakin ingin mengupdate status menjadi "Menunggu Diambil"?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, update!',
+        cancelButtonText: 'Tidak, batalkan!',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const selectedPeminjaman = this.dataPeminjaman.filter(item => this.selectedItems.includes(item.id));
+          selectedPeminjaman.forEach(item => {
+            item.status = 'Menunggu Diambil';
+          });
+          this.isStatusUpdated = true;
+          Swal.fire('Berhasil!', 'Status telah diupdate.', 'success');
+        }
+      });
     },
+    // setStatus(peminjaman, status) {
+    //   peminjaman.status = status;
+    //   if (status === 'ditolak') {
+    //     this.openRejectModal(peminjaman);
+    //   }
+    // },
     setStatus(peminjaman, status) {
-      peminjaman.status = status;
-      if (status === 'ditolak') {
-        this.openRejectModal(peminjaman);
-      }
+      Swal.fire({
+        title: 'Konfirmasi',
+        text: `Apakah Anda yakin ingin mengupdate status menjadi "${status}"?`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, update!',
+        cancelButtonText: 'Tidak, batalkan!',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          peminjaman.status = status;
+          if (status === 'ditolak') {
+            this.openRejectModal(peminjaman);
+          }
+        }
+      });
     },
     openRejectModal(peminjaman) {
       this.currentRejectItem = peminjaman;

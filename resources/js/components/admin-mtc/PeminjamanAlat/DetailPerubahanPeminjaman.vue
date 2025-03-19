@@ -209,6 +209,7 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2';
 export default {
   props: {
     noPinjam: String,
@@ -331,19 +332,55 @@ export default {
         this.selectedItems = this.filteredData.map(item => item.id);
       }
     },
-    updateStatusToMenungguDiambil() {
-      const selectedPeminjaman = this.dataPeminjaman.filter(item => this.selectedItems.includes(item.id));
-      selectedPeminjaman.forEach(item => {
-        item.status = 'Setuju';
-      });
+    // updateStatusToMenungguDiambil() {
+    //   const selectedPeminjaman = this.dataPeminjaman.filter(item => this.selectedItems.includes(item.id));
+    //   selectedPeminjaman.forEach(item => {
+    //     item.status = 'Setuju';
+    //   });
 
-      this.isStatusUpdated = true;
+    //   this.isStatusUpdated = true;
+    // },
+    updateStatusToMenungguDiambil() {
+      Swal.fire({
+        title: 'Konfirmasi',
+        text: 'Apakah Anda yakin ingin mengupdate status menjadi "Setuju"?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, update!',
+        cancelButtonText: 'Tidak, batalkan!',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const selectedPeminjaman = this.dataPeminjaman.filter(item => this.selectedItems.includes(item.id));
+          selectedPeminjaman.forEach(item => {
+            item.status = 'Setuju';
+          });
+          this.isStatusUpdated = true;
+          Swal.fire('Berhasil!', 'Status telah diupdate.', 'success');
+        }
+      });
     },
+    // setStatus(peminjaman, status) {
+    //   peminjaman.status = status;
+    //   if (status === 'Ditolak') {
+    //     this.openRejectModal(peminjaman);
+    //   }
+    // },
     setStatus(peminjaman, status) {
-      peminjaman.status = status;
-      if (status === 'Ditolak') {
-        this.openRejectModal(peminjaman);
-      }
+      Swal.fire({
+        title: 'Konfirmasi',
+        text: `Apakah Anda yakin ingin mengupdate status menjadi "${status}"?`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, update!',
+        cancelButtonText: 'Tidak, batalkan!',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          peminjaman.status = status;
+          if (status === 'ditolak') {
+            this.openRejectModal(peminjaman);
+          }
+        }
+      });
     },
     openRejectModal(peminjaman) {
       this.currentRejectItem = peminjaman;

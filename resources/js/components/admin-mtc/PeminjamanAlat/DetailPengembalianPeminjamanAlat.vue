@@ -242,6 +242,7 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2';
 export default {
   props: {
     noPinjam: String,
@@ -431,18 +432,43 @@ export default {
     closeTestModal() {
       this.isTestModalVisible = false;
     },
-    // Submit the test result
+    // // Submit the test result
+    // submitTestResult() {
+    //   if (!this.testDate || !this.testResult) {
+    //     alert('Tanggal pengujian dan hasil pengujian harus diisi.');
+    //     return;
+    //   }
+
+    //   this.currentTestItem.tanggal_pengujian = this.testDate;
+    //   this.currentTestItem.hasil_pengujian = this.testResult;
+    //   this.currentTestItem.keterangan_pengujian = this.testNotes;
+
+    //   this.closeTestModal();
+    // },
     submitTestResult() {
-      if (!this.testDate || !this.testResult) {
-        alert('Tanggal pengujian dan hasil pengujian harus diisi.');
-        return;
-      }
+      Swal.fire({
+        title: 'Konfirmasi',
+        text: 'Apakah Anda yakin ingin mengirim hasil pengujian?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, kirim!',
+        cancelButtonText: 'Tidak, batalkan!',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          if (!this.testDate || !this.testResult) {
+            alert('Tanggal pengujian dan hasil pengujian harus diisi.');
+            return;
+          }
 
-      this.currentTestItem.tanggal_pengujian = this.testDate;
-      this.currentTestItem.hasil_pengujian = this.testResult;
-      this.currentTestItem.keterangan_pengujian = this.testNotes;
+          this.currentTestItem.tanggal_pengujian = this.testDate;
+          this.currentTestItem.hasil_pengujian = this.testResult;
+          this.currentTestItem.keterangan_pengujian = this.testNotes;
+          this.currentTestItem.status = 'Selesai';
 
-      this.closeTestModal();
+          this.closeTestModal();
+          Swal.fire('Berhasil!', 'Hasil pengujian telah dikirim.', 'success');
+        }
+      });
     },
   },
   mounted() {
