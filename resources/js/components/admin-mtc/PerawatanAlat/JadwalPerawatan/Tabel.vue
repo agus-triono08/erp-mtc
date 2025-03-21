@@ -19,7 +19,7 @@
         <router-link id="pills-home-tab" data-toggle="pill" data-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true" class="nav-link" :class="{ active: $route.name === 'tabel-jadwal-perawatan' }" :to="{ name: 'tabel-jadwal-perawatan' }">Tabel</router-link>
       </li>
       <li role="presentation" class="nav-item">
-        <router-link id="pills-profile-tab" data-toggle="pill" data-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" class="nav-link" :class="{ active: $route.name === 'kalender-perawatan' }" :to="{ name: 'kalender-perawatan' }">Kalender</router-link>
+        <router-link id="pills-profile-tab" data-toggle="pill" data-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" class="nav-link" :class="{ active: $route.name === 'kalender-perawatan-bulan' }" :to="{ name: 'kalender-perawatan-bulan' }">Kalender</router-link>
       </li>
     </ul>
     <div class="row mb-2 mt-2 align-items-center">
@@ -110,8 +110,12 @@
             <th :colspan="last_date">Tanggal</th>
           </tr>
           <tr>
-            <th v-for="i in Array.from(Array(last_date).keys())" :key="i" style="color: #000;">
+            <th v-for="i in Array.from(Array(last_date).keys())" :key="i" style="color: #000;" class="text-center">
               {{ i + 1 }}
+              <!-- Menampilkan nama PIC jika ada -->
+              <!-- <div v-if="picPerTanggal[i + 1]" style="font-size: 12px; color: #000;">
+                {{ picPerTanggal[i + 1] }}
+              </div> -->
             </th>
           </tr>
         </thead>
@@ -153,6 +157,9 @@
               </div>
             </td>
             <td v-for="i in Array.from(Array(last_date).keys())" :key="i" :style="{ backgroundColor: getBackgroundColor(item, i + 1) }">
+              <div v-if="picPerTanggal[item.id] && picPerTanggal[item.id][i + 1]" style="font-size: 12px; color: #000;">
+                {{ picPerTanggal[item.id][i + 1] }}
+              </div>
             </td>
           </tr>
         </tbody>
@@ -321,6 +328,8 @@
 
 <script>
 import vSelect from 'vue-select';
+import Swal from 'sweetalert2';
+import { formatDate } from '@fullcalendar/core';
 
 export default {
   components: {
@@ -397,6 +406,7 @@ export default {
       isModalSelesaiOpen: false,
       modalTitle: 'Tambah Jadwal Perawatan',
       isLoading: false,
+      picPerTanggal: {},
     }
   },
   computed: {
@@ -458,7 +468,7 @@ export default {
 
       // Jika tidak ada kondisi yang memenuhi, statusnya -
       return {
-        status: '-',
+        status: 'Sesuai',
       };
     } else {
       return {
@@ -703,7 +713,7 @@ export default {
       // }
       
       // Highlight tanggal perawatan jika berada dalam rentang tanggal start dan end
-      if (item.tanggal_perawatan && item.tanggal_start && item.tanggal_end) {
+      if (this.isDate(item.tanggal_perawatan && item.tanggal_start && item.tanggal_end)) {
         const tanggalPerawatan = new Date(item.tanggal_perawatan).getDate();
         const startDay = new Date(item.tanggal_start).getDate();
         const endDay = new Date(item.tanggal_end).getDate();
@@ -711,6 +721,11 @@ export default {
         if (tanggalPerawatan >= startDay && tanggalPerawatan <= endDay && tanggalPerawatan === day) {
           return 'yellow';
         }
+      }
+
+      // Highlight start date (tanggal_start)
+      if (item.tanggal_start && day === new Date(item.tanggal_start).getDate()) {
+        return 'yellow';
       }
       
       // Highlight weekends
@@ -812,7 +827,9 @@ export default {
         this.getOnlyTanggal[index] = tanggalSekarang.getDate();
         // console.log(this.getOnlyTanggal[index]);
         const tanggalEnd = tanggalSekarang.toISOString().split('T')[0];
-        this.jadwalPerawatan[index].tanggal_end = tanggalEnd;
+        const waktuSekarang = tanggalSekarang.toTimeString().split(' ')[0];
+        const tanggalWaktuEnd = `${tanggalEnd} ${waktuSekarang}`;
+        this.jadwalPerawatan[index].tanggal_end = tanggalWaktuEnd;
         this.jadwalPerawatan[index].kondisi = this.kondisi;
         this.jadwalPerawatan[index].status = 'Selesai';
       }
@@ -844,36 +861,218 @@ export default {
     //   if (index !== -1) {
     //     this.jadwalPerawatan[index].tanggal_perawatan = this.tanggal_perawatan;
     //     this.jadwalPerawatan[index].tanggal_start = this.tanggal_start;
+    //     const tanggalSekarang = new Date();
+    //     const tanggalStart = tanggalSekarang.toISOString().split('T')[0];
+    //     this.jadwalPerawatan[index].tanggal_start = tanggalStart;        
     //     this.jadwalPerawatan[index].waktu_mulai = this.waktu_mulai;
     //     this.jadwalPerawatan[index].waktu_selesai = this.waktu_selesai;
     //     this.jadwalPerawatan[index].pic = this.pic;
     //     this.jadwalPerawatan[index].detail = this.detail;
     //     this.jadwalPerawatan[index].kondisi = this.kondisi;
     //     this.jadwalPerawatan[index].status = 'Pelaksanaan';
-    //     // Update tanggal pengerjaan pada tabel
-    //     const tanggalPerawatan = this.tanggal_perawatan.split('-');
-    //     const tanggal = tanggalPerawatan[2];
-    //     this.jadwalPerawatan[index].tanggal_perawatan = [parseInt(tanggal)];
+
+    //     // Menyimpan PIC untuk setiap tanggal perawatan
+    //     if (this.tanggal_perawatan) {
+    //       const tanggal = parseInt(this.tanggal_perawatan, 10);  // Menyimpan PIC untuk tanggal tertentu
+    //       this.picPerTanggal[tanggal] = this.jadwalPerawatan.pic;;  // Menyimpan nama PIC berdasarkan tanggal
+    //       console.log(this.picPerTanggal);
+    //     }
+    //   }
+    //   this.closeModalEdit();
+    // },
+    // simpanJadwalPerawatan() {
+    //   const index = this.jadwalPerawatan.findIndex((item) => item.id === this.id);
+    //   if (index !== -1) {
+    //     // Update the jadwalPerawatan object
+    //     this.jadwalPerawatan[index].tanggal_perawatan = this.tanggal_perawatan;
+    //     this.jadwalPerawatan[index].tanggal_start = this.tanggal_start;
+
+    //     const tanggalSekarang = new Date();
+    //     const tanggalStart = tanggalSekarang.toISOString().split('T')[0];
+    //     this.jadwalPerawatan[index].tanggal_start = tanggalStart;
+    //     console.log(tanggalStart);
+    //     const hari = tanggalStart.split('-')[2];
+    //     console.log(hari);
+    //     this.jadwalPerawatan[index].waktu_mulai = this.waktu_mulai;
+    //     this.jadwalPerawatan[index].waktu_selesai = this.waktu_selesai;
+    //     this.jadwalPerawatan[index].pic = this.pic;
+    //     this.jadwalPerawatan[index].detail = this.detail;
+    //     this.jadwalPerawatan[index].kondisi = this.kondisi;
+    //     this.jadwalPerawatan[index].status = 'Pelaksanaan';
+
+    //     // Menyimpan PIC untuk setiap tanggal perawatan
+    //     // if (this.tanggal_perawatan) {
+    //     //   const tanggal = parseInt(this.tanggal_perawatan, 10);  // Menyimpan PIC untuk tanggal tertentu
+    //     //   this.picPerTanggal[tanggal] = this.jadwalPerawatan.pic; // Menyimpan nama PIC berdasarkan tanggal
+    //     //   console.log(this.picPerTanggal);
+    //     // }
+
+    //     // Also store PIC for tanggal_start
+    //     if (hari) {
+    //       const startTanggal = parseInt(hari, 10);  // Menyimpan PIC untuk tanggal_start
+    //       if (!this.picPerTanggal[this.id]) {
+    //         this.picPerTanggal[this.id] = {}; // Pastikan ada objek untuk setiap id
+    //       }
+    //       this.picPerTanggal[this.id][startTanggal] = this.jadwalPerawatan.pic;  // Menyimpan nama PIC berdasarkan tanggal_start dan id
+    //       console.log("PIC for tanggal_start: ", this.picPerTanggal);
+    //     }
     //   }
     //   this.closeModalEdit();
     // },
     simpanJadwalPerawatan() {
       const index = this.jadwalPerawatan.findIndex((item) => item.id === this.id);
+      
       if (index !== -1) {
-        this.jadwalPerawatan[index].tanggal_perawatan = this.tanggal_perawatan;
-        this.jadwalPerawatan[index].tanggal_start = this.tanggal_start;
-        const tanggalSekarang = new Date();
-        const tanggalStart = tanggalSekarang.toISOString().split('T')[0];
-        this.jadwalPerawatan[index].tanggal_start = tanggalStart;        
-        this.jadwalPerawatan[index].waktu_mulai = this.waktu_mulai;
-        this.jadwalPerawatan[index].waktu_selesai = this.waktu_selesai;
-        this.jadwalPerawatan[index].pic = this.pic;
-        this.jadwalPerawatan[index].detail = this.detail;
-        this.jadwalPerawatan[index].kondisi = this.kondisi;
-        this.jadwalPerawatan[index].status = 'Pelaksanaan';
+        // Menampilkan SweetAlert dengan ikon peringatan dan tombol konfirmasi/pembatalan
+        Swal.fire({
+          title: 'Konfirmasi Pengiriman',
+          text: 'Apakah kamu yakin ingin mengirim jadwal perawatan ini?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Ya, kirim!',
+          cancelButtonText: 'Tidak, batalkan!',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Proses jika pengguna memilih "Ya, kirim!"
+            
+            // Mendapatkan tanggal dan waktu saat ini
+            const moment = require('moment-timezone');
+            const tanggalSekarang = moment();
+            const waktuGmt7 = tanggalSekarang.tz('Asia/Jakarta').format('HH:mm:ss');
+
+            const tanggal = tanggalSekarang.format('YYYY-MM-DD');
+            const tanggalWaktu = `${tanggal} ${waktuGmt7}`;
+            
+            // Update the jadwalPerawatan object dengan tanggal dan waktu
+            this.jadwalPerawatan[index].tanggal_perawatan = this.tanggal_perawatan;
+            this.jadwalPerawatan[index].tanggal_start = tanggalWaktu;
+            this.jadwalPerawatan[index].waktu_mulai = this.waktu_mulai;
+            this.jadwalPerawatan[index].waktu_selesai = this.waktu_selesai;
+            this.jadwalPerawatan[index].pic = this.pic;
+            this.jadwalPerawatan[index].detail = this.detail;
+            this.jadwalPerawatan[index].kondisi = this.kondisi;
+            this.jadwalPerawatan[index].status = 'Pelaksanaan';
+
+            // Menyimpan PIC untuk setiap tanggal perawatan
+            const hari = tanggal.split('-')[2];  // Mengambil hari dari tanggal_start
+            if (hari) {
+              const startTanggal = parseInt(hari, 10);  // Menyimpan PIC untuk tanggal_start
+              if (!this.picPerTanggal[this.id]) {
+                this.picPerTanggal[this.id] = {}; // Pastikan ada objek untuk setiap id
+              }
+              this.picPerTanggal[this.id][startTanggal] = this.jadwalPerawatan.pic;  // Menyimpan nama PIC berdasarkan tanggal_start dan id
+            }
+
+            // Menampilkan SweetAlert sukses setelah data disimpan
+            Swal.fire({
+              title: 'Berhasil!',
+              text: 'Jadwal perawatan berhasil dikirim.',
+              icon: 'success',
+              confirmButtonText: 'OK'
+            });
+          } else {
+            // Jika pengguna memilih "Tidak, batalkan!" maka proses dibatalkan dan tidak dilanjutkan
+            Swal.fire({
+              title: 'Dibatalkan',
+              text: 'Pengiriman jadwal perawatan dibatalkan.',
+              icon: 'info',
+              confirmButtonText: 'OK'
+            });
+            return; // Membatalkan proses lebih lanjut
+          }
+        });
+      } else {
+        // Menampilkan SweetAlert jika tidak ditemukan
+        Swal.fire({
+          title: 'Gagal!',
+          text: 'Jadwal perawatan tidak ditemukan.',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
       }
+
       this.closeModalEdit();
     },
+    // simpanJadwalPerawatan() {
+    //   const index = this.jadwalPerawatan.findIndex((item) => item.id === this.id);
+    //   if (index !== -1) {
+    //     // Menampilkan SweetAlert dengan ikon peringatan dan tombol konfirmasi/pembatalan
+    //     Swal.fire({
+    //       title: 'Konfirmasi Pengiriman',
+    //       text: 'Apakah kamu yakin ingin mengirim jadwal perawatan ini?',
+    //       icon: 'warning',
+    //       showCancelButton: true,
+    //       confirmButtonText: 'Ya, kirim!',
+    //       cancelButtonText: 'Tidak, batalkan!',
+    //     }).then((result) => {
+    //       if (result.isConfirmed) {
+    //         // Proses jika pengguna memilih "Ya, kirim!"
+    //         // Update the jadwalPerawatan object
+    //         this.jadwalPerawatan[index].tanggal_perawatan = this.tanggal_perawatan;
+    //         this.jadwalPerawatan[index].tanggal_start = this.tanggal_start;
+
+    //         const tanggalSekarang = new Date();
+    //         const tanggalStart = tanggalSekarang.toISOString().split('T')[0];
+    //         const Tanggal = tanggalStart[0];
+    //         const Waktu = tanggalStart[1].split('.')[0];
+    //         const tanggalWaktu = `${Tanggal} ${Waktu}`;
+    //         console.log(tanggalWaktu); 
+    //         this.jadwalPerawatan[index].tanggal_start = tanggalStart;            
+    //         const hari = tanggalStart.split('-')[2];            
+    //         this.jadwalPerawatan[index].waktu_mulai = this.waktu_mulai;
+    //         this.jadwalPerawatan[index].waktu_selesai = this.waktu_selesai;
+    //         this.jadwalPerawatan[index].pic = this.pic;
+    //         this.jadwalPerawatan[index].detail = this.detail;
+    //         this.jadwalPerawatan[index].kondisi = this.kondisi;
+    //         this.jadwalPerawatan[index].status = 'Pelaksanaan';
+
+    //         // Menyimpan PIC untuk setiap tanggal perawatan
+    //         // if (this.tanggal_perawatan) {
+    //         //   const tanggal = parseInt(this.tanggal_perawatan, 10);  // Menyimpan PIC untuk tanggal tertentu
+    //         //   this.picPerTanggal[tanggal] = this.jadwalPerawatan.pic; // Menyimpan nama PIC berdasarkan tanggal
+    //         //   console.log(this.picPerTanggal);
+    //         // }
+
+    //         // Also store PIC for tanggal_start
+    //         if (hari) {
+    //           const startTanggal = parseInt(hari, 10);  // Menyimpan PIC untuk tanggal_start
+    //           if (!this.picPerTanggal[this.id]) {
+    //             this.picPerTanggal[this.id] = {}; // Pastikan ada objek untuk setiap id
+    //           }
+    //           this.picPerTanggal[this.id][startTanggal] = this.jadwalPerawatan.pic;  // Menyimpan nama PIC berdasarkan tanggal_start dan id
+    //           // console.log("PIC for tanggal_start: ", this.picPerTanggal);
+    //         }
+
+    //         // Menampilkan SweetAlert sukses setelah data disimpan
+    //         Swal.fire({
+    //           title: 'Berhasil!',
+    //           text: 'Jadwal perawatan berhasil dikirim.',
+    //           icon: 'success',
+    //           confirmButtonText: 'OK'
+    //         });
+    //       } else {
+    //         // Jika pengguna memilih "Tidak, batalkan!" maka proses dibatalkan dan tidak dilanjutkan
+    //         Swal.fire({
+    //           title: 'Dibatalkan',
+    //           text: 'Pengiriman jadwal perawatan dibatalkan.',
+    //           icon: 'info',
+    //           confirmButtonText: 'OK'
+    //         });
+    //         return; // Membatalkan proses lebih lanjut
+    //       }
+    //     });
+    //   } else {
+    //     // Menampilkan SweetAlert jika tidak ditemukan
+    //     Swal.fire({
+    //       title: 'Gagal!',
+    //       text: 'Jadwal perawatan tidak ditemukan.',
+    //       icon: 'error',
+    //       confirmButtonText: 'OK'
+    //     });
+    //   }
+
+    //   this.closeModalEdit();
+    // },
     editJadwal(item) {
       this.id = item.id;
       this.tanggal_perawatan = item.tanggal_perawatan;
@@ -926,12 +1125,37 @@ export default {
     },
   },
   filters: {
-    formatDate(date) {
+    // Filter untuk format tanggal
+    // formatDate(date) {
+    //   if (date) {
+    //     return `${date.toLocaleDateString('id-ID')}`;  // Format: dd-mm-yyyy        
+    //   }
+    //   return '-';
+    // },
+    formatDate(date, options = {}) {
       if (date) {
-        return date.toLocaleDateString('id-ID');
+        // Menambahkan default options jika tidak ada
+        const defaultOptions = {
+          month: 'numeric',
+          year: 'numeric',
+          day: 'numeric',
+          timeZoneName: 'short',
+          timeZone: 'Asia/Jakarta',
+          locale: 'id',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: false,
+        };
+
+        const finalOptions = { ...defaultOptions, ...options };
+        
+        // Menggunakan Intl.DateTimeFormat dengan opsi yang telah disesuaikan
+        const formatter = new Intl.DateTimeFormat(finalOptions.locale, finalOptions);
+        return formatter.format(new Date(date));
       }
       return '-';
-    },
+    }
   },
   mounted() {
     this.pages = Array.from({ length: Math.ceil(this.jadwalPerawatan.length / this.perPage) }, (_, i) => i + 1);

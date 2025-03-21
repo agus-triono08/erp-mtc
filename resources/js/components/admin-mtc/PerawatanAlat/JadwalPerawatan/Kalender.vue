@@ -8,167 +8,150 @@
     </div>
     <ul id="pills-tab" role="tablist" class="nav nav-pills mb-3" style="margin-top: 1rem !important;">
       <li role="presentation" class="nav-item">
-        <router-link id="pills-home-tab" data-toggle="pill" data-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="false" class="nav-link" :class="{ active: $route.name === 'tabel-jadwal-perawatan' }" :to="{ name: 'tabel-jadwal-perawatan' }">Tabel</router-link>
+        <router-link id="pills-home-tab" data-toggle="pill" data-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true" class="nav-link" :class="{ active: $route.name === 'tabel-jadwal-perawatan' }" :to="{ name: 'tabel-jadwal-perawatan' }">Tabel</router-link>
       </li>
       <li role="presentation" class="nav-item">
-        <router-link id="pills-profile-tab" data-toggle="pill" data-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="true" class="nav-link" :class="{ active: $route.name === 'kalender-perawatan' }" :to="{ name: 'kalender-perawatan' }">Kalender</router-link>
+        <router-link id="pills-profile-tab" data-toggle="pill" data-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false" class="nav-link" :class="{ active: $route.name === 'kalender-perawatan' }" :to="{ name: 'kalender-perawatan' }">Kalender</router-link>
       </li>
     </ul>
-    <div class="row align-items-center justify-content-end mr-3">
-      <button class="btn btn-sm btn-outline-primary mr-2" @click="exportToExcel"><i class="bi bi-filetype-exe"></i>Export</button>
+    <div class="row align-items-center justify-content-end mr-5 mb-3">
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <router-link class="nav-link" id="year-tab" data-toggle="tab" role="tab" aria-controls="year" aria-selected="true" :class="{active: $route.name === 'kalender-perawatan'}" :to="{name: 'kalender-perawatan'}">Year</router-link>
+        </li>
+        <li class="nav-item" role="presentation">
+          <router-link class="nav-link" id="mount-tab" data-toggle="tab" role="tab" aria-controls="mount" aria-selected="false" :class="{active: $route.name === 'kalender-perawatan-bulan'}" :to="{name: 'kalender-perawatan-bulan'}">Mount</router-link>
+        </li>
+      </ul>
+    </div>
+    <div class="row mb-2 mt-2 align-items-center justify-content-center" id="head">      
+        <h5 style="color: #000;"><b>{{ currentYear }}</b></h5>      
+    </div>
+    <!-- Export -->
+    <div class="row align-items-center justify-content-end mr-5 mb-3">         
+      <button class="btn btn-sm btn-outline-primary mr-2" @click="printCalendar"><i class="bi bi-printer"></i> Print</button>
+      <!-- <button class="btn btn-sm btn-outline-primary"><i class="bi bi-filetype-exe"></i>Export</button> -->
     </div>    
-    <div class="mb-5 mt-2 mr-3" id="calendar"></div>
+    <!-- Main -->
+    <div class="table table-responsive">      
+      <v-calendar
+        id="calendar-to-print"
+        :columns="$screens({ default: 1, lg: 3 })"
+        :rows="$screens({ default: 1, lg: 4 })"
+        :is-expanded="$screens({ default: true, lg: false })"
+        :from-page="{ year: 2025, month: 1 }"
+        :attributes="attrs"
+        class="m-5 align-items-center justify-content-center"
+      />
+      <v-calendar        
+        :columns="$screens({ default: 1, lg: 6 })"
+        :rows="$screens({ default: 1, lg: 2 })"
+        :is-expanded="$screens({ default: true, lg: false })"
+        :from-page="{ year: 2025, month: 1 }"
+        :attributes="attrs"
+        class="m-5 align-items-center justify-content-center"        
+      />
+    </div>
   </div>
 </template>
+
 <script>
-import { Calendar } from '@fullcalendar/core';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import listPlugin from '@fullcalendar/list';
-import * as XLSX from 'xlsx';
-// import mixins from "./mix";
+import { Calendar } from 'v-calendar';
 
-// Tambahkan kode berikut untuk mendefinisikan nama bulan Indonesia
-const locale = {
-  id: 'id',
-  firstDay: 0, // hari pertama dalam seminggu (0 = Minggu, 1 = Senin)
-  dayNames: ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'],
-  dayNamesShort: ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'],
-  monthNames: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
-  monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
-  titleFormat: { year: 'numeric', month: 'long', day: 'numeric' },
-};
-
-export default {
-  // mixins: [mixins],
+export default {  
+  name: 'MultiPaneCalendar',
+  components: {
+    VCalendar: Calendar,
+  },
   data() {
     return {
-      jadwalPerawatan: [
+      attrs: [
         {
-          id: 1,
-          no_perawatan: 'R-01',
-          nama_alat: 'Bor',
-          no_seri: 'B-01',
-          tanggal_start: new Date(new Date().getFullYear(), new Date().getMonth(), 6),
-          tanggal_end: new Date(new Date().getFullYear(), new Date().getMonth(), 10),
-          waktu_mulai: '',
-          waktu_selesai: '',
-          pic: '',
-          detail: '',
-          kondisi: '',
-          status: 'Selesai'
+          highlight: {
+            start: { fillMode: 'outline', color: 'red', contentClass: 'italic' },
+            base: { fillMode: 'light', color: 'red', contentClass: 'italic' },
+            end: { fillMode: 'outline', color: 'red', contentClass: 'italic' },
+          },
+          dates: { start: new Date(2025, 2, 17), end: new Date(2025, 2, 21) },
+          popover: {
+            label: 'Nama Alat: Mesin A, No. Seri: 123456',
+            visibility: 'focus',
+          },
         },
         {
-          id: 2,
-          no_perawatan: 'R-02',
-          nama_alat: 'Bor',
-          no_seri: 'B-02',
-          tanggal_start: new Date(new Date().getFullYear(), new Date().getMonth(), 13),
-          tanggal_end: new Date(new Date().getFullYear(), new Date().getMonth(), 15),
-          waktu_mulai: '',
-          waktu_selesai: '',
-          pic: '',
-          detail: '',
-          kondisi: '',
-          status: 'Pelaksanaan'
+          highlight: {
+            start: { fillMode: 'outline', color: 'orange', contentClass: 'italic' },
+            base: { fillMode: 'light', color: 'orange', contentClass: 'italic' },
+            end: { fillMode: 'outline', color: 'orange', contentClass: 'italic' },
+          },
+          dates: { start: new Date(2025, 2, 24), end: new Date(2025, 2, 26) },
+          popover: {
+            label: 'Nama Alat: Mesin B, No. Seri: 231342',
+            visibility: 'focus',
+          },
         },
-        {
-          id: 3,
-          no_perawatan: 'R-03',
-          nama_alat: 'Bor',
-          no_seri: 'B-03',
-          tanggal_start: new Date(new Date().getFullYear(), new Date().getMonth(), 19),
-          tanggal_end: new Date(new Date().getFullYear(), new Date().getMonth(), 25),
-          waktu_mulai: '',
-          waktu_selesai: '',
-          pic: '',
-          detail: '',
-          kondisi: '',
-          status: 'Belum Selesai'
-        },
-        {
-          id: 4,
-          no_perawatan: 'R-04',
-          nama_alat: 'Bor',
-          no_seri: 'B-04',
-          tanggal_start: new Date(new Date().getFullYear(), 11, 1),
-          tanggal_end: new Date(new Date().getFullYear(), 11, 5),
-          waktu_mulai: '',
-          waktu_selesai: '',
-          pic: '',
-          detail: '',
-          kondisi: '',
-          status: 'Belum Selesai'
-        },
-        // tambahkan data lainnya
-      ]
+      ],
     }
-  },
-  mounted() {
-    const calendarEl = document.getElementById('calendar');
-    const calendar = new Calendar(calendarEl, {
-      plugins: [dayGridPlugin, timeGridPlugin, listPlugin],
-      headerToolbar: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-      },
-      initialDate: new Date(),
-      navLinks: true, // can click day/week names to navigate views
-      editable: true,
-      dayMaxEvents: true, // allow "more" link when too many events
-      locale: 'id', // tambahkan opsi locale
-      hiddenDays: [0, 6],
-      events: this.jadwalPerawatan.map((item) => {
-        return {
-          title: `${item.nama_alat} - ${item.no_seri}`,
-          start: item.tanggal_start,
-          end: item.tanggal_end,
-          allDay: true,
-          backgroundColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
-          borderColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
-          display: 'block',
-        }
-      }),
-      select: (arg) => {
-        const tanggalPerawatan = this.jadwalPerawatan.find((item) => {
-          return (arg.start >= item.tanggal_start && arg.start <= item.tanggal_end) || (arg.end >= item.tanggal_start && arg.end <= item.tanggal_end);
-        });
-        if (tanggalPerawatan) {
-          alert('Tanggal ini sudah terblokir');
-          return false;
-        }
-      }
-    });
-    calendar.render();
   },
   methods: {
-    exportToExcel() {
-      const tahun = new Date().getFullYear();
-      const data = this.jadwalPerawatan.filter((item) => {
-        return item.tanggal_start.getFullYear() === tahun;
-      });
+    printCalendar() {
+      // Menyembunyikan elemen-elemen lain
+      const elements = document.body.children;
+      for (let i = 0; i < elements.length; i++) {
+        if (elements[i].id !== 'calendar-to-print') {
+          elements[i].style.display = true;
+        }
+      }
 
-      const worksheet = XLSX.utils.json_to_sheet(data);
-      const workbook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(workbook, worksheet, 'Jadwal Perawatan');
+      // Mencetak halaman yang hanya berisi kalender
+      window.print();
 
-      XLSX.writeFile(workbook, `Jadwal Perawatan ${tahun}.xlsx`);
+      // Setelah print, tampilkan kembali elemen-elemen yang disembunyikan
+      for (let i = 0; i < elements.length; i++) {
+        elements[i].style.display = '';
+      }
     }
   },
-}
+  computed: {
+    currentYear() {
+      const date = new Date();
+      return date.getFullYear();
+    },
+  }
+};
 </script>
 <style>
-  #calendar {
-    width: 100%;
-    height: 600px;
+@media screen {
+  #calendar-to-print {
+    display: none;
   }
-  #pills-tab .nav-link {
-    color: #000;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
   }
 
-  #pills-tab .nav-link.active {
-    background-color: #169ea8;
-    color: #fff;
+  #calendar-to-print,
+  #calendar-to-print * {
+    visibility: visible;
   }
+
+  #head, #head * {
+    visibility: visible;
+  }
+
+  #head {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%);
+  }
+
+  #calendar-to-print {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
 </style>

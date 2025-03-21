@@ -104,6 +104,7 @@
               <th class="text-center text-black-1">Tanggal Masuk</th>
               <th class="text-center text-black-1">Harga</th>
               <th class="text-center text-black-1">Kondisi</th>
+              <th class="text-center text-black-1">Barcode</th>
               <th class="text-center text-black-1">Aksi</th>
             </tr>
           </thead>
@@ -136,6 +137,7 @@
                           'status-hilang': noseri.status === 'Hilang',
                           'status-dipinjam': noseri.status === 'Dipinjam'}"
               >{{ noseri.status || '-' }}</td>
+              <td><vue-barcode :value="noseri.no_seri_alat" :options="{ width: 100, height: 50 }"></vue-barcode></td>
               <td>
                 <div class="dropdown text-center">
                   <button
@@ -154,6 +156,9 @@
                     </a>
                     <a class="dropdown-item" @click="editData(noseri.id)">
                       <i class="fas fa-edit text-primary"></i> Edit
+                    </a>
+                    <a class="dropdown-item" @click="downloadBarcode(noseri.no_seri_alat)">
+                      <i class="fas fa-download text-success"></i> Download Barcode
                     </a>
                   </div>
                 </div>
@@ -193,11 +198,16 @@
 <script>
 import axios from "axios";
 import * as XLSX from 'xlsx';  // Impor XLSX dari library yang sudah diinstal
+import VueBarcode from 'vue-barcode';
+import jsPDF from 'jspdf';
 
 export default {
   props: {
     kodeAlat: String,
     id: Number,
+  },
+  components: {
+    VueBarcode
   },
   data() {
     return {
@@ -376,6 +386,28 @@ export default {
         return noseri.harga;
       }
     },
+    downloadBarcode(noSeri) {
+      const link = document.createElement('a');
+      link.href = `https://barcode.tec-it.com/barcode.ashx?data=${noSeri}&multiplebarcodes=true&translate-esc=on&download=true`;
+      link.download = `barcode_${noSeri}.png`;
+      document.body.appendChild(link); // Menambahkan elemen 'a' ke DOM
+      setTimeout(() => {
+        link.click();
+        document.body.removeChild(link); // Menghapus elemen setelah klik
+      }, 100);
+    },
+    // downloadBarcode(noSeri) {
+    //   const link = document.createElement('a');
+    //   link.href = `https://barcode.tec-it.com/barcode.ashx?data=${noSeri}`;
+    //   link.download = `barcode_${noSeri}.png`;
+    //   link.click();
+    // },
+    // downloadBarcode(noSeri) {
+    //   const doc = new jsPDF();
+    //   const barcode = `https://barcode.tec-it.com/barcode.ashx?data=${noSeri}`;
+    //   doc.addImage(barcode, 'PNG', 10, 10, 100, 50);
+    //   doc.save(`barcode_${noSeri}.pdf`);
+    // },
     downloadExcel() {
       if (this.filteredData.length === 0) {
         alert("Tidak ada data yang dapat di download");

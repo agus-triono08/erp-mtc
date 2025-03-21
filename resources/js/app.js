@@ -124,6 +124,7 @@ const DetailSelesaiPerawatan = require('./components/admin-mtc/PerawatanAlat/Kon
 const TabelPerawatan = require('./components/admin-mtc/PerawatanAlat/JadwalPerawatan/Tabel.vue').default;
 const TabelPerencanaanPerawatan = require('./components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Tabel.vue').default;
 const KalenderPerawatan = require('./components/admin-mtc/PerawatanAlat/JadwalPerawatan/Kalender.vue').default;
+const KalenderPerawatanBulan = require('./components/admin-mtc/PerawatanAlat/JadwalPerawatan/KalenderBulan.vue').default;
 const KalenderPerencanaanPerawatan = require('./components/admin-mtc/PerawatanAlat/JadwalPerawatan/Perencanaan/Kalender.vue').default;
 const RiwayatPerawatan = require('./components/admin-mtc/PerawatanAlat/JadwalPerawatan/RiwayatPerawatan.vue').default;
 
@@ -465,9 +466,14 @@ const routes = [
         name: 'tabel-perencanaan-jadwal-perawatan',
     },
     {
-        path: '/admin-mtc/jadwal-perawatan/kalender',
+        path: '/admin-mtc/jadwal-perawatan',
         component: KalenderPerawatan,
         name: 'kalender-perawatan',
+    },
+    {
+        path: '/admin-mtc/jadwal-perawatan',
+        component: KalenderPerawatanBulan,
+        name: 'kalender-perawatan-bulan',
     },
     {
         path: '/admin-mtc/perencanaan/jadwal-perawatan/kalender',
