@@ -44,6 +44,12 @@
     <div v-if="showBelumDigunakan">
       <div class="row align-items-center justify-content-end mr-3 mt-3 mb-4">
         <!-- Tombol Download Excel di samping kiri filter -->
+        <button @click="exportSelected" class="btn btn-sm btn-outline-primary mr-1">
+          <i class="fas fa-download"></i> Export Barcode
+        </button>
+        <!-- <button class="btn btn-sm btn-outline-primary mr-2 ml-1" @click="exportAllBarcode">
+          <i class="fas fa-download text-success"></i> Download Semua Barcode
+        </button> -->
         <div>
           <button @click="downloadExcel" class="btn btn-sm btn-outline-primary mr-1">
             <i class="fas fa-file-excel"></i> Export
@@ -92,6 +98,9 @@
         <table class="table table-border no-border table-custom text-center" style="overflow-x: auto;">
           <thead>
             <tr class="bg-table">
+              <th class="text-center text-black-1 tr-center">
+                <input type="checkbox" @change="updateSelectAll" @click="selectAll" v-model="selectAllCheckbox">
+              </th>
               <th class="text-center text-black-1 tr-center">#</th>                    
               <th class="text-center text-black-1" style="cursor: pointer; position: relative; vertical-align: middle;">
                 No. Seri Alat
@@ -113,8 +122,11 @@
               <td colspan="5" class="text-center">Tidak Ada Data</td>
             </tr>
           </tbody>
-          <tbody v-for="(noseri, index) in filteredData" :key="noseri.id">
+          <tbody v-for="(noseri, index) in filteredData" :key="noseri.id" :ref="'barcode' + index">
             <tr class="text-center">
+              <td class="text-center">
+                <input type="checkbox" @change="updateSelectedItems" v-model="selectedItems" :value="noseri.id">
+              </td>
               <td class="text-center">{{ (currentPage - 1) * rowsPerPage + index + 1 }}</td>
               <td class="text-center">{{ noseri.no_seri_alat || '-' }}</td>
               <td class="text-center">{{ noseri.layout ? noseri.layout.nama_lokasi : '-' }}</td>
@@ -137,7 +149,7 @@
                           'status-hilang': noseri.status === 'Hilang',
                           'status-dipinjam': noseri.status === 'Dipinjam'}"
               >{{ noseri.status || '-' }}</td>
-              <td><vue-barcode :value="noseri.no_seri_alat" :options="{ width: 100, height: 50 }"></vue-barcode></td>
+              <td><vue-barcode :ref="'barcode' + index" :value="noseri.no_seri_alat" :options="{ width: 100, height: 50 }"></vue-barcode></td>
               <td>
                 <div class="dropdown text-center">
                   <button
@@ -157,9 +169,12 @@
                     <a class="dropdown-item" @click="editData(noseri.id)">
                       <i class="fas fa-edit text-primary"></i> Edit
                     </a>
-                    <a class="dropdown-item" @click="downloadBarcode(noseri.no_seri_alat)">
+                    <!-- <a class="dropdown-item" @click="downloadBarcode(noseri.no_seri_alat)">
                       <i class="fas fa-download text-success"></i> Download Barcode
                     </a>
+                    <a class="dropdown-item" @click="exportPDF(noseri.no_seri_alat)">
+                      <i class="fas fa-download text-success"></i> Download Barcode PDF
+                    </a> -->
                   </div>
                 </div>
               </td>
@@ -200,6 +215,7 @@ import axios from "axios";
 import * as XLSX from 'xlsx';  // Impor XLSX dari library yang sudah diinstal
 import VueBarcode from 'vue-barcode';
 import jsPDF from 'jspdf';
+import html2canvas from "html2canvas";
 
 export default {
   props: {
@@ -222,6 +238,8 @@ export default {
       searchQuery: '',
       rowsPerPage: 10,
       currentPage: 1,
+      selectAllCheckbox: false,
+      selectedItems: [],
     };
   },
   computed: {
@@ -396,6 +414,155 @@ export default {
         document.body.removeChild(link); // Menghapus elemen setelah klik
       }, 100);
     },
+    exportPDF(noSeri) {
+      const index = this.filteredData.findIndex(noseri => noseri.no_seri_alat === noSeri);
+      if (index !== -1) {
+        const barcode = this.$refs['barcode' + index][0]; // Mendapatkan elemen barcode
+        html2canvas(barcode.$el).then(canvas => {
+          const imgData = canvas.toDataURL('image/png');
+          const doc = new jsPDF();
+          doc.addImage(imgData, 'PNG', 10, 10, 26, 15);
+          doc.save(`barcode_${noSeri}.pdf`);
+        });
+      }
+    },
+    exportAllBarcode() {
+      const doc = new jsPDF();
+      let y = 10; // Koordinat y untuk menambahkan barcode
+      let x = 10; // Koordinat x untuk menambahkan barcode
+      let baris = 0; // Jumlah baris
+      let kolom = 0; // Jumlah kolom
+      this.datanoseri.forEach((noseri, index) => {
+        const barcode = this.$refs['barcode' + index][0]; // Mendapatkan elemen barcode
+        html2canvas(barcode.$el).then(canvas => {
+          const imgData = canvas.toDataURL('image/png');
+          doc.addImage(imgData, 'PNG', x, y, 50, 20);
+          x += 60; // Menambahkan 60 untuk menempatkan barcode berikutnya di samping
+          kolom++;
+          if (kolom === 2) {
+            x = 10; // Reset posisi x
+            y += 30; // Menambahkan 30 untuk menempatkan barcode berikutnya di bawah
+            baris++;
+            kolom = 0;
+          }
+          if (baris === 20) {
+            doc.addPage(); // Tambahkan halaman baru
+            y = 10; // Reset posisi y
+            baris = 0;
+          }
+          if (index === this.datanoseri.length - 1) {
+            doc.save('all_barcode.pdf');
+          }
+        });
+      });
+    },
+    selectAll() {
+      if (this.selectAllCheckbox) {
+        this.selectedItems = this.filteredData.map(item => item.id);
+      } else {
+        this.selectedItems = [];
+      }
+    },
+    updateSelectAll() {
+      if (this.selectAllCheckbox) {
+        this.selectedItems = this.filteredData.map(item => item.id);
+      } else {
+        this.selectedItems = [];
+      }
+    },
+    updateSelectedItems() {
+      if (this.selectedItems.length === this.filteredData.length) {
+        this.selectAllCheckbox = true;
+      } else {
+        this.selectAllCheckbox = false;
+      }
+    },
+    exportSelected() {
+      if (this.selectedItems.length === 0) {
+        alert("Tidak ada data yang dipilih");
+        return;
+      }
+
+      const doc = new jsPDF();
+      let y = 10, x = 10, baris = 0, kolom = 0;
+
+      // Gunakan Promise untuk memastikan semua elemen diproses sebelum menyimpan file
+      const promises = this.filteredData
+        .filter(item => this.selectedItems.includes(item.id))
+        .map(noseri => {
+          const barcodeRef = this.$refs[`barcode${this.filteredData.indexOf(noseri)}`];
+          if (barcodeRef && barcodeRef[0]) {
+            return html2canvas(barcodeRef[0].$el).then(canvas => {
+              const imgData = canvas.toDataURL('image/png');
+              doc.addImage(imgData, 'PNG', x, y, 26, 15);
+              x += 60;
+              kolom++;
+              if (kolom === 2) {
+                x = 10; // Reset posisi x
+                y += 30; // Tambahkan jarak vertikal
+                baris++;
+                kolom = 0;
+              }
+              if (baris === 20) {
+                doc.addPage(); // Tambahkan halaman baru jika melebihi baris
+                y = 10; // Reset posisi y
+                baris = 0;
+              }
+            });
+          } else {
+            console.error(`Barcode untuk item ${noseri.id} tidak ditemukan.`);
+          }
+        });
+
+      // Tunggu semua barcode selesai diproses, lalu simpan PDF
+      Promise.all(promises).then(() => {
+        doc.save('barcode_terpilih.pdf');
+      }).catch(error => {
+        console.error("Terjadi kesalahan saat memproses barcode:", error);
+      });
+    },
+    // exportSelected() {
+    //   if (this.selectedItems.length === 0) {
+    //     alert("Tidak ada data yang dipilih");
+    //     return;
+    //   }
+
+    //   const doc = new jsPDF({
+    //     unit: 'mm',
+    //     format: [26, 15], // Ukuran kertas 26 mm x 15 mm
+    //   });
+    //   let y = 5; // Koordinat y untuk menambahkan barcode
+    //   let x = 5; // Koordinat x untuk menambahkan barcode
+    //   let baris = 0; // Jumlah baris
+    //   let kolom = 0; // Jumlah kolom
+
+    //   const barcodeWidth = 20; // Ukuran barcode 20 mm
+    //   const barcodeHeight = 10; // Ukuran barcode 10 mm
+
+    //   this.filteredData.filter(item => this.selectedItems.includes(item.id)).forEach((noseri, index) => {
+    //     const barcode = this.$refs['barcode' + this.filteredData.indexOf(noseri)][0]; // Mendapatkan elemen barcode
+    //     html2canvas(barcode.$el).then(canvas => {
+    //       const imgData = canvas.toDataURL('image/png');
+    //       doc.addImage(imgData, 'PNG', x, y, barcodeWidth, barcodeHeight);
+    //       x += barcodeWidth + 2; // Menambahkan 2 mm untuk jarak antara barcode
+    //       kolom++;
+    //       if (kolom === 1) {
+    //         x = 5; // Reset posisi x
+    //         y += barcodeHeight + 2; // Menambahkan 2 mm untuk jarak antara barcode
+    //         baris++;
+    //         kolom = 0;
+    //       }
+    //       if (baris === 1) {
+    //         doc.addPage(); // Tambahkan halaman baru
+    //         y = 5; // Reset posisi y
+    //         baris = 0;
+    //       }
+    //       if (index === this.selectedItems.length - 1) {
+    //         doc.save('barcode_terpilih.pdf');
+    //       }
+    //     });
+    //   });
+    // },
     // downloadBarcode(noSeri) {
     //   const link = document.createElement('a');
     //   link.href = `https://barcode.tec-it.com/barcode.ashx?data=${noSeri}`;
