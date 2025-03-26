@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLayoutTable extends Migration
+class CreateTipeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateLayoutTable extends Migration
      */
     public function up()
     {
-        Schema::create('layouts', function (Blueprint $table) {
-            $table->id('id');
-            $table->string('ruang');
-            $table->string('rak');
-            $table->integer('lantai');
-            $table->string('koordinat');
+        Schema::create('tipe', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('kategori_merek_id')->constrained('kategori_merek')->onDelete('cascade');
+            $table->string('kode_tipe');
+            $table->string('nama_tipe');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreateLayoutTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('layouts');
+        Schema::dropIfExists('tipe');
     }
 }

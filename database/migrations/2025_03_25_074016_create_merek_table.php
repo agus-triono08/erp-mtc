@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLayoutTable extends Migration
+class CreateMerekTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateLayoutTable extends Migration
      */
     public function up()
     {
-        Schema::create('layouts', function (Blueprint $table) {
-            $table->id('id');
-            $table->string('ruang');
-            $table->string('rak');
-            $table->integer('lantai');
-            $table->string('koordinat');
+        Schema::create('merek', function (Blueprint $table) {
+            $table->id();
+            $table->string('kode_merek');
+            $table->string('nama_merek');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreateLayoutTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('layouts');
+        Schema::dropIfExists('merek');
     }
 }

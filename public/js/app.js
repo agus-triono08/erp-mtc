@@ -35087,7 +35087,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getLayouts: function getLayouts() {
       var _this2 = this;
-      axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/layouts').then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/v1/layouts').then(function (response) {
         _this2.layouts = response.data;
         _this2.isLoading = false;
       })["catch"](function (error) {
@@ -35126,7 +35126,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
       if (this.currentIndex === null) {
         // Tambah Data
-        axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/layouts', this.form).then(function (response) {
+        axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/v1/layouts', this.form).then(function (response) {
           _this3.layouts.push(response.data);
           _this3.closeModal();
           _this3.getLayouts();
@@ -35136,7 +35136,7 @@ __webpack_require__.r(__webpack_exports__);
         });
       } else {
         // Edit Data
-        axios__WEBPACK_IMPORTED_MODULE_0___default().put("/api/layouts/".concat(this.currentId), this.form).then(function (response) {
+        axios__WEBPACK_IMPORTED_MODULE_0___default().put("/api/v1/layouts/".concat(this.currentId), this.form).then(function (response) {
           _this3.layouts[_this3.currentIndex] = response.data;
           _this3.closeModal();
           _this3.getLayouts();
@@ -35148,7 +35148,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     deleteData: function deleteData(index, item) {
       var _this4 = this;
-      axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"]("/api/layouts/".concat(item.id)).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"]("/api/v1/layouts/".concat(item.id)).then(function (response) {
         _this4.layouts.splice(index, 1);
       })["catch"](function (error) {
         console.error(error);
@@ -41037,7 +41037,8 @@ var locale = {
     exportToExcel: function exportToExcel() {
       var tahun = new Date().getFullYear();
       var data = this.jadwalPerawatan.filter(function (item) {
-        return item.tanggal_start.getFullYear() === tahun;
+        var tanggalStart = new Date(item.tanggal_start);
+        return tanggalStart.getFullYear() === tahun;
       });
       var worksheet = xlsx__WEBPACK_IMPORTED_MODULE_6__.utils.json_to_sheet(data);
       var workbook = xlsx__WEBPACK_IMPORTED_MODULE_6__.utils.book_new();
@@ -48431,7 +48432,7 @@ __webpack_require__.r(__webpack_exports__);
       }
       localStorage.setItem('loginAttempts', attempts);
       localStorage.setItem('lastLoginAttempt', Date.now());
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/login', {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/v1/login', {
         username: this.username,
         password: this.password
       }).then(function (response) {

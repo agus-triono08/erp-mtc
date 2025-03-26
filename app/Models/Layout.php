@@ -9,5 +9,5 @@ class Layout extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['ruang', 'rak', 'lantai'];
+    protected $fillable = ['ruang', 'rak', 'lantai', 'koordinat'];
 }

@@ -125,7 +125,7 @@ export default {
       localStorage.setItem('loginAttempts', attempts);
       localStorage.setItem('lastLoginAttempt', Date.now());
 
-      axios.post('/api/login', {
+      axios.post('/api/v1/login', {
         username: this.username,
         password: this.password
       })

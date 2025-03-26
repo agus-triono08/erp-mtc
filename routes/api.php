@@ -10,6 +10,11 @@ use App\Http\Controllers\LayoutController;
 use App\Http\Controllers\DivisiController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Inventory\MerekController;
+use App\Http\Controllers\Inventory\JenisController;
+use App\Http\Controllers\Inventory\KategoriController;
+use App\Http\Controllers\Inventory\KategoriMerekController;
+use App\Http\Controllers\Inventory\TipeController;
 use App\Http\Controllers\Auth\LoginController;
 
 /*
@@ -115,15 +120,27 @@ Route::delete('/rincian-alat/{id}', [RincianAlatController::class, 'destroy']);
 
 Route::post('tech-issue', [TechIssueController::class, 'store']);
 
+//USER
+Route::apiResource('v1/users', UserController::class);
+Route::post('v1/login', [UserController::class, 'login']);
+
 // LAYOUT
-Route::apiResource('layouts', LayoutController::class);
+Route::apiResource('v1/layouts', LayoutController::class);
 
 // DIVISI
-Route::apiResource('divisis', DivisiController::class);
+Route::apiResource('v1/divisis', DivisiController::class);
 
 // JABATAN
-Route::apiResource('jabatans', JabatanController::class);
+Route::apiResource('v1/jabatans', JabatanController::class);
 
-//USER
-Route::apiResource('users', UserController::class);
-Route::post('/login', [UserController::class, 'login']);
+//Inventory
+//MEREK
+Route::apiResource('v1/merek', MerekController::class);
+//JENIS
+Route::apiResource('v1/jenis', JenisController::class);
+//KATEGORI
+Route::apiResource('v1/kategori', KategoriController::class);
+//KategoriAlat
+Route::apiResource('v1/kategori-merek', KategoriMerekController::class);
+//TIPE
+Route::apiResource('v1/tipe', TipeController::class);

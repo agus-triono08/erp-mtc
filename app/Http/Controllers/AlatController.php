@@ -92,7 +92,7 @@ class AlatController extends Controller
             'kode_alat' => '1-C3-B0-2-01',
             'id_layout' => 1,
             'stok' => 1,
-            'harga' => 5000,
+            'harga' => 55000,
             'tanggal_masuk' => '2024-01-01',
             'status' => 'Error'
         ],

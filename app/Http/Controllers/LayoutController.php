@@ -19,6 +19,7 @@ class LayoutController extends Controller
         $layout->ruang = $request->input('ruang');
         $layout->rak = $request->input('rak');
         $layout->lantai = $request->input('lantai');
+        $layout->koordinat = $request->input('koordinat');
         $layout->save();
         return response()->json($layout, 201);
     }
@@ -41,6 +42,7 @@ class LayoutController extends Controller
         $layout->ruang = $request->input('ruang');
         $layout->rak = $request->input('rak');
         $layout->lantai = $request->input('lantai');
+        $layout->koordinat = $request->input('koordinat');
         $layout->save();
         return response()->json($layout);
     }

@@ -211,7 +211,8 @@ export default {
     exportToExcel() {
       const tahun = new Date().getFullYear();
       const data = this.jadwalPerawatan.filter((item) => {
-        return item.tanggal_start.getFullYear() === tahun;
+        const tanggalStart = new Date(item.tanggal_start);
+        return tanggalStart.getFullYear() === tahun;
       });
 
       const worksheet = XLSX.utils.json_to_sheet(data);

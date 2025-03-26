@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLayoutTable extends Migration
+class CreateKategoriTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateLayoutTable extends Migration
      */
     public function up()
     {
-        Schema::create('layouts', function (Blueprint $table) {
-            $table->id('id');
-            $table->string('ruang');
-            $table->string('rak');
-            $table->integer('lantai');
-            $table->string('koordinat');
+        Schema::create('kategori', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('jenis_id')->constrained()->onDelete('cascade');
+            $table->string('kode_kategori');
+            $table->string('nama_kategori');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreateLayoutTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('layouts');
+        Schema::dropIfExists('kategori');
     }
 }

@@ -182,7 +182,7 @@ export default {
   },
   methods: {
     getLayouts() {
-      axios.get('/api/layouts')
+      axios.get('/api/v1/layouts')
         .then(response => {
           this.layouts = response.data;
           this.isLoading = false;
@@ -220,7 +220,7 @@ export default {
     saveData() {
       if (this.currentIndex === null) {
         // Tambah Data
-        axios.post('/api/layouts', this.form)
+        axios.post('/api/v1/layouts', this.form)
           .then(response => {
             this.layouts.push(response.data);
             this.closeModal();
@@ -232,7 +232,7 @@ export default {
           });
       } else {
         // Edit Data
-        axios.put(`/api/layouts/${this.currentId}`, this.form)
+        axios.put(`/api/v1/layouts/${this.currentId}`, this.form)
           .then(response => {
             this.layouts[this.currentIndex] = response.data;
             this.closeModal();
@@ -245,7 +245,7 @@ export default {
       }
     },
     deleteData(index, item) {
-      axios.delete(`/api/layouts/${item.id}`)
+      axios.delete(`/api/v1/layouts/${item.id}`)
         .then(response => {
           this.layouts.splice(index, 1);
         })
