@@ -103,4 +103,8 @@ Aplikasi akan berjalan di http://127.0.0.1:8000/. Anda dapat mengaksesnya melalu
 The license used in developing this project is the [GPL-3.0 license](https://www.gnu.org/licenses/gpl-3.0.html).
 
 ## Kontak
+<<<<<<< HEAD
 Jika Anda memiliki pertanyaan atau masalah terkait aplikasi ini, silakan hubungi saya melalui [GitHub Issues](https://github.com/agus-triono08/erp-mtc/issues).
+=======
+Jika Anda memiliki pertanyaan atau masalah terkait aplikasi ini, silakan hubungi saya melalui [GitHub Issues](https://github.com/agus-triono08/erp-mtc/issues).
+>>>>>>> bcef79c2aca1a816ded52fb7d126bfb5b8aec8da
