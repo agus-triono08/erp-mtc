@@ -15,4 +15,14 @@ class Jenis extends Model
         'kode_jenis',
         'nama_jenis',
     ];
+
+    public function tools()
+    {
+        return $this->hasMany(Tools::class);
+    }
+    
+    public function kategori()
+    {
+        return $this->hasOne(Kategori::class, 'jenis_id', 'id');
+    }
 }

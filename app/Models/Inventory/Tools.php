@@ -4,6 +4,8 @@ namespace App\Models\Inventory;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 
 class Tools extends Model
 {
@@ -26,8 +28,28 @@ class Tools extends Model
         'jadwal_perawatan',
     ];
 
-    public function jenis(): BelongsTo
+    public function jenis()
     {
         return $this->belongsTo(Jenis::class);
+    }
+
+    public function kategori()
+    {
+        return $this->hasOneThrough(Kategori::class, Jenis::class, 'id', 'jenis_id', 'jenis_id', 'id');
+    }
+
+    public function kategoriMerek()
+    {
+        return $this->hasOneThrough(KategoriMerek::class, Kategori::class, 'id', 'kategori_id', 'kategori_id', 'id');
+    }
+
+    public function merek()
+    {
+        return $this->hasOneThrough(Merek::class, KategoriMerek::class, 'id', 'id', 'kategori_merek_id', 'merek_id');
+    }
+
+    public function tipe()
+    {
+        return $this->hasOneThrough(Tipe::class, KategoriMerek::class, 'id', 'kategori_merek_id', 'kategori_merek_id', 'id');
     }
 }

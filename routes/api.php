@@ -15,6 +15,7 @@ use App\Http\Controllers\Inventory\JenisController;
 use App\Http\Controllers\Inventory\KategoriController;
 use App\Http\Controllers\Inventory\KategoriMerekController;
 use App\Http\Controllers\Inventory\TipeController;
+use App\Http\Controllers\Inventory\ToolsController;
 use App\Http\Controllers\Auth\LoginController;
 
 /*
@@ -144,3 +145,5 @@ Route::apiResource('v1/kategori', KategoriController::class);
 Route::apiResource('v1/kategori-merek', KategoriMerekController::class);
 //TIPE
 Route::apiResource('v1/tipe', TipeController::class);
+//TOOLS
+Route::apiResource('v1/tools', ToolsController::class);

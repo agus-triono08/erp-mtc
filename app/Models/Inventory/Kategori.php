@@ -17,8 +17,13 @@ class Kategori extends Model
         'nama_kategori',
     ];
 
-    public function jenis(): BelongsTo
+    public function jenis()
     {
-        return $this->belongsTo(Jenis::class);
+        return $this->belongsTo(Jenis::class, 'jenis_id', 'id');
+    }
+
+    public function kategoriMerek()
+    {
+        return $this->hasMany(KategoriMerek::class, 'kategori_id', 'id');
     }
 }

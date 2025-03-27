@@ -22442,6 +22442,7 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 //
 //
 //
+//
 
 
 
@@ -22476,28 +22477,40 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
   computed: {
     availableCategory: function availableCategory() {
       return _toConsumableArray(new Set(this.alats.map(function (alat) {
-        return alat.kategori;
+        return alat.jenis.kategori.nama_kategori;
       })));
     },
     availableJenis: function availableJenis() {
       return _toConsumableArray(new Set(this.alats.map(function (alat) {
-        return alat.jenis;
+        return alat.jenis.nama_jenis;
       })));
     },
     filteredAlats: function filteredAlats() {
       var _this = this;
       return this.alats.filter(function (alat) {
         var statusMatch = _this.statusFilters.length ? _this.statusFilters.includes(alat.status) : true;
-        var unitMatch = _this.unitFilters.length ? _this.unitFilters.includes(alat.unit_alat) : true;
-        var categoryMatch = _this.categoryFilters.length ? _this.categoryFilters.includes(alat.kategori) : true;
-        var jenisMatch = _this.jenisFilter.length ? _this.jenisFilter.includes(alat.jenis) : true;
-        var searchMatch = alat.nama_alat.toLowerCase().includes(_this.searchQuery.toLowerCase()) || alat.merek_alat.toLowerCase().includes(_this.searchQuery.toLowerCase()) || alat.kode_alat.toLowerCase().includes(_this.searchQuery.toLowerCase());
+        var unitMatch = _this.unitFilters.length ? _this.unitFilters.includes(alat.unit) : true;
+        var categoryMatch = _this.categoryFilters.length ? _this.categoryFilters.includes(alat.jenis.kategori.nama_kategori) : true;
+        var jenisMatch = _this.jenisFilter.length ? _this.jenisFilter.includes(alat.jenis.nama_jenis) : true;
+        var searchMatch = alat.nama.toLowerCase().includes(_this.searchQuery.toLowerCase()) || alat.jenis.kategori.kategori_merek[0].merek.nama_merek.toLowerCase().includes(_this.searchQuery.toLowerCase()) || alat.kode.toLowerCase().includes(_this.searchQuery.toLowerCase());
         return statusMatch && unitMatch && jenisMatch && categoryMatch && searchMatch;
       });
     },
+    // filteredAlats() {
+    //   return this.alats.filter(alat => {
+    //     const statusMatch = this.statusFilters.length ? this.statusFilters.includes(alat.status) : true;
+    //     const unitMatch = this.unitFilters.length ? this.unitFilters.includes(alat.unit_alat) : true;
+    //     const categoryMatch = this.categoryFilters.length ? this.categoryFilters.includes(alat.kategori) : true;
+    //     const jenisMatch = this.jenisFilter.length ? this.jenisFilter.includes(alat.jenis) : true;
+    //     const searchMatch = alat.nama_alat.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+    //       alat.merek_alat.toLowerCase().includes(this.searchQuery.toLowerCase()) || 
+    //       alat.kode_alat.toLowerCase().includes(this.searchQuery.toLowerCase());
+    //     return statusMatch && unitMatch && jenisMatch && categoryMatch && searchMatch;
+    //   });
+    // },
     filteredGroupedAlats: function filteredGroupedAlats() {
       var grouped = this.paginatedAlats.reduce(function (groups, alat) {
-        var kategori = alat.kategori || 'Uncategorized';
+        var kategori = alat.jenis.kategori.nama_kategori || 'Uncategorized';
         if (!groups[kategori]) {
           groups[kategori] = [];
         }
@@ -22531,35 +22544,20 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
               _this2.isLoading = true;
               _context.prev = 1;
               _context.next = 4;
-              return axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/alats");
+              return axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/v1/tools');
             case 4:
               response = _context.sent;
-              _this2.alats = response.data.data.map(function (alat) {
-                return {
-                  id: alat.id,
-                  kode_alat: alat.kode_alat,
-                  jenis: alat.jenis,
-                  nama_alat: alat.nama_alat,
-                  merek_alat: alat.merek_alat,
-                  tipe_alat: alat.tipe_alat,
-                  unit_alat: alat.unit_alat,
-                  status: alat.status,
-                  stok_awal: alat.stok_awal,
-                  stok_akhir: alat.stok_akhir,
-                  gambar_alat: alat.gambar,
-                  kategori: alat.kategori
-                };
-              });
-              //console.log(this.alats);
+              _this2.alats = response.data;
+              // console.log('Data telah di-fetch:', this.alats);
               _context.next = 11;
               break;
             case 8:
               _context.prev = 8;
               _context.t0 = _context["catch"](1);
-              console.error("Error fetching data:", _context.t0);
+              console.error('Error fetching tools:', _context.t0);
             case 11:
               _context.prev = 11;
-              _this2.isLoading = false; // Hilangkan loader
+              _this2.isLoading = false;
               return _context.finish(11);
             case 14:
             case "end":
@@ -22568,6 +22566,51 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
         }, _callee, null, [[1, 8, 11, 14]]);
       }))();
     },
+    // async fetchAlats() {
+    //   this.isLoading = true;
+    //   try {
+    //     const response = await axios.get('/api/v1/tools');
+    //     this.tools = response.data.map((item) => ({
+    //       id: item.id,
+    //       kode: item.kode,
+    //       nama: item.nama,
+    //       jenis: item.jenis,
+    //       stok_awal: item.stok_awal,
+    //       stok_akhir: item.stok_akhir,
+    //       gambar: item.gambar,
+    //     }));
+    //     console.log('Data telah di-fetch:', this.tools);
+    //   } catch (error) {
+    //     console.error('Error fetching tools:', error);
+    //   } finally {
+    //     this.isLoading = false;
+    //   }
+    // },
+    // async fetchAlats() {
+    //   this.isLoading = true;
+    //   try {
+    //     const response = await axios.get(`/api/alats`);
+    //     this.alats = response.data.data.map((alat) => ({
+    //       id: alat.id,
+    //       kode_alat: alat.kode_alat,
+    //       jenis: alat.jenis,
+    //       nama_alat: alat.nama_alat,
+    //       merek_alat: alat.merek_alat,
+    //       tipe_alat: alat.tipe_alat,
+    //       unit_alat: alat.unit_alat,
+    //       status: alat.status,
+    //       stok_awal: alat.stok_awal,
+    //       stok_akhir: alat.stok_akhir,
+    //       gambar_alat: alat.gambar,
+    //       kategori: alat.kategori,
+    //     }));
+    //     //console.log(this.alats);
+    //   } catch (error) {
+    //     console.error("Error fetching data:", error);
+    //   } finally {
+    //     this.isLoading = false; // Hilangkan loader
+    //   }
+    // },
     sortStokAwal: function sortStokAwal(order) {
       this.alats.sort(function (a, b) {
         if (order === 'asc') {
@@ -22638,12 +22681,12 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
         return {
           No: index + 1,
           // Menambahkan nomor urut      
-          Kode: alat.kode_alat,
-          Jenis: alat.jenis,
-          Kategori: alat.kategori,
-          Nama: alat.nama_alat,
-          Merek: alat.merek_alat,
-          Tipe: alat.tipe_alat,
+          Kode: alat.kode,
+          Jenis: alat.jenis.nama_jenis,
+          Kategori: alat.jenis.kategori.nama_kategori,
+          Nama: alat.nama,
+          Merek: alat.jenis.kategori.kategori_merek[0].merek.nama_merek,
+          Tipe: alat.jenis.kategori.kategori_merek[0].tipe.nama_tipe,
           'Stok Awal': alat.stok_awal,
           'Stok Akhir': alat.stok_akhir
         };
@@ -34373,6 +34416,14 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -34387,6 +34438,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         stok_error: ""
       },
       alat: {
+        jenis: "",
         nama_alat: "",
         merek_alat: "",
         tanggal_masuk: "",
@@ -34398,7 +34450,12 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         harga_pembelian: 0,
         asal_usul: "",
         fungsi: "",
-        jadwal_perawatan: '' // Untuk menyimpan jadwal perawatan yang dipilih
+        jadwal_perawatan: '',
+        // Untuk menyimpan jadwal perawatan yang dipilih
+        tipe_alat: "",
+        produk: "",
+        satuan_alat: "",
+        sumber_alat: ""
       },
       gambar: null,
       gambarPreview: null,
@@ -34503,6 +34560,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     },
     resetForm: function resetForm() {
       this.alat = {
+        jenis: "",
         nama_alat: "",
         merek_alat: "",
         tanggal_masuk: "",
@@ -34512,7 +34570,14 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         stok: "",
         deskripsi: "",
         harga_pembelian: 0,
-        asal_usul: ""
+        asal_usul: "",
+        fungsi: "",
+        jadwal_perawatan: '',
+        // Untuk menyimpan jadwal perawatan yang dipilih
+        tipe_alat: "",
+        produk: "",
+        satuan_alat: "",
+        sumber_alat: ""
       };
       this.gambar = null;
       this.gambarPreview = null;
@@ -186519,10 +186584,10 @@ var render = function () {
                           ),
                         ]),
                         _vm._v(" "),
-                        _vm._l(categoryGroup, function (alat, index) {
+                        _vm._l(categoryGroup, function (item, index) {
                           return _c(
                             "tr",
-                            { key: alat.id, staticClass: "tr-center" },
+                            { key: item.id, staticClass: "tr-center" },
                             [
                               _c("td", { staticClass: "text-center" }, [
                                 _vm._v(_vm._s(index + 1)),
@@ -186536,52 +186601,44 @@ var render = function () {
                                     "margin-right": "20px",
                                     "border-radius": "10px",
                                   },
-                                  attrs: { src: alat.gambar_alat },
+                                  attrs: { src: item.gambar },
                                 }),
-                                _vm._v(_vm._s(alat.kode_alat)),
+                                _vm._v(_vm._s(item.kode)),
                               ]),
                               _vm._v(" "),
                               _c("td", { staticClass: "text-center" }, [
-                                _vm._v(_vm._s(alat.jenis || "-")),
+                                _vm._v(_vm._s(item.jenis.nama_jenis || "-")),
                               ]),
                               _vm._v(" "),
                               _c("td", { staticClass: "text-center" }, [
-                                _vm._v(_vm._s(alat.nama_alat)),
+                                _vm._v(_vm._s(item.nama || "-")),
                               ]),
                               _vm._v(" "),
                               _c("td", { staticClass: "text-center" }, [
-                                _vm._v(_vm._s(alat.merek_alat)),
+                                _vm._v(
+                                  _vm._s(
+                                    item.jenis.kategori.kategori_merek[0].merek
+                                      .nama_merek || "-"
+                                  )
+                                ),
                               ]),
                               _vm._v(" "),
                               _c("td", { staticClass: "text-center" }, [
-                                _vm._v(_vm._s(alat.tipe_alat)),
+                                _vm._v(
+                                  _vm._s(
+                                    item.jenis.kategori.kategori_merek[0].tipe
+                                      .nama_tipe
+                                  )
+                                ),
                               ]),
                               _vm._v(" "),
                               _c("td", { staticClass: "text-center" }, [
-                                _vm._v(_vm._s(alat.stok_awal)),
+                                _vm._v(_vm._s(item.stok_awal || "-")),
                               ]),
                               _vm._v(" "),
-                              _c(
-                                "td",
-                                {
-                                  staticClass: "text-center",
-                                  class: {
-                                    "text-danger": alat.stok_akhir <= 2,
-                                  },
-                                },
-                                [
-                                  _vm._v(_vm._s(alat.stok_akhir)),
-                                  _c("br"),
-                                  _vm._v(" "),
-                                  alat.stok_akhir <= 2
-                                    ? _c(
-                                        "span",
-                                        { staticClass: "text-center" },
-                                        [_c("small", [_vm._v("Minimum Stok")])]
-                                      )
-                                    : _vm._e(),
-                                ]
-                              ),
+                              _c("td", { staticClass: "text-center" }, [
+                                _vm._v(_vm._s(item.stok_akhir || "-")),
+                              ]),
                               _vm._v(" "),
                               _c("td", [
                                 _c(
@@ -186606,7 +186663,9 @@ var render = function () {
                                             staticClass: "dropdown-item",
                                             on: {
                                               click: function ($event) {
-                                                return _vm.viewDetail(alat.id)
+                                                return _vm.viewDetail(
+                                                  _vm.alat.id
+                                                )
                                               },
                                             },
                                           },
@@ -186625,7 +186684,7 @@ var render = function () {
                                             staticClass: "dropdown-item",
                                             on: {
                                               click: function ($event) {
-                                                return _vm.editData(alat.id)
+                                                return _vm.editData(_vm.alat.id)
                                               },
                                             },
                                           },
@@ -201657,7 +201716,61 @@ var render = function () {
             },
           },
           [
-            _vm._m(1),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "form-group col-md-12" }, [
+                _vm._m(1),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.alat.jenis,
+                        expression: "alat.jenis",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    attrs: { id: "jenis" },
+                    on: {
+                      change: function ($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function (o) {
+                            return o.selected
+                          })
+                          .map(function (o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.alat,
+                          "jenis",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      },
+                    },
+                  },
+                  [
+                    _c(
+                      "option",
+                      { attrs: { value: "", disabled: "", selected: "" } },
+                      [_vm._v("Pilih Jenis")]
+                    ),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "Alat" } }, [
+                      _vm._v("Alat"),
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "Mesin" } }, [
+                      _vm._v("Mesin"),
+                    ]),
+                  ]
+                ),
+              ]),
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "form-group col-md-12" }, [
@@ -201781,11 +201894,96 @@ var render = function () {
               ]),
             ]),
             _vm._v(" "),
-            _vm._m(5),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "form-group col-md-6" }, [
+                _vm._m(5),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.alat.tipe_alat,
+                      expression: "alat.tipe_alat",
+                    },
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    id: "tipe_alat",
+                    placeholder: "Masukkan Tipe/Ukuran Alat",
+                    required: "",
+                  },
+                  domProps: { value: _vm.alat.tipe_alat },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.alat, "tipe_alat", $event.target.value)
+                    },
+                  },
+                }),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group col-md-6" }, [
+                _vm._m(6),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.alat.produk,
+                        expression: "alat.produk",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    attrs: { id: "pembelian" },
+                    on: {
+                      change: function ($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function (o) {
+                            return o.selected
+                          })
+                          .map(function (o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.alat,
+                          "produk",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      },
+                    },
+                  },
+                  [
+                    _c(
+                      "option",
+                      { attrs: { value: "", disabled: "", selected: "" } },
+                      [_vm._v("Pilih Produk Alat")]
+                    ),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "Local" } }, [
+                      _vm._v("Local"),
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "Import" } }, [
+                      _vm._v("Import"),
+                    ]),
+                  ]
+                ),
+              ]),
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "form-group col-md-4" }, [
-                _vm._m(6),
+                _vm._m(7),
                 _vm._v(" "),
                 _c("input", {
                   directives: [
@@ -201815,14 +202013,122 @@ var render = function () {
                 }),
               ]),
               _vm._v(" "),
-              _vm._m(7),
+              _c("div", { staticClass: "form-group col-md-4" }, [
+                _vm._m(8),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.alat.satuan_alat,
+                        expression: "alat.satuan_alat",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    attrs: { id: "satuan_alat" },
+                    on: {
+                      change: function ($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function (o) {
+                            return o.selected
+                          })
+                          .map(function (o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.alat,
+                          "satuan_alat",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      },
+                    },
+                  },
+                  [
+                    _c(
+                      "option",
+                      { attrs: { value: "", disabled: "", selected: "" } },
+                      [_vm._v("Pilih Satuan Alat")]
+                    ),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "Pcs" } }, [_vm._v("Pcs")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "Unit" } }, [
+                      _vm._v("Unit"),
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "Set" } }, [_vm._v("Set")]),
+                  ]
+                ),
+              ]),
               _vm._v(" "),
-              _vm._m(8),
+              _c("div", { staticClass: "form-group col-md-4" }, [
+                _vm._m(9),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.alat.sumber_alat,
+                        expression: "alat.sumber_alat",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    attrs: { id: "sumber_alat" },
+                    on: {
+                      change: function ($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function (o) {
+                            return o.selected
+                          })
+                          .map(function (o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.alat,
+                          "sumber_alat",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      },
+                    },
+                  },
+                  [
+                    _c(
+                      "option",
+                      { attrs: { value: "", disabled: "", selected: "" } },
+                      [_vm._v("Pilih Sumber Alat")]
+                    ),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "Stok Baru" } }, [
+                      _vm._v("Stok Baru"),
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "Stok Lama" } }, [
+                      _vm._v("Stok Lama"),
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "Peminjaman" } }, [
+                      _vm._v("Peminjaman"),
+                    ]),
+                  ]
+                ),
+              ]),
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "form-group col-md-12" }, [
-                _vm._m(9),
+                _vm._m(10),
                 _vm._v(" "),
                 _c(
                   "select",
@@ -201917,10 +202223,18 @@ var render = function () {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
-              _vm._m(10),
+              _vm._m(11),
               _vm._v(" "),
               _c("div", { staticClass: "textarea-wrapper" }, [
                 _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.alat.fungsi,
+                      expression: "alat.fungsi",
+                    },
+                  ],
                   staticClass: "form-control",
                   attrs: {
                     id: "fungsi",
@@ -201928,13 +202242,22 @@ var render = function () {
                     placeholder: "Masukkan Fungsi Nya (Maksimal 100 Karakter)",
                     maxlength: "100",
                   },
+                  domProps: { value: _vm.alat.fungsi },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.alat, "fungsi", $event.target.value)
+                    },
+                  },
                 }),
                 _vm._v(" "),
                 _c("small", { staticClass: "text-muted char-counter" }, [
                   _vm._v(
-                    "\n                  " +
+                    "\n            " +
                       _vm._s(_vm.alat.fungsi.length) +
-                      " / 100\n                "
+                      " / 100\n          "
                   ),
                 ]),
               ]),
@@ -201942,10 +202265,18 @@ var render = function () {
             _vm._v(" "),
             _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "form-group col-md-12" }, [
-                _vm._m(11),
+                _vm._m(12),
                 _vm._v(" "),
                 _c("div", { staticClass: "textarea-wrapper" }, [
                   _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.alat.asal_usul,
+                        expression: "alat.asal_usul",
+                      },
+                    ],
                     staticClass: "form-control",
                     attrs: {
                       id: "asal_usul",
@@ -201954,13 +202285,22 @@ var render = function () {
                         "Masukkan Vendor Alat (Maksimal 100 karakter)",
                       maxlength: "100",
                     },
+                    domProps: { value: _vm.alat.asal_usul },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.alat, "asal_usul", $event.target.value)
+                      },
+                    },
                   }),
                   _vm._v(" "),
                   _c("small", { staticClass: "text-muted char-counter" }, [
                     _vm._v(
-                      "\n                  " +
+                      "\n              " +
                         _vm._s(_vm.alat.asal_usul.length) +
-                        " / 100\n                "
+                        " / 100\n            "
                     ),
                   ]),
                 ]),
@@ -201968,7 +202308,7 @@ var render = function () {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
-              _vm._m(12),
+              _vm._m(13),
               _vm._v(" "),
               _c("div", { staticClass: "textarea-wrapper" }, [
                 _c("textarea", {
@@ -202000,16 +202340,16 @@ var render = function () {
                 _vm._v(" "),
                 _c("small", { staticClass: "text-muted char-counter" }, [
                   _vm._v(
-                    "\n                " +
+                    "\n            " +
                       _vm._s(_vm.alat.deskripsi.length) +
-                      " / 500\n              "
+                      " / 500\n          "
                   ),
                 ]),
               ]),
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
-              _vm._m(13),
+              _vm._m(14),
               _vm._v(" "),
               _c(
                 "div",
@@ -202037,7 +202377,7 @@ var render = function () {
                     ? _c("p", [
                         _c("i", { staticClass: "fas fa-image" }),
                         _c("br"),
-                        _vm._v("\n                Drag and drop here "),
+                        _vm._v("\n            Drag and drop here "),
                         _c("br"),
                         _vm._v("or "),
                         _c("br"),
@@ -202061,7 +202401,7 @@ var render = function () {
               ),
             ]),
             _vm._v(" "),
-            _vm._m(14),
+            _vm._m(15),
           ]
         ),
       ]
@@ -202088,29 +202428,15 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "form-group col-md-12" }, [
-        _c(
-          "label",
-          { staticStyle: { color: "#000" }, attrs: { for: "jenis" } },
-          [
-            _c("b", [_vm._v("Jenis")]),
-            _vm._v(" "),
-            _c("sup", { staticStyle: { color: "red" } }, [_vm._v("*")]),
-          ]
-        ),
+    return _c(
+      "label",
+      { staticStyle: { color: "#000" }, attrs: { for: "jenis" } },
+      [
+        _c("b", [_vm._v("Jenis")]),
         _vm._v(" "),
-        _c("select", { staticClass: "form-control", attrs: { id: "jenis" } }, [
-          _c("option", { attrs: { value: "", disabled: "", selected: "" } }, [
-            _vm._v("Pilih Jenis"),
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "Alat" } }, [_vm._v("Alat")]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "Mesin" } }, [_vm._v("Mesin")]),
-        ]),
-      ]),
-    ])
+        _c("sup", { staticStyle: { color: "red" } }, [_vm._v("*")]),
+      ]
+    )
   },
   function () {
     var _vm = this
@@ -202158,53 +202484,25 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "form-group col-md-6" }, [
-        _c(
-          "label",
-          { staticStyle: { color: "#000" }, attrs: { for: "tipe_alat" } },
-          [
-            _c("b", [_vm._v("Tipe/Ukuran Alat")]),
-            _vm._v(" "),
-            _c("sup", { staticStyle: { color: "red" } }, [
-              _c("b", [_vm._v(" *")]),
-            ]),
-          ]
-        ),
+    return _c(
+      "label",
+      { staticStyle: { color: "#000" }, attrs: { for: "tipe_alat" } },
+      [
+        _c("b", [_vm._v("Tipe/Ukuran Alat")]),
         _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            type: "text",
-            id: "tipe_alat",
-            placeholder: "Masukkan Tipe/Ukuran Alat",
-            required: "",
-          },
-        }),
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group col-md-6" }, [
-        _c(
-          "label",
-          { staticStyle: { color: "#000" }, attrs: { for: "pembelian" } },
-          [_c("b", [_vm._v("Produk")])]
-        ),
-        _vm._v(" "),
-        _c(
-          "select",
-          { staticClass: "form-control", attrs: { id: "pembelian" } },
-          [
-            _c("option", { attrs: { value: "", disabled: "", selected: "" } }, [
-              _vm._v("Pilih Produk Alat"),
-            ]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "Local" } }, [_vm._v("Local")]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "Import" } }, [_vm._v("Import")]),
-          ]
-        ),
-      ]),
-    ])
+        _c("sup", { staticStyle: { color: "red" } }, [_c("b", [_vm._v(" *")])]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticStyle: { color: "#000" }, attrs: { for: "pembelian" } },
+      [_c("b", [_vm._v("Produk")])]
+    )
   },
   function () {
     var _vm = this
@@ -202224,63 +202522,21 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group col-md-4" }, [
-      _c(
-        "label",
-        { staticStyle: { color: "#000" }, attrs: { for: "satuan_alat" } },
-        [_c("b", [_vm._v("Satuan Alat")])]
-      ),
-      _vm._v(" "),
-      _c(
-        "select",
-        { staticClass: "form-control", attrs: { id: "satuan_alat" } },
-        [
-          _c("option", { attrs: { value: "", disabled: "", selected: "" } }, [
-            _vm._v("Pilih Satuan Alat"),
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "Pcs" } }, [_vm._v("Pcs")]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "Unit" } }, [_vm._v("Unit")]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "Set" } }, [_vm._v("Set")]),
-        ]
-      ),
-    ])
+    return _c(
+      "label",
+      { staticStyle: { color: "#000" }, attrs: { for: "satuan_alat" } },
+      [_c("b", [_vm._v("Satuan Alat")])]
+    )
   },
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group col-md-4" }, [
-      _c(
-        "label",
-        { staticStyle: { color: "#000" }, attrs: { for: "sumber_alat" } },
-        [_c("b", [_vm._v("Sumber Alat")])]
-      ),
-      _vm._v(" "),
-      _c(
-        "select",
-        { staticClass: "form-control", attrs: { id: "sumber_alat" } },
-        [
-          _c("option", { attrs: { value: "", disabled: "", selected: "" } }, [
-            _vm._v("Pilih Sumber Alat"),
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "Stok Baru" } }, [
-            _vm._v("Stok Baru"),
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "Stok Lama" } }, [
-            _vm._v("Stok Lama"),
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "Peminjaman" } }, [
-            _vm._v("Peminjaman"),
-          ]),
-        ]
-      ),
-    ])
+    return _c(
+      "label",
+      { staticStyle: { color: "#000" }, attrs: { for: "sumber_alat" } },
+      [_c("b", [_vm._v("Sumber Alat")])]
+    )
   },
   function () {
     var _vm = this
@@ -202356,7 +202612,7 @@ var staticRenderFns = [
             { staticClass: "btn btn-plus mr-2", attrs: { type: "submit" } },
             [
               _c("i", { staticClass: "fas fa-save" }),
-              _vm._v(" Simpan\n            "),
+              _vm._v(" Simpan\n          "),
             ]
           ),
         ]),

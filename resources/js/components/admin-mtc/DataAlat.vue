@@ -176,17 +176,18 @@
           <tr>
             <td colspan="9" class="bg-teal text-white" style="font-size: 16px;"><strong>{{ category }}</strong></td>
           </tr>
-          <tr v-for="(alat, index) in categoryGroup" :key="alat.id" class="tr-center">
+          <tr v-for="(item, index) in categoryGroup" :key="item.id" class="tr-center">
             <td class="text-center">{{ index + 1 }}</td>
-            <td class="text-left"><img :src="alat.gambar_alat" style="max-width: 50px; max-height: 50px; margin-right: 20px; border-radius: 10px;" />{{ alat.kode_alat }}</td>
-            <td class="text-center">{{ alat.jenis || '-' }}</td>
-            <td class="text-center">{{ alat.nama_alat }}</td>
-            <td class="text-center">{{ alat.merek_alat }}</td>
-            <td class="text-center">{{ alat.tipe_alat }}</td>
-            <td class="text-center">{{ alat.stok_awal }}</td>
-            <td class="text-center" :class="{ 'text-danger': alat.stok_akhir <= 2 }">{{ alat.stok_akhir }}<br>
+            <td class="text-left"><img :src="item.gambar" style="max-width: 50px; max-height: 50px; margin-right: 20px; border-radius: 10px;" />{{ item.kode }}</td>
+            <td class="text-center">{{ item.jenis.nama_jenis || '-' }}</td>
+            <td class="text-center">{{ item.nama || '-' }}</td>
+            <td class="text-center">{{ item.jenis.kategori.kategori_merek[0].merek.nama_merek || '-' }}</td>
+            <td class="text-center">{{ item.jenis.kategori.kategori_merek[0].tipe.nama_tipe }}</td>
+            <td class="text-center">{{ item.stok_awal || '-' }}</td>
+            <!-- <td class="text-center" :class="{ 'text-danger': alat.stok_akhir <= 2 }">{{ alat.stok_akhir }}<br>
               <span v-if="alat.stok_akhir <= 2" class="text-center"><small>Minimum Stok</small></span>
-            </td>
+            </td> -->
+            <td class="text-center">{{ item.stok_akhir || '-' }}</td>
             <td>
               <div class="dropdown text-center">
                 <button
@@ -214,7 +215,7 @@
             </td>
           </tr>
         </tbody>
-      </table>      
+      </table>   
     </div>
     <!-- Pagination -->
     <div class="d-flex justify-content-between align-items-center mt-3" style="border-radius: 10px; background-color: #f3f4f6; height: 50px; color: #000;">
@@ -273,27 +274,40 @@ export default {
   },
   computed: {
     availableCategory() {
-      return [...new Set(this.alats.map(alat => alat.kategori))];
+      return [...new Set(this.alats.map(alat => alat.jenis.kategori.nama_kategori))];
     },
     availableJenis() {
-      return [...new Set(this.alats.map(alat => alat.jenis))];
+      return [...new Set(this.alats.map(alat => alat.jenis.nama_jenis))];
     },
     filteredAlats() {
       return this.alats.filter(alat => {
         const statusMatch = this.statusFilters.length ? this.statusFilters.includes(alat.status) : true;
-        const unitMatch = this.unitFilters.length ? this.unitFilters.includes(alat.unit_alat) : true;
-        const categoryMatch = this.categoryFilters.length ? this.categoryFilters.includes(alat.kategori) : true;
-        const jenisMatch = this.jenisFilter.length ? this.jenisFilter.includes(alat.jenis) : true;
-        const searchMatch = alat.nama_alat.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-          alat.merek_alat.toLowerCase().includes(this.searchQuery.toLowerCase()) || 
-          alat.kode_alat.toLowerCase().includes(this.searchQuery.toLowerCase());
+        const unitMatch = this.unitFilters.length ? this.unitFilters.includes(alat.unit) : true;
+        const categoryMatch = this.categoryFilters.length ? this.categoryFilters.includes(alat.jenis.kategori.nama_kategori) : true;
+        const jenisMatch = this.jenisFilter.length ? this.jenisFilter.includes(alat.jenis.nama_jenis) : true;
+        const searchMatch = alat.nama.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+          alat.jenis.kategori.kategori_merek[0].merek.nama_merek.toLowerCase().includes(this.searchQuery.toLowerCase()) || 
+          alat.kode.toLowerCase().includes(this.searchQuery.toLowerCase());
 
         return statusMatch && unitMatch && jenisMatch && categoryMatch && searchMatch;
       });
     },
+    // filteredAlats() {
+    //   return this.alats.filter(alat => {
+    //     const statusMatch = this.statusFilters.length ? this.statusFilters.includes(alat.status) : true;
+    //     const unitMatch = this.unitFilters.length ? this.unitFilters.includes(alat.unit_alat) : true;
+    //     const categoryMatch = this.categoryFilters.length ? this.categoryFilters.includes(alat.kategori) : true;
+    //     const jenisMatch = this.jenisFilter.length ? this.jenisFilter.includes(alat.jenis) : true;
+    //     const searchMatch = alat.nama_alat.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+    //       alat.merek_alat.toLowerCase().includes(this.searchQuery.toLowerCase()) || 
+    //       alat.kode_alat.toLowerCase().includes(this.searchQuery.toLowerCase());
+
+    //     return statusMatch && unitMatch && jenisMatch && categoryMatch && searchMatch;
+    //   });
+    // },
     filteredGroupedAlats() {
       const grouped = this.paginatedAlats.reduce((groups, alat) => {
-        const kategori = alat.kategori || 'Uncategorized';
+        const kategori = alat.jenis.kategori.nama_kategori || 'Uncategorized';
         if (!groups[kategori]) {
           groups[kategori] = [];
         }
@@ -320,28 +334,60 @@ export default {
     async fetchAlats() {
       this.isLoading = true;
       try {
-        const response = await axios.get(`/api/alats`);
-        this.alats = response.data.data.map((alat) => ({
-          id: alat.id,
-          kode_alat: alat.kode_alat,
-          jenis: alat.jenis,
-          nama_alat: alat.nama_alat,
-          merek_alat: alat.merek_alat,
-          tipe_alat: alat.tipe_alat,
-          unit_alat: alat.unit_alat,
-          status: alat.status,
-          stok_awal: alat.stok_awal,
-          stok_akhir: alat.stok_akhir,
-          gambar_alat: alat.gambar,
-          kategori: alat.kategori,
-        }));
-        //console.log(this.alats);
+        const response = await axios.get('/api/v1/tools');
+        this.alats = response.data;
+        // console.log('Data telah di-fetch:', this.alats);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error('Error fetching tools:', error);
       } finally {
-        this.isLoading = false; // Hilangkan loader
+        this.isLoading = false;
       }
     },
+    // async fetchAlats() {
+    //   this.isLoading = true;
+    //   try {
+    //     const response = await axios.get('/api/v1/tools');
+    //     this.tools = response.data.map((item) => ({
+    //       id: item.id,
+    //       kode: item.kode,
+    //       nama: item.nama,
+    //       jenis: item.jenis,
+    //       stok_awal: item.stok_awal,
+    //       stok_akhir: item.stok_akhir,
+    //       gambar: item.gambar,
+    //     }));
+    //     console.log('Data telah di-fetch:', this.tools);
+    //   } catch (error) {
+    //     console.error('Error fetching tools:', error);
+    //   } finally {
+    //     this.isLoading = false;
+    //   }
+    // },
+    // async fetchAlats() {
+    //   this.isLoading = true;
+    //   try {
+    //     const response = await axios.get(`/api/alats`);
+    //     this.alats = response.data.data.map((alat) => ({
+    //       id: alat.id,
+    //       kode_alat: alat.kode_alat,
+    //       jenis: alat.jenis,
+    //       nama_alat: alat.nama_alat,
+    //       merek_alat: alat.merek_alat,
+    //       tipe_alat: alat.tipe_alat,
+    //       unit_alat: alat.unit_alat,
+    //       status: alat.status,
+    //       stok_awal: alat.stok_awal,
+    //       stok_akhir: alat.stok_akhir,
+    //       gambar_alat: alat.gambar,
+    //       kategori: alat.kategori,
+    //     }));
+    //     //console.log(this.alats);
+    //   } catch (error) {
+    //     console.error("Error fetching data:", error);
+    //   } finally {
+    //     this.isLoading = false; // Hilangkan loader
+    //   }
+    // },
     sortStokAwal(order) {
       this.alats.sort((a, b) => {
         if (order === 'asc') {
@@ -410,12 +456,12 @@ export default {
     // Menyiapkan data yang akan dikonversi, termasuk nomor urut
     const data = this.filteredAlats.map((alat, index) => ({
       No: index + 1,  // Menambahkan nomor urut      
-      Kode: alat.kode_alat,
-      Jenis: alat.jenis,
-      Kategori: alat.kategori,
-      Nama: alat.nama_alat,
-      Merek: alat.merek_alat,
-      Tipe: alat.tipe_alat,
+      Kode: alat.kode,
+      Jenis: alat.jenis.nama_jenis,
+      Kategori: alat.jenis.kategori.nama_kategori,
+      Nama: alat.nama,
+      Merek: alat.jenis.kategori.kategori_merek[0].merek.nama_merek,
+      Tipe: alat.jenis.kategori.kategori_merek[0].tipe.nama_tipe,
       'Stok Awal': alat.stok_awal,
       'Stok Akhir': alat.stok_akhir,      
     }));
