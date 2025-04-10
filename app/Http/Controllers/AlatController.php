@@ -9,7 +9,7 @@ class AlatController extends Controller
     // Data dummy
     private $dataDummy = [
         [
-            'id' => 1,
+            'id' => 10,
             'kode_alat' => '1-C3-B0-2-01',
             'nama_alat' => 'Clamp',
             'jenis' => 'Alat',

@@ -181,6 +181,9 @@
             <td class="text-left"><img :src="item.gambar" style="max-width: 50px; max-height: 50px; margin-right: 20px; border-radius: 10px;" />{{ item.kode }}</td>
             <td class="text-center">{{ item.jenis.nama_jenis || '-' }}</td>
             <td class="text-center">{{ item.nama || '-' }}</td>
+            <!-- <td class="text-center">{{ item.jenis.kategori[0].kategori_merek[0].merek.nama_merek }}</td> -->
+            <!-- <td class="text-center">{{ item.jenis.kategori.kategori_merek && item.jenis.kategori.kategori_merek && item.jenis.kategori.kategori_merek.merek ? item.jenis.kategori.kategori_merek.merek.nama_merek : '-' }}</td>
+            <td class="text-center">{{ item.jenis.kategori.kategori_merek && item.jenis.kategori.kategori_merek && item.jenis.kategori.kategori_merek.tipe ? item.jenis.kategori.kategori_merek.tipe.nama_tipe : '-' }}</td> -->
             <td class="text-center">{{ item.jenis.kategori.kategori_merek[0].merek.nama_merek || '-' }}</td>
             <td class="text-center">{{ item.jenis.kategori.kategori_merek[0].tipe.nama_tipe }}</td>
             <td class="text-center">{{ item.stok_awal || '-' }}</td>
@@ -201,7 +204,7 @@
                   <i class="fas fa-ellipsis-v"></i>
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" @click="viewDetail(alat.id)">
+                  <a class="dropdown-item" @click="viewDetail(item.id)">
                     <i class="fas fa-eye text-info"></i> Detail
                   </a>
                   <a class="dropdown-item" @click="editData(alat.id)">
@@ -283,15 +286,28 @@ export default {
       return this.alats.filter(alat => {
         const statusMatch = this.statusFilters.length ? this.statusFilters.includes(alat.status) : true;
         const unitMatch = this.unitFilters.length ? this.unitFilters.includes(alat.unit) : true;
-        const categoryMatch = this.categoryFilters.length ? this.categoryFilters.includes(alat.jenis.kategori.nama_kategori) : true;
+        const categoryMatch = this.categoryFilters.length ? this.categoryFilters.includes(alat.jenis.kategori ? alat.jenis.kategori.nama_kategori : '') : true;
         const jenisMatch = this.jenisFilter.length ? this.jenisFilter.includes(alat.jenis.nama_jenis) : true;
         const searchMatch = alat.nama.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-          alat.jenis.kategori.kategori_merek[0].merek.nama_merek.toLowerCase().includes(this.searchQuery.toLowerCase()) || 
+          (alat.jenis.kategori && alat.jenis.kategori.kategori_merek && alat.jenis.kategori.kategori_merek[0].merek && alat.jenis.kategori.kategori_merek[0].merek.nama_merek.toLowerCase().includes(this.searchQuery.toLowerCase())) || 
           alat.kode.toLowerCase().includes(this.searchQuery.toLowerCase());
 
         return statusMatch && unitMatch && jenisMatch && categoryMatch && searchMatch;
       });
     },
+    // filteredAlats() {
+    //   return this.alats.filter(alat => {
+    //     const statusMatch = this.statusFilters.length ? this.statusFilters.includes(alat.status) : true;
+    //     const unitMatch = this.unitFilters.length ? this.unitFilters.includes(alat.unit) : true;
+    //     const categoryMatch = this.categoryFilters.length ? this.categoryFilters.includes(alat.jenis.kategori.nama_kategori) : true;
+    //     const jenisMatch = this.jenisFilter.length ? this.jenisFilter.includes(alat.jenis.nama_jenis) : true;
+    //     const searchMatch = alat.nama.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+    //       alat.jenis.kategori.kategori_merek[0].merek.nama_merek.toLowerCase().includes(this.searchQuery.toLowerCase()) || 
+    //       alat.kode.toLowerCase().includes(this.searchQuery.toLowerCase());
+
+    //     return statusMatch && unitMatch && jenisMatch && categoryMatch && searchMatch;
+    //   });
+    // },
     // filteredAlats() {
     //   return this.alats.filter(alat => {
     //     const statusMatch = this.statusFilters.length ? this.statusFilters.includes(alat.status) : true;

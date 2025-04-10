@@ -53,6 +53,19 @@
             </div>
         </a>
     </li>
+
+    <!-- Heading -->
+    <br><div class="sidebar-heading">
+        <strong>Inventory Alat/Mesin</strong>
+    </div>
+
+    <!-- Nav Item - Data -->
+    <li class="nav-item {{ request()->routeIs('kategori.adminmtc') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('kategori.adminmtc') }}">
+            <i class="bi {{ request()->routeIs('kategori.adminmtc') ? 'bi-file-spreadsheet' : 'bi-file-spreadsheet-fill' }}"></i>
+            <span>Kategori/Merek</span>
+        </a>
+    </li>
     
     <!-- Heading -->
     <br><div class="sidebar-heading">

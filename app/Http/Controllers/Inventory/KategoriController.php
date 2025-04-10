@@ -13,10 +13,16 @@ class KategoriController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $kategoris = Kategori::all();
-        return response()->json($kategoris);
+    // public function index()
+    // {
+    //     $kategoris = Kategori::all();
+    //     return response()->json($kategoris);
+    // }
+
+    public function index() {
+        return Kategori::with([
+            'jenis',
+        ])->get();
     }
 
     // /**

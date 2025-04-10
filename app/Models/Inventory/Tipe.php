@@ -4,6 +4,7 @@ namespace App\Models\Inventory;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Tipe extends Model
 {
@@ -19,6 +20,15 @@ class Tipe extends Model
 
     public function kategorimerek(): BelongsTo
     {
-        return $this->belongsTo(KategoriMerek::class);
+        return $this->belongsTo(KategoriMerek::class, 'kategori_merek_id', 'id');
+    }
+
+    public function merek() {
+        return $this->hasOneThrough(Merek::class, KategoriMerek::class, 'merek_id', 'id');
+    }
+
+    public function kategori()
+    {
+        return $this->hasOneThrough(Kategori::class, KategoriMerek::class, 'kategori_id', 'id');
     }
 }

@@ -89,6 +89,10 @@ Route::get('/admin-mtc/alat/data-error/input', function () {
 Route::get('/admin-mtc/layout', function() {
     return view('admin-mtc.Main.layout');
 })->name('layout.adminmtc');
+
+Route::get('/admin-mtc/inventory', function() {
+    return view('admin-mtc.Main.kategori');
+})->name('kategori.adminmtc');
 });
 
 // USER MAINTENANCE

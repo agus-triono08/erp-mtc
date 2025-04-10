@@ -23,11 +23,12 @@
             <select 
               id="jenis"
               class="form-control"
-              v-model="alat.jenis"
+              required
             >
               <option value="" disabled selected>Pilih Jenis</option>
-              <option value="Alat">Alat</option>
-              <option value="Mesin">Mesin</option>
+              <option v-for="jenis in Jenis" :key="jenis.id" :value="jenis.nama_jenis">{{ jenis.nama_jenis }}</option>
+              <!-- <option value="Alat">Alat</option>
+              <option value="Mesin">Mesin</option> -->
             </select>
           </div>
         </div>
@@ -39,11 +40,11 @@
               <b>Kategori</b>
               <sup style="color: red;"> *</sup>
             </label>
-            <div>
+            <!-- <div>
               <v-select
                 v-model="selectedKategori"
-                :options="kategoris"
-                label="label"
+                :options="Kategoris"
+                label="nama_kategori"
                 placeholder="Pilih Kategori"
                 @input="onKategoriChange"
                 :searchable="true"
@@ -57,7 +58,14 @@
                 class="form-control"
                 placeholder="Masukkan kategori baru"
               />
-            </div>
+            </div> -->
+            <v-select
+              v-model="selectedKategori"
+              :options="Kategoris"
+              label="nama_kategori"
+              placeholder="Pilih Kategori"
+              :searchable="true"              
+            ></v-select>
           </div>
         </div>
 
@@ -84,14 +92,22 @@
               <b>Merek Alat</b>
               <sup style="color: red;"><b> *</b></sup>
             </label>
-            <input
+            <!-- <input
               type="text"
               id="merek_alat"
               v-model="alat.merek_alat"
               class="form-control"
               placeholder="Masukkan Merek Alat"
               required
-            />
+            /> -->
+            <v-select
+              v-model="selectedMerek"
+              :options="Merek"
+              label="nama_merek"
+              placeholder="Pilih Merek"
+              :searchable="true"
+              required
+            ></v-select>
           </div>            
         </div>
 
@@ -110,6 +126,14 @@
               placeholder="Masukkan Tipe/Ukuran Alat"
               required
             />
+            <!-- <v-select
+              v-model="selectedTipe"
+              :options="Tipe"
+              label="nama_tipe"
+              placeholder="Pilih Tipe"
+              :searchable="true"
+              required
+            ></v-select> -->
           </div>
 
           <!-- Produk -->
@@ -440,6 +464,7 @@
 
 <script>
 import axios from "axios";
+import { create } from "lodash";
 import vSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';
 
@@ -449,6 +474,14 @@ export default {
   },
   data() {
     return {
+      Jenis: [],
+      selectedJenis: null,
+      Kategoris: [],
+      selectedKategori: '',
+      Merek: [],
+      selectedMerek: null,
+      Tipe: [],
+      selectedTipe: null,
       error: {
         stok_error: "",
       },
@@ -484,13 +517,52 @@ export default {
       showManualInputLocation: false,
       locations: ['Gedung A', 'Gedung B', 'Gedung C', 'Gedung D'],
       manualKategori: '',
-      showManualInput: false,
-      selectedKategori: '',
+      showManualInput: false,      
       showManualInputJadwal: false, // Untuk menampilkan input manual jadwal
       manualJadwal: '', // Untuk input manual jadwal
     };
   },
   methods: {
+    //Mengambil Data Jenis
+    async fetchDataJenis() {
+      try {
+        const response = await axios.get('/api/v1/jenis');
+        this.Jenis = response.data;
+        // console.log(this.Jenis);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    //Mengambil Data Kategori
+    async fetchDataKategori() {
+      try {
+        const response = await axios.get('/api/v1/kategori');
+        this.Kategoris = response.data;
+        // console.log(this.Kategoris);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    //Mengambil Data Merek
+    async fetchDataMerek() {
+      try {
+        const response = await axios.get('/api/v1/merek');
+        this.Merek = response.data;
+        // console.log(this.Kategoris);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    //Mengambil Data Tipe
+    async fetchDataTipe() {
+      try {
+        const response = await axios.get('/api/v1/tipe');
+        this.Tipe = response.data;
+        // console.log(this.Kategoris);
+      } catch (error) {
+        console.error(error);
+      }
+    },
     onJadwalChange(event) {
       if (event.target.value === 'other') {
         this.showManualInputJadwal = true;
@@ -624,6 +696,12 @@ export default {
       return this.showManualInputLocation ? this.manualLocation : this.selectedLocation;
     }
   },
+  mounted() {
+    this.fetchDataJenis();
+    this.fetchDataKategori();
+    this.fetchDataMerek();
+    this.fetchDataTipe();
+  },
 };
 </script>
   
@@ -748,4 +826,4 @@ export default {
     cursor: pointer;
   }
   
-  </style>
+  </style> 

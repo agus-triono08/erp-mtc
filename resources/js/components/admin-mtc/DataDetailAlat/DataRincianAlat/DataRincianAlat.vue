@@ -119,7 +119,7 @@
           </thead>
           <tbody v-if="filteredData.length === 0">
             <tr>
-              <td colspan="5" class="text-center">Tidak Ada Data</td>
+              <td colspan="9" class="text-center">Tidak Ada Data</td>
             </tr>
           </tbody>
           <tbody v-for="(noseri, index) in filteredData" :key="noseri.id" :ref="'barcode' + index">
@@ -128,28 +128,28 @@
                 <input type="checkbox" @change="updateSelectedItems" v-model="selectedItems" :value="noseri.id">
               </td>
               <td class="text-center">{{ (currentPage - 1) * rowsPerPage + index + 1 }}</td>
-              <td class="text-center">{{ noseri.no_seri_alat || '-' }}</td>
+              <td class="text-center">{{ noseri.no_seri || '-' }}</td>
               <td class="text-center">{{ noseri.layout ? noseri.layout.nama_lokasi : '-' }}</td>
               <td class="text-center">{{ noseri.tanggal_masuk }} <br>
                 <small style="color: #444;"><i class="fas fa-clock"></i> {{ durasiData[index] !== '-' ? durasiData[index] + ' Hari' : '-' }}</small>
               </td>
               <td>{{ formatRupiah(noseri.harga) }} <br>
-                <small v-if="noseri.kode_alat && noseri.kode_alat.startsWith('2-')">                  
+                <small v-if="noseri.kode_alat && noseri.kode_alat.startsWith('2-')" style="color: #444;">                  
                   <!-- {{ formatRupiah(getNilaiBuku(noseri)) }} -->
-                  <span :style="{ color: getNilaiBuku(noseri) === 'Sudah Tidak Bernilai' ? 'red' : '' }">Depresiasi: {{ getNilaiBuku(noseri) }}</span>
+                  <span :style="{ color: getNilaiBuku(noseri) === 'Sudah Tidak Bernilai' ? 'red' : '' }"><i class="bi bi-cash-coin"></i> {{ getNilaiBuku(noseri) }}</span>
                 </small>
               </td>
               <td 
                 class="text-center status-pill parent-element"
                 style="margin-top: 20px;"
                 :class="{
-                          'status-active': noseri.status === 'OK', 
-                          'status-rusak': noseri.status === 'Rusak', 
-                          'status-error': noseri.status === 'Error',
-                          'status-hilang': noseri.status === 'Hilang',
-                          'status-dipinjam': noseri.status === 'Dipinjam'}"
-              >{{ noseri.status || '-' }}</td>
-              <td><vue-barcode :ref="'barcode' + index" :value="noseri.no_seri_alat" :options="{ width: 100, height: 50 }"></vue-barcode></td>
+                          'status-active': noseri.kondisi === 'OK', 
+                          'status-rusak': noseri.kondisi === 'Rusak', 
+                          'status-error': noseri.kondisi === 'Error',
+                          'status-hilang': noseri.kondisi === 'Hilang',
+                          'status-dipinjam': noseri.kondisi === 'Dipinjam'}"
+              >{{ noseri.kondisi || '-' }}</td>
+              <td><vue-barcode :ref="'barcode' + index" :value="noseri.no_seri" :options="{ width: 100, height: 50 }"></vue-barcode></td>
               <td>
                 <div class="dropdown text-center">
                   <button
@@ -274,19 +274,29 @@ export default {
     filteredData() {
       return this.datanoseri.filter(noseri => {
         const kondisiMatch = this.kondisiFilters.length ? this.kondisiFilters.includes(noseri.status) : true;
-        const searchMatch = noseri.no_seri_alat.toLowerCase().includes(this.searchQuery.toLowerCase());
+        const searchMatch = noseri.no_seri.toLowerCase().includes(this.searchQuery.toLowerCase());
 
         return kondisiMatch && searchMatch;
       });
     }
   },
   methods: {
+    // async fetchAlatError() {
+    //   try {
+    //     const kodeAlat = this.kodeAlat; // Kode alat di URL
+    //     const response = await axios.get(`/api/no-seri/belumdigunakan/${kodeAlat}`);
+    //     this.datanoseri = response.data; // Menyimpan data alat
+    //     console.log(this.datanoseri)
+    //   } catch (error) {
+    //     console.error("Error fetching alat error detail:", error);
+    //   }
+    // },
     async fetchAlatError() {
       try {
         const kodeAlat = this.kodeAlat; // Kode alat di URL
-        const response = await axios.get(`/api/no-seri/belumdigunakan/${kodeAlat}`);
+        const response = await axios.get(`/api/v1/noseri/getNoSeri/${kodeAlat}`);
         this.datanoseri = response.data; // Menyimpan data alat
-        //console.log(this.datanoseri)
+        console.log(this.datanoseri)
       } catch (error) {
         console.error("Error fetching alat error detail:", error);
       }

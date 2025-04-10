@@ -158,6 +158,11 @@ const DataRiwayatPenggantian = require('./components/admin-mtc/Riwayat/DataRiway
 //LAYOUT
 const DataLayout = require('./components/admin-mtc/Layout/DataLayout.vue').default;
 
+//Inventory
+const Kategori = require('./components/admin-mtc/AlatdanMesin/KategoriAlatdanMesin.vue').default;
+const Merek = require('./components/admin-mtc/AlatdanMesin/MerekAlatdanMesin.vue').default;
+const Tipe = require('./components/admin-mtc/AlatdanMesin/TipeAlatdanMesin.vue').default;
+
 //USER DATA MASTER
 const DataMasterUser = require('./components/user/MasterData/Data.vue').default;
 
@@ -352,6 +357,22 @@ const routes = [
     {
         path: '/admin-mtc/layout',
         component: DataLayout,
+    },
+    //Inventory
+    {
+        path: '/admin-mtc/inventory',
+        component: Kategori,
+        name: 'kategori',
+    },
+    {
+        path: '/admin-mtc/inventory',
+        component: Merek,
+        name: 'merek',
+    },
+    {
+        path: '/admin-mtc/inventory',
+        component: Tipe,
+        name: 'tipe',
     },
     {
         path: '/admin-mtc/data-alat/detail/:id',

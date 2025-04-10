@@ -18,7 +18,7 @@
             <div class="card-body text-center" style="border-radius: 10px; height: 30px;">
               <p>
                 <span class="m-2" style="color: #169ea8;"> Detail Master data</span>/ 
-                <span class="mt-2 mb-2 mr-2 ml-1" style="color: #e6494b;">{{ alat.kode_alat || '-'}}</span>
+                <span class="mt-2 mb-2 mr-2 ml-1" style="color: #e6494b;">{{ form.kode || '-'}}</span>
               </p>
             </div>
           </div>
@@ -32,9 +32,9 @@
             <div class="card-body text-center" style="border-radius: 10px;"> 
               <div class="image-container" style="width: 100%; height: 220px; overflow: hidden; border-radius: 10px;">
                 <img 
-                  :src="alat.gambar" 
+                  :src="form.gambar" 
                   class="img-fluid shadow-sm hover-effect" 
-                  alt="Gambar Alat" 
+                  alt="Ini Gambar Sih Harusnya" 
                   style="width: 100%; height: 100%; object-fit: cover; border-radius: 0;" 
                 />
               </div>                        
@@ -64,10 +64,10 @@
                   </tr>
                   <tr>
                     <th style="color: #000; font-size: x-large;">
-                      {{ alat.nama_alat || '-' }}
+                      {{ form.nama || '-' }}
                     </th>
                     <th class="ml-4" style="color: #000; font-size: x-large;">
-                      {{ alat.kode_alat || '-' }}
+                      {{ form.kode || '-' }}
                     </th>
                   </tr>
                 </thead>
@@ -80,7 +80,7 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td>{{ formatRupiah(alat.harga_total) }}</td>
+                    <td>{{ formatRupiah(form.harga_total) }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -175,35 +175,35 @@
               <tbody>
                 <tr>
                   <td>Kategori</td>
-                  <th style="color: #000;">{{ alat.kategori || '-' }}</th>
+                  <th style="color: #000;">{{ form.jenis && form.jenis.kategori && form.jenis.kategori.nama_kategori ? form.jenis.kategori.nama_kategori : '-' }}</th>
                 </tr>
                 <tr>                  
                   <td>Merek</td>
-                  <th style="color: #000;">{{ alat.merek_alat || '-' }}</th>
+                  <th style="color: #000;">{{ form.jenis && form.jenis.kategori && form.jenis.kategori.kategori_merek[0] && form.jenis.kategori.kategori_merek[0].merek && form.jenis.kategori.kategori_merek[0].merek.nama_merek || '-' }}</th>
                 </tr>
                 <tr>
                   <td>Type/Size</td>
-                  <th style="color: #000;">{{ alat.tipe_alat || '-' }}</th>
+                  <th style="color: #000;">{{ form.jenis && form.jenis.kategori && form.jenis.kategori.kategori_merek[0] && form.jenis.kategori.kategori_merek[0].tipe && form.jenis.kategori.kategori_merek[0].tipe.nama_tipe || '-' }}</th>                
                 </tr>
                 <tr>
                   <td>Available Stok</td>
-                  <th style="color: #000">{{ alat.stok_akhir || '-' }}</th>
+                  <th style="color: #000">{{ form.stok_akhir || '-' }}</th>
                 </tr>
                 <tr>
                   <td>Produk</td>
-                  <th style="color: #000;">{{ alat.pembelian || '-' }}</th>
+                  <th style="color: #000;">{{ form.pembelian || '-' }}</th>
                 </tr>
                 <tr>
                   <td>Satuan</td>
-                  <th style="color: #000">{{ alat.unit_alat || '-' }}</th>
+                  <th style="color: #000">{{ form.unit || '-' }}</th>
                 </tr>
                 <tr>
                   <td>Sumber</td>
-                  <th style="color: #000;">{{ alat.sumber_alat || '-' }}</th>
+                  <th style="color: #000;">{{ form.sumber || '-' }}</th>
                 </tr>
                 <tr>
                   <td>Vendor</td>
-                  <th style="color: #000;">{{ alat.vendor || '-' }}</th>
+                  <th style="color: #000;">{{ form.vendor || '-' }}</th>
                 </tr>                               
               </tbody>
             </table>
@@ -217,7 +217,7 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>{{ alat.fungsi || '-' }}</td>
+                  <td>{{ form.fungsi || '-' }}</td>
                 </tr>
               </tbody>
             </table>
@@ -231,7 +231,7 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>{{ alat.deskripsi || '-' }}</td>
+                  <td>{{ form.deskripsi || '-' }}</td>
                 </tr>
               </tbody>
             </table>
@@ -239,24 +239,24 @@
         </div>
         <!-- Konten Detail Rincian Alat -->
         <div id="app" class="card-body" v-if="showRincianAlat" style="border-radius: 20px;">
-          <rincian-alat :kode-alat="alat.kode_alat"></rincian-alat>
+          <rincian-alat :kode-alat="form.kode"></rincian-alat>
         </div>
       </div>
       <!-- Konten Detail Alat Rusak -->
       <div id="app" class="card-body" v-if="showRincianAlatRusak" style="border-radius: 20px;">
-        <alat-rusak :kode-alat="alat.kode_alat"></alat-rusak>
+        <alat-rusak :kode-alat="form.kode"></alat-rusak>
       </div>
       <!-- Konten Detail Alat Musnah -->
       <div id="app" class="card-body" v-if="showRincianAlatMusnah" style="border-radius: 20px;">
-        <alat-musnah :kode-alat="alat.kode_alat"></alat-musnah>
+        <alat-musnah :kode-alat="form.kode"></alat-musnah>
       </div>
       <!-- Konten Detail Alat Error -->
       <div id="app" class="card-body" v-if="showRincianAlatError" style="border-radius: 20px;">
-        <alat-error :kode-alat="alat.kode_alat"></alat-error>
+        <alat-error :kode-alat="form.kode"></alat-error>
       </div>
       <!-- Konten Detail Alat Hilang -->
       <div id="app" class="card-body" v-if="showRincianAlatHilang" style="border-radius: 20px;">
-        <alat-hilang :kode-alat="alat.kode_alat"></alat-hilang>
+        <alat-hilang :kode-alat="form.kode"></alat-hilang>
       </div>
     </div>
   </div>
@@ -272,6 +272,7 @@ export default {
   data() {
     return {
       alat: {}, // Menyimpan data alat
+      form: {},
       showDetail: true, // Mengontrol tampilan detail
       showDetailAlat: true,
       showRincianAlat: false, //Mengontrol tampilan rincian alat
@@ -282,17 +283,38 @@ export default {
     };
   },
   methods: {
+    // async fetchData() {
+    //   try {
+    //     const id = this.$route.params.id;
+    //     const response = await axios.get(`/api/v1/tools/${id}`);
+    //     this.form = response.data;
+    //     console.log(this.form);
+    //   } catch (error) {
+    //     console.error(error);
+    //   }
+    // },
     async fetchAlatDetail() {
       try {
         const id = this.$route.params.id; // ID alat di URL
-        const response = await axios.get(`/api/alats/${id}`);
-        this.alat = response.data; // Menyimpan data alat
-        //console.log("Data alat:", this.alat); // Debug data
+        const response = await axios.get(`/api/v1/tools/${id}`);
+        this.form = response.data; // Menyimpan data alat
+        // console.log("Data alat:", this.alat); // Debug data
       } catch (error) {
         //console.error("Error fetching alat detail:", error);
         alert("Gagal memuat detail alat.");
       }
     },
+    // async fetchAlatDetail() {
+    //   try {
+    //     const id = this.$route.params.id; // ID alat di URL
+    //     const response = await axios.get(`/api/alats/${id}`);
+    //     this.alat = response.data; // Menyimpan data alat
+    //     console.log("Data alat:", this.alat); // Debug data
+    //   } catch (error) {
+    //     //console.error("Error fetching alat detail:", error);
+    //     alert("Gagal memuat detail alat.");
+    //   }
+    // },
     formatRupiah(harga_total) {
       return harga_total ? new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(harga_total) : 'Rp -';
     },
@@ -360,6 +382,7 @@ export default {
   },
   mounted() {
     this.fetchAlatDetail();
+    // this.fetchData();
     this.showDetail = true; // Menampilkan detail alat saat halaman pertama kali dimuat
   },
 };

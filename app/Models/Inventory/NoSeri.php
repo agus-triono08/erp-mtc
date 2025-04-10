@@ -30,6 +30,6 @@ class NoSeri extends Model
 
     public function tools(): BelongsTo
     {
-        return $this->belongsTo(Tools::class);
+        return $this->belongsTo(Tools::class, 'tools_id', 'id');
     }
 }

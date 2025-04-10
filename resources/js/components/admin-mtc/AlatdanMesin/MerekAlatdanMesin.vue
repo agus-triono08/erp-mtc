@@ -8,7 +8,18 @@
         </div>
       </div>
     </div>
-    <h1 class="h3 mb-4 mt-4 text-gray-900"><b>Layout</b></h1>
+    <h1 class="h3 mb-4 mt-4 text-gray-900"><b>Inventory Alat/Mesin</b></h1>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <router-link class="nav-link" id="kategori-tab" data-toggle="tab" role="tab" aria-controls="kategori" aria-selected="false" :class="{active: $route.name === 'kategori'}" :to="{name: 'kategori'}">Kategori Alat/Mesin</router-link>
+      </li>
+      <li class="nav-item" role="presentation">
+        <router-link class="nav-link" id="merek-tab" data-toggle="tab" role="tab" aria-controls="merek" aria-selected="true" :class="{active: $route.name === 'merek'}" :to="{name: 'merek'}">Merek Alat/Mesin</router-link>
+      </li>
+      <!-- <li class="nav-item" role="presentation">
+        <router-link class="nav-link" id="tipe-tab" data-toggle="tab" role="tab" aria-controls="tipe" aria-selected="false" :class="{active: $route.name === 'tipe'}" :to="{name: 'tipe'}">Tipe Alat/Mesin</router-link>
+      </li> -->
+    </ul>
     <div class="row align-items-center justify-content-end m-3">
       <!-- Tambah Data -->
       <button class="btn btn-sm btn-outline-primary mr-2 ml-1" @click="openModal('add')">
@@ -28,25 +39,33 @@
         <thead>
           <tr class="bg-table text-center">
             <th class="text-black-1">#</th>
-            <th class="text-black-1">Ruang</th>
-            <th class="text-black-1">Lantai</th>
-            <th class="text-black-1">Rak</th>
-            <th class="text-black-1">Koordinat</th>
+            <th @click="sortBy('kode_merek')" style="cursor: pointer;">
+              Kode
+              <i class="fas" :class="{
+                'fa-sort-up': sortKey === 'kode_merek' && sortDirection === 'asc',
+                'fa-sort-down': sortKey === 'kode_merek' && sortDirection === 'desc'
+              }"></i>
+            </th>
+            <th @click="sortBy('nama_merek')" style="cursor: pointer;">
+              Nama
+              <i class="fas" :class="{
+                'fa-sort-up': sortKey === 'nama_merek' && sortDirection === 'asc',
+                'fa-sort-down': sortKey === 'nama_merek' && sortDirection === 'desc'
+              }"></i>
+            </th>
             <th class="text-black-1">Aksi</th>
           </tr>
         </thead>
         <tbody v-if="paginatedData.length === 0">
           <tr class="text-center">
-            <td colspan="6">Data tidak ditemukan</td>
+            <td colspan="4">Data tidak ditemukan</td>
           </tr>
         </tbody>
-        <tbody v-for="(item, index) in paginatedData" :key="index">
+        <tbody v-for="(item, index) in paginatedData" :key="item.id">
           <tr class="text-center">
             <td>{{ index + 1 }}</td>
-            <td>{{ item.ruang || '-' }}</td>
-            <td>{{ item.lantai || '-' }}</td>
-            <td>{{ item.rak || '-' }}</td>
-            <td>{{ item.koordinat || '-' }}</td>
+            <td>{{ item.kode_merek|| '-' }}</td>
+            <td>{{ item.nama_merek || '-' }}</td>
             <td>
               <div class="dropdown text-center">
                 <button
@@ -103,22 +122,28 @@
             </button>
           </div>
           <div class="modal-body">
+            <!-- <div class="form-group">
+              <label for="jenis" style="color: #000;">
+                <b>Jenis</b>
+                <sup style="color: red;">*</sup>
+              </label>
+              <select 
+                id="jenis"
+                class="form-control"
+                v-model="form.jenis"
+                required
+              >
+                <option value="" disabled selected>Pilih Jenis</option>
+                <option v-for="jenis in Jenis" :key="jenis.id" :value="jenis.id">{{ jenis.nama_jenis }}</option>              
+              </select>
+            </div> -->
             <div class="form-group">
-              <label for="ruang">Ruang</label>
-              <input type="text" class="form-control" id="ruang" v-model="form.ruang">
-            </div>
-            <div class="form-group">
-              <label for="lantai">Lantai</label>
-              <input type="text" class="form-control" id="lantai" v-model="form.lantai">
-            </div>
-            <div class="form-group">
-              <label for="rak">Rak</label>
-              <input type="text" class="form-control" id="rak" v-model="form.rak">
-            </div>
-            <div class="form-group">
-              <label for="rak">Koordinat</label>
-              <input type="text" class="form-control" id="koordinat" v-model="form.koordinat">
-            </div>
+              <label for="jenis" style="color: #000;">
+                <b>Nama</b>
+                <sup style="color: red;">*</sup>
+              </label>
+              <input type="text" class="form-control" id="nama" v-model="form.nama_merek">
+            </div>            
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" @click="closeModal">Tutup</button>
@@ -133,18 +158,22 @@
 
 <script>
 import axios from 'axios';
+import vSelect from 'vue-select';
 
 export default {
+  components: {
+    vSelect,
+  },
   data() {
     return {
       searchQuery: '',
-      layouts: [], // Data layout dari API Laravel
-      form: {
-        ruang: '',
-        lantai: '',
-        rak: '',
-        koordinat: '',
+      Merek: [],
+      form: {        
+        nama_merek: '',
+        kode_merek: '',
       },
+      sortKey: '',
+      sortDirection: 'asc',
       currentIndex: null,
       modalTitle: '',
       modalAction: '',
@@ -156,15 +185,32 @@ export default {
   },
   mounted() {
     this.isLoading = true;
-    this.getLayouts();
+    this.fetchData();
   },
   computed: {
     filteredData() {
-      return this.layouts.filter(item => {
-        return  item.ruang.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-                item.lantai.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-                item.rak.toLowerCase().includes(this.searchQuery.toLowerCase());
+      let result = this.Merek.filter(item => {
+        return (
+          item.kode_merek.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+          item.nama_merek.toLowerCase().includes(this.searchQuery.toLowerCase())
+        );
       });
+
+      if (this.sortKey) {
+        result.sort((a, b) => {
+          let aVal = this.getSortValue(a, this.sortKey);
+          let bVal = this.getSortValue(b, this.sortKey);
+
+          aVal = aVal ? aVal.toString().toLowerCase() : '';
+          bVal = bVal ? bVal.toString().toLowerCase() : '';
+
+          if (aVal < bVal) return this.sortDirection === 'asc' ? -1 : 1;
+          if (aVal > bVal) return this.sortDirection === 'asc' ? 1 : -1;
+          return 0;
+        });
+      }
+
+      return result;
     },
     totalPages() {
       return Math.ceil(this.filteredData.length / this.rowsPerPage);
@@ -181,10 +227,11 @@ export default {
     },
   },
   methods: {
-    getLayouts() {
-      axios.get('/api/v1/layouts')
+    fetchData() {
+      axios.get('/api/v1/merek')
         .then(response => {
-          this.layouts = response.data;
+          this.Merek = response.data;
+          // console.log(this.Merek);
           this.isLoading = false;
         })
         .catch(error => {
@@ -192,23 +239,32 @@ export default {
           this.isLoading = false;
         });
     },
+    sortBy(key) {
+      if (this.sortKey === key) {
+        this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+      } else {
+        this.sortKey = key;
+        this.sortDirection = 'asc';
+      }
+    },
+    getSortValue(item, key) {
+      if (key === 'jenis') {
+        return item.jenis?.nama_jenis;
+      }
+      return item[key];
+    },
     openModal(action, item = null, index = null) {
       if (action === 'add') {
         this.modalTitle = 'Tambah Data';
         this.modalAction = 'Simpan';
-        this.form.ruang = '';
-        this.form.lantai = '';
-        this.form.rak = '';
-        this.form.koordinat = '';
+        this.form.nama_merek = '';
         this.currentIndex = null;
         this.currentId = null;
       } else if (action === 'edit' && item) {
         this.modalTitle = 'Edit Data';
         this.modalAction = 'Update';
-        this.form.ruang = item.ruang;
-        this.form.lantai = item.lantai;
-        this.form.rak = item.rak;
-        this.form.koordinat = item.koordinat;
+        this.form.kode_merek = item.kode_merek;
+        this.form.nama_merek = item.nama_merek;
         this.currentIndex = index;
         this.currentId = item.id;
       }
@@ -220,11 +276,11 @@ export default {
     saveData() {
       if (this.currentIndex === null) {
         // Tambah Data
-        axios.post('/api/v1/layouts', this.form)
+        axios.post('/api/v1/merek', this.form)
           .then(response => {
-            this.layouts.push(response.data);
+            this.Merek.push(response.data);
             this.closeModal();
-            this.getLayouts();
+            this.fetchData();
             this.currentPage = 1; // Tambahkan kode ini untuk reset pagination
           })
           .catch(error => {
@@ -232,11 +288,11 @@ export default {
           });
       } else {
         // Edit Data
-        axios.put(`/api/v1/layouts/${this.currentId}`, this.form)
+        axios.put(`/api/v1/merek/${this.currentId}`, this.form)
           .then(response => {
-            this.layouts[this.currentIndex] = response.data;
+            this.Merek[this.currentIndex] = response.data;
             this.closeModal();
-            this.getLayouts();
+            this.fetchData();
             this.currentPage = 1; // Tambahkan kode ini untuk reset pagination
           })
           .catch(error => {
@@ -245,9 +301,9 @@ export default {
       }
     },
     deleteData(index, item) {
-      axios.delete(`/api/v1/layouts/${item.id}`)
+      axios.delete(`/api/v1/merek/${item.id}`)
         .then(response => {
-          this.layouts.splice(index, 1);
+          this.Merek.splice(index, 1);
         })
         .catch(error => {
           console.error(error);
@@ -264,7 +320,7 @@ export default {
       }
     },
     debouncedFetchNoSeri: _.debounce(function () {
-        this.getLayouts();
+        this.fetchData();
       }, 300),
   }
 }

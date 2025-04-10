@@ -13,10 +13,17 @@ class TipeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $tipe = Tipe::all();
-        return response()->json($tipe);
+    // public function index()
+    // {
+    //     $tipe = Tipe::all();
+    //     return response()->json($tipe);
+    // }
+    public function index() {
+        return Tipe::with([
+            'kategorimerek',
+            'kategorimerek.merek',
+            'kategorimerek.kategori',
+        ])->get();
     }
 
     // /**

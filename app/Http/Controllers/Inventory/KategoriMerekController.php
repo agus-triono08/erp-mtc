@@ -108,4 +108,20 @@ class KategoriMerekController extends Controller
 
         return response()->json(['message' => 'Kategori Merek berhasil dihapus']);
     }
+    
+    public function check(Request $request)
+    {
+        $kategoriId = $request->kategori_id;
+        $merekId = $request->merek_id;
+
+        $existing = KategoriMerek::where('kategori_id', $kategoriId)
+                                ->where('merek_id', $merekId)
+                                ->first();
+
+        if ($existing) {
+            return response()->json(['id' => $existing->id], 200);
+        } else {
+            return response()->json(['id' => null], 200);
+        }
+    }
 }
