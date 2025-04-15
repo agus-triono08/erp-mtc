@@ -4,6 +4,8 @@ namespace App\Models\Inventory;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Layout;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class NoSeri extends Model
 {
@@ -31,5 +33,10 @@ class NoSeri extends Model
     public function tools(): BelongsTo
     {
         return $this->belongsTo(Tools::class, 'tools_id', 'id');
+    }
+
+    public function perawatan()
+    {
+        return $this->hasMany(Perawatan::class);
     }
 }

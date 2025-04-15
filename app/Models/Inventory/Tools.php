@@ -5,6 +5,7 @@ namespace App\Models\Inventory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\Layout;
 
 
 class Tools extends Model
@@ -58,23 +59,29 @@ class Tools extends Model
         return $this->belongsTo(Jenis::class);
     }
 
-    public function kategori()
-    {
-        return $this->belongsTo(Kategori::class);
-    }
+    // public function kategori()
+    // {
+    //     return $this->belongsTo(Kategori::class);
+    // }
 
-    public function merek()
-    {
-        return $this->belongsTo(Merek::class);
-    }
+    // public function merek()
+    // {
+    //     return $this->belongsTo(Merek::class);
+    // }
 
-    public function tipe()
-    {
-        return $this->belongsTo(Tipe::class);
-    }
+    // public function tipe()
+    // {
+    //     return $this->belongsTo(Tipe::class);
+    // }
 
     public function noSeri()
     {
         return $this->hasMany(NoSeri::class);
     }
+
+    public function layout()
+    {
+        return $this->belongsTo(Layout::class);
+    }
+
 }

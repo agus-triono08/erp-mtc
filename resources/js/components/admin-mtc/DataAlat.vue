@@ -178,14 +178,23 @@
           </tr>
           <tr v-for="(item, index) in categoryGroup" :key="item.id" class="tr-center">
             <td class="text-center">{{ index + 1 }}</td>
-            <td class="text-left"><img :src="item.gambar" style="max-width: 50px; max-height: 50px; margin-right: 20px; border-radius: 10px;" />{{ item.kode }}</td>
-            <td class="text-center">{{ item.jenis.nama_jenis || '-' }}</td>
+            <td class="text-left">
+              <img 
+                :src="getImageUrl(item.gambar)" 
+                style="max-width: 50px; max-height: 50px; margin-right: 20px; border-radius: 10px;" 
+              />
+              {{ item.kode }}
+            </td>
+            <td class="text-center">{{ getNamaJenis(item) }}</td>
             <td class="text-center">{{ item.nama || '-' }}</td>
             <!-- <td class="text-center">{{ item.jenis.kategori[0].kategori_merek[0].merek.nama_merek }}</td> -->
             <!-- <td class="text-center">{{ item.jenis.kategori.kategori_merek && item.jenis.kategori.kategori_merek && item.jenis.kategori.kategori_merek.merek ? item.jenis.kategori.kategori_merek.merek.nama_merek : '-' }}</td>
             <td class="text-center">{{ item.jenis.kategori.kategori_merek && item.jenis.kategori.kategori_merek && item.jenis.kategori.kategori_merek.tipe ? item.jenis.kategori.kategori_merek.tipe.nama_tipe : '-' }}</td> -->
-            <td class="text-center">{{ item.jenis.kategori.kategori_merek[0].merek.nama_merek || '-' }}</td>
-            <td class="text-center">{{ item.jenis.kategori.kategori_merek[0].tipe.nama_tipe }}</td>
+            <!-- <td class="text-center">{{ item.jenis.kategori.kategori_merek[0].merek.nama_merek || '-' }}</td>
+            <td class="text-center">{{ item.jenis.kategori.kategori_merek[0].tipe.nama_tipe }}</td> -->
+            <!-- <td class="text-center">{{ item.nama_merek || '-' }}</td> -->
+            <td class="text-center">{{ getNamaMerek(item) }}</td>
+            <td class="text-center">{{ getNamaTipe(item) || '-' }}</td>
             <td class="text-center">{{ item.stok_awal || '-' }}</td>
             <!-- <td class="text-center" :class="{ 'text-danger': alat.stok_akhir <= 2 }">{{ alat.stok_akhir }}<br>
               <span v-if="alat.stok_akhir <= 2" class="text-center"><small>Minimum Stok</small></span>
@@ -207,7 +216,7 @@
                   <a class="dropdown-item" @click="viewDetail(item.id)">
                     <i class="fas fa-eye text-info"></i> Detail
                   </a>
-                  <a class="dropdown-item" @click="editData(alat.id)">
+                  <a class="dropdown-item" @click="editData(item.id)">
                     <i class="fas fa-edit text-primary"></i> Edit
                   </a>
                   <!-- <a class="dropdown-item" @click="deleteData(alat.id)">
@@ -276,25 +285,42 @@ export default {
     };
   },
   computed: {
+    // availableCategory() {
+    //   return [...new Set(this.alats.map(alat => alat.jenis.kategori.nama_kategori))];
+    // },
     availableCategory() {
-      return [...new Set(this.alats.map(alat => alat.jenis.kategori.nama_kategori))];
+      return [...new Set(this.alats.map(alat => this.getNamaKategori(alat)))];
     },
     availableJenis() {
-      return [...new Set(this.alats.map(alat => alat.jenis.nama_jenis))];
+      return [...new Set(this.alats.map(alat => this.getNamaJenis(alat)))];
     },
     filteredAlats() {
       return this.alats.filter(alat => {
         const statusMatch = this.statusFilters.length ? this.statusFilters.includes(alat.status) : true;
         const unitMatch = this.unitFilters.length ? this.unitFilters.includes(alat.unit) : true;
-        const categoryMatch = this.categoryFilters.length ? this.categoryFilters.includes(alat.jenis.kategori ? alat.jenis.kategori.nama_kategori : '') : true;
-        const jenisMatch = this.jenisFilter.length ? this.jenisFilter.includes(alat.jenis.nama_jenis) : true;
+        const categoryMatch = this.categoryFilters.length ? this.categoryFilters.includes(this.getNamaKategori(alat)) : true;
+        const jenisMatch = this.jenisFilter.length ? this.jenisFilter.includes(this.getNamaJenis(alat)) : true;
         const searchMatch = alat.nama.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-          (alat.jenis.kategori && alat.jenis.kategori.kategori_merek && alat.jenis.kategori.kategori_merek[0].merek && alat.jenis.kategori.kategori_merek[0].merek.nama_merek.toLowerCase().includes(this.searchQuery.toLowerCase())) || 
+          this.getNamaMerek(alat).toLowerCase().includes(this.searchQuery.toLowerCase()) || 
+          this.getNamaTipe(alat).toLowerCase().includes(this.searchQuery.toLowerCase()) ||
           alat.kode.toLowerCase().includes(this.searchQuery.toLowerCase());
 
         return statusMatch && unitMatch && jenisMatch && categoryMatch && searchMatch;
       });
     },
+    // filteredAlats() {
+    //   return this.alats.filter(alat => {
+    //     const statusMatch = this.statusFilters.length ? this.statusFilters.includes(alat.status) : true;
+    //     const unitMatch = this.unitFilters.length ? this.unitFilters.includes(alat.unit) : true;
+    //     const categoryMatch = this.categoryFilters.length ? this.categoryFilters.includes(alat.jenis.kategori ? alat.jenis.kategori.nama_kategori : '') : true;
+    //     const jenisMatch = this.jenisFilter.length ? this.jenisFilter.includes(alat.jenis.nama_jenis) : true;
+    //     const searchMatch = alat.nama.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+    //       (alat.jenis.kategori && alat.jenis.kategori.kategori_merek && alat.jenis.kategori.kategori_merek[0].merek && alat.jenis.kategori.kategori_merek[0].merek.nama_merek.toLowerCase().includes(this.searchQuery.toLowerCase())) || 
+    //       alat.kode.toLowerCase().includes(this.searchQuery.toLowerCase());
+
+    //     return statusMatch && unitMatch && jenisMatch && categoryMatch && searchMatch;
+    //   });
+    // },
     // filteredAlats() {
     //   return this.alats.filter(alat => {
     //     const statusMatch = this.statusFilters.length ? this.statusFilters.includes(alat.status) : true;
@@ -323,15 +349,49 @@ export default {
     // },
     filteredGroupedAlats() {
       const grouped = this.paginatedAlats.reduce((groups, alat) => {
-        const kategori = alat.jenis.kategori.nama_kategori || 'Uncategorized';
-        if (!groups[kategori]) {
-          groups[kategori] = [];
+        const parts = alat.kode?.split('-') || [];
+        const kodeKategori = parts[1];
+
+        let namaKategori = 'Uncategorized';
+
+        if (alat.jenis?.kategori) {
+          const kategoriMatch = alat.jenis.kategori.find(k => k.kode_kategori === kodeKategori);
+          if (kategoriMatch) {
+            namaKategori = kategoriMatch.nama_kategori;
+          }
         }
-        groups[kategori].push(alat);
+
+        if (!groups[namaKategori]) {
+          groups[namaKategori] = [];
+        }
+
+        groups[namaKategori].push(alat);
         return groups;
       }, {});
       return grouped;
     },
+    // filteredGroupedAlats() {
+    //   const grouped = this.paginatedAlats.reduce((groups, alat) => {
+    //     const kategori = alat.nama_kategori || 'Uncategorized';
+    //     if (!groups[kategori]) {
+    //       groups[kategori] = [];
+    //     }
+    //     groups[kategori].push(alat);
+    //     return groups;
+    //   }, {});
+    //   return grouped;
+    // },
+    // filteredGroupedAlats() {
+    //   const grouped = this.paginatedAlats.reduce((groups, alat) => {
+    //     const kategori = alat.jenis.kategori.nama_kategori || 'Uncategorized';
+    //     if (!groups[kategori]) {
+    //       groups[kategori] = [];
+    //     }
+    //     groups[kategori].push(alat);
+    //     return groups;
+    //   }, {});
+    //   return grouped;
+    // },
     paginatedAlats() {
       const start = (this.currentPage - 1) * this.rowsPerPage;
       return this.filteredAlats.slice(start, start + this.rowsPerPage);
@@ -358,6 +418,9 @@ export default {
       } finally {
         this.isLoading = false;
       }
+    },
+    getImageUrl(path) {
+      return path ? `${window.location.origin}/storage/${path}` : null;
     },
     // async fetchAlats() {
     //   this.isLoading = true;
@@ -461,6 +524,33 @@ export default {
     tutupModal() {
       this.showModalInput = false;
     },
+    getNamaJenis(item) {
+      const parts = item.kode?.split('-') || [];
+      const kodeJenis = parts[0];
+      return item.jenis?.kode_jenis === kodeJenis ? item.jenis.nama_jenis : '-';
+    },
+    getNamaKategori(item) {
+      const parts = item.kode?.split('-') || [];
+      const kodeKategori = parts[1];
+      const kategori = item.jenis?.kategori?.find(k => k.kode_kategori === kodeKategori);
+      return kategori ? kategori.nama_kategori : '-';
+    },
+    getNamaMerek(item) {
+      const parts = item.kode?.split('-') || [];
+      const kodeMerek = parts[2];
+      const kategori = item.jenis?.kategori || [];
+      const merek = kategori.flatMap(k => k.merek || []).find(m => m.kode_merek === kodeMerek);
+      return merek ? merek.nama_merek : '-';
+    },
+    getNamaTipe(item) {
+      const parts = item.kode?.split('-') || [];
+      const kodeTipe = parts[3];
+      const tipe = item.jenis?.kategori
+        ?.flatMap(k => k.merek || [])
+        .flatMap(m => m.tipe || [])
+        .find(t => t.kode_tipe === kodeTipe);
+      return tipe ? tipe.nama_tipe : '-';
+    },
     // Metode untuk mendownload data ke Excel
     downloadExcel() {
     // Memastikan data yang akan diekspor sudah ada
@@ -473,11 +563,11 @@ export default {
     const data = this.filteredAlats.map((alat, index) => ({
       No: index + 1,  // Menambahkan nomor urut      
       Kode: alat.kode,
-      Jenis: alat.jenis.nama_jenis,
-      Kategori: alat.jenis.kategori.nama_kategori,
+      Jenis: this.getNamaJenis(alat),
+      Kategori: this.getNamaKategori(alat),
       Nama: alat.nama,
-      Merek: alat.jenis.kategori.kategori_merek[0].merek.nama_merek,
-      Tipe: alat.jenis.kategori.kategori_merek[0].tipe.nama_tipe,
+      Merek: this.getNamaMerek(alat),
+      Tipe: this.getNamaTipe(alat),
       'Stok Awal': alat.stok_awal,
       'Stok Akhir': alat.stok_akhir,      
     }));

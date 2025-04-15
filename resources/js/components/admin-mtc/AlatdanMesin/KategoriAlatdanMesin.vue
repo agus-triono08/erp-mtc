@@ -71,7 +71,7 @@
         <tbody v-for="(item, index) in paginatedData" :key="item.id">
           <tr class="text-center">
             <td>{{ index + 1 }}</td>
-            <td>{{ item.jenis.nama_jenis || '-' }}</td>
+            <td>{{ item.jenis && item.jenis.nama_jenis || '-' }}</td>
             <td>{{ item.kode_kategori|| '-' }}</td>
             <td>{{ item.nama_kategori || '-' }}</td>
             <td>
@@ -146,7 +146,7 @@
               </select>
             </div>
             <div class="form-group">
-              <label for="jenis" style="color: #000;">
+              <label for="nama" style="color: #000;">
                 <b>Nama</b>
                 <sup style="color: red;">*</sup>
               </label>

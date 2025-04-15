@@ -11,565 +11,400 @@
     <div class="card-header py-3 mb-2">
       <h6 class="m-0 font-weight-bold" style="color: #169ea8; border-radius: 15px;">Form Input Data Master</h6>
     </div>
-    <div class="card-body" style="border-radius: 15px;">
-      <form @submit.prevent="submitAlat">
 
-        <div class="row">
-          <div class="form-group col-md-12">
-            <label for="jenis" style="color: #000;">
-              <b>Jenis</b>
-              <sup style="color: red;">*</sup>
-            </label>
-            <select 
-              id="jenis"
-              class="form-control"
-              required
-            >
-              <option value="" disabled selected>Pilih Jenis</option>
-              <option v-for="jenis in Jenis" :key="jenis.id" :value="jenis.nama_jenis">{{ jenis.nama_jenis }}</option>
-              <!-- <option value="Alat">Alat</option>
-              <option value="Mesin">Mesin</option> -->
-            </select>
-          </div>
-        </div>
+    <form @submit.prevent="submitForm" enctype="multipart/form-data">
+      <!-- Dropdown Jenis -->
+      <div class="form-group">
+        <label style="color: black;">
+          <b>Jenis</b>
+          <sup style="color: red;">*</sup>
+        </label>
+        <select v-model="form.jenis_id" class="form-control" @change="fetchKategori">
+          <option disabled value="">Pilih Jenis</option>
+          <option v-for="j in jenis" :key="j.id" :value="j.id">
+            {{ j.nama_jenis }}
+          </option>
+        </select>
+      </div>
 
-        <!-- Kategori Alat -->
-        <div class="row">
-          <div class="form-group col-md-12">
-            <label for="kategori" style="color: #000;">
-              <b>Kategori</b>
-              <sup style="color: red;"> *</sup>
-            </label>
-            <!-- <div>
-              <v-select
-                v-model="selectedKategori"
-                :options="Kategoris"
-                label="nama_kategori"
-                placeholder="Pilih Kategori"
-                @input="onKategoriChange"
-                :searchable="true"
-              >
-              </v-select>
-            </div>
-            <div v-if="showManualInput" class="mt-2">
-              <input
-                type="text"
-                v-model="manualKategori"
-                class="form-control"
-                placeholder="Masukkan kategori baru"
-              />
-            </div> -->
-            <v-select
-              v-model="selectedKategori"
-              :options="Kategoris"
-              label="nama_kategori"
-              placeholder="Pilih Kategori"
-              :searchable="true"              
-            ></v-select>
-          </div>
-        </div>
-
-        <!-- Nama Alat -->
-        <div class="row">
-          <div class="form-group col-md-6">
-            <label for="nama_alat" style="color: #000;">
-              <b>Nama Alat</b>
-              <sup style="color: red;"><b> *</b></sup>
-            </label>
-            <input
-              type="text"
-              id="nama_alat"
-              v-model="alat.nama_alat"
-              class="form-control"
-              placeholder="Masukkan Nama Alat"
-              required
-            />
-          </div>
-
-          <!-- Merek Alat -->
-          <div class="form-group col-md-6">
-            <label for="merek_alat" style="color: #000;">
-              <b>Merek Alat</b>
-              <sup style="color: red;"><b> *</b></sup>
-            </label>
-            <!-- <input
-              type="text"
-              id="merek_alat"
-              v-model="alat.merek_alat"
-              class="form-control"
-              placeholder="Masukkan Merek Alat"
-              required
-            /> -->
-            <v-select
-              v-model="selectedMerek"
-              :options="Merek"
-              label="nama_merek"
-              placeholder="Pilih Merek"
-              :searchable="true"
-              required
-            ></v-select>
-          </div>            
-        </div>
-
-        <div class="row">        
-          <!--Tipe/Ukuran Alat-->
-          <div class="form-group col-md-6">
-            <label for="tipe_alat" style="color: #000;">
-              <b>Tipe/Ukuran Alat</b>
-              <sup style="color: red;"><b> *</b></sup>
-            </label>
-            <input 
-              type="text"
-              id="tipe_alat"
-              v-model="alat.tipe_alat"
-              class="form-control"
-              placeholder="Masukkan Tipe/Ukuran Alat"
-              required
-            />
-            <!-- <v-select
-              v-model="selectedTipe"
-              :options="Tipe"
-              label="nama_tipe"
-              placeholder="Pilih Tipe"
-              :searchable="true"
-              required
-            ></v-select> -->
-          </div>
-
-          <!-- Produk -->
-          <div class="form-group col-md-6">
-            <label for="pembelian" style="color: #000;">
-              <b>Produk</b>
-            </label>
-            <select
-              id="pembelian"
-              v-model="alat.produk"
-              class="form-control"
-            >
-              <option value="" disabled selected>Pilih Produk Alat</option>
-              <option value="Local">Local</option>
-              <option value="Import">Import</option>
-            </select>
-          </div>
-
-          <!-- Serial Number Alat Bawaan -->
-          <!--<div class="form-group col-md-6">
-            <label for="serial_number" style="color: #000;">
-              <b>Serial Number Alat Bawaan</b>
-            </label>
-            <input 
-              type="text"
-              id="serial_number"
-              v-model="alat.serial_number"
-              class="form-control"
-              placeholder="Masukkan Serial Number Alat Bawaan"
-              required
-            />            
-            <span style="font-size: small;">Isi '-' jika tidak memiliki serial number</span>   
-          </div>-->         
-        </div>
-
-        <!--<div class="row">-->
-          <!-- Harga Pembelian -->
-          <!--<div class="form-group col-md-6">
-            <label for="harga_pembelian" style="color: #000;">
-              <b>Harga Pembelian Alat</b>
-            </label>
-            <input
-              type="text"
-              id="harga_pembelian"
-              v-model="formattedHarga"
-              class="form-control"
-              placeholder="Rp. -"
-              @input="formatHarga"
-              required
-            />
-            <input type="hidden" v-model="alat.harga_pembelian" />
-            <span style="font-size: small;">Isi '0' jika tidak memiliki harga pembelian</span>
-          </div>-->            
-
-          <!-- Tahun Masuk -->
-          <!--<div class="form-group col-md-6">
-            <label for="tahun_masuk" style="color: #000;"><b>Tahun Masuk Alat</b></label>
-            <input
-              type="number"
-              id="tahun_masuk"
-              v-model="alat.tahun_masuk"
-              class="form-control"
-              placeholder="Masukkan Tahun Masuk Alat"
-              required
-            />
-          </div>
-        </div>-->
-
-        <div class="row">
-          <!-- Stok -->
-          <div class="form-group col-md-4">
-            <label for="stok" style="color: #000;">
-              <b>Stok</b>
-              <sup style="color: red;"> *</sup>
-            </label>
-            <input
-              type="number"
-              id="stok"
-              v-model="alat.stok"
-              class="form-control"
-              placeholder="Masukkan Jumlah Stok"
-              required
-            />
-          </div>         
-
-          <!-- Satuan Alat -->
-          <div class="form-group col-md-4">
-            <label for="satuan_alat" style="color: #000;"><b>Satuan Alat</b></label>
-            <select 
-              id="satuan_alat"
-              v-model="alat.satuan_alat"
-              class="form-control"
-            >
-              <option value="" disabled selected>Pilih Satuan Alat</option>
-              <option value="Pcs">Pcs</option>
-              <option value="Unit">Unit</option>
-              <option value="Set">Set</option>
-            </select>
-          </div>  
-            
-          <!-- Sumber Alat -->
-          <div class="form-group col-md-4">
-            <label for="sumber_alat" style="color: #000;">
-              <b>Sumber Alat</b>                
-            </label>
-            <select
-              id="sumber_alat"
-              v-model="alat.sumber_alat"
-              class="form-control"
-            >
-              <option value="" disabled selected>Pilih Sumber Alat</option>               
-              <option value="Stok Baru">Stok Baru</option>
-              <option value="Stok Lama">Stok Lama</option>
-              <option value="Peminjaman">Peminjaman</option>                
-            </select>
-          </div> 
-
-          <!-- Status -->
-          <!--<div class="form-group col-md-6">
-            <label for="status" style="color: #000;">
-              <b>Status</b>
-              <sup style="color: red;"> *</sup>
-            </label>
-            <select
-              id="status"
-              v-model="alat.status"
-              class="form-control"
-              required
-            >
-              <option value="" disabled selected>Pilih Status</option>
-              <option value="active">Active</option>
-              <option value="rusak">Rusak</option>
-              <option value="error">Error</option>
-            </select>
-          </div>-->    
-        </div>
-
-        <!--<div class="row">-->
-          <!-- Lokasi Penyimpanan -->
-          <!--<div class="form-group col-md-6">
-            <label for="lokasi_penyimpanan" style="color: #000;">
-              <b>Lokasi Penyimpanan</b>
-              <sup style="color: red;"> *</sup>
-            </label>
-            <div>
-              <select
-              id="lokasi"
-              v-model="selectedLocation"
-              class="form-control"
-              @change="onLocationChange"
-              >
-                <option value="" disabled selected>Pilih Lokasi</option>                  
-                <option value="other">Masukkan Lokasi Lainnya</option>
-                <option v-for="location in locations" :key="location.id" :value="location">
-                  {{ location }}
-                </option>
-              </select>
-            </div>
-            <div v-if="showManualInputLocation" class="mt-2">
-              <input
-                type="text"
-                v-model="manualLocationInput"
-                class="form-control"
-                placeholder="Masukkan Lokasi Penyimpanan"
-              />
-            </div>
-          </div>
-
-        </div>-->
-
-        <!-- Jadwal Perawatan -->
-        <div class="row">
-          <div class="form-group col-md-12">
-            <label for="jadwal_perawatan" style="color: #000;">
-              <b>Jadwal Perawatan</b>
-              <sup style="color: red;"> *</sup>
-            </label>
-            <select
-              id="jadwal_perawatan"
-              v-model="alat.jadwal_perawatan"
-              @change="onJadwalChange"
-              class="form-control"
-              required
-            >
-              <option value="" disabled selected>Pilih Interval Perawatan</option>
-              <option value="3">Setiap 3 Bulan</option>
-              <option value="6">Setiap 6 Bulan</option>
-              <option value="12">Setiap 12 Bulan</option>
-              <option value="other">Lainnya</option>
-            </select>
-          </div>
-
-          <!-- Manual Input Jadwal (jika memilih "Lainnya") -->
-          <div v-if="showManualInputJadwal" class="form-group col-md-12">
-            <input
-              type="number"
-              v-model="manualJadwal"
-              class="form-control"
-              placeholder="Masukkan interval (bulan)"
-            />
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="fungsi" style="color: #000;">
-            <b>Fungsi</b>
+      <!-- Dropdown Kategori -->
+      <div class="form-group">
+        <label style="color: black;">
+          <b>Kategori</b>
+          <sup style="color: red;">*</sup>
+        </label>
+        <select v-model="form.kategori_id" class="form-control" @change="fetchMerek">
+          <option disabled value="">Pilih Kategori</option>
+          <option v-for="k in kategori" :key="k.id" :value="k.id">
+            {{ k.nama_kategori }}
+          </option>
+        </select>
+      </div>
+      
+      <div class="row">
+        <!-- Dropdown Merek -->
+        <div class="form-group col-md-6">
+          <label style="color: black;">
+            <b>Merek</b>
+            <sup style="color: red;">*</sup>
           </label>
+          <select v-model="form.merek_id" class="form-control" @change="fetchTipe">
+            <option disabled value="">Pilih Merek</option>
+            <option v-for="m in merek" :key="m.id" :value="m.id">
+              {{ m.nama_merek }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Dropdown Tipe -->
+        <div class="form-group col-md-6">
+          <label style="color: black;">
+            <b>Tipe</b>
+            <sup style="color: red;">*</sup>
+          </label>
+          <select v-model="form.tipe_id" class="form-control">
+            <option disabled value="">Pilih Tipe</option>
+            <option v-for="t in tipe" :key="t.id" :value="t.id">
+              {{ t.nama_tipe }}
+            </option>
+          </select>
+        </div>
+      </div>      
+
+      <div class="row">
+        <!-- Input Fields -->
+        <div class="form-group col-md-6">
+          <label style="color: black;">
+            <b>Nama</b>
+            <sup style="color: red;">*</sup>
+          </label>
+          <input v-model="form.nama" type="text" class="form-control" placeholder="Masukkan Nama Alat" required />
+        </div>
+
+        <div class="form-group col-md-6">
+          <label style="color: black;">
+            <b>Stok</b>
+            <sup style="color: red;">*</sup>
+          </label>
+          <input v-model="form.stok_awal" type="number" class="form-control" placeholder="Masukkan Jumlah Stok" required />
+        </div>
+      </div>      
+
+      <div class="row">
+        <div class="form-group col-md-4">
+          <label style="color: black;">
+            <b>Satuan</b>
+            <!-- <sup style="color: red;">*</sup> -->
+          </label>
+          <!-- <input v-model="form.unit" type="text" class="form-control" /> -->
+          <select 
+            id="satuan_alat"
+            v-model="form.unit"
+            class="form-control"
+          >
+            <option value="" disabled selected>Pilih Satuan Alat</option>
+            <option value="Pcs">Pcs</option>
+            <option value="Unit">Unit</option>
+            <option value="Set">Set</option>
+          </select>
+        </div>
+
+        <div class="form-group col-md-4">
+          <label style="color: black;">
+            <b>Produk</b>
+            <!-- <sup style="color: red;">*</sup> -->
+          </label>
+          <!-- <input v-model="form.pembelian" type="text" class="form-control" /> -->
+          <select
+            id="pembelian"
+            v-model="form.pembelian"
+            class="form-control"
+          >
+            <option value="" disabled selected>Pilih Produk Alat</option>
+            <option value="Local">Local</option>
+            <option value="Import">Import</option>
+          </select>
+        </div>
+
+        <div class="form-group col-md-4">
+          <label style="color: black;">
+            <b>Sumber</b>
+            <!-- <sup style="color: red;">*</sup> -->
+          </label>
+          <!-- <input v-model="form.sumber" type="text" class="form-control" /> -->
+          <select
+            id="sumber_alat"
+            v-model="form.sumber"
+            class="form-control"
+          >
+            <option value="" disabled selected>Pilih Sumber Alat</option>               
+            <option value="Stok Baru">Stok Baru</option>
+            <option value="Stok Lama">Stok Lama</option>
+            <option value="Peminjaman">Peminjaman</option>                
+          </select>
+        </div>
+      </div>
+
+      <!-- <div class="form-group">
+        <label>Harga Total</label>
+        <input v-model="form.harga_total" type="number" class="form-control" />
+      </div> -->            
+
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label style="color: black;">
+            <b>Vendor</b>
+            <!-- <sup style="color: red;">*</sup> -->
+          </label>
+          <!-- <input v-model="form.vendor" type="text" class="form-control" /> -->
           <div class="textarea-wrapper">
             <textarea
-              id="fungsi"                
-              v-model="alat.fungsi"
-              class="form-control"
-              rows="1"
-              placeholder="Masukkan Fungsi Nya (Maksimal 100 Karakter)"
-              maxlength="100"
+            id="vendor"
+            v-model="form.vendor"
+            class="form-control"
+            rows="1"
+            placeholder="Masukkan Vendor Darimana (Maksimal 100 karakter)"
+            maxlength="100"
             ></textarea>
             <small class="text-muted char-counter">
-              {{ alat.fungsi.length }} / 100
+              {{ form.vendor.length }} / 100
             </small>
           </div>
         </div>
 
-        <div class="row">
-          <!-- Asal Usul -->
-          <div class="form-group col-md-12">
-            <label for="asal_usul" style="color: #000;">
-              <b>Vendor</b>
-            </label>
-            <div class="textarea-wrapper">
-              <textarea
-              id="asal_usul"
-              v-model="alat.asal_usul"
-              class="form-control"
-              rows="1"
-              placeholder="Masukkan Vendor Alat (Maksimal 100 karakter)"
-              maxlength="100"
-              ></textarea>
-              <small class="text-muted char-counter">
-                {{ alat.asal_usul.length }} / 100
-              </small>
-            </div>
-          </div>
-        </div>
-
-        <!-- Deskripsi -->
-        <div class="form-group">
-          <label for="deskripsi" style="color: #000;">
-            <b>Deskripsi</b>
-          </label>
-          <div class="textarea-wrapper">
-            <textarea
-              id="deskripsi"
-              v-model="alat.deskripsi"
-              class="form-control"
-              rows="3"
-              placeholder="Masukkan Deskripsi (Maksimal 500 karakter)"
-              maxlength="500"
-            ></textarea>
-            <small class="text-muted char-counter">
-              {{ alat.deskripsi.length }} / 500
-            </small>
-          </div>
-        </div>
-
-        <!-- Upload Gambar dengan Drag-and-Drop -->
-        <div class="form-group">
-          <label for="gambar" style="color: #000;">
-            <b>Thumbnail Image</b>
+        <div class="form-group col-md-6">
+          <label for="layout" style="color: #000;">
+            <b>Layout</b>
             <sup style="color: red;"> *</sup>
           </label>
-          <div 
-            class="upload-box-1"
-            @dragover.prevent
-            @drop.prevent="handleDrop"
-            @dragenter="dragActive = true"
-            @dragleave="dragActive = false"
-            :class="{ 'drag-active': dragActive }"
-          >
-            <p v-if="!gambarPreview">
-              <i class="fas fa-image"></i><br>
-              Drag and drop here <br>or <br><span class="browse-link">Browse</span>
-            </p>
-            <p v-else>
-              <img :src="gambarPreview" alt="Preview" class="img-preview" />
-            </p>
-            <input 
-              type="file"
-              class="upload-input"
-              @change="onFileChange"
-              accept="image/*"
-              required
-            />
-          </div>
-        </div>          
-
-        <!-- Kondisi -->
-        <!--<div class="form-group">
-          <label for="kondisi">Kondisi</label>
-          <select
-            id="kondisi"
-            v-model="alat.kondisi"
-            class="form-control"
-            required
-          >
-            <option value="">Pilih Kondisi</option>
-            <option value="baru">Baru</option>
-            <option value="lama">Lama</option>
-            <option value="rusak">Rusak</option>
+          <select id="layout" v-model="form.layout_id" class="form-control">
+            <option value="" disabled selected>Pilih Layout</option>
+            <option v-for="layout in Layout" :key="layout.id" :value="layout.id">{{ layout.ruang }}</option>
           </select>
-        </div>-->                          
-
-        <!-- Tombol Aksi -->
-        <div class="form-group d-flex justify-content-between mt-5">
-          <span></span>
-          <div>
-            <button type="submit" class="btn btn-plus mr-2">
-              <i class="fas fa-save"></i> Simpan
-            </button>
-            <!--<button @click="tutupModal" type="button" class="btn btn-danger">
-              <i class="fas fa-times"></i> Batal
-            </button>-->
-          </div>
         </div>
-      </form>
-    </div>
+      </div>
+
+      <div class="form-group">
+        <label style="color: black;">
+          <b>Fungsi</b>
+          <!-- <sup style="color: red;">*</sup> -->
+        </label>
+        <!-- <textarea v-model="form.fungsi" class="form-control"></textarea> -->
+        <div class="textarea-wrapper">
+          <textarea
+            id="fungsi"                
+            v-model="form.fungsi"
+            class="form-control"
+            rows="1"
+            placeholder="Masukkan Fungsi Nya (Maksimal 100 Karakter)"
+            maxlength="100"
+          ></textarea>
+          <small class="text-muted char-counter">
+            {{ form.fungsi.length }} / 100
+          </small>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label style="color: black;">
+          <b>Deskripsi</b>
+          <!-- <sup style="color: red;">*</sup> -->
+        </label>
+        <!-- <textarea v-model="form.deskripsi" class="form-control"></textarea> -->
+        <div class="textarea-wrapper">
+          <textarea
+            id="deskripsi"                
+            v-model="form.deskripsi"
+            class="form-control"
+            rows="3"
+            placeholder="Masukkan Deskripsi (Maksimal 500 Karakter)"
+            maxlength="500"
+          ></textarea>
+          <small class="text-muted char-counter">
+            {{ form.deskripsi.length }} / 500
+          </small>
+        </div>
+      </div>
+
+      <!-- <div class="form-group">
+        <label>Jadwal Perawatan</label>
+        <input v-model="form.jadwal_perawatan" type="date" class="form-control" />
+      </div> -->
+
+      <div class="form-group">
+        <label for="jadwal_perawatan" style="color: #000;">
+          <b>Jadwal Perawatan</b>
+          <sup style="color: red;"> *</sup>
+        </label>
+        <!-- <select 
+          id="jadwal_perawatan"
+          v-model="form.jadwal_perawatan"
+          @change="onJadwalChange"
+          class="form-control"
+          required> -->
+        <select 
+          id="jadwal_perawatan"
+          v-model="form.jadwal_perawatan"
+          class="form-control"
+          required>
+          <option value="" disabled selected>Pilih Interval Perawatan</option>
+          <option value="1">Setiap 1 Bulan</option>
+          <option value="3">Setiap 3 Bulan</option>
+          <option value="6">Setiap 6 Bulan</option>
+          <option value="12">Setiap 12 Bulan</option>
+          <!-- <option value="other">Lainnya</option> -->
+        </select>
+      </div>
+
+      <!-- Manual Input Interval Perawatan (Jika tidak ada pilihan di atas) -->
+      <!-- <div class="form-group" v-if="showManualInputJadwal">
+        <input 
+          type="number"
+          v-model="form.jadwal_perawatan"
+          class="form-control"
+          placeholder="Masukkan Interval Jadwal Perawatan (Bulan)"/>
+      </div> -->
+
+      <!-- <div class="form-group">
+        <label>Gambar</label>
+        <input type="file" @change="handleFileUpload" class="form-control" />
+      </div> -->
+      <!-- Upload Gambar dengan Drag-and-Drop -->
+      <div class="form-group">
+        <label for="gambar" style="color: #000;">
+          <b>Thumbnail Image</b>
+          <sup style="color: red;"> *</sup>
+        </label>
+        <div 
+          class="upload-box-1"
+          @dragover.prevent
+          @drop.prevent="handleDrop"
+          @dragenter="dragActive = true"
+          @dragleave="dragActive = false"
+          :class="{ 'drag-active': dragActive }"
+        >
+          <p v-if="!form.gambar">
+            <i class="fas fa-image"></i><br>
+            Drag and drop here <br>or <br><span class="browse-link">Browse</span>
+          </p>
+          <p v-else>
+            <img :src="previewImage" alt="Preview" class="img-preview" />
+          </p>
+          <input 
+            type="file"
+            class="upload-input"
+            @change="onFileChange"
+            accept="image/*"
+            required
+          />
+        </div>
+      </div>          
+
+      <button class="btn btn-primary mb-3 float-right">Simpan</button>
+    </form>
   </div>
 </template>
 
 <script>
-import axios from "axios";
-import { create } from "lodash";
-import vSelect from 'vue-select';
-import 'vue-select/dist/vue-select.css';
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
 export default {
-  components: {
-    vSelect,
-  },
+  name: 'ToolForm',
   data() {
     return {
-      Jenis: [],
-      selectedJenis: null,
-      Kategoris: [],
-      selectedKategori: '',
-      Merek: [],
-      selectedMerek: null,
-      Tipe: [],
-      selectedTipe: null,
-      error: {
-        stok_error: "",
+      form: {
+        jenis_id: '',
+        kategori_id: '',
+        merek_id: '',
+        tipe_id: '',
+        nama: '',
+        layout_id: '',
+        stok_awal: '',
+        unit: '',
+        harga_total: '',
+        pembelian: '',
+        sumber: '',
+        vendor: '',
+        fungsi: '',
+        deskripsi: '',
+        jadwal_perawatan: '',
+        gambar: null,
       },
-      alat: {
-        jenis: "",
-        nama_alat: "",
-        merek_alat: "",
-        tanggal_masuk: "",
-        lokasi_penyimpanan: "",
-        kondisi: "",
-        status: "",
-        stok: "",
-        deskripsi: "",
-        harga_pembelian: 0,
-        asal_usul: "",
-        fungsi: "",
-        jadwal_perawatan: '', // Untuk menyimpan jadwal perawatan yang dipilih
-        tipe_alat: "",
-        produk: "",
-        satuan_alat: "",
-        sumber_alat: "",
-      },
-      gambar: null,
-      gambarPreview: null,
+      jenis: [],
+      Layout: [],
+      kategori: [],
+      merek: [],
+      tipe: [],
+      previewImage: null, // ✅ buat tampilan preview
       dragActive: false,
-      showModal: false,
-      selectedKodeAlat: '',
-      kode_alats: [],
-      kategoris: ['CLAMP', 'POWER SUPPLY', 'GLUE GUN', 'TANG', 'WATERPASS', 'SOLDER', 'Masukkan Kategori Lainnya'], // Contoh data dari database
-      formattedHarga: '',
-      selectedLocation: '',
-      manualLocationInput: '',
-      showManualInputLocation: false,
-      locations: ['Gedung A', 'Gedung B', 'Gedung C', 'Gedung D'],
-      manualKategori: '',
-      showManualInput: false,      
-      showManualInputJadwal: false, // Untuk menampilkan input manual jadwal
-      manualJadwal: '', // Untuk input manual jadwal
+      showManualInputJadwal: false,
     };
   },
+  mounted() {
+    this.fetchJenis();
+    this.fetchLayout();
+  },
   methods: {
-    //Mengambil Data Jenis
-    async fetchDataJenis() {
-      try {
-        const response = await axios.get('/api/v1/jenis');
-        this.Jenis = response.data;
-        // console.log(this.Jenis);
-      } catch (error) {
-        console.error(error);
-      }
+    async fetchJenis() {
+      const res = await axios.get('/api/v1/jenis');
+      this.jenis = res.data;
     },
-    //Mengambil Data Kategori
-    async fetchDataKategori() {
-      try {
-        const response = await axios.get('/api/v1/kategori');
-        this.Kategoris = response.data;
-        // console.log(this.Kategoris);
-      } catch (error) {
-        console.error(error);
-      }
+    async fetchKategori() {
+      const res = await axios.get(`/api/v1/kategori?jenis_id=${this.form.jenis_id}`);
+      this.kategori = res.data;
+      this.merek = [];
+      this.tipe = [];
+      this.form.kategori_id = '';
     },
-    //Mengambil Data Merek
-    async fetchDataMerek() {
-      try {
-        const response = await axios.get('/api/v1/merek');
-        this.Merek = response.data;
-        // console.log(this.Kategoris);
-      } catch (error) {
-        console.error(error);
-      }
+    async fetchMerek() {
+      const res = await axios.get(`/api/v1/merek?kategori_id=${this.form.kategori_id}`);
+      this.merek = res.data;
+      this.tipe = [];
+      this.form.merek_id = '';
     },
-    //Mengambil Data Tipe
-    async fetchDataTipe() {
-      try {
-        const response = await axios.get('/api/v1/tipe');
-        this.Tipe = response.data;
-        // console.log(this.Kategoris);
-      } catch (error) {
-        console.error(error);
-      }
+    async fetchTipe() {
+      const res = await axios.get(`/api/v1/tipe?merek_id=${this.form.merek_id}&kategori_id=${this.form.kategori_id}`);
+      this.tipe = res.data;
+      this.form.tipe_id = '';
     },
-    onJadwalChange(event) {
-      if (event.target.value === 'other') {
-        this.showManualInputJadwal = true;
-        this.alat.jadwal_perawatan = ''; // Kosongkan pilihan jika memilih "Lainnya"
-      } else {
-        this.showManualInputJadwal = false;
-        this.manualJadwal = ''; // Kosongkan input manual
+    async fetchLayout() {
+      axios.get('/api/v1/layouts')
+      .then(response => {
+        this.Layout = response.data;
+        console.log(this.Layout);
+      })
+      .catch(error => {
+        console.error(error);
+      })
+    },
+    handleFileUpload(e) {
+      this.form.gambar = e.target.files[0];
+    },
+    async submitForm() {
+      const formData = new FormData();
+      for (let key in this.form) {
+        formData.append(key, this.form[key]);
+      }
+
+      try {
+        const res = await axios.post('/api/v1/tools', formData);
+        Swal.fire({
+          title: 'Berhasil!',
+          text: 'Data berhasil disimpan.',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        }).then(() => {
+          this.$router.push('/admin-mtc/data-alat');
+        });
+      } catch (err) {
+        console.error(err.response.data); // Tambahkan ini
+        Swal.fire({
+          title: 'Gagal!',
+          text: 'Data gagal disimpan.',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
       }
     },
     kembali() {
@@ -577,253 +412,41 @@ export default {
         window.location.reload();
       });
     },
-    tutupModal() {
-      this.$emit('tutup-modal'); // Mengirim event ke komponen induk
+    setImagePreview(file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.previewImage = e.target.result; // ✅ Khusus preview saja
+      };
+      reader.readAsDataURL(file);
+      this.form.gambar = file; // ✅ Simpan file aslinya untuk upload
     },
     onFileChange(event) {
       const file = event.target.files[0];
+      if (file && file.size > 2 * 1024 * 1024) {
+        Swal.fire("Ukuran gambar terlalu besar", "Maksimal 2MB", "warning");
+        return;
+      }
       this.setImagePreview(file);
     },
     handleDrop(event) {
       const file = event.dataTransfer.files[0];
       this.setImagePreview(file);
     },
-    setImagePreview(file) {
-      this.gambar = file;
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.gambarPreview = e.target.result;
-      };
-      reader.readAsDataURL(file);
-    },
-    async submitAlat() {
-      const formData = new FormData();
-      for (const key in this.alat) {
-        formData.append(key, this.alat[key]);
-      }
-      if (this.gambar) {
-        formData.append("gambar", this.gambar);
-      }
-      if (this.alat.deskripsi.length > 500) {
-        alert("Deskripsi tidak boleh lebih dari 500 karakter.");
-        return;
-      }
-
-      try {
-        await axios.post("/api/alats", formData, {
-          headers: { "Content-Type": "multipart/form-data" },
-        });
-        alert("Data berhasil disimpan!");
-        this.tutupModal(); // Tutup modal setelah data berhasil disimpan
-      } catch (error) {
-        console.error("Error response:", error.response);
-        alert("Terjadi kesalahan saat menyimpan data: " + error.response.data.message);
-      }
-    },
-    resetForm() {
-      this.alat = {
-        jenis: "",
-        nama_alat: "",
-        merek_alat: "",
-        tanggal_masuk: "",
-        lokasi_penyimpanan: "",
-        kondisi: "",
-        status: "",
-        stok: "",
-        deskripsi: "",
-        harga_pembelian: 0,
-        asal_usul: "",
-        fungsi: "",
-        jadwal_perawatan: '', // Untuk menyimpan jadwal perawatan yang dipilih
-        tipe_alat: "",
-        produk: "",
-        satuan_alat: "",
-        sumber_alat: "",
-      };
-      this.gambar = null;
-      this.gambarPreview = null;
-    },
-    onKategoriChange(event) {
+    onJadwalChange(event) {
       if (event.target.value === 'other') {
-        this.showManualInput = true;
-        this.selectedKategori = '';
+        this.showManualInputJadwal = true;
+        this.form.jadwal_perawatan = '';
       } else {
-        this.showManualInput = false;
-        this.manualKategori = '';
+        this.showManualInputJadwal = false;
+        this.form.jadwal_perawatan = '';
       }
     },
-    formatHarga(event) {
-      let value = event.target.value.replace(/\D/g, '');
-      this.alat.harga_pembelian = value ? parseInt(value, 10) : 0;
-      this.formattedHarga = this.formatRupiah(value);
-    },
-    formatRupiah(angka) {
-      if (!angka) return '';
-      let number_string = angka.toString();
-      let sisa = number_string.length % 3;
-      let rupiah = number_string.substr(0, sisa);
-      let ribuan = number_string.substr(sisa).match(/\d{3}/g);
-
-      if (ribuan) {
-        let separator = sisa ? '.' : '';
-        rupiah += separator + ribuan.join('.');
-      }
-
-      return `Rp. ${rupiah}`;
-    },
-    onLocationChange(event) {
-      if (event.target.value === 'other') {
-        this.showManualInputLocation = true;
-        this.selectedLocation = '';
-      } else {
-        this.showManualInputLocation = false;
-        this.manualLocation = '';
-      }
-    },
-    onKategoriChange() {
-      if (this.selectedKategori === 'Masukkan Kategori Lainnya') {
-        this.showManualInput = true;
-      } else {
-        this.showManualInput = false;
-      }
-    }
-  },
-  computed: {
-    finalKategori() {
-      return this.showManualInput ? this.manualKategori : this.selectedKategori;
-    },
-    finalLocation() {
-      return this.showManualInputLocation ? this.manualLocation : this.selectedLocation;
-    }
-  },
-  mounted() {
-    this.fetchDataJenis();
-    this.fetchDataKategori();
-    this.fetchDataMerek();
-    this.fetchDataTipe();
   },
 };
 </script>
-  
-  <style>
-  .icon-hover {
-    color: #5a5c69;
-    transition: color 0.3s ease;
-  }
-  
-  .icon-hover:hover {
-    color: #169ea8;
-  }
-  .btn-plus {
-    background-color: #169EA8;
-    color: #fff;
-  }
-  .btn-plus:hover {
-      background-color: #22d3e0;
-      color: #fff;
-  }
-  
-  /* Modal Styling */
-  .modal {
-    display: none; /* Sembunyikan modal secara default */
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Latar belakang transparan */
-  }
-  
-  .modal.is-visible {
-    display: flex; /* Tampilkan modal saat is-visible aktif */
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .modal-content {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    max-width: 400px;
-    text-align: center;
-  }
-  
-  .modal-content h2 {
-    margin-bottom: 10px;
-    font-size: 1.5rem;
-    color: #333;
-  }
-  
-  .modal-content p {
-    margin-bottom: 20px;
-    color: #666;
-  }
-  
-  .modal-content button {
-    padding: 10px 20px;
-    margin: 5px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  #confirmButton {
-    background-color: #169ea8;
-    color: #fff;
-  }
-  
-  #cancelButton {
-    background-color: #f44336;
-    color: #fff;
-  }
-  
-  .textarea-wrapper {
-    position: relative;
-  }
-  
-  textarea {
-    padding-bottom: 20px; /* Beri ruang untuk teks di bagian bawah */
-  }
-  
-  .char-counter {
-    position: absolute;
-    bottom: 5px;
-    right: 10px;
-    font-size: 12px;
-    color: #6c757d; /* Warna teks abu-abu */
-    pointer-events: none; /* Supaya tidak mengganggu input */
-  }
-  .upload-box-1 {
-    border: 2px dashed #169ea8;
-    padding: 20px;
-    text-align: center;
-    cursor: pointer;
-    position: relative;
-    transition: border-color 0.3s ease;
-    max-width: max-content;
-    max-height: auto;
-  }
-  
-  .upload-box-1 .fa-image {
-    font-size: 36px; /* Ukuran ikon diperbesar */
-    margin-bottom: 10px;
-    color: #666;
-  }
-  
-  .upload-box-1.drag-active {
-    border-color: #22d3e0;
-  }
-  
-  .upload-box-1 .upload-input {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    cursor: pointer;
-  }
-  
-  </style> 
+
+<style scoped>
+.container {
+  max-width: 700px;
+}
+</style>

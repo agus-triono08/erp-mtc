@@ -10,4 +10,9 @@ class Layout extends Model
     use HasFactory;
 
     protected $fillable = ['ruang', 'rak', 'lantai', 'koordinat'];
+
+    public function noSeri()
+    {
+        return $this->hasMany(Tools::class);
+    }
 }

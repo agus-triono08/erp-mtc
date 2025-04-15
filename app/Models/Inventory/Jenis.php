@@ -23,6 +23,6 @@ class Jenis extends Model
     
     public function kategori()
     {
-        return $this->hasOne(Kategori::class, 'jenis_id', 'id');
+        return $this->hasMany(Kategori::class, 'jenis_id', 'id');
     }
 }

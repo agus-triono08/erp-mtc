@@ -95,7 +95,7 @@
     <!-- Modal untuk Input dan Edit Data -->
     <div v-if="isModalOpen" class="modal fade show" style="display: block;" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog" role="document">
-        <div class="modal-content">
+        <div class="modal-content" style="max-height: 90vh; overflow-y: auto;">
           <div class="modal-header">
             <h5 class="modal-title">{{ modalTitle }}</h5>
             <button type="button" class="close" @click="closeModal">
@@ -104,20 +104,32 @@
           </div>
           <div class="modal-body">
             <div class="form-group">
-              <label for="ruang">Ruang</label>
-              <input type="text" class="form-control" id="ruang" v-model="form.ruang">
+              <label for="ruang" style="color: #000;">
+                <b>Ruang</b>
+                <sup style="color: red;"> *</sup>
+              </label>
+              <input type="text" class="form-control" id="ruang" v-model="form.ruang" placeholder="Masukkan Nama Ruangan">
             </div>
             <div class="form-group">
-              <label for="lantai">Lantai</label>
-              <input type="text" class="form-control" id="lantai" v-model="form.lantai">
+              <label for="lantai" style="color: #000;">
+                <b>Lantai</b>
+                <sup style="color: red;"> *</sup>                
+              </label>
+              <input type="number" class="form-control" id="lantai" v-model="form.lantai" placeholder="Masukkan Lantai Berapa">
             </div>
             <div class="form-group">
-              <label for="rak">Rak</label>
-              <input type="text" class="form-control" id="rak" v-model="form.rak">
+              <label for="rak" style="color: #000;">
+                <b>Rak</b>
+                <sup style="color: red;"> *</sup>                
+              </label>
+              <input type="text" class="form-control" id="rak" v-model="form.rak" placeholder="Masukkan Nama Rak">
             </div>
             <div class="form-group">
-              <label for="rak">Koordinat</label>
-              <input type="text" class="form-control" id="koordinat" v-model="form.koordinat">
+              <label for="koordinat" style="color: #000;">
+                <b>Koordinat</b>
+                <sup style="color: red;"> *</sup>
+              </label>
+              <input type="text" class="form-control" id="koordinat" v-model="form.koordinat" placeholder="Masukkan Titik Koordinat">
             </div>
           </div>
           <div class="modal-footer">

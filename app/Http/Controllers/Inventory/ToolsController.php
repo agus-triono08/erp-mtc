@@ -9,9 +9,14 @@ use App\Models\Inventory\Merek;
 use App\Models\Inventory\KategoriMerek;
 use App\Models\Inventory\Tipe;
 use App\Models\Inventory\NoSeri;
+use App\Models\Inventory\Perawatan;
+use App\Models\Layout;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ToolsController extends Controller
 {
@@ -20,74 +25,37 @@ class ToolsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    // public function index()
-    // {
-    //     return Tools::with(['jenis', 'kategori', 'merek', 'tipe'])
-    //                 ->get()
-    //                 ->map(function ($tool) {
-    //                     return [
-    //                         'id' => $tool->id,
-    //                         'kode' => $tool->kode,
-    //                         'nama' => $tool->nama,
-    //                         'stok_awal' => $tool->stok_awal,
-    //                         'stok_akhir' => $tool->stok_akhir,
-    //                         'unit' => $tool->unit,
-    //                         'harga_total' => $tool->harga_total,
-    //                         'pembelian' => $tool->pembelian,
-    //                         'sumber' => $tool->sumber,
-    //                         'vendor' => $tool->vendor,
-    //                         'fungsi' => $tool->fungsi,
-    //                         'deskripsi' => $tool->deskripsi,
-    //                         'gambar' => $tool->gambar,
-    //                         'jadwal_perawatan' => $tool->jadwal_perawatan,
-    //                         'nama_jenis' => $tool->jenis->nama_jenis ?? null,
-    //                         'nama_kategori' => $tool->kategori->nama_kategori ?? null,
-    //                         'nama_merek' => $tool->merek->nama_merek ?? null,
-    //                         'nama_tipe' => $tool->tipe->nama_tipe ?? null,
-    //                     ];
-    //                 });
-    // }
-
-    // public function index()
-    // {
-    //     return Tools::with([
-    //         'jenis',
-    //         'jenis.kategori',
-    //         'jenis.kategori.kategoriMerek.merek',
-    //         'jenis.kategori.kategoriMerek.tipe'
-    //     ])->get();
-    // }
 
     public function index(Request $request)
     {
         $tools = Tools::with([
-            'jenis',
-            'jenis.kategori',
-            'jenis.kategori.kategoriMerek.merek',
-            'jenis.kategori.kategoriMerek.tipe'
-        ])
-        ->when($request->jenis_id, function ($query) use ($request) {
-            $query->where('jenis_id', $request->jenis_id);
-        })
-        ->when($request->kategori_id, function ($query) use ($request) {
-            $query->whereHas('jenis.kategori', function ($q) use ($request) {
-                $q->where('id', $request->kategori_id);
-            });
-        })
-        ->when($request->merek_id, function ($query) use ($request) {
-            $query->whereHas('jenis.kategori.kategoriMerek', function ($q) use ($request) {
-                $q->where('merek_id', $request->merek_id);
-            });
-        })
-        ->when($request->tipe_id, function ($query) use ($request) {
-            $query->whereHas('jenis.kategori.kategoriMerek', function ($q) use ($request) {
-                $q->where('tipe_id', $request->tipe_id);
-            });
-        })
-        ->get();
-
+            'jenis.kategori.merek.tipe'
+        ])->whereHas('jenis', function ($q) use ($request) {
+            if ($request->jenis_id) {
+                $q->where('id', $request->jenis_id);
+            }
+    
+            if ($request->kategori_id) {
+                $q->whereHas('kategori', function ($q2) use ($request) {
+                    $q2->where('id', $request->kategori_id);
+                });
+            }
+    
+            if ($request->merek_id) {
+                $q->whereHas('kategori.merek', function ($q3) use ($request) {
+                    $q3->where('id', $request->merek_id);
+                });
+            }
+    
+            if ($request->tipe_id) {
+                $q->whereHas('kategori.merek.tipe', function ($q4) use ($request) {
+                    $q4->where('id', $request->tipe_id);
+                });
+            }
+        })->get();
+    
         return response()->json($tools);
-    }
+    }     
 
     // /**
     //  * Show the form for creating a new resource.
@@ -105,299 +73,96 @@ class ToolsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    // public function store(Request $request)
-    // {
-    //     $tools = new Tools();
-    //     $tools->jenis_id = $request->jenis_id;
-    //     $tools->kode = $request->kode;
-    //     $tools->nama = $request->nama;
-    //     $tools->stok_awal = $request->stok_awal;
-    //     $tools->stok_akhir = $request->stok_akhir;
-    //     $tools->unit = $request->unit;
-    //     $tools->harga_total = $request->harga_total;
-    //     $tools->pembelian = $request->pembelian;
-    //     $tools->sumber = $request->sumber;
-    //     $tools->vendor = $request->vendor;
-    //     $tools->fungsi = $request->fungsi;
-    //     $tools->deskripsi = $request->deskripsi;
-    //     $tools->gambar = $request->gambar;
-    //     $tools->jadwal_perawatan = $request->jadwal_perawatan;
-    //     $tools->save();
-    //     return response()->json($tools);
-    // }
-
-    // UPDATE 10-04-2025
+    
+    
     public function store(Request $request)
     {
-        // Validasi input
         $request->validate([
-            'stok_awal' => 'required|integer|min:1',
             'jenis_id' => 'required|exists:jenis,id',
-            'kategori_id' => 'required|exists:kategori,id',
-            'merek_id' => 'required|exists:merek,id',
-            'tipe_id' => 'required|exists:tipe,id',
-            'nama' => 'required|string',
-            'unit' => 'required|string',
-            'pembelian' => 'required|string',
-            'sumber' => 'required|string',
+            'nama' => 'required',
+            'stok_awal' => 'nullable|integer',
+            'unit' => 'nullable|string',
+            'harga_total' => 'nullable|numeric',
+            'pembelian' => 'nullable|string',
+            'sumber' => 'nullable|string',
             'vendor' => 'nullable|string',
             'fungsi' => 'nullable|string',
             'deskripsi' => 'nullable|string',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'jadwal_perawatan' => 'nullable|numeric',
+            'kategori_id' => 'required|exists:kategori,id',
+            'merek_id' => 'required|exists:merek,id',
+            'tipe_id' => 'required|exists:tipe,id',
         ]);
 
-        // Ambil model relasi untuk kebutuhan kode
-        $jenis = Jenis::findOrFail($request->jenis_id);
-        $kategori = Kategori::findOrFail($request->kategori_id);
-        $merek = Merek::findOrFail($request->merek_id);
-        $tipe = Tipe::findOrFail($request->tipe_id);
+        // Ambil data relasi
+        $jenis = Jenis::find($request->jenis_id);
+        $kategori = Kategori::find($request->kategori_id);
+        $merek = Merek::find($request->merek_id);
+        $tipe = Tipe::find($request->tipe_id);
 
-        // Generate kode unik
-        $count = Tools::count() + 1;
-        $nomorUrut = str_pad($count, 3, '0', STR_PAD_LEFT);
-        $kode = $jenis->kode_jenis . '-' . $kategori->kode_kategori . '-' . $merek->kode_merek . '-' . $tipe->kode_tipe . '-' . $nomorUrut;
+        // Hitung nomor urut terakhir untuk kombinasi ini
+        $prefix = "{$jenis->kode_jenis}-{$kategori->kode_kategori}-{$merek->kode_merek}-{$tipe->kode_tipe}";
+        $lastTool = Tools::where('kode', 'like', "$prefix-%")->orderByDesc('id')->first();
+        $nextNumber = $lastTool ? (int)substr($lastTool->kode, -3) + 1 : 1;
+        $kode = $prefix . '-' . str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
 
-        // Simpan alat
-        $tool = Tools::create([
-            'jenis_id' => $request->jenis_id,
-            'kode' => $kode,
-            'nama' => $request->nama,
-            'stok_awal' => $request->stok_awal,
-            'stok_akhir' => $request->stok_awal,
-            'unit' => $request->unit,
-            'pembelian' => $request->pembelian,
-            'sumber' => $request->sumber,
-            'vendor' => $request->vendor,
-            'fungsi' => $request->fungsi,
-            'deskripsi' => $request->deskripsi,
-            'gambar' => null, // optional jika kamu pakai upload file
-            'jadwal_perawatan' => null // optional jika belum diinput
-        ]);
+        // Upload gambar jika ada
+        $data = $request->except('kode');
+        $data['kode'] = $kode;
+        $data['jenis_id'] = $jenis->id;
 
-        // Buat no seri sebanyak stok_awal
-        for ($i = 0; $i < $request->stok_awal; $i++) {
-            $hurufUnique = strtoupper(substr($kategori->nama_kategori, 0, 2));
-            $angkaAcak = rand(1000, 99999999);
-            $noSeri = $hurufUnique . $angkaAcak;
-
-            NoSeri::create([
-                'tools_id' => $tool->id,
-                'no_seri' => $noSeri,
-                'no_seri_default' => null,
-                'tanggal_masuk' => now(),
-            ]);
+        if ($request->hasFile('gambar')) {
+            $file = $request->file('gambar');
+            $filename = time() . '_' . Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME));
+            $extension = $file->getClientOriginalExtension();
+            $path = "tools/{$filename}.{$extension}";
+            Storage::disk('public')->put($path, file_get_contents($file));
+            $data['gambar'] = $path;
         }
 
-        // Load relasi sampai ke nama_kategori, nama_merek, dan nama_tipe
-        $tool = Tools::with([
-            'jenis.kategori.kategoriMerek.merek',
-            'jenis.kategori.kategoriMerek.tipe'
-        ])->find($tool->id);
+        // Simpan data tool
+        $tool = Tools::create($data);
 
-        return response()->json($tool, 201);
+        // Update stok akhir dengan stok awal
+        $tool->stok_akhir = $tool->stok_awal;
+        $tool->save();
+
+        // Buat no_seri sebanyak stok_awal
+        $stok = $tool->stok_awal ?? 1;
+        $inisial_kategori = strtoupper(Str::limit(preg_replace('/[^A-Za-z]/', '', $kategori->nama_kategori), 2, ''));
+
+        for ($i = 0; $i < $stok; $i++) {
+            $random8 = str_pad(mt_rand(0, 99999999), 8, '0', STR_PAD_LEFT);
+            $no_seri = $inisial_kategori . $random8;
+
+            $layout = Layout::find($request->layout_id);
+
+            $noSeriRecord = NoSeri::create([
+                'tools_id' => $tool->id,
+                'layout_id' => $layout->id,
+                'no_seri' => $no_seri,
+                'no_seri_default' => null,
+                'tanggal_masuk' => now(),
+                'harga' => $tool->harga_total ? $tool->harga_total / $stok : null,
+            ]);
+
+            $interval = (int) $request->jadwal_perawatan;
+            $jumlahPerawatan = 12;
+
+            $user = User::find($request->users_id);
+
+            for($j = 0; $j < $jumlahPerawatan; $j++) {
+                Perawatan::create([
+                    'no_seri_id' => $noSeriRecord->id,
+                    'users_id' => $user->id ?? null,
+                    'tgl_perawatan' => now()->addMonths($j * $interval),            
+                ]);
+            }
+        }
+
+        return response()->json($tool->load('jenis.kategori.merek.tipe'), 201);
     }
-
-    // // UPDATE 08-04-2025
-    // public function store(Request $request)
-    // {
-    //     // Validate input
-    //     $request->validate([
-    //         'stok_awal' => 'required|integer|min:1',
-    //         'jenis_id' => 'required',
-    //         'kategori_id' => 'required',
-    //         'merek_id' => 'required',
-    //         'tipe_id' => 'required',
-    //     ]);
-
-    //     // $jenis = Jenis::findOrFail($request->jenis_id);
-    //     // $kategori = Kategori::findOrFail($request->kategori_id);
-
-    //     // // Cari kategori_merek berdasarkan kategori_id & merek_id
-    //     // $kategoriMerek = KategoriMerek::with(['kategori', 'merek', 'tipe'])
-    //     // ->findOrFail($request->kategori_merek_id);
-
-    //     // $merek = $kategoriMerek->merek;
-
-    //     // // Cari tipe berdasarkan kategori_merek_id & tipe_id
-    //     // $tipe = \App\Models\Inventory\Tipe::where('kategori_merek_id', $kategoriMerek->id)
-    //     //     ->where('id', $request->tipe_id)
-    //     //     ->firstOrFail();
-
-    //     // $jenis = Jenis::firstOrCreate(['id' => $request->jenis_id]);
-    //     // $kategori = Kategori::firstOrCreate(['id' => $request->kategori_id]);
-    //     // $merek = Merek::firstOrCreate(['id' => $request->merek_id]);
-    //     // $tipe = Tipe::firstOrCreate(['id' => $request->tipe_id]);
-
-    //     // Find related models
-    //     $jenis = Jenis::findOrFail($request->jenis_id);
-    //     $kategori = Kategori::findOrFail($request->kategori_id);
-    //     $merek = Merek::findOrFail($request->merek_id);
-    //     $tipe = Tipe::findOrFail($request->tipe_id);
-
-    //     // Generate unique tool code
-    //     $count = Tools::count() + 1;
-    //     $nomorUrut = str_pad($count, 3, '0', STR_PAD_LEFT);
-    //     $kode = $jenis->kode_jenis . '-' . $kategori->kode_kategori . '-' . $merek->kode_merek . '-' . $tipe->kode_tipe . '-' . $nomorUrut;
-
-    //     // Create the tool
-    //     $tool = Tools::create(array_merge($request->all(), [
-    //         'kode' => $kode,
-    //         'stok_akhir' => $request->stok_awal,            
-    //     ]));
-
-    //     // Create serial numbers based on stok_awal
-    //     for ($i = 0; $i < $request->stok_awal; $i++) {
-    //         $hurufUnique = substr($kategori->nama_kategori, 0, 2);
-    //         $angkaAcak = rand(1000, 99999999); // Membuat angka acak antara 1000 dan 99999999
-    //         $noSeri = $hurufUnique . $angkaAcak;
-    //         NoSeri::create([
-    //             'tools_id' => $tool->id, // Reference to the tool
-    //             'no_seri' => $noSeri, // Generates a unique serial number
-    //             'no_seri_default' => null, // Set this if you have a default or specific format
-    //             'tanggal_masuk' => now(), // Tambahkan tanggal masuk
-    //         ]);
-    //     }
-
-    //     // Reload tool with full relations
-    //     $tool = Tools::with(['jenis', 'kategori', 'merek', 'tipe'])->find($tool->id);
-
-    //     return response()->json($tool, 201);
-    // }
-
-    // // 08-04-2025
-    // public function store(Request $request)
-    // {
-    //     $jenis = Jenis::findOrFail($request->jenis_id);
-    //     $kategori = Kategori::findOrFail($request->kategori_id);
-    //     $merek = Merek::findOrFail($request->merek_id);
-    //     $tipe = Tipe::findOrFail($request->tipe_id);
-
-    //     // Menghitung jumlah tools yang sudah ada
-    //     $count = Tools::count() + 1;
-    //     $nomorUrut = str_pad($count, 3, '0', STR_PAD_LEFT); // Menjadikan 3 digit (001, 002, ...)
-
-    //     // Format kode
-    //     $kode = $jenis->kode_jenis . '-' . $kategori->kode_kategori . '-' . $merek->kode_merek . '-' . $tipe->kode_tipe . '-' . $nomorUrut;
-
-    //     // Simpan data dengan kode baru
-    //     $tool = Tools::create(array_merge($request->all(), ['kode' => $kode]));
-
-    //     return response()->json($tool, 201);
-    // }
-
-    // public function store(Request $request)
-    // {
-    //     // Menjalankan query untuk mendapatkan kode dan data lainnya berdasarkan id_tools
-    //     $tool = DB::table('tools as t')
-    //         ->join('jenis as j', 't.jenis_id', '=', 'j.id')
-    //         ->join('kategori as k', 'j.id', '=', 'k.jenis_id')
-    //         ->join('kategori_merek as km', 'k.id', '=', 'km.kategori_id')
-    //         ->join('merek as m', 'km.merek_id', '=', 'm.id')
-    //         ->join('tipe as ty', 'km.id', '=', 'ty.kategori_merek_id')
-    //         ->select(
-    //             't.kode as tool_code',  // Kolom yang Anda inginkan, yaitu kode alat
-    //             't.nama as tool_name',
-    //             'j.nama_jenis as jenis_name',
-    //             'k.nama_kategori as kategori_name',
-    //             'm.nama_merek as merek_name',
-    //             'ty.nama_tipe as tipe_name'
-    //         )
-    //         ->where('t.id', $request->id_tools)  // Mengambil berdasarkan id_tools dari request
-    //         ->first(); // Ambil satu hasil saja
-
-    //     // Debugging untuk melihat hasil query
-    //     dd($tool); // Lihat hasil query yang dijalankan
-
-    //     // Jika alat tidak ditemukan, beri response error
-    //     if (!$tool) {
-    //         return response()->json(['error' => 'Tool not found'], 404);
-    //     }
-
-    //     // Membuat objek Tools baru untuk disimpan
-    //     $tools = new Tools();
-    //     $tools->jenis_id = $request->jenis_id;
-    //     $tools->kode = $tool->tool_code;  // Mengisi kode secara otomatis dengan nilai dari query
-    //     $tools->nama = $request->nama;
-    //     $tools->stok_awal = $request->stok_awal;
-    //     $tools->stok_akhir = $request->stok_akhir;
-    //     $tools->unit = $request->unit;
-    //     $tools->harga_total = $request->harga_total;
-    //     $tools->pembelian = $request->pembelian;
-    //     $tools->sumber = $request->sumber;
-    //     $tools->vendor = $request->vendor;
-    //     $tools->fungsi = $request->fungsi;
-    //     $tools->deskripsi = $request->deskripsi;
-    //     $tools->gambar = $request->gambar;
-    //     $tools->jadwal_perawatan = $request->jadwal_perawatan;
-        
-    //     // Simpan data tools ke database
-    //     $tools->save();
-
-    //     // Kembalikan response dengan data tools yang baru disimpan
-    //     return response()->json($tools);
-    // }
-
-    // public function store(Request $request)
-    // {
-    //     // Validasi input termasuk gambar
-    //     $request->validate([
-    //         'gambar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:153600',  // 150MB = 150 * 1024 KB
-    //     ]);
-
-    //     // Ambil kode dari tabel terkait berdasarkan ID yang diberikan
-    //     $jenis = Jenis::find($request->jenis_id);
-    //     $kategori = Kategori::find($request->kategori_id); // Menggunakan kategori_id dari request
-    //     $kategoriMerek = KategoriMerek::where('kategori_id', $request->kategori_id)->first(); // Ambil kategori_merek berdasarkan kategori_id
-    //     $merek = Merek::find($kategoriMerek->merek_id); // Ambil merek berdasarkan kategori_merek
-    //     $tipe = Tipe::find($request->tipe_id); // Menggunakan tipe_id dari request
-
-    //     // Validasi apakah data yang diperlukan ditemukan
-    //     if (!$jenis || !$kategori || !$merek || !$tipe) {
-    //         return response()->json(['error' => 'Data tidak ditemukan.'], 404);
-    //     }
-
-    //     // Ambil nomor urut berdasarkan jumlah data tools yang sudah ada
-    //     $nomorUrut = Tools::count() + 1; // Hitung jumlah data tools dan tambah 1
-
-    //     // Gabungkan semua bagian kode (jenis, kategori, merek, tipe, nomor urut)
-    //     $kode = $jenis->kode . $kategori->kode . $merek->kode . $tipe->kode . str_pad($nomorUrut, 4, '0', STR_PAD_LEFT);
-
-    //     // Jika gambar ada di dalam request
-    //     if ($request->hasFile('gambar')) {
-    //         // Ambil file gambar
-    //         $file = $request->file('gambar');
-
-    //         // Tentukan nama file dengan format yang unik
-    //         $fileName = time() . '_' . $file->getClientOriginalName();
-
-    //         // Simpan file di folder 'public/images'
-    //         $filePath = $file->storeAs('public/images', $fileName);
-
-    //         // Membuat objek tools baru dan menyimpan data
-    //         $tools = new Tools();
-    //         $tools->jenis_id = $request->jenis_id;
-    //         $tools->kategori_id = $request->kategori_id;
-    //         $tools->kode = $kode; // Assign kode yang telah digabungkan
-    //         $tools->nama = $request->nama;
-    //         $tools->stok_awal = $request->stok_awal;
-    //         $tools->stok_akhir = $request->stok_akhir;
-    //         $tools->unit = $request->unit;
-    //         $tools->harga_total = $request->harga_total;
-    //         $tools->pembelian = $request->pembelian;
-    //         $tools->sumber = $request->sumber;
-    //         $tools->vendor = $request->vendor;
-    //         $tools->fungsi = $request->fungsi;
-    //         $tools->deskripsi = $request->deskripsi;
-    //         $tools->gambar = $filePath; // Simpan path gambar di database
-    //         $tools->jadwal_perawatan = $request->jadwal_perawatan;
-    //         $tools->save();
-
-    //         // Kembalikan data tools yang telah disimpan sebagai JSON
-    //         return response()->json($tools);
-    //     }
-
-    //     // Jika tidak ada gambar yang diupload
-    //     return response()->json(['error' => 'Tidak ada file gambar yang diunggah.'], 400);
-    // }
 
     /**
      * Display the specified resource.
@@ -405,30 +170,16 @@ class ToolsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // public function show($id)
-    // {
-    //     $tools = Tools::find($id);
-    //     if ($tools) {
-    //         return response()->json($tools);
-    //     } else {
-    //         return response()->json(['error' => 'Tools tidak ditemukan.'], 404);
-    //     }
-    // }
+    
     public function show($id)
     {
-        $tools = Tools::with([
-            'jenis',
-            'jenis.kategori',
-            'jenis.kategori.kategoriMerek.merek',
-            'jenis.kategori.kategoriMerek.tipe'
-        ])->find($id);
-
-        if ($tools) {
-            return response()->json($tools);
-        } else {
-            return response()->json(['error' => 'Tools tidak ditemukan.'], 404);
-        }
-    }
+        $tool = Tools::with([
+            'jenis.kategori.merek.tipe',
+            'layout' // Tambahkan relasi layout
+        ])->findOrFail($id);
+    
+        return response()->json($tool);
+    }     
 
     // /**
     //  * Show the form for editing the specified resource.
@@ -448,89 +199,84 @@ class ToolsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    // public function update(Request $request, $id)
+    // {
+    //     $tool = Tools::findOrFail($id);
+
+    //     // Validasi hanya untuk field yang dapat diedit
+    //     $request->validate([
+    //         'pembelian' => 'nullable|string',
+    //         'sumber' => 'nullable|string',
+    //         'vendor' => 'nullable|string',
+    //         'fungsi' => 'nullable|string',
+    //         'deskripsi' => 'nullable|string',
+    //     ]);
+
+    //     // Ambil data relasi jika perlu untuk menentukan kode
+    //     $jenis = $tool->jenis; // Tidak perlu update jenis jika tidak berubah
+    //     $kategori = $tool->kategori; // Tidak perlu update kategori jika tidak berubah
+    //     $merek = $tool->merek; // Tidak perlu update merek jika tidak berubah
+    //     $tipe = $tool->tipe; // Tidak perlu update tipe jika tidak berubah
+
+    //     // Buat ulang kode berdasarkan relasi jika terjadi perubahan
+    //     $prefix = "{$jenis->kode_jenis}-{$kategori->kode_kategori}-{$merek->kode_merek}-{$tipe->kode_tipe}";
+
+    //     // Cek apakah prefix-nya berubah
+    //     $currentPrefix = implode('-', array_slice(explode('-', $tool->kode), 0, 4));
+    //     if ($prefix !== $currentPrefix) {
+    //         $lastTool = Tools::where('kode', 'like', "$prefix-%")->orderByDesc('id')->first();
+    //         $nextNumber = $lastTool ? (int)substr($lastTool->kode, -3) + 1 : 1;
+    //         $kode = $prefix . '-' . str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
+    //     } else {
+    //         $kode = $tool->kode; // kode tetap
+    //     }
+
+    //     // Ambil data yang dapat diubah
+    //     $data = $request->only(['pembelian', 'sumber', 'vendor', 'fungsi', 'deskripsi']);
+    //     $data['kode'] = $kode;
+
+    //     if ($request->hasFile('gambar')) {
+    //         // Hapus gambar lama jika ada
+    //         if ($tool->gambar) {
+    //             Storage::disk('public')->delete($tool->gambar);
+    //         }
+
+    //         // Upload gambar baru
+    //         $file = $request->file('gambar');
+    //         $filename = time() . '_' . Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME));
+    //         $extension = $file->getClientOriginalExtension();
+    //         $path = "tools/{$filename}.{$extension}";
+    //         Storage::disk('public')->put($path, file_get_contents($file));
+    //         $data['gambar'] = $path;
+    //     }
+
+    //     // Update data alat
+    //     $tool->update($data);
+
+    //     // Mengembalikan response dengan data lengkap termasuk relasi
+    //     return response()->json($tool->load('jenis.kategori.merek.tipe'));
+    // }
     public function update(Request $request, $id)
     {
-        // Validasi input termasuk gambar
+        $tool = Tools::findOrFail($id);
+
+        // Validasi hanya untuk field yang dapat diedit
         $request->validate([
-            'gambar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:153600',  // 150MB = 150 * 1024 KB
+            'pembelian' => 'nullable|string',
+            'sumber' => 'nullable|string',
+            'vendor' => 'nullable|string',
+            'fungsi' => 'nullable|string',
+            'deskripsi' => 'nullable|string',
         ]);
 
-        // Ambil data tools yang akan diupdate
-        $tools = Tools::find($id);
+        // Ambil data yang diizinkan untuk diubah
+        $data = $request->only(['pembelian', 'sumber', 'vendor', 'fungsi', 'deskripsi']);
 
-        // Validasi apakah data tools ditemukan
-        if (!$tools) {
-            return response()->json(['error' => 'Data tidak ditemukan.'], 404);
-        }
+        // Update data alat
+        $tool->update($data);
 
-        // Ambil kode dari tabel terkait berdasarkan ID yang diberikan
-        $jenis = Jenis::find($request->jenis_id);
-        $kategori = Kategori::find($request->kategori_id); // Menggunakan kategori_id dari request
-        $kategoriMerek = KategoriMerek::where('kategori_id', $request->kategori_id)->first(); // Ambil kategori_merek berdasarkan kategori_id
-        $merek = Merek::find($kategoriMerek->merek_id); // Ambil merek berdasarkan kategori_merek
-        $tipe = Tipe::find($request->tipe_id); // Menggunakan tipe_id dari request
-
-        // Validasi apakah data yang diperlukan ditemukan
-        if (!$jenis || !$kategori || !$merek || !$tipe) {
-            return response()->json(['error' => 'Data tidak ditemukan.'], 404);
-        }
-
-        // Gabungkan semua bagian kode (jenis, kategori, merek, tipe, nomor urut)
-        $kode = $jenis->kode . $kategori->kode . $merek->kode . $tipe->kode . str_pad($tools->nomor_urut, 4, '0', STR_PAD_LEFT);
-
-        // Jika gambar ada di dalam request
-        if ($request->hasFile('gambar')) {
-            // Ambil file gambar
-            $file = $request->file('gambar');
-
-            // Tentukan nama file dengan format yang unik
-            $fileName = time() . '_' . $file->getClientOriginalName();
-
-            // Simpan file di folder 'public/images'
-            $filePath = $file->storeAs('public/images', $fileName);
-
-            // Update data tools
-            $tools->jenis_id = $request->jenis_id;
-            $tools->kategori_id = $request->kategori_id;
-            $tools->kode = $kode; // Assign kode yang telah digabungkan
-            $tools->nama = $request->nama;
-            $tools->stok_awal = $request->stok_awal;
-            $tools->stok_akhir = $request->stok_akhir;
-            $tools->unit = $request->unit;
-            $tools->harga_total = $request->harga_total;
-            $tools->pembelian = $request->pembelian;
-            $tools->sumber = $request->sumber;
-            $tools->vendor = $request->vendor;
-            $tools->fungsi = $request->fungsi;
-            $tools->deskripsi = $request->deskripsi;
-            $tools->gambar = $filePath; // Simpan path gambar di database
-            $tools->jadwal_perawatan = $request->jadwal_perawatan;
-            $tools->save();
-
-            // Kembalikan data tools yang telah diupdate sebagai JSON
-            return response()->json($tools);
-        }
-
-        // Jika tidak ada gambar yang diupload
-        // Update data tools tanpa gambar
-        $tools->jenis_id = $request->jenis_id;
-        $tools->kategori_id = $request->kategori_id;
-        $tools->kode = $kode; // Assign kode yang telah digabungkan
-        $tools->nama = $request->nama;
-        $tools->stok_awal = $request->stok_awal;
-        $tools->stok_akhir = $request->stok_akhir;
-        $tools->unit = $request->unit;
-        $tools->harga_total = $request->harga_total;
-        $tools->pembelian = $request->pembelian;
-        $tools->sumber = $request->sumber;
-        $tools->vendor = $request->vendor;
-        $tools->fungsi = $request->fungsi;
-        $tools->deskripsi = $request->deskripsi;
-        $tools->jadwal_perawatan = $request->jadwal_perawatan;
-        $tools->save();
-
-        // Kembalikan data tools yang telah diupdate sebagai JSON
-        return response()->json($tools);
+        // Mengembalikan response dengan data lengkap termasuk relasi
+        return response()->json($tool->load('jenis.kategori.merek.tipe', 'layout'));
     }
 
     /**

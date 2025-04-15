@@ -22,8 +22,13 @@ class Kategori extends Model
         return $this->belongsTo(Jenis::class, 'jenis_id', 'id');
     }
 
-    public function kategoriMerek()
+    // public function kategoriMerek()
+    // {
+    //     return $this->hasMany(KategoriMerek::class, 'kategori_id', 'id');
+    // }
+
+    public function merek()
     {
-        return $this->hasMany(KategoriMerek::class, 'kategori_id', 'id');
+        return $this->belongsToMany(Merek::class, 'kategori_merek');
     }
 }

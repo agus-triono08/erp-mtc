@@ -17,10 +17,10 @@ class KategoriMerek extends Model
         'kategori_id',
     ];
 
-    public function tipe()
-    {
-        return $this->hasOne(Tipe::class, 'kategori_merek_id');
-    }
+    // public function tipe()
+    // {
+    //     return $this->hasMany(Tipe::class, 'kategori_merek_id');
+    // }
 
     public function merek(): BelongsTo
     {
@@ -30,5 +30,9 @@ class KategoriMerek extends Model
     public function kategori(): BelongsTo
     {
         return $this->belongsTo(Kategori::class, 'kategori_id', 'id');
+    }
+    public function tipe()
+    {
+        return $this->belongsToMany(Tipe::class, 'tipe', 'kategori_merek_id');
     }
 }

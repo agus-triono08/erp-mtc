@@ -27,8 +27,8 @@ class CreateToolsTable extends Migration
             $table->string('vendor')->nullable();
             $table->text('fungsi')->nullable();
             $table->text('deskripsi')->nullable();
-            $table->string('gambar');
-            $table->integer('jadwal_perawatan');
+            $table->string('gambar')->nullable();
+            $table->integer('jadwal_perawatan')->nullable();
             $table->timestamps();
         });
     }

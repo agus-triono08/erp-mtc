@@ -32,7 +32,7 @@
             <div class="card-body text-center" style="border-radius: 10px;"> 
               <div class="image-container" style="width: 100%; height: 220px; overflow: hidden; border-radius: 10px;">
                 <img 
-                  :src="form.gambar" 
+                  :src="getImageUrl(form.gambar)" 
                   class="img-fluid shadow-sm hover-effect" 
                   alt="Ini Gambar Sih Harusnya" 
                   style="width: 100%; height: 100%; object-fit: cover; border-radius: 0;" 
@@ -48,12 +48,12 @@
             <div class="card-body p-0" style="border-radius: 20px;"> 
               <div class="d-flex justify-content-between align-items-center" style="margin: 10px;">
                 <h5 class="m-0 font-weight-bold" style="color: #169ea8;">Tool Information</h5>
-                <button 
+                <!-- <button 
                   class="btn btn-plus btn-sm"
                   @click="goToEditPage"                  
                 >
                   <i class="fas fa-pencil-alt"></i>
-                </button>
+                </button> -->
               </div>
               <!-- Tabel Detail -->
               <table class="table table-hover no-border compact-table ml-2">              
@@ -174,16 +174,20 @@
             <table class="table table-hover no-border compact-table">
               <tbody>
                 <tr>
+                  <td>Jenis</td>
+                  <th style="color: #000;">{{ getNamaJenis(form) }}</th>
+                </tr>
+                <tr>
                   <td>Kategori</td>
-                  <th style="color: #000;">{{ form.jenis && form.jenis.kategori && form.jenis.kategori.nama_kategori ? form.jenis.kategori.nama_kategori : '-' }}</th>
+                  <th style="color: #000;">{{ getNamaKategori(form) }}</th>
                 </tr>
                 <tr>                  
                   <td>Merek</td>
-                  <th style="color: #000;">{{ form.jenis && form.jenis.kategori && form.jenis.kategori.kategori_merek[0] && form.jenis.kategori.kategori_merek[0].merek && form.jenis.kategori.kategori_merek[0].merek.nama_merek || '-' }}</th>
+                  <th style="color: #000;">{{ getNamaMerek(form) }}</th>
                 </tr>
                 <tr>
                   <td>Type/Size</td>
-                  <th style="color: #000;">{{ form.jenis && form.jenis.kategori && form.jenis.kategori.kategori_merek[0] && form.jenis.kategori.kategori_merek[0].tipe && form.jenis.kategori.kategori_merek[0].tipe.nama_tipe || '-' }}</th>                
+                  <th style="color: #000;">{{ getNamaTipe(form) }}</th>
                 </tr>
                 <tr>
                   <td>Available Stok</td>
@@ -298,11 +302,41 @@ export default {
         const id = this.$route.params.id; // ID alat di URL
         const response = await axios.get(`/api/v1/tools/${id}`);
         this.form = response.data; // Menyimpan data alat
-        // console.log("Data alat:", this.alat); // Debug data
+        // console.log("Data alat:", this.form); // Debug data
       } catch (error) {
         //console.error("Error fetching alat detail:", error);
         alert("Gagal memuat detail alat.");
       }
+    },
+    getImageUrl(path) {
+      return path ? `${window.location.origin}/storage/${path}` : null;
+    },
+    getNamaJenis(form) {
+      const parts = form.kode?.split('-') || [];
+      const kodeJenis = parts[0];
+      return form.jenis && form.jenis.kode_jenis === kodeJenis ? form.jenis.nama_jenis : '-';
+    },
+    getNamaKategori(form) {
+      const parts = form.kode?.split('-') || [];
+      const kodeKategori = parts[1];
+      const kategori = form.jenis?.kategori?.find(k => k.kode_kategori === kodeKategori);
+      return kategori ? kategori.nama_kategori : '-';
+    },
+    getNamaMerek(form) {
+      const parts = form.kode?.split('-') || [];
+      const kodeMerek = parts[2];
+      const kategori = form.jenis?.kategori || [];
+      const merek = kategori.flatMap(k => k.merek || []).find(m => m.kode_merek === kodeMerek);
+      return merek ? merek.nama_merek : '-';
+    },
+    getNamaTipe(form) {
+      const parts = form.kode?.split('-') || [];
+      const kodeTipe = parts[3];
+      const tipe = form.jenis?.kategori
+        ?.flatMap(k => k.merek || [])
+        .flatMap(m => m.tipe || [])
+        .find(t => t.kode_tipe === kodeTipe);
+      return tipe ? tipe.nama_tipe : '-';
     },
     // async fetchAlatDetail() {
     //   try {

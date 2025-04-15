@@ -99,7 +99,7 @@
           <thead>
             <tr class="bg-table">
               <th class="text-center text-black-1 tr-center">
-                <input type="checkbox" @change="updateSelectAll" @click="selectAll" v-model="selectAllCheckbox">
+                <!-- <input type="checkbox" @change="updateSelectAll" @click="selectAll" v-model="selectAllCheckbox"> -->
               </th>
               <th class="text-center text-black-1 tr-center">#</th>                    
               <th class="text-center text-black-1" style="cursor: pointer; position: relative; vertical-align: middle;">
@@ -129,7 +129,8 @@
               </td>
               <td class="text-center">{{ (currentPage - 1) * rowsPerPage + index + 1 }}</td>
               <td class="text-center">{{ noseri.no_seri || '-' }}</td>
-              <td class="text-center">{{ noseri.layout ? noseri.layout.nama_lokasi : '-' }}</td>
+              <!-- <td class="text-center">{{ noseri.layout ? noseri.layout.ruang : '-' }}</td> -->
+              <td class="text-center">{{ formatLayout(noseri) }}</td>
               <td class="text-center">{{ noseri.tanggal_masuk }} <br>
                 <small style="color: #444;"><i class="fas fa-clock"></i> {{ durasiData[index] !== '-' ? durasiData[index] + ' Hari' : '-' }}</small>
               </td>
@@ -150,6 +151,7 @@
                           'status-dipinjam': noseri.kondisi === 'Dipinjam'}"
               >{{ noseri.kondisi || '-' }}</td>
               <td><vue-barcode :ref="'barcode' + index" :value="noseri.no_seri" :options="{ width: 100, height: 50 }"></vue-barcode></td>
+              <!-- <vue-barcode :ref="'barcode' + index" :value="`${noseri.no_seri} - ${noseri.layout.ruang} | Rak ${noseri.layout.rak} | Lantai ${noseri.layout.lantai} | ${noseri.layout.koordinat}`" :options="{ width: 100, height: 50 }"></vue-barcode> -->
               <td>
                 <div class="dropdown text-center">
                   <button
@@ -291,12 +293,16 @@ export default {
     //     console.error("Error fetching alat error detail:", error);
     //   }
     // },
+    formatLayout(noseri) {
+      if (!noseri.layout) return '-';
+      return `${noseri.layout.ruang || '-'} | Rak ${noseri.layout.rak || '-'} | Lantai ${noseri.layout.lantai || '-'} | ${noseri.layout.koordinat || '-'}`;
+    },
     async fetchAlatError() {
       try {
         const kodeAlat = this.kodeAlat; // Kode alat di URL
         const response = await axios.get(`/api/v1/noseri/getNoSeri/${kodeAlat}`);
         this.datanoseri = response.data; // Menyimpan data alat
-        console.log(this.datanoseri)
+        // console.log(this.datanoseri)
       } catch (error) {
         console.error("Error fetching alat error detail:", error);
       }
@@ -493,10 +499,20 @@ export default {
         return;
       }
 
-      const doc = new jsPDF();
-      let y = 10, x = 10, baris = 0, kolom = 0;
+      // Inisialisasi dokumen PDF dengan ukuran 26mm x 15mm
+      const doc = new jsPDF({
+        orientation: "landscape", // bisa diganti "portrait" kalau butuh
+        unit: "mm",
+        format: [50, 20]
+      });
 
-      // Gunakan Promise untuk memastikan semua elemen diproses sebelum menyimpan file
+      let y = 2, x = 2, baris = 0, kolom = 0;
+
+      // Atur ukuran tulisan
+      doc.setFontSize(4);
+      // Tambahkan tulisan "Elitech" di sudut kanan atas
+      doc.text("Elitech", 47, 8, null, null, "right");
+
       const promises = this.filteredData
         .filter(item => this.selectedItems.includes(item.id))
         .map(noseri => {
@@ -504,33 +520,64 @@ export default {
           if (barcodeRef && barcodeRef[0]) {
             return html2canvas(barcodeRef[0].$el).then(canvas => {
               const imgData = canvas.toDataURL('image/png');
-              doc.addImage(imgData, 'PNG', x, y, 26, 15);
-              x += 60;
-              kolom++;
-              if (kolom === 2) {
-                x = 10; // Reset posisi x
-                y += 30; // Tambahkan jarak vertikal
-                baris++;
-                kolom = 0;
-              }
-              if (baris === 20) {
-                doc.addPage(); // Tambahkan halaman baru jika melebihi baris
-                y = 10; // Reset posisi y
-                baris = 0;
-              }
+              doc.addImage(imgData, 'PNG', x, y, 40, 16); // Menyesuaikan agar muat di 26x15mm
             });
           } else {
             console.error(`Barcode untuk item ${noseri.id} tidak ditemukan.`);
+            return Promise.resolve(); // tetap return Promise agar tidak gagal total
           }
         });
 
-      // Tunggu semua barcode selesai diproses, lalu simpan PDF
       Promise.all(promises).then(() => {
         doc.save('barcode_terpilih.pdf');
       }).catch(error => {
         console.error("Terjadi kesalahan saat memproses barcode:", error);
       });
     },
+    // exportSelected() {
+    //   if (this.selectedItems.length === 0) {
+    //     alert("Tidak ada data yang dipilih");
+    //     return;
+    //   }
+
+    //   const doc = new jsPDF();
+    //   let y = 10, x = 10, baris = 0, kolom = 0;
+
+    //   // Gunakan Promise untuk memastikan semua elemen diproses sebelum menyimpan file
+    //   const promises = this.filteredData
+    //     .filter(item => this.selectedItems.includes(item.id))
+    //     .map(noseri => {
+    //       const barcodeRef = this.$refs[`barcode${this.filteredData.indexOf(noseri)}`];
+    //       if (barcodeRef && barcodeRef[0]) {
+    //         return html2canvas(barcodeRef[0].$el).then(canvas => {
+    //           const imgData = canvas.toDataURL('image/png');
+    //           doc.addImage(imgData, 'PNG', x, y, 26, 15);
+    //           x += 60;
+    //           kolom++;
+    //           if (kolom === 2) {
+    //             x = 10; // Reset posisi x
+    //             y += 30; // Tambahkan jarak vertikal
+    //             baris++;
+    //             kolom = 0;
+    //           }
+    //           if (baris === 20) {
+    //             doc.addPage(); // Tambahkan halaman baru jika melebihi baris
+    //             y = 10; // Reset posisi y
+    //             baris = 0;
+    //           }
+    //         });
+    //       } else {
+    //         console.error(`Barcode untuk item ${noseri.id} tidak ditemukan.`);
+    //       }
+    //     });
+
+    //   // Tunggu semua barcode selesai diproses, lalu simpan PDF
+    //   Promise.all(promises).then(() => {
+    //     doc.save('barcode_terpilih.pdf');
+    //   }).catch(error => {
+    //     console.error("Terjadi kesalahan saat memproses barcode:", error);
+    //   });
+    // },
     // exportSelected() {
     //   if (this.selectedItems.length === 0) {
     //     alert("Tidak ada data yang dipilih");

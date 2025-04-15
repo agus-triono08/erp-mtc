@@ -50,10 +50,10 @@ class TipeController extends Controller
 
         $inisial = strtoupper(substr($nama_tipe, 0, 1));
 
-        $urutanTerakhir = Tipe::where('nama_tipe', 'like', $inisial . '%')
+        $urutanTerakhir = Tipe::where('kode_tipe', 'like', $inisial . '%')
                             ->count();
-        
-        $kode_tipe = $urutanTerakhir;
+
+        $kode_tipe = $inisial . $urutanTerakhir;
 
         if ($nama_tipe == 'NO TIPE') {
             $kode_tipe = 'XX';
@@ -66,6 +66,30 @@ class TipeController extends Controller
 
         return response()->json($tipe);
     }
+    // public function store(Request $request)
+    // {
+    //     $tipe = new Tipe();
+    //     $kategori_merek_id = $request->input('kategori_merek_id');
+    //     $nama_tipe = $request->input('nama_tipe');
+
+    //     $inisial = strtoupper(substr($nama_tipe, 0, 1));
+
+    //     $urutanTerakhir = Tipe::where('nama_tipe', 'like', $inisial . '%')
+    //                         ->count();
+        
+    //     $kode_tipe = $urutanTerakhir;
+
+    //     if ($nama_tipe == 'NO TIPE') {
+    //         $kode_tipe = 'XX';
+    //     }
+
+    //     $tipe->kode_tipe = $kode_tipe;
+    //     $tipe->kategori_merek_id = $kategori_merek_id;
+    //     $tipe->nama_tipe = $nama_tipe;
+    //     $tipe->save();
+
+    //     return response()->json($tipe);
+    // }
 
     /**
      * Display the specified resource.

@@ -23,12 +23,12 @@ class Tipe extends Model
         return $this->belongsTo(KategoriMerek::class, 'kategori_merek_id', 'id');
     }
 
-    public function merek() {
-        return $this->hasOneThrough(Merek::class, KategoriMerek::class, 'merek_id', 'id');
-    }
+    // public function merek() {
+    //     return $this->hasOneThrough(Merek::class, KategoriMerek::class, 'merek_id', 'id');
+    // }
 
-    public function kategori()
-    {
-        return $this->hasOneThrough(Kategori::class, KategoriMerek::class, 'kategori_id', 'id');
-    }
+    // public function kategori()
+    // {
+    //     return $this->hasOneThrough(Kategori::class, KategoriMerek::class, 'kategori_id', 'id');
+    // }
 }

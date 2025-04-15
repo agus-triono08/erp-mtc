@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Inventory;
 
 use App\Models\Inventory\NoSeri;
 use App\Models\Inventory\Tools;
+use App\Models\Layout;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -106,14 +107,16 @@ class NoSeriController extends Controller
         //
     }
 
-    public function getNoSeri($kodeAlat) {
+    public function getNoSeri($kodeAlat)
+    {
         $tools = Tools::where('kode', $kodeAlat)->first();
 
         if (!$tools) {
             return response()->json(['message' => 'Tool not found'], 404);
         }
 
-        $noseri = NoSeri::where('tools_id', $tools->id)->get();
+        // Tambahkan relasi layout
+        $noseri = NoSeri::with('layout')->where('tools_id', $tools->id)->get();
 
         if ($noseri->isEmpty()) {
             return response()->json(['message' => 'NoSeri not found'], 404);
