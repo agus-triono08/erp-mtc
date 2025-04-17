@@ -153,9 +153,11 @@ class ToolsController extends Controller
             $user = User::find($request->users_id);
 
             for($j = 0; $j < $jumlahPerawatan; $j++) {
+                $noPerawatan = 'JP' . str_pad($j + 1, 8, '0', STR_PAD_LEFT);
                 Perawatan::create([
                     'no_seri_id' => $noSeriRecord->id,
                     'users_id' => $user->id ?? null,
+                    'no_perawatan' => $noPerawatan,
                     'tgl_perawatan' => now()->addMonths($j * $interval),            
                 ]);
             }
@@ -305,6 +307,13 @@ class ToolsController extends Controller
 
         // Kembalikan pesan sukses
         return response()->json(['message' => 'Data berhasil dihapus.']);
+    }
+
+    public function getNoSeriByTool($toolId)
+    {
+        return NoSeri::where('tools_id', $toolId)
+            ->select('id', 'no_seri')
+            ->get();
     }
 }
 

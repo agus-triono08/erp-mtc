@@ -44,22 +44,25 @@
       <table class="table table-custom has-text-centered is-bordered" style="white-space: nowrap" id="export_table">
         <thead class="bg-table">
           <tr style="color: #000;">
+            <th rowspan="2">No Perawatan</th>
             <th rowspan="2">Nama Alat/Mesin</th>
             <th rowspan="2">No Seri</th>
             <th :colspan="last_date">Tanggal</th>
           </tr>
           <tr>
-            <th v-for="i in Array.from(Array(last_date).keys())" :key="i" style="color: #000;">
+            <th v-for="i in Array.from(Array(last_date).keys())" :key="i" style="color: #000;" class="text-center">
               {{ i + 1 }}
             </th>
           </tr>
         </thead>
         <tbody v-if="filteredJadwalPerawatan.length > 0">
           <tr v-for="item in filteredJadwalPerawatan.slice((currentPage - 1) * perPage, currentPage * perPage)" :key="item.id">
-            <td>{{ item.nama_alat }}</td>
-            <td>{{ item.no_seri }}</td>
-            <td v-for="i in Array.from(Array(last_date).keys())" :key="i" :style="{ backgroundColor: weekend_date.indexOf(i + 1) !== -1 ? 'black' : isDate(item.tanggal_perawatan, i + 1) ? 'yellow' : '' }">
-            </td>
+            <td>{{ item.no_perawatan }}</td>
+            <td>{{ item.no_seri.tools.nama }}</td>
+            <td>{{ item.no_seri.no_seri }}</td>
+            <!-- <td v-for="i in Array.from(Array(last_date).keys())" :key="i" :style="{ backgroundColor: weekend_date.indexOf(i + 1) !== -1 ? 'black' : isDate(item.tgl_perawatan, i + 1) ? 'yellow' : '' }">
+            </td> -->
+            <td v-for="i in Array.from(Array(last_date).keys())" :key="i" :style="{ backgroundColor: getBackgroundColor(item, i + 1) }"></td>
           </tr>
         </tbody>
         <tbody v-else>
@@ -67,24 +70,24 @@
             <td :colspan="last_date + 3">Tidak ada data</td>
           </tr>
         </tbody>
-      </table>
-      <!-- Pagination -->
-      <div class="d-flex justify-content-between align-items-center mt-3 mb-3" style="border-radius: 10px; background-color: #f3f4f6; height: 50px; color: #000;">
-        <div class="ml-3">
-          Rows per page:
-          <span>{{ perPage }}</span>
-        </div>
-        <div class="mr-3">          
-          <span>{{ paginationInfo }}</span>
-          <button @click="prevPage" :disabled="currentPage === 1" class="btn btn-sm btn-light">
-            <i class="fas fa-angle-left"></i>
-          </button>
-          <span>  </span>
-          <button @click="nextPage" :disabled="currentPage === totalPages" class="btn btn-sm btn-light">
-            <i class="fas fa-angle-right"></i>
-          </button>
-        </div>
-      </div>   
+      </table>      
+    </div>
+    <!-- Pagination -->
+    <div class="d-flex justify-content-between align-items-center mt-3 mb-3" style="border-radius: 10px; background-color: #f3f4f6; height: 50px; color: #000;">
+      <div class="ml-3">
+        Rows per page:
+        <span>{{ perPage }}</span>
+      </div>
+      <div class="mr-3">          
+        <span>{{ paginationInfo }}</span>
+        <button @click="prevPage" :disabled="currentPage === 1" class="btn btn-sm btn-light">
+          <i class="fas fa-angle-left"></i>
+        </button>
+        <span>  </span>
+        <button @click="nextPage" :disabled="currentPage === totalPages" class="btn btn-sm btn-light">
+          <i class="fas fa-angle-right"></i>
+        </button>
+      </div>
     </div>
     <!-- Pelaksanaan  -->
     <div class="row align-items-center justify-content-end mr-3">      
@@ -101,6 +104,7 @@
       <table class="table table-custom has-text-centered is-bordered" style="white-space: nowrap" id="export_table">
         <thead class="bg-table">
           <tr style="color: #000;">
+            <th rowspan="2">No Perawatan</th>
             <th rowspan="2">Nama Alat/Mesin</th>
             <th rowspan="2">No Seri</th>
             <th rowspan="2" class="text-center">Rentang Waktu</th>
@@ -121,8 +125,9 @@
         </thead>
         <tbody v-if="filteredJadwalPerawatan.length > 0">
           <tr v-for="(item, index) in filteredJadwalPerawatan.slice((currentPage - 1) * perPage, currentPage * perPage)" :key="item.id">
-            <td>{{ item.nama_alat }}</td>
-            <td>{{ item.no_seri }}</td>
+            <td>{{ item.no_perawatan }}</td>
+            <td>{{ item.no_seri.tools.nama }}</td>
+            <td>{{ item.no_seri.no_seri }}</td>
             <td class="text-center">{{ getTanggalStart(item) | formatDate }} - {{ getTanggalEnd(item) | formatDate }} <br>
               <small>{{ durasiDataPerawatan[index].status }}</small>
             </td>
@@ -190,7 +195,7 @@
     <!-- Modal untuk Tambah Data -->
     <div v-if="isModalTambahOpen" class="modal fade show" style="display: block;" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog" role="document">
-        <div class="modal-content">
+        <div class="modal-content" style="max-height: 90vh; overflow-y: auto;">
           <div class="modal-header">
             <h5 class="modal-title">Tambah Jadwal Perawatan</h5>
             <button type="button" class="close" @click="closeModalTambah">
@@ -200,27 +205,42 @@
           <div class="modal-body">
             <form>
               <div class="form-group">
-                <label>Tanggal</label>
-                <input v-model="tanggal" type="date" class="form-control">
+                <label for="tools" style="color: #000;">
+                  <b>Tanggal Perawatan</b>
+                  <sup style="color: red;"> *</sup>
+                </label>
+                <!-- <input v-model="tglPerawatan" type="date" class="form-control" :max="dateFormatter()" :min="minDateFormatter()"> -->
+                <input v-model="tglPerawatan" type="date" class="form-control" :min="minDateFormatter()" :max="dateFormatter()">
               </div>
               <div class="form-group">
-                <label>Nama Alat/Mesin</label>
-                <select v-model="nama_alat" class="form-control">
-                  <option value="">Pilih Nama Alat/Mesin</option>
-                  <option value="Bor">Bor</option>
-                  <option value="Gergaji">Gergaji</option>
-                  <option value="Pahat">Pahat</option>
+                <label for="tools" style="color: #000;">
+                  <b>Alat/Mesin</b>
+                  <sup style="color: red;"> *</sup>
+                </label>
+                <select v-model="selectedToolId" @change="getNoSeri" class="form-control">
+                  <option disabled value="">-- Pilih Tool --</option>
+                  <option v-for="tool in tools" :key="tool.id" :value="tool.id">
+                    {{ tool.nama }}
+                  </option>
                 </select>
               </div>
               <div class="form-group">
-                <label>No Seri</label>
-                <input v-model="no_seri" type="text" class="form-control" :disabled="nama_alat === ''">
+                <label for="tools" style="color: #000;">
+                  <b>No Seri</b>
+                  <sup style="color: red;"> *</sup>
+                </label>
+                <select v-model="selectedNoSeriId" class="form-control">
+                  <option disabled value="">-- Pilih No Seri --</option>
+                  <option v-for="seri in noSeriList" :key="seri.id" :value="seri.id">
+                    {{ seri.no_seri }}
+                  </option>
+                </select>
               </div>
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" @click="closeModalTambah">Batal</button>
-            <button type="button" class="btn btn-primary" @click="tambahJadwalPerawatan">Simpan</button>
+            <button type="button" class="btn btn-danger" @click="closeModalTambah">Batal</button>
+            <button type="button" class="btn btn-primary" @click="submitPerawatan">Simpan</button>
           </div>
         </div>
       </div>
@@ -330,6 +350,7 @@
 import vSelect from 'vue-select';
 import Swal from 'sweetalert2';
 import { formatDate } from '@fullcalendar/core';
+import axios from 'axios';
 
 export default {
   components: {
@@ -337,7 +358,13 @@ export default {
   },
   data() {
     return {
+      form: [],
       getOnlyTanggal: [],
+      tools: [],
+      noSeriList: [],
+      selectedToolId: '',
+      selectedNoSeriId: '',
+      tglPerawatan: '',
       picOptions: [
         { text: 'John Doe', value: 'John Doe' },
         { text: 'Jane Doe', value: 'Jane Doe' },
@@ -345,51 +372,51 @@ export default {
         { text: 'Alice Johnson', value: 'Alice Johnson' },
       ],
       jadwalPerawatan: [
-        {          
-          id: 1,
-          no_perawatan: 'R-01',
-          nama_alat: 'Bor',
-          no_seri: 'B-01',
-          tanggal_perawatan: '6',
-          tanggal_start: '',
-          tanggal_end: '',
-          waktu_mulai: '',
-          waktu_selesai: '',
-          pic: '',
-          detail: '',
-          kondisi: '',
-          status: 'Belum Selesai'
-        },
-        {          
-          id: 2,
-          no_perawatan: 'R-02',
-          nama_alat: 'Bor',
-          no_seri: 'B-02',
-          tanggal_perawatan: '20',
-          tanggal_start: '',
-          tanggal_end: '',
-          waktu_mulai: '',
-          waktu_selesai: '',
-          pic: '',
-          detail: '',
-          kondisi: '',
-          status: 'Belum Selesai'
-        },
-        {                    
-          id: 3,
-          no_perawatan: 'R-03',
-          nama_alat: 'Bor',
-          no_seri: 'B-03',
-          tanggal_perawatan: '19',
-          tanggal_start: '',
-          tanggal_end: '',
-          waktu_mulai: '',
-          waktu_selesai: '',
-          pic: '',
-          detail: '',
-          kondisi: '',
-          status: 'Belum Selesai'
-        },
+        // {          
+        //   id: 1,
+        //   no_perawatan: 'R-01',
+        //   nama_alat: 'Bor',
+        //   no_seri: 'B-01',
+        //   tanggal_perawatan: '6',
+        //   tanggal_start: '',
+        //   tanggal_end: '',
+        //   waktu_mulai: '',
+        //   waktu_selesai: '',
+        //   pic: '',
+        //   detail: '',
+        //   kondisi: '',
+        //   status: 'Belum Selesai'
+        // },
+        // {          
+        //   id: 2,
+        //   no_perawatan: 'R-02',
+        //   nama_alat: 'Bor',
+        //   no_seri: 'B-02',
+        //   tanggal_perawatan: '20',
+        //   tanggal_start: '',
+        //   tanggal_end: '',
+        //   waktu_mulai: '',
+        //   waktu_selesai: '',
+        //   pic: '',
+        //   detail: '',
+        //   kondisi: '',
+        //   status: 'Belum Selesai'
+        // },
+        // {                    
+        //   id: 3,
+        //   no_perawatan: 'R-03',
+        //   nama_alat: 'Bor',
+        //   no_seri: 'B-03',
+        //   tanggal_perawatan: '19',
+        //   tanggal_start: '',
+        //   tanggal_end: '',
+        //   waktu_mulai: '',
+        //   waktu_selesai: '',
+        //   pic: '',
+        //   detail: '',
+        //   kondisi: '',
+        //   status: 'Belum Selesai'
+        // },
       ],
       status: '',
       currentPage: 1,
@@ -544,7 +571,7 @@ export default {
     filteredJadwalPerawatan() {
       const search = this.search.toLowerCase();
       return this.jadwalPerawatan.filter((item) => {
-        return item.nama_alat.toLowerCase().includes(search) || item.no_seri.toLowerCase().includes(search);
+        return item.no_seri.no_seri.toLowerCase().includes(search) || item.no_seri.tools.nama.toLowerCase().includes(search) || item.no_perawatan.toLowerCase().includes(search);
       });
     },
     totalPages() {
@@ -557,6 +584,15 @@ export default {
     },
   },
   methods: {
+    async fetchDataFrom() {
+      try {
+        const response = await axios.get('/api/v1/perawatan')
+        this.jadwalPerawatan = response.data;
+        // console.log(this.jadwalPerawatan);
+      } catch (error) {
+        console.error(error);
+      }
+    },
     getTanggalStart(item) {
       if (item.tanggal_start) {
         return new Date(item.tanggal_start);
@@ -603,7 +639,7 @@ export default {
     //       return true;
     //     }
     // //   }
-    isDate(tanggal, hari, tanggal_start, tanggal_end) {
+    isDate(tanggal, hari, tgl_mulai_perawatan, tgl_selesai_perawatan) {
       // Cek apakah tanggal adalah string
       if (typeof tanggal === 'string') {
         // Jika tanggal adalah string, cek apakah tanggal mengandung hari
@@ -611,8 +647,8 @@ export default {
           return true;
         }
       } else {
-        const isStartDate = tanggal_start && new Date(tanggal_start).getDate() === hari;
-        const isEndDate = tanggal_end && new Date(tanggal_end).getDate() === hari;
+        const isStartDate = tgl_mulai_perawatan && new Date(tgl_mulai_perawatan).getDate() === hari;
+        const isEndDate = tgl_selesai_perawatan && new Date(tgl_selesai_perawatan).getDate() === hari;
 
         if (isStartDate || isEndDate) {
           return true;
@@ -701,47 +737,45 @@ export default {
     //   return '';
     // },
     getBackgroundColor(item, tanggal) {
-      const day = parseInt(tanggal, 10); // Convert to integer for comparison
-      // console.log(item,tanggal);
-      // Highlight tanggal perawatan jika tidak ada tanggal start dan end
-      if (!item.tanggal_start && !item.tanggal_end && item.tanggal_perawatan === String(day)) {
-        return 'yellow';
-      }
+      const day = parseInt(tanggal, 10);
 
-      // if (item.tanggal_perawatan === String(day)) {
-      //   return 'yellow';
-      // }
-      
-      // Highlight tanggal perawatan jika berada dalam rentang tanggal start dan end
-      if (this.isDate(item.tanggal_perawatan && item.tanggal_start && item.tanggal_end)) {
-        const tanggalPerawatan = new Date(item.tanggal_perawatan).getDate();
-        const startDay = new Date(item.tanggal_start).getDate();
-        const endDay = new Date(item.tanggal_end).getDate();
-        
-        if (tanggalPerawatan >= startDay && tanggalPerawatan <= endDay && tanggalPerawatan === day) {
+      // Highlight jika hanya ada tgl_perawatan (tanpa mulai dan selesai)
+      if (!item.tgl_mulai_perawatan && !item.tgl_selesai_perawatan && item.tgl_perawatan) {
+        const perawatanDate = new Date(item.tgl_perawatan).getDate();
+        if (perawatanDate === day && !this.weekend_date.includes(day)) {
           return 'yellow';
         }
       }
 
-      // Highlight start date (tanggal_start)
-      if (item.tanggal_start && day === new Date(item.tanggal_start).getDate()) {
+      // Highlight jika tgl_perawatan berada dalam rentang tgl_mulai dan tgl_selesai
+      if (this.isDate(item.tgl_perawatan) && this.isDate(item.tgl_mulai_perawatan) && this.isDate(item.tgl_selesai_perawatan)) {
+        const tanggalPerawatan = new Date(item.tgl_perawatan).getDate();
+        const startDay = new Date(item.tgl_mulai_perawatan).getDate();
+        const endDay = new Date(item.tgl_selesai_perawatan).getDate();
+
+        if (tanggalPerawatan >= startDay && tanggalPerawatan <= endDay && tanggalPerawatan === day && !this.weekend_date.includes(day)) {
+          return 'yellow';
+        }
+      }
+
+      // Highlight tgl_mulai_perawatan secara spesifik
+      if (item.tgl_mulai_perawatan && day === new Date(item.tgl_mulai_perawatan).getDate() && !this.weekend_date.includes(day)) {
         return 'yellow';
       }
-      
-      // Highlight weekends
+
+      // Highlight akhir pekan
       if (this.weekend_date.includes(day)) {
         return 'black';
       }
-      
-      // Highlight date within the start-end range
-      const startDay = item.tanggal_start ? new Date(item.tanggal_start).getDate() : null;
-      const endDay = item.tanggal_end ? new Date(item.tanggal_end).getDate() : null;
-      
-      if (startDay && endDay && day >= startDay && day <= endDay) {
+
+      // Highlight jika tanggal berada di antara tgl_mulai_perawatan dan tgl_selesai_perawatan
+      const startDay = item.tgl_mulai_perawatan ? new Date(item.tgl_mulai_perawatan).getDate() : null;
+      const endDay = item.tgl_selesai_perawatan ? new Date(item.tgl_selesai_perawatan).getDate() : null;
+
+      if (startDay && endDay && day >= startDay && day <= endDay && !this.weekend_date.includes(day)) {
         return 'yellow';
       }
-      
-      // Default color
+
       return '';
     },
     // getBackgroundColor(item, tanggal) {
@@ -780,6 +814,21 @@ export default {
     //   // Default color
     //   return '';
     // },
+    minDateFormatter() {
+      const date = new Date();
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0'); // tambah padding
+      return `${year}-${month}-01`;
+    },
+    dateFormatter() {
+      const date = new Date();
+      const year = date.getFullYear();
+      const month = date.getMonth();
+      const lastDay = new Date(year, month + 1, 0).getDate();
+      const paddedMonth = String(month + 1).padStart(2, '0'); // tambah padding
+      const paddedDay = String(lastDay).padStart(2, '0');
+      return `${year}-${paddedMonth}-${paddedDay}`;
+    },
     showModalTambah() {
       this.isModalTambahOpen = true;
     },
@@ -808,16 +857,79 @@ export default {
     closeModalSelesai() {
       this.isModalSelesaiOpen = false;
     },
-    tambahJadwalPerawatan() {
-      const jadwalPerawatanBaru = {
-        id: this.jadwalPerawatan.length + 1,
-        tanggal_perawatan: [this.tanggal],
-        nama_alat: this.nama_alat,
-        no_seri: this.no_seri,
-      };
-      this.jadwalPerawatan.push(jadwalPerawatanBaru);
-      this.closeModalTambah();  // Change hideModalTambah to closeModalTambah
+    async getTools() {
+      try {
+        const response = await axios.get('/api/v1/tools');
+        this.tools = response.data;
+      } catch (error) {
+        console.error('Gagal mengambil data tools:', error);
+      }
     },
+
+    async getNoSeri() {
+      try {
+        if (this.selectedToolId) {
+          const response = await axios.get(`/api/v1/tools/${this.selectedToolId}/no-seri`);
+          this.noSeriList = response.data;
+        } else {
+          this.noSeriList = [];
+        }
+      } catch (error) {
+        console.error('Gagal mengambil data no seri:', error);
+      }
+    },
+
+    async submitPerawatan() {
+      try {
+        const payload = {
+          tgl_perawatan: this.tglPerawatan,
+          no_seri_id: this.selectedNoSeriId
+        };
+
+        const response = await axios.post('/api/v1/perawatan', payload);
+        Swal.fire({
+          title: 'Berhasil!',
+          text: response.data.message,
+          icon: 'success',
+          confirmButtonText: 'OK'
+        }).then(() => {
+          window.location.reload();
+        });
+        // Reset form jika ingin
+        this.tglPerawatan = '';
+        this.selectedToolId = '';
+        this.selectedNoSeriId = '';
+        this.noSeriList = [];
+      } catch (error) {
+        if (error.response && error.response.data) {
+          console.log(error.response.data); // ✅ lihat detail error dari Laravel
+          Swal.fire({
+            title: 'Gagal!',
+            text: error.response.data.message || 'Gagal menyimpan perawatan.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
+        } else {
+          console.error(error);
+          Swal.fire({
+            title: 'Gagal!',
+            text: 'Terjadi kesalahan tidak terduga.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
+        }
+      }
+    },
+    // tambahJadwalPerawatan() {
+    //   const jadwalPerawatanBaru = {
+    //     id: this.jadwalPerawatan.length + 1,
+    //     tanggal_perawatan: [this.tanggal],
+    //     nama_alat: this.nama_alat,
+    //     no_seri: this.no_seri,
+    //   };
+    //   this.jadwalPerawatan.push(jadwalPerawatanBaru);
+    //   this.closeModalTambah();  // Change hideModalTambah to closeModalTambah
+    // },
     simpanSelesai() {
       const index = this.jadwalPerawatan.findIndex((item) => item.id === this.id);
       if (index !== -1) {
@@ -1158,6 +1270,8 @@ export default {
     }
   },
   mounted() {
+    this.fetchDataFrom();
+    this.getTools();
     this.pages = Array.from({ length: Math.ceil(this.jadwalPerawatan.length / this.perPage) }, (_, i) => i + 1);
   }
 }

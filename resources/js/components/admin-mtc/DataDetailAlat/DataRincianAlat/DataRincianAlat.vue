@@ -8,11 +8,11 @@
     </div>
 
     <!-- Modal Edit Data -->
-    <div id="app" class="modal-input" :class="{'is-visible' :showModalEdit}" @click.self="tutupModal">
+    <!-- <div id="app" class="modal-input" :class="{'is-visible' :showModalEdit}" @click.self="tutupModal">
       <div class="modal-content-input">
         <edit-alat-belum-digunakan @tutup-modal="tutupModal" :id="idEdit"></edit-alat-belum-digunakan>
       </div>      
-    </div>
+    </div> -->
 
     <div class="col-md-12">
       <button 
@@ -109,6 +109,7 @@
                   <i @click="sortNoSeri('asc')" class="fas fa-sort-down"></i>
                 </span>
               </th>
+              <th class="text-center text-black-1">No Seri Default</th>
               <th class="text-center text-black-1">Layout</th>
               <th class="text-center text-black-1">Tanggal Masuk</th>
               <th class="text-center text-black-1">Harga</th>
@@ -129,6 +130,7 @@
               </td>
               <td class="text-center">{{ (currentPage - 1) * rowsPerPage + index + 1 }}</td>
               <td class="text-center">{{ noseri.no_seri || '-' }}</td>
+              <td class="text-center">{{ noseri.no_seri_default || '-' }}</td>
               <!-- <td class="text-center">{{ noseri.layout ? noseri.layout.ruang : '-' }}</td> -->
               <td class="text-center">{{ formatLayout(noseri) }}</td>
               <td class="text-center">{{ noseri.tanggal_masuk }} <br>
@@ -168,9 +170,12 @@
                     <a class="dropdown-item" @click="viewDetail(noseri.id)">
                       <i class="fas fa-eye text-info"></i> Riwayat
                     </a>
-                    <a class="dropdown-item" @click="editData(noseri.id)">
-                      <i class="fas fa-edit text-primary"></i> Edit
+                    <a class="dropdown-item" @click="openModal('edit', noseri, index)">
+                      <i class="bi bi-pencil-square text-primary"></i> Edit
                     </a>
+                    <!-- <a class="dropdown-item" @click="editData(noseri.id)">
+                      <i class="fas fa-edit text-primary"></i> Edit
+                    </a> -->
                     <!-- <a class="dropdown-item" @click="downloadBarcode(noseri.no_seri_alat)">
                       <i class="fas fa-download text-success"></i> Download Barcode
                     </a>
@@ -209,6 +214,88 @@
     <div v-if="showPeminjaman">
       <rincian-alat-peminjaman :kode-alat="kodeAlat"></rincian-alat-peminjaman>
     </div>
+
+    <!-- Modal untuk Input dan Edit Data -->
+    <div v-if="isModalOpen" class="modal fade show" style="display: block;" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" style="max-height: 90vh; overflow-y: auto;">
+          <div class="modal-header">
+            <h5 class="modal-title">{{ modalTitle }}</h5>
+            <button type="button" class="close" @click="closeModal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="no-seri" style="color: #000;">
+                <b>No Seri Alat/Mesin</b>
+                <sup style="color: red;"> *</sup>
+              </label>
+              <input type="text" class="form-control" id="no-seri" v-model="datanoseri.no_seri" disabled>
+            </div>
+            <div class="form-group">
+              <label for="layout" style="color: #000;">
+                <b>Layout</b>
+                <sup style="color: red;"> *</sup>
+              </label>
+              <select 
+                id="layout"
+                class="form-control"
+                v-model="datanoseri.layout_id"
+                required
+              >
+              <option value="" disabled selected> Pilih Layout </option>
+              <option v-for="layout in Layout" :key="layout.id" :value="layout.id">{{ layout.ruang }}</option>
+              </select>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label for="no_seri_default" style="color: #000;">
+                  <b>No Seri Default</b>
+                  <sup style="color: red;"> *</sup>
+                </label>
+                <input type="text" class="form-control" id="no_seri_default" v-model="datanoseri.no_seri_default">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="tanggal-masuk" style="color: #000;">
+                  <b>Tanggal Masuk</b>
+                  <sup style="color: red;"> *</sup>
+                </label>
+                <input type="date" class="form-control" id="tanggal-masuk" v-model="datanoseri.tanggal_masuk">
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label for="harga" style="color: #000;">
+                  <b>Harga Satuan</b>
+                  <sup style="color: red;"> *</sup>
+                </label>
+                <input type="number" class="form-control" id="harga" v-model="datanoseri.harga">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="harga" style="color: #000;">
+                  <b>Kondisi</b>
+                  <sup style="color: red;"> *</sup>
+                </label>
+                <select id="kondisi" class="form-control" v-model="datanoseri.kondisi" disabled>
+                  <option value="" disabled>Pilih Kondisi Alat/Mesin</option>
+                  <option value="OK">OK</option>
+                  <option value="Error">Error</option>
+                  <option value="Rusak">Rusak</option>
+                  <option value="Musnah">Musnah</option>
+                  <option value="Hilang">Hilang</option>
+                </select>
+                <!-- <input type="number" class="form-control" id="harga" v-model="datanoseri.harga"> -->
+              </div>
+            </div>                                    
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" @click="closeModal">Tutup</button>
+            <button type="button" class="btn btn-primary" @click="saveData">{{ modalAction }}</button>
+          </div>
+        </div>
+      </div>
+    </div>    
   </div>
 </template>
 
@@ -222,7 +309,7 @@ import html2canvas from "html2canvas";
 export default {
   props: {
     kodeAlat: String,
-    id: Number,
+    noSeriId: Number,
   },
   components: {
     VueBarcode
@@ -230,6 +317,7 @@ export default {
   data() {
     return {
       datanoseri: [],
+      Layout: [],
       showModalInput: false,
       showModalEdit: false,
       idEdit: null,
@@ -242,6 +330,7 @@ export default {
       currentPage: 1,
       selectAllCheckbox: false,
       selectedItems: [],
+      isModalOpen: false,
     };
   },
   computed: {
@@ -276,7 +365,7 @@ export default {
     filteredData() {
       return this.datanoseri.filter(noseri => {
         const kondisiMatch = this.kondisiFilters.length ? this.kondisiFilters.includes(noseri.status) : true;
-        const searchMatch = noseri.no_seri.toLowerCase().includes(this.searchQuery.toLowerCase());
+        const searchMatch = noseri.no_seri && noseri.no_seri.toLowerCase().includes(this.searchQuery.toLowerCase());
 
         return kondisiMatch && searchMatch;
       });
@@ -305,6 +394,15 @@ export default {
         // console.log(this.datanoseri)
       } catch (error) {
         console.error("Error fetching alat error detail:", error);
+      }
+    },
+    // Mengambil Data Layout
+    async fetchLayout() {
+      try {
+        const response = await axios.get('/api/v1/layouts');
+        this.Layout = response.data;
+      } catch (error) {
+        console.error(error);
       }
     },
     sortNoSeri(order) {
@@ -418,6 +516,46 @@ export default {
         }
       } else {
         return noseri.harga;
+      }
+    },
+    openModal(action, noseri = null, index = null) {
+      if (action === 'edit' && noseri) {
+        this.modalTitle = 'Edit Data';
+        this.modalAction = 'Update';
+        this.datanoseri.no_seri = noseri.no_seri;
+        this.datanoseri.layout_id = noseri.layout_id;
+        this.datanoseri.no_seri_default = noseri.no_seri_default;
+        this.datanoseri.tanggal_masuk = noseri.tanggal_masuk;
+        this.datanoseri.harga = noseri.harga;
+        this.datanoseri.kondisi = noseri.kondisi;
+        this.currentIndex = index;
+        this.currentId = noseri.id;
+        console.log('layout_id dari noseri:', noseri.layout_id);
+      }
+      this.isModalOpen = true;
+    },
+    closeModal() {
+      this.isModalOpen = false; // Set modal status close
+    },
+    saveData() {
+      if (this.modalAction === 'Update') {
+          console.log('Updating data with ID:', this.currentId);
+          console.log('Data yang akan dikirim:', this.datanoseri); // Log data yang akan dikirim
+          axios.put(`/api/v1/noseri/${this.currentId}`, this.datanoseri)
+              .then(response => {
+                  console.log('Update successful:', response.data);
+                  const index = this.datanoseri.findIndex(item => item.id === this.currentId);
+                  if (index !== -1) {
+                      this.datanoseri.splice(index, 1, response.data.data); // Update data di frontend
+                  }
+                  this.closeModal();
+              })
+              .catch(error => {
+                  console.error('Error updating data:', error);
+                  if (error.response) {
+                      console.error('Response data:', error.response.data); // Log data respons
+                  }
+              });
       }
     },
     downloadBarcode(noSeri) {
@@ -677,6 +815,7 @@ export default {
   },
   mounted() {
     this.fetchAlatError();
+    this.fetchLayout();
   }
 }
 </script>

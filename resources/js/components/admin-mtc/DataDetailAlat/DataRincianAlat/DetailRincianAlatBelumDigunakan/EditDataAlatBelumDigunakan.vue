@@ -163,7 +163,7 @@
         try {
           const response = await axios.get(`/api/no-seri/belumdigunakan/${id}/edit`);
           this.noseri = response.data.data;
-          //console.log(this.noseri);
+          console.log(this.noseri);
         } catch (error) {}
       },
       async submitAlat() {

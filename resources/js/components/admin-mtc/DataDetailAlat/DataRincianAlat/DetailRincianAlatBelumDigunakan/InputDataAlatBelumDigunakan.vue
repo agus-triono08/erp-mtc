@@ -1,371 +1,225 @@
 <template>
-  <div class="container-fluid">
+  <div>
     <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold" style="color: #169ea8; border-radius: 15px;">Form Input Data Alat Belum Digunakan</h6>
+      <h6 class="m-0 font-weight-bold text-primary">Form Input Data Alat Belum Digunakan</h6>
     </div>
-    <div class="card-body" style="border-radius: 15px;">
-      <form @submit.prevent="submitAlat">
-
-        <!-- No Seri Alat -->
-          <div class="form-group">
-            <label for="no_seri_alat" style="color: #000;">
-              <b>No Seri Alat</b>              
-            </label>
-            <input
-              type="text"
-              id="no_seri_alat"              
-              class="form-control"
-              placeholder="Masukkan No Seri"                            
-            />
-          </div>
-
-          <!-- Layout -->
-          <div class="form-group">
-            <label for="layout" style="color: #000;">
-              <b>Layout</b>
-              <sup style="color: red;"> *</sup>
-            </label>
-            <select id="layout" class="form-control" required>
-              <option value="" disabled selected>Pilih Layout</option>
-              <option value="Lemari 1">Lemari 1</option>
-              <option value="Lemari 2">Lemari 2</option>
-            </select>
-          </div>
-
-          <!-- Tanggal Masuk -->
-          <div class="form-group">
-            <label for="tanggal_masuk" style="color: #000;">
-              <b>Tanggal Masuk</b>
-              <sup style="color: red;"> *</sup>
-            </label>
-            <input
-              type="date"
-              id="tanggal_masuk"
-              class="form-control"
-              required
-            />            
-          </div>
-
-          <!-- Harga -->
-          <div class="form-group">
-            <label for="harga" style="color: #000;">
-              <b>Harga</b>
-              <sup style="color: red;"> *</sup>
-            </label>
-            <input
-              type="number"
-              id="harga"
-              class="form-control"
-              placeholder="Masukkan Harga Alat"
-              required
-            />
-          </div>
-
-          <!-- Kondisi -->
-          <div class="form-group">
-            <label for="kondisi" style="color: #000;">
-              <b>Kondisi</b>
-              <sup style="color: red;"> *</sup>
-            </label>
-            <select id="kondisi" class="form-control" required>
-              <option value="Ready" disabled selected>Ready</option>              
-            </select>
-          </div>
-
-        <!-- Tombol Aksi -->
-        <div class="form-group d-flex justify-content-between">
-          <span></span>
-          <div>
-            <button type="submit" class="btn btn-plus mr-2">
-              <i class="fas fa-save"></i> Simpan
-            </button>
-            <button @click="tutupModal" type="button" class="btn btn-danger">
-              <i class="fas fa-times"></i> Batal
-            </button>
-          </div>
+    <form @submit.prevent="submitForm" enctype="multipart/form-data">
+      <div class="row">
+        <div class="col-md-12">
+          <label style="color: #000;">Alat/Mesin<sup style="color: red;"> *</sup></label>
+          <!-- <select v-model="form.tools_id" class="form-control" required>
+            <option value="">Pilih Tools</option>
+            <option v-for="tool in tools" :key="tool.id" :value="tool.id">
+              {{ tool.nama }}
+            </option>
+          </select> -->
+          <v-select
+            v-model="form.tools_id"
+            required
+            placeholder="Pilih Alat/Mesin"
+            :options="tools"
+            label="nama"
+            :searchable="true"
+            :reduce="tool => tool.id"
+          />
         </div>
-      </form>
-    </div>
+
+        <div class="col-md-12">
+          <label style="color: #000;">Layout<sup style="color: red;"> *</sup></label>
+          <!-- <select v-model="form.layout_id" class="form-control" required>
+            <option value="">Pilih Layout</option>
+            <option v-for="layout in layouts" :key="layout.id" :value="layout.id">
+              {{ layout.ruang }}
+            </option>
+          </select> -->
+          <v-select
+            v-model="form.layout_id"
+            required
+            placeholder="Pilih Layout"
+            :options="layouts"
+            label="ruang"
+            :searchable="true"
+            :reduce="layout => layout.id"
+          />
+
+        </div>
+
+        <div class="col-md-12 mt-2">
+          <label style="color: #000;">Interval Jadwal Perawatan (bulan)<sup style="color: red;"> *</sup></label>
+          <!-- <input type="number" class="form-control" v-model="form.jadwal_perawatan" min="1"> -->
+          <select 
+            id="jadwal_perawatan"
+            v-model="form.jadwal_perawatan"
+            class="form-control"
+            required
+          >
+            <option value="" disabled>Pilih Interval Perawatan</option>
+            <option value="1">Setiap 1 Bulan</option>
+            <option value="3">Setiap 3 Bulan</option>
+            <option value="6">Setiap 6 Bulan</option>
+            <option value="12">Setiap 12 Bulan</option>
+          </select>
+        </div>
+
+        <div class="col-md-6 mt-2">
+          <label style="color: #000;">No Seri default<sup style="color: red;"> *</sup></label>
+          <input type="text" v-model="form.no_seri_default" class="form-control" required placeholder="Masukkan No Seri Default">
+        </div>
+
+        <div class="col-md-6 mt-2">
+          <label style="color: #000;">Jumlah Stok Masuk<sup style="color: red;"> *</sup></label>
+          <input type="number" class="form-control" v-model="form.stok_awal" min="1" required>
+        </div>
+
+        <div class="col-md-6 mt-2">
+          <label style="color: #000;">Harga Satuan<sup style="color: red;"> *</sup></label>
+          <input type="number" class="form-control" v-model="form.harga" min="0" required placeholder="Masukkan Harga Satuan Alat/Mesin">          
+        </div>
+
+        <div class="col-md-6 mt-2">
+          <label style="color: #000;">Kondisi<sup style="color: red;"> *</sup></label>
+          <!-- <input type="text" class="form-control" v-model="form.kondisi" required> -->
+          <select 
+            id="kondisi"
+            v-model="form.kondisi"
+            class="form-control"
+            required
+          >
+            <option value="" disabled selected>Pilih Kondisi</option>
+            <option value="OK">OK</option>        
+          </select>
+        </div>        
+
+        <!-- <div class="col-md-6 mt-2">
+          <label>PIC (User)</label>
+          <select v-model="form.users_id" class="form-control">
+            <option value="">Pilih PIC (optional)</option>
+            <option v-for="user in users" :key="user.id" :value="user.id">
+              {{ user.name }}
+            </option>
+          </select>
+        </div> -->        
+
+        <!-- <div class="col-md-12 mt-3">
+          <button type="submit" class="btn btn-primary w-100">Simpan No Seri & Jadwal</button>
+        </div> -->
+      </div>
+      <div class="form-group d-flex justify-content-end mt-4">
+        <button type="submit" class="btn btn-primary mr-2"><i class="bi bi-floppy"></i> Simpan No Seri & Jadwal</button>
+        <button type="button" class="btn btn-danger" @click="tutupModal"><i class="bi bi-x-circle"></i> Tutup</button>
+      </div>
+    </form>
   </div>
 </template>
 
 <script>
-import axios from "axios";
+import { reduce } from 'lodash';
+import VSelect from 'vue-select';
+import Swal from 'sweetalert2';
 
 export default {
+  components: { 
+    VSelect 
+  },
   data() {
     return {
-      error: {
-        stok_error: "",
-      },
-      alat: {
-        nama_alat: "",
-        merek_alat: "",
-        tanggal_masuk: "",
-        lokasi_penyimpanan: "",
-        kondisi: "",
-        status: "",
-        stok: "",
-        deskripsi: "",
-        harga_pembelian: 0,
-        asal_usul: "",
-      },
-      gambar: null,
-      gambarPreview: null,
-      dragActive: false,
-      showModal: false,
-      selectedKodeAlat: '',
-      kode_alats: [],
-      kategoris: ['CLAMP', 'POWER SUPPLY', 'GLUE GUN', 'TANG', 'WATERPASS', 'SOLDER'],
-      formattedHarga: '',
-      selectedLocation: '',
-      manualLocationInput: '',
-      showManualInputLocation: false,
-      locations: ['Gedung A', 'Gedung B', 'Gedung C', 'Gedung D'],
+      tools: [],
+      layouts: [],
+      users: [],
+      form: {
+        tools_id: '',
+        layout_id: '',
+        stok_awal: 1,
+        harga: '',
+        kondisi: '',
+        jadwal_perawatan: 1,
+        // users_id: '',
+        no_seri_default: '',
+      }
     };
   },
+  mounted() {
+    this.fetchInitialData();
+  },
   methods: {
-    tutupModal() {
-      this.$emit('tutup-modal'); // Mengirim event ke komponen induk
-    },
-    onFileChange(event) {
-      const file = event.target.files[0];
-      this.setImagePreview(file);
-    },
-    handleDrop(event) {
-      const file = event.dataTransfer.files[0];
-      this.setImagePreview(file);
-    },
-    setImagePreview(file) {
-      this.gambar = file;
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.gambarPreview = e.target.result;
-      };
-      reader.readAsDataURL(file);
-    },
-    async submitAlat() {
-      const formData = new FormData();
-      for (const key in this.alat) {
-        formData.append(key, this.alat[key]);
-      }
-      if (this.gambar) {
-        formData.append("gambar", this.gambar);
-      }
-      if (this.alat.deskripsi.length > 500) {
-        alert("Deskripsi tidak boleh lebih dari 500 karakter.");
-        return;
-      }
-
+    async fetchInitialData() {
       try {
-        await axios.post("/api/alats", formData, {
-          headers: { "Content-Type": "multipart/form-data" },
+        const [toolsRes, layoutsRes] = await Promise.all([
+          axios.get('/api/v1/tools'),
+          axios.get('/api/v1/layouts')
+          // axios.get('/api/v1/users')
+        ]);
+        this.tools = toolsRes.data;
+        this.layouts = layoutsRes.data;
+        // this.users = usersRes.data;
+      } catch (err) {
+        console.error('Gagal fetch data awal:', err);
+      }
+    },
+    async submitForm() {
+      try {
+        const res = await axios.post('/api/v1/noseri', this.form);
+        Swal.fire({
+          title: 'Berhasil!',
+          text: 'No seri & jadwal berhasil disimpan.',
+          icon: 'success',
+          confirmButtonText: 'OK'
         });
-        alert("Data berhasil disimpan!");
-        this.tutupModal(); // Tutup modal setelah data berhasil disimpan
-      } catch (error) {
-        console.error("Error response:", error.response);
-        alert("Terjadi kesalahan saat menyimpan data: " + error.response.data.message);
+        this.$emit('tutup-modal');
+        // this.resetForm();
+        // this.$emit('success', res.data); // jika ingin refresh list dari parent
+      } catch (err) {
+        if (err.response && err.response.status === 422) {
+          Swal.fire({
+            title: 'Validasi Gagal!',
+            text: 'Silakan periksa kembali inputan Anda.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
+        } else if (err.response && err.response.status >= 400 && err.response.status < 500) {
+          Swal.fire({
+            title: 'Gagal!',
+            text: 'Gagal menyimpan data.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
+        } else {
+          console.error(err);
+        }
       }
     },
-    resetForm() {
-      this.alat = {
-        nama_alat: "",
-        merek_alat: "",
-        tanggal_masuk: "",
-        lokasi_penyimpanan: "",
-        kondisi: "",
-        status: "",
-        stok: "",
-        deskripsi: "",
-        harga_pembelian: 0,
-        asal_usul: "",
-      };
-      this.gambar = null;
-      this.gambarPreview = null;
+    // resetForm() {
+    //   this.form = {
+    //     tools_id: '',
+    //     layout_id: '',
+    //     stok_awal: 1,
+    //     harga: '',
+    //     kondisi: '',
+    //     jadwal_perawatan: 1,
+    //     // users_id: '',
+    //     no_seri_default: ''
+    //   };
+    // },
+    tutupModal() {
+      Swal.fire({
+        title: 'Tutup?',
+        text: 'Apakah Anda yakin ingin menutup form?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, tutup!',
+        cancelButtonText: 'Tidak, batalkan!'
+      }).then((result) => {
+        if (result.value) {
+          this.$emit('tutup-modal');
+        }
+      });
     },
-    onKategoriChange(event) {
-      if (event.target.value === 'other') {
-        this.showManualInput = true;
-        this.selectedKategori = '';
-      } else {
-        this.showManualInput = false;
-        this.manualKategori = '';
-      }
-    },
-    formatHarga(event) {
-      let value = event.target.value.replace(/\D/g, '');
-      this.alat.harga_pembelian = value ? parseInt(value, 10) : 0;
-      this.formattedHarga = this.formatRupiah(value);
-    },
-    formatRupiah(angka) {
-      if (!angka) return '';
-      let number_string = angka.toString();
-      let sisa = number_string.length % 3;
-      let rupiah = number_string.substr(0, sisa);
-      let ribuan = number_string.substr(sisa).match(/\d{3}/g);
-
-      if (ribuan) {
-        let separator = sisa ? '.' : '';
-        rupiah += separator + ribuan.join('.');
-      }
-
-      return `Rp. ${rupiah}`;
-    },
-    onLocationChange(event) {
-      if (event.target.value === 'other') {
-        this.showManualInputLocation = true;
-        this.selectedLocation = '';
-      } else {
-        this.showManualInputLocation = false;
-        this.manualLocation = '';
-      }
-    },
-  },
-  computed: {
-    finalKategori() {
-      return this.showManualInput ? this.manualKategori : this.selectedKategori;
-    },
-    finalLocation() {
-      return this.showManualInputLocation ? this.manualLocation : this.selectedLocation;
-    }
-  },
+  }
 };
 </script>
-  
-  <style>
-  .icon-hover {
-    color: #5a5c69;
-    transition: color 0.3s ease;
-  }
-  
-  .icon-hover:hover {
-    color: #169ea8;
-  }
-  .btn-plus {
-    background-color: #169EA8;
-    color: #fff;
-  }
-  .btn-plus:hover {
-      background-color: #22d3e0;
-      color: #fff;
-  }
-  
-  .upload-box {
-    border: 2px dashed #169ea8;
-    padding: 20px;
-    text-align: center;
-    cursor: pointer;
-    position: relative;
-    transition: border-color 0.3s ease;
-    max-width: 200px;
-    max-height: auto;
-  }
-  
-  .upload-box .fa-image {
-    font-size: 36px; /* Ukuran ikon diperbesar */
-    margin-bottom: 10px;
-    color: #666;
-  }
-  
-  .upload-box.drag-active {
-    border-color: #22d3e0;
-  }
-  
-  .upload-box .upload-input {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    cursor: pointer;
-  }
-  
-  .browse-link {
-    color: #169ea8;
-    text-decoration: underline;
-    cursor: pointer;
-  }
-  
-  .img-preview {
-    max-width: 150px;
-    max-height: 150px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
-  }
-  
-  /* Modal Styling */
-  .modal {
-    display: none; /* Sembunyikan modal secara default */
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Latar belakang transparan */
-  }
-  
-  .modal.is-visible {
-    display: flex; /* Tampilkan modal saat is-visible aktif */
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .modal-content {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    max-width: 400px;
-    text-align: center;
-  }
-  
-  .modal-content h2 {
-    margin-bottom: 10px;
-    font-size: 1.5rem;
-    color: #333;
-  }
-  
-  .modal-content p {
-    margin-bottom: 20px;
-    color: #666;
-  }
-  
-  .modal-content button {
-    padding: 10px 20px;
-    margin: 5px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  #confirmButton {
-    background-color: #169ea8;
-    color: #fff;
-  }
-  
-  #cancelButton {
-    background-color: #f44336;
-    color: #fff;
-  }
-  
-  .textarea-wrapper {
-    position: relative;
-  }
-  
-  textarea {
-    padding-bottom: 20px; /* Beri ruang untuk teks di bagian bawah */
-  }
-  
-  .char-counter {
-    position: absolute;
-    bottom: 5px;
-    right: 10px;
-    font-size: 12px;
-    color: #6c757d; /* Warna teks abu-abu */
-    pointer-events: none; /* Supaya tidak mengganggu input */
-  }
-  
-  </style>
+
+<style scoped>
+label {
+  font-weight: 600;
+}
+</style>

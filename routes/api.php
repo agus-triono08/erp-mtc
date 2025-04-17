@@ -17,6 +17,7 @@ use App\Http\Controllers\Inventory\KategoriMerekController;
 use App\Http\Controllers\Inventory\TipeController;
 use App\Http\Controllers\Inventory\ToolsController;
 use App\Http\Controllers\Inventory\NoSeriController;
+use App\Http\Controllers\Inventory\PerawatanController;
 use App\Http\Controllers\Auth\LoginController;
 
 /*
@@ -149,6 +150,9 @@ Route::get('/v1/kategori-merek/check', [KategoriMerekController::class, 'check']
 Route::apiResource('v1/tipe', TipeController::class);
 //TOOLS
 Route::apiResource('v1/tools', ToolsController::class);
+Route::get('/v1/tools/{id}/no-seri', [ToolsController::class, 'getNoSeriByTool']);
 //NOSeri
 Route::apiResource('v1/noseri', NoseriController::class);
 Route::get('/v1/noseri/getNoSeri/{kodeAlat}', [NoseriController::class, 'getNoSeri']);
+//Perawatan
+Route::apiResource('v1/perawatan', PerawatanController::class);

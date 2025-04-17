@@ -25464,6 +25464,93 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
  // Impor XLSX dari library yang sudah diinstal
@@ -25473,7 +25560,7 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     kodeAlat: String,
-    id: Number
+    noSeriId: Number
   },
   components: {
     VueBarcode: (vue_barcode__WEBPACK_IMPORTED_MODULE_1___default())
@@ -25481,6 +25568,7 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
   data: function data() {
     return {
       datanoseri: [],
+      Layout: [],
       showModalInput: false,
       showModalEdit: false,
       idEdit: null,
@@ -25492,7 +25580,8 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
       rowsPerPage: 10,
       currentPage: 1,
       selectAllCheckbox: false,
-      selectedItems: []
+      selectedItems: [],
+      isModalOpen: false
     };
   },
   computed: {
@@ -25530,7 +25619,7 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
       var _this = this;
       return this.datanoseri.filter(function (noseri) {
         var kondisiMatch = _this.kondisiFilters.length ? _this.kondisiFilters.includes(noseri.status) : true;
-        var searchMatch = noseri.no_seri.toLowerCase().includes(_this.searchQuery.toLowerCase());
+        var searchMatch = noseri.no_seri && noseri.no_seri.toLowerCase().includes(_this.searchQuery.toLowerCase());
         return kondisiMatch && searchMatch;
       });
     }
@@ -25576,6 +25665,33 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
               return _context.stop();
           }
         }, _callee, null, [[0, 8]]);
+      }))();
+    },
+    // Mengambil Data Layout
+    fetchLayout: function fetchLayout() {
+      var _this3 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.prev = 0;
+              _context2.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/v1/layouts');
+            case 3:
+              response = _context2.sent;
+              _this3.Layout = response.data;
+              _context2.next = 10;
+              break;
+            case 7:
+              _context2.prev = 7;
+              _context2.t0 = _context2["catch"](0);
+              console.error(_context2.t0);
+            case 10:
+            case "end":
+              return _context2.stop();
+          }
+        }, _callee2, null, [[0, 7]]);
       }))();
     },
     sortNoSeri: function sortNoSeri(order) {
@@ -25689,6 +25805,49 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
         return noseri.harga;
       }
     },
+    openModal: function openModal(action) {
+      var noseri = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+      var index = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+      if (action === 'edit' && noseri) {
+        this.modalTitle = 'Edit Data';
+        this.modalAction = 'Update';
+        this.datanoseri.no_seri = noseri.no_seri;
+        this.datanoseri.layout_id = noseri.layout_id;
+        this.datanoseri.no_seri_default = noseri.no_seri_default;
+        this.datanoseri.tanggal_masuk = noseri.tanggal_masuk;
+        this.datanoseri.harga = noseri.harga;
+        this.datanoseri.kondisi = noseri.kondisi;
+        this.currentIndex = index;
+        this.currentId = noseri.id;
+        console.log('layout_id dari noseri:', noseri.layout_id);
+      }
+      this.isModalOpen = true;
+    },
+    closeModal: function closeModal() {
+      this.isModalOpen = false; // Set modal status close
+    },
+    saveData: function saveData() {
+      var _this4 = this;
+      if (this.modalAction === 'Update') {
+        console.log('Updating data with ID:', this.currentId);
+        console.log('Data yang akan dikirim:', this.datanoseri); // Log data yang akan dikirim
+        axios__WEBPACK_IMPORTED_MODULE_0___default().put("/api/v1/noseri/".concat(this.currentId), this.datanoseri).then(function (response) {
+          console.log('Update successful:', response.data);
+          var index = _this4.datanoseri.findIndex(function (item) {
+            return item.id === _this4.currentId;
+          });
+          if (index !== -1) {
+            _this4.datanoseri.splice(index, 1, response.data.data); // Update data di frontend
+          }
+          _this4.closeModal();
+        })["catch"](function (error) {
+          console.error('Error updating data:', error);
+          if (error.response) {
+            console.error('Response data:', error.response.data); // Log data respons
+          }
+        });
+      }
+    },
     downloadBarcode: function downloadBarcode(noSeri) {
       var link = document.createElement('a');
       link.href = "https://barcode.tec-it.com/barcode.ashx?data=".concat(noSeri, "&multiplebarcodes=true&translate-esc=on&download=true");
@@ -25714,14 +25873,14 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
       }
     },
     exportAllBarcode: function exportAllBarcode() {
-      var _this3 = this;
+      var _this5 = this;
       var doc = new jspdf__WEBPACK_IMPORTED_MODULE_2__["default"]();
       var y = 10; // Koordinat y untuk menambahkan barcode
       var x = 10; // Koordinat x untuk menambahkan barcode
       var baris = 0; // Jumlah baris
       var kolom = 0; // Jumlah kolom
       this.datanoseri.forEach(function (noseri, index) {
-        var barcode = _this3.$refs['barcode' + index][0]; // Mendapatkan elemen barcode
+        var barcode = _this5.$refs['barcode' + index][0]; // Mendapatkan elemen barcode
         html2canvas__WEBPACK_IMPORTED_MODULE_3___default()(barcode.$el).then(function (canvas) {
           var imgData = canvas.toDataURL('image/png');
           doc.addImage(imgData, 'PNG', x, y, 50, 20);
@@ -25738,7 +25897,7 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
             y = 10; // Reset posisi y
             baris = 0;
           }
-          if (index === _this3.datanoseri.length - 1) {
+          if (index === _this5.datanoseri.length - 1) {
             doc.save('all_barcode.pdf');
           }
         });
@@ -25770,7 +25929,7 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
       }
     },
     exportSelected: function exportSelected() {
-      var _this4 = this;
+      var _this6 = this;
       if (this.selectedItems.length === 0) {
         alert("Tidak ada data yang dipilih");
         return;
@@ -25793,9 +25952,9 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
       // Tambahkan tulisan "Elitech" di sudut kanan atas
       doc.text("Elitech", 47, 8, null, null, "right");
       var promises = this.filteredData.filter(function (item) {
-        return _this4.selectedItems.includes(item.id);
+        return _this6.selectedItems.includes(item.id);
       }).map(function (noseri) {
-        var barcodeRef = _this4.$refs["barcode".concat(_this4.filteredData.indexOf(noseri))];
+        var barcodeRef = _this6.$refs["barcode".concat(_this6.filteredData.indexOf(noseri))];
         if (barcodeRef && barcodeRef[0]) {
           return html2canvas__WEBPACK_IMPORTED_MODULE_3___default()(barcodeRef[0].$el).then(function (canvas) {
             var imgData = canvas.toDataURL('image/png');
@@ -25905,7 +26064,7 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
     //   doc.save(`barcode_${noSeri}.pdf`);
     // },
     downloadExcel: function downloadExcel() {
-      var _this5 = this;
+      var _this7 = this;
       if (this.filteredData.length === 0) {
         alert("Tidak ada data yang dapat di download");
         return;
@@ -25920,8 +26079,8 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
           NoSeri: item.no_seri_alat,
           Layout: item === null || item === void 0 || (_item$layout = item.layout) === null || _item$layout === void 0 ? void 0 : _item$layout.nama_lokasi,
           TanggalMasuk: item.tanggal_masuk,
-          Harga: "".concat(_this5.formatRupiah(item.harga)),
-          Depresiasi: _this5.getNilaiBuku(item),
+          Harga: "".concat(_this7.formatRupiah(item.harga)),
+          Depresiasi: _this7.getNilaiBuku(item),
           Kondisi: item.status
         };
       });
@@ -25961,6 +26120,7 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
   },
   mounted: function mounted() {
     this.fetchAlatError();
+    this.fetchLayout();
   }
 });
 
@@ -27186,17 +27346,17 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             case 4:
               response = _context.sent;
               _this2.noseri = response.data.data;
-              //console.log(this.noseri);
-              _context.next = 10;
+              console.log(_this2.noseri);
+              _context.next = 11;
               break;
-            case 8:
-              _context.prev = 8;
+            case 9:
+              _context.prev = 9;
               _context.t0 = _context["catch"](1);
-            case 10:
+            case 11:
             case "end":
               return _context.stop();
           }
-        }, _callee, null, [[1, 8]]);
+        }, _callee, null, [[1, 9]]);
       }))();
     },
     submitAlat: function submitAlat() {
@@ -27322,10 +27482,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-select */ "./node_modules/vue-select/dist/vue-select.js");
+/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_select__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_2__);
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 //
@@ -27419,164 +27589,167 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    VSelect: (vue_select__WEBPACK_IMPORTED_MODULE_1___default())
+  },
   data: function data() {
     return {
-      error: {
-        stok_error: ""
-      },
-      alat: {
-        nama_alat: "",
-        merek_alat: "",
-        tanggal_masuk: "",
-        lokasi_penyimpanan: "",
-        kondisi: "",
-        status: "",
-        stok: "",
-        deskripsi: "",
-        harga_pembelian: 0,
-        asal_usul: ""
-      },
-      gambar: null,
-      gambarPreview: null,
-      dragActive: false,
-      showModal: false,
-      selectedKodeAlat: '',
-      kode_alats: [],
-      kategoris: ['CLAMP', 'POWER SUPPLY', 'GLUE GUN', 'TANG', 'WATERPASS', 'SOLDER'],
-      formattedHarga: '',
-      selectedLocation: '',
-      manualLocationInput: '',
-      showManualInputLocation: false,
-      locations: ['Gedung A', 'Gedung B', 'Gedung C', 'Gedung D']
+      tools: [],
+      layouts: [],
+      users: [],
+      form: {
+        tools_id: '',
+        layout_id: '',
+        stok_awal: 1,
+        harga: '',
+        kondisi: '',
+        jadwal_perawatan: 1,
+        // users_id: '',
+        no_seri_default: ''
+      }
     };
   },
+  mounted: function mounted() {
+    this.fetchInitialData();
+  },
   methods: {
-    tutupModal: function tutupModal() {
-      this.$emit('tutup-modal'); // Mengirim event ke komponen induk
-    },
-    onFileChange: function onFileChange(event) {
-      var file = event.target.files[0];
-      this.setImagePreview(file);
-    },
-    handleDrop: function handleDrop(event) {
-      var file = event.dataTransfer.files[0];
-      this.setImagePreview(file);
-    },
-    setImagePreview: function setImagePreview(file) {
+    fetchInitialData: function fetchInitialData() {
       var _this = this;
-      this.gambar = file;
-      var reader = new FileReader();
-      reader.onload = function (e) {
-        _this.gambarPreview = e.target.result;
-      };
-      reader.readAsDataURL(file);
-    },
-    submitAlat: function submitAlat() {
-      var _this2 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var formData, key;
+        var _yield$Promise$all, _yield$Promise$all2, toolsRes, layoutsRes;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
-              formData = new FormData();
-              for (key in _this2.alat) {
-                formData.append(key, _this2.alat[key]);
-              }
-              if (_this2.gambar) {
-                formData.append("gambar", _this2.gambar);
-              }
-              if (!(_this2.alat.deskripsi.length > 500)) {
-                _context.next = 6;
-                break;
-              }
-              alert("Deskripsi tidak boleh lebih dari 500 karakter.");
-              return _context.abrupt("return");
-            case 6:
-              _context.prev = 6;
-              _context.next = 9;
-              return axios__WEBPACK_IMPORTED_MODULE_0___default().post("/api/alats", formData, {
-                headers: {
-                  "Content-Type": "multipart/form-data"
-                }
-              });
-            case 9:
-              alert("Data berhasil disimpan!");
-              _this2.tutupModal(); // Tutup modal setelah data berhasil disimpan
-              _context.next = 17;
+              _context.prev = 0;
+              _context.next = 3;
+              return Promise.all([axios.get('/api/v1/tools'), axios.get('/api/v1/layouts')
+              // axios.get('/api/v1/users')
+              ]);
+            case 3:
+              _yield$Promise$all = _context.sent;
+              _yield$Promise$all2 = _slicedToArray(_yield$Promise$all, 2);
+              toolsRes = _yield$Promise$all2[0];
+              layoutsRes = _yield$Promise$all2[1];
+              _this.tools = toolsRes.data;
+              _this.layouts = layoutsRes.data;
+              // this.users = usersRes.data;
+              _context.next = 14;
               break;
-            case 13:
-              _context.prev = 13;
-              _context.t0 = _context["catch"](6);
-              console.error("Error response:", _context.t0.response);
-              alert("Terjadi kesalahan saat menyimpan data: " + _context.t0.response.data.message);
-            case 17:
+            case 11:
+              _context.prev = 11;
+              _context.t0 = _context["catch"](0);
+              console.error('Gagal fetch data awal:', _context.t0);
+            case 14:
             case "end":
               return _context.stop();
           }
-        }, _callee, null, [[6, 13]]);
+        }, _callee, null, [[0, 11]]);
       }))();
     },
-    resetForm: function resetForm() {
-      this.alat = {
-        nama_alat: "",
-        merek_alat: "",
-        tanggal_masuk: "",
-        lokasi_penyimpanan: "",
-        kondisi: "",
-        status: "",
-        stok: "",
-        deskripsi: "",
-        harga_pembelian: 0,
-        asal_usul: ""
-      };
-      this.gambar = null;
-      this.gambarPreview = null;
+    submitForm: function submitForm() {
+      var _this2 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var res;
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.prev = 0;
+              _context2.next = 3;
+              return axios.post('/api/v1/noseri', _this2.form);
+            case 3:
+              res = _context2.sent;
+              sweetalert2__WEBPACK_IMPORTED_MODULE_2___default().fire({
+                title: 'Berhasil!',
+                text: 'No seri & jadwal berhasil disimpan.',
+                icon: 'success',
+                confirmButtonText: 'OK'
+              });
+              _this2.$emit('tutup-modal');
+              // this.resetForm();
+              // this.$emit('success', res.data); // jika ingin refresh list dari parent
+              _context2.next = 11;
+              break;
+            case 8:
+              _context2.prev = 8;
+              _context2.t0 = _context2["catch"](0);
+              if (_context2.t0.response && _context2.t0.response.status === 422) {
+                sweetalert2__WEBPACK_IMPORTED_MODULE_2___default().fire({
+                  title: 'Validasi Gagal!',
+                  text: 'Silakan periksa kembali inputan Anda.',
+                  icon: 'error',
+                  confirmButtonText: 'OK'
+                });
+              } else if (_context2.t0.response && _context2.t0.response.status >= 400 && _context2.t0.response.status < 500) {
+                sweetalert2__WEBPACK_IMPORTED_MODULE_2___default().fire({
+                  title: 'Gagal!',
+                  text: 'Gagal menyimpan data.',
+                  icon: 'error',
+                  confirmButtonText: 'OK'
+                });
+              } else {
+                console.error(_context2.t0);
+              }
+            case 11:
+            case "end":
+              return _context2.stop();
+          }
+        }, _callee2, null, [[0, 8]]);
+      }))();
     },
-    onKategoriChange: function onKategoriChange(event) {
-      if (event.target.value === 'other') {
-        this.showManualInput = true;
-        this.selectedKategori = '';
-      } else {
-        this.showManualInput = false;
-        this.manualKategori = '';
-      }
-    },
-    formatHarga: function formatHarga(event) {
-      var value = event.target.value.replace(/\D/g, '');
-      this.alat.harga_pembelian = value ? parseInt(value, 10) : 0;
-      this.formattedHarga = this.formatRupiah(value);
-    },
-    formatRupiah: function formatRupiah(angka) {
-      if (!angka) return '';
-      var number_string = angka.toString();
-      var sisa = number_string.length % 3;
-      var rupiah = number_string.substr(0, sisa);
-      var ribuan = number_string.substr(sisa).match(/\d{3}/g);
-      if (ribuan) {
-        var separator = sisa ? '.' : '';
-        rupiah += separator + ribuan.join('.');
-      }
-      return "Rp. ".concat(rupiah);
-    },
-    onLocationChange: function onLocationChange(event) {
-      if (event.target.value === 'other') {
-        this.showManualInputLocation = true;
-        this.selectedLocation = '';
-      } else {
-        this.showManualInputLocation = false;
-        this.manualLocation = '';
-      }
-    }
-  },
-  computed: {
-    finalKategori: function finalKategori() {
-      return this.showManualInput ? this.manualKategori : this.selectedKategori;
-    },
-    finalLocation: function finalLocation() {
-      return this.showManualInputLocation ? this.manualLocation : this.selectedLocation;
+    // resetForm() {
+    //   this.form = {
+    //     tools_id: '',
+    //     layout_id: '',
+    //     stok_awal: 1,
+    //     harga: '',
+    //     kondisi: '',
+    //     jadwal_perawatan: 1,
+    //     // users_id: '',
+    //     no_seri_default: ''
+    //   };
+    // },
+    tutupModal: function tutupModal() {
+      var _this3 = this;
+      sweetalert2__WEBPACK_IMPORTED_MODULE_2___default().fire({
+        title: 'Tutup?',
+        text: 'Apakah Anda yakin ingin menutup form?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, tutup!',
+        cancelButtonText: 'Tidak, batalkan!'
+      }).then(function (result) {
+        if (result.value) {
+          _this3.$emit('tutup-modal');
+        }
+      });
     }
   }
 });
@@ -42351,17 +42524,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _fullcalendar_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @fullcalendar/core */ "./node_modules/@fullcalendar/core/index.js");
-/* harmony import */ var _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fullcalendar/daygrid */ "./node_modules/@fullcalendar/daygrid/index.js");
-/* harmony import */ var _fullcalendar_timegrid__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fullcalendar/timegrid */ "./node_modules/@fullcalendar/timegrid/index.js");
-/* harmony import */ var _fullcalendar_list__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fullcalendar/list */ "./node_modules/@fullcalendar/list/index.js");
-/* harmony import */ var xlsx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! xlsx */ "./node_modules/xlsx/xlsx.mjs");
-/* harmony import */ var _fullcalendar_multimonth__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fullcalendar/multimonth */ "./node_modules/@fullcalendar/multimonth/index.js");
-/* harmony import */ var _fullcalendar_resource_timegrid__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @fullcalendar/resource-timegrid */ "./node_modules/@fullcalendar/resource-timegrid/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _fullcalendar_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fullcalendar/core */ "./node_modules/@fullcalendar/core/index.js");
+/* harmony import */ var _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fullcalendar/daygrid */ "./node_modules/@fullcalendar/daygrid/index.js");
+/* harmony import */ var _fullcalendar_timegrid__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fullcalendar/timegrid */ "./node_modules/@fullcalendar/timegrid/index.js");
+/* harmony import */ var _fullcalendar_list__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @fullcalendar/list */ "./node_modules/@fullcalendar/list/index.js");
+/* harmony import */ var xlsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! xlsx */ "./node_modules/xlsx/xlsx.mjs");
+/* harmony import */ var _fullcalendar_multimonth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fullcalendar/multimonth */ "./node_modules/@fullcalendar/multimonth/index.js");
+/* harmony import */ var _fullcalendar_resource_timegrid__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @fullcalendar/resource-timegrid */ "./node_modules/@fullcalendar/resource-timegrid/index.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
-function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
-function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 //
 //
 //
@@ -42395,6 +42576,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 //
 //
 //
+
 
 
 
@@ -42424,125 +42606,294 @@ var locale = {
   // mixins: [mixins],
   data: function data() {
     return {
-      jadwalPerawatan: [{
-        id: 1,
-        no_perawatan: 'R-01',
-        nama_alat: 'Bor',
-        no_seri: 'B-01',
-        tanggal_start: '2025-03-06',
-        tanggal_end: '2025-03-10',
-        waktu_mulai: '08:00',
-        waktu_selesai: '08:30',
-        pic: 'Jhon',
-        detail: '',
-        kondisi: '',
-        status: 'Selesai'
-      }, {
-        id: 2,
-        no_perawatan: 'R-02',
-        nama_alat: 'Bor',
-        no_seri: 'B-02',
-        tanggal_start: '2025-03-13',
-        tanggal_end: '2025-03-13',
-        waktu_mulai: '08:00',
-        waktu_selesai: '09:30',
-        pic: 'Adam',
-        detail: '',
-        kondisi: '',
-        status: 'Pelaksanaan'
-      }, {
-        id: 3,
-        no_perawatan: 'R-03',
-        nama_alat: 'Bor',
-        no_seri: 'B-03',
-        tanggal_start: '2025-03-19',
-        tanggal_end: '2025-03-25',
-        waktu_mulai: '08:00',
-        waktu_selesai: '09:00',
-        pic: 'Thomas',
-        detail: '',
-        kondisi: '',
-        status: 'Belum Selesai'
-      }, {
-        id: 4,
-        no_perawatan: 'R-04',
-        nama_alat: 'Bor',
-        no_seri: 'B-04',
-        tanggal_start: '2025-11-03',
-        tanggal_end: '2025-11-05',
-        waktu_mulai: '10:20',
-        waktu_selesai: '11:00',
-        pic: 'Atom',
-        detail: '',
-        kondisi: '',
-        status: 'Belum Selesai'
-      }
-      // tambahkan data lainnya
+      jadwalPerawatan: [
+        // {
+        //   id: 1,
+        //   no_perawatan: 'R-01',
+        //   nama_alat: 'Bor',
+        //   no_seri: 'B-01',
+        //   tanggal_start: '2025-03-06',
+        //   tanggal_end: '2025-03-10',
+        //   waktu_mulai: '08:00',
+        //   waktu_selesai: '08:30',
+        //   pic: 'Jhon',
+        //   detail: '',
+        //   kondisi: '',
+        //   status: 'Selesai'
+        // },
+        // {
+        //   id: 2,
+        //   no_perawatan: 'R-02',
+        //   nama_alat: 'Bor',
+        //   no_seri: 'B-02',
+        //   tanggal_start: '2025-03-13',
+        //   tanggal_end: '2025-03-13',
+        //   waktu_mulai: '08:00',
+        //   waktu_selesai: '09:30',
+        //   pic: 'Adam',
+        //   detail: '',
+        //   kondisi: '',
+        //   status: 'Pelaksanaan'
+        // },
+        // {
+        //   id: 3,
+        //   no_perawatan: 'R-03',
+        //   nama_alat: 'Bor',
+        //   no_seri: 'B-03',
+        //   tanggal_start: '2025-03-19',
+        //   tanggal_end: '2025-03-25',
+        //   waktu_mulai: '08:00',
+        //   waktu_selesai: '09:00',
+        //   pic: 'Thomas',
+        //   detail: '',
+        //   kondisi: '',
+        //   status: 'Belum Selesai'
+        // },
+        // {
+        //   id: 4,
+        //   no_perawatan: 'R-04',
+        //   nama_alat: 'Bor',
+        //   no_seri: 'B-04',
+        //   tanggal_start: '2025-11-03',
+        //   tanggal_end: '2025-11-05',
+        //   waktu_mulai: '10:20',
+        //   waktu_selesai: '11:00',
+        //   pic: 'Atom',
+        //   detail: '',
+        //   kondisi: '',
+        //   status: 'Belum Selesai'
+        // },
+        // tambahkan data lainnya
       ]
     };
   },
   mounted: function mounted() {
-    var _this = this,
-      _Calendar;
-    var calendarEl = document.getElementById('calendar');
-    var calendar = new _fullcalendar_core__WEBPACK_IMPORTED_MODULE_0__.Calendar(calendarEl, (_Calendar = {
-      plugins: [_fullcalendar_multimonth__WEBPACK_IMPORTED_MODULE_1__["default"], _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_2__["default"], _fullcalendar_timegrid__WEBPACK_IMPORTED_MODULE_3__["default"], _fullcalendar_list__WEBPACK_IMPORTED_MODULE_4__["default"], _fullcalendar_resource_timegrid__WEBPACK_IMPORTED_MODULE_5__["default"]],
-      headerToolbar: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'multiMonthYear,dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-      },
-      initialDate: new Date(),
-      initialView: 'resourceTimeGridDay',
-      // initialView: 'resourceDayGridDay',
-      schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source'
-    }, _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_Calendar, "initialView", 'multiMonthYear'), "navLinks", true), "editable", true), "dayMaxEvents", true), "locale", 'id'), "hiddenDays", [0, 6]), "slotMinTime", '08:00'), "slotMaxTime", '17:00'), "resourceAreaWidth", '200px'), "resourceAreaHeaderContent", 'PIC'), _defineProperty(_defineProperty(_defineProperty(_Calendar, "resources", this.jadwalPerawatan.map(function (item) {
-      var resource = {
-        id: item.id,
-        title: item.pic // pastikan pic terisi dengan benar
-      };
-      // console.log(resource); // Cek apakah resources terisi dengan benar
-      return resource;
-    })), "events", this.jadwalPerawatan.map(function (item) {
-      var startDate = new Date(item.tanggal_start);
-      var endDate = new Date(item.tanggal_end);
-      startDate.setHours(item.waktu_mulai.split(":")[0]);
-      startDate.setMinutes(item.waktu_mulai.split(":")[1]);
-      endDate.setHours(item.waktu_selesai.split(":")[0]);
-      endDate.setMinutes(item.waktu_selesai.split(":")[1]);
-      return {
-        title: "".concat(item.nama_alat, " - ").concat(item.no_seri),
-        start: startDate,
-        end: endDate,
-        allDay: false,
-        resourceId: item.id,
-        backgroundColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
-        borderColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
-        display: 'block'
-      };
-    })), "select", function select(arg) {
-      var tanggalPerawatan = _this.jadwalPerawatan.find(function (item) {
-        return arg.start >= item.tanggal_start && arg.start <= item.tanggal_end || arg.end >= item.tanggal_start && arg.end <= item.tanggal_end;
-      });
-      if (tanggalPerawatan) {
-        alert('Tanggal ini sudah terblokir');
-        return false;
-      }
-    })));
-    calendar.render();
+    this.fetchData();
+    // const calendarEl = document.getElementById('calendar');
+    // const calendar = new Calendar(calendarEl, {
+    //   plugins: [multiMonthPlugin, dayGridPlugin, timeGridPlugin, listPlugin, resourceTimeGridPlugin],
+    //   headerToolbar: {
+    //     left: 'prev,next today',
+    //     center: 'title',
+    //     right: 'multiMonthYear,dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+    //   },
+    //   initialDate: new Date(),
+    //   initialView: 'resourceTimeGridDay',
+    //   // initialView: 'resourceDayGridDay',
+    //   schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
+    //   initialView: 'multiMonthYear',
+    //   navLinks: true, // can click day/week names to navigate views
+    //   editable: true,
+    //   dayMaxEvents: true, // allow "more" link when too many events
+    //   locale: 'id', // tambahkan opsi locale
+    //   hiddenDays: [0, 6],
+    //   slotMinTime: '08:00',
+    //   slotMaxTime: '17:00',
+    //   // events: this.jadwalPerawatan.map((item) => {
+    //   //   if (item.waktu_mulai && item.waktu_selesai) {
+    //   //     return {
+    //   //       title: `${item.nama_alat} - ${item.no_seri}`,
+    //   //       start: item.tanggal_start,
+    //   //       end: item.tanggal_end,
+    //   //       allDay: false,
+    //   //       startTime: item.waktu_mulai,
+    //   //       endTime: item.waktu_selesai,
+    //   //       backgroundColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
+    //   //       borderColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
+    //   //       display: 'block',
+    //   //     }
+    //   //   } else {
+    //   //     return {
+    //   //       title: `${item.nama_alat} - ${item.no_seri}`,
+    //   //       start: item.tanggal_start,
+    //   //       end: item.tanggal_end,
+    //   //       allDay: true,
+    //   //       backgroundColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
+    //   //       borderColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
+    //   //       display: 'block',
+    //   //     }
+    //   //   }
+    //   // }),
+    //   // resources: [{
+    //   //   id: 'Adi',
+    //   //   title: 'Adi'
+    //   // }],
+    //   resourceAreaWidth: '200px',
+    //   resourceAreaHeaderContent: 'PIC',
+    //   resources: this.jadwalPerawatan.map((item) => {
+    //     const resource = {
+    //       id: item.id,
+    //       title: item.pic,  // pastikan pic terisi dengan benar
+    //     };
+    //     // console.log(resource); // Cek apakah resources terisi dengan benar
+    //     return resource;
+    //   }),
+    //   events: this.jadwalPerawatan.map((item) => {
+    //     const startDate = new Date(item.tanggal_start);
+    //     const endDate = new Date(item.tanggal_end);
+    //     startDate.setHours(item.waktu_mulai.split(":")[0]);
+    //     startDate.setMinutes(item.waktu_mulai.split(":")[1]);
+    //     endDate.setHours(item.waktu_selesai.split(":")[0]);
+    //     endDate.setMinutes(item.waktu_selesai.split(":")[1]);
+    //     return {
+    //       title: `${item.nama_alat} - ${item.no_seri}`,
+    //       start: startDate,
+    //       end: endDate,
+    //       allDay: false,
+    //       resourceId: item.id,
+    //       backgroundColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
+    //       borderColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
+    //       display: 'block',
+    //     }
+    //   }),
+    //   select: (arg) => {
+    //     const tanggalPerawatan = this.jadwalPerawatan.find((item) => {
+    //       return (arg.start >= item.tanggal_start && arg.start <= item.tanggal_end) || (arg.end >= item.tanggal_start && arg.end <= item.tanggal_end);
+    //     });
+    //     if (tanggalPerawatan) {
+    //       alert('Tanggal ini sudah terblokir');
+    //       return false;
+    //     }
+    //   }
+    // });
+    // calendar.render();
   },
   methods: {
+    fetchData: function fetchData() {
+      var _this = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var params, response;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              params = {
+                all: ''
+              };
+              _context.next = 4;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/v1/perawatan', {
+                params: params
+              });
+            case 4:
+              response = _context.sent;
+              _this.jadwalPerawatan = response.data;
+              // console.log(this.jadwalPerawatan);
+              _this.renderCalendar();
+              _context.next = 12;
+              break;
+            case 9:
+              _context.prev = 9;
+              _context.t0 = _context["catch"](0);
+              console.error(_context.t0);
+            case 12:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[0, 9]]);
+      }))();
+    },
+    renderCalendar: function renderCalendar() {
+      var calendarEl = document.getElementById('calendar');
+      var calendar = new _fullcalendar_core__WEBPACK_IMPORTED_MODULE_1__.Calendar(calendarEl, {
+        plugins: [_fullcalendar_multimonth__WEBPACK_IMPORTED_MODULE_2__["default"], _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_3__["default"], _fullcalendar_timegrid__WEBPACK_IMPORTED_MODULE_4__["default"], _fullcalendar_list__WEBPACK_IMPORTED_MODULE_5__["default"], _fullcalendar_resource_timegrid__WEBPACK_IMPORTED_MODULE_6__["default"]],
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'multiMonthYear,dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+        },
+        initialDate: new Date(),
+        initialView: 'multiMonthYear',
+        schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
+        navLinks: true,
+        editable: false,
+        dayMaxEvents: true,
+        locale: 'id',
+        hiddenDays: [0, 6],
+        slotMinTime: '08:00',
+        slotMaxTime: '17:00',
+        resourceAreaWidth: '200px',
+        resourceAreaHeaderContent: 'PIC',
+        resources: this.jadwalPerawatan.map(function (item) {
+          var _item$no_seri;
+          return {
+            id: item.id,
+            title: ((_item$no_seri = item.no_seri) === null || _item$no_seri === void 0 || (_item$no_seri = _item$no_seri.tools) === null || _item$no_seri === void 0 ? void 0 : _item$no_seri.nama) || 'Tidak Diketahui'
+          };
+        }),
+        events: this.jadwalPerawatan.map(function (item) {
+          var _item$no_seri2, _item$no_seri3;
+          var alat = (_item$no_seri2 = item.no_seri) === null || _item$no_seri2 === void 0 ? void 0 : _item$no_seri2.tools;
+          var noSeri = (_item$no_seri3 = item.no_seri) === null || _item$no_seri3 === void 0 ? void 0 : _item$no_seri3.no_seri;
+
+          // Gunakan tgl_perawatan sebagai tanggal event jika tidak ada waktu mulai/selesai
+          var startDate = item.tgl_mulai_perawatan ? new Date(item.tgl_mulai_perawatan) : new Date(item.tgl_perawatan);
+          var endDate = item.tgl_selesai_perawatan ? new Date(item.tgl_selesai_perawatan) : new Date(item.tgl_perawatan);
+          if (item.waktu_mulai) {
+            var _item$waktu_mulai$spl = item.waktu_mulai.split(':'),
+              _item$waktu_mulai$spl2 = _slicedToArray(_item$waktu_mulai$spl, 2),
+              startHour = _item$waktu_mulai$spl2[0],
+              startMin = _item$waktu_mulai$spl2[1];
+            startDate.setHours(startHour, startMin);
+          }
+          if (item.waktu_selesai) {
+            var _item$waktu_selesai$s = item.waktu_selesai.split(':'),
+              _item$waktu_selesai$s2 = _slicedToArray(_item$waktu_selesai$s, 2),
+              endHour = _item$waktu_selesai$s2[0],
+              endMin = _item$waktu_selesai$s2[1];
+            endDate.setHours(endHour, endMin);
+          }
+          return {
+            title: "".concat(item.no_perawatan, " - ").concat((alat === null || alat === void 0 ? void 0 : alat.nama) || 'Alat', " - ").concat(noSeri || ''),
+            start: startDate,
+            end: endDate,
+            allDay: false,
+            resourceId: item.id,
+            backgroundColor: item.status === 'Belum Dilakukan Perawatan' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
+            borderColor: item.status === 'Belum Dilakukan Perawatan' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
+            display: 'block'
+          };
+        })
+      });
+      calendar.render();
+    },
     exportToExcel: function exportToExcel() {
       var tahun = new Date().getFullYear();
       var data = this.jadwalPerawatan.filter(function (item) {
-        var tanggalStart = new Date(item.tanggal_start);
-        return tanggalStart.getFullYear() === tahun;
+        return new Date(item.tgl_perawatan).getFullYear() === tahun;
+      }).map(function (item) {
+        var _item$no_seri4, _item$no_seri5;
+        var alat = ((_item$no_seri4 = item.no_seri) === null || _item$no_seri4 === void 0 ? void 0 : _item$no_seri4.tools) || {};
+        return {
+          'No Perawatan': item.no_perawatan || '-',
+          'Nama Alat': alat.nama || 'Tidak Diketahui',
+          'No Seri': ((_item$no_seri5 = item.no_seri) === null || _item$no_seri5 === void 0 ? void 0 : _item$no_seri5.no_seri) || 'Tidak Diketahui',
+          'Tanggal Perawatan': item.tgl_perawatan || '-',
+          'Waktu Mulai': item.waktu_mulai || '-',
+          'Waktu Selesai': item.waktu_selesai || '-',
+          'Status': item.status || '-',
+          'Fungsi': alat.fungsi || '-',
+          'Deskripsi': alat.deskripsi || '-',
+          'Vendor': alat.vendor || '-',
+          'Sumber': alat.sumber || '-',
+          'Pembelian': alat.pembelian || '-'
+        };
       });
-      var worksheet = xlsx__WEBPACK_IMPORTED_MODULE_6__.utils.json_to_sheet(data);
-      var workbook = xlsx__WEBPACK_IMPORTED_MODULE_6__.utils.book_new();
-      xlsx__WEBPACK_IMPORTED_MODULE_6__.utils.book_append_sheet(workbook, worksheet, 'Jadwal Perawatan');
-      xlsx__WEBPACK_IMPORTED_MODULE_6__.writeFile(workbook, "Jadwal Perawatan ".concat(tahun, ".xlsx"));
+      var worksheet = xlsx__WEBPACK_IMPORTED_MODULE_7__.utils.json_to_sheet(data);
+      var workbook = xlsx__WEBPACK_IMPORTED_MODULE_7__.utils.book_new();
+      xlsx__WEBPACK_IMPORTED_MODULE_7__.utils.book_append_sheet(workbook, worksheet, 'Jadwal Perawatan');
+      xlsx__WEBPACK_IMPORTED_MODULE_7__.writeFile(workbook, "Jadwal_Perawatan_".concat(tahun, ".xlsx"));
     },
+    // exportToExcel() {
+    //   const tahun = new Date().getFullYear();
+    //   const data = this.jadwalPerawatan.filter((item) => {
+    //     const tanggalStart = new Date(item.tanggal_start);
+    //     return tanggalStart.getFullYear() === tahun;
+    //   });
+    //   const worksheet = XLSX.utils.json_to_sheet(data);
+    //   const workbook = XLSX.utils.book_new();
+    //   XLSX.utils.book_append_sheet(workbook, worksheet, 'Jadwal Perawatan');
+    //   XLSX.writeFile(workbook, `Jadwal Perawatan ${tahun}.xlsx`);
+    // },
     printCalendar: function printCalendar() {
       // // Menyembunyikan elemen-elemen lain
       // const elements = document.body.children;
@@ -42586,10 +42937,39 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _fullcalendar_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @fullcalendar/core */ "./node_modules/@fullcalendar/core/index.js");
-/* harmony import */ var _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fullcalendar/daygrid */ "./node_modules/@fullcalendar/daygrid/index.js");
-/* harmony import */ var _fullcalendar_timegrid__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fullcalendar/timegrid */ "./node_modules/@fullcalendar/timegrid/index.js");
-/* harmony import */ var _fullcalendar_list__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fullcalendar/list */ "./node_modules/@fullcalendar/list/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _fullcalendar_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fullcalendar/core */ "./node_modules/@fullcalendar/core/index.js");
+/* harmony import */ var _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fullcalendar/daygrid */ "./node_modules/@fullcalendar/daygrid/index.js");
+/* harmony import */ var _fullcalendar_timegrid__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fullcalendar/timegrid */ "./node_modules/@fullcalendar/timegrid/index.js");
+/* harmony import */ var _fullcalendar_list__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @fullcalendar/list */ "./node_modules/@fullcalendar/list/index.js");
+/* harmony import */ var xlsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! xlsx */ "./node_modules/xlsx/xlsx.mjs");
+/* harmony import */ var _fullcalendar_multimonth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fullcalendar/multimonth */ "./node_modules/@fullcalendar/multimonth/index.js");
+/* harmony import */ var _fullcalendar_resource_timegrid__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @fullcalendar/resource-timegrid */ "./node_modules/@fullcalendar/resource-timegrid/index.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -42614,6 +42994,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+// import resourceDayGridPlugin from '@fullcalendar/resource-daygrid';
 
 // Tambahkan kode berikut untuk mendefinisikan nama bulan Indonesia
 var locale = {
@@ -42631,93 +43016,324 @@ var locale = {
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  // mixins: [mixins],
   data: function data() {
     return {
-      jadwalPerawatan: [{
-        id: 1,
-        no_perawatan: 'R-01',
-        nama_alat: 'Bor',
-        no_seri: 'B-01',
-        tanggal_start: new Date(new Date().getFullYear(), new Date().getMonth(), 6),
-        tanggal_end: new Date(new Date().getFullYear(), new Date().getMonth(), 10),
-        waktu_mulai: '',
-        waktu_selesai: '',
-        pic: '',
-        detail: '',
-        kondisi: '',
-        status: 'Selesai'
-      }, {
-        id: 2,
-        no_perawatan: 'R-02',
-        nama_alat: 'Bor',
-        no_seri: 'B-02',
-        tanggal_start: new Date(new Date().getFullYear(), new Date().getMonth(), 13),
-        tanggal_end: new Date(new Date().getFullYear(), new Date().getMonth(), 15),
-        waktu_mulai: '',
-        waktu_selesai: '',
-        pic: '',
-        detail: '',
-        kondisi: '',
-        status: 'Pelaksanaan'
-      }, {
-        id: 3,
-        no_perawatan: 'R-03',
-        nama_alat: 'Bor',
-        no_seri: 'B-03',
-        tanggal_start: new Date(new Date().getFullYear(), new Date().getMonth(), 19),
-        tanggal_end: new Date(new Date().getFullYear(), new Date().getMonth(), 25),
-        waktu_mulai: '',
-        waktu_selesai: '',
-        pic: '',
-        detail: '',
-        kondisi: '',
-        status: 'Belum Selesai'
-      }
-      // tambahkan data lainnya
+      jadwalPerawatan: [
+        // {
+        //   id: 1,
+        //   no_perawatan: 'R-01',
+        //   nama_alat: 'Bor',
+        //   no_seri: 'B-01',
+        //   tanggal_start: '2025-03-06',
+        //   tanggal_end: '2025-03-10',
+        //   waktu_mulai: '08:00',
+        //   waktu_selesai: '08:30',
+        //   pic: 'Jhon',
+        //   detail: '',
+        //   kondisi: '',
+        //   status: 'Selesai'
+        // },
+        // {
+        //   id: 2,
+        //   no_perawatan: 'R-02',
+        //   nama_alat: 'Bor',
+        //   no_seri: 'B-02',
+        //   tanggal_start: '2025-03-13',
+        //   tanggal_end: '2025-03-13',
+        //   waktu_mulai: '08:00',
+        //   waktu_selesai: '09:30',
+        //   pic: 'Adam',
+        //   detail: '',
+        //   kondisi: '',
+        //   status: 'Pelaksanaan'
+        // },
+        // {
+        //   id: 3,
+        //   no_perawatan: 'R-03',
+        //   nama_alat: 'Bor',
+        //   no_seri: 'B-03',
+        //   tanggal_start: '2025-03-19',
+        //   tanggal_end: '2025-03-25',
+        //   waktu_mulai: '08:00',
+        //   waktu_selesai: '09:00',
+        //   pic: 'Thomas',
+        //   detail: '',
+        //   kondisi: '',
+        //   status: 'Belum Selesai'
+        // },
+        // {
+        //   id: 4,
+        //   no_perawatan: 'R-04',
+        //   nama_alat: 'Bor',
+        //   no_seri: 'B-04',
+        //   tanggal_start: '2025-11-03',
+        //   tanggal_end: '2025-11-05',
+        //   waktu_mulai: '10:20',
+        //   waktu_selesai: '11:00',
+        //   pic: 'Atom',
+        //   detail: '',
+        //   kondisi: '',
+        //   status: 'Belum Selesai'
+        // },
+        // tambahkan data lainnya
       ]
     };
   },
   mounted: function mounted() {
-    var _this = this;
-    var calendarEl = document.getElementById('calendar');
-    var calendar = new _fullcalendar_core__WEBPACK_IMPORTED_MODULE_0__.Calendar(calendarEl, {
-      plugins: [_fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_1__["default"], _fullcalendar_timegrid__WEBPACK_IMPORTED_MODULE_2__["default"], _fullcalendar_list__WEBPACK_IMPORTED_MODULE_3__["default"]],
-      headerToolbar: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-      },
-      initialDate: new Date(new Date().getMonth() === 11 ? new Date().getFullYear() + 1 : new Date().getFullYear(), new Date().getMonth() === 11 ? 0 : new Date().getMonth() + 1, 1),
-      navLinks: true,
-      // can click day/week names to navigate views
-      editable: true,
-      dayMaxEvents: true,
-      // allow "more" link when too many events
-      locale: 'id',
-      // tambahkan opsi locale
-      hiddenDays: [0, 6],
-      events: this.jadwalPerawatan.map(function (item) {
+    this.fetchData();
+    // const calendarEl = document.getElementById('calendar');
+    // const calendar = new Calendar(calendarEl, {
+    //   plugins: [multiMonthPlugin, dayGridPlugin, timeGridPlugin, listPlugin, resourceTimeGridPlugin],
+    //   headerToolbar: {
+    //     left: 'prev,next today',
+    //     center: 'title',
+    //     right: 'multiMonthYear,dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+    //   },
+    //   initialDate: new Date(),
+    //   initialView: 'resourceTimeGridDay',
+    //   // initialView: 'resourceDayGridDay',
+    //   schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
+    //   initialView: 'multiMonthYear',
+    //   navLinks: true, // can click day/week names to navigate views
+    //   editable: true,
+    //   dayMaxEvents: true, // allow "more" link when too many events
+    //   locale: 'id', // tambahkan opsi locale
+    //   hiddenDays: [0, 6],
+    //   slotMinTime: '08:00',
+    //   slotMaxTime: '17:00',
+    //   // events: this.jadwalPerawatan.map((item) => {
+    //   //   if (item.waktu_mulai && item.waktu_selesai) {
+    //   //     return {
+    //   //       title: `${item.nama_alat} - ${item.no_seri}`,
+    //   //       start: item.tanggal_start,
+    //   //       end: item.tanggal_end,
+    //   //       allDay: false,
+    //   //       startTime: item.waktu_mulai,
+    //   //       endTime: item.waktu_selesai,
+    //   //       backgroundColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
+    //   //       borderColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
+    //   //       display: 'block',
+    //   //     }
+    //   //   } else {
+    //   //     return {
+    //   //       title: `${item.nama_alat} - ${item.no_seri}`,
+    //   //       start: item.tanggal_start,
+    //   //       end: item.tanggal_end,
+    //   //       allDay: true,
+    //   //       backgroundColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
+    //   //       borderColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
+    //   //       display: 'block',
+    //   //     }
+    //   //   }
+    //   // }),
+    //   // resources: [{
+    //   //   id: 'Adi',
+    //   //   title: 'Adi'
+    //   // }],
+    //   resourceAreaWidth: '200px',
+    //   resourceAreaHeaderContent: 'PIC',
+    //   resources: this.jadwalPerawatan.map((item) => {
+    //     const resource = {
+    //       id: item.id,
+    //       title: item.pic,  // pastikan pic terisi dengan benar
+    //     };
+    //     // console.log(resource); // Cek apakah resources terisi dengan benar
+    //     return resource;
+    //   }),
+    //   events: this.jadwalPerawatan.map((item) => {
+    //     const startDate = new Date(item.tanggal_start);
+    //     const endDate = new Date(item.tanggal_end);
+    //     startDate.setHours(item.waktu_mulai.split(":")[0]);
+    //     startDate.setMinutes(item.waktu_mulai.split(":")[1]);
+    //     endDate.setHours(item.waktu_selesai.split(":")[0]);
+    //     endDate.setMinutes(item.waktu_selesai.split(":")[1]);
+    //     return {
+    //       title: `${item.nama_alat} - ${item.no_seri}`,
+    //       start: startDate,
+    //       end: endDate,
+    //       allDay: false,
+    //       resourceId: item.id,
+    //       backgroundColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
+    //       borderColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
+    //       display: 'block',
+    //     }
+    //   }),
+    //   select: (arg) => {
+    //     const tanggalPerawatan = this.jadwalPerawatan.find((item) => {
+    //       return (arg.start >= item.tanggal_start && arg.start <= item.tanggal_end) || (arg.end >= item.tanggal_start && arg.end <= item.tanggal_end);
+    //     });
+    //     if (tanggalPerawatan) {
+    //       alert('Tanggal ini sudah terblokir');
+    //       return false;
+    //     }
+    //   }
+    // });
+    // calendar.render();
+  },
+  methods: {
+    fetchData: function fetchData() {
+      var _this = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var params, response;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              params = {
+                all: ''
+              };
+              _context.next = 4;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/v1/perawatan', {
+                params: params
+              });
+            case 4:
+              response = _context.sent;
+              _this.jadwalPerawatan = response.data;
+              // console.log(this.jadwalPerawatan);
+              _this.renderCalendar();
+              _context.next = 12;
+              break;
+            case 9:
+              _context.prev = 9;
+              _context.t0 = _context["catch"](0);
+              console.error(_context.t0);
+            case 12:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[0, 9]]);
+      }))();
+    },
+    renderCalendar: function renderCalendar() {
+      var calendarEl = document.getElementById('calendar');
+      var calendar = new _fullcalendar_core__WEBPACK_IMPORTED_MODULE_1__.Calendar(calendarEl, {
+        plugins: [_fullcalendar_multimonth__WEBPACK_IMPORTED_MODULE_2__["default"], _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_3__["default"], _fullcalendar_timegrid__WEBPACK_IMPORTED_MODULE_4__["default"], _fullcalendar_list__WEBPACK_IMPORTED_MODULE_5__["default"], _fullcalendar_resource_timegrid__WEBPACK_IMPORTED_MODULE_6__["default"]],
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'multiMonthYear,dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+        },
+        initialDate: new Date(),
+        initialView: 'multiMonthYear',
+        schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
+        navLinks: true,
+        editable: false,
+        dayMaxEvents: true,
+        locale: 'id',
+        hiddenDays: [0, 6],
+        slotMinTime: '08:00',
+        slotMaxTime: '17:00',
+        resourceAreaWidth: '200px',
+        resourceAreaHeaderContent: 'PIC',
+        resources: this.jadwalPerawatan.map(function (item) {
+          var _item$no_seri;
+          return {
+            id: item.id,
+            title: ((_item$no_seri = item.no_seri) === null || _item$no_seri === void 0 || (_item$no_seri = _item$no_seri.tools) === null || _item$no_seri === void 0 ? void 0 : _item$no_seri.nama) || 'Tidak Diketahui'
+          };
+        }),
+        events: this.jadwalPerawatan.map(function (item) {
+          var _item$no_seri2, _item$no_seri3;
+          var alat = (_item$no_seri2 = item.no_seri) === null || _item$no_seri2 === void 0 ? void 0 : _item$no_seri2.tools;
+          var noSeri = (_item$no_seri3 = item.no_seri) === null || _item$no_seri3 === void 0 ? void 0 : _item$no_seri3.no_seri;
+
+          // Gunakan tgl_perawatan sebagai tanggal event jika tidak ada waktu mulai/selesai
+          var startDate = item.tgl_mulai_perawatan ? new Date(item.tgl_mulai_perawatan) : new Date(item.tgl_perawatan);
+          var endDate = item.tgl_selesai_perawatan ? new Date(item.tgl_selesai_perawatan) : new Date(item.tgl_perawatan);
+          if (item.waktu_mulai) {
+            var _item$waktu_mulai$spl = item.waktu_mulai.split(':'),
+              _item$waktu_mulai$spl2 = _slicedToArray(_item$waktu_mulai$spl, 2),
+              startHour = _item$waktu_mulai$spl2[0],
+              startMin = _item$waktu_mulai$spl2[1];
+            startDate.setHours(startHour, startMin);
+          }
+          if (item.waktu_selesai) {
+            var _item$waktu_selesai$s = item.waktu_selesai.split(':'),
+              _item$waktu_selesai$s2 = _slicedToArray(_item$waktu_selesai$s, 2),
+              endHour = _item$waktu_selesai$s2[0],
+              endMin = _item$waktu_selesai$s2[1];
+            endDate.setHours(endHour, endMin);
+          }
+          return {
+            title: "".concat((alat === null || alat === void 0 ? void 0 : alat.nama) || 'Alat', " - ").concat(noSeri || '', " - No. Perawatan: ").concat(item.no_perawatan),
+            start: startDate,
+            end: endDate,
+            allDay: false,
+            resourceId: item.id,
+            backgroundColor: item.status === 'Belum Dilakukan Perawatan' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
+            borderColor: item.status === 'Belum Dilakukan Perawatan' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
+            display: 'block'
+          };
+        })
+      });
+      calendar.render();
+    },
+    exportToExcel: function exportToExcel() {
+      var tahun = new Date().getFullYear();
+      var data = this.jadwalPerawatan.filter(function (item) {
+        return new Date(item.tgl_perawatan).getFullYear() === tahun;
+      }).map(function (item) {
+        var _item$no_seri4, _item$no_seri5;
+        var alat = ((_item$no_seri4 = item.no_seri) === null || _item$no_seri4 === void 0 ? void 0 : _item$no_seri4.tools) || {};
         return {
-          title: "".concat(item.nama_alat, " - ").concat(item.no_seri),
-          start: item.tanggal_start,
-          end: item.tanggal_end,
-          allDay: true,
-          backgroundColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
-          borderColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
-          display: 'block'
+          'No Perawatan': item.no_perawatan || '-',
+          'Nama Alat': alat.nama || 'Tidak Diketahui',
+          'No Seri': ((_item$no_seri5 = item.no_seri) === null || _item$no_seri5 === void 0 ? void 0 : _item$no_seri5.no_seri) || 'Tidak Diketahui',
+          'Tanggal Perawatan': item.tgl_perawatan || '-',
+          'Waktu Mulai': item.waktu_mulai || '-',
+          'Waktu Selesai': item.waktu_selesai || '-',
+          'Status': item.status || '-',
+          'Fungsi': alat.fungsi || '-',
+          'Deskripsi': alat.deskripsi || '-',
+          'Vendor': alat.vendor || '-',
+          'Sumber': alat.sumber || '-',
+          'Pembelian': alat.pembelian || '-'
         };
-      }),
-      select: function select(arg) {
-        var tanggalPerawatan = _this.jadwalPerawatan.find(function (item) {
-          return arg.start >= item.tanggal_start && arg.start <= item.tanggal_end || arg.end >= item.tanggal_start && arg.end <= item.tanggal_end;
-        });
-        if (tanggalPerawatan) {
-          alert('Tanggal ini sudah terblokir');
-          return false;
-        }
-      }
-    });
-    calendar.render();
+      });
+      var worksheet = xlsx__WEBPACK_IMPORTED_MODULE_7__.utils.json_to_sheet(data);
+      var workbook = xlsx__WEBPACK_IMPORTED_MODULE_7__.utils.book_new();
+      xlsx__WEBPACK_IMPORTED_MODULE_7__.utils.book_append_sheet(workbook, worksheet, 'Jadwal Perawatan');
+      xlsx__WEBPACK_IMPORTED_MODULE_7__.writeFile(workbook, "Jadwal_Perawatan_".concat(tahun, ".xlsx"));
+    },
+    // exportToExcel() {
+    //   const tahun = new Date().getFullYear();
+    //   const data = this.jadwalPerawatan.filter((item) => {
+    //     const tanggalStart = new Date(item.tanggal_start);
+    //     return tanggalStart.getFullYear() === tahun;
+    //   });
+    //   const worksheet = XLSX.utils.json_to_sheet(data);
+    //   const workbook = XLSX.utils.book_new();
+    //   XLSX.utils.book_append_sheet(workbook, worksheet, 'Jadwal Perawatan');
+    //   XLSX.writeFile(workbook, `Jadwal Perawatan ${tahun}.xlsx`);
+    // },
+    printCalendar: function printCalendar() {
+      // // Menyembunyikan elemen-elemen lain
+      // const elements = document.body.children;
+      // for (let i = 0; i < elements.length; i++) {
+      //   if (elements[i].id !== 'calendar') {
+      //     elements[i].style.display = true;
+      //   }
+      // }
+
+      // // Mencetak halaman yang hanya berisi kalender
+      // window.print();
+
+      // // Setelah print, tampilkan kembali elemen-elemen yang disembunyikan
+      // for (let i = 0; i < elements.length; i++) {
+      //   elements[i].style.display = '';
+      // }
+      var calendarEl = document.getElementById('calendar');
+      var calendarHtml = calendarEl.outerHTML;
+      var printWindow = window.open('', '', 'height=600,width=800');
+      printWindow.document.write('<html><head><title>Kalender Perawatan</title>');
+      printWindow.document.write('<link rel="stylesheet" href="' + document.location.protocol + '//' + document.location.host + '/css/style.css">');
+      printWindow.document.write('</head><body>');
+      printWindow.document.write(calendarHtml);
+      printWindow.document.write('</body></html>');
+      printWindow.print();
+      printWindow.close();
+    }
   }
 });
 
@@ -42736,6 +43352,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-select */ "./node_modules/vue-select/dist/vue-select.js");
 /* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_select__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_1__);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 //
 //
 //
@@ -42857,6 +43479,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -42865,6 +43518,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      tools: [],
+      noSeriList: [],
+      selectedToolId: '',
+      selectedNoSeriId: '',
+      tglPerawatan: '',
       picOptions: [{
         text: 'John Doe',
         value: 'John Doe'
@@ -42929,7 +43587,7 @@ __webpack_require__.r(__webpack_exports__);
     filteredJadwalPerawatan: function filteredJadwalPerawatan() {
       var search = this.search.toLowerCase();
       return this.jadwalPerawatan.filter(function (item) {
-        return item.nama_alat.toLowerCase().includes(search) || item.no_seri.toLowerCase().includes(search);
+        return item.no_seri.no_seri.toLowerCase().includes(search) || item.no_seri.tools.nama.toLowerCase().includes(search) || item.no_perawatan.toLowerCase().includes(search);
       });
     },
     totalPages: function totalPages() {
@@ -42942,6 +43600,38 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
+    fetchDataFrom: function fetchDataFrom() {
+      var _this = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var params, response;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              params = {
+                bulan_besok: ''
+              };
+              _context.next = 4;
+              return axios.get('/api/v1/perawatan', {
+                params: params
+              });
+            case 4:
+              response = _context.sent;
+              _this.jadwalPerawatan = response.data;
+              // console.log(this.jadwalPerawatan);
+              _context.next = 11;
+              break;
+            case 8:
+              _context.prev = 8;
+              _context.t0 = _context["catch"](0);
+              console.error(_context.t0);
+            case 11:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[0, 8]]);
+      }))();
+    },
     isDate: function isDate(tanggal, hari) {
       // Cek apakah tanggal adalah string
       if (typeof tanggal === 'string') {
@@ -42959,6 +43649,45 @@ __webpack_require__.r(__webpack_exports__);
       }
       // Jika tidak ada kondisi yang terpenuhi, return false
       return false;
+    },
+    getBackgroundColor: function getBackgroundColor(item, tanggal) {
+      var day = parseInt(tanggal, 10);
+
+      // Highlight jika hanya ada tgl_perawatan (tanpa mulai dan selesai)
+      if (!item.tgl_mulai_perawatan && !item.tgl_selesai_perawatan && item.tgl_perawatan) {
+        var perawatanDate = new Date(item.tgl_perawatan).getDate();
+        if (perawatanDate === day && !this.weekend_date.includes(day)) {
+          return 'yellow';
+        }
+      }
+
+      // Highlight jika tgl_perawatan berada dalam rentang tgl_mulai dan tgl_selesai
+      if (this.isDate(item.tgl_perawatan) && this.isDate(item.tgl_mulai_perawatan) && this.isDate(item.tgl_selesai_perawatan)) {
+        var tanggalPerawatan = new Date(item.tgl_perawatan).getDate();
+        var _startDay = new Date(item.tgl_mulai_perawatan).getDate();
+        var _endDay = new Date(item.tgl_selesai_perawatan).getDate();
+        if (tanggalPerawatan >= _startDay && tanggalPerawatan <= _endDay && tanggalPerawatan === day && !this.weekend_date.includes(day)) {
+          return 'yellow';
+        }
+      }
+
+      // Highlight tgl_mulai_perawatan secara spesifik
+      if (item.tgl_mulai_perawatan && day === new Date(item.tgl_mulai_perawatan).getDate() && !this.weekend_date.includes(day)) {
+        return 'yellow';
+      }
+
+      // Highlight akhir pekan
+      if (this.weekend_date.includes(day)) {
+        return 'black';
+      }
+
+      // Highlight jika tanggal berada di antara tgl_mulai_perawatan dan tgl_selesai_perawatan
+      var startDay = item.tgl_mulai_perawatan ? new Date(item.tgl_mulai_perawatan).getDate() : null;
+      var endDay = item.tgl_selesai_perawatan ? new Date(item.tgl_selesai_perawatan).getDate() : null;
+      if (startDay && endDay && day >= startDay && day <= endDay && !this.weekend_date.includes(day)) {
+        return 'yellow';
+      }
+      return '';
     },
     prevPage: function prevPage() {
       this.currentPage--;
@@ -42979,16 +43708,135 @@ __webpack_require__.r(__webpack_exports__);
     closeModalTambah: function closeModalTambah() {
       this.isModalTambahOpen = false;
     },
-    tambahJadwalPerawatan: function tambahJadwalPerawatan() {
-      var jadwalPerawatanBaru = {
-        id: this.jadwalPerawatan.length + 1,
-        tanggal_perawatan: [this.tanggal],
-        nama_alat: this.nama_alat,
-        no_seri: this.no_seri
-      };
-      this.jadwalPerawatan.push(jadwalPerawatanBaru);
-      this.closeModalTambah(); // Change hideModalTambah to closeModalTambah
+    getTools: function getTools() {
+      var _this2 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.prev = 0;
+              _context2.next = 3;
+              return axios.get('/api/v1/tools');
+            case 3:
+              response = _context2.sent;
+              _this2.tools = response.data;
+              _context2.next = 10;
+              break;
+            case 7:
+              _context2.prev = 7;
+              _context2.t0 = _context2["catch"](0);
+              console.error('Gagal mengambil data tools:', _context2.t0);
+            case 10:
+            case "end":
+              return _context2.stop();
+          }
+        }, _callee2, null, [[0, 7]]);
+      }))();
     },
+    getNoSeri: function getNoSeri() {
+      var _this3 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.prev = 0;
+              if (!_this3.selectedToolId) {
+                _context3.next = 8;
+                break;
+              }
+              _context3.next = 4;
+              return axios.get("/api/v1/tools/".concat(_this3.selectedToolId, "/no-seri"));
+            case 4:
+              response = _context3.sent;
+              _this3.noSeriList = response.data;
+              _context3.next = 9;
+              break;
+            case 8:
+              _this3.noSeriList = [];
+            case 9:
+              _context3.next = 14;
+              break;
+            case 11:
+              _context3.prev = 11;
+              _context3.t0 = _context3["catch"](0);
+              console.error('Gagal mengambil data no seri:', _context3.t0);
+            case 14:
+            case "end":
+              return _context3.stop();
+          }
+        }, _callee3, null, [[0, 11]]);
+      }))();
+    },
+    submitPerawatan: function submitPerawatan() {
+      var _this4 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+        var payload, response;
+        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+          while (1) switch (_context4.prev = _context4.next) {
+            case 0:
+              _context4.prev = 0;
+              payload = {
+                tgl_perawatan: _this4.tglPerawatan,
+                no_seri_id: _this4.selectedNoSeriId
+              };
+              _context4.next = 4;
+              return axios.post('/api/v1/perawatan', payload);
+            case 4:
+              response = _context4.sent;
+              sweetalert2__WEBPACK_IMPORTED_MODULE_1___default().fire({
+                title: 'Berhasil!',
+                text: response.data.message,
+                icon: 'success',
+                confirmButtonText: 'OK'
+              }).then(function () {
+                window.location.reload();
+              });
+              // Reset form jika ingin
+              _this4.tglPerawatan = '';
+              _this4.selectedToolId = '';
+              _this4.selectedNoSeriId = '';
+              _this4.noSeriList = [];
+              _context4.next = 15;
+              break;
+            case 12:
+              _context4.prev = 12;
+              _context4.t0 = _context4["catch"](0);
+              if (_context4.t0.response && _context4.t0.response.data) {
+                console.log(_context4.t0.response.data); // ✅ lihat detail error dari Laravel
+                sweetalert2__WEBPACK_IMPORTED_MODULE_1___default().fire({
+                  title: 'Gagal!',
+                  text: _context4.t0.response.data.message || 'Gagal menyimpan perawatan.',
+                  icon: 'error',
+                  confirmButtonText: 'OK'
+                });
+              } else {
+                console.error(_context4.t0);
+                sweetalert2__WEBPACK_IMPORTED_MODULE_1___default().fire({
+                  title: 'Gagal!',
+                  text: 'Terjadi kesalahan tidak terduga.',
+                  icon: 'error',
+                  confirmButtonText: 'OK'
+                });
+              }
+            case 15:
+            case "end":
+              return _context4.stop();
+          }
+        }, _callee4, null, [[0, 12]]);
+      }))();
+    },
+    // tambahJadwalPerawatan() {
+    //   const jadwalPerawatanBaru = {
+    //     id: this.jadwalPerawatan.length + 1,
+    //     tanggal_perawatan: [this.tanggal],
+    //     nama_alat: this.nama_alat,
+    //     no_seri: this.no_seri,
+    //   };
+    //   this.jadwalPerawatan.push(jadwalPerawatanBaru);
+    //   this.closeModalTambah();  // Change hideModalTambah to closeModalTambah
+    // },    
     exportToExcel: function exportToExcel() {
       this.convertToExcel("export_table", "Jadwal Perawatan");
     },
@@ -43022,6 +43870,15 @@ __webpack_require__.r(__webpack_exports__);
       }
       var result = this.currentYear.toString() + "-" + real_month + "-" + real_date;
       return result;
+    },
+    minDateFormatter: function minDateFormatter() {
+      var nextMonth = this.getMonthNumber(this.currentMonth) + 1;
+      var year = this.currentYear;
+      if (nextMonth > 12) {
+        nextMonth = 1;
+        year += 1;
+      }
+      return "".concat(year, "-").concat(nextMonth.toString().padStart(2, '0'), "-01");
     }
   },
   watch: {
@@ -43042,6 +43899,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.pages = [];
+    this.fetchDataFrom();
+    this.getTools();
+    // this.getNoSeriByTool(toolId);
   }
 });
 
@@ -43060,6 +43920,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
@@ -43206,6 +44068,15 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -43224,50 +44095,53 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         text: 'Alice Johnson',
         value: 'Alice Johnson'
       }],
-      riwayatPerawatan: [{
-        id: 1,
-        no_perawatan: 'R-01',
-        nama_alat: 'Bor',
-        no_seri: 'B-01',
-        tanggal_perawatan: '2025-03-06',
-        tanggal_start: '2025-03-04',
-        tanggal_end: '2025-03-07',
-        waktu_mulai: '08:00',
-        waktu_selesai: '11:00',
-        pic: 'John Doe',
-        detail: 'Perawatan Rutin',
-        kondisi: 'OK',
-        status: 'Selesai'
-      }, {
-        id: 2,
-        no_perawatan: 'R-02',
-        nama_alat: 'Bor',
-        no_seri: 'B-02',
-        tanggal_perawatan: '2025-03-13',
-        tanggal_start: '2025-03-13',
-        tanggal_end: '2025-03-15',
-        waktu_mulai: '08:30',
-        waktu_selesai: '09:45',
-        pic: 'Jane Doe',
-        detail: 'Perawatan Rutin',
-        kondisi: 'Error',
-        status: 'Selesai'
-      }, {
-        id: 3,
-        no_perawatan: 'R-03',
-        nama_alat: 'Bor',
-        no_seri: 'B-03',
-        tanggal_perawatan: '2025-03-19',
-        tanggal_start: '2025-03-17',
-        tanggal_end: '2025-03-21',
-        waktu_mulai: '10:00',
-        waktu_selesai: '12:00',
-        pic: 'Bob Smith',
-        detail: 'Perawatan Rutin',
-        kondisi: 'Rusak',
-        status: 'Selesai'
-      }
-      // tambahkan data lainnya
+      riwayatPerawatan: [
+        // {          
+        //   id: 1,
+        //   no_perawatan: 'R-01',
+        //   nama_alat: 'Bor',
+        //   no_seri: 'B-01',
+        //   tanggal_perawatan: '2025-03-06',
+        //   tanggal_start: '2025-03-04',
+        //   tanggal_end: '2025-03-07',
+        //   waktu_mulai: '08:00',
+        //   waktu_selesai: '11:00',
+        //   pic: 'John Doe',
+        //   detail: 'Perawatan Rutin',
+        //   kondisi: 'OK',
+        //   status: 'Selesai'
+        // },
+        // {          
+        //   id: 2,
+        //   no_perawatan: 'R-02',
+        //   nama_alat: 'Bor',
+        //   no_seri: 'B-02',
+        //   tanggal_perawatan: '2025-03-13',
+        //   tanggal_start: '2025-03-13',
+        //   tanggal_end: '2025-03-15',
+        //   waktu_mulai: '08:30',
+        //   waktu_selesai: '09:45',
+        //   pic: 'Jane Doe',
+        //   detail: 'Perawatan Rutin',
+        //   kondisi: 'Error',
+        //   status: 'Selesai'
+        // },
+        // {                    
+        //   id: 3,
+        //   no_perawatan: 'R-03',
+        //   nama_alat: 'Bor',
+        //   no_seri: 'B-03',
+        //   tanggal_perawatan: '2025-03-19',
+        //   tanggal_start: '2025-03-17',
+        //   tanggal_end: '2025-03-21',
+        //   waktu_mulai: '10:00',
+        //   waktu_selesai: '12:00',
+        //   pic: 'Bob Smith',
+        //   detail: 'Perawatan Rutin',
+        //   kondisi: 'Rusak',
+        //   status: 'Selesai'
+        // },
+        // tambahkan data lainnya
       ],
       status: '',
       currentPage: 1,
@@ -43283,42 +44157,84 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       modalTitle: 'Tambah Jadwal Perawatan',
       sortKey: '',
       sortDirection: 'asc',
-      isLoading: false
+      isLoading: false,
+      filterKondisi: '',
+      filterStatus: ''
     };
   },
+  mounted: function mounted() {
+    this.fetchData();
+  },
   methods: {
-    loadData: function loadData() {
+    fetchData: function fetchData() {
       var _this = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var params, response;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
               _this.isLoading = true;
-              try {
-                // kode untuk load data
-              } catch (error) {
-                console.error(error);
-              } finally {
-                _this.isLoading = false;
-              }
-            case 2:
+              _context.prev = 1;
+              params = {
+                all: ''
+              };
+              _context.next = 5;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/perawatan', {
+                params: params
+              });
+            case 5:
+              response = _context.sent;
+              _this.riwayatPerawatan = response.data;
+              // console.log(this.riwayatPerawatan);
+              _context.next = 12;
+              break;
+            case 9:
+              _context.prev = 9;
+              _context.t0 = _context["catch"](1);
+              console.error(_context.t0);
+            case 12:
+              _context.prev = 12;
+              _this.isLoading = false;
+              return _context.finish(12);
+            case 15:
             case "end":
               return _context.stop();
           }
-        }, _callee);
+        }, _callee, null, [[1, 9, 12, 15]]);
       }))();
     },
     sortBy: function sortBy(key) {
+      var _this2 = this;
       this.sortKey = key;
       this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+      this.riwayatPerawatan.sort(function (a, b) {
+        if (key === 'tgl_perawatan') {
+          var tanggalA = new Date(a[key]);
+          var tanggalB = new Date(b[key]);
+          if (_this2.sortDirection === 'asc') {
+            return tanggalA > tanggalB ? 1 : -1;
+          } else {
+            return tanggalA < tanggalB ? 1 : -1;
+          }
+        } else {
+          if (_this2.sortDirection === 'asc') {
+            return a[key] > b[key] ? 1 : -1;
+          } else {
+            return a[key] < b[key] ? 1 : -1;
+          }
+        }
+      });
     },
-    filterTanggal: function filterTanggal(tanggal) {
-      if (this.tanggalStart && this.tanggalEnd) {
-        return tanggal >= this.tanggalStart && tanggal <= this.tanggalEnd;
-      } else if (this.tanggalStart) {
-        return tanggal >= this.tanggalStart;
-      } else if (this.tanggalEnd) {
-        return tanggal <= this.tanggalEnd;
+    filterData: function filterData() {
+      this.currentPage = 1;
+    },
+    filterTanggal: function filterTanggal(tanggal, item) {
+      if (item.tgl_mulai_perawatan && item.tgl_selesai_perawatan) {
+        return tanggal >= item.tgl_mulai_perawatan && tanggal <= item.tgl_selesai_perawatan;
+      } else if (item.tgl_mulai_perawatan) {
+        return tanggal >= item.tgl_mulai_perawatan;
+      } else if (item.tgl_selesai_perawatan) {
+        return tanggal <= item.tgl_selesai_perawatan;
       } else {
         return true;
       }
@@ -43339,16 +44255,24 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
   },
   computed: {
     filteredRiwayatPerawatan: function filteredRiwayatPerawatan() {
-      var _this2 = this;
+      var _this3 = this;
       return this.riwayatPerawatanWithRentang.filter(function (item) {
-        return Object.values(item).some(function (value) {
-          return String(value).toLowerCase().includes(_this2.search.toLowerCase());
-        }) && _this2.filterTanggal(item.tanggal_perawatan);
+        var _item$no_seri, _item$no_seri2, _item$no_seri3;
+        var noPerawatan = String(item.no_perawatan || '').toLowerCase();
+        var namaAlat = String(((_item$no_seri = item.no_seri) === null || _item$no_seri === void 0 || (_item$no_seri = _item$no_seri.tools) === null || _item$no_seri === void 0 ? void 0 : _item$no_seri.nama) || '').toLowerCase();
+        var noSeri = String(((_item$no_seri2 = item.no_seri) === null || _item$no_seri2 === void 0 ? void 0 : _item$no_seri2.no_seri) || '').toLowerCase();
+        var search = _this3.search.toLowerCase();
+        var matchSearch = noPerawatan.includes(search) || namaAlat.includes(search) || noSeri.includes(search);
+        var matchTanggal = (_this3.tanggalStart === '' || item.tgl_mulai_perawatan >= _this3.tanggalStart) && (_this3.tanggalEnd === '' || item.tgl_selesai_perawatan <= _this3.tanggalEnd);
+        var matchKondisi = _this3.filterKondisi === '' || ((_item$no_seri3 = item.no_seri) === null || _item$no_seri3 === void 0 ? void 0 : _item$no_seri3.kondisi) === _this3.filterKondisi;
+        var matchStatus = _this3.filterStatus === '' || item.status === _this3.filterStatus;
+        return matchSearch && matchTanggal && matchKondisi && matchStatus;
       }).sort(function (a, b) {
-        if (_this2.sortDirection === 'asc') {
-          return a[_this2.sortKey] > b[_this2.sortKey] ? 1 : -1;
+        if (!_this3.sortKey) return 0;
+        if (_this3.sortDirection === 'asc') {
+          return a[_this3.sortKey] > b[_this3.sortKey] ? 1 : -1;
         } else {
-          return a[_this2.sortKey] < b[_this2.sortKey] ? 1 : -1;
+          return a[_this3.sortKey] < b[_this3.sortKey] ? 1 : -1;
         }
       });
     },
@@ -43367,8 +44291,8 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     },
     riwayatPerawatanWithRentang: function riwayatPerawatanWithRentang() {
       return this.riwayatPerawatan.map(function (item) {
-        var tanggalStart = new Date(item.tanggal_start);
-        var tanggalEnd = new Date(item.tanggal_end);
+        var tanggalStart = new Date(item.tgl_mulai_perawatan);
+        var tanggalEnd = new Date(item.tgl_selesai_perawatan);
         var rentangWaktu = Math.abs(tanggalEnd - tanggalStart) / (1000 * 60 * 60 * 24);
         return _objectSpread(_objectSpread({}, item), {}, {
           rentang_waktu: "".concat(rentangWaktu, " hari")
@@ -43395,12 +44319,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_select__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 //
 //
 //
@@ -43729,6 +44658,27 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -43739,7 +44689,13 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
   },
   data: function data() {
     return {
+      form: [],
       getOnlyTanggal: [],
+      tools: [],
+      noSeriList: [],
+      selectedToolId: '',
+      selectedNoSeriId: '',
+      tglPerawatan: '',
       picOptions: [{
         text: 'John Doe',
         value: 'John Doe'
@@ -43753,49 +44709,53 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         text: 'Alice Johnson',
         value: 'Alice Johnson'
       }],
-      jadwalPerawatan: [{
-        id: 1,
-        no_perawatan: 'R-01',
-        nama_alat: 'Bor',
-        no_seri: 'B-01',
-        tanggal_perawatan: '6',
-        tanggal_start: '',
-        tanggal_end: '',
-        waktu_mulai: '',
-        waktu_selesai: '',
-        pic: '',
-        detail: '',
-        kondisi: '',
-        status: 'Belum Selesai'
-      }, {
-        id: 2,
-        no_perawatan: 'R-02',
-        nama_alat: 'Bor',
-        no_seri: 'B-02',
-        tanggal_perawatan: '20',
-        tanggal_start: '',
-        tanggal_end: '',
-        waktu_mulai: '',
-        waktu_selesai: '',
-        pic: '',
-        detail: '',
-        kondisi: '',
-        status: 'Belum Selesai'
-      }, {
-        id: 3,
-        no_perawatan: 'R-03',
-        nama_alat: 'Bor',
-        no_seri: 'B-03',
-        tanggal_perawatan: '19',
-        tanggal_start: '',
-        tanggal_end: '',
-        waktu_mulai: '',
-        waktu_selesai: '',
-        pic: '',
-        detail: '',
-        kondisi: '',
-        status: 'Belum Selesai'
-      }],
+      jadwalPerawatan: [
+        // {          
+        //   id: 1,
+        //   no_perawatan: 'R-01',
+        //   nama_alat: 'Bor',
+        //   no_seri: 'B-01',
+        //   tanggal_perawatan: '6',
+        //   tanggal_start: '',
+        //   tanggal_end: '',
+        //   waktu_mulai: '',
+        //   waktu_selesai: '',
+        //   pic: '',
+        //   detail: '',
+        //   kondisi: '',
+        //   status: 'Belum Selesai'
+        // },
+        // {          
+        //   id: 2,
+        //   no_perawatan: 'R-02',
+        //   nama_alat: 'Bor',
+        //   no_seri: 'B-02',
+        //   tanggal_perawatan: '20',
+        //   tanggal_start: '',
+        //   tanggal_end: '',
+        //   waktu_mulai: '',
+        //   waktu_selesai: '',
+        //   pic: '',
+        //   detail: '',
+        //   kondisi: '',
+        //   status: 'Belum Selesai'
+        // },
+        // {                    
+        //   id: 3,
+        //   no_perawatan: 'R-03',
+        //   nama_alat: 'Bor',
+        //   no_seri: 'B-03',
+        //   tanggal_perawatan: '19',
+        //   tanggal_start: '',
+        //   tanggal_end: '',
+        //   waktu_mulai: '',
+        //   waktu_selesai: '',
+        //   pic: '',
+        //   detail: '',
+        //   kondisi: '',
+        //   status: 'Belum Selesai'
+        // },
+      ],
       status: '',
       currentPage: 1,
       pages: [],
@@ -43947,7 +44907,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
     filteredJadwalPerawatan: function filteredJadwalPerawatan() {
       var search = this.search.toLowerCase();
       return this.jadwalPerawatan.filter(function (item) {
-        return item.nama_alat.toLowerCase().includes(search) || item.no_seri.toLowerCase().includes(search);
+        return item.no_seri.no_seri.toLowerCase().includes(search) || item.no_seri.tools.nama.toLowerCase().includes(search) || item.no_perawatan.toLowerCase().includes(search);
       });
     },
     totalPages: function totalPages() {
@@ -43960,6 +44920,33 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
     }
   },
   methods: {
+    fetchDataFrom: function fetchDataFrom() {
+      var _this2 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _context.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_2___default().get('/api/v1/perawatan');
+            case 3:
+              response = _context.sent;
+              _this2.jadwalPerawatan = response.data;
+              // console.log(this.jadwalPerawatan);
+              _context.next = 10;
+              break;
+            case 7:
+              _context.prev = 7;
+              _context.t0 = _context["catch"](0);
+              console.error(_context.t0);
+            case 10:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, null, [[0, 7]]);
+      }))();
+    },
     getTanggalStart: function getTanggalStart(item) {
       if (item.tanggal_start) {
         return new Date(item.tanggal_start);
@@ -44005,7 +44992,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
     //       return true;
     //     }
     // //   }
-    isDate: function isDate(tanggal, hari, tanggal_start, tanggal_end) {
+    isDate: function isDate(tanggal, hari, tgl_mulai_perawatan, tgl_selesai_perawatan) {
       // Cek apakah tanggal adalah string
       if (typeof tanggal === 'string') {
         // Jika tanggal adalah string, cek apakah tanggal mengandung hari
@@ -44013,8 +45000,8 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
           return true;
         }
       } else {
-        var isStartDate = tanggal_start && new Date(tanggal_start).getDate() === hari;
-        var isEndDate = tanggal_end && new Date(tanggal_end).getDate() === hari;
+        var isStartDate = tgl_mulai_perawatan && new Date(tgl_mulai_perawatan).getDate() === hari;
+        var isEndDate = tgl_selesai_perawatan && new Date(tgl_selesai_perawatan).getDate() === hari;
         if (isStartDate || isEndDate) {
           return true;
         }
@@ -44090,45 +45077,42 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
     //   return '';
     // },
     getBackgroundColor: function getBackgroundColor(item, tanggal) {
-      var day = parseInt(tanggal, 10); // Convert to integer for comparison
-      // console.log(item,tanggal);
-      // Highlight tanggal perawatan jika tidak ada tanggal start dan end
-      if (!item.tanggal_start && !item.tanggal_end && item.tanggal_perawatan === String(day)) {
-        return 'yellow';
-      }
+      var day = parseInt(tanggal, 10);
 
-      // if (item.tanggal_perawatan === String(day)) {
-      //   return 'yellow';
-      // }
-
-      // Highlight tanggal perawatan jika berada dalam rentang tanggal start dan end
-      if (this.isDate(item.tanggal_perawatan && item.tanggal_start && item.tanggal_end)) {
-        var tanggalPerawatan = new Date(item.tanggal_perawatan).getDate();
-        var _startDay = new Date(item.tanggal_start).getDate();
-        var _endDay = new Date(item.tanggal_end).getDate();
-        if (tanggalPerawatan >= _startDay && tanggalPerawatan <= _endDay && tanggalPerawatan === day) {
+      // Highlight jika hanya ada tgl_perawatan (tanpa mulai dan selesai)
+      if (!item.tgl_mulai_perawatan && !item.tgl_selesai_perawatan && item.tgl_perawatan) {
+        var perawatanDate = new Date(item.tgl_perawatan).getDate();
+        if (perawatanDate === day && !this.weekend_date.includes(day)) {
           return 'yellow';
         }
       }
 
-      // Highlight start date (tanggal_start)
-      if (item.tanggal_start && day === new Date(item.tanggal_start).getDate()) {
+      // Highlight jika tgl_perawatan berada dalam rentang tgl_mulai dan tgl_selesai
+      if (this.isDate(item.tgl_perawatan) && this.isDate(item.tgl_mulai_perawatan) && this.isDate(item.tgl_selesai_perawatan)) {
+        var tanggalPerawatan = new Date(item.tgl_perawatan).getDate();
+        var _startDay = new Date(item.tgl_mulai_perawatan).getDate();
+        var _endDay = new Date(item.tgl_selesai_perawatan).getDate();
+        if (tanggalPerawatan >= _startDay && tanggalPerawatan <= _endDay && tanggalPerawatan === day && !this.weekend_date.includes(day)) {
+          return 'yellow';
+        }
+      }
+
+      // Highlight tgl_mulai_perawatan secara spesifik
+      if (item.tgl_mulai_perawatan && day === new Date(item.tgl_mulai_perawatan).getDate() && !this.weekend_date.includes(day)) {
         return 'yellow';
       }
 
-      // Highlight weekends
+      // Highlight akhir pekan
       if (this.weekend_date.includes(day)) {
         return 'black';
       }
 
-      // Highlight date within the start-end range
-      var startDay = item.tanggal_start ? new Date(item.tanggal_start).getDate() : null;
-      var endDay = item.tanggal_end ? new Date(item.tanggal_end).getDate() : null;
-      if (startDay && endDay && day >= startDay && day <= endDay) {
+      // Highlight jika tanggal berada di antara tgl_mulai_perawatan dan tgl_selesai_perawatan
+      var startDay = item.tgl_mulai_perawatan ? new Date(item.tgl_mulai_perawatan).getDate() : null;
+      var endDay = item.tgl_selesai_perawatan ? new Date(item.tgl_selesai_perawatan).getDate() : null;
+      if (startDay && endDay && day >= startDay && day <= endDay && !this.weekend_date.includes(day)) {
         return 'yellow';
       }
-
-      // Default color
       return '';
     },
     // getBackgroundColor(item, tanggal) {
@@ -44161,6 +45145,21 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
     //   // Default color
     //   return '';
     // },
+    minDateFormatter: function minDateFormatter() {
+      var date = new Date();
+      var year = date.getFullYear();
+      var month = String(date.getMonth() + 1).padStart(2, '0'); // tambah padding
+      return "".concat(year, "-").concat(month, "-01");
+    },
+    dateFormatter: function dateFormatter() {
+      var date = new Date();
+      var year = date.getFullYear();
+      var month = date.getMonth();
+      var lastDay = new Date(year, month + 1, 0).getDate();
+      var paddedMonth = String(month + 1).padStart(2, '0'); // tambah padding
+      var paddedDay = String(lastDay).padStart(2, '0');
+      return "".concat(year, "-").concat(paddedMonth, "-").concat(paddedDay);
+    },
     showModalTambah: function showModalTambah() {
       this.isModalTambahOpen = true;
     },
@@ -44189,20 +45188,139 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
     closeModalSelesai: function closeModalSelesai() {
       this.isModalSelesaiOpen = false;
     },
-    tambahJadwalPerawatan: function tambahJadwalPerawatan() {
-      var jadwalPerawatanBaru = {
-        id: this.jadwalPerawatan.length + 1,
-        tanggal_perawatan: [this.tanggal],
-        nama_alat: this.nama_alat,
-        no_seri: this.no_seri
-      };
-      this.jadwalPerawatan.push(jadwalPerawatanBaru);
-      this.closeModalTambah(); // Change hideModalTambah to closeModalTambah
+    getTools: function getTools() {
+      var _this3 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.prev = 0;
+              _context2.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_2___default().get('/api/v1/tools');
+            case 3:
+              response = _context2.sent;
+              _this3.tools = response.data;
+              _context2.next = 10;
+              break;
+            case 7:
+              _context2.prev = 7;
+              _context2.t0 = _context2["catch"](0);
+              console.error('Gagal mengambil data tools:', _context2.t0);
+            case 10:
+            case "end":
+              return _context2.stop();
+          }
+        }, _callee2, null, [[0, 7]]);
+      }))();
     },
+    getNoSeri: function getNoSeri() {
+      var _this4 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.prev = 0;
+              if (!_this4.selectedToolId) {
+                _context3.next = 8;
+                break;
+              }
+              _context3.next = 4;
+              return axios__WEBPACK_IMPORTED_MODULE_2___default().get("/api/v1/tools/".concat(_this4.selectedToolId, "/no-seri"));
+            case 4:
+              response = _context3.sent;
+              _this4.noSeriList = response.data;
+              _context3.next = 9;
+              break;
+            case 8:
+              _this4.noSeriList = [];
+            case 9:
+              _context3.next = 14;
+              break;
+            case 11:
+              _context3.prev = 11;
+              _context3.t0 = _context3["catch"](0);
+              console.error('Gagal mengambil data no seri:', _context3.t0);
+            case 14:
+            case "end":
+              return _context3.stop();
+          }
+        }, _callee3, null, [[0, 11]]);
+      }))();
+    },
+    submitPerawatan: function submitPerawatan() {
+      var _this5 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
+        var payload, response;
+        return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+          while (1) switch (_context4.prev = _context4.next) {
+            case 0:
+              _context4.prev = 0;
+              payload = {
+                tgl_perawatan: _this5.tglPerawatan,
+                no_seri_id: _this5.selectedNoSeriId
+              };
+              _context4.next = 4;
+              return axios__WEBPACK_IMPORTED_MODULE_2___default().post('/api/v1/perawatan', payload);
+            case 4:
+              response = _context4.sent;
+              sweetalert2__WEBPACK_IMPORTED_MODULE_1___default().fire({
+                title: 'Berhasil!',
+                text: response.data.message,
+                icon: 'success',
+                confirmButtonText: 'OK'
+              }).then(function () {
+                window.location.reload();
+              });
+              // Reset form jika ingin
+              _this5.tglPerawatan = '';
+              _this5.selectedToolId = '';
+              _this5.selectedNoSeriId = '';
+              _this5.noSeriList = [];
+              _context4.next = 15;
+              break;
+            case 12:
+              _context4.prev = 12;
+              _context4.t0 = _context4["catch"](0);
+              if (_context4.t0.response && _context4.t0.response.data) {
+                console.log(_context4.t0.response.data); // ✅ lihat detail error dari Laravel
+                sweetalert2__WEBPACK_IMPORTED_MODULE_1___default().fire({
+                  title: 'Gagal!',
+                  text: _context4.t0.response.data.message || 'Gagal menyimpan perawatan.',
+                  icon: 'error',
+                  confirmButtonText: 'OK'
+                });
+              } else {
+                console.error(_context4.t0);
+                sweetalert2__WEBPACK_IMPORTED_MODULE_1___default().fire({
+                  title: 'Gagal!',
+                  text: 'Terjadi kesalahan tidak terduga.',
+                  icon: 'error',
+                  confirmButtonText: 'OK'
+                });
+              }
+            case 15:
+            case "end":
+              return _context4.stop();
+          }
+        }, _callee4, null, [[0, 12]]);
+      }))();
+    },
+    // tambahJadwalPerawatan() {
+    //   const jadwalPerawatanBaru = {
+    //     id: this.jadwalPerawatan.length + 1,
+    //     tanggal_perawatan: [this.tanggal],
+    //     nama_alat: this.nama_alat,
+    //     no_seri: this.no_seri,
+    //   };
+    //   this.jadwalPerawatan.push(jadwalPerawatanBaru);
+    //   this.closeModalTambah();  // Change hideModalTambah to closeModalTambah
+    // },
     simpanSelesai: function simpanSelesai() {
-      var _this2 = this;
+      var _this6 = this;
       var index = this.jadwalPerawatan.findIndex(function (item) {
-        return item.id === _this2.id;
+        return item.id === _this6.id;
       });
       if (index !== -1) {
         this.jadwalPerawatan[index].detail = this.detail;
@@ -44300,9 +45418,9 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
     //   this.closeModalEdit();
     // },
     simpanJadwalPerawatan: function simpanJadwalPerawatan() {
-      var _this3 = this;
+      var _this7 = this;
       var index = this.jadwalPerawatan.findIndex(function (item) {
-        return item.id === _this3.id;
+        return item.id === _this7.id;
       });
       if (index !== -1) {
         // Menampilkan SweetAlert dengan ikon peringatan dan tombol konfirmasi/pembatalan
@@ -44325,23 +45443,23 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
             var tanggalWaktu = "".concat(tanggal, " ").concat(waktuGmt7);
 
             // Update the jadwalPerawatan object dengan tanggal dan waktu
-            _this3.jadwalPerawatan[index].tanggal_perawatan = _this3.tanggal_perawatan;
-            _this3.jadwalPerawatan[index].tanggal_start = tanggalWaktu;
-            _this3.jadwalPerawatan[index].waktu_mulai = _this3.waktu_mulai;
-            _this3.jadwalPerawatan[index].waktu_selesai = _this3.waktu_selesai;
-            _this3.jadwalPerawatan[index].pic = _this3.pic;
-            _this3.jadwalPerawatan[index].detail = _this3.detail;
-            _this3.jadwalPerawatan[index].kondisi = _this3.kondisi;
-            _this3.jadwalPerawatan[index].status = 'Pelaksanaan';
+            _this7.jadwalPerawatan[index].tanggal_perawatan = _this7.tanggal_perawatan;
+            _this7.jadwalPerawatan[index].tanggal_start = tanggalWaktu;
+            _this7.jadwalPerawatan[index].waktu_mulai = _this7.waktu_mulai;
+            _this7.jadwalPerawatan[index].waktu_selesai = _this7.waktu_selesai;
+            _this7.jadwalPerawatan[index].pic = _this7.pic;
+            _this7.jadwalPerawatan[index].detail = _this7.detail;
+            _this7.jadwalPerawatan[index].kondisi = _this7.kondisi;
+            _this7.jadwalPerawatan[index].status = 'Pelaksanaan';
 
             // Menyimpan PIC untuk setiap tanggal perawatan
             var hari = tanggal.split('-')[2]; // Mengambil hari dari tanggal_start
             if (hari) {
               var startTanggal = parseInt(hari, 10); // Menyimpan PIC untuk tanggal_start
-              if (!_this3.picPerTanggal[_this3.id]) {
-                _this3.picPerTanggal[_this3.id] = {}; // Pastikan ada objek untuk setiap id
+              if (!_this7.picPerTanggal[_this7.id]) {
+                _this7.picPerTanggal[_this7.id] = {}; // Pastikan ada objek untuk setiap id
               }
-              _this3.picPerTanggal[_this3.id][startTanggal] = _this3.jadwalPerawatan.pic; // Menyimpan nama PIC berdasarkan tanggal_start dan id
+              _this7.picPerTanggal[_this7.id][startTanggal] = _this7.jadwalPerawatan.pic; // Menyimpan nama PIC berdasarkan tanggal_start dan id
             }
 
             // Menampilkan SweetAlert sukses setelah data disimpan
@@ -44531,6 +45649,8 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
     }
   },
   mounted: function mounted() {
+    this.fetchDataFrom();
+    this.getTools();
     this.pages = Array.from({
       length: Math.ceil(this.jadwalPerawatan.length / this.perPage)
     }, function (_, i) {
@@ -46975,127 +48095,93 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
   data: function data() {
     return {
       searchQuery: '',
-      datariwayat: [{
-        id: 1,
-        id_alat: 101,
-        id_pengguna: 1,
-        no_seri: "ABC123456",
-        layout: "Layout 1",
-        pic: 1,
-        jumlah: 5,
-        tanggal: "2025-02-20",
-        PIC: {
-          nama_staff: "John Doe"
-        },
-        noSeri: {
-          status: "OK"
-        },
-        alat: {
-          kode_alat: "ALAT001"
-        },
-        pengguna: {
-          divisi: "Engineering"
-        },
-        tujuan: "Engineering",
-        jenis: "Tool",
-        kondisi: "OK"
-      }, {
-        id: 2,
-        id_alat: 102,
-        id_pengguna: 2,
-        no_seri: "DEF789101",
-        layout: "Layout 2",
-        pic: 2,
-        jumlah: 10,
-        tanggal: "2025-02-15",
-        PIC: {
-          nama_staff: "Jane Smith"
-        },
-        noSeri: {
-          status: "Rusak"
-        },
-        alat: {
-          kode_alat: "ALAT002"
-        },
-        pengguna: {
-          divisi: "Maintenance"
-        },
-        tujuan: "Maintenance",
-        jenis: "Machine",
-        kondisi: "Rusak"
-      }, {
-        id: 3,
-        id_alat: 103,
-        id_pengguna: 3,
-        no_seri: "GHI112233",
-        layout: "Layout 3",
-        pic: 3,
-        jumlah: 3,
-        tanggal: "2025-02-18",
-        PIC: {
-          nama_staff: "Alice Johnson"
-        },
-        noSeri: {
-          status: "Error"
-        },
-        alat: {
-          kode_alat: "ALAT003"
-        },
-        pengguna: {
-          divisi: "IT"
-        },
-        tujuan: "IT Support",
-        jenis: "Machine",
-        kondisi: "Error"
-      }, {
-        id: 4,
-        id_alat: 104,
-        id_pengguna: 4,
-        no_seri: "JKL345678",
-        layout: "Layout 4",
-        pic: 4,
-        jumlah: 7,
-        tanggal: "2025-02-22",
-        PIC: {
-          nama_staff: "Bob Lee"
-        },
-        noSeri: {
-          status: "Musnah"
-        },
-        alat: {
-          kode_alat: "ALAT004"
-        },
-        pengguna: {
-          divisi: "Logistics"
-        },
-        tujuan: "Logistics",
-        jenis: "Tool",
-        kondisi: "Musnah"
-      }, {
-        id: 5,
-        id_alat: 105,
-        id_pengguna: 5,
-        no_seri: "MNO567890",
-        layout: "Layout 5",
-        pic: 5,
-        jumlah: 2,
-        tanggal: "2025-02-10",
-        PIC: {
-          nama_staff: "Charlie Brown"
-        },
-        noSeri: {
-          status: "Hilang"
-        },
-        alat: {
-          kode_alat: "ALAT005"
-        },
-        pengguna: {
-          divisi: "HR"
-        },
-        tujuan: "HR Department",
-        jenis: "Machine",
-        kondisi: "Hilang"
-      }],
+      datariwayat: [
+        //   {
+        //   id: 1,
+        //   id_alat: 101,
+        //   id_pengguna: 1,
+        //   no_seri: "ABC123456",
+        //   layout: "Layout 1",
+        //   pic: 1,
+        //   jumlah: 5,
+        //   tanggal: "2025-02-20",
+        //   PIC: { nama_staff: "John Doe" },
+        //   noSeri: { status: "OK" },
+        //   alat: { kode_alat: "ALAT001" },
+        //   pengguna: { divisi: "Engineering" },
+        //   tujuan: "Engineering",
+        //   jenis: "Tool",
+        //   kondisi: "OK",
+        // },
+        // {
+        //   id: 2,
+        //   id_alat: 102,
+        //   id_pengguna: 2,
+        //   no_seri: "DEF789101",
+        //   layout: "Layout 2",
+        //   pic: 2,
+        //   jumlah: 10,
+        //   tanggal: "2025-02-15",
+        //   PIC: { nama_staff: "Jane Smith" },
+        //   noSeri: { status: "Rusak" },
+        //   alat: { kode_alat: "ALAT002" },
+        //   pengguna: { divisi: "Maintenance" },
+        //   tujuan: "Maintenance",
+        //   jenis: "Machine",
+        //   kondisi: "Rusak",
+        // },
+        // {
+        //   id: 3,
+        //   id_alat: 103,
+        //   id_pengguna: 3,
+        //   no_seri: "GHI112233",
+        //   layout: "Layout 3",
+        //   pic: 3,
+        //   jumlah: 3,
+        //   tanggal: "2025-02-18",
+        //   PIC: { nama_staff: "Alice Johnson" },
+        //   noSeri: { status: "Error" },
+        //   alat: { kode_alat: "ALAT003" },
+        //   pengguna: { divisi: "IT" },
+        //   tujuan: "IT Support",
+        //   jenis: "Machine",
+        //   kondisi: "Error",
+        // },
+        // {
+        //   id: 4,
+        //   id_alat: 104,
+        //   id_pengguna: 4,
+        //   no_seri: "JKL345678",
+        //   layout: "Layout 4",
+        //   pic: 4,
+        //   jumlah: 7,
+        //   tanggal: "2025-02-22",
+        //   PIC: { nama_staff: "Bob Lee" },
+        //   noSeri: { status: "Musnah" },
+        //   alat: { kode_alat: "ALAT004" },
+        //   pengguna: { divisi: "Logistics" },
+        //   tujuan: "Logistics",
+        //   jenis: "Tool",
+        //   kondisi: "Musnah",
+        // },
+        // {
+        //   id: 5,
+        //   id_alat: 105,
+        //   id_pengguna: 5,
+        //   no_seri: "MNO567890",
+        //   layout: "Layout 5",
+        //   pic: 5,
+        //   jumlah: 2,
+        //   tanggal: "2025-02-10",
+        //   PIC: { nama_staff: "Charlie Brown" },
+        //   noSeri: { status: "Hilang" },
+        //   alat: { kode_alat: "ALAT005" },
+        //   pengguna: { divisi: "HR" },
+        //   tujuan: "HR Department",
+        //   jenis: "Machine",
+        //   kondisi: "Hilang",
+        // },
+      ],
       rowsPerPage: 10,
       currentPage: 1,
       tanggalAwal: '',
@@ -47108,7 +48194,7 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
       kondisiOptions: [],
       showAlat: true,
       showMesin: false,
-      jenisFilter: [],
+      namaFilter: [],
       sortKey: '',
       sortDirection: 'asc',
       isLoading: false
@@ -47153,15 +48239,15 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
     },
     filteredData: function filteredData() {
       var _this = this;
-      if (this.searchQuery || this.tanggalAwal || this.tanggalAkhir || this.tujuanDivisiFilter || this.jenisFilter || this.kondisiFilter) {
+      if (this.searchQuery || this.tanggalAwal || this.tanggalAkhir || this.tujuanDivisiFilter || this.namaFilter || this.kondisiFilter) {
         return this.paginatedData.filter(function (datariwayat) {
           var _datariwayat$noSeri;
           var tanggalMatch = _this.tanggalAwal && _this.tanggalAkhir ? datariwayat.tanggal >= _this.tanggalAwal && datariwayat.tanggal <= _this.tanggalAkhir : true;
           var searchMatch = _this.searchQuery ? datariwayat.no_seri && datariwayat.no_seri.toLowerCase().includes(_this.searchQuery.toLowerCase()) || datariwayat.tujuan && datariwayat.tujuan.toLowerCase().includes(_this.searchQuery.toLowerCase()) || datariwayat.nama_peminjam && datariwayat.nama_peminjam.toLowerCase().includes(_this.searchQuery.toLowerCase()) || datariwayat.staff && datariwayat.staff.nama_staff && datariwayat.staff.nama_staff.toLowerCase().includes(_this.searchQuery.toLowerCase()) : true;
           var tujuanDivisiMatch = _this.tujuanDivisiFilter ? datariwayat.tujuan === _this.tujuanDivisiFilter : true;
-          var jenisMatch = _this.jenisFilter.length ? _this.jenisFilter.includes(datariwayat.jenis) : true;
+          var namaMatch = _this.namaFilter.length ? _this.namaFilter.includes(datariwayat.tools.nama) : true;
           var kondisiMatch = _this.kondisiFilter.length ? _this.kondisiFilter.includes(datariwayat === null || datariwayat === void 0 || (_datariwayat$noSeri = datariwayat.noSeri) === null || _datariwayat$noSeri === void 0 ? void 0 : _datariwayat$noSeri.status) : true;
-          return tanggalMatch && searchMatch && tujuanDivisiMatch && jenisMatch && kondisiMatch;
+          return tanggalMatch && searchMatch && tujuanDivisiMatch && namaMatch && kondisiMatch;
         }).sort(function (a, b) {
           if (_this.sortKey === 'PIC.nama_staff') {
             var picA = a.PIC ? a.PIC.nama_staff : '';
@@ -47193,62 +48279,66 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
     }
   },
   methods: {
-    fetchNoSeriAlat: function fetchNoSeriAlat() {
+    fetchData: function fetchData() {
       var _this2 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var response;
+        var res;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
               _this2.isLoading = true;
               _context.prev = 1;
               _context.next = 4;
-              return axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/riwayat/alats");
+              return axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/v1/noseri');
             case 4:
-              response = _context.sent;
-              _this2.datariwayat = response.data.data.map(function (riwayat) {
-                return {
-                  id: riwayat.id,
-                  id_alat: riwayat.id_alat,
-                  id_pengguna: riwayat.id_pengguna,
-                  no_seri: riwayat.id_no_seri_alat,
-                  layout: riwayat.id_layout,
-                  pic: riwayat.id_staff,
-                  jumlah: riwayat.jumlah,
-                  tanggal: riwayat.tanggal,
-                  PIC: riwayat.staff,
-                  noSeri: riwayat.no_seri_alat,
-                  alat: riwayat.alat,
-                  pengguna: riwayat.pengguna
-                };
-              });
-              _this2.tujuanDivisiOptions = _toConsumableArray(new Set(_this2.datariwayat.map(function (datariwayat) {
-                return datariwayat.tujuan;
-              })));
-              _this2.jenisOptions = _toConsumableArray(new Set(_this2.datariwayat.map(function (datariwayat) {
-                return datariwayat.jenis;
-              })));
-              _this2.kondisiOptions = _toConsumableArray(new Set(_this2.datariwayat.map(function (datariwayat) {
-                return datariwayat.kondisi;
-              })));
+              res = _context.sent;
+              _this2.datariwayat = res.data;
               console.log(_this2.datariwayat);
-              _context.next = 15;
+              _context.next = 12;
               break;
-            case 12:
-              _context.prev = 12;
+            case 9:
+              _context.prev = 9;
               _context.t0 = _context["catch"](1);
               console.error(_context.t0);
+            case 12:
+              _context.prev = 12;
+              _this2.isLoading = false;
+              return _context.finish(12);
             case 15:
-              _context.prev = 15;
-              _this2.isLoading = false; // Hilangkan loader
-              return _context.finish(15);
-            case 18:
             case "end":
               return _context.stop();
           }
-        }, _callee, null, [[1, 12, 15, 18]]);
+        }, _callee, null, [[1, 9, 12, 15]]);
       }))();
     },
+    // async fetchNoSeriAlat() {
+    //   this.isLoading = true;
+    //   try {
+    //     const response = await axios.get(`/api/riwayat/alats`);
+    //     this.datariwayat = response.data.data.map((riwayat)=> ({
+    //       id: riwayat.id,
+    //       id_alat: riwayat.id_alat,
+    //       id_pengguna: riwayat.id_pengguna,
+    //       no_seri: riwayat.id_no_seri_alat,
+    //       layout: riwayat.id_layout,
+    //       pic: riwayat.id_staff,
+    //       jumlah: riwayat.jumlah,
+    //       tanggal: riwayat.tanggal,
+    //       PIC: riwayat.staff,
+    //       noSeri: riwayat.no_seri_alat,
+    //       alat: riwayat.alat,
+    //       pengguna: riwayat.pengguna,
+    //     }));
+    //     this.tujuanDivisiOptions = [...new Set(this.datariwayat.map(datariwayat => datariwayat.tujuan))];
+    //     this.jenisOptions = [...new Set(this.datariwayat.map(datariwayat => datariwayat.jenis))];
+    //     this.kondisiOptions = [...new Set(this.datariwayat.map(datariwayat => datariwayat.kondisi))];
+    //     console.log(this.datariwayat);
+    //   } catch (error) {
+    //     console.error(error);
+    //   } finally {
+    //     this.isLoading = false; // Hilangkan loader
+    //   }
+    // },
     debouncedFetchNoSeri: _.debounce(function () {
       this.fetchNoSeriAlat();
     }, 300),
@@ -47296,13 +48386,13 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 
       // Menyiapkan data yang akan dikonversi
       var data = this.filteredData.map(function (item) {
-        var _item$PIC, _item$noSeri2;
+        var _item$PIC;
         return {
-          Tanggal: item.tanggal,
+          Tanggal: item.tanggal_masuk,
           PIC: item === null || item === void 0 || (_item$PIC = item.PIC) === null || _item$PIC === void 0 ? void 0 : _item$PIC.nama_staff,
-          Jenis: item.jenis,
+          Jenis: item.tools.nama,
           NoSeri: item.no_seri,
-          Kondisi: item === null || item === void 0 || (_item$noSeri2 = item.noSeri) === null || _item$noSeri2 === void 0 ? void 0 : _item$noSeri2.status
+          Kondisi: item.kondisi
         };
       });
 
@@ -47318,7 +48408,8 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
     }
   },
   mounted: function mounted() {
-    this.fetchNoSeriAlat();
+    // this.fetchNoSeriAlat();
+    this.fetchData();
   }
 });
 
@@ -49333,6 +50424,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
                 fungsi: fungsi,
                 deskripsi: deskripsi
               });
+              // console.log(this.form);
             case 6:
             case "end":
               return _context.stop();
@@ -49359,7 +50451,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             case 6:
               sweetalert2__WEBPACK_IMPORTED_MODULE_1___default().fire({
                 title: 'Berhasil!',
-                text: 'Data berhasil disimpan.',
+                text: 'Data berhasil diubah.',
                 icon: 'success',
                 confirmButtonText: 'OK'
               }).then(function () {
@@ -49373,7 +50465,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
               console.error((_err$response = _context2.t0.response) === null || _err$response === void 0 ? void 0 : _err$response.data);
               sweetalert2__WEBPACK_IMPORTED_MODULE_1___default().fire({
                 title: 'Gagal!',
-                text: 'Data gagal disimpan.',
+                text: 'Data gagal diubah.',
                 icon: 'error',
                 confirmButtonText: 'OK'
               });
@@ -81196,10 +82288,10 @@ ___CSS_LOADER_EXPORT___.push([module.id, "\n.icon-hover {\n  color: #5a5c69;\n  
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/DataDetailAlat/DataRincianAlat/DetailRincianAlatBelumDigunakan/InputDataAlatBelumDigunakan.vue?vue&type=style&index=0&lang=css&":
-/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/DataDetailAlat/DataRincianAlat/DetailRincianAlatBelumDigunakan/InputDataAlatBelumDigunakan.vue?vue&type=style&index=0&lang=css& ***!
-  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/DataDetailAlat/DataRincianAlat/DetailRincianAlatBelumDigunakan/InputDataAlatBelumDigunakan.vue?vue&type=style&index=0&id=62384471&scoped=true&lang=css&":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/DataDetailAlat/DataRincianAlat/DetailRincianAlatBelumDigunakan/InputDataAlatBelumDigunakan.vue?vue&type=style&index=0&id=62384471&scoped=true&lang=css& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -81213,7 +82305,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.icon-hover {\n  color: #5a5c69;\n  transition: color 0.3s ease;\n}\n.icon-hover:hover {\n  color: #169ea8;\n}\n.btn-plus {\n  background-color: #169EA8;\n  color: #fff;\n}\n.btn-plus:hover {\n    background-color: #22d3e0;\n    color: #fff;\n}\n.upload-box {\n  border: 2px dashed #169ea8;\n  padding: 20px;\n  text-align: center;\n  cursor: pointer;\n  position: relative;\n  transition: border-color 0.3s ease;\n  max-width: 200px;\n  max-height: auto;\n}\n.upload-box .fa-image {\n  font-size: 36px; /* Ukuran ikon diperbesar */\n  margin-bottom: 10px;\n  color: #666;\n}\n.upload-box.drag-active {\n  border-color: #22d3e0;\n}\n.upload-box .upload-input {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 100%;\n  height: 100%;\n  opacity: 0;\n  cursor: pointer;\n}\n.browse-link {\n  color: #169ea8;\n  text-decoration: underline;\n  cursor: pointer;\n}\n.img-preview {\n  max-width: 150px;\n  max-height: 150px;\n  border-radius: 5px;\n  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);\n}\n\n/* Modal Styling */\n.modal {\n  display: none; /* Sembunyikan modal secara default */\n  position: fixed;\n  z-index: 1000;\n  left: 0;\n  top: 0;\n  width: 100%;\n  height: 100%;\n  background-color: rgba(0, 0, 0, 0.5); /* Latar belakang transparan */\n}\n.modal.is-visible {\n  display: flex; /* Tampilkan modal saat is-visible aktif */\n  justify-content: center;\n  align-items: center;\n}\n.modal-content {\n  background-color: #fff;\n  padding: 20px;\n  border-radius: 8px;\n  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);\n  max-width: 400px;\n  text-align: center;\n}\n.modal-content h2 {\n  margin-bottom: 10px;\n  font-size: 1.5rem;\n  color: #333;\n}\n.modal-content p {\n  margin-bottom: 20px;\n  color: #666;\n}\n.modal-content button {\n  padding: 10px 20px;\n  margin: 5px;\n  border: none;\n  border-radius: 5px;\n  cursor: pointer;\n}\n#confirmButton {\n  background-color: #169ea8;\n  color: #fff;\n}\n#cancelButton {\n  background-color: #f44336;\n  color: #fff;\n}\n.textarea-wrapper {\n  position: relative;\n}\ntextarea {\n  padding-bottom: 20px; /* Beri ruang untuk teks di bagian bawah */\n}\n.char-counter {\n  position: absolute;\n  bottom: 5px;\n  right: 10px;\n  font-size: 12px;\n  color: #6c757d; /* Warna teks abu-abu */\n  pointer-events: none; /* Supaya tidak mengganggu input */\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\nlabel[data-v-62384471] {\r\n  font-weight: 600;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -81933,7 +83025,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n#calendar {\n  width: 100%;\n  height: 600px;\n}\n#pills-tab .nav-link {\n  color: #000;\n}\n#pills-tab .nav-link.active {\n  background-color: #169ea8;\n  color: #fff;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n#calendar {\n  width: 100%;\n  height: 600px;\n}\n#pills-tab .nav-link {\n  color: #000;\n}\n#pills-tab .nav-link.active {\n  background-color: #169ea8;\n  color: #fff;\n}\n@media print {\n  /* body * {\n    visibility: hidden;\n  }\n\n  #calendar,\n  #calendar * {\n    visibility: visible;\n  }\n\n  #calendar {\n    position: absolute;\n    left: 0;\n    top: 0;\n  } */\n#calendar {\n    width: 100%;\n    height: 100%;\n    margin: 0;\n    padding: 0;\n}\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -81957,7 +83049,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* Tambahkan CSS untuk garis bawah */\n.table td[data-v-32cb6d16] {\r\n  border: 1px solid #fff;\n}\n#pills-tab .nav-link[data-v-32cb6d16] {\r\n  color: #000;\n}\n#pills-tab .nav-link.active[data-v-32cb6d16] {\r\n  background-color: #169ea8;\r\n  color: #fff;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* Tambahkan CSS untuk garis bawah */\n.table td[data-v-32cb6d16] {\r\n  border: 1px solid #fff;\n}\n#pills-tab .nav-link[data-v-32cb6d16] {\r\n  color: #000;\n}\n#pills-tab .nav-link.active[data-v-32cb6d16] {\r\n  background-color: #169ea8;\r\n  color: #fff;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -81981,7 +83073,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* Tambahkan CSS untuk garis bawah */\n.table td[data-v-69bbc481] {\r\n  border: 1px solid #fff;\n}\n#pills-tab .nav-link[data-v-69bbc481] {\r\n  color: #000;\n}\n#pills-tab .nav-link.active[data-v-69bbc481] {\r\n  background-color: #169ea8;\r\n  color: #fff;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* Tambahkan CSS untuk garis bawah */\n.table td[data-v-69bbc481] {\r\n  border: 1px solid #fff;\n}\n#pills-tab .nav-link[data-v-69bbc481] {\r\n  color: #000;\n}\n#pills-tab .nav-link.active[data-v-69bbc481] {\r\n  background-color: #169ea8;\r\n  color: #fff;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -176161,10 +177253,10 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/DataDetailAlat/DataRincianAlat/DetailRincianAlatBelumDigunakan/InputDataAlatBelumDigunakan.vue?vue&type=style&index=0&lang=css&":
-/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/DataDetailAlat/DataRincianAlat/DetailRincianAlatBelumDigunakan/InputDataAlatBelumDigunakan.vue?vue&type=style&index=0&lang=css& ***!
-  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/DataDetailAlat/DataRincianAlat/DetailRincianAlatBelumDigunakan/InputDataAlatBelumDigunakan.vue?vue&type=style&index=0&id=62384471&scoped=true&lang=css&":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/DataDetailAlat/DataRincianAlat/DetailRincianAlatBelumDigunakan/InputDataAlatBelumDigunakan.vue?vue&type=style&index=0&id=62384471&scoped=true&lang=css& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -176174,7 +177266,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
 /* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_InputDataAlatBelumDigunakan_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./InputDataAlatBelumDigunakan.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/DataDetailAlat/DataRincianAlat/DetailRincianAlatBelumDigunakan/InputDataAlatBelumDigunakan.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_InputDataAlatBelumDigunakan_vue_vue_type_style_index_0_id_62384471_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./InputDataAlatBelumDigunakan.vue?vue&type=style&index=0&id=62384471&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/DataDetailAlat/DataRincianAlat/DetailRincianAlatBelumDigunakan/InputDataAlatBelumDigunakan.vue?vue&type=style&index=0&id=62384471&scoped=true&lang=css&");
 
             
 
@@ -176183,11 +177275,11 @@ var options = {};
 options.insert = "head";
 options.singleton = false;
 
-var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_InputDataAlatBelumDigunakan_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"], options);
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_InputDataAlatBelumDigunakan_vue_vue_type_style_index_0_id_62384471_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"], options);
 
 
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_InputDataAlatBelumDigunakan_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_InputDataAlatBelumDigunakan_vue_vue_type_style_index_0_id_62384471_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
 
 /***/ }),
 
@@ -188090,6 +189182,30 @@ var render = function () {
           ],
           1
         ),
+        _vm._v(" "),
+        _c(
+          "li",
+          { staticClass: "nav-item", attrs: { role: "presentation" } },
+          [
+            _c(
+              "router-link",
+              {
+                staticClass: "nav-link",
+                class: { active: _vm.$route.name === "tipe" },
+                attrs: {
+                  id: "tipe-tab",
+                  "data-toggle": "tab",
+                  role: "tab",
+                  "aria-controls": "tipe",
+                  "aria-selected": "false",
+                  to: { name: "tipe" },
+                },
+              },
+              [_vm._v("Tipe Alat/Mesin")]
+            ),
+          ],
+          1
+        ),
       ]
     ),
     _vm._v(" "),
@@ -191230,36 +192346,6 @@ var render = function () {
       ]
     ),
     _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass: "modal-input",
-        class: { "is-visible": _vm.showModalEdit },
-        attrs: { id: "app" },
-        on: {
-          click: function ($event) {
-            if ($event.target !== $event.currentTarget) {
-              return null
-            }
-            return _vm.tutupModal.apply(null, arguments)
-          },
-        },
-      },
-      [
-        _c(
-          "div",
-          { staticClass: "modal-content-input" },
-          [
-            _c("edit-alat-belum-digunakan", {
-              attrs: { id: _vm.idEdit },
-              on: { "tutup-modal": _vm.tutupModal },
-            }),
-          ],
-          1
-        ),
-      ]
-    ),
-    _vm._v(" "),
     _c("div", { staticClass: "col-md-12" }, [
       _c(
         "button",
@@ -191510,6 +192596,10 @@ var render = function () {
                     ),
                     _vm._v(" "),
                     _c("th", { staticClass: "text-center text-black-1" }, [
+                      _vm._v("No Seri Default"),
+                    ]),
+                    _vm._v(" "),
+                    _c("th", { staticClass: "text-center text-black-1" }, [
                       _vm._v("Layout"),
                     ]),
                     _vm._v(" "),
@@ -191602,6 +192692,10 @@ var render = function () {
                         _vm._v(" "),
                         _c("td", { staticClass: "text-center" }, [
                           _vm._v(_vm._s(noseri.no_seri || "-")),
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-center" }, [
+                          _vm._v(_vm._s(noseri.no_seri_default || "-")),
                         ]),
                         _vm._v(" "),
                         _c("td", { staticClass: "text-center" }, [
@@ -191722,13 +192816,18 @@ var render = function () {
                                     staticClass: "dropdown-item",
                                     on: {
                                       click: function ($event) {
-                                        return _vm.editData(noseri.id)
+                                        return _vm.openModal(
+                                          "edit",
+                                          noseri,
+                                          index
+                                        )
                                       },
                                     },
                                   },
                                   [
                                     _c("i", {
-                                      staticClass: "fas fa-edit text-primary",
+                                      staticClass:
+                                        "bi bi-pencil-square text-primary",
                                     }),
                                     _vm._v(" Edit\n                  "),
                                   ]
@@ -191817,6 +192916,332 @@ var render = function () {
           1
         )
       : _vm._e(),
+    _vm._v(" "),
+    _vm.isModalOpen
+      ? _c(
+          "div",
+          {
+            staticClass: "modal fade show",
+            staticStyle: { display: "block" },
+            attrs: { tabindex: "-1", role: "dialog", "aria-hidden": "true" },
+          },
+          [
+            _c(
+              "div",
+              { staticClass: "modal-dialog", attrs: { role: "document" } },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass: "modal-content",
+                    staticStyle: { "max-height": "90vh", "overflow-y": "auto" },
+                  },
+                  [
+                    _c("div", { staticClass: "modal-header" }, [
+                      _c("h5", { staticClass: "modal-title" }, [
+                        _vm._v(_vm._s(_vm.modalTitle)),
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "close",
+                          attrs: { type: "button" },
+                          on: { click: _vm.closeModal },
+                        },
+                        [
+                          _c("span", { attrs: { "aria-hidden": "true" } }, [
+                            _vm._v("×"),
+                          ]),
+                        ]
+                      ),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "modal-body" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _vm._m(4),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.datanoseri.no_seri,
+                              expression: "datanoseri.no_seri",
+                            },
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "text", id: "no-seri", disabled: "" },
+                          domProps: { value: _vm.datanoseri.no_seri },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.datanoseri,
+                                "no_seri",
+                                $event.target.value
+                              )
+                            },
+                          },
+                        }),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group" }, [
+                        _vm._m(5),
+                        _vm._v(" "),
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.datanoseri.layout_id,
+                                expression: "datanoseri.layout_id",
+                              },
+                            ],
+                            staticClass: "form-control",
+                            attrs: { id: "layout", required: "" },
+                            on: {
+                              change: function ($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function (o) {
+                                    return o.selected
+                                  })
+                                  .map(function (o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.datanoseri,
+                                  "layout_id",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              },
+                            },
+                          },
+                          [
+                            _c(
+                              "option",
+                              {
+                                attrs: {
+                                  value: "",
+                                  disabled: "",
+                                  selected: "",
+                                },
+                              },
+                              [_vm._v(" Pilih Layout ")]
+                            ),
+                            _vm._v(" "),
+                            _vm._l(_vm.Layout, function (layout) {
+                              return _c(
+                                "option",
+                                {
+                                  key: layout.id,
+                                  domProps: { value: layout.id },
+                                },
+                                [_vm._v(_vm._s(layout.ruang))]
+                              )
+                            }),
+                          ],
+                          2
+                        ),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "form-group col-md-6" }, [
+                          _vm._m(6),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.datanoseri.no_seri_default,
+                                expression: "datanoseri.no_seri_default",
+                              },
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "text", id: "no_seri_default" },
+                            domProps: { value: _vm.datanoseri.no_seri_default },
+                            on: {
+                              input: function ($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.datanoseri,
+                                  "no_seri_default",
+                                  $event.target.value
+                                )
+                              },
+                            },
+                          }),
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group col-md-6" }, [
+                          _vm._m(7),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.datanoseri.tanggal_masuk,
+                                expression: "datanoseri.tanggal_masuk",
+                              },
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "date", id: "tanggal-masuk" },
+                            domProps: { value: _vm.datanoseri.tanggal_masuk },
+                            on: {
+                              input: function ($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.datanoseri,
+                                  "tanggal_masuk",
+                                  $event.target.value
+                                )
+                              },
+                            },
+                          }),
+                        ]),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "form-group col-md-6" }, [
+                          _vm._m(8),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.datanoseri.harga,
+                                expression: "datanoseri.harga",
+                              },
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "number", id: "harga" },
+                            domProps: { value: _vm.datanoseri.harga },
+                            on: {
+                              input: function ($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.datanoseri,
+                                  "harga",
+                                  $event.target.value
+                                )
+                              },
+                            },
+                          }),
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group col-md-6" }, [
+                          _vm._m(9),
+                          _vm._v(" "),
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.datanoseri.kondisi,
+                                  expression: "datanoseri.kondisi",
+                                },
+                              ],
+                              staticClass: "form-control",
+                              attrs: { id: "kondisi", disabled: "" },
+                              on: {
+                                change: function ($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function (o) {
+                                      return o.selected
+                                    })
+                                    .map(function (o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.$set(
+                                    _vm.datanoseri,
+                                    "kondisi",
+                                    $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  )
+                                },
+                              },
+                            },
+                            [
+                              _c(
+                                "option",
+                                { attrs: { value: "", disabled: "" } },
+                                [_vm._v("Pilih Kondisi Alat/Mesin")]
+                              ),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "OK" } }, [
+                                _vm._v("OK"),
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "Error" } }, [
+                                _vm._v("Error"),
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "Rusak" } }, [
+                                _vm._v("Rusak"),
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "Musnah" } }, [
+                                _vm._v("Musnah"),
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "Hilang" } }, [
+                                _vm._v("Hilang"),
+                              ]),
+                            ]
+                          ),
+                        ]),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "modal-footer" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-danger",
+                          attrs: { type: "button" },
+                          on: { click: _vm.closeModal },
+                        },
+                        [_vm._v("Tutup")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary",
+                          attrs: { type: "button" },
+                          on: { click: _vm.saveData },
+                        },
+                        [_vm._v(_vm._s(_vm.modalAction))]
+                      ),
+                    ]),
+                  ]
+                ),
+              ]
+            ),
+          ]
+        )
+      : _vm._e(),
   ])
 }
 var staticRenderFns = [
@@ -191872,6 +193297,90 @@ var staticRenderFns = [
         },
       },
       [_c("i", { staticClass: "fas fa-ellipsis-v" })]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticStyle: { color: "#000" }, attrs: { for: "no-seri" } },
+      [
+        _c("b", [_vm._v("No Seri Alat/Mesin")]),
+        _vm._v(" "),
+        _c("sup", { staticStyle: { color: "red" } }, [_vm._v(" *")]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticStyle: { color: "#000" }, attrs: { for: "layout" } },
+      [
+        _c("b", [_vm._v("Layout")]),
+        _vm._v(" "),
+        _c("sup", { staticStyle: { color: "red" } }, [_vm._v(" *")]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticStyle: { color: "#000" }, attrs: { for: "no_seri_default" } },
+      [
+        _c("b", [_vm._v("No Seri Default")]),
+        _vm._v(" "),
+        _c("sup", { staticStyle: { color: "red" } }, [_vm._v(" *")]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticStyle: { color: "#000" }, attrs: { for: "tanggal-masuk" } },
+      [
+        _c("b", [_vm._v("Tanggal Masuk")]),
+        _vm._v(" "),
+        _c("sup", { staticStyle: { color: "red" } }, [_vm._v(" *")]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticStyle: { color: "#000" }, attrs: { for: "harga" } },
+      [
+        _c("b", [_vm._v("Harga Satuan")]),
+        _vm._v(" "),
+        _c("sup", { staticStyle: { color: "red" } }, [_vm._v(" *")]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticStyle: { color: "#000" }, attrs: { for: "harga" } },
+      [
+        _c("b", [_vm._v("Kondisi")]),
+        _vm._v(" "),
+        _c("sup", { staticStyle: { color: "red" } }, [_vm._v(" *")]),
+      ]
     )
   },
 ]
@@ -193488,10 +194997,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/DataDetailAlat/DataRincianAlat/DetailRincianAlatBelumDigunakan/InputDataAlatBelumDigunakan.vue?vue&type=template&id=62384471&":
-/*!****************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/DataDetailAlat/DataRincianAlat/DetailRincianAlatBelumDigunakan/InputDataAlatBelumDigunakan.vue?vue&type=template&id=62384471& ***!
-  \****************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/DataDetailAlat/DataRincianAlat/DetailRincianAlatBelumDigunakan/InputDataAlatBelumDigunakan.vue?vue&type=template&id=62384471&scoped=true&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/DataDetailAlat/DataRincianAlat/DetailRincianAlatBelumDigunakan/InputDataAlatBelumDigunakan.vue?vue&type=template&id=62384471&scoped=true& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -193504,57 +195013,286 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container-fluid" }, [
+  return _c("div", [
     _vm._m(0),
     _vm._v(" "),
     _c(
-      "div",
-      { staticClass: "card-body", staticStyle: { "border-radius": "15px" } },
-      [
-        _c(
-          "form",
-          {
-            on: {
-              submit: function ($event) {
-                $event.preventDefault()
-                return _vm.submitAlat.apply(null, arguments)
-              },
-            },
+      "form",
+      {
+        attrs: { enctype: "multipart/form-data" },
+        on: {
+          submit: function ($event) {
+            $event.preventDefault()
+            return _vm.submitForm.apply(null, arguments)
           },
-          [
-            _vm._m(1),
-            _vm._v(" "),
-            _vm._m(2),
-            _vm._v(" "),
+        },
+      },
+      [
+        _c("div", { staticClass: "row" }, [
+          _c(
+            "div",
+            { staticClass: "col-md-12" },
+            [
+              _vm._m(1),
+              _vm._v(" "),
+              _c("v-select", {
+                attrs: {
+                  required: "",
+                  placeholder: "Pilih Alat/Mesin",
+                  options: _vm.tools,
+                  label: "nama",
+                  searchable: true,
+                  reduce: function (tool) {
+                    return tool.id
+                  },
+                },
+                model: {
+                  value: _vm.form.tools_id,
+                  callback: function ($$v) {
+                    _vm.$set(_vm.form, "tools_id", $$v)
+                  },
+                  expression: "form.tools_id",
+                },
+              }),
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "col-md-12" },
+            [
+              _vm._m(2),
+              _vm._v(" "),
+              _c("v-select", {
+                attrs: {
+                  required: "",
+                  placeholder: "Pilih Layout",
+                  options: _vm.layouts,
+                  label: "ruang",
+                  searchable: true,
+                  reduce: function (layout) {
+                    return layout.id
+                  },
+                },
+                model: {
+                  value: _vm.form.layout_id,
+                  callback: function ($$v) {
+                    _vm.$set(_vm.form, "layout_id", $$v)
+                  },
+                  expression: "form.layout_id",
+                },
+              }),
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-12 mt-2" }, [
             _vm._m(3),
             _vm._v(" "),
-            _vm._m(4),
-            _vm._v(" "),
-            _vm._m(5),
-            _vm._v(" "),
             _c(
-              "div",
-              { staticClass: "form-group d-flex justify-content-between" },
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.jadwal_perawatan,
+                    expression: "form.jadwal_perawatan",
+                  },
+                ],
+                staticClass: "form-control",
+                attrs: { id: "jadwal_perawatan", required: "" },
+                on: {
+                  change: function ($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function (o) {
+                        return o.selected
+                      })
+                      .map(function (o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.form,
+                      "jadwal_perawatan",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  },
+                },
+              },
               [
-                _c("span"),
+                _c("option", { attrs: { value: "", disabled: "" } }, [
+                  _vm._v("Pilih Interval Perawatan"),
+                ]),
                 _vm._v(" "),
-                _c("div", [
-                  _vm._m(6),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-danger",
-                      attrs: { type: "button" },
-                      on: { click: _vm.tutupModal },
-                    },
-                    [
-                      _c("i", { staticClass: "fas fa-times" }),
-                      _vm._v(" Batal\n          "),
-                    ]
-                  ),
+                _c("option", { attrs: { value: "1" } }, [
+                  _vm._v("Setiap 1 Bulan"),
+                ]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "3" } }, [
+                  _vm._v("Setiap 3 Bulan"),
+                ]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "6" } }, [
+                  _vm._v("Setiap 6 Bulan"),
+                ]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "12" } }, [
+                  _vm._v("Setiap 12 Bulan"),
                 ]),
               ]
+            ),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-6 mt-2" }, [
+            _vm._m(4),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.form.no_seri_default,
+                  expression: "form.no_seri_default",
+                },
+              ],
+              staticClass: "form-control",
+              attrs: {
+                type: "text",
+                required: "",
+                placeholder: "Masukkan No Seri Default",
+              },
+              domProps: { value: _vm.form.no_seri_default },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.form, "no_seri_default", $event.target.value)
+                },
+              },
+            }),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-6 mt-2" }, [
+            _vm._m(5),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.form.stok_awal,
+                  expression: "form.stok_awal",
+                },
+              ],
+              staticClass: "form-control",
+              attrs: { type: "number", min: "1", required: "" },
+              domProps: { value: _vm.form.stok_awal },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.form, "stok_awal", $event.target.value)
+                },
+              },
+            }),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-6 mt-2" }, [
+            _vm._m(6),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.form.harga,
+                  expression: "form.harga",
+                },
+              ],
+              staticClass: "form-control",
+              attrs: {
+                type: "number",
+                min: "0",
+                required: "",
+                placeholder: "Masukkan Harga Satuan Alat/Mesin",
+              },
+              domProps: { value: _vm.form.harga },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.form, "harga", $event.target.value)
+                },
+              },
+            }),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-6 mt-2" }, [
+            _vm._m(7),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.kondisi,
+                    expression: "form.kondisi",
+                  },
+                ],
+                staticClass: "form-control",
+                attrs: { id: "kondisi", required: "" },
+                on: {
+                  change: function ($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function (o) {
+                        return o.selected
+                      })
+                      .map(function (o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.form,
+                      "kondisi",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  },
+                },
+              },
+              [
+                _c(
+                  "option",
+                  { attrs: { value: "", disabled: "", selected: "" } },
+                  [_vm._v("Pilih Kondisi")]
+                ),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "OK" } }, [_vm._v("OK")]),
+              ]
+            ),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "form-group d-flex justify-content-end mt-4" },
+          [
+            _vm._m(8),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-danger",
+                attrs: { type: "button" },
+                on: { click: _vm.tutupModal },
+              },
+              [_c("i", { staticClass: "bi bi-x-circle" }), _vm._v(" Tutup")]
             ),
           ]
         ),
@@ -193568,136 +195306,72 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header py-3" }, [
-      _c(
-        "h6",
-        {
-          staticClass: "m-0 font-weight-bold",
-          staticStyle: { color: "#169ea8", "border-radius": "15px" },
-        },
-        [_vm._v("Form Input Data Alat Belum Digunakan")]
-      ),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c(
-        "label",
-        { staticStyle: { color: "#000" }, attrs: { for: "no_seri_alat" } },
-        [_c("b", [_vm._v("No Seri Alat")])]
-      ),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: {
-          type: "text",
-          id: "no_seri_alat",
-          placeholder: "Masukkan No Seri",
-        },
-      }),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c(
-        "label",
-        { staticStyle: { color: "#000" }, attrs: { for: "layout" } },
-        [
-          _c("b", [_vm._v("Layout")]),
-          _vm._v(" "),
-          _c("sup", { staticStyle: { color: "red" } }, [_vm._v(" *")]),
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "select",
-        { staticClass: "form-control", attrs: { id: "layout", required: "" } },
-        [
-          _c("option", { attrs: { value: "", disabled: "", selected: "" } }, [
-            _vm._v("Pilih Layout"),
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "Lemari 1" } }, [_vm._v("Lemari 1")]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "Lemari 2" } }, [_vm._v("Lemari 2")]),
-        ]
-      ),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c(
-        "label",
-        { staticStyle: { color: "#000" }, attrs: { for: "tanggal_masuk" } },
-        [
-          _c("b", [_vm._v("Tanggal Masuk")]),
-          _vm._v(" "),
-          _c("sup", { staticStyle: { color: "red" } }, [_vm._v(" *")]),
-        ]
-      ),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "date", id: "tanggal_masuk", required: "" },
-      }),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", { staticStyle: { color: "#000" }, attrs: { for: "harga" } }, [
-        _c("b", [_vm._v("Harga")]),
-        _vm._v(" "),
-        _c("sup", { staticStyle: { color: "red" } }, [_vm._v(" *")]),
+      _c("h6", { staticClass: "m-0 font-weight-bold text-primary" }, [
+        _vm._v("Form Input Data Alat Belum Digunakan"),
       ]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: {
-          type: "number",
-          id: "harga",
-          placeholder: "Masukkan Harga Alat",
-          required: "",
-        },
-      }),
     ])
   },
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c(
-        "label",
-        { staticStyle: { color: "#000" }, attrs: { for: "kondisi" } },
-        [
-          _c("b", [_vm._v("Kondisi")]),
-          _vm._v(" "),
-          _c("sup", { staticStyle: { color: "red" } }, [_vm._v(" *")]),
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "select",
-        { staticClass: "form-control", attrs: { id: "kondisi", required: "" } },
-        [
-          _c(
-            "option",
-            { attrs: { value: "Ready", disabled: "", selected: "" } },
-            [_vm._v("Ready")]
-          ),
-        ]
-      ),
+    return _c("label", { staticStyle: { color: "#000" } }, [
+      _vm._v("Alat/Mesin"),
+      _c("sup", { staticStyle: { color: "red" } }, [_vm._v(" *")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticStyle: { color: "#000" } }, [
+      _vm._v("Layout"),
+      _c("sup", { staticStyle: { color: "red" } }, [_vm._v(" *")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticStyle: { color: "#000" } }, [
+      _vm._v("Interval Jadwal Perawatan (bulan)"),
+      _c("sup", { staticStyle: { color: "red" } }, [_vm._v(" *")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticStyle: { color: "#000" } }, [
+      _vm._v("No Seri default"),
+      _c("sup", { staticStyle: { color: "red" } }, [_vm._v(" *")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticStyle: { color: "#000" } }, [
+      _vm._v("Jumlah Stok Masuk"),
+      _c("sup", { staticStyle: { color: "red" } }, [_vm._v(" *")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticStyle: { color: "#000" } }, [
+      _vm._v("Harga Satuan"),
+      _c("sup", { staticStyle: { color: "red" } }, [_vm._v(" *")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticStyle: { color: "#000" } }, [
+      _vm._v("Kondisi"),
+      _c("sup", { staticStyle: { color: "red" } }, [_vm._v(" *")]),
     ])
   },
   function () {
@@ -193706,8 +195380,11 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "button",
-      { staticClass: "btn btn-plus mr-2", attrs: { type: "submit" } },
-      [_c("i", { staticClass: "fas fa-save" }), _vm._v(" Simpan\n          ")]
+      { staticClass: "btn btn-primary mr-2", attrs: { type: "submit" } },
+      [
+        _c("i", { staticClass: "bi bi-floppy" }),
+        _vm._v(" Simpan No Seri & Jadwal"),
+      ]
     )
   },
 ]
@@ -214599,6 +216276,21 @@ var render = function () {
       ]
     ),
     _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "row align-items-center justify-content-end mr-3" },
+      [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-sm btn-outline-primary mr-2",
+            on: { click: _vm.exportToExcel },
+          },
+          [_c("i", { staticClass: "bi bi-filetype-exe" }), _vm._v("Export")]
+        ),
+      ]
+    ),
+    _vm._v(" "),
     _c("div", { staticClass: "mb-5 mt-2 mr-3", attrs: { id: "calendar" } }),
   ])
 }
@@ -214787,6 +216479,8 @@ var render = function () {
         [
           _c("thead", { staticClass: "bg-table" }, [
             _c("tr", { staticStyle: { color: "#000" } }, [
+              _c("th", { attrs: { rowspan: "2" } }, [_vm._v("No Perawatan")]),
+              _vm._v(" "),
               _c("th", { attrs: { rowspan: "2" } }, [
                 _vm._v("Nama Alat/Mesin"),
               ]),
@@ -214801,9 +216495,15 @@ var render = function () {
             _c(
               "tr",
               _vm._l(Array.from(Array(_vm.last_date).keys()), function (i) {
-                return _c("th", { key: i, staticStyle: { color: "#000" } }, [
-                  _vm._v("\n            " + _vm._s(i + 1) + "\n          "),
-                ])
+                return _c(
+                  "th",
+                  {
+                    key: i,
+                    staticClass: "text-center",
+                    staticStyle: { color: "#000" },
+                  },
+                  [_vm._v("\n            " + _vm._s(i + 1) + "\n          ")]
+                )
               }),
               0
             ),
@@ -214822,9 +216522,11 @@ var render = function () {
                       "tr",
                       { key: item.id },
                       [
-                        _c("td", [_vm._v(_vm._s(item.nama_alat))]),
+                        _c("td", [_vm._v(_vm._s(item.no_perawatan))]),
                         _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(item.no_seri))]),
+                        _c("td", [_vm._v(_vm._s(item.no_seri.tools.nama))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(item.no_seri.no_seri))]),
                         _vm._v(" "),
                         _vm._l(
                           Array.from(Array(_vm.last_date).keys()),
@@ -214832,12 +216534,10 @@ var render = function () {
                             return _c("td", {
                               key: i,
                               style: {
-                                backgroundColor:
-                                  _vm.weekend_date.indexOf(i + 1) !== -1
-                                    ? "black"
-                                    : _vm.isDate(item.tanggal_perawatan, i + 1)
-                                    ? "yellow"
-                                    : "",
+                                backgroundColor: _vm.getBackgroundColor(
+                                  item,
+                                  i + 1
+                                ),
                               },
                             })
                           }
@@ -214858,53 +216558,53 @@ var render = function () {
               ]),
         ]
       ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass:
-            "d-flex justify-content-between align-items-center mt-3 mb-3",
-          staticStyle: {
-            "border-radius": "10px",
-            "background-color": "#f3f4f6",
-            height: "50px",
-            color: "#000",
-          },
-        },
-        [
-          _c("div", { staticClass: "ml-3" }, [
-            _vm._v("\n        Rows per page:\n        "),
-            _c("span", [_vm._v(_vm._s(_vm.perPage))]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "mr-3" }, [
-            _c("span", [_vm._v(_vm._s(_vm.paginationInfo))]),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-sm btn-light",
-                attrs: { disabled: _vm.currentPage === 1 },
-                on: { click: _vm.prevPage },
-              },
-              [_c("i", { staticClass: "fas fa-angle-left" })]
-            ),
-            _vm._v(" "),
-            _c("span"),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-sm btn-light",
-                attrs: { disabled: _vm.currentPage === _vm.totalPages },
-                on: { click: _vm.nextPage },
-              },
-              [_c("i", { staticClass: "fas fa-angle-right" })]
-            ),
-          ]),
-        ]
-      ),
     ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass:
+          "d-flex justify-content-between align-items-center mt-3 mb-3",
+        staticStyle: {
+          "border-radius": "10px",
+          "background-color": "#f3f4f6",
+          height: "50px",
+          color: "#000",
+        },
+      },
+      [
+        _c("div", { staticClass: "ml-3" }, [
+          _vm._v("\n      Rows per page:\n      "),
+          _c("span", [_vm._v(_vm._s(_vm.perPage))]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "mr-3" }, [
+          _c("span", [_vm._v(_vm._s(_vm.paginationInfo))]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-sm btn-light",
+              attrs: { disabled: _vm.currentPage === 1 },
+              on: { click: _vm.prevPage },
+            },
+            [_c("i", { staticClass: "fas fa-angle-left" })]
+          ),
+          _vm._v(" "),
+          _c("span"),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-sm btn-light",
+              attrs: { disabled: _vm.currentPage === _vm.totalPages },
+              on: { click: _vm.nextPage },
+            },
+            [_c("i", { staticClass: "fas fa-angle-right" })]
+          ),
+        ]),
+      ]
+    ),
     _vm._v(" "),
     _vm.isModalTambahOpen
       ? _c(
@@ -214919,159 +216619,216 @@ var render = function () {
               "div",
               { staticClass: "modal-dialog", attrs: { role: "document" } },
               [
-                _c("div", { staticClass: "modal-content" }, [
-                  _c("div", { staticClass: "modal-header" }, [
-                    _c("h5", { staticClass: "modal-title" }, [
-                      _vm._v("Tambah Jadwal Perawatan"),
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "close",
-                        attrs: { type: "button" },
-                        on: { click: _vm.closeModalTambah },
-                      },
-                      [
-                        _c("span", { attrs: { "aria-hidden": "true" } }, [
-                          _vm._v("×"),
-                        ]),
-                      ]
-                    ),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "modal-body" }, [
-                    _c("form", [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", [_vm._v("Tanggal")]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.tanggal,
-                              expression: "tanggal",
-                            },
-                          ],
-                          staticClass: "form-control",
-                          attrs: { type: "date", max: _vm.dateFormatter() },
-                          domProps: { value: _vm.tanggal },
-                          on: {
-                            input: function ($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.tanggal = $event.target.value
-                            },
-                          },
-                        }),
+                _c(
+                  "div",
+                  {
+                    staticClass: "modal-content",
+                    staticStyle: { "max-height": "90vh", "overflow-y": "auto" },
+                  },
+                  [
+                    _c("div", { staticClass: "modal-header" }, [
+                      _c("h5", { staticClass: "modal-title" }, [
+                        _vm._v("Tambah Jadwal Perawatan"),
                       ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", [_vm._v("Nama Alat/Mesin")]),
-                        _vm._v(" "),
-                        _c(
-                          "select",
-                          {
+                      _c(
+                        "button",
+                        {
+                          staticClass: "close",
+                          attrs: { type: "button" },
+                          on: { click: _vm.closeModalTambah },
+                        },
+                        [
+                          _c("span", { attrs: { "aria-hidden": "true" } }, [
+                            _vm._v("×"),
+                          ]),
+                        ]
+                      ),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "modal-body" }, [
+                      _c("form", [
+                        _c("div", { staticClass: "form-group" }, [
+                          _vm._m(2),
+                          _vm._v(" "),
+                          _c("input", {
                             directives: [
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.nama_alat,
-                                expression: "nama_alat",
+                                value: _vm.tglPerawatan,
+                                expression: "tglPerawatan",
                               },
                             ],
                             staticClass: "form-control",
+                            attrs: {
+                              type: "date",
+                              max: _vm.dateFormatter(),
+                              min: _vm.minDateFormatter(),
+                            },
+                            domProps: { value: _vm.tglPerawatan },
                             on: {
-                              change: function ($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function (o) {
-                                    return o.selected
-                                  })
-                                  .map(function (o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.nama_alat = $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
+                              input: function ($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.tglPerawatan = $event.target.value
                               },
                             },
-                          },
-                          [
-                            _c("option", { attrs: { value: "" } }, [
-                              _vm._v("Pilih Nama Alat/Mesin"),
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "Bor" } }, [
-                              _vm._v("Bor"),
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "Gergaji" } }, [
-                              _vm._v("Gergaji"),
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "Pahat" } }, [
-                              _vm._v("Pahat"),
-                            ]),
-                          ]
-                        ),
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", [_vm._v("No Seri")]),
+                          }),
+                        ]),
                         _vm._v(" "),
-                        _c("input", {
-                          directives: [
+                        _c("div", { staticClass: "form-group" }, [
+                          _vm._m(3),
+                          _vm._v(" "),
+                          _c(
+                            "select",
                             {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.no_seri,
-                              expression: "no_seri",
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.selectedToolId,
+                                  expression: "selectedToolId",
+                                },
+                              ],
+                              staticClass: "form-control",
+                              on: {
+                                change: [
+                                  function ($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call(
+                                        $event.target.options,
+                                        function (o) {
+                                          return o.selected
+                                        }
+                                      )
+                                      .map(function (o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.selectedToolId = $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  },
+                                  _vm.getNoSeri,
+                                ],
+                              },
                             },
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            disabled: _vm.nama_alat === "",
-                          },
-                          domProps: { value: _vm.no_seri },
-                          on: {
-                            input: function ($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.no_seri = $event.target.value
+                            [
+                              _c(
+                                "option",
+                                { attrs: { disabled: "", value: "" } },
+                                [_vm._v("-- Pilih Tool --")]
+                              ),
+                              _vm._v(" "),
+                              _vm._l(_vm.tools, function (tool) {
+                                return _c(
+                                  "option",
+                                  {
+                                    key: tool.id,
+                                    domProps: { value: tool.id },
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                  " +
+                                        _vm._s(tool.nama) +
+                                        "\n                "
+                                    ),
+                                  ]
+                                )
+                              }),
+                            ],
+                            2
+                          ),
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group" }, [
+                          _vm._m(4),
+                          _vm._v(" "),
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.selectedNoSeriId,
+                                  expression: "selectedNoSeriId",
+                                },
+                              ],
+                              staticClass: "form-control",
+                              on: {
+                                change: function ($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function (o) {
+                                      return o.selected
+                                    })
+                                    .map(function (o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.selectedNoSeriId = $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                },
+                              },
                             },
-                          },
-                        }),
+                            [
+                              _c(
+                                "option",
+                                { attrs: { disabled: "", value: "" } },
+                                [_vm._v("-- Pilih No Seri --")]
+                              ),
+                              _vm._v(" "),
+                              _vm._l(_vm.noSeriList, function (seri) {
+                                return _c(
+                                  "option",
+                                  {
+                                    key: seri.id,
+                                    domProps: { value: seri.id },
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                  " +
+                                        _vm._s(seri.no_seri) +
+                                        "\n                "
+                                    ),
+                                  ]
+                                )
+                              }),
+                            ],
+                            2
+                          ),
+                        ]),
                       ]),
                     ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "modal-footer" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-secondary",
-                        attrs: { type: "button" },
-                        on: { click: _vm.closeModalTambah },
-                      },
-                      [_vm._v("Batal")]
-                    ),
                     _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-primary",
-                        attrs: { type: "button" },
-                        on: { click: _vm.tambahJadwalPerawatan },
-                      },
-                      [_vm._v("Simpan")]
-                    ),
-                  ]),
-                ]),
+                    _c("div", { staticClass: "modal-footer" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-danger",
+                          attrs: { type: "button" },
+                          on: { click: _vm.closeModalTambah },
+                        },
+                        [_vm._v("Batal")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary",
+                          attrs: { type: "button" },
+                          on: { click: _vm.submitPerawatan },
+                        },
+                        [_vm._v("Simpan")]
+                      ),
+                    ]),
+                  ]
+                ),
               ]
             ),
           ]
@@ -215104,6 +216861,48 @@ var staticRenderFns = [
     return _c("h5", { staticStyle: { color: "#000" } }, [
       _c("b", [_vm._v("Perencanaan")]),
     ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticStyle: { color: "#000" }, attrs: { for: "tools" } },
+      [
+        _c("b", [_vm._v("Tanggal Perawatan")]),
+        _vm._v(" "),
+        _c("sup", { staticStyle: { color: "red" } }, [_vm._v(" *")]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticStyle: { color: "#000" }, attrs: { for: "tools" } },
+      [
+        _c("b", [_vm._v("Alat/Mesin")]),
+        _vm._v(" "),
+        _c("sup", { staticStyle: { color: "red" } }, [_vm._v(" *")]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticStyle: { color: "#000" }, attrs: { for: "tools" } },
+      [
+        _c("b", [_vm._v("No Seri")]),
+        _vm._v(" "),
+        _c("sup", { staticStyle: { color: "red" } }, [_vm._v(" *")]),
+      ]
+    )
   },
 ]
 render._withStripped = true
@@ -215138,7 +216937,142 @@ var render = function () {
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "row align-items-center justify-content-end m-3" },
+        { staticClass: "row align-items-center justify-content-end m-4" },
+        [
+          _c("div", { staticClass: "filter-wrapper ml-2" }, [
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.filterKondisi,
+                    expression: "filterKondisi",
+                  },
+                ],
+                staticClass: "form-control",
+                on: {
+                  change: [
+                    function ($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function (o) {
+                          return o.selected
+                        })
+                        .map(function (o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.filterKondisi = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    },
+                    _vm.filterData,
+                  ],
+                },
+              },
+              [
+                _c("option", { attrs: { value: "" } }, [
+                  _vm._v("Semua Kondisi"),
+                ]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "OK" } }, [_vm._v("OK")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "Rusak" } }, [_vm._v("Rusak")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "Error" } }, [_vm._v("Error")]),
+              ]
+            ),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "filter-wrapper ml-2" }, [
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.filterStatus,
+                    expression: "filterStatus",
+                  },
+                ],
+                staticClass: "form-control",
+                on: {
+                  change: [
+                    function ($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function (o) {
+                          return o.selected
+                        })
+                        .map(function (o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.filterStatus = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    },
+                    _vm.filterData,
+                  ],
+                },
+              },
+              [
+                _c("option", { attrs: { value: "" } }, [
+                  _vm._v("Semua Status"),
+                ]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "Selesai Perawatan" } }, [
+                  _vm._v("Selesai Perawatan"),
+                ]),
+                _vm._v(" "),
+                _c(
+                  "option",
+                  { attrs: { value: "Belum Dilakukan Perawatan" } },
+                  [_vm._v("Belum Dilakukan Perawatan")]
+                ),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "Dalam Proses Perawatan" } }, [
+                  _vm._v("Dalam Proses Perawatan"),
+                ]),
+              ]
+            ),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "search-wrapper ml-2" }, [
+            _c("div", { staticClass: "input-group" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.search,
+                    expression: "search",
+                  },
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "Search..." },
+                domProps: { value: _vm.search },
+                on: {
+                  input: [
+                    function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.search = $event.target.value
+                    },
+                    _vm.filterData,
+                  ],
+                },
+              }),
+            ]),
+          ]),
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "row align-items-center justify-content-end m-4" },
         [
           _c("div", { staticClass: "filter-wrapper" }, [
             _c("div", { staticClass: "input-group" }, [
@@ -215155,12 +217089,15 @@ var render = function () {
                 attrs: { type: "date", placeholder: "Tanggal Start..." },
                 domProps: { value: _vm.tanggalStart },
                 on: {
-                  input: function ($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.tanggalStart = $event.target.value
-                  },
+                  input: [
+                    function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.tanggalStart = $event.target.value
+                    },
+                    _vm.filterData,
+                  ],
                 },
               }),
               _vm._v(" "),
@@ -215179,38 +217116,15 @@ var render = function () {
                 attrs: { type: "date", placeholder: "Tanggal End..." },
                 domProps: { value: _vm.tanggalEnd },
                 on: {
-                  input: function ($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.tanggalEnd = $event.target.value
-                  },
-                },
-              }),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "search-wrapper ml-2" }, [
-            _c("div", { staticClass: "input-group" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.search,
-                    expression: "search",
-                  },
-                ],
-                staticClass: "form-control",
-                attrs: { type: "text", placeholder: "Cari..." },
-                domProps: { value: _vm.search },
-                on: {
-                  input: function ($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.search = $event.target.value
-                  },
+                  input: [
+                    function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.tanggalEnd = $event.target.value
+                    },
+                    _vm.filterData,
+                  ],
                 },
               }),
             ]),
@@ -215236,175 +217150,41 @@ var render = function () {
                   {
                     on: {
                       click: function ($event) {
-                        return _vm.sortBy("nama_alat")
+                        return _vm.sortBy("no_perawatan")
                       },
                     },
                   },
                   [
-                    _vm._v("\n            Nama Alat/Mesin\n            "),
+                    _vm._v("\n            No. Perawatan\n            "),
                     _c("i", {
                       staticClass: "fas",
                       class: {
                         "fa-sort-up":
-                          _vm.sortKey === "nama_alat" &&
+                          _vm.sortKey === "no_perawatan" &&
                           _vm.sortDirection === "asc",
                         "fa-sort-down":
-                          _vm.sortKey === "nama_alat" &&
+                          _vm.sortKey === "no_perawatan" &&
                           _vm.sortDirection === "desc",
                       },
                     }),
                   ]
                 ),
                 _vm._v(" "),
-                _c(
-                  "th",
-                  {
-                    on: {
-                      click: function ($event) {
-                        return _vm.sortBy("no_seri")
-                      },
-                    },
-                  },
-                  [
-                    _vm._v("\n            No Seri\n            "),
-                    _c("i", {
-                      staticClass: "fas",
-                      class: {
-                        "fa-sort-up":
-                          _vm.sortKey === "no_seri" &&
-                          _vm.sortDirection === "asc",
-                        "fa-sort-down":
-                          _vm.sortKey === "no_seri" &&
-                          _vm.sortDirection === "desc",
-                      },
-                    }),
-                  ]
-                ),
+                _c("th", [_vm._v("Nama Alat/Mesin")]),
                 _vm._v(" "),
-                _c(
-                  "th",
-                  {
-                    on: {
-                      click: function ($event) {
-                        return _vm.sortBy("tanggal_perawatan")
-                      },
-                    },
-                  },
-                  [
-                    _vm._v("\n            Tanggal Perawatan\n            "),
-                    _c("i", {
-                      staticClass: "fas",
-                      class: {
-                        "fa-sort-up":
-                          _vm.sortKey === "tanggal_perawatan" &&
-                          _vm.sortDirection === "asc",
-                        "fa-sort-down":
-                          _vm.sortKey === "tanggal_perawatan" &&
-                          _vm.sortDirection === "desc",
-                      },
-                    }),
-                  ]
-                ),
+                _c("th", [_vm._v("No Seri")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("Tanggal Perawatan")]),
                 _vm._v(" "),
                 _c("th", [_vm._v("Rentang Waktu")]),
                 _vm._v(" "),
-                _c(
-                  "th",
-                  {
-                    on: {
-                      click: function ($event) {
-                        return _vm.sortBy("pic")
-                      },
-                    },
-                  },
-                  [
-                    _vm._v("\n            PIC\n            "),
-                    _c("i", {
-                      staticClass: "fas",
-                      class: {
-                        "fa-sort-up":
-                          _vm.sortKey === "pic" && _vm.sortDirection === "asc",
-                        "fa-sort-down":
-                          _vm.sortKey === "pic" && _vm.sortDirection === "desc",
-                      },
-                    }),
-                  ]
-                ),
+                _c("th", [_vm._v("PIC")]),
                 _vm._v(" "),
-                _c(
-                  "th",
-                  {
-                    on: {
-                      click: function ($event) {
-                        return _vm.sortBy("detail")
-                      },
-                    },
-                  },
-                  [
-                    _vm._v("\n            Keterangan Perawatan\n            "),
-                    _c("i", {
-                      staticClass: "fas",
-                      class: {
-                        "fa-sort-up":
-                          _vm.sortKey === "detail" &&
-                          _vm.sortDirection === "asc",
-                        "fa-sort-down":
-                          _vm.sortKey === "detail" &&
-                          _vm.sortDirection === "desc",
-                      },
-                    }),
-                  ]
-                ),
+                _c("th", [_vm._v("Keterangan Perawatan")]),
                 _vm._v(" "),
-                _c(
-                  "th",
-                  {
-                    on: {
-                      click: function ($event) {
-                        return _vm.sortBy("kondisi")
-                      },
-                    },
-                  },
-                  [
-                    _vm._v("\n            Kondisi\n            "),
-                    _c("i", {
-                      staticClass: "fas",
-                      class: {
-                        "fa-sort-up":
-                          _vm.sortKey === "kondisi" &&
-                          _vm.sortDirection === "asc",
-                        "fa-sort-down":
-                          _vm.sortKey === "kondisi" &&
-                          _vm.sortDirection === "desc",
-                      },
-                    }),
-                  ]
-                ),
+                _c("th", [_vm._v("Kondisi")]),
                 _vm._v(" "),
-                _c(
-                  "th",
-                  {
-                    on: {
-                      click: function ($event) {
-                        return _vm.sortBy("status")
-                      },
-                    },
-                  },
-                  [
-                    _vm._v("\n            Status\n            "),
-                    _c("i", {
-                      staticClass: "fas",
-                      class: {
-                        "fa-sort-up":
-                          _vm.sortKey === "status" &&
-                          _vm.sortDirection === "asc",
-                        "fa-sort-down":
-                          _vm.sortKey === "status" &&
-                          _vm.sortDirection === "desc",
-                      },
-                    }),
-                  ]
-                ),
+                _c("th", [_vm._v("Status")]),
               ]
             ),
           ]),
@@ -215417,11 +217197,15 @@ var render = function () {
                     "tr",
                     { key: item.id, staticClass: "text-center" },
                     [
-                      _c("td", [_vm._v(_vm._s(item.nama_alat))]),
+                      _c("td", [_vm._v(_vm._s(item.no_perawatan))]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(item.no_seri))]),
+                      _c("td", [
+                        _vm._v(_vm._s(item.no_seri.tools.nama || "-")),
+                      ]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(item.tanggal_perawatan))]),
+                      _c("td", [_vm._v(_vm._s(item.no_seri.no_seri || "-"))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(item.tgl_perawatan || "-"))]),
                       _vm._v(" "),
                       _c("td", [
                         _vm._v(_vm._s(item.rentang_waktu) + " "),
@@ -215429,16 +217213,16 @@ var render = function () {
                         _vm._v(" "),
                         _c("small", [
                           _vm._v(
-                            _vm._s(item.tanggal_start) +
+                            _vm._s(item.tgl_mulai_perawatan || "-") +
                               " to " +
-                              _vm._s(item.tanggal_end)
+                              _vm._s(item.tgl_selesai_perawatan || "-")
                           ),
                         ]),
                       ]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(item.pic))]),
+                      _c("td", [_vm._v(_vm._s(item.users_id || "-"))]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(item.detail))]),
+                      _c("td", [_vm._v(_vm._s(item.detail_perawatan || "-"))]),
                       _vm._v(" "),
                       _c("td", [
                         _c(
@@ -215446,15 +217230,15 @@ var render = function () {
                           {
                             staticClass: "btn-sts",
                             class: {
-                              "status-rusak": item.kondisi === "Rusak",
-                              "status-active": item.kondisi === "OK",
-                              "status-error": item.kondisi === "Error",
+                              "status-rusak": item.no_seri.kondisi === "Rusak",
+                              "status-active": item.no_seri.kondisi === "OK",
+                              "status-error": item.no_seri.kondisi === "Error",
                             },
                           },
                           [
                             _vm._v(
                               "\n              " +
-                                _vm._s(item.kondisi) +
+                                _vm._s(item.no_seri.kondisi) +
                                 "\n              "
                             ),
                           ]
@@ -215467,9 +217251,12 @@ var render = function () {
                           {
                             staticClass: "btn-sts",
                             class: {
-                              "status-rusak": item.status === "Belum Selesai",
-                              "status-active": item.status === "Selesai",
-                              "status-error": item.status === "Error",
+                              "status-rusak":
+                                item.status === "Belum Dilakukan Perawatan",
+                              "status-active":
+                                item.status === "Selesai Perawatan",
+                              "status-error":
+                                item.status === "Dalam Proses Perawatan",
                             },
                           },
                           [
@@ -215730,6 +217517,8 @@ var render = function () {
         [
           _c("thead", { staticClass: "bg-table" }, [
             _c("tr", { staticStyle: { color: "#000" } }, [
+              _c("th", { attrs: { rowspan: "2" } }, [_vm._v("No Perawatan")]),
+              _vm._v(" "),
               _c("th", { attrs: { rowspan: "2" } }, [
                 _vm._v("Nama Alat/Mesin"),
               ]),
@@ -215744,9 +217533,15 @@ var render = function () {
             _c(
               "tr",
               _vm._l(Array.from(Array(_vm.last_date).keys()), function (i) {
-                return _c("th", { key: i, staticStyle: { color: "#000" } }, [
-                  _vm._v("\n            " + _vm._s(i + 1) + "\n          "),
-                ])
+                return _c(
+                  "th",
+                  {
+                    key: i,
+                    staticClass: "text-center",
+                    staticStyle: { color: "#000" },
+                  },
+                  [_vm._v("\n            " + _vm._s(i + 1) + "\n          ")]
+                )
               }),
               0
             ),
@@ -215765,9 +217560,11 @@ var render = function () {
                       "tr",
                       { key: item.id },
                       [
-                        _c("td", [_vm._v(_vm._s(item.nama_alat))]),
+                        _c("td", [_vm._v(_vm._s(item.no_perawatan))]),
                         _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(item.no_seri))]),
+                        _c("td", [_vm._v(_vm._s(item.no_seri.tools.nama))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(item.no_seri.no_seri))]),
                         _vm._v(" "),
                         _vm._l(
                           Array.from(Array(_vm.last_date).keys()),
@@ -215775,12 +217572,10 @@ var render = function () {
                             return _c("td", {
                               key: i,
                               style: {
-                                backgroundColor:
-                                  _vm.weekend_date.indexOf(i + 1) !== -1
-                                    ? "black"
-                                    : _vm.isDate(item.tanggal_perawatan, i + 1)
-                                    ? "yellow"
-                                    : "",
+                                backgroundColor: _vm.getBackgroundColor(
+                                  item,
+                                  i + 1
+                                ),
                               },
                             })
                           }
@@ -215801,53 +217596,53 @@ var render = function () {
               ]),
         ]
       ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass:
-            "d-flex justify-content-between align-items-center mt-3 mb-3",
-          staticStyle: {
-            "border-radius": "10px",
-            "background-color": "#f3f4f6",
-            height: "50px",
-            color: "#000",
-          },
-        },
-        [
-          _c("div", { staticClass: "ml-3" }, [
-            _vm._v("\n        Rows per page:\n        "),
-            _c("span", [_vm._v(_vm._s(_vm.perPage))]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "mr-3" }, [
-            _c("span", [_vm._v(_vm._s(_vm.paginationInfo))]),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-sm btn-light",
-                attrs: { disabled: _vm.currentPage === 1 },
-                on: { click: _vm.prevPage },
-              },
-              [_c("i", { staticClass: "fas fa-angle-left" })]
-            ),
-            _vm._v(" "),
-            _c("span"),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-sm btn-light",
-                attrs: { disabled: _vm.currentPage === _vm.totalPages },
-                on: { click: _vm.nextPage },
-              },
-              [_c("i", { staticClass: "fas fa-angle-right" })]
-            ),
-          ]),
-        ]
-      ),
     ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass:
+          "d-flex justify-content-between align-items-center mt-3 mb-3",
+        staticStyle: {
+          "border-radius": "10px",
+          "background-color": "#f3f4f6",
+          height: "50px",
+          color: "#000",
+        },
+      },
+      [
+        _c("div", { staticClass: "ml-3" }, [
+          _vm._v("\n      Rows per page:\n      "),
+          _c("span", [_vm._v(_vm._s(_vm.perPage))]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "mr-3" }, [
+          _c("span", [_vm._v(_vm._s(_vm.paginationInfo))]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-sm btn-light",
+              attrs: { disabled: _vm.currentPage === 1 },
+              on: { click: _vm.prevPage },
+            },
+            [_c("i", { staticClass: "fas fa-angle-left" })]
+          ),
+          _vm._v(" "),
+          _c("span"),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-sm btn-light",
+              attrs: { disabled: _vm.currentPage === _vm.totalPages },
+              on: { click: _vm.nextPage },
+            },
+            [_c("i", { staticClass: "fas fa-angle-right" })]
+          ),
+        ]),
+      ]
+    ),
     _vm._v(" "),
     _c(
       "div",
@@ -215894,6 +217689,8 @@ var render = function () {
         [
           _c("thead", { staticClass: "bg-table" }, [
             _c("tr", { staticStyle: { color: "#000" } }, [
+              _c("th", { attrs: { rowspan: "2" } }, [_vm._v("No Perawatan")]),
+              _vm._v(" "),
               _c("th", { attrs: { rowspan: "2" } }, [
                 _vm._v("Nama Alat/Mesin"),
               ]),
@@ -215947,9 +217744,11 @@ var render = function () {
                       "tr",
                       { key: item.id },
                       [
-                        _c("td", [_vm._v(_vm._s(item.nama_alat))]),
+                        _c("td", [_vm._v(_vm._s(item.no_perawatan))]),
                         _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(item.no_seri))]),
+                        _c("td", [_vm._v(_vm._s(item.no_seri.tools.nama))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(item.no_seri.no_seri))]),
                         _vm._v(" "),
                         _c("td", { staticClass: "text-center" }, [
                           _vm._v(
@@ -216168,159 +217967,216 @@ var render = function () {
               "div",
               { staticClass: "modal-dialog", attrs: { role: "document" } },
               [
-                _c("div", { staticClass: "modal-content" }, [
-                  _c("div", { staticClass: "modal-header" }, [
-                    _c("h5", { staticClass: "modal-title" }, [
-                      _vm._v("Tambah Jadwal Perawatan"),
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "close",
-                        attrs: { type: "button" },
-                        on: { click: _vm.closeModalTambah },
-                      },
-                      [
-                        _c("span", { attrs: { "aria-hidden": "true" } }, [
-                          _vm._v("×"),
-                        ]),
-                      ]
-                    ),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "modal-body" }, [
-                    _c("form", [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", [_vm._v("Tanggal")]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.tanggal,
-                              expression: "tanggal",
-                            },
-                          ],
-                          staticClass: "form-control",
-                          attrs: { type: "date" },
-                          domProps: { value: _vm.tanggal },
-                          on: {
-                            input: function ($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.tanggal = $event.target.value
-                            },
-                          },
-                        }),
+                _c(
+                  "div",
+                  {
+                    staticClass: "modal-content",
+                    staticStyle: { "max-height": "90vh", "overflow-y": "auto" },
+                  },
+                  [
+                    _c("div", { staticClass: "modal-header" }, [
+                      _c("h5", { staticClass: "modal-title" }, [
+                        _vm._v("Tambah Jadwal Perawatan"),
                       ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", [_vm._v("Nama Alat/Mesin")]),
-                        _vm._v(" "),
-                        _c(
-                          "select",
-                          {
+                      _c(
+                        "button",
+                        {
+                          staticClass: "close",
+                          attrs: { type: "button" },
+                          on: { click: _vm.closeModalTambah },
+                        },
+                        [
+                          _c("span", { attrs: { "aria-hidden": "true" } }, [
+                            _vm._v("×"),
+                          ]),
+                        ]
+                      ),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "modal-body" }, [
+                      _c("form", [
+                        _c("div", { staticClass: "form-group" }, [
+                          _vm._m(5),
+                          _vm._v(" "),
+                          _c("input", {
                             directives: [
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.nama_alat,
-                                expression: "nama_alat",
+                                value: _vm.tglPerawatan,
+                                expression: "tglPerawatan",
                               },
                             ],
                             staticClass: "form-control",
+                            attrs: {
+                              type: "date",
+                              min: _vm.minDateFormatter(),
+                              max: _vm.dateFormatter(),
+                            },
+                            domProps: { value: _vm.tglPerawatan },
                             on: {
-                              change: function ($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function (o) {
-                                    return o.selected
-                                  })
-                                  .map(function (o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.nama_alat = $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
+                              input: function ($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.tglPerawatan = $event.target.value
                               },
                             },
-                          },
-                          [
-                            _c("option", { attrs: { value: "" } }, [
-                              _vm._v("Pilih Nama Alat/Mesin"),
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "Bor" } }, [
-                              _vm._v("Bor"),
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "Gergaji" } }, [
-                              _vm._v("Gergaji"),
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "Pahat" } }, [
-                              _vm._v("Pahat"),
-                            ]),
-                          ]
-                        ),
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", [_vm._v("No Seri")]),
+                          }),
+                        ]),
                         _vm._v(" "),
-                        _c("input", {
-                          directives: [
+                        _c("div", { staticClass: "form-group" }, [
+                          _vm._m(6),
+                          _vm._v(" "),
+                          _c(
+                            "select",
                             {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.no_seri,
-                              expression: "no_seri",
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.selectedToolId,
+                                  expression: "selectedToolId",
+                                },
+                              ],
+                              staticClass: "form-control",
+                              on: {
+                                change: [
+                                  function ($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call(
+                                        $event.target.options,
+                                        function (o) {
+                                          return o.selected
+                                        }
+                                      )
+                                      .map(function (o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.selectedToolId = $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  },
+                                  _vm.getNoSeri,
+                                ],
+                              },
                             },
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            disabled: _vm.nama_alat === "",
-                          },
-                          domProps: { value: _vm.no_seri },
-                          on: {
-                            input: function ($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.no_seri = $event.target.value
+                            [
+                              _c(
+                                "option",
+                                { attrs: { disabled: "", value: "" } },
+                                [_vm._v("-- Pilih Tool --")]
+                              ),
+                              _vm._v(" "),
+                              _vm._l(_vm.tools, function (tool) {
+                                return _c(
+                                  "option",
+                                  {
+                                    key: tool.id,
+                                    domProps: { value: tool.id },
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                  " +
+                                        _vm._s(tool.nama) +
+                                        "\n                "
+                                    ),
+                                  ]
+                                )
+                              }),
+                            ],
+                            2
+                          ),
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group" }, [
+                          _vm._m(7),
+                          _vm._v(" "),
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.selectedNoSeriId,
+                                  expression: "selectedNoSeriId",
+                                },
+                              ],
+                              staticClass: "form-control",
+                              on: {
+                                change: function ($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function (o) {
+                                      return o.selected
+                                    })
+                                    .map(function (o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.selectedNoSeriId = $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                },
+                              },
                             },
-                          },
-                        }),
+                            [
+                              _c(
+                                "option",
+                                { attrs: { disabled: "", value: "" } },
+                                [_vm._v("-- Pilih No Seri --")]
+                              ),
+                              _vm._v(" "),
+                              _vm._l(_vm.noSeriList, function (seri) {
+                                return _c(
+                                  "option",
+                                  {
+                                    key: seri.id,
+                                    domProps: { value: seri.id },
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                  " +
+                                        _vm._s(seri.no_seri) +
+                                        "\n                "
+                                    ),
+                                  ]
+                                )
+                              }),
+                            ],
+                            2
+                          ),
+                        ]),
                       ]),
                     ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "modal-footer" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-secondary",
-                        attrs: { type: "button" },
-                        on: { click: _vm.closeModalTambah },
-                      },
-                      [_vm._v("Batal")]
-                    ),
                     _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-primary",
-                        attrs: { type: "button" },
-                        on: { click: _vm.tambahJadwalPerawatan },
-                      },
-                      [_vm._v("Simpan")]
-                    ),
-                  ]),
-                ]),
+                    _c("div", { staticClass: "modal-footer" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-danger",
+                          attrs: { type: "button" },
+                          on: { click: _vm.closeModalTambah },
+                        },
+                        [_vm._v("Batal")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary",
+                          attrs: { type: "button" },
+                          on: { click: _vm.submitPerawatan },
+                        },
+                        [_vm._v("Simpan")]
+                      ),
+                    ]),
+                  ]
+                ),
               ]
             ),
           ]
@@ -216627,6 +218483,48 @@ var staticRenderFns = [
         },
       },
       [_c("i", { staticClass: "fas fa-ellipsis-v" })]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticStyle: { color: "#000" }, attrs: { for: "tools" } },
+      [
+        _c("b", [_vm._v("Tanggal Perawatan")]),
+        _vm._v(" "),
+        _c("sup", { staticStyle: { color: "red" } }, [_vm._v(" *")]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticStyle: { color: "#000" }, attrs: { for: "tools" } },
+      [
+        _c("b", [_vm._v("Alat/Mesin")]),
+        _vm._v(" "),
+        _c("sup", { staticStyle: { color: "red" } }, [_vm._v(" *")]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticStyle: { color: "#000" }, attrs: { for: "tools" } },
+      [
+        _c("b", [_vm._v("No Seri")]),
+        _vm._v(" "),
+        _c("sup", { staticStyle: { color: "red" } }, [_vm._v(" *")]),
+      ]
     )
   },
 ]
@@ -220536,49 +222434,49 @@ var render = function () {
                     [
                       _vm._m(3),
                       _vm._v(" "),
-                      _vm._l(_vm.availableJenis, function (jenis) {
-                        return _c("div", { key: jenis }, [
+                      _vm._l(_vm.availableJenis, function (nama) {
+                        return _c("div", { key: nama }, [
                           _c("label", [
                             _c("input", {
                               directives: [
                                 {
                                   name: "model",
                                   rawName: "v-model",
-                                  value: _vm.jenisFilter,
-                                  expression: "jenisFilter",
+                                  value: _vm.namaFilter,
+                                  expression: "namaFilter",
                                 },
                               ],
                               attrs: { type: "checkbox" },
                               domProps: {
-                                value: jenis,
-                                checked: Array.isArray(_vm.jenisFilter)
-                                  ? _vm._i(_vm.jenisFilter, jenis) > -1
-                                  : _vm.jenisFilter,
+                                value: nama,
+                                checked: Array.isArray(_vm.namaFilter)
+                                  ? _vm._i(_vm.namaFilter, nama) > -1
+                                  : _vm.namaFilter,
                               },
                               on: {
                                 change: function ($event) {
-                                  var $$a = _vm.jenisFilter,
+                                  var $$a = _vm.namaFilter,
                                     $$el = $event.target,
                                     $$c = $$el.checked ? true : false
                                   if (Array.isArray($$a)) {
-                                    var $$v = jenis,
+                                    var $$v = nama,
                                       $$i = _vm._i($$a, $$v)
                                     if ($$el.checked) {
                                       $$i < 0 &&
-                                        (_vm.jenisFilter = $$a.concat([$$v]))
+                                        (_vm.namaFilter = $$a.concat([$$v]))
                                     } else {
                                       $$i > -1 &&
-                                        (_vm.jenisFilter = $$a
+                                        (_vm.namaFilter = $$a
                                           .slice(0, $$i)
                                           .concat($$a.slice($$i + 1)))
                                     }
                                   } else {
-                                    _vm.jenisFilter = $$c
+                                    _vm.namaFilter = $$c
                                   }
                                 },
                               },
                             }),
-                            _vm._v(_vm._s(jenis)),
+                            _vm._v(_vm._s(nama)),
                           ]),
                         ])
                       }),
@@ -220765,7 +222663,9 @@ var render = function () {
                           },
                         },
                         [
-                          _vm._v("\n                Tanggal\n                "),
+                          _vm._v(
+                            "\n                Tanggal Masuk\n                "
+                          ),
                           _c("i", {
                             staticClass: "fas",
                             class: {
@@ -220810,20 +222710,22 @@ var render = function () {
                         {
                           on: {
                             click: function ($event) {
-                              return _vm.sortBy("jenis")
+                              return _vm.sortBy("nama")
                             },
                           },
                         },
                         [
-                          _vm._v("\n                Jenis\n                "),
+                          _vm._v(
+                            "\n                Nama Alat/Mesin\n                "
+                          ),
                           _c("i", {
                             staticClass: "fas",
                             class: {
                               "fa-sort-up":
-                                _vm.sortKey === "jenis" &&
+                                _vm.sortKey === "nama" &&
                                 _vm.sortDirection === "asc",
                               "fa-sort-down":
-                                _vm.sortKey === "jenis" &&
+                                _vm.sortKey === "nama" &&
                                 _vm.sortDirection === "desc",
                             },
                           }),
@@ -220893,7 +222795,7 @@ var render = function () {
                       _c("td", [_vm._v(_vm._s(index + 1))]),
                       _vm._v(" "),
                       _c("td", [
-                        _vm._v(_vm._s(riwayat.tanggal || "-") + " "),
+                        _vm._v(_vm._s(riwayat.tanggal_masuk || "-") + " "),
                         _c("br"),
                         _vm._v(" "),
                         _c("small", { staticStyle: { color: "#444" } }, [
@@ -220915,7 +222817,7 @@ var render = function () {
                         ),
                       ]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(riwayat.jenis))]),
+                      _c("td", [_vm._v(_vm._s(riwayat.tools.nama || "-"))]),
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(riwayat.no_seri || "-"))]),
                       _vm._v(" "),
@@ -220925,22 +222827,14 @@ var render = function () {
                           {
                             staticClass: "btn-sts",
                             class: {
-                              "status-active": riwayat.noSeri.status === "OK",
-                              "status-error": riwayat.noSeri.status === "Error",
-                              "status-rusak": riwayat.noSeri.status === "Rusak",
-                              "status-hilang":
-                                riwayat.noSeri.status === "Hilang",
-                              "status-dipinjam":
-                                riwayat.noSeri.status === "Musnah",
+                              "status-active": riwayat.kondisi === "OK",
+                              "status-error": riwayat.kondisi === "Error",
+                              "status-rusak": riwayat.kondisi === "Rusak",
+                              "status-hilang": riwayat.kondisi === "Hilang",
+                              "status-dipinjam": riwayat.kondisi === "Musnah",
                             },
                           },
-                          [
-                            _vm._v(
-                              _vm._s(
-                                riwayat.noSeri ? riwayat.noSeri.status : "-"
-                              )
-                            ),
-                          ]
+                          [_vm._v(_vm._s(riwayat.kondisi || "-"))]
                         ),
                       ]),
                     ]),
@@ -221044,7 +222938,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("label", [_c("b", [_vm._v("Jenis")])])
+    return _c("label", [_c("b", [_vm._v("Nama Alat/Mesin")])])
   },
   function () {
     var _vm = this
@@ -223316,7 +225210,9 @@ var render = function () {
           }),
           _vm._v(" "),
           _c("small", { staticClass: "text-muted" }, [
-            _vm._v(_vm._s(_vm.form.vendor.length) + " / 100"),
+            _vm._v(
+              _vm._s(_vm.form.vendor ? _vm.form.vendor.length : 0) + " / 100"
+            ),
           ]),
         ]),
         _vm._v(" "),
@@ -223350,7 +225246,9 @@ var render = function () {
           }),
           _vm._v(" "),
           _c("small", { staticClass: "text-muted" }, [
-            _vm._v(_vm._s(_vm.form.fungsi.length) + " / 100"),
+            _vm._v(
+              _vm._s(_vm.form.fungsi ? _vm.form.fungsi.length : 0) + " / 100"
+            ),
           ]),
         ]),
         _vm._v(" "),
@@ -223384,7 +225282,10 @@ var render = function () {
           }),
           _vm._v(" "),
           _c("small", { staticClass: "text-muted" }, [
-            _vm._v(_vm._s(_vm.form.deskripsi.length) + " / 500"),
+            _vm._v(
+              _vm._s(_vm.form.deskripsi ? _vm.form.deskripsi.length : 0) +
+                " / 500"
+            ),
           ]),
         ]),
         _vm._v(" "),
@@ -299917,7 +301818,7 @@ var routes = [{
   component: KalenderPerawatanBulan,
   name: 'kalender-perawatan-bulan'
 }, {
-  path: '/admin-mtc/perencanaan/jadwal-perawatan/kalender',
+  path: '/admin-mtc/perencanaan/jadwal-perawatan',
   component: KalenderPerencanaanPerawatan,
   name: 'kalender-perencanaan-perawatan'
 }, {
@@ -302135,9 +304036,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _InputDataAlatBelumDigunakan_vue_vue_type_template_id_62384471___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./InputDataAlatBelumDigunakan.vue?vue&type=template&id=62384471& */ "./resources/js/components/admin-mtc/DataDetailAlat/DataRincianAlat/DetailRincianAlatBelumDigunakan/InputDataAlatBelumDigunakan.vue?vue&type=template&id=62384471&");
+/* harmony import */ var _InputDataAlatBelumDigunakan_vue_vue_type_template_id_62384471_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./InputDataAlatBelumDigunakan.vue?vue&type=template&id=62384471&scoped=true& */ "./resources/js/components/admin-mtc/DataDetailAlat/DataRincianAlat/DetailRincianAlatBelumDigunakan/InputDataAlatBelumDigunakan.vue?vue&type=template&id=62384471&scoped=true&");
 /* harmony import */ var _InputDataAlatBelumDigunakan_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./InputDataAlatBelumDigunakan.vue?vue&type=script&lang=js& */ "./resources/js/components/admin-mtc/DataDetailAlat/DataRincianAlat/DetailRincianAlatBelumDigunakan/InputDataAlatBelumDigunakan.vue?vue&type=script&lang=js&");
-/* harmony import */ var _InputDataAlatBelumDigunakan_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./InputDataAlatBelumDigunakan.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/admin-mtc/DataDetailAlat/DataRincianAlat/DetailRincianAlatBelumDigunakan/InputDataAlatBelumDigunakan.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _InputDataAlatBelumDigunakan_vue_vue_type_style_index_0_id_62384471_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./InputDataAlatBelumDigunakan.vue?vue&type=style&index=0&id=62384471&scoped=true&lang=css& */ "./resources/js/components/admin-mtc/DataDetailAlat/DataRincianAlat/DetailRincianAlatBelumDigunakan/InputDataAlatBelumDigunakan.vue?vue&type=style&index=0&id=62384471&scoped=true&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -302149,11 +304050,11 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _InputDataAlatBelumDigunakan_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _InputDataAlatBelumDigunakan_vue_vue_type_template_id_62384471___WEBPACK_IMPORTED_MODULE_0__.render,
-  _InputDataAlatBelumDigunakan_vue_vue_type_template_id_62384471___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  _InputDataAlatBelumDigunakan_vue_vue_type_template_id_62384471_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _InputDataAlatBelumDigunakan_vue_vue_type_template_id_62384471_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
   null,
-  null,
+  "62384471",
   null
   
 )
@@ -302181,32 +304082,32 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/admin-mtc/DataDetailAlat/DataRincianAlat/DetailRincianAlatBelumDigunakan/InputDataAlatBelumDigunakan.vue?vue&type=style&index=0&lang=css&":
-/*!***************************************************************************************************************************************************************************!*\
-  !*** ./resources/js/components/admin-mtc/DataDetailAlat/DataRincianAlat/DetailRincianAlatBelumDigunakan/InputDataAlatBelumDigunakan.vue?vue&type=style&index=0&lang=css& ***!
-  \***************************************************************************************************************************************************************************/
+/***/ "./resources/js/components/admin-mtc/DataDetailAlat/DataRincianAlat/DetailRincianAlatBelumDigunakan/InputDataAlatBelumDigunakan.vue?vue&type=style&index=0&id=62384471&scoped=true&lang=css&":
+/*!***************************************************************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/admin-mtc/DataDetailAlat/DataRincianAlat/DetailRincianAlatBelumDigunakan/InputDataAlatBelumDigunakan.vue?vue&type=style&index=0&id=62384471&scoped=true&lang=css& ***!
+  \***************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_InputDataAlatBelumDigunakan_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../node_modules/style-loader/dist/cjs.js!../../../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./InputDataAlatBelumDigunakan.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/DataDetailAlat/DataRincianAlat/DetailRincianAlatBelumDigunakan/InputDataAlatBelumDigunakan.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_InputDataAlatBelumDigunakan_vue_vue_type_style_index_0_id_62384471_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../node_modules/style-loader/dist/cjs.js!../../../../../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./InputDataAlatBelumDigunakan.vue?vue&type=style&index=0&id=62384471&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/DataDetailAlat/DataRincianAlat/DetailRincianAlatBelumDigunakan/InputDataAlatBelumDigunakan.vue?vue&type=style&index=0&id=62384471&scoped=true&lang=css&");
 
 
 /***/ }),
 
-/***/ "./resources/js/components/admin-mtc/DataDetailAlat/DataRincianAlat/DetailRincianAlatBelumDigunakan/InputDataAlatBelumDigunakan.vue?vue&type=template&id=62384471&":
-/*!*************************************************************************************************************************************************************************!*\
-  !*** ./resources/js/components/admin-mtc/DataDetailAlat/DataRincianAlat/DetailRincianAlatBelumDigunakan/InputDataAlatBelumDigunakan.vue?vue&type=template&id=62384471& ***!
-  \*************************************************************************************************************************************************************************/
+/***/ "./resources/js/components/admin-mtc/DataDetailAlat/DataRincianAlat/DetailRincianAlatBelumDigunakan/InputDataAlatBelumDigunakan.vue?vue&type=template&id=62384471&scoped=true&":
+/*!*************************************************************************************************************************************************************************************!*\
+  !*** ./resources/js/components/admin-mtc/DataDetailAlat/DataRincianAlat/DetailRincianAlatBelumDigunakan/InputDataAlatBelumDigunakan.vue?vue&type=template&id=62384471&scoped=true& ***!
+  \*************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_InputDataAlatBelumDigunakan_vue_vue_type_template_id_62384471___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_InputDataAlatBelumDigunakan_vue_vue_type_template_id_62384471___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_InputDataAlatBelumDigunakan_vue_vue_type_template_id_62384471_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_InputDataAlatBelumDigunakan_vue_vue_type_template_id_62384471_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_InputDataAlatBelumDigunakan_vue_vue_type_template_id_62384471___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./InputDataAlatBelumDigunakan.vue?vue&type=template&id=62384471& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/DataDetailAlat/DataRincianAlat/DetailRincianAlatBelumDigunakan/InputDataAlatBelumDigunakan.vue?vue&type=template&id=62384471&");
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_InputDataAlatBelumDigunakan_vue_vue_type_template_id_62384471_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./InputDataAlatBelumDigunakan.vue?vue&type=template&id=62384471&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin-mtc/DataDetailAlat/DataRincianAlat/DetailRincianAlatBelumDigunakan/InputDataAlatBelumDigunakan.vue?vue&type=template&id=62384471&scoped=true&");
 
 
 /***/ }),

@@ -30,8 +30,8 @@ class Perawatan extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function no_seri()
+    public function noSeri()
     {
-        return $this->belongsTo(NoSeri::class);
+        return $this->belongsTo(NoSeri::class, 'no_seri_id');
     }
 }

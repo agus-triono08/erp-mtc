@@ -39,7 +39,7 @@
           placeholder="Masukkan Vendor (maks. 100 karakter)"
           maxlength="100"
         ></textarea>
-        <small class="text-muted">{{ form.vendor.length }} / 100</small>
+        <small class="text-muted">{{ form.vendor ? form.vendor.length : 0 }} / 100</small>
       </div>
 
       <div class="form-group">
@@ -51,7 +51,7 @@
           placeholder="Masukkan Fungsi (maks. 100 karakter)"
           maxlength="100"
         ></textarea>
-        <small class="text-muted">{{ form.fungsi.length }} / 100</small>
+        <small class="text-muted">{{ form.fungsi ? form.fungsi.length : 0 }} / 100</small>
       </div>
 
       <div class="form-group">
@@ -63,7 +63,7 @@
           placeholder="Masukkan Deskripsi (maks. 500 karakter)"
           maxlength="500"
         ></textarea>
-        <small class="text-muted">{{ form.deskripsi.length }} / 500</small>
+        <small class="text-muted">{{ form.deskripsi ? form.deskripsi.length : 0 }} / 500</small>
       </div>
 
       <button class="btn btn-primary mb-3 float-right">Simpan</button>
@@ -99,6 +99,7 @@ export default {
       const res = await axios.get(`/api/v1/tools/${toolId}`);
       const { id, pembelian, sumber, vendor, fungsi, deskripsi } = res.data;
       this.form = { ...this.form, id, pembelian, sumber, vendor, fungsi, deskripsi };
+      // console.log(this.form);
     },
     async submitForm() {
       const formData = new FormData();
@@ -112,7 +113,7 @@ export default {
         await axios.post(`/api/v1/tools/${this.form.id}?_method=PUT`, formData);
         Swal.fire({
           title: 'Berhasil!',
-          text: 'Data berhasil disimpan.',
+          text: 'Data berhasil diubah.',
           icon: 'success',
           confirmButtonText: 'OK'
         }).then(() => {
@@ -122,7 +123,7 @@ export default {
         console.error(err.response?.data);
         Swal.fire({
           title: 'Gagal!',
-          text: 'Data gagal disimpan.',
+          text: 'Data gagal diubah.',
           icon: 'error',
           confirmButtonText: 'OK'
         });

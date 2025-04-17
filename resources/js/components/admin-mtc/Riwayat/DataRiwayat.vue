@@ -67,9 +67,9 @@
         @click.stop
       >
         <div>
-          <label><b>Jenis</b></label>
-          <div v-for="jenis in availableJenis" :key="jenis">
-            <label><input type="checkbox" :value="jenis" v-model="jenisFilter"/>{{ jenis }}</label>
+          <label><b>Nama Alat/Mesin</b></label>
+          <div v-for="nama in availableJenis" :key="nama">
+            <label><input type="checkbox" :value="nama" v-model="namaFilter"/>{{ nama }}</label>
           </div>
         </div>
         <div>
@@ -123,16 +123,16 @@
               <tr style="color: #000;" class="text-center">
                 <th>#</th>
                 <th @click="sortBy('tanggal')">
-                  Tanggal
+                  Tanggal Masuk
                   <i class="fas" :class="{'fa-sort-up': sortKey === 'tanggal' && sortDirection === 'asc', 'fa-sort-down': sortKey === 'tanggal' && sortDirection === 'desc'}"></i>
                 </th>
                 <th @click="sortBy('PIC.nama_staff')">
                   PIC
                   <i class="fas" :class="{'fa-sort-up': sortKey === 'PIC.nama_staff' && sortDirection === 'asc', 'fa-sort-down': sortKey === 'PIC.nama_staff' && sortDirection === 'desc'}"></i>
                 </th>
-                <th @click="sortBy('jenis')">
-                  Jenis
-                  <i class="fas" :class="{'fa-sort-up': sortKey === 'jenis' && sortDirection === 'asc', 'fa-sort-down': sortKey === 'jenis' && sortDirection === 'desc'}"></i>
+                <th @click="sortBy('nama')">
+                  Nama Alat/Mesin
+                  <i class="fas" :class="{'fa-sort-up': sortKey === 'nama' && sortDirection === 'asc', 'fa-sort-down': sortKey === 'nama' && sortDirection === 'desc'}"></i>
                 </th>
                 <th @click="sortBy('no_seri')">
                   No Seri
@@ -152,22 +152,22 @@
             <tbody v-for="(riwayat, index) in filteredData" :key="index">
               <tr class="text-center">
                 <td>{{ index + 1 }}</td>
-                <td>{{ riwayat.tanggal || '-' }} <br> <small style="color: #444;"><i class="fas fa-clock"></i> {{ durasiData[index] !== '-' ? durasiData[index] + 'Hari' : '-' }}</small></td>                
+                <td>{{ riwayat.tanggal_masuk || '-' }} <br> <small style="color: #444;"><i class="fas fa-clock"></i> {{ durasiData[index] !== '-' ? durasiData[index] + 'Hari' : '-' }}</small></td>                
                 <td>{{ riwayat.PIC ? riwayat.PIC.nama_staff : '-' }}</td>     
                 <!-- <td>{{ riwayat.pengguna ? riwayat.pengguna.divisi : '-' }}</td> -->
-                <td>{{ riwayat.jenis }}</td>
+                <td>{{ riwayat.tools.nama || '-' }}</td>
                 <!-- <td>{{ riwayat.alat ? riwayat.alat.kode_alat : '-' }}</td>     -->
                 <td>{{ riwayat.no_seri || '-' }}</td>            
                 <td>
                   <div 
                     class="btn-sts"
-                      :class="{'status-active': riwayat.noSeri.status === 'OK', 
-                              'status-error': riwayat.noSeri.status === 'Error',
-                              'status-rusak': riwayat.noSeri.status === 'Rusak',
-                              'status-hilang': riwayat.noSeri.status === 'Hilang',
-                              'status-dipinjam': riwayat.noSeri.status === 'Musnah',
+                      :class="{'status-active': riwayat.kondisi === 'OK', 
+                              'status-error': riwayat.kondisi === 'Error',
+                              'status-rusak': riwayat.kondisi === 'Rusak',
+                              'status-hilang': riwayat.kondisi === 'Hilang',
+                              'status-dipinjam': riwayat.kondisi === 'Musnah',
                     }"
-                  >{{ riwayat.noSeri ? riwayat.noSeri.status : '-' }}</div>
+                  >{{ riwayat.kondisi || '-' }}</div>
                   </td>
               </tr>
             </tbody>
@@ -207,91 +207,91 @@ export default {
     return {
       searchQuery: '',
       datariwayat: [
-        {
-        id: 1,
-        id_alat: 101,
-        id_pengguna: 1,
-        no_seri: "ABC123456",
-        layout: "Layout 1",
-        pic: 1,
-        jumlah: 5,
-        tanggal: "2025-02-20",
-        PIC: { nama_staff: "John Doe" },
-        noSeri: { status: "OK" },
-        alat: { kode_alat: "ALAT001" },
-        pengguna: { divisi: "Engineering" },
-        tujuan: "Engineering",
-        jenis: "Tool",
-        kondisi: "OK",
-      },
-      {
-        id: 2,
-        id_alat: 102,
-        id_pengguna: 2,
-        no_seri: "DEF789101",
-        layout: "Layout 2",
-        pic: 2,
-        jumlah: 10,
-        tanggal: "2025-02-15",
-        PIC: { nama_staff: "Jane Smith" },
-        noSeri: { status: "Rusak" },
-        alat: { kode_alat: "ALAT002" },
-        pengguna: { divisi: "Maintenance" },
-        tujuan: "Maintenance",
-        jenis: "Machine",
-        kondisi: "Rusak",
-      },
-      {
-        id: 3,
-        id_alat: 103,
-        id_pengguna: 3,
-        no_seri: "GHI112233",
-        layout: "Layout 3",
-        pic: 3,
-        jumlah: 3,
-        tanggal: "2025-02-18",
-        PIC: { nama_staff: "Alice Johnson" },
-        noSeri: { status: "Error" },
-        alat: { kode_alat: "ALAT003" },
-        pengguna: { divisi: "IT" },
-        tujuan: "IT Support",
-        jenis: "Machine",
-        kondisi: "Error",
-      },
-      {
-        id: 4,
-        id_alat: 104,
-        id_pengguna: 4,
-        no_seri: "JKL345678",
-        layout: "Layout 4",
-        pic: 4,
-        jumlah: 7,
-        tanggal: "2025-02-22",
-        PIC: { nama_staff: "Bob Lee" },
-        noSeri: { status: "Musnah" },
-        alat: { kode_alat: "ALAT004" },
-        pengguna: { divisi: "Logistics" },
-        tujuan: "Logistics",
-        jenis: "Tool",
-        kondisi: "Musnah",
-      },
-      {
-        id: 5,
-        id_alat: 105,
-        id_pengguna: 5,
-        no_seri: "MNO567890",
-        layout: "Layout 5",
-        pic: 5,
-        jumlah: 2,
-        tanggal: "2025-02-10",
-        PIC: { nama_staff: "Charlie Brown" },
-        noSeri: { status: "Hilang" },
-        alat: { kode_alat: "ALAT005" },
-        pengguna: { divisi: "HR" },
-        tujuan: "HR Department",
-        jenis: "Machine",
-        kondisi: "Hilang",
-      },
+      //   {
+      //   id: 1,
+      //   id_alat: 101,
+      //   id_pengguna: 1,
+      //   no_seri: "ABC123456",
+      //   layout: "Layout 1",
+      //   pic: 1,
+      //   jumlah: 5,
+      //   tanggal: "2025-02-20",
+      //   PIC: { nama_staff: "John Doe" },
+      //   noSeri: { status: "OK" },
+      //   alat: { kode_alat: "ALAT001" },
+      //   pengguna: { divisi: "Engineering" },
+      //   tujuan: "Engineering",
+      //   jenis: "Tool",
+      //   kondisi: "OK",
+      // },
+      // {
+      //   id: 2,
+      //   id_alat: 102,
+      //   id_pengguna: 2,
+      //   no_seri: "DEF789101",
+      //   layout: "Layout 2",
+      //   pic: 2,
+      //   jumlah: 10,
+      //   tanggal: "2025-02-15",
+      //   PIC: { nama_staff: "Jane Smith" },
+      //   noSeri: { status: "Rusak" },
+      //   alat: { kode_alat: "ALAT002" },
+      //   pengguna: { divisi: "Maintenance" },
+      //   tujuan: "Maintenance",
+      //   jenis: "Machine",
+      //   kondisi: "Rusak",
+      // },
+      // {
+      //   id: 3,
+      //   id_alat: 103,
+      //   id_pengguna: 3,
+      //   no_seri: "GHI112233",
+      //   layout: "Layout 3",
+      //   pic: 3,
+      //   jumlah: 3,
+      //   tanggal: "2025-02-18",
+      //   PIC: { nama_staff: "Alice Johnson" },
+      //   noSeri: { status: "Error" },
+      //   alat: { kode_alat: "ALAT003" },
+      //   pengguna: { divisi: "IT" },
+      //   tujuan: "IT Support",
+      //   jenis: "Machine",
+      //   kondisi: "Error",
+      // },
+      // {
+      //   id: 4,
+      //   id_alat: 104,
+      //   id_pengguna: 4,
+      //   no_seri: "JKL345678",
+      //   layout: "Layout 4",
+      //   pic: 4,
+      //   jumlah: 7,
+      //   tanggal: "2025-02-22",
+      //   PIC: { nama_staff: "Bob Lee" },
+      //   noSeri: { status: "Musnah" },
+      //   alat: { kode_alat: "ALAT004" },
+      //   pengguna: { divisi: "Logistics" },
+      //   tujuan: "Logistics",
+      //   jenis: "Tool",
+      //   kondisi: "Musnah",
+      // },
+      // {
+      //   id: 5,
+      //   id_alat: 105,
+      //   id_pengguna: 5,
+      //   no_seri: "MNO567890",
+      //   layout: "Layout 5",
+      //   pic: 5,
+      //   jumlah: 2,
+      //   tanggal: "2025-02-10",
+      //   PIC: { nama_staff: "Charlie Brown" },
+      //   noSeri: { status: "Hilang" },
+      //   alat: { kode_alat: "ALAT005" },
+      //   pengguna: { divisi: "HR" },
+      //   tujuan: "HR Department",
+      //   jenis: "Machine",
+      //   kondisi: "Hilang",
+      // },
       ],
       rowsPerPage: 10,
       currentPage: 1,
@@ -305,7 +305,7 @@ export default {
       kondisiOptions: [],
       showAlat: true,
       showMesin: false,
-      jenisFilter: [],
+      namaFilter: [],
       sortKey: '',
       sortDirection: 'asc',
       isLoading: false,
@@ -344,7 +344,7 @@ export default {
       return this.datariwayat.slice(start, end);
     },
     filteredData() {
-      if (this.searchQuery || this.tanggalAwal || this.tanggalAkhir || this.tujuanDivisiFilter || this.jenisFilter || this.kondisiFilter) {
+      if (this.searchQuery || this.tanggalAwal || this.tanggalAkhir || this.tujuanDivisiFilter || this.namaFilter || this.kondisiFilter) {
         return this.paginatedData.filter(datariwayat => {
           const tanggalMatch = this.tanggalAwal && this.tanggalAkhir
             ? datariwayat.tanggal >= this.tanggalAwal && datariwayat.tanggal <= this.tanggalAkhir
@@ -360,13 +360,13 @@ export default {
           const tujuanDivisiMatch = this.tujuanDivisiFilter
             ? datariwayat.tujuan === this.tujuanDivisiFilter
             : true;
-          const jenisMatch = this.jenisFilter.length
-            ? this.jenisFilter.includes(datariwayat.jenis)
+          const namaMatch = this.namaFilter.length
+            ? this.namaFilter.includes(datariwayat.tools.nama)
             : true;
           const kondisiMatch = this.kondisiFilter.length
             ? this.kondisiFilter.includes(datariwayat?.noSeri?.status)
             : true;
-          return tanggalMatch && searchMatch && tujuanDivisiMatch && jenisMatch && kondisiMatch;
+          return tanggalMatch && searchMatch && tujuanDivisiMatch && namaMatch && kondisiMatch;
         }).sort((a, b) => {
           if (this.sortKey === 'PIC.nama_staff') {
             const picA = a.PIC ? a.PIC.nama_staff : '';
@@ -398,34 +398,46 @@ export default {
     }
   },
   methods: {
-    async fetchNoSeriAlat() {
+    async fetchData() {
       this.isLoading = true;
       try {
-        const response = await axios.get(`/api/riwayat/alats`);
-        this.datariwayat = response.data.data.map((riwayat)=> ({
-          id: riwayat.id,
-          id_alat: riwayat.id_alat,
-          id_pengguna: riwayat.id_pengguna,
-          no_seri: riwayat.id_no_seri_alat,
-          layout: riwayat.id_layout,
-          pic: riwayat.id_staff,
-          jumlah: riwayat.jumlah,
-          tanggal: riwayat.tanggal,
-          PIC: riwayat.staff,
-          noSeri: riwayat.no_seri_alat,
-          alat: riwayat.alat,
-          pengguna: riwayat.pengguna,
-        }));
-        this.tujuanDivisiOptions = [...new Set(this.datariwayat.map(datariwayat => datariwayat.tujuan))];
-        this.jenisOptions = [...new Set(this.datariwayat.map(datariwayat => datariwayat.jenis))];
-        this.kondisiOptions = [...new Set(this.datariwayat.map(datariwayat => datariwayat.kondisi))];
+        const res = await axios.get('/api/v1/noseri');
+        this.datariwayat = res.data;
         console.log(this.datariwayat);
       } catch (error) {
         console.error(error);
       } finally {
-        this.isLoading = false; // Hilangkan loader
+        this.isLoading = false;
       }
     },
+    // async fetchNoSeriAlat() {
+    //   this.isLoading = true;
+    //   try {
+    //     const response = await axios.get(`/api/riwayat/alats`);
+    //     this.datariwayat = response.data.data.map((riwayat)=> ({
+    //       id: riwayat.id,
+    //       id_alat: riwayat.id_alat,
+    //       id_pengguna: riwayat.id_pengguna,
+    //       no_seri: riwayat.id_no_seri_alat,
+    //       layout: riwayat.id_layout,
+    //       pic: riwayat.id_staff,
+    //       jumlah: riwayat.jumlah,
+    //       tanggal: riwayat.tanggal,
+    //       PIC: riwayat.staff,
+    //       noSeri: riwayat.no_seri_alat,
+    //       alat: riwayat.alat,
+    //       pengguna: riwayat.pengguna,
+    //     }));
+    //     this.tujuanDivisiOptions = [...new Set(this.datariwayat.map(datariwayat => datariwayat.tujuan))];
+    //     this.jenisOptions = [...new Set(this.datariwayat.map(datariwayat => datariwayat.jenis))];
+    //     this.kondisiOptions = [...new Set(this.datariwayat.map(datariwayat => datariwayat.kondisi))];
+    //     console.log(this.datariwayat);
+    //   } catch (error) {
+    //     console.error(error);
+    //   } finally {
+    //     this.isLoading = false; // Hilangkan loader
+    //   }
+    // },
     debouncedFetchNoSeri: _.debounce(function () {
       this.fetchNoSeriAlat();
     }, 300),
@@ -473,11 +485,11 @@ export default {
 
       // Menyiapkan data yang akan dikonversi
       const data = this.filteredData.map(item => ({
-        Tanggal: item.tanggal,
+        Tanggal: item.tanggal_masuk,
         PIC: item?.PIC?.nama_staff,
-        Jenis: item.jenis,
+        Jenis: item.tools.nama,
         NoSeri: item.no_seri,
-        Kondisi: item?.noSeri?.status,        
+        Kondisi: item.kondisi,        
       }));
 
       // Mengonversi data ke dalam format sheet Excel
@@ -492,7 +504,8 @@ export default {
     },
   },
   mounted() {
-    this.fetchNoSeriAlat();
+    // this.fetchNoSeriAlat();
+    this.fetchData();
   }
 }
 </script>

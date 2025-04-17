@@ -16,9 +16,9 @@
       <li class="nav-item" role="presentation">
         <router-link class="nav-link" id="merek-tab" data-toggle="tab" role="tab" aria-controls="merek" aria-selected="true" :class="{active: $route.name === 'merek'}" :to="{name: 'merek'}">Merek Alat/Mesin</router-link>
       </li>
-      <!-- <li class="nav-item" role="presentation">
+      <li class="nav-item" role="presentation">
         <router-link class="nav-link" id="tipe-tab" data-toggle="tab" role="tab" aria-controls="tipe" aria-selected="false" :class="{active: $route.name === 'tipe'}" :to="{name: 'tipe'}">Tipe Alat/Mesin</router-link>
-      </li> -->
+      </li>
     </ul>
     <div class="row align-items-center justify-content-end m-3">
       <!-- Tambah Data -->

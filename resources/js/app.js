@@ -497,7 +497,7 @@ const routes = [
         name: 'kalender-perawatan-bulan',
     },
     {
-        path: '/admin-mtc/perencanaan/jadwal-perawatan/kalender',
+        path: '/admin-mtc/perencanaan/jadwal-perawatan',
         component: KalenderPerencanaanPerawatan,
         name: 'kalender-perencanaan-perawatan',
     },

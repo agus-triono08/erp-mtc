@@ -32,6 +32,7 @@
   </div>
 </template>
 <script>
+import axios from 'axios';
 import { Calendar } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -57,170 +58,276 @@ export default {
   data() {
     return {
       jadwalPerawatan: [
-        {
-          id: 1,
-          no_perawatan: 'R-01',
-          nama_alat: 'Bor',
-          no_seri: 'B-01',
-          tanggal_start: '2025-03-06',
-          tanggal_end: '2025-03-10',
-          waktu_mulai: '08:00',
-          waktu_selesai: '08:30',
-          pic: 'Jhon',
-          detail: '',
-          kondisi: '',
-          status: 'Selesai'
-        },
-        {
-          id: 2,
-          no_perawatan: 'R-02',
-          nama_alat: 'Bor',
-          no_seri: 'B-02',
-          tanggal_start: '2025-03-13',
-          tanggal_end: '2025-03-13',
-          waktu_mulai: '08:00',
-          waktu_selesai: '09:30',
-          pic: 'Adam',
-          detail: '',
-          kondisi: '',
-          status: 'Pelaksanaan'
-        },
-        {
-          id: 3,
-          no_perawatan: 'R-03',
-          nama_alat: 'Bor',
-          no_seri: 'B-03',
-          tanggal_start: '2025-03-19',
-          tanggal_end: '2025-03-25',
-          waktu_mulai: '08:00',
-          waktu_selesai: '09:00',
-          pic: 'Thomas',
-          detail: '',
-          kondisi: '',
-          status: 'Belum Selesai'
-        },
-        {
-          id: 4,
-          no_perawatan: 'R-04',
-          nama_alat: 'Bor',
-          no_seri: 'B-04',
-          tanggal_start: '2025-11-03',
-          tanggal_end: '2025-11-05',
-          waktu_mulai: '10:20',
-          waktu_selesai: '11:00',
-          pic: 'Atom',
-          detail: '',
-          kondisi: '',
-          status: 'Belum Selesai'
-        },
+        // {
+        //   id: 1,
+        //   no_perawatan: 'R-01',
+        //   nama_alat: 'Bor',
+        //   no_seri: 'B-01',
+        //   tanggal_start: '2025-03-06',
+        //   tanggal_end: '2025-03-10',
+        //   waktu_mulai: '08:00',
+        //   waktu_selesai: '08:30',
+        //   pic: 'Jhon',
+        //   detail: '',
+        //   kondisi: '',
+        //   status: 'Selesai'
+        // },
+        // {
+        //   id: 2,
+        //   no_perawatan: 'R-02',
+        //   nama_alat: 'Bor',
+        //   no_seri: 'B-02',
+        //   tanggal_start: '2025-03-13',
+        //   tanggal_end: '2025-03-13',
+        //   waktu_mulai: '08:00',
+        //   waktu_selesai: '09:30',
+        //   pic: 'Adam',
+        //   detail: '',
+        //   kondisi: '',
+        //   status: 'Pelaksanaan'
+        // },
+        // {
+        //   id: 3,
+        //   no_perawatan: 'R-03',
+        //   nama_alat: 'Bor',
+        //   no_seri: 'B-03',
+        //   tanggal_start: '2025-03-19',
+        //   tanggal_end: '2025-03-25',
+        //   waktu_mulai: '08:00',
+        //   waktu_selesai: '09:00',
+        //   pic: 'Thomas',
+        //   detail: '',
+        //   kondisi: '',
+        //   status: 'Belum Selesai'
+        // },
+        // {
+        //   id: 4,
+        //   no_perawatan: 'R-04',
+        //   nama_alat: 'Bor',
+        //   no_seri: 'B-04',
+        //   tanggal_start: '2025-11-03',
+        //   tanggal_end: '2025-11-05',
+        //   waktu_mulai: '10:20',
+        //   waktu_selesai: '11:00',
+        //   pic: 'Atom',
+        //   detail: '',
+        //   kondisi: '',
+        //   status: 'Belum Selesai'
+        // },
         // tambahkan data lainnya
       ]
     }
   },
   mounted() {
-    const calendarEl = document.getElementById('calendar');
-    const calendar = new Calendar(calendarEl, {
-      plugins: [multiMonthPlugin, dayGridPlugin, timeGridPlugin, listPlugin, resourceTimeGridPlugin],
-      headerToolbar: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'multiMonthYear,dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-      },
-      initialDate: new Date(),
-      initialView: 'resourceTimeGridDay',
-      // initialView: 'resourceDayGridDay',
-      schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
-      initialView: 'multiMonthYear',
-      navLinks: true, // can click day/week names to navigate views
-      editable: true,
-      dayMaxEvents: true, // allow "more" link when too many events
-      locale: 'id', // tambahkan opsi locale
-      hiddenDays: [0, 6],
-      slotMinTime: '08:00',
-      slotMaxTime: '17:00',
-      // events: this.jadwalPerawatan.map((item) => {
-      //   if (item.waktu_mulai && item.waktu_selesai) {
-      //     return {
-      //       title: `${item.nama_alat} - ${item.no_seri}`,
-      //       start: item.tanggal_start,
-      //       end: item.tanggal_end,
-      //       allDay: false,
-      //       startTime: item.waktu_mulai,
-      //       endTime: item.waktu_selesai,
-      //       backgroundColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
-      //       borderColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
-      //       display: 'block',
-      //     }
-      //   } else {
-      //     return {
-      //       title: `${item.nama_alat} - ${item.no_seri}`,
-      //       start: item.tanggal_start,
-      //       end: item.tanggal_end,
-      //       allDay: true,
-      //       backgroundColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
-      //       borderColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
-      //       display: 'block',
-      //     }
-      //   }
-      // }),
-      // resources: [{
-      //   id: 'Adi',
-      //   title: 'Adi'
-      // }],
-      resourceAreaWidth: '200px',
-      resourceAreaHeaderContent: 'PIC',
-      resources: this.jadwalPerawatan.map((item) => {
-        const resource = {
-          id: item.id,
-          title: item.pic,  // pastikan pic terisi dengan benar
-        };
-        // console.log(resource); // Cek apakah resources terisi dengan benar
-        return resource;
-      }),
-      events: this.jadwalPerawatan.map((item) => {
-        const startDate = new Date(item.tanggal_start);
-        const endDate = new Date(item.tanggal_end);
-        startDate.setHours(item.waktu_mulai.split(":")[0]);
-        startDate.setMinutes(item.waktu_mulai.split(":")[1]);
-        endDate.setHours(item.waktu_selesai.split(":")[0]);
-        endDate.setMinutes(item.waktu_selesai.split(":")[1]);
-        return {
-          title: `${item.nama_alat} - ${item.no_seri}`,
-          start: startDate,
-          end: endDate,
-          allDay: false,
-          resourceId: item.id,
-          backgroundColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
-          borderColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
-          display: 'block',
-        }
-      }),
-      select: (arg) => {
-        const tanggalPerawatan = this.jadwalPerawatan.find((item) => {
-          return (arg.start >= item.tanggal_start && arg.start <= item.tanggal_end) || (arg.end >= item.tanggal_start && arg.end <= item.tanggal_end);
-        });
-        if (tanggalPerawatan) {
-          alert('Tanggal ini sudah terblokir');
-          return false;
-        }
-      }
-    });
-    calendar.render();
+    this.fetchData();
+    // const calendarEl = document.getElementById('calendar');
+    // const calendar = new Calendar(calendarEl, {
+    //   plugins: [multiMonthPlugin, dayGridPlugin, timeGridPlugin, listPlugin, resourceTimeGridPlugin],
+    //   headerToolbar: {
+    //     left: 'prev,next today',
+    //     center: 'title',
+    //     right: 'multiMonthYear,dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+    //   },
+    //   initialDate: new Date(),
+    //   initialView: 'resourceTimeGridDay',
+    //   // initialView: 'resourceDayGridDay',
+    //   schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
+    //   initialView: 'multiMonthYear',
+    //   navLinks: true, // can click day/week names to navigate views
+    //   editable: true,
+    //   dayMaxEvents: true, // allow "more" link when too many events
+    //   locale: 'id', // tambahkan opsi locale
+    //   hiddenDays: [0, 6],
+    //   slotMinTime: '08:00',
+    //   slotMaxTime: '17:00',
+    //   // events: this.jadwalPerawatan.map((item) => {
+    //   //   if (item.waktu_mulai && item.waktu_selesai) {
+    //   //     return {
+    //   //       title: `${item.nama_alat} - ${item.no_seri}`,
+    //   //       start: item.tanggal_start,
+    //   //       end: item.tanggal_end,
+    //   //       allDay: false,
+    //   //       startTime: item.waktu_mulai,
+    //   //       endTime: item.waktu_selesai,
+    //   //       backgroundColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
+    //   //       borderColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
+    //   //       display: 'block',
+    //   //     }
+    //   //   } else {
+    //   //     return {
+    //   //       title: `${item.nama_alat} - ${item.no_seri}`,
+    //   //       start: item.tanggal_start,
+    //   //       end: item.tanggal_end,
+    //   //       allDay: true,
+    //   //       backgroundColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
+    //   //       borderColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
+    //   //       display: 'block',
+    //   //     }
+    //   //   }
+    //   // }),
+    //   // resources: [{
+    //   //   id: 'Adi',
+    //   //   title: 'Adi'
+    //   // }],
+    //   resourceAreaWidth: '200px',
+    //   resourceAreaHeaderContent: 'PIC',
+    //   resources: this.jadwalPerawatan.map((item) => {
+    //     const resource = {
+    //       id: item.id,
+    //       title: item.pic,  // pastikan pic terisi dengan benar
+    //     };
+    //     // console.log(resource); // Cek apakah resources terisi dengan benar
+    //     return resource;
+    //   }),
+    //   events: this.jadwalPerawatan.map((item) => {
+    //     const startDate = new Date(item.tanggal_start);
+    //     const endDate = new Date(item.tanggal_end);
+    //     startDate.setHours(item.waktu_mulai.split(":")[0]);
+    //     startDate.setMinutes(item.waktu_mulai.split(":")[1]);
+    //     endDate.setHours(item.waktu_selesai.split(":")[0]);
+    //     endDate.setMinutes(item.waktu_selesai.split(":")[1]);
+    //     return {
+    //       title: `${item.nama_alat} - ${item.no_seri}`,
+    //       start: startDate,
+    //       end: endDate,
+    //       allDay: false,
+    //       resourceId: item.id,
+    //       backgroundColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
+    //       borderColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
+    //       display: 'block',
+    //     }
+    //   }),
+    //   select: (arg) => {
+    //     const tanggalPerawatan = this.jadwalPerawatan.find((item) => {
+    //       return (arg.start >= item.tanggal_start && arg.start <= item.tanggal_end) || (arg.end >= item.tanggal_start && arg.end <= item.tanggal_end);
+    //     });
+    //     if (tanggalPerawatan) {
+    //       alert('Tanggal ini sudah terblokir');
+    //       return false;
+    //     }
+    //   }
+    // });
+    // calendar.render();
   },
   methods: {
+    async fetchData() {
+      try {
+        const params = {
+          all: ''
+        };
+        const response = await axios.get('/api/v1/perawatan', { params });
+        this.jadwalPerawatan = response.data;
+        // console.log(this.jadwalPerawatan);
+        this.renderCalendar();
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    renderCalendar() {
+      const calendarEl = document.getElementById('calendar');
+      const calendar = new Calendar(calendarEl, {
+        plugins: [multiMonthPlugin, dayGridPlugin, timeGridPlugin, listPlugin, resourceTimeGridPlugin],
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'multiMonthYear,dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+        },
+        initialDate: new Date(),
+        initialView: 'multiMonthYear',
+        schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
+        navLinks: true,
+        editable: false,
+        dayMaxEvents: true,
+        locale: 'id',
+        hiddenDays: [0, 6],
+        slotMinTime: '08:00',
+        slotMaxTime: '17:00',
+        resourceAreaWidth: '200px',
+        resourceAreaHeaderContent: 'PIC',
+        resources: this.jadwalPerawatan.map((item) => ({
+          id: item.id,
+          title: item.no_seri?.tools?.nama || 'Tidak Diketahui',
+        })),
+        events: this.jadwalPerawatan.map((item) => {
+          const alat = item.no_seri?.tools;
+          const noSeri = item.no_seri?.no_seri;
+
+          // Gunakan tgl_perawatan sebagai tanggal event jika tidak ada waktu mulai/selesai
+          const startDate = item.tgl_mulai_perawatan ? new Date(item.tgl_mulai_perawatan) : new Date(item.tgl_perawatan);
+          const endDate = item.tgl_selesai_perawatan ? new Date(item.tgl_selesai_perawatan) : new Date(item.tgl_perawatan);
+
+          if (item.waktu_mulai) {
+            const [startHour, startMin] = item.waktu_mulai.split(':');
+            startDate.setHours(startHour, startMin);
+          }
+          if (item.waktu_selesai) {
+            const [endHour, endMin] = item.waktu_selesai.split(':');
+            endDate.setHours(endHour, endMin);
+          }
+
+          return {
+            title: `${item.no_perawatan} - ${alat?.nama || 'Alat'} - ${noSeri || ''}`,
+            start: startDate,
+            end: endDate,
+            allDay: false,
+            resourceId: item.id,
+            backgroundColor:
+              item.status === 'Belum Dilakukan Perawatan' ? '#dc3545'
+              : item.status === 'Pelaksanaan' ? '#169ea8'
+              : '#28a745',
+            borderColor:
+              item.status === 'Belum Dilakukan Perawatan' ? '#dc3545'
+              : item.status === 'Pelaksanaan' ? '#169ea8'
+              : '#28a745',
+            display: 'block',
+          };
+        }),
+      });
+
+      calendar.render();
+    },
     exportToExcel() {
       const tahun = new Date().getFullYear();
-      const data = this.jadwalPerawatan.filter((item) => {
-        const tanggalStart = new Date(item.tanggal_start);
-        return tanggalStart.getFullYear() === tahun;
-      });
+
+      const data = this.jadwalPerawatan
+        .filter(item => new Date(item.tgl_perawatan).getFullYear() === tahun)
+        .map(item => {
+          const alat = item.no_seri?.tools || {};
+          return {
+            'No Perawatan' : item.no_perawatan || '-',
+            'Nama Alat': alat.nama || 'Tidak Diketahui',
+            'No Seri': item.no_seri?.no_seri || 'Tidak Diketahui',
+            'Tanggal Perawatan': item.tgl_perawatan || '-',
+            'Waktu Mulai': item.waktu_mulai || '-',
+            'Waktu Selesai': item.waktu_selesai || '-',
+            'Status': item.status || '-',
+            'Fungsi': alat.fungsi || '-',
+            'Deskripsi': alat.deskripsi || '-',
+            'Vendor': alat.vendor || '-',
+            'Sumber': alat.sumber || '-',
+            'Pembelian': alat.pembelian || '-',
+          };
+        });
 
       const worksheet = XLSX.utils.json_to_sheet(data);
       const workbook = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(workbook, worksheet, 'Jadwal Perawatan');
 
-      XLSX.writeFile(workbook, `Jadwal Perawatan ${tahun}.xlsx`);
+      XLSX.writeFile(workbook, `Jadwal_Perawatan_${tahun}.xlsx`);
     },
+    // exportToExcel() {
+    //   const tahun = new Date().getFullYear();
+    //   const data = this.jadwalPerawatan.filter((item) => {
+    //     const tanggalStart = new Date(item.tanggal_start);
+    //     return tanggalStart.getFullYear() === tahun;
+    //   });
+
+    //   const worksheet = XLSX.utils.json_to_sheet(data);
+    //   const workbook = XLSX.utils.book_new();
+    //   XLSX.utils.book_append_sheet(workbook, worksheet, 'Jadwal Perawatan');
+
+    //   XLSX.writeFile(workbook, `Jadwal Perawatan ${tahun}.xlsx`);
+    // },
     printCalendar() {
       // // Menyembunyikan elemen-elemen lain
       // const elements = document.body.children;
