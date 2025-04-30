@@ -1,5 +1,13 @@
 <template>
   <div class="container-fluid mt-3 mr-3 mb-3">
+    <!-- Loader -->
+    <div class="loader" v-if="isLoading">
+      <div class="loading-overlay">
+        <div class="loading-spinner">
+            <span class="sr-only">Loading...</span>          
+        </div>
+      </div>
+    </div>
     <!-- Modal Konfirmasi -->
     <div class="modal" :class="{ 'is-visible': showModal }">
         <div class="modal-content">
@@ -168,17 +176,30 @@
           <tr>
             <td colspan="9" class="bg-teal text-white" style="font-size: 16px;"><strong>{{ category }}</strong></td>
           </tr>
-          <tr v-for="(alat, index) in categoryGroup" :key="alat.id" class="tr-center">
+          <tr v-for="(item, index) in categoryGroup" :key="item.id" class="tr-center">
             <td class="text-center">{{ index + 1 }}</td>
-            <td class="text-left"><img :src="alat.gambar_alat" style="max-width: 50px; max-height: 50px; margin-right: 20px; border-radius: 10px;" />{{ alat.kode_alat }}</td>
-            <td class="text-center">{{ alat.jenis || '-' }}</td>
-            <td class="text-center">{{ alat.nama_alat }}</td>
-            <td class="text-center">{{ alat.merek_alat }}</td>
-            <td class="text-center">{{ alat.tipe_alat }}</td>
-            <td class="text-center">{{ alat.stok_awal }}</td>
-            <td class="text-center" :class="{ 'text-danger': alat.stok_akhir <= 2 }">{{ alat.stok_akhir }}<br>
-              <span v-if="alat.stok_akhir <= 2" class="text-center"><small>Minimum Stok</small></span>
+            <td class="text-left">
+              <img 
+                :src="getImageUrl(item.gambar)" 
+                style="max-width: 50px; max-height: 50px; margin-right: 20px; border-radius: 10px;" 
+              />
+              {{ item.kode }}
             </td>
+            <td class="text-center">{{ getNamaJenis(item) }}</td>
+            <td class="text-center">{{ item.nama || '-' }}</td>
+            <!-- <td class="text-center">{{ item.jenis.kategori[0].kategori_merek[0].merek.nama_merek }}</td> -->
+            <!-- <td class="text-center">{{ item.jenis.kategori.kategori_merek && item.jenis.kategori.kategori_merek && item.jenis.kategori.kategori_merek.merek ? item.jenis.kategori.kategori_merek.merek.nama_merek : '-' }}</td>
+            <td class="text-center">{{ item.jenis.kategori.kategori_merek && item.jenis.kategori.kategori_merek && item.jenis.kategori.kategori_merek.tipe ? item.jenis.kategori.kategori_merek.tipe.nama_tipe : '-' }}</td> -->
+            <!-- <td class="text-center">{{ item.jenis.kategori.kategori_merek[0].merek.nama_merek || '-' }}</td>
+            <td class="text-center">{{ item.jenis.kategori.kategori_merek[0].tipe.nama_tipe }}</td> -->
+            <!-- <td class="text-center">{{ item.nama_merek || '-' }}</td> -->
+            <td class="text-center">{{ getNamaMerek(item) }}</td>
+            <td class="text-center">{{ getNamaTipe(item) || '-' }}</td>
+            <td class="text-center">{{ item.stok_awal || '-' }}</td>
+            <!-- <td class="text-center" :class="{ 'text-danger': alat.stok_akhir <= 2 }">{{ alat.stok_akhir }}<br>
+              <span v-if="alat.stok_akhir <= 2" class="text-center"><small>Minimum Stok</small></span>
+            </td> -->
+            <td class="text-center">{{ item.stok_akhir || '-' }}</td>
             <!-- <td>
               <div class="dropdown text-center">
                 <button
@@ -192,10 +213,10 @@
                   <i class="fas fa-ellipsis-v"></i>
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" @click="viewDetail(alat.id)">
+                  <a class="dropdown-item" @click="viewDetail(item.id)">
                     <i class="fas fa-eye text-info"></i> Detail
                   </a>
-                  <a class="dropdown-item" @click="editData(alat.id)">
+                  <a class="dropdown-item" @click="editData(item.id)">
                     <i class="fas fa-edit text-primary"></i> Edit
                   </a>
                   <a class="dropdown-item" @click="deleteData(alat.id)">
@@ -206,7 +227,7 @@
             </td> -->
           </tr>
         </tbody>
-      </table>      
+      </table>   
     </div>
     <!-- Pagination -->
     <div class="d-flex justify-content-between align-items-center mt-3" style="border-radius: 10px; background-color: #f3f4f6; height: 50px; color: #000;">
@@ -259,40 +280,118 @@ export default {
       showAlat: true,
       showMesin: false,
       jenisFilter: [],
+      isLoading: false,
       showModalInput: false, // Tambahkan variabel untuk mengontrol tampilan modal input       
     };
   },
   computed: {
+    // availableCategory() {
+    //   return [...new Set(this.alats.map(alat => alat.jenis.kategori.nama_kategori))];
+    // },
     availableCategory() {
-      return [...new Set(this.alats.map(alat => alat.kategori))];
+      return [...new Set(this.alats.map(alat => this.getNamaKategori(alat)))];
     },
     availableJenis() {
-      return [...new Set(this.alats.map(alat => alat.jenis))];
+      return [...new Set(this.alats.map(alat => this.getNamaJenis(alat)))];
     },
     filteredAlats() {
       return this.alats.filter(alat => {
         const statusMatch = this.statusFilters.length ? this.statusFilters.includes(alat.status) : true;
-        const unitMatch = this.unitFilters.length ? this.unitFilters.includes(alat.unit_alat) : true;
-        const categoryMatch = this.categoryFilters.length ? this.categoryFilters.includes(alat.kategori) : true;
-        const jenisMatch = this.jenisFilter.length ? this.jenisFilter.includes(alat.jenis) : true;
-        const searchMatch = alat.nama_alat.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-          alat.merek_alat.toLowerCase().includes(this.searchQuery.toLowerCase()) || 
-          alat.kode_alat.toLowerCase().includes(this.searchQuery.toLowerCase());
+        const unitMatch = this.unitFilters.length ? this.unitFilters.includes(alat.unit) : true;
+        const categoryMatch = this.categoryFilters.length ? this.categoryFilters.includes(this.getNamaKategori(alat)) : true;
+        const jenisMatch = this.jenisFilter.length ? this.jenisFilter.includes(this.getNamaJenis(alat)) : true;
+        const searchMatch = alat.nama.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+          this.getNamaMerek(alat).toLowerCase().includes(this.searchQuery.toLowerCase()) || 
+          this.getNamaTipe(alat).toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+          alat.kode.toLowerCase().includes(this.searchQuery.toLowerCase());
 
         return statusMatch && unitMatch && jenisMatch && categoryMatch && searchMatch;
       });
     },
+    // filteredAlats() {
+    //   return this.alats.filter(alat => {
+    //     const statusMatch = this.statusFilters.length ? this.statusFilters.includes(alat.status) : true;
+    //     const unitMatch = this.unitFilters.length ? this.unitFilters.includes(alat.unit) : true;
+    //     const categoryMatch = this.categoryFilters.length ? this.categoryFilters.includes(alat.jenis.kategori ? alat.jenis.kategori.nama_kategori : '') : true;
+    //     const jenisMatch = this.jenisFilter.length ? this.jenisFilter.includes(alat.jenis.nama_jenis) : true;
+    //     const searchMatch = alat.nama.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+    //       (alat.jenis.kategori && alat.jenis.kategori.kategori_merek && alat.jenis.kategori.kategori_merek[0].merek && alat.jenis.kategori.kategori_merek[0].merek.nama_merek.toLowerCase().includes(this.searchQuery.toLowerCase())) || 
+    //       alat.kode.toLowerCase().includes(this.searchQuery.toLowerCase());
+
+    //     return statusMatch && unitMatch && jenisMatch && categoryMatch && searchMatch;
+    //   });
+    // },
+    // filteredAlats() {
+    //   return this.alats.filter(alat => {
+    //     const statusMatch = this.statusFilters.length ? this.statusFilters.includes(alat.status) : true;
+    //     const unitMatch = this.unitFilters.length ? this.unitFilters.includes(alat.unit) : true;
+    //     const categoryMatch = this.categoryFilters.length ? this.categoryFilters.includes(alat.jenis.kategori.nama_kategori) : true;
+    //     const jenisMatch = this.jenisFilter.length ? this.jenisFilter.includes(alat.jenis.nama_jenis) : true;
+    //     const searchMatch = alat.nama.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+    //       alat.jenis.kategori.kategori_merek[0].merek.nama_merek.toLowerCase().includes(this.searchQuery.toLowerCase()) || 
+    //       alat.kode.toLowerCase().includes(this.searchQuery.toLowerCase());
+
+    //     return statusMatch && unitMatch && jenisMatch && categoryMatch && searchMatch;
+    //   });
+    // },
+    // filteredAlats() {
+    //   return this.alats.filter(alat => {
+    //     const statusMatch = this.statusFilters.length ? this.statusFilters.includes(alat.status) : true;
+    //     const unitMatch = this.unitFilters.length ? this.unitFilters.includes(alat.unit_alat) : true;
+    //     const categoryMatch = this.categoryFilters.length ? this.categoryFilters.includes(alat.kategori) : true;
+    //     const jenisMatch = this.jenisFilter.length ? this.jenisFilter.includes(alat.jenis) : true;
+    //     const searchMatch = alat.nama_alat.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+    //       alat.merek_alat.toLowerCase().includes(this.searchQuery.toLowerCase()) || 
+    //       alat.kode_alat.toLowerCase().includes(this.searchQuery.toLowerCase());
+
+    //     return statusMatch && unitMatch && jenisMatch && categoryMatch && searchMatch;
+    //   });
+    // },
     filteredGroupedAlats() {
       const grouped = this.paginatedAlats.reduce((groups, alat) => {
-        const kategori = alat.kategori || 'Uncategorized';
-        if (!groups[kategori]) {
-          groups[kategori] = [];
+        const parts = alat.kode?.split('-') || [];
+        const kodeKategori = parts[1];
+
+        let namaKategori = 'Uncategorized';
+
+        if (alat.jenis?.kategori) {
+          const kategoriMatch = alat.jenis.kategori.find(k => k.kode_kategori === kodeKategori);
+          if (kategoriMatch) {
+            namaKategori = kategoriMatch.nama_kategori;
+          }
         }
-        groups[kategori].push(alat);
+
+        if (!groups[namaKategori]) {
+          groups[namaKategori] = [];
+        }
+
+        groups[namaKategori].push(alat);
         return groups;
       }, {});
       return grouped;
     },
+    // filteredGroupedAlats() {
+    //   const grouped = this.paginatedAlats.reduce((groups, alat) => {
+    //     const kategori = alat.nama_kategori || 'Uncategorized';
+    //     if (!groups[kategori]) {
+    //       groups[kategori] = [];
+    //     }
+    //     groups[kategori].push(alat);
+    //     return groups;
+    //   }, {});
+    //   return grouped;
+    // },
+    // filteredGroupedAlats() {
+    //   const grouped = this.paginatedAlats.reduce((groups, alat) => {
+    //     const kategori = alat.jenis.kategori.nama_kategori || 'Uncategorized';
+    //     if (!groups[kategori]) {
+    //       groups[kategori] = [];
+    //     }
+    //     groups[kategori].push(alat);
+    //     return groups;
+    //   }, {});
+    //   return grouped;
+    // },
     paginatedAlats() {
       const start = (this.currentPage - 1) * this.rowsPerPage;
       return this.filteredAlats.slice(start, start + this.rowsPerPage);
@@ -309,27 +408,65 @@ export default {
   },
   methods: {
     async fetchAlats() {
+      this.isLoading = true;
       try {
-        const response = await axios.get(`/api/alats`);
-        this.alats = response.data.data.map((alat) => ({
-          id: alat.id,
-          kode_alat: alat.kode_alat,
-          jenis: alat.jenis,
-          nama_alat: alat.nama_alat,
-          merek_alat: alat.merek_alat,
-          tipe_alat: alat.tipe_alat,
-          unit_alat: alat.unit_alat,
-          status: alat.status,
-          stok_awal: alat.stok_awal,
-          stok_akhir: alat.stok_akhir,
-          gambar_alat: alat.gambar,
-          kategori: alat.kategori,
-        }));
-        //console.log(this.alats);
+        const response = await axios.get('/api/v1/tools');
+        this.alats = response.data;
+        // console.log('Data telah di-fetch:', this.alats);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error('Error fetching tools:', error);
+      } finally {
+        this.isLoading = false;
       }
     },
+    getImageUrl(path) {
+      return path ? `${window.location.origin}/storage/${path}` : null;
+    },
+    // async fetchAlats() {
+    //   this.isLoading = true;
+    //   try {
+    //     const response = await axios.get('/api/v1/tools');
+    //     this.tools = response.data.map((item) => ({
+    //       id: item.id,
+    //       kode: item.kode,
+    //       nama: item.nama,
+    //       jenis: item.jenis,
+    //       stok_awal: item.stok_awal,
+    //       stok_akhir: item.stok_akhir,
+    //       gambar: item.gambar,
+    //     }));
+    //     console.log('Data telah di-fetch:', this.tools);
+    //   } catch (error) {
+    //     console.error('Error fetching tools:', error);
+    //   } finally {
+    //     this.isLoading = false;
+    //   }
+    // },
+    // async fetchAlats() {
+    //   this.isLoading = true;
+    //   try {
+    //     const response = await axios.get(`/api/alats`);
+    //     this.alats = response.data.data.map((alat) => ({
+    //       id: alat.id,
+    //       kode_alat: alat.kode_alat,
+    //       jenis: alat.jenis,
+    //       nama_alat: alat.nama_alat,
+    //       merek_alat: alat.merek_alat,
+    //       tipe_alat: alat.tipe_alat,
+    //       unit_alat: alat.unit_alat,
+    //       status: alat.status,
+    //       stok_awal: alat.stok_awal,
+    //       stok_akhir: alat.stok_akhir,
+    //       gambar_alat: alat.gambar,
+    //       kategori: alat.kategori,
+    //     }));
+    //     //console.log(this.alats);
+    //   } catch (error) {
+    //     console.error("Error fetching data:", error);
+    //   } finally {
+    //     this.isLoading = false; // Hilangkan loader
+    //   }
+    // },
     sortStokAwal(order) {
       this.alats.sort((a, b) => {
         if (order === 'asc') {
@@ -387,6 +524,33 @@ export default {
     tutupModal() {
       this.showModalInput = false;
     },
+    getNamaJenis(item) {
+      const parts = item.kode?.split('-') || [];
+      const kodeJenis = parts[0];
+      return item.jenis?.kode_jenis === kodeJenis ? item.jenis.nama_jenis : '-';
+    },
+    getNamaKategori(item) {
+      const parts = item.kode?.split('-') || [];
+      const kodeKategori = parts[1];
+      const kategori = item.jenis?.kategori?.find(k => k.kode_kategori === kodeKategori);
+      return kategori ? kategori.nama_kategori : '-';
+    },
+    getNamaMerek(item) {
+      const parts = item.kode?.split('-') || [];
+      const kodeMerek = parts[2];
+      const kategori = item.jenis?.kategori || [];
+      const merek = kategori.flatMap(k => k.merek || []).find(m => m.kode_merek === kodeMerek);
+      return merek ? merek.nama_merek : '-';
+    },
+    getNamaTipe(item) {
+      const parts = item.kode?.split('-') || [];
+      const kodeTipe = parts[3];
+      const tipe = item.jenis?.kategori
+        ?.flatMap(k => k.merek || [])
+        .flatMap(m => m.tipe || [])
+        .find(t => t.kode_tipe === kodeTipe);
+      return tipe ? tipe.nama_tipe : '-';
+    },
     // Metode untuk mendownload data ke Excel
     downloadExcel() {
     // Memastikan data yang akan diekspor sudah ada
@@ -398,12 +562,12 @@ export default {
     // Menyiapkan data yang akan dikonversi, termasuk nomor urut
     const data = this.filteredAlats.map((alat, index) => ({
       No: index + 1,  // Menambahkan nomor urut      
-      Kode: alat.kode_alat,
-      Jenis: alat.jenis,
-      Kategori: alat.kategori,
-      Nama: alat.nama_alat,
-      Merek: alat.merek_alat,
-      Tipe: alat.tipe_alat,
+      Kode: alat.kode,
+      Jenis: this.getNamaJenis(alat),
+      Kategori: this.getNamaKategori(alat),
+      Nama: alat.nama,
+      Merek: this.getNamaMerek(alat),
+      Tipe: this.getNamaTipe(alat),
       'Stok Awal': alat.stok_awal,
       'Stok Akhir': alat.stok_akhir,      
     }));
@@ -522,6 +686,11 @@ input[type="checkbox"]:checked::after {
 .status-rusak {
   background-color: rgba(220, 53, 69, 0.1); /* Merah dengan transparansi */
   color: rgba(220, 53, 69);
+}
+
+.status-musnah {
+  background-color: rgba(247, 0, 255, 0.1);
+  color: rgba(247, 0, 255);
 }
 
 .status-error {
@@ -680,5 +849,41 @@ input[type="checkbox"]:checked::after {
     max-width: 800px;
     width: 100%;
   }
+  .loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.5);
+  z-index: 1000;
+}
+
+.loading-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.loading-spinner {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  border: 10px solid rgba(220, 53, 69, 0.1);
+  border-top-color: #dc3545;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 
 </style>

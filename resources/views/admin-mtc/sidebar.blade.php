@@ -63,7 +63,7 @@
     <li class="nav-item {{ request()->routeIs('kategori.adminmtc') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('kategori.adminmtc') }}">
             <i class="bi {{ request()->routeIs('kategori.adminmtc') ? 'bi-file-spreadsheet' : 'bi-file-spreadsheet-fill' }}"></i>
-            <span>Kategori/Merek</span>
+            <span>Kategori/Merek/Tipe</span>
         </a>
     </li>
     

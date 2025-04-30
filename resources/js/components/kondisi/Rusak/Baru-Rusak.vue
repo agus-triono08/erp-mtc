@@ -71,7 +71,8 @@
                     'status-hilang': item.status === 'Menunggu Persetujuan Pemusnahan',
                     'status-active': item.status === 'Selesai',
                   }">
-                  {{ item.status }}
+                  {{ item.status }}\
+                  
                 </div>
               </td>
               <td>

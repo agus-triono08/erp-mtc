@@ -1,17 +1,9 @@
 <template>
   <div class="container-fluid">
-    <!-- Loader -->
-    <div class="loader" v-if="isLoading">
-      <div class="loading-overlay">
-        <div class="loading-spinner">
-            <span class="sr-only">Loading...</span>          
-        </div>
-      </div>
-    </div>
     <h1 class="h3 mb-4 mt-4 text-gray-900"><b>Riwayat</b></h1>
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item" role="presentation">
-        <router-link class="nav-link" id="kondisi-tab" data-toggle="tab" role="tab" aria-controls="kondisi" aria-selected="false" :class="{active: $route.name === 'data-riwayat-perkondisi'}" :to="{name: 'data-riwayat-perkondisi'}">Per Kondisi</router-link>
+        <router-link class="nav-link" id="kondisi-tab" data-toggle="tab" role="tab" aria-controls="kondisi" aria-selected="true" :class="{active: $route.name === 'data-riwayat-perkondisi'}" :to="{name: 'data-riwayat-perkondisi'}">Per Kondisi</router-link>
       </li>
       <li class="nav-item" role="presentation">
         <router-link class="nav-link" id="peminjaman-tab" data-toggle="tab" role="tab" aria-controls="peminjaman" aria-selected="false" :class="{active: $route.name === 'data-riwayat-peminjaman'}" :to="{name: 'data-riwayat-peminjaman'}">Peminjaman</router-link>
@@ -20,339 +12,171 @@
         <router-link class="nav-link" id="permintaan-tab" data-toggle="tab" role="tab" aria-controls="permintaan" aria-selected="false" :class="{active: $route.name === 'data-riwayat-permintaan'}" :to="{name: 'data-riwayat-permintaan'}">Permintaan</router-link>
       </li>
       <li class="nav-item" role="presentation">
-        <router-link class="nav-link" id="penggantian-tab" data-toggle="tab" role="tab" aria-controls="penggantian" aria-selected="true" :class="{active: $route.name === 'data-riwayat-penggantian'}" :to="{name: 'data-riwayat-penggantian'}">Penggantian Alat/Mesin Hilang</router-link>
+        <router-link class="nav-link" id="penggantian-tab" data-toggle="tab" role="tab" aria-controls="penggantian" aria-selected="false" :class="{active: $route.name === 'data-riwayat-penggantian'}" :to="{name: 'data-riwayat-penggantian'}">Penggantian Alat/Mesin Hilang</router-link>
       </li>
     </ul>
-    <!-- <div class="col-md-12">
-      <button 
-        class="btn btn-show m-1"
-        :class="{active: showAlat}"
-        @click="toggleAlat"
-      >
-        <span v-if="showAlat">Alat</span>
-        <span v-else>Alat</span>
-      </button>
-      <button 
-        class="btn btn-show m-1"
-        :class="{active: showMesin}"
-        @click="toggleMesin"
-      >
-        <span v-if="showMesin">Mesin</span>
-        <span v-else>Mesin</span>
-      </button>
-    </div> -->
-    <div v-if="showAlat">
-    <div class="row align-items-center justify-content-end mt-4 mb-2">
-      <!-- Tombol Download Excel di samping kiri filter -->
-      <div>
-        <button @click="downloadExcel" class="btn btn-sm btn-primary-1 mr-2">
-          <i class="fas fa-file-excel"></i> Export
-        </button>
-      </div>
-      <!-- Filter -->
-      <button
-        class="btn btn-sm btn-primary-1"
-        type="button"
-        id="filterDropdown"
-        data-toggle="dropdown"
-        aria-haspopup="true"
-        aria-expanded="false"
-      >
-        <i class="fa fa-filter"></i> Filter
-      </button>
-      <div 
-        class="dropdown-menu p-3"
-        aria-labelledby="filterDropdown"
-        style="border-radius: 8px; width: 250px;"
-        @click.stop
-      >
-        <!-- <div>
-          <label><b>Jenis</b></label>
-          <div v-for="jenis in availableJenis" :key="jenis">
-            <label><input type="checkbox" :value="jenis" v-model="jenisFilter"/>{{ jenis }}</label>
-          </div>
-        </div>
-        <div>
-          <label><b>Kondisi</b></label>
-          <div v-for="kondisi in availablekondisi" :key="kondisi">
-            <label><input type="checkbox" :value="kondisi" v-model="kondisiFilter"/>{{ kondisi }}</label>
-          </div>
-        </div> -->
-        <div>
-          <label><b>Divisi</b></label>
-          <div v-for="item in availabledivisi" :key="item">
-            <label><input type="checkbox" :value="item" v-model="tujuanDivisiFilter"/>{{ item }}</label>
-          </div>
-        </div>
-      </div>
-      <!-- <div class="ml-2" style="border-radius: 5px;">
-        <div class="input-group">
-          <label class="mr-2" style="color: #000;"><b>Tujuan Divisi:</b></label>
-          <select class="form-control" v-model="tujuanDivisiFilter" style="border-radius: 5px;">
-            <option value="">Semua</option>
-            <option v-for="(tujuan, index) in tujuanDivisiOptions" :key="index" :value="tujuan">{{ tujuan }}</option>
-          </select>
-          <label class="ml-2 mr-2" style="color: #000;"><b>Jenis:</b></label>
-          <select class="form-control" v-model="jenisFilter" style="border-radius: 5px;">
-            <option value="">Semua</option>
-            <option v-for="(jenis, index) in jenisOptions" :key="index" :value="jenis">{{ jenis }}</option>
-          </select>
-          <label class="ml-2 mr-2" style="color: #000;"><b>Kondisi:</b></label>
-          <select class="form-control" v-model="kondisiFilter" style="border-radius: 5px;">
-            <option value="">Semua</option>
-            <option v-for="(kondisi, index) in kondisiOptions" :key="index" :value="kondisi">{{ kondisi }}</option>
-          </select>
-        </div>
-      </div>       -->
-          <div class="search-wrapper col-3">
-            <div class="input-group">
-              <input type="text" placeholder="Search..." class="form-control"
-                v-model="searchQuery"
-                @input="debouncedFetchNoSeri"
-              />            
-            </div>
-          </div>
-        </div>
-    <div class="row align-items-center justify-content-end mr-3 mt-4 mb-2">
-      <div class="ml-2">
-        <div class="input-group">
-          <label class="mr-2" style="color: #000;"><b>Tanggal Awal:</b></label>
-          <input type="date" class="form-control" v-model="tanggalAwal" style="border-radius: 5px;"/>
-          <label class="ml-2 mr-2" style="color: #000;"><b>Tanggal Akhir:</b></label>
-          <input type="date" class="form-control" v-model="tanggalAkhir" style="border-radius: 5px;">          
-        </div>
-      </div>
+    <div class="row align-items-center justify-content-end m-3">
+      <button @click="exportToExcel" class="btn btn-sm btn-primary-1 mr-2"><i class="fas fa-file-excel"></i> Export Excel</button>
+      <!-- <select v-model="selectedNama" class="border p-2 rounded">
+        <option value="">Semua Alat/Mesin</option>
+        <option v-for="nama in namaOptions" :key="nama" :value="nama">{{ nama }}</option>
+      </select> -->
+      <select v-model="selectedKondisi" class="btn btn-sm border p-2 rounded mr-2">
+        <option value="">Semua Kondisi</option>
+        <option v-for="kondisi in kondisiOptions" :key="kondisi" :value="kondisi">{{ kondisi }}</option>    
+        <!-- <option value="OK">OK</option>
+        <option value="Rusak">Rusak</option>
+        <option value="Musnah">Musnah</option>
+        <option value="Hilang">Hilang</option>
+        <option value="Error">Error</option>       -->
+      </select> 
+      <input v-model="search" type="text" placeholder="Search..." class="btn btn-sm border p-2 rounded w-1/3" />
     </div>
-        <div class="table-responsive p-3">
-          <table class="table table-border no-border table-custom" style="overflow-x: auto;">
-            <thead class="bg-table">
-              <tr style="color: #000;" class="text-center">
-                <th>#</th>
-                <th @click="sortBy('tanggal')">
-                  Tanggal
-                  <i class="fas" :class="{'fa-sort-up': sortKey === 'tanggal' && sortDirection === 'asc', 'fa-sort-down': sortKey === 'tanggal' && sortDirection === 'desc'}"></i>
-                </th>
-                <th @click="sortBy('PIC.nama_staff')">
-                  Nama Peminjam
-                  <i class="fas" :class="{'fa-sort-up': sortKey === 'PIC.nama_staff' && sortDirection === 'asc', 'fa-sort-down': sortKey === 'PIC.nama_staff' && sortDirection === 'desc'}"></i>
-                </th>
-                <th @click="sortBy('tujuan')">
-                  Divisi
-                  <i class="fas" :class="{'fa-sort-up': sortKey === 'tujuan' && sortDirection === 'asc', 'fa-sort-down': sortKey === 'tujuan' && sortDirection === 'desc'}"></i>
-                </th>
-                <th @click="sortBy('no_penggantian')">
-                  No Penggantian
-                  <i class="fas" :class="{'fa-sort-up': sortKey === 'no_penggantian' && sortDirection === 'asc', 'fa-sort-down': sortKey === 'no_penggantian' && sortDirection === 'desc'}"></i>
-                </th>
-                <th @click="sortBy('alat.nama_alat')">
-                  Nama Alat/Mesin
-                  <i class="fas" :class="{'fa-sort-up': sortKey === 'alat.nama_alat' && sortDirection === 'asc', 'fa-sort-down': sortKey === 'alat.nama_alat' && sortDirection === 'desc'}"></i>
-                </th>
-                <th @click="sortBy('no_seri')">
-                  No Seri
-                  <i class="fas" :class="{'fa-sort-up': sortKey === 'no_seri' && sortDirection === 'asc', 'fa-sort-down': sortKey === 'no_seri' && sortDirection === 'desc'}"></i>
-                </th>
-              </tr>
-            </thead>
-            <tbody v-if="filteredData.length===0">
-              <tr class="text-center">
-                <td colspan="8">Tidak Ada Data</td>
-              </tr>
-            </tbody>
-            <tbody v-for="(riwayat, index) in filteredData" :key="index">
-              <tr class="text-center">
-                <td>{{ index + 1 }}</td>
-                <td>{{ riwayat.tanggal || '-' }} <br> <small style="color: #444;"><i class="fas fa-clock"></i> {{ durasiData[index] !== '-' ? durasiData[index] + 'Hari' : '-' }}</small></td>                
-                <td>{{ riwayat.PIC ? riwayat.PIC.nama_staff : '-' }}</td>     
-                <!-- <td>{{ riwayat.pengguna ? riwayat.pengguna.divisi : '-' }}</td> -->
-                <td>{{ riwayat.tujuan }}</td>
-                <!-- <td>{{ riwayat.alat ? riwayat.alat.kode_alat : '-' }}</td>     -->
-                <td>{{ riwayat.no_penggantian || '-' }}</td>            
-                <!-- <td>
-                  <div 
-                    class="btn-sts"
-                      :class="{'status-active': riwayat.noSeri.status === 'OK', 
-                              'status-error': riwayat.noSeri.status === 'Error',
-                              'status-rusak': riwayat.noSeri.status === 'Rusak',
-                              'status-hilang': riwayat.noSeri.status === 'Hilang',
-                              'status-dipinjam': riwayat.noSeri.status === 'Musnah',
-                    }"
-                  >{{ riwayat.noSeri ? riwayat.noSeri.status : '-' }}</div>
-                  </td> -->
-                  <td>{{ riwayat.alat ? riwayat.alat.nama_alat : '-' }}</td>
-                  <td>{{ riwayat.no_seri }}</td>
-              </tr>
-            </tbody>
-          </table>
-          <!-- Pagination -->
-          <div class="d-flex justify-content-between align-items-center mb-3 mt-3" style="border-radius: 10px; background-color: #f3f4f6; height: 50px; color: #000;">
-            <div class="ml-3">
-              Rows per page:
-              <span>{{ rowsPerPage }}</span>
-            </div>
-            <div class="mr-3">          
-              <span>{{ paginationInfo }}</span>
-              <button @click="prevPage" :disabled="currentPage === 1" class="btn btn-sm btn-light">
-                <i class="fas fa-angle-left"></i>
-              </button>
-              <span>  </span>
-              <button @click="nextPage" :disabled="currentPage === totalPages" class="btn btn-sm btn-light">
-                <i class="fas fa-angle-right"></i>
-              </button>
-            </div>
-          </div>
+    <div class="table-responsive p-3">
+      <table class="table table-border no-border table-custom" style="border-radius: 5px;">
+        <thead class="bg-table">
+          <tr>
+            <th class="text-center p-2 border cursor-pointer" @click="sortBy('no_kehilangan')" style="color: #000;">
+              No Kehilangan
+              <span v-if="sortKey === 'no_kehilangan'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+            </th>
+            <th class="text-center p-2 border cursor-pointer" @click="sortBy('no_seri.tools.nama')" style="color: #000;">
+              Nama Alat/Mesin
+              <span v-if="sortKey === 'no_seri.tools.nama'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+            </th>
+            <th class="text-center p-2 border cursor-pointer" @click="sortBy('no_seri')" style="color: #000;">
+              No Seri
+              <span v-if="sortKey === 'no_seri'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+            </th>
+            <th class="text-center p-2 border cursor-pointer" @click="sortBy('tanggal_kehilangan')" style="color: #000;">
+              Tgl Kehilangan
+              <span v-if="sortKey === 'tanggal_kehilangan'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+            </th>
+            <th class="text-center p-2 border cursor-pointer" @click="sortBy('dipinjam_oleh')" style="color: #000;">
+              Dipinjam Oleh
+              <span v-if="sortKey === 'dipinjam_oleh'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+            </th>
+            <th class="text-center p-2 border cursor-pointer" @click="sortBy('divisi')" style="color: #000;">
+              Divisi
+              <span v-if="sortKey === 'divisi'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+            </th>           
+            <th class="text-center p-2 border cursor-pointer" @click="sortBy('kondisi')" style="color: #000;">
+              Kondisi
+              <span v-if="sortKey === 'kondisi'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+            </th>
+            <th class="text-center p-2 border cursor-pointer" @click="sortBy('status')" style="color: #000;">
+              Status
+              <span v-if="sortKey === 'status'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody v-if="paginatedData.length === 0">
+          <tr>
+            <td class="text-center" colspan="9">Tidak Ada Data</td>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr v-for="(item, index) in paginatedData" :key="item.id">
+            <td class="text-center p-2 border">{{ item.no_kehilangan || '-' }}</td>
+            <td class="text-center p-2 border">{{ item.no_seri.tools.nama || '-' }}</td>
+            <td class="text-center p-2 border">{{ item.no_seri.no_seri || '-' }}</td>
+            <td class="text-center p-2 border">
+              {{ item.tgl_kehilangan || '-' }}
+              <br> 
+              <small style="color: #444;">
+                <i class="fas fa-clock"></i>
+                  {{ durasiData[index] !== '-' ? durasiData[index] + 'Hari' : '-' }}
+              </small>
+            </td>
+            <td class="text-center p-2 border">-</td>
+            <td class="text-center p-2 border">-</td>
+            <td class="text-center">
+              <div 
+                class="btn-sts"
+                  :class="{'status-active': item.no_seri.kondisi === 'OK', 
+                          'status-error': item.no_seri.kondisi === 'Error',
+                          'status-rusak': item.no_seri.kondisi === 'Rusak',
+                          'status-hilang': item.no_seri.kondisi === 'Hilang',
+                          'status-dipinjam': item.no_seri.kondisi === 'Musnah',
+                }"
+              >
+                {{ item.no_seri.kondisi || '-' }}
+              </div>
+            </td>
+            <td>
+              <div
+                class="status-pill parent-element"
+                :class="{
+                  'status-active': item.status === 'Selesai',
+                  'status-error': item.status === 'Proses',
+                  'status-rusak': item.status === 'Belum',
+                  'status-musnah': item.status === 'Digunakan',
+                  'status-hilang': item.status === 'Hilang',
+                }"
+              >
+                {{ item.status || '-' }}
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="d-flex justify-content-between align-items-center mb-3 mt-3" style="border-radius: 10px; background-color: #f3f4f6; height: 50px; color: #000;">
+        <div class="ml-3">
+          Rows per page:
+          <span>{{ paginatedData.length }}</span>
         </div>
-    </div>
-    <div v-if="showMesin">
-
+        <div class="mr-3">
+          <span>{{ paginationInfo }}</span>
+          <button
+            @click="changePage(currentPage - 1)"
+            :disabled="currentPage === 1"
+            class="btn btn-sm btn-light"
+          >
+          <i class="fas fa-angle-left"></i>
+          </button>
+          <span>  </span>
+          <button
+            @click="changePage(currentPage + 1)"
+            :disabled="currentPage === totalPages"
+            class="btn btn-sm btn-light"
+          >
+          <i class="fas fa-angle-right"></i>
+          </button>
+        </div>        
+      </div>
     </div>
   </div>
 </template>
+
 <script>
-import axios from 'axios';
-import * as XLSX from 'xlsx';  
+import * as XLSX from 'xlsx';
+
 export default {
-  props: {
-    noSeri: String,
-  },
   data() {
     return {
-      searchQuery: '',
-      datariwayat: [
-        {
-        id: 1,
-        id_alat: 101,
-        id_pengguna: 1,
-        no_seri: "ABC123456",
-        no_pinjam: "P001",
-        no_permintaan: "PR001",
-        no_penggantian: "NPG-001",
-        layout: "Layout 1",
-        pic: 1,
-        jumlah: 5,
-        tanggal: "2025-02-20",
-        PIC: { nama_staff: "John Doe" },
-        noSeri: { status: "OK" },
-        alat: { kode_alat: "ALAT001", nama_alat: "Alat 1" },
-        pengguna: { divisi: "Engineering" },
-        tujuan: "Engineering",
-        jenis: "Tool",
-        kondisi: "OK",
-      },
-      {
-        id: 2,
-        id_alat: 102,
-        id_pengguna: 2,
-        no_seri: "DEF789101",
-        no_pinjam: "P002",
-        no_permintaan: "PR002",
-        no_penggantian: "NPG-002",
-        layout: "Layout 2",
-        pic: 2,
-        jumlah: 10,
-        tanggal: "2025-02-15",
-        PIC: { nama_staff: "Jane Smith" },
-        noSeri: { status: "Rusak" },
-        alat: { kode_alat: "ALAT002", nama_alat: "Alat 2" },
-        pengguna: { divisi: "Maintenance" },
-        tujuan: "Maintenance",
-        jenis: "Machine",
-        kondisi: "Rusak",
-      },
-      {
-        id: 3,
-        id_alat: 103,
-        id_pengguna: 3,
-        no_seri: "GHI112233",
-        no_pinjam: "P003",
-        no_permintaan: "PR003",
-        no_penggantian: "NPG-003",
-        layout: "Layout 3",
-        pic: 3,
-        jumlah: 3,
-        tanggal: "2025-02-18",
-        PIC: { nama_staff: "Alice Johnson" },
-        noSeri: { status: "Error" },
-        alat: { kode_alat: "ALAT003", nama_alat: "Alat 3" },
-        pengguna: { divisi: "IT" },
-        tujuan: "IT Support",
-        jenis: "Machine",
-        kondisi: "Error",
-      },
-      {
-        id: 4,
-        id_alat: 104,
-        id_pengguna: 4,
-        no_seri: "JKL345678",
-        no_pinjam: "P004",
-        no_permintaan: "PR004",
-        no_penggantian: "NPG-004",
-        layout: "Layout 4",
-        pic: 4,
-        jumlah: 7,
-        tanggal: "2025-02-22",
-        PIC: { nama_staff: "Bob Lee" },
-        noSeri: { status: "Musnah" },
-        alat: { kode_alat: "ALAT004", nama_alat: "Alat 4" },
-        pengguna: { divisi: "Logistics" },
-        tujuan: "Logistics",
-        jenis: "Tool",
-        kondisi: "Musnah",
-      },
-      {
-        id: 5,
-        id_alat: 105,
-        id_pengguna: 5,
-        no_seri: "MNO567890",
-        no_pinjam: "P005",
-        no_permintaan: "PR005",
-        no_penggantian: "NPG-005",
-        layout: "Layout 5",
-        pic: 5,
-        jumlah: 2,
-        tanggal: "2025-02-10",
-        PIC: { nama_staff: "Charlie Brown" },
-        noSeri: { status: "Hilang" },
-        alat: { kode_alat: "ALAT005", nama_alat: "Alat 5" },
-        pengguna: { divisi: "HR" },
-        tujuan: "HR Department",
-        jenis: "Machine",
-        kondisi: "Hilang",
-      },
-      ],
-      rowsPerPage: 10,
-      currentPage: 1,
-      tanggalAwal: '',
-      tanggalAkhir: '',
-      tujuanDivisiFilter: [],
-      // jenisFilter: '',
-      kondisiFilter: [],
-      divisiFilter: [],
-      tujuanDivisiOptions: [],
-      jenisOptions: [],
-      kondisiOptions: [],
-      showAlat: true,
-      showMesin: false,
-      jenisFilter: [],
+      kehilanganData: [],
+      search: '',
+      selectedNama: '',
+      selectedKondisi: '',
       sortKey: '',
       sortDirection: 'asc',
-      isLoading: false,
-      }
+      currentPage: 1,
+      itemsPerPage: 10
+    };
   },
   computed: {
-    availableJenis() {
-      return [...new Set(this.datariwayat.map(item=>item.jenis))];
-    },
-    availablekondisi() {
-      return [...new Set(this.datariwayat.map(item=>item?.noSeri?.status))];
-    },
-    availabledivisi() {
-      return [...new Set(this.datariwayat.map(item=>item.tujuan))];
+    // namaOptions() {
+    //   const names = this.kehilanganData.map(item => item.no_seri && item.no_seri.tools.nama);
+    //   return [...new Set(names)];
+    // },
+    kondisiOptions() {
+      const kondisi = this.kehilanganData.map(item => item.no_seri.kondisi);
+      return [...new Set(kondisi)];
     },
     durasiData() {
-      return this.datariwayat.map(noseri => {
-        if (noseri.tanggal) {
-          const tanggal = new Date(noseri.tanggal);
+      return this.kehilanganData.map(item => {
+        if (item.tgl_kehilangan) {
+          const tanggal = new Date(item.tgl_kehilangan);
           const tanggalTerkini = new Date();
           const durasi = tanggalTerkini - tanggal;
           const hari = Math.floor(durasi / (1000 * 60 * 60 * 24));
@@ -361,211 +185,92 @@ export default {
         return '-';
       });
     },
-    totalPages() {
-      return Math.ceil(this.datariwayat.length / this.rowsPerPage);
-    },
-    paginationInfo() {
-      const start = (this.currentPage - 1) * this.rowsPerPage + 1;
-      const end = Math.min(this.currentPage * this.rowsPerPage, this.datariwayat.length);
-      return `Showing ${start} to ${end} of ${this.datariwayat.length} entries`;
+    filteredData() {
+      let data = this.kehilanganData.filter(item => {
+        return (
+          // (!this.selectedNama || item.no_seri && item.no_seri.tools.nama === this.selectedNama) &&
+          (!this.selectedKondisi || item.no_seri.kondisi === this.selectedKondisi) &&
+          (item.no_seri.no_seri.toLowerCase().includes(this.search.toLowerCase()) ||
+          item.no_seri && item.no_seri.tools.nama.toLowerCase().includes(this.search.toLowerCase()) ||
+          item.no_kehilangan.toLowerCase().includes(this.search.toLowerCase()))
+        );
+      });
+
+      if (this.sortKey) {
+        data.sort((a, b) => {
+          const getValue = (obj, path) => path.split('.').reduce((o, i) => o?.[i], obj);
+          const valA = getValue(a, this.sortKey);
+          const valB = getValue(b, this.sortKey);
+          if (valA == null) return 1;
+          if (valB == null) return -1;
+          if (this.sortDirection === 'asc') {
+            return valA > valB ? 1 : valA < valB ? -1 : 0;
+          } else {
+            return valA < valB ? 1 : valA > valB ? -1 : 0;
+          }
+        });
+      }
+
+      return data;
     },
     paginatedData() {
-      const start = (this.currentPage - 1) * this.rowsPerPage;
-      const end = this.currentPage * this.rowsPerPage;
-      return this.datariwayat.slice(start, end);
+      const start = (this.currentPage - 1) * this.itemsPerPage;
+      return this.filteredData.slice(start, start + this.itemsPerPage);
     },
-    filteredData() {
-      if (this.searchQuery || this.tanggalAwal || this.tanggalAkhir || this.tujuanDivisiFilter || this.jenisFilter || this.kondisiFilter) {
-        return this.paginatedData.filter(datariwayat => {
-          const tanggalMatch = this.tanggalAwal && this.tanggalAkhir
-            ? datariwayat.tanggal >= this.tanggalAwal && datariwayat.tanggal <= this.tanggalAkhir
-            : true;
-          const searchMatch = this.searchQuery
-            ? (
-              (datariwayat.no_seri && datariwayat.no_seri.toLowerCase().includes(this.searchQuery.toLowerCase())) ||
-              (datariwayat.tujuan && datariwayat.tujuan.toLowerCase().includes(this.searchQuery.toLowerCase())) ||
-              (datariwayat.nama_peminjam && datariwayat.nama_peminjam.toLowerCase().includes(this.searchQuery.toLowerCase())) ||
-              (datariwayat.staff && datariwayat.staff.nama_staff && datariwayat.staff.nama_staff.toLowerCase().includes(this.searchQuery.toLowerCase()))
-            )
-            : true;
-          const tujuanDivisiMatch = this.tujuanDivisiFilter.length
-            ? this.tujuanDivisiFilter.includes(datariwayat.tujuan)
-            : true;
-          const jenisMatch = this.jenisFilter.length
-            ? this.jenisFilter.includes(datariwayat.jenis)
-            : true;
-          const kondisiMatch = this.kondisiFilter.length
-            ? this.kondisiFilter.includes(datariwayat?.noSeri?.status)
-            : true;
-          return tanggalMatch && searchMatch && tujuanDivisiMatch && jenisMatch && kondisiMatch;
-        }).sort((a, b) => {
-          if (this.sortKey === 'alat.nama_alat') {
-            const namaAlatA = a.alat ? a.alat.nama_alat : '';
-            const namaAlatB = b.alat ? b.alat.nama_alat : '';
-            return this.sortDirection === 'asc' ? namaAlatA.localeCompare(namaAlatB) : namaAlatB.localeCompare(namaAlatA);
-          } else if (this.sortKey === 'PIC.nama_staff') {
-            const picA = a.PIC ? a.PIC.nama_staff : '';
-            const picB = b.PIC ? b.PIC.nama_staff : '';
-            return this.sortDirection === 'asc' ? picA.localeCompare(picB) : picB.localeCompare(picA);
-          } else {
-            if (this.sortDirection === 'asc') {
-              return a[this.sortKey] > b[this.sortKey] ? 1 : -1;
-            } else {
-              return a[this.sortKey] < b[this.sortKey] ? 1 : -1;
-            }
-          }
-        });
+    totalPages() {
+      return Math.ceil(this.filteredData.length / this.itemsPerPage);
+    },
+    paginationInfo() {
+      const start = (this.currentPage - 1) * this.itemsPerPage +1;
+      const end = Math.min(this.currentPage * this.itemsPerPage, this.filteredData.length);
+      return `Showing ${start} to ${end} of ${this.filteredData.length} entries`;
+    },
+  },
+  methods: {
+    async fetchData() {
+      const res = await fetch('/api/v1/kehilangan');
+      const data = await res.json();
+      this.kehilanganData = data;
+    },
+    exportToExcel() {
+      const worksheet = XLSX.utils.json_to_sheet(
+        this.filteredData.map(item => ({
+          'No Kehilangan': item.no_kehilangan,
+          'Nama Alat/Mesin': item.no_seri.tools.nama,
+          'No Seri': item.no_seri.no_seri,
+          'Tanggal Kehilangan': item.tgl_kehilangan,
+          'Dipinjam Oleh': '-',
+          'Divisi': '-',
+          'Kondisi': item.no_seri.kondisi,
+          'Status': item.status,
+        }))
+      );
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, 'Kehilangan');
+      XLSX.writeFile(workbook, 'Riwayat_Kehilangan.xlsx');
+    },
+    sortBy(key) {
+      if (this.sortKey === key) {
+        this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
       } else {
-        return this.datariwayat.sort((a, b) => {
-          if (this.sortKey === 'alat.nama_alat') {
-            const namaAlatA = a.alat ? a.alat.nama_alat : '';
-            const namaAlatB = b.alat ? b.alat.nama_alat : '';
-            return this.sortDirection === 'asc' ? namaAlatA.localeCompare(namaAlatB) : namaAlatB.localeCompare(namaAlatA);
-          } else if (this.sortKey === 'PIC.nama_staff') {
-            const picA = a.PIC ? a.PIC.nama_staff : '';
-            const picB = b.PIC ? b.PIC.nama_staff : '';
-            return this.sortDirection === 'asc' ? picA.localeCompare(picB) : picB.localeCompare(picA);
-          } else {
-            if (this.sortDirection === 'asc') {
-              return a[this.sortKey] > b[this.sortKey] ? 1 : -1;
-            } else {
-              return a[this.sortKey] < b[this.sortKey] ? 1 : -1;
-            }
-          }
-        });
+        this.sortKey = key;
+        this.sortDirection = 'asc';
+      }
+    },
+    changePage(page) {
+      if (page >= 1 && page <= this.totalPages) {
+        this.currentPage = page;
       }
     }
   },
-  methods: {
-    async fetchNoSeriAlat() {
-      this.isLoading = true;
-      try {
-        const response = await axios.get(`/api/riwayat/alats`);
-        this.datariwayat = response.data.data.map((riwayat)=> ({
-          id: riwayat.id,
-          id_alat: riwayat.id_alat,
-          id_pengguna: riwayat.id_pengguna,
-          no_seri: riwayat.id_no_seri_alat,
-          layout: riwayat.id_layout,
-          pic: riwayat.id_staff,
-          jumlah: riwayat.jumlah,
-          tanggal: riwayat.tanggal,
-          PIC: riwayat.staff,
-          noSeri: riwayat.no_seri_alat,
-          alat: riwayat.alat,
-          pengguna: riwayat.pengguna,
-        }));
-        this.tujuanDivisiOptions = [...new Set(this.datariwayat.map(datariwayat => datariwayat.tujuan))];
-        this.jenisOptions = [...new Set(this.datariwayat.map(datariwayat => datariwayat.jenis))];
-        this.kondisiOptions = [...new Set(this.datariwayat.map(datariwayat => datariwayat.kondisi))];
-        console.log(this.datariwayat);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        this.isLoading = false; // Hilangkan loader
-      }
-    },
-    debouncedFetchNoSeri: _.debounce(function () {
-      this.fetchNoSeriAlat();
-    }, 300),
-    prevPage () {
-      if (this.currentPage > 1) {
-        this.currentPage--;
-      }
-    },
-    nextPage() {
-      if (this.currentPage < this.totalPages) {
-        this.currentPage++;
-      }
-    },
-    toggleAlat() {
-      this.showMesin = false;
-      this.showAlat = !this.showAlat;
-    },
-    toggleMesin() {
-      this.showAlat = false;
-      this.showMesin = !this.showMesin;
-    },
-    sortTanggal(order) {
-      this.datariwayat.sort((a, b) => {
-        const dateA = new Date(a.tanggal); // Mengonversi tanggal menjadi objek Date
-        const dateB = new Date(b.tanggal); // Mengonversi tanggal menjadi objek Date
-
-        if (order === 'asc') {
-          return dateA - dateB; // Urutkan berdasarkan tanggal, ascending
-        } else {
-          return dateB - dateA; // Urutkan berdasarkan tanggal, descending
-        }
-      });
-    },
-    sortBy(key) {
-      this.sortKey = key
-      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc'
-    },
-    // Metode untuk mendownload data ke Excel
-    downloadExcel() {
-      // Memastikan data yang akan diekspor sudah ada
-      if (this.filteredData.length === 0) {
-        alert("Tidak ada data untuk di-download");
-        return;
-      }
-
-      // Menyiapkan data yang akan dikonversi
-      const data = this.filteredData.map(item => ({
-        'Tanggal Penggantian Alat/Mesin Hilang': item.tanggal,
-        'Nama Peminjam': item?.PIC?.nama_staff,
-        'Divisi': item.tujuan,
-        'No Penggantian': item.no_permintaan,
-        'Nama Alat/Mesin': item?.alat?.nama_alat,        
-        'No Seri': item.no_seri,
-      }));
-
-      // Mengonversi data ke dalam format sheet Excel
-      const ws = XLSX.utils.json_to_sheet(data);
-      
-      // Membuat workbook dari sheet yang sudah dibuat
-      const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, 'Riwayat Penggantian');
-
-      // Menyimpan file Excel dengan nama yang ditentukan
-      XLSX.writeFile(wb, 'riwayat-penggantian-alat-mesin-hilang.xlsx');
-    },
-  },
   mounted() {
-    this.fetchNoSeriAlat();
+    this.fetchData();
   }
-}
+};
 </script>
-<style>
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.5);
-  z-index: 1000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
-.loading-spinner {
-  display: inline-block;
-  width: 100px;
-  height: 100px;
-  border: 10px solid rgba(220, 53, 69, 0.1);
-  border-top-color: #dc3545;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+<style scoped>
+th, td {
+  text-align: left;
 }
 </style>

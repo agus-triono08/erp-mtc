@@ -10,7 +10,17 @@
 
     <form @submit.prevent="submitForm" enctype="multipart/form-data">
       <div class="row">
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-4">
+          <label style="color: black;"><b>Satuan</b></label>
+          <select v-model="form.unit" class="form-control">
+            <option value="" disabled selected>Pilih Satuan Alat</option>               
+            <option value="Pcs">Pcs</option>
+            <option value="Unit">Unit</option>
+            <option value="Set">Set</option>                
+          </select>
+        </div>
+
+        <div class="form-group col-md-4">
           <label style="color: black;"><b>Produk</b></label>
           <select v-model="form.pembelian" class="form-control">
             <option value="" disabled selected>Pilih Produk Alat</option>
@@ -19,7 +29,7 @@
           </select>
         </div>
 
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-4">
           <label style="color: black;"><b>Sumber</b></label>
           <select v-model="form.sumber" class="form-control">
             <option value="" disabled selected>Pilih Sumber Alat</option>               
@@ -83,6 +93,7 @@ export default {
         id: '',
         pembelian: '',
         sumber: '',
+        unit: '',
         vendor: '',
         fungsi: '',
         deskripsi: '',
@@ -97,13 +108,13 @@ export default {
     async fetchToolData() {
       const toolId = this.$route.params.id;
       const res = await axios.get(`/api/v1/tools/${toolId}`);
-      const { id, pembelian, sumber, vendor, fungsi, deskripsi } = res.data;
-      this.form = { ...this.form, id, pembelian, sumber, vendor, fungsi, deskripsi };
+      const { id, pembelian, unit, sumber, vendor, fungsi, deskripsi } = res.data;
+      this.form = { ...this.form, id, pembelian, sumber, unit, vendor, fungsi, deskripsi };
       // console.log(this.form);
     },
     async submitForm() {
       const formData = new FormData();
-      const allowedFields = ['pembelian', 'sumber', 'vendor', 'fungsi', 'deskripsi'];
+      const allowedFields = ['pembelian', 'sumber',  'unit', 'vendor', 'fungsi', 'deskripsi'];
 
       allowedFields.forEach((field) => {
         formData.append(field, this.form[field] ?? '');

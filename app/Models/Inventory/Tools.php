@@ -27,6 +27,8 @@ class Tools extends Model
         'deskripsi',
         'gambar',
         'jadwal_perawatan',
+        'waktu_perawatan',
+        'jumlah_orang_perawatan',
     ];
 
     // public function jenis()

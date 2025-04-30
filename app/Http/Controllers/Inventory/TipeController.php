@@ -141,27 +141,18 @@ class TipeController extends Controller
         $kategori_merek_id = $request->input('kategori_merek_id');
         $nama_tipe = $request->input('nama_tipe');
 
-        // Jika nama tipe berubah, maka perbarui kode tipe
-        if ($tipe->nama_tipe != $nama_tipe) {
-            // Mendapatkan inisial dari nama tipe (huruf pertama)
-            $inisial = strtoupper(substr($nama_tipe, 0, 1)); //Ambil 1 digit inisial awal dan pastikan huruf kapital
+        $inisial = strtoupper(substr($nama_tipe, 0, 1));
 
-            // Mendapatkan urutan yang sudah ada berdasarkan inisial
-            $urutanTerakhir = Tipe::where('nama_tipe', 'like', $inisial . '%')
-                                ->where('id', '!=', $id)
-                                ->count(); // Menghitung berapa banyak tipe yang memiliki inisial yang sama
+        $urutanTerakhir = Tipe::where('kode_tipe', 'like', $inisial . '%')
+                            ->count();
 
-            // Kode tipe terdiri dari urutan yang dihasilkan
-            $kode_tipe = $urutanTerakhir;
+        $kode_tipe = $inisial . $urutanTerakhir;
 
-            // Jika nama tipe adalah "NO TIPE", maka kode_tipe = 'XX'
-            if ($nama_tipe == 'NO TIPE') {
-                $kode_tipe = 'XX';
-            }
-
-            $tipe->kode_tipe = $kode_tipe;
+        if ($nama_tipe == 'NO TIPE') {
+            $kode_tipe = 'XX';
         }
 
+        $tipe->kode_tipe = $kode_tipe;
         $tipe->kategori_merek_id = $kategori_merek_id;
         $tipe->nama_tipe = $nama_tipe;
         $tipe->save();

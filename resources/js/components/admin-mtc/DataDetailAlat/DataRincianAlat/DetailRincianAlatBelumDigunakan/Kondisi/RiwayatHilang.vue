@@ -25,26 +25,27 @@
             <thead>
               <tr class="bg-table text-center">
                 <th class="text-center" style="width: 10px; color: #000;">#</th>
+                <th class="text-center" style="width: 10px; color: #000;">No Kehilangan</th>
                 <th class="text-center" style="width: 10px; color: #000;">Tgl</th>
                 <th class="text-center" style="width: 10px; color: #000;">Jenis Riwayat</th>
-                <th class="text-center" style="width: 10px; color: #000;">Nama</th>
-                <th class="text-center" style="width: 10px; color: #000;">Divisi</th>
+                <th class="text-center" style="width: 10px; color: #000;">Dipinjam Oleh</th>
                 <th class="text-center" style="width: 10px; color: #000;">Detail</th>
               </tr>
             </thead>
-            <tbody v-if="filteredData.length===1">
+            <tbody v-if="filteredData.length===0">
               <tr class="text-center">
-                <td colspan="6">Tidak Ada Data</td>
+                <td colspan="8">Tidak Ada Data</td>
               </tr>
             </tbody>
             <tbody v-for="(rynoseri, index) in filteredData" :key="index">
-              <!--<tr class="text-center">
+              <tr class="text-center">
                 <td>{{ index + 1 }}</td>
-                <td>{{ rynoseri.rusak ? rynoseri.rusak.tanggal_kerusakan : '-' }} <br> <small style="color: #444;"><i class="fas fa-clock"></i> {{ durasiData[index] !== '-' ? durasiData[index] + 'Hari' : '-' }}</small></td>
-                <td>{{ rynoseri.rusak && rynoseri.rusak.noseri ? rynoseri.rusak.noseri.status : '-' }}</td>
-                <td>{{ rynoseri.rusak && rynoseri.rusak.staff ? rynoseri.rusak.id_staff_kerusakan.nama_staff : '-' }}</td>
-                <td>{{ rynoseri.rusak ? rynoseri.rusak.deskripsi_kerusakan : '-' }}</td>
-              </tr>-->
+                <td>{{ rynoseri.no_kehilangan }}</td>
+                <td>{{ rynoseri.tgl_kehilangan || '-' }} <br> <small style="color: #444;"><i class="fas fa-clock"></i> {{ durasiData[index] !== '-' ? durasiData[index] + 'Hari' : '-' }}</small></td>
+                <td>{{ rynoseri.kondisi || '-' }}</td>
+                <td>{{ rynoseri.staff ? rynoseri.staff.nama_staff : '-' }}</td>
+                <td>{{ rynoseri.detail_hilang || '-' }}</td>
+              </tr>
             </tbody>
           </table>
           <!-- Pagination -->
@@ -69,6 +70,7 @@
 </template>
 <script>
 import axios from 'axios';
+import _ from 'lodash'; // pastikan lodash tersedia
 
 export default {
   props: {
@@ -77,7 +79,7 @@ export default {
   data() {
     return {
       searchQuery: '',
-      datanoseri: [],
+      datanoseri: [], // harus array!
       rowsPerPage: 10,
       currentPage: 1,
       tanggalAwal: '',
@@ -88,13 +90,13 @@ export default {
       tujuanDivisiOptions: [],
       jenisOptions: [],
       kondisiOptions: [],
-      }
+    }
   },
   computed: {
     durasiData() {
       return this.datanoseri.map(noseri => {
-        if (noseri.rusak && noseri.rusak.tanggal_kerusakan) {
-          const tanggal = new Date(noseri.rusak && noseri.rusak.tanggal_kerusakan);
+        if (noseri.tgl_kehilangan) {
+          const tanggal = new Date(noseri.tgl_kehilangan);
           const tanggalTerkini = new Date();
           const durasi = tanggalTerkini - tanggal;
           const hari = Math.floor(durasi / (1000 * 60 * 60 * 24));
@@ -112,33 +114,42 @@ export default {
       return `Showing ${start} to ${end} of ${this.datanoseri.length} entries`;
     },
     paginatedData() {
+      if (!Array.isArray(this.datanoseri)) return []; // perlindungan
       const start = (this.currentPage - 1) * this.rowsPerPage;
       const end = this.currentPage * this.rowsPerPage;
       return this.datanoseri.slice(start, end);
     },
     filteredData() {
-      if (this.searchQuery || this.tanggalAwal || this.tanggalAkhir || this.tujuanDivisiFilter || this.jenisFilter || this.kondisiFilter) {
+      if (
+        this.searchQuery ||
+        this.tanggalAwal ||
+        this.tanggalAkhir ||
+        this.tujuanDivisiFilter ||
+        this.jenisFilter ||
+        this.kondisiFilter
+      ) {
         return this.paginatedData.filter(datanoseri => {
           const tanggalMatch = this.tanggalAwal && this.tanggalAkhir
-            ? datanoseri.error && datanoseri.error.tanggal_error >= this.tanggalAwal && datanoseri.error && datanoseri.error.tanggal_error <= this.tanggalAkhir
+            ? datanoseri.tgl_kehilangan >= this.tanggalAwal && datanoseri.tgl_kehilangan <= this.tanggalAkhir
             : true;
+
           const searchMatch = this.searchQuery
-            ? (
-              (datanoseri.no_seri && datanoseri.no_seri.toLowerCase().includes(this.searchQuery.toLowerCase())) ||
-              (datanoseri.tujuan && datanoseri.tujuan.toLowerCase().includes(this.searchQuery.toLowerCase())) ||
-              (datanoseri.nama_peminjam && datanoseri.nama_peminjam.toLowerCase().includes(this.searchQuery.toLowerCase())) ||
-              (datanoseri.staff && datanoseri.staff.nama_staff && datanoseri.staff.nama_staff.toLowerCase().includes(this.searchQuery.toLowerCase()))
-            )
+            ? (datanoseri.detail_hilang && datanoseri.detail_hilang.toLowerCase().includes(this.searchQuery.toLowerCase())) ||
+            (datanoseri.no_kehilangan && datanoseri.no_kehilangan.toLowerCase().includes(this.searchQuery.toLowerCase()))
             : true;
+
           const tujuanDivisiMatch = this.tujuanDivisiFilter
             ? datanoseri.tujuan === this.tujuanDivisiFilter
             : true;
+
           const jenisMatch = this.jenisFilter
             ? datanoseri.jenis === this.jenisFilter
             : true;
+
           const kondisiMatch = this.kondisiFilter
             ? datanoseri.kondisi === this.kondisiFilter
             : true;
+
           return tanggalMatch && searchMatch && tujuanDivisiMatch && jenisMatch && kondisiMatch;
         });
       } else {
@@ -150,20 +161,28 @@ export default {
     async fetchNoSeriAlat() {
       try {
         const noSeri = this.noSeri;
-        const response = await axios.get(`/api/no-seri/belum-digunakan/${noSeri}/riwayat`);
-        this.datanoseri = response.data;
-        this.tujuanDivisiOptions = [...new Set(this.datanoseri.map(datanoseri => datanoseri.tujuan))];
-        this.jenisOptions = [...new Set(this.datanoseri.map(datanoseri => datanoseri.jenis))];
-        this.kondisiOptions = [...new Set(this.datanoseri.map(datanoseri => datanoseri.kondisi))];
-        //console.log(this.datanoseri);
+        const response = await axios.get(`/api/v1/kehilangan/getHilang/${noSeri}`);
+        // console.log('Respon dari backend:', response.data);
+
+        // Penyesuaian jika backend mengirim data sebagai object { data: [...] }
+        const result = response.data;
+        if (Array.isArray(result)) {
+          this.datanoseri = result;
+        } else if (Array.isArray(result.data)) {
+          this.datanoseri = result.data;
+        } else {
+          // console.warn('Response tidak sesuai format yang diharapkan.');
+          this.datanoseri = [];
+        }
       } catch (error) {
-        console.error(error);
+        console.error('Gagal fetch data:', error);
+        this.datanoseri = [];
       }
     },
     debouncedFetchNoSeri: _.debounce(function () {
       this.fetchNoSeriAlat();
     }, 300),
-    prevPage () {
+    prevPage() {
       if (this.currentPage > 1) {
         this.currentPage--;
       }

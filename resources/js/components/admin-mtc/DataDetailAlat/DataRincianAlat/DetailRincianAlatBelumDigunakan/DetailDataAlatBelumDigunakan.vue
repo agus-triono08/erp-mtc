@@ -18,7 +18,7 @@
           <div class="card-body text-center" style="border-radius: 5px; height: 30px;">
             <p>
               <span class="m-2" style="color: #169ea8;">Detail Rincian Alat</span>/
-              <span class="mt-2 mb-2 mr-2 ml-1" style="color: #e6494b;">{{ datanoseri.noseri ? datanoseri.noseri.no_seri_alat : '-' }}</span>
+              <span class="mt-2 mb-2 mr-2 ml-1" style="color: #e6494b;">{{ datanoseri.no_seri || '-' }}</span>
             </p>
           </div>
         </div>
@@ -29,31 +29,35 @@
       <div class="card-body" style="border-radius: 20px">
         <div class="row m-1">
           <div class="col-12 mt-3">
-            <h5 class="font-weight-bold" style="color: #169ea8;">No Seri Alat {{ datanoseri.noseri ? datanoseri.noseri.no_seri_alat : '-' }}</h5>
+            <h5 class="font-weight-bold" style="color: #169ea8;">No Seri Alat/Mesin {{ datanoseri.no_seri || '-' }}</h5>
           </div>
         </div>
         <div class="row m-1">
           <div class="col-3">
-            <dd>Layout</dd>
-            <dt style="color: #000;" class="mb-2">{{ datanoseri.layout ? datanoseri.layout.nama_lokasi : '-' }}</dt>
+            <dd>Nama Alat/Mesin</dd>
+            <dt style="color: #000;" class="mb-2">
+              {{ datanoseri.tools && datanoseri.tools.nama ? datanoseri.tools.nama : '-' }}
+            </dt>
+            <dd>Layout</dd>            
+            <dt style="color: #000;" class="mb-2">{{ formatLayout(datanoseri) }}</dt>
           </div>
           <div class="col-3">
             <dd>Tanggal Masuk</dd>
-            <dt style="color: #000;" class="mb-2">{{ datanoseri.noseri ? datanoseri.noseri.tanggal_masuk : '-' }}</dt>
+            <dt style="color: #000;" class="mb-2">{{ datanoseri.tanggal_masuk || '-' }}</dt>
           </div>
           <div class="col-3">
             <dd>Harga</dd>
-            <dt style="color: #000;" class="mb-2">{{ formatRupiah(datanoseri.noseri ? datanoseri.noseri.harga : '-') }}</dt>
+            <dt style="color: #000;" class="mb-2">{{ formatRupiah(datanoseri.harga || '-') }}</dt>
           </div>
           <div class="col-3">
             <dd>Kondisi</dd>
             <dt class="mb-4 text-center status-pill parent-element"      
                 :class="{
-                          'status-active': noseri.status === 'Ready', 
-                          'status-rusak': noseri.status === 'Rusak', 
+                          'status-active': datanoseri.kondisi === 'OK', 
+                          'status-rusak': datanoseri.kondisi === 'Rusak', 
                           'status-error': datanoseri.kondisi === 'Error',
-                          'status-hilang': noseri.status === 'Hilang',
-                          'status-dipinjam': noseri.status === 'Dipinjam'}">{{ datanoseri.kondisi }}</dt>
+                          'status-hilang': datanoseri.kondisi === 'Hilang',
+                          'status-dipinjam': datanoseri.kondisi === 'Dipinjam'}">{{ datanoseri.kondisi }}</dt>
           </div>
         </div>
       </div>
@@ -105,23 +109,23 @@
       </div> 
 
       <!-- Card Konten Detail -->
-      <div id="app" v-if="showDetail  && datanoseri.noseri && datanoseri.noseri.no_seri_alat" class="card-body">
-        <detail-rincian-alat-belum-digunakan :no-seri="datanoseri.noseri && datanoseri.noseri.no_seri_alat"></detail-rincian-alat-belum-digunakan>        
+      <div id="app" v-if="showDetail  && datanoseri.no_seri" class="card-body">
+        <detail-rincian-alat-belum-digunakan :no-seri="datanoseri.no_seri"></detail-rincian-alat-belum-digunakan>        
       </div>
 
       <!-- Card Konten Riwayat Rusak -->
-      <div id="app" v-if="showRusak && datanoseri.noseri && datanoseri.noseri.no_seri_alat" class="card-body">
-        <detail-riwayat-rusak :no-seri="datanoseri.noseri && datanoseri.noseri.no_seri_alat"></detail-riwayat-rusak>        
+      <div id="app" v-if="showRusak && datanoseri.no_seri" class="card-body">
+        <detail-riwayat-rusak :no-seri="datanoseri.no_seri"></detail-riwayat-rusak>        
       </div>
 
       <!-- Card Konten Riwayat Musnah -->
-      <div id="app" v-if="showMusnah && datanoseri.noseri && datanoseri.noseri.no_seri_alat" class="card-body">
-        <detail-riwayat-musnah :no-seri="datanoseri.noseri && datanoseri.noseri.no_seri_alat"></detail-riwayat-musnah>        
+      <div id="app" v-if="showMusnah && datanoseri.no_seri" class="card-body">
+        <detail-riwayat-musnah :no-seri="datanoseri.no_seri"></detail-riwayat-musnah>        
       </div>
 
       <!-- Card Konten Riwayat Hilang -->
-      <div id="app" v-if="showHilang && datanoseri.noseri && datanoseri.noseri.no_seri_alat" class="card-body">
-        <detail-riwayat-hilang :no-seri="datanoseri.noseri && datanoseri.noseri.no_seri_alat"></detail-riwayat-hilang>        
+      <div id="app" v-if="showHilang && datanoseri.no_seri" class="card-body">
+        <detail-riwayat-hilang :no-seri="datanoseri.no_seri"></detail-riwayat-hilang>        
       </div>
     </div>
     
@@ -152,12 +156,16 @@ export default {
     async fetchNoSeri() {
       try {
         const id = this.$route.params.id;
-        const response = await axios.get(`/api/no-seri/belum-digunakan/detail-riwayat/${id}`);
+        const response = await axios.get(`/api/v1/noseri/${id}`);
         this.datanoseri = response.data;
-        //console.log(this.datanoseri);
+        // console.log(this.datanoseri);
       } catch (error) {
         alert("Gagal memuat detail alat peminjaman.");
       }
+    },
+    formatLayout() {
+      if (!this.datanoseri.layout) return '-';
+      return `${this.datanoseri.layout.ruang || '-'} | Rak ${this.datanoseri.layout.rak || '-'} | Lantai ${this.datanoseri.layout.lantai || '-'} | ${this.datanoseri.layout.koordinat || '-'}`;
     },
     debouncedFetchNoSeri: _.debounce(function (){
       this.fetchNoSeri();

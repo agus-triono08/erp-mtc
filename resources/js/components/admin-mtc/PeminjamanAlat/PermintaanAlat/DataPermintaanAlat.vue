@@ -1,6 +1,48 @@
 <template>
-  <div class="row align-items-center justify-content-end mr-3 mt-3 mb-4">
-    <div class="d-flex justify-content-between mb-4">
+  <div class="row align-items-center justify-content-end mr-3 mt-3 mb-2">
+    <div class="d-flex justify-content-between mb-2">
+      <!-- Status Filter with Checkboxes -->
+      <!-- <div class="status-filter-wrapper">
+        <button
+            class="btn btn-sm btn-primary-1 mr-2"
+            type="button"
+            id="filterDropdown"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          ><i class="fas fa-filter"></i> Filter</button>
+        <div class="dropdown-menu p-3" aria-labelledby="filterDropdown" style="border-radius: 8px; width: 250px;" @click.stop>
+          <div v-for="status in statusOptions" :key="status" >
+            <label>
+            <input 
+              type="checkbox" 
+              :value="status" 
+              v-model="selectedStatuses" 
+            />
+            {{ status }}</label>
+          </div>
+        </div>
+      </div> -->
+
+      <button
+        class="btn btn-sm btn-primary-1 mr-2"
+        type="button"
+        id="filterDropdown"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      ><i class="fas fa-filter"></i> Filter</button>
+      <!-- Tambahkan checkbox untuk memilih status -->
+      <div class="dropdown-menu p-3" aria-labelledby="filterDropdown" style="border-radius: 8px; width: 250px;" @click.stop>
+        <label for="Status"><b>Status</b></label>
+        <div v-for="sts in statusOptions" :key="sts">
+          <label>
+            <input type="checkbox" :value="sts" v-model="selectedStatuses" />
+            {{ sts }}
+          </label>
+        </div>
+      </div>
+
       <!-- Search -->
       <div class="search-wrapper">
         <div class="input-group">
@@ -19,10 +61,12 @@
       <table class="table table-border no-border table-custom text-wrape" style="overflow-x: auto;">
         <thead>
           <tr class="text-center bg-table">
-            <th class="text-black-1 ">No Permintaan</th>
-            <th class="text-black-1">Tgl Permintaan</th>
-            <th class="text-black-1">Nama</th>
-            <th class="text-black-1">Divisi</th>                        
+            <th class="text-black-1" @click="sortBy('no_permintaan')">No Permintaan <i class="fas" :class="{'fa-sort-up': sortKey === 'no_permintaan' && !reverse, 'fa-sort-down': sortKey === 'no_permintaan' && reverse}"></i></th>
+            <th class="text-black-1" @click="sortBy('tgl_permintaan')">Tgl Permintaan <i class="fas" :class="{'fa-sort-up': sortKey === 'tgl_permintaan' && !reverse, 'fa-sort-down': sortKey === 'tgl_permintaan' && reverse}"></i></th>
+            <th class="text-black-1" @click="sortBy('total')">Total <i class="fas" :class="{'fa-sort-up': sortKey === 'total' && !reverse, 'fa-sort-down': sortKey === 'total' && reverse}"></i></th>
+            <th class="text-black-1" @click="sortBy('pengguna.nama_pengguna')">Nama <i class="fas" :class="{'fa-sort-up': sortKey === 'pengguna.nama_pengguna' && !reverse, 'fa-sort-down': sortKey === 'pengguna.nama_pengguna' && reverse}"></i></th>
+            <th class="text-black-1" @click="sortBy('pengguna.divisi')">Divisi <i class="fas" :class="{'fa-sort-up': sortKey === 'pengguna.divisi' && !reverse, 'fa-sort-down': sortKey === 'pengguna.divisi' && reverse}"></i></th>          
+            <th class="text-black-1" @click="sortBy('status')">Status <i class="fas" :class="{'fa-sort-up': sortKey === 'status' && !reverse, 'fa-sort-down': sortKey === 'status' && reverse}"></i></th>              
             <th class="text-black-1">Aksi</th>
           </tr>
         </thead>
@@ -34,9 +78,24 @@
         <tbody v-for="(permintaan, index) in filteredData" :key="permintaan.id">
           <tr class="text-center">
             <td>{{ permintaan.no_permintaan || '-' }}</td>
-            <td>{{ permintaan.tanggal_permintaan || '-' }}</td>
+            <td>{{ permintaan.tgl_permintaan || '-' }}</td>
+            <td>{{ permintaan.total || '-' }}</td>
             <td>{{ permintaan.pengguna ? permintaan.pengguna.nama_pengguna : '-' }}</td>
-            <td>{{ permintaan.pengguna ? permintaan.pengguna.divisi : '-' }}</td>                        
+            <td>{{ permintaan.pengguna ? permintaan.pengguna.divisi : '-' }}</td>       
+            <td>
+              <div
+                class="btn-sts"
+                :class="{
+                  'status-active': permintaan.status === 'Selesai',
+                  'status-error': permintaan.status === 'Menunggu Diambil',
+                  'status-rusak': permintaan.status === 'Ditolak',
+                  'status-musnah': permintaan.status === 'Digunakan',
+                  'status-hilang': permintaan.status === 'Belum Diproses',
+                }"
+              >
+                {{ permintaan.status || '-' }}
+              </div>
+            </td>                 
             <td>
               <div class="dropdown text-center">
                 <button
@@ -47,7 +106,7 @@
                   aria-haspopup="true"
                   aria-expanded="false"
                 >
-                  <i class="fa fa-ellipsis-v"></i>
+ <i class="fa fa-ellipsis-v"></i>
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                   <a class="dropdown-item" @click="viewDetail(permintaan.id)">
@@ -83,6 +142,7 @@
 </template>
 <script>
 import axios from 'axios';
+import { values } from 'lodash';
 export default {
   data() {
     return {
@@ -90,9 +150,17 @@ export default {
       dataPermintaanAlat: [],
       rowsPerPage: 10,
       currentPage: 1,
+      sortKey: '',
+      reverse: false,
+      selectedStatuses: [],
+      // statusOptions: ['Selesai', 'Menunggu Diambil', 'Ditolak', 'Digunakan', 'Belum Diproses'],
     }
   },
   computed: {
+    statusOptions() {
+      const status = this.dataPermintaanAlat.map(item => item.status);
+      return [...new Set(status)];
+    },
     totalPages() {
       return Math.ceil(this.dataPermintaanAlat.length / this.rowsPerPage);
     },
@@ -107,26 +175,35 @@ export default {
       return this.dataPermintaanAlat.slice(start, end);
     },
     filteredData() {
+      let data = this.paginatedData;
       if (this.searchQuery) {
-        return this.paginatedData.filter(permintaan => {
+        data = data.filter(permintaan => {
           return (
             permintaan.kode_alat?.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
             permintaan.no_permintaan?.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
             permintaan.pengguna?.nama_pengguna?.toLowerCase().includes(this.searchQuery.toLowerCase())
           );
         });
-      } else {
-        return this.paginatedData;
       }
+      if (this.selectedStatuses.length) {
+        data = data.filter(permintaan => this.selectedStatuses.includes(permintaan.status));
+      }
+      if (this.sortKey) {
+        data.sort((a, b) => {
+          const modifier = this.reverse ? -1 : 1;
+          if (a[this.sortKey] < b[this.sortKey]) return -1 * modifier;
+          if (a[this.sortKey] > b[this.sortKey]) return 1 * modifier;
+          return 0;
+        });
+      }
+      return data;
     }
   },
   methods: {
     async fetchPermintaan() {
-      try {
-        const response = await axios.get('/api/permintaan');
-        this.dataPermintaanAlat = response.data.data;
-        //console.log(this.dataPermintaanAlat);
-      } catch (error) {}
+      const res = await fetch('/api/v1/permintaan');
+      const data = await res.json();
+      this.dataPermintaanAlat = data.by_status;
     },
     debouncedFetchAlats: _.debounce(function () {
       this.fetchPermintaan();
@@ -136,13 +213,17 @@ export default {
     },
     prevPage() {
       if (this.currentPage > 1) {
-        this.currentPage --;
+        this.currentPage--;
       }
     },
     nextPage() {
       if (this.currentPage < this.totalPages) {
-        this.currentPage ++;
+        this.currentPage++;
       }
+    },
+    sortBy(key) {
+      this.reverse = (this.sortKey === key) ? !this.reverse : false;
+      this.sortKey = key;
     },
   },
   mounted() {

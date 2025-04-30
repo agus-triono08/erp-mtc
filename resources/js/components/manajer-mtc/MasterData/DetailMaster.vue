@@ -12,13 +12,13 @@
     </div>
 
       <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1 class="h3" style="color: #000;"><b>Detail Alat</b></h1>
+        <h1 class="h3" style="color: #000;"><b>Detail Master Data</b></h1>
         <div class="d-flex align-items-center justify-content-center">
           <div class="card shadow" style="max-width: auto; border-radius: 10px;">
             <div class="card-body text-center" style="border-radius: 10px; height: 30px;">
               <p>
-                <span class="m-2" style="color: #169ea8;"> Detail Alat</span>/ 
-                <span class="mt-2 mb-2 mr-2 ml-1" style="color: #e6494b;">{{ alat.kode_alat || '-'}}</span>
+                <span class="m-2" style="color: #169ea8;"> Detail Master data</span>/ 
+                <span class="mt-2 mb-2 mr-2 ml-1" style="color: #e6494b;">{{ form.kode || '-'}}</span>
               </p>
             </div>
           </div>
@@ -32,9 +32,9 @@
             <div class="card-body text-center" style="border-radius: 10px;"> 
               <div class="image-container" style="width: 100%; height: 220px; overflow: hidden; border-radius: 10px;">
                 <img 
-                  :src="alat.gambar" 
+                  :src="getImageUrl(form.gambar)" 
                   class="img-fluid shadow-sm hover-effect" 
-                  alt="Gambar Alat" 
+                  alt="Ini Gambar Sih Harusnya" 
                   style="width: 100%; height: 100%; object-fit: cover; border-radius: 0;" 
                 />
               </div>                        
@@ -48,26 +48,26 @@
             <div class="card-body p-0" style="border-radius: 20px;"> 
               <div class="d-flex justify-content-between align-items-center" style="margin: 10px;">
                 <h5 class="m-0 font-weight-bold" style="color: #169ea8;">Tool Information</h5>
-                <button 
+                <!-- <button 
                   class="btn btn-plus btn-sm"
                   @click="goToEditPage"                  
                 >
                   <i class="fas fa-pencil-alt"></i>
-                </button>
+                </button> -->
               </div>
               <!-- Tabel Detail -->
               <table class="table table-hover no-border compact-table ml-2">              
                 <thead>
                   <tr>
-                    <td>Nama Alat</td>
-                    <td class="ml-4">Kode Alat</td>
+                    <td>Nama </td>
+                    <td class="ml-4">Kode </td>
                   </tr>
                   <tr>
                     <th style="color: #000; font-size: x-large;">
-                      {{ alat.nama_alat || '-' }}
+                      {{ form.nama || '-' }}
                     </th>
                     <th class="ml-4" style="color: #000; font-size: x-large;">
-                      {{ alat.kode_alat || '-' }}
+                      {{ form.kode || '-' }}
                     </th>
                   </tr>
                 </thead>
@@ -75,12 +75,12 @@
               <table class="table no-border compact-table ml-2">              
                 <thead>
                   <tr>
-                    <th class="text-left">Harga Total Pembelian Alat</th>
+                    <th class="text-left">Harga Total Pembelian</th>
                   </tr>                
                 </thead>
                 <tbody>
                   <tr>
-                    <td>{{ formatRupiah(alat.harga_total) }}</td>
+                    <td>{{ formatRupiah(form.harga_total) }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -113,41 +113,41 @@
           <span v-else>Rincian Alat</span>
         </button>-->
         <!-- Tombol Detail Alat Error -->
-        <button
+        <!-- <button
           class="btn btn-show-error m-1"
           :class="{ active: showRincianAlatError }"
           @click="toggleRincianAlatError"
         >
-          <span v-if="showRincianAlatError">Detail Alat Error</span>
-          <span v-else>Detail Alat Error</span>
-        </button>
+          <span v-if="showRincianAlatError">Detail Data Error</span>
+          <span v-else>Detail Data Error</span>
+        </button> -->
         <!-- Tombol Detail Alat Rusak -->
-        <button
+        <!-- <button
           class="btn btn-show-rusak m-1"
           :class="{ active: showRincianAlatRusak }"
           @click="toggleRincianAlatRusak"
           >
-          <span v-if="showRincianAlatRusak">Detail Alat Rusak</span>
-          <span v-else>Detail Alat Rusak</span>
-        </button>
+          <span v-if="showRincianAlatRusak">Detail Data Rusak</span>
+          <span v-else>Detail Data Rusak</span>
+        </button> -->
         <!-- Tombol Detail Alat Musnah -->
-        <button
+        <!-- <button
           class="btn btn-show-musnah m-1"
           :class="{ active: showRincianAlatMusnah }"
           @click="toggleRincianAlatMusnah"
         >
-        <span v-if="showRincianAlatMusnah">Detail Alat Musnah</span>
-        <span v-else>Detail Alat Musnah</span>
-        </button>
+        <span v-if="showRincianAlatMusnah">Detail Data Musnah</span>
+        <span v-else>Detail Data Musnah</span>
+        </button> -->
         <!-- Tombol Detail Alat Hilang -->
-        <button
+        <!-- <button
           class="btn btn-show-hilang m-1"
           :class="{ active: showRincianAlatHilang }"
           @click="toggleRincianAlatHilang"
         >
-          <span v-if="showRincianAlatHilang">Detail Alat Hilang</span>
-          <span v-else>Detail Alat Hilang</span>
-        </button>
+          <span v-if="showRincianAlatHilang">Detail Data Hilang</span>
+          <span v-else>Detail Data Hilang</span>
+        </button> -->
       </div>
       <!-- Konten Detail -->
       <div class="card-body ml-2" v-if="showDetail" style="border-radius: 20px;">
@@ -157,16 +157,16 @@
               :class="{ active: showDetailAlat }" 
               @click="toggleDetailAlat"
             >
-              <span v-if="showDetailAlat">Detail Alat</span>
-              <span v-else>Detail Alat</span>
+              <span v-if="showDetailAlat">Detail Data Master</span>
+              <span v-else>Detail Data Master</span>
             </button>
             <button
               class="btn btn-show ml-1 mb-4 mr-1 mt-3"
               :class="{ active: showRincianAlat }"
               @click="toggleRincianAlat"
             >
-              <span v-if="showRincianAlat">Detail Rincian Alat</span>
-              <span v-else>Detail Rincian Alat</span>
+              <span v-if="showRincianAlat">Detail Rincian Data Master</span>
+              <span v-else>Detail Rincian Data Master</span>
             </button>
           </div>
         <div v-if="showDetailAlat" class="mt-3">
@@ -174,36 +174,40 @@
             <table class="table table-hover no-border compact-table">
               <tbody>
                 <tr>
+                  <td>Jenis</td>
+                  <th style="color: #000;">{{ getNamaJenis(form) }}</th>
+                </tr>
+                <tr>
                   <td>Kategori</td>
-                  <th style="color: #000;">{{ alat.kategori || '-' }}</th>
+                  <th style="color: #000;">{{ getNamaKategori(form) }}</th>
                 </tr>
                 <tr>                  
                   <td>Merek</td>
-                  <th style="color: #000;">{{ alat.merek_alat || '-' }}</th>
+                  <th style="color: #000;">{{ getNamaMerek(form) }}</th>
                 </tr>
                 <tr>
                   <td>Type/Size</td>
-                  <th style="color: #000;">{{ alat.tipe_alat || '-' }}</th>
+                  <th style="color: #000;">{{ getNamaTipe(form) }}</th>
                 </tr>
                 <tr>
                   <td>Available Stok</td>
-                  <th style="color: #000">{{ alat.stok_akhir || '-' }}</th>
+                  <th style="color: #000">{{ form.stok_akhir || '-' }}</th>
                 </tr>
                 <tr>
                   <td>Produk</td>
-                  <th style="color: #000;">{{ alat.pembelian || '-' }}</th>
+                  <th style="color: #000;">{{ form.pembelian || '-' }}</th>
                 </tr>
                 <tr>
                   <td>Satuan</td>
-                  <th style="color: #000">{{ alat.unit_alat || '-' }}</th>
+                  <th style="color: #000">{{ form.unit || '-' }}</th>
                 </tr>
                 <tr>
-                  <td>Sumber Alat</td>
-                  <th style="color: #000;">{{ alat.sumber_alat || '-' }}</th>
+                  <td>Sumber</td>
+                  <th style="color: #000;">{{ form.sumber || '-' }}</th>
                 </tr>
                 <tr>
                   <td>Vendor</td>
-                  <th style="color: #000;">{{ alat.vendor || '-' }}</th>
+                  <th style="color: #000;">{{ form.vendor || '-' }}</th>
                 </tr>                               
               </tbody>
             </table>
@@ -217,7 +221,7 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>{{ alat.fungsi || '-' }}</td>
+                  <td>{{ form.fungsi || '-' }}</td>
                 </tr>
               </tbody>
             </table>
@@ -231,7 +235,7 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>{{ alat.deskripsi || '-' }}</td>
+                  <td>{{ form.deskripsi || '-' }}</td>
                 </tr>
               </tbody>
             </table>
@@ -239,24 +243,24 @@
         </div>
         <!-- Konten Detail Rincian Alat -->
         <div id="app" class="card-body" v-if="showRincianAlat" style="border-radius: 20px;">
-          <rincian-alat :kode-alat="alat.kode_alat"></rincian-alat>
+          <rincian-alat :kode-alat="form.kode"></rincian-alat>
         </div>
       </div>
       <!-- Konten Detail Alat Rusak -->
       <div id="app" class="card-body" v-if="showRincianAlatRusak" style="border-radius: 20px;">
-        <alat-rusak :kode-alat="alat.kode_alat"></alat-rusak>
+        <alat-rusak :kode-alat="form.kode"></alat-rusak>
       </div>
       <!-- Konten Detail Alat Musnah -->
       <div id="app" class="card-body" v-if="showRincianAlatMusnah" style="border-radius: 20px;">
-        <master-data-musnah :kode-alat="alat.kode_alat"></master-data-musnah>
+        <alat-musnah :kode-alat="form.kode"></alat-musnah>
       </div>
       <!-- Konten Detail Alat Error -->
       <div id="app" class="card-body" v-if="showRincianAlatError" style="border-radius: 20px;">
-        <alat-error :kode-alat="alat.kode_alat"></alat-error>
+        <alat-error :kode-alat="form.kode"></alat-error>
       </div>
       <!-- Konten Detail Alat Hilang -->
       <div id="app" class="card-body" v-if="showRincianAlatHilang" style="border-radius: 20px;">
-        <alat-hilang :kode-alat="alat.kode_alat"></alat-hilang>
+        <alat-hilang :kode-alat="form.kode"></alat-hilang>
       </div>
     </div>
   </div>
@@ -272,6 +276,7 @@ export default {
   data() {
     return {
       alat: {}, // Menyimpan data alat
+      form: {},
       showDetail: true, // Mengontrol tampilan detail
       showDetailAlat: true,
       showRincianAlat: false, //Mengontrol tampilan rincian alat
@@ -282,17 +287,68 @@ export default {
     };
   },
   methods: {
+    // async fetchData() {
+    //   try {
+    //     const id = this.$route.params.id;
+    //     const response = await axios.get(`/api/v1/tools/${id}`);
+    //     this.form = response.data;
+    //     console.log(this.form);
+    //   } catch (error) {
+    //     console.error(error);
+    //   }
+    // },
     async fetchAlatDetail() {
       try {
         const id = this.$route.params.id; // ID alat di URL
-        const response = await axios.get(`/api/alats/${id}`);
-        this.alat = response.data; // Menyimpan data alat
-        //console.log("Data alat:", this.alat); // Debug data
+        const response = await axios.get(`/api/v1/tools/${id}`);
+        this.form = response.data; // Menyimpan data alat
+        // console.log("Data alat:", this.form); // Debug data
       } catch (error) {
         //console.error("Error fetching alat detail:", error);
         alert("Gagal memuat detail alat.");
       }
     },
+    getImageUrl(path) {
+      return path ? `${window.location.origin}/storage/${path}` : null;
+    },
+    getNamaJenis(form) {
+      const parts = form.kode?.split('-') || [];
+      const kodeJenis = parts[0];
+      return form.jenis && form.jenis.kode_jenis === kodeJenis ? form.jenis.nama_jenis : '-';
+    },
+    getNamaKategori(form) {
+      const parts = form.kode?.split('-') || [];
+      const kodeKategori = parts[1];
+      const kategori = form.jenis?.kategori?.find(k => k.kode_kategori === kodeKategori);
+      return kategori ? kategori.nama_kategori : '-';
+    },
+    getNamaMerek(form) {
+      const parts = form.kode?.split('-') || [];
+      const kodeMerek = parts[2];
+      const kategori = form.jenis?.kategori || [];
+      const merek = kategori.flatMap(k => k.merek || []).find(m => m.kode_merek === kodeMerek);
+      return merek ? merek.nama_merek : '-';
+    },
+    getNamaTipe(form) {
+      const parts = form.kode?.split('-') || [];
+      const kodeTipe = parts[3];
+      const tipe = form.jenis?.kategori
+        ?.flatMap(k => k.merek || [])
+        .flatMap(m => m.tipe || [])
+        .find(t => t.kode_tipe === kodeTipe);
+      return tipe ? tipe.nama_tipe : '-';
+    },
+    // async fetchAlatDetail() {
+    //   try {
+    //     const id = this.$route.params.id; // ID alat di URL
+    //     const response = await axios.get(`/api/alats/${id}`);
+    //     this.alat = response.data; // Menyimpan data alat
+    //     console.log("Data alat:", this.alat); // Debug data
+    //   } catch (error) {
+    //     //console.error("Error fetching alat detail:", error);
+    //     alert("Gagal memuat detail alat.");
+    //   }
+    // },
     formatRupiah(harga_total) {
       return harga_total ? new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(harga_total) : 'Rp -';
     },
@@ -360,6 +416,7 @@ export default {
   },
   mounted() {
     this.fetchAlatDetail();
+    // this.fetchData();
     this.showDetail = true; // Menampilkan detail alat saat halaman pertama kali dimuat
   },
 };

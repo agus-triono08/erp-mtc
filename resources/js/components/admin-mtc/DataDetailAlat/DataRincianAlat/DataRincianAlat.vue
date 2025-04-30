@@ -3,7 +3,7 @@
     <!-- Modal Input Data -->
     <div id="app" class="modal-input" :class="{'is-visible': showModalInput}" @click.self="tutupModal">
       <div class="modal-content-input">
-        <input-alat-belum-digunakan @tutup-modal="tutupModal"></input-alat-belum-digunakan>
+        <input-alat-belum-digunakan :kode-alat="kodeAlat" @tutup-modal="tutupModal"></input-alat-belum-digunakan>
       </div>
     </div>
 
@@ -99,7 +99,7 @@
           <thead>
             <tr class="bg-table">
               <th class="text-center text-black-1 tr-center">
-                <!-- <input type="checkbox" @change="updateSelectAll" @click="selectAll" v-model="selectAllCheckbox"> -->
+                <input type="checkbox" @change="updateSelectAll" @click="selectAll" v-model="selectAllCheckbox">
               </th>
               <th class="text-center text-black-1 tr-center">#</th>                    
               <th class="text-center text-black-1" style="cursor: pointer; position: relative; vertical-align: middle;">
@@ -118,12 +118,12 @@
               <th class="text-center text-black-1">Aksi</th>
             </tr>
           </thead>
-          <tbody v-if="filteredData.length === 0">
+          <tbody v-if="paginatedData.length === 0">
             <tr>
               <td colspan="9" class="text-center">Tidak Ada Data</td>
             </tr>
           </tbody>
-          <tbody v-for="(noseri, index) in filteredData" :key="noseri.id" :ref="'barcode' + index">
+          <tbody v-for="(noseri, index) in paginatedData" :key="noseri.id" :ref="'barcode' + index">
             <tr class="text-center">
               <td class="text-center">
                 <input type="checkbox" @change="updateSelectedItems" v-model="selectedItems" :value="noseri.id">
@@ -150,6 +150,7 @@
                           'status-rusak': noseri.kondisi === 'Rusak', 
                           'status-error': noseri.kondisi === 'Error',
                           'status-hilang': noseri.kondisi === 'Hilang',
+                          'status-musnah': noseri.kondisi === 'Musnah',
                           'status-dipinjam': noseri.kondisi === 'Dipinjam'}"
               >{{ noseri.kondisi || '-' }}</td>
               <td><vue-barcode :ref="'barcode' + index" :value="noseri.no_seri" :options="{ width: 100, height: 50 }"></vue-barcode></td>
@@ -231,7 +232,7 @@
                 <b>No Seri Alat/Mesin</b>
                 <sup style="color: red;"> *</sup>
               </label>
-              <input type="text" class="form-control" id="no-seri" v-model="datanoseri.no_seri" disabled>
+              <input type="text" class="form-control" id="no-seri" v-model="form.no_seri" disabled>
             </div>
             <div class="form-group">
               <label for="layout" style="color: #000;">
@@ -241,7 +242,7 @@
               <select 
                 id="layout"
                 class="form-control"
-                v-model="datanoseri.layout_id"
+                v-model="form.layout_id"
                 required
               >
               <option value="" disabled selected> Pilih Layout </option>
@@ -252,16 +253,16 @@
               <div class="form-group col-md-6">
                 <label for="no_seri_default" style="color: #000;">
                   <b>No Seri Default</b>
-                  <sup style="color: red;"> *</sup>
+                  <!-- <sup style="color: red;"> *</sup> -->
                 </label>
-                <input type="text" class="form-control" id="no_seri_default" v-model="datanoseri.no_seri_default">
+                <input type="text" class="form-control" id="no_seri_default" v-model="form.no_seri_default">
               </div>
               <div class="form-group col-md-6">
                 <label for="tanggal-masuk" style="color: #000;">
                   <b>Tanggal Masuk</b>
-                  <sup style="color: red;"> *</sup>
+                  <!-- <sup style="color: red;"> *</sup> -->
                 </label>
-                <input type="date" class="form-control" id="tanggal-masuk" v-model="datanoseri.tanggal_masuk">
+                <input type="date" class="form-control" id="tanggal-masuk" v-model="form.tanggal_masuk">
               </div>
             </div>
             <div class="row">
@@ -270,14 +271,14 @@
                   <b>Harga Satuan</b>
                   <sup style="color: red;"> *</sup>
                 </label>
-                <input type="number" class="form-control" id="harga" v-model="datanoseri.harga">
+                <input type="number" class="form-control" id="harga" v-model="form.harga">
               </div>
               <div class="form-group col-md-6">
                 <label for="harga" style="color: #000;">
                   <b>Kondisi</b>
                   <sup style="color: red;"> *</sup>
                 </label>
-                <select id="kondisi" class="form-control" v-model="datanoseri.kondisi" disabled>
+                <select id="kondisi" class="form-control" v-model="form.kondisi" disabled>
                   <option value="" disabled>Pilih Kondisi Alat/Mesin</option>
                   <option value="OK">OK</option>
                   <option value="Error">Error</option>
@@ -305,6 +306,7 @@ import * as XLSX from 'xlsx';  // Impor XLSX dari library yang sudah diinstal
 import VueBarcode from 'vue-barcode';
 import jsPDF from 'jspdf';
 import html2canvas from "html2canvas";
+import Swal from 'sweetalert2';
 
 export default {
   props: {
@@ -317,6 +319,17 @@ export default {
   data() {
     return {
       datanoseri: [],
+      form: {
+        no_seri : '',
+        layout_id : '',
+        no_seri_default : '',
+        tanggal_masuk : '',
+        harga : '',
+        kondisi : '',
+      },
+      currentIndex: null,
+      modalTitle: '',
+      modalAction: '',
       Layout: [],
       showModalInput: false,
       showModalEdit: false,
@@ -335,7 +348,7 @@ export default {
   },
   computed: {
     availableKondisi() {
-      return [...new Set(this.datanoseri.map(item => item.status))];
+      return [...new Set(this.datanoseri.map(item => item && item.kondisi))]; // Add a check for undefined item objects
     },
     durasiData() {
       return this.datanoseri.map(noseri => {
@@ -350,25 +363,31 @@ export default {
       });
     },
     totalPages() {
-      return Math.ceil(this.datanoseri.length / this.rowsPerPage);
+      return Math.ceil(this.filteredData.length / this.rowsPerPage);
     },
     paginationInfo() {
       const start = (this.currentPage - 1) * this.rowsPerPage + 1;
-      const end = Math.min(this.currentPage * this.rowsPerPage, this.datanoseri.length);
-      return `Showing ${start} to ${end} of ${this.datanoseri.length} entries`;
-    },
-    paginatedData() {
-      const start = (this.currentPage - 1) * this.rowsPerPage;
-      const end = start + this.rowsPerPage;
-      return this.datanoseri.slice(start, end);
+      const end = Math.min(this.currentPage * this.rowsPerPage, this.filteredData.length);
+      return `Showing ${start} to ${end} of ${this.filteredData.length} entries`;
     },
     filteredData() {
       return this.datanoseri.filter(noseri => {
-        const kondisiMatch = this.kondisiFilters.length ? this.kondisiFilters.includes(noseri.status) : true;
-        const searchMatch = noseri.no_seri && noseri.no_seri.toLowerCase().includes(this.searchQuery.toLowerCase());
+        if (!noseri) return false;
 
-        return kondisiMatch && searchMatch;
+        const kondisiMatch = this.kondisiFilters.length
+          ? this.kondisiFilters.includes(noseri.kondisi)
+          : true;
+
+        const search = this.searchQuery.toLowerCase();
+        const noSeriMatch = noseri.no_seri?.toLowerCase().includes(search);
+        const ruangMatch = noseri.layout?.ruang?.toLowerCase().includes(search);
+
+        return kondisiMatch && (noSeriMatch || ruangMatch);
       });
+    },
+    paginatedData() {
+      const start = (this.currentPage - 1) * this.rowsPerPage;
+      return this.filteredData.slice(start, start + this.rowsPerPage);
     }
   },
   methods: {
@@ -386,12 +405,14 @@ export default {
       if (!noseri.layout) return '-';
       return `${noseri.layout.ruang || '-'} | Rak ${noseri.layout.rak || '-'} | Lantai ${noseri.layout.lantai || '-'} | ${noseri.layout.koordinat || '-'}`;
     },
-    async fetchAlatError() {
+    async  fetchAlatError() {
       try {
         const kodeAlat = this.kodeAlat; // Kode alat di URL
+        // console.log(this.kodeAlat);
         const response = await axios.get(`/api/v1/noseri/getNoSeri/${kodeAlat}`);
         this.datanoseri = response.data; // Menyimpan data alat
-        // console.log(this.datanoseri)
+        // console.log(this.datanoseri);
+        // console.log(kodeAlat);
       } catch (error) {
         console.error("Error fetching alat error detail:", error);
       }
@@ -518,46 +539,94 @@ export default {
         return noseri.harga;
       }
     },
-    openModal(action, noseri = null, index = null) {
-      if (action === 'edit' && noseri) {
+    openModal(action, item = null, index = null) {
+      if (action === 'edit' && item) {
         this.modalTitle = 'Edit Data';
         this.modalAction = 'Update';
-        this.datanoseri.no_seri = noseri.no_seri;
-        this.datanoseri.layout_id = noseri.layout_id;
-        this.datanoseri.no_seri_default = noseri.no_seri_default;
-        this.datanoseri.tanggal_masuk = noseri.tanggal_masuk;
-        this.datanoseri.harga = noseri.harga;
-        this.datanoseri.kondisi = noseri.kondisi;
+        this.form.no_seri = item.no_seri;
+        this.form.layout_id = item.layout_id;
+        this.form.no_seri_default = item.no_seri_default;
+        this.form.tanggal_masuk = item.tanggal_masuk;
+        this.form.harga = item.harga;
+        this.form.kondisi = item.kondisi;
         this.currentIndex = index;
-        this.currentId = noseri.id;
-        console.log('layout_id dari noseri:', noseri.layout_id);
+        this.currentId = item.id;
+        // console.log('layout_id dari noseri:', item.layout_id);
       }
       this.isModalOpen = true;
     },
     closeModal() {
       this.isModalOpen = false; // Set modal status close
     },
+    // saveData() {
+    //   if (this.modalAction === 'Update') {
+    //       console.log('Updating data with ID:', this.currentId);
+    //       console.log('Data yang akan dikirim:', this.datanoseri); // Log data yang akan dikirim
+    //       axios.put(`/api/v1/noseri/${this.currentId}`, this.datanoseri)
+    //           .then(response => {
+    //               console.log('Update successful:', response.data);
+    //               const index = this.datanoseri.findIndex(item => item.id === this.currentId);
+    //               if (index !== -1) {
+    //                   this.datanoseri.splice(index, 1, response.data.data); // Update data di frontend
+    //               }
+    //               this.closeModal();
+    //           })
+    //           .catch(error => {
+    //               console.error('Error updating data:', error);
+    //               if (error.response) {
+    //                   console.error('Response data:', error.response.data); // Log data respons
+    //               }
+    //           });
+    //   }
+    // },
     saveData() {
-      if (this.modalAction === 'Update') {
-          console.log('Updating data with ID:', this.currentId);
-          console.log('Data yang akan dikirim:', this.datanoseri); // Log data yang akan dikirim
-          axios.put(`/api/v1/noseri/${this.currentId}`, this.datanoseri)
-              .then(response => {
-                  console.log('Update successful:', response.data);
-                  const index = this.datanoseri.findIndex(item => item.id === this.currentId);
-                  if (index !== -1) {
-                      this.datanoseri.splice(index, 1, response.data.data); // Update data di frontend
-                  }
-                  this.closeModal();
-              })
-              .catch(error => {
-                  console.error('Error updating data:', error);
-                  if (error.response) {
-                      console.error('Response data:', error.response.data); // Log data respons
-                  }
-              });
+      if (this.currentIndex !== null) {
+        axios.put(`/api/v1/noseri/${this.currentId}`, this.form)
+        .then(response => {
+          this.datanoseri[this.currentIndex] = response.data;
+          this.closeModal();
+          this.fetchAlatError();
+          this.fetchLayout();
+          this.currentPage = 1;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+        })
+        .catch(error => {
+          console.error('Error updating data:', error);
+        })
       }
     },
+    // saveData() {
+    //   if (this.modalAction === 'Update') {
+    //     console.log('Updating data with ID:', this.currentId);
+
+    //     // Validasi simple
+    //     if (!this.datanoseri.layout_id || !this.datanoseri.harga) {
+    //       alert('Layout dan Harga tidak boleh kosong!');
+    //       return;
+    //     }
+
+    //     // Convert harga jadi number
+    //     this.datanoseri.harga = parseFloat(this.datanoseri.harga) || 0;
+
+    //     axios.put(`/api/v1/noseri/${this.currentId}`, this.datanoseri)        
+    //       .then(response => {
+    //         console.log('Update successful:', response.data);
+
+    //         // Update array yang menyimpan semua data (bukan datanoseri langsung)
+    //         const index = this.datanoseri.findIndex(item => item.id === this.currentId);
+    //           if (index !== -1) {
+    //             this.datanoseri.splice(index, 1, response.data.data);
+    //           }
+
+    //         this.closeModal();            
+    //       })
+    //       .catch(error => {
+    //         console.error('Error updating data:', error);
+    //         if (error.response) {
+    //           alert(error.response.data.message || 'Terjadi kesalahan saat menyimpan data.');
+    //         }
+    //       });
+    //   }
+    // },
     downloadBarcode(noSeri) {
       const link = document.createElement('a');
       link.href = `https://barcode.tec-it.com/barcode.ashx?data=${noSeri}&multiplebarcodes=true&translate-esc=on&download=true`;
@@ -633,38 +702,39 @@ export default {
     },
     exportSelected() {
       if (this.selectedItems.length === 0) {
-        alert("Tidak ada data yang dipilih");
+        Swal.fire({
+          title: 'Tidak ada data yang dipilih',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        });
         return;
       }
 
-      // Inisialisasi dokumen PDF dengan ukuran 26mm x 15mm
       const doc = new jsPDF({
-        orientation: "landscape", // bisa diganti "portrait" kalau butuh
+        orientation: "landscape",
         unit: "mm",
         format: [50, 20]
       });
 
-      let y = 2, x = 2, baris = 0, kolom = 0;
+      const selectedNoseri = this.filteredData.filter(item => this.selectedItems.includes(item.id));
+      const promises = selectedNoseri.map((noseri, idx) => {
+        const barcodeIndex = this.filteredData.indexOf(noseri);
+        const barcodeRef = this.$refs[`barcode${barcodeIndex}`];
 
-      // Atur ukuran tulisan
-      doc.setFontSize(4);
-      // Tambahkan tulisan "Elitech" di sudut kanan atas
-      doc.text("Elitech", 47, 8, null, null, "right");
+        if (barcodeRef && barcodeRef[0]) {
+          return html2canvas(barcodeRef[0].$el).then(canvas => {
+            const imgData = canvas.toDataURL('image/png');
 
-      const promises = this.filteredData
-        .filter(item => this.selectedItems.includes(item.id))
-        .map(noseri => {
-          const barcodeRef = this.$refs[`barcode${this.filteredData.indexOf(noseri)}`];
-          if (barcodeRef && barcodeRef[0]) {
-            return html2canvas(barcodeRef[0].$el).then(canvas => {
-              const imgData = canvas.toDataURL('image/png');
-              doc.addImage(imgData, 'PNG', x, y, 40, 16); // Menyesuaikan agar muat di 26x15mm
-            });
-          } else {
-            console.error(`Barcode untuk item ${noseri.id} tidak ditemukan.`);
-            return Promise.resolve(); // tetap return Promise agar tidak gagal total
-          }
-        });
+            if (idx > 0) doc.addPage(); // tambah halaman baru selain di halaman pertama
+            doc.setFontSize(4);
+            doc.text("Elitech", 25, 1.5, null, null, "center");
+            doc.addImage(imgData, 'PNG', 4, 2, 45, 18); // posisi dan ukuran gambar barcode
+          });
+        } else {
+          console.error(`Barcode untuk item ${noseri.id} tidak ditemukan.`);
+          return Promise.resolve(); // biar proses tidak berhenti
+        }
+      });
 
       Promise.all(promises).then(() => {
         doc.save('barcode_terpilih.pdf');
@@ -777,15 +847,24 @@ export default {
       }
 
       // Menyiapkan data yang akan dikonversi, termasuk nomor urut
-      const data = this.filteredData.map((item, index) => ({
-        No: index + 1, // Menambahkan nomor urut
-        NoSeri: item.no_seri_alat,
-        Layout: item?.layout?.nama_lokasi,
-        TanggalMasuk: item.tanggal_masuk,
-        Harga: `${this.formatRupiah(item.harga)}`,
-        Depresiasi: this.getNilaiBuku(item),
-        Kondisi: item.status,
-      }));
+      const data = this.filteredData.map((item, index) => {
+        const row = {
+          No: index + 1,
+          Nama: item.tools.nama,
+          Kode: item.tools.kode,
+          'No Seri': item.no_seri,
+          Layout: this.formatLayout(item),
+          'Tanggal Masuk': item.tanggal_masuk,
+          Harga: `${this.formatRupiah(item.harga)}`,
+          Kondisi: item.kondisi,
+        };
+
+        if (item.tools.jenis_id === 2) {
+          row['Depresiasi Mesin'] = this.getNilaiBuku(item);
+        }
+
+        return row;
+      });
 
       // Mengonversi data ke dalam format sheet Excel
       const ws = XLSX.utils.json_to_sheet(data);
@@ -810,7 +889,16 @@ export default {
   },
   watch: {
     rowsPerPage() {
-      this.currentPage = 1; // Reset ke halaman pertama saat rowsPerPage berubah
+      this.currentPage = 1;
+    },
+    searchQuery() {
+      this.currentPage = 1;
+    },
+    kondisiFilters: {
+      handler() {
+        this.currentPage = 1;
+      },
+      deep: true
     }
   },
   mounted() {
@@ -894,5 +982,10 @@ export default {
   .status-dipinjam {
     background-color: rgba(235, 90, 60, 0.1);
     color: rgba(235, 90, 60);
+  }
+
+  .status-musnah {
+    background-color: rgba(100, 13, 95, 0.1);
+    color: rgba(100, 13, 95);
   }
 </style>

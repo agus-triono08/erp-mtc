@@ -21,6 +21,7 @@ class Perawatan extends Model
         'tgl_perawatan',
         'tgl_mulai_perawatan',
         'tgl_selesai_perawatan',
+        'waktu_perawatan',
         'waktu_mulai',
         'waktu_selesai',
     ];

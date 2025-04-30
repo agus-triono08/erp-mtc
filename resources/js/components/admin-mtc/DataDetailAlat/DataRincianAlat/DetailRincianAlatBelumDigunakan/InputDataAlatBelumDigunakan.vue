@@ -5,14 +5,14 @@
     </div>
     <form @submit.prevent="submitForm" enctype="multipart/form-data">
       <div class="row">
-        <div class="col-md-12">
+        <!-- <div class="col-md-12">
           <label style="color: #000;">Alat/Mesin<sup style="color: red;"> *</sup></label>
-          <!-- <select v-model="form.tools_id" class="form-control" required>
+          <select v-model="form.tools_id" class="form-control" required>
             <option value="">Pilih Tools</option>
             <option v-for="tool in tools" :key="tool.id" :value="tool.id">
               {{ tool.nama }}
             </option>
-          </select> -->
+          </select>
           <v-select
             v-model="form.tools_id"
             required
@@ -22,7 +22,7 @@
             :searchable="true"
             :reduce="tool => tool.id"
           />
-        </div>
+        </div> -->
 
         <div class="col-md-12">
           <label style="color: #000;">Layout<sup style="color: red;"> *</sup></label>
@@ -54,6 +54,7 @@
             required
           >
             <option value="" disabled>Pilih Interval Perawatan</option>
+            <option value="0">Tidak Ada Perawatan</option>
             <option value="1">Setiap 1 Bulan</option>
             <option value="3">Setiap 3 Bulan</option>
             <option value="6">Setiap 6 Bulan</option>
@@ -62,8 +63,25 @@
         </div>
 
         <div class="col-md-6 mt-2">
-          <label style="color: #000;">No Seri default<sup style="color: red;"> *</sup></label>
-          <input type="text" v-model="form.no_seri_default" class="form-control" required placeholder="Masukkan No Seri Default">
+          <label for="waktu_perawatan" style="color: #000;">
+            Waktu Total Perawatan
+            <sup style="color: red;"> *</sup>
+          </label>
+          <input type="time" v-model="form.waktu_perawatan" class="form-control" required placeholder="Masukkan Waktu Perawatan">
+          <small class="form-text" style="color: red;">Masukkan Total Perkiraan Waktu Perawatan Semua Stok</small>
+        </div>
+
+        <div class="col-md-6 mt-2">
+          <label for="jumlah_orang_perawatan" style="color: #000;">
+            Total PIC Perawatan
+            <sup style="color: red;"> *</sup>
+          </label>
+          <input type="number" v-model="form.jumlah_orang_perawatan" class="form-control" required placeholder="Masukkan Total PIC Perawatan">
+        </div>
+
+        <div class="col-md-6 mt-2">
+          <label style="color: #000;">No Seri default</label>
+          <input type="text" v-model="form.no_seri_default" class="form-control" placeholder="Masukkan No Seri Default">
         </div>
 
         <div class="col-md-6 mt-2">
@@ -73,20 +91,15 @@
 
         <div class="col-md-6 mt-2">
           <label style="color: #000;">Harga Satuan<sup style="color: red;"> *</sup></label>
-          <input type="number" class="form-control" v-model="form.harga" min="0" required placeholder="Masukkan Harga Satuan Alat/Mesin">          
+          <input type="number" class="form-control" v-model="form.harga" min="0" placeholder="Masukkan Harga Satuan Alat/Mesin">          
         </div>
 
         <div class="col-md-6 mt-2">
           <label style="color: #000;">Kondisi<sup style="color: red;"> *</sup></label>
           <!-- <input type="text" class="form-control" v-model="form.kondisi" required> -->
-          <select 
-            id="kondisi"
-            v-model="form.kondisi"
-            class="form-control"
-            required
-          >
-            <option value="" disabled selected>Pilih Kondisi</option>
-            <option value="OK">OK</option>        
+          <select id="kondisi" v-model="form.kondisi" class="form-control">
+            <option value="" disabled>Pilih Kondisi</option>
+            <option value="OK" selected>OK</option>            
           </select>
         </div>        
 
@@ -118,6 +131,9 @@ import VSelect from 'vue-select';
 import Swal from 'sweetalert2';
 
 export default {
+  props: {
+    kodeAlat: String
+  },
   components: { 
     VSelect 
   },
@@ -127,12 +143,14 @@ export default {
       layouts: [],
       users: [],
       form: {
-        tools_id: '',
+        // tools_id: '',
         layout_id: '',
         stok_awal: 1,
         harga: '',
         kondisi: '',
-        jadwal_perawatan: 1,
+        jadwal_perawatan: '',
+        waktu_perawatan: '',
+        jumlah_orang_perawatan: '',
         // users_id: '',
         no_seri_default: '',
       }
@@ -158,7 +176,14 @@ export default {
     },
     async submitForm() {
       try {
-        const res = await axios.post('/api/v1/noseri', this.form);
+        const kodeAlat = this.kodeAlat; // Kode alat di URL
+        // console.log(this.kodeAlat);
+
+        // Konversi waktu perawatan dari format time ke integer (menit)
+        const [hours, minutes] = this.form.waktu_perawatan.split(':');
+        this.form.waktu_perawatan = parseInt(hours) * 60 + parseInt(minutes); // Mengonversi ke menit
+
+        const res = await axios.post(`/api/v1/noseri/store/${kodeAlat}`, this.form);
         Swal.fire({
           title: 'Berhasil!',
           text: 'No seri & jadwal berhasil disimpan.',

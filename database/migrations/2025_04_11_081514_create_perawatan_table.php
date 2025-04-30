@@ -24,6 +24,7 @@ class CreatePerawatanTable extends Migration
                 $table->date('tgl_perawatan')->nullable();
                 $table->date('tgl_mulai_perawatan')->nullable();
                 $table->date('tgl_selesai_perawatan')->nullable();
+                $table->time('waktu_perawatan')->nullable();
                 $table->time('waktu_mulai')->nullable();
                 $table->time('waktu_selesai')->nullable();
                 $table->timestamps();

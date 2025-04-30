@@ -29,30 +29,48 @@
 
     <!-- Heading -->
     <br><div class="sidebar-heading">
-        <strong>Data Inventaris</strong>
+        <strong>Alat/Mesin</strong>
     </div>
 
     <!-- Nav Item - Data -->
     <li class="nav-item {{ request()->routeIs('data.manajermtc') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('data.manajermtc') }}">
             <i class="fas fa-fw {{ request()->routeIs('data.manajermtc') ? 'fa-tools' : 'fa-toolbox' }}"></i>
-            <span>Master Data</span>
+            <span>Alat/Mesin</span>
         </a>
-    </li>
-
-    <!-- Nav Item - Data -->
-    <li class="nav-item {{ request()->routeIs('layout.manajermtc') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('layout.manajermtc') }}">
-            <i class="fas fa-fw {{ request()->routeIs('layout.manajermtc') ? 'fa-folder-open' : 'fa-folder' }}"></i>
-            <span>Layout</span>
-        </a>
-    </li>
+    </li>    
 
     <!-- Nav Item - History -->
     <li class="nav-item {{ request()->routeIs('manajermtc-riwayat') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('manajermtc-riwayat') }}">
             <i class="fas fa-fw {{ request()->routeIs('manajermtc-riwayat') ? 'fa-folder-open' : 'fa-history' }}"></i>
             <span>Riwayat</span>
+        </a>
+    </li>
+
+    <!-- Heading -->
+    <br><div class="sidebar-heading">
+        <strong>Inventory Alat/Mesin</strong>
+    </div>
+
+    <!-- Nav Item - Data -->
+    <li class="nav-item {{ request()->routeIs('kategori.managermtc') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('kategori.managermtc') }}">
+            <i class="bi {{ request()->routeIs('kategori.managermtc') ? 'bi-file-spreadsheet' : 'bi-file-spreadsheet-fill' }}"></i>
+            <span>Kategori/Merek/Tipe</span>
+        </a>
+    </li>
+
+    <!-- Heading -->
+    <br><div class="sidebar-heading">
+        <strong>Lokasi Penyimpanan</strong>
+    </div>
+
+    <!-- Nav Item - Data -->
+    <li class="nav-item {{ request()->routeIs('layout.manajermtc') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('layout.manajermtc') }}">
+            <i class="bi {{ request()->routeIs('layout.manajermtc') ? 'bi-door-open-fill' : 'bi-door-closed-fill' }}"></i>
+            <span>Layout</span>
         </a>
     </li>
 

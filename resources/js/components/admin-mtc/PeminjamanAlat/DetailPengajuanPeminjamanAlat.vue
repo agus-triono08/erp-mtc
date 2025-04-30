@@ -18,7 +18,7 @@
         <thead>
           <tr class="bg-table text-center">          
             <th class="text-center" style="width: 10px; color: #000;">#</th>
-            <th class="text-center" style="width: 10px; color: #000;">No Pengajuan</th>
+            <th class="text-center" style="width: 10px; color: #000;">No Seri</th>
             <th class="text-center" style="width: 10px; color: #000;">Tgl Peminjaman</th>
             <th class="text-center" style="width: 10px; color: #000;">Status Sebelumnya</th>
             <th class="text-center" style="width: 10px; color: #000;">Alasan Ditolak</th>            
@@ -30,12 +30,24 @@
           </tr>
         </tbody>
         <tbody v-for="(peminjaman, index) in filteredData" :key="index">
-          <tr class="text-center">
+          <tr class="text-center" v-for="(noSeri, indexSeri) in peminjaman.no_seri" :key="indexSeri">
             <td>{{ index + 1 }}</td>
-            <td>{{ peminjaman.no_pengajuan || '-' }}</td>
-            <td>{{ peminjaman.tanggal_peminjaman || '-' }}</td>
-            <td>{{ peminjaman.status || '-' }}</td>
-            <td>{{ peminjaman.deskriksi }}</td>
+            <td>{{ noSeri.no_seri || '-' }}</td>
+            <td>{{ noSeri.tanggal_kondisi || '-' }}</td>
+            <td>
+              <div
+                class="btn-sts"
+                  :class="{'status-active': noSeri.kondisi_after === 'Selesai',
+                          'status-error' : noSeri.kondisi_after === 'Menunggu Diambil',
+                          'status-rusak' : noSeri.kondisi_after === 'Ditolak',
+                          'status-hilang' : noSeri.kondisi_after === 'Dipinjam',
+                          'status-dipinjam' : noSeri.kondisi_after === 'Belum Diproses',
+                }"
+              >
+                {{ noSeri.kondisi_after || '-'}}
+              </div>
+            </td>
+            <td>{{ noSeri.reject_reason }}</td>
           </tr>
         </tbody>
       </table>
@@ -93,14 +105,7 @@ export default {
   },
   data() {
   return {
-    dataPeminjaman: [
-    {
-        no_pengajuan: "A001",
-        tanggal_peminjaman: "2025-02-01",
-        status: "Ditolak",
-        deskriksi: "Alat dalam perbaikan"
-      },
-    ],
+    dataPeminjaman: [],
     searchQuery: '',
     rowsPerPage: 10,
     currentPage: 1,
@@ -124,9 +129,21 @@ computed: {
     if (this.searchQuery) {
       return this.paginatedData.filter(item => {
         return (
-          item.no_pengajuan.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-          item.tanggal_peminjaman.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-          item.status.toLowerCase().includes(this.searchQuery.toLowerCase())
+          // item.no_peminjaman.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+          // item.tgl_pinjam.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+          // item.tgl_kembali.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+          // item.alasan_penolakan.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+          // item.tools.nama.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+          // item.tools.kode.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+          item.no_seri.some(no_seri => {
+            return (
+              no_seri.no_seri.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+              no_seri.kondisi.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+              no_seri.kondisi_after.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+              no_seri.tanggal_kondisi.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+              no_seri.reject_reason.toLowerCase().includes(this.searchQuery.toLowerCase())
+            );
+          })
         );
       });
     } else {
@@ -138,8 +155,10 @@ methods: {
   async fetchPeminjaman() {
     try {
       const noPinjam = this.noPinjam;
-      const response = await axios.get(`/api/Peminjaman/rincian/${noPinjam}`);
+      // console.log(this.noPinjam);
+      const response = await axios.get(`/api/v1/peminjaman/getPengajuanNoPeminjaman/${noPinjam}`);
       this.dataPeminjaman = response.data;
+      // console.log(this.dataPeminjaman);
     } catch (error) {
       console.error("Error fetching data peminjaman", error);
     }

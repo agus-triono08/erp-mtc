@@ -24,6 +24,7 @@ class CreateNoSeriTable extends Migration
             $table->date('tanggal_kondisi')->nullable();
             $table->enum('kondisi', ['OK', 'Error', 'Rusak', 'Musnah', 'Hilang'])->default('OK');
             $table->string('kondisi_after')->nullable();
+            $table->string('reject_reason')->nullable();
             $table->timestamps();
         });
     }

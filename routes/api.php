@@ -18,6 +18,12 @@ use App\Http\Controllers\Inventory\TipeController;
 use App\Http\Controllers\Inventory\ToolsController;
 use App\Http\Controllers\Inventory\NoSeriController;
 use App\Http\Controllers\Inventory\PerawatanController;
+use App\Http\Controllers\Inventory\ErrorController;
+use App\Http\Controllers\Inventory\RusakController;
+use App\Http\Controllers\Inventory\MusnahController;
+use App\Http\Controllers\Inventory\HilangController;
+use App\Http\Controllers\Inventory\PermintaanController;
+use App\Http\Controllers\Inventory\PeminjamanController;
 use App\Http\Controllers\Auth\LoginController;
 
 /*
@@ -153,6 +159,37 @@ Route::apiResource('v1/tools', ToolsController::class);
 Route::get('/v1/tools/{id}/no-seri', [ToolsController::class, 'getNoSeriByTool']);
 //NOSeri
 Route::apiResource('v1/noseri', NoseriController::class);
+Route::post('/v1/noseri/store/{kodeAlat}', [NoSeriController::class, 'store']);
 Route::get('/v1/noseri/getNoSeri/{kodeAlat}', [NoseriController::class, 'getNoSeri']);
+Route::prefix('v1/noseri')->group(function () {
+    Route::post('/reject', [NoseriController::class, 'reject']);
+    Route::post('/update-status', [NoseriController::class, 'updateStatus']);
+    Route::post('/bulk-update-status', [NoseriController::class, 'bulkUpdateStatus']);
+    Route::post('/reject-permintaan', [NoseriController::class, 'rejectPermintaan']);
+    Route::post('/update-status-permintaan', [NoseriController::class, 'updateStatusPermintaan']);
+    Route::post('/bulk-update-status-permintaan', [NoseriController::class, 'bulkUpdateStatusPermintaan']);
+});
 //Perawatan
 Route::apiResource('v1/perawatan', PerawatanController::class);
+//Perbaikan
+Route::apiResource('v1/perbaikan', ErrorController::class);
+Route::get('/v1/perbaikan/getError/{noSeri}', [ErrorController::class, 'getError']);
+// Kerusakan
+Route::apiResource('v1/kerusakan', RusakController::class);
+Route::get('/v1/kerusakan/getRusak/{noSeri}', [RusakController::class, 'getRusak']);
+// Pemusnahan
+Route::apiResource('v1/pemusnahan', MusnahController::class);
+Route::get('/v1/pemusnahan/getMusnah/{noSeri}', [MusnahController::class, 'getMusnah']);
+// Kehilangan
+Route::apiResource('v1/kehilangan', HilangController::class);
+Route::get('/v1/kehilangan/getHilang/{noSeri}', [HilangController::class, 'getHilang']);
+// Permintaan
+Route::apiResource('v1/permintaan', PermintaanController::class);
+Route::get('/v1/permintaan/getPermintaan/{kodeAlat}', [PermintaanController::class, 'getPermintaan']);
+Route::get('/v1/permintaan/getNoPermintaan/{noPermintaan}', [PermintaanController::class, 'getNoPermintaan']);
+Route::get('/v1/permintaan/getPengajuanNoPermintaan/{noPermintaan}', [PermintaanController::class, 'getPengajuanNoPermintaan']);
+// Peminjaman
+Route::apiResource('v1/peminjaman', PeminjamanController::class);
+Route::get('/v1/peminjaman/getPeminjaman/{kodeAlat}', [PeminjamanController::class, 'getPeminjaman']);
+Route::get('/v1/peminjaman/getNoPeminjaman/{noPinjam}', [PeminjamanController::class, 'getNoPeminjaman']);
+Route::get('/v1/peminjaman/getPengajuanNoPeminjaman/{noPinjam}', [PeminjamanController::class, 'getPengajuanNoPeminjaman']);

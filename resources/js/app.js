@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 
 
 
+
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -41,6 +42,8 @@ Vue.component('mesin-hilang', require('./components/admin-mtc/DataMesin/DetailMe
 //Vue.component('data-alat', require('./components/admin-mtc/DataAlat.vue').default);
 //Vue.component('detail-alat', require('./components/admin-mtc/DetailAlat.vue').default);
 
+// const TabNavigationRiwayat = require('./components/admin-mtc/Riwayat/TabNavigation.vue').default;
+
 // Manajer MTC
 const MasterDataM = require('./components/manajer-mtc/MasterData/DataMaster.vue').default;
 const InputDataM = require('./components/manajer-mtc/MasterData/InputMaster.vue').default;
@@ -49,6 +52,9 @@ const EditMasterDataM = require('./components/manajer-mtc/MasterData/EditMaster.
 Vue.component('master-data-musnah', require('./components/manajer-mtc/MasterData/KondisiDataMaster/DataMasterMusnah.vue').default);
 const DataLayoutM = require('./components/manajer-mtc/Layout/DataLayout.vue').default;
 const RiwayatM = require('./components/manajer-mtc/Riwayat/DataRiwayat.vue').default;
+const RiwayatPeminjamanM = require('./components/manajer-mtc/Riwayat/DataRiwayatPeminjaman.vue').default;
+const RiwayatPermintaanM = require('./components/manajer-mtc/Riwayat/DataRiwayatPermintaan.vue').default;
+const RiwayatPenggantianM = require('./components/manajer-mtc/Riwayat/DataRiwayatPenggantian.vue').default;
 const PeminjamanM  = require('./components/manajer-mtc/Peminjaman&Permintaan/Peminjaman/DataPeminjamanAlat.vue').default;
 Vue.component('data-permintaanM', require('./components/manajer-mtc/Peminjaman&Permintaan/Permintaan/DataPermintaanAlat.vue').default);
 const DetailPeminjamanM = require('./components/manajer-mtc/Peminjaman&Permintaan/Peminjaman/DetailPeminjamanAlat.vue').default;
@@ -159,9 +165,12 @@ const DataRiwayatPenggantian = require('./components/admin-mtc/Riwayat/DataRiway
 const DataLayout = require('./components/admin-mtc/Layout/DataLayout.vue').default;
 
 //Inventory
+const KategoriM = require('./components/manajer-mtc/AlatdanMesin/KategoriAlatdanMesin.vue').default;
 const Kategori = require('./components/admin-mtc/AlatdanMesin/KategoriAlatdanMesin.vue').default;
 const Merek = require('./components/admin-mtc/AlatdanMesin/MerekAlatdanMesin.vue').default;
+const MerekM = require('./components/manajer-mtc/AlatdanMesin/MerekAlatdanMesin.vue').default;
 const Tipe = require('./components/admin-mtc/AlatdanMesin/TipeAlatdanMesin.vue').default;
+const TipeM = require('./components/manajer-mtc/AlatdanMesin/TipeAlatdanMesin.vue').default;
 
 //USER DATA MASTER
 const DataMasterUser = require('./components/user/MasterData/Data.vue').default;
@@ -330,10 +339,6 @@ const routes = [
       component: DataLayoutM,
     },
     {
-      path: '/manajer-mtc/riwayat',
-      component: RiwayatM,
-    },
-    {
       path: '/manajer-mtc/peminjaman',
       component: PeminjamanM,
     },
@@ -360,14 +365,29 @@ const routes = [
     },
     //Inventory
     {
+        path: '/manager-mtc/inventory',
+        component: KategoriM,
+        name: 'kategori-mgn',
+    },
+    {
         path: '/admin-mtc/inventory',
         component: Kategori,
         name: 'kategori',
     },
     {
+        path: '/manager-mtc/inventory',
+        component: MerekM,
+        name: 'merek-mgn',
+    },
+    {
         path: '/admin-mtc/inventory',
         component: Merek,
         name: 'merek',
+    },
+    {
+        path: '/manager-mtc/inventory',
+        component: TipeM,
+        name: 'tipe-mgn',
     },
     {
         path: '/admin-mtc/inventory',
@@ -514,10 +534,21 @@ const routes = [
         path: '/admin-mtc/data-perawatan/detail/:id',
         component: DetailPerawatanAlat,
     },
+    // RIWAYAT
+    {
+        path: '/manajer-mtc/riwayat',
+        component: RiwayatM,
+        name: 'data-riwayat-perkondisi-mgn',
+    },
     {
         path: '/admin-mtc/riwayat',
         component: DataRiwayat,
         name: 'data-riwayat-perkondisi',
+    },
+    {
+        path: '/manajer-mtc/riwayat',
+        component: RiwayatPeminjamanM,
+        name: 'data-riwayat-peminjaman-mgn',
     },
     {
         path: '/admin-mtc/riwayat',
@@ -525,9 +556,19 @@ const routes = [
         name: 'data-riwayat-peminjaman',
     },
     {
+        path: '/manajer-mtc/riwayat',
+        component: RiwayatPermintaanM,
+        name: 'data-riwayat-permintaan-mgn'
+    },
+    {
         path: '/admin-mtc/riwayat',
         component: DataRiwayatPermintaan,
         name: 'data-riwayat-permintaan',
+    },
+    {
+        path: '/manajer-mtc/riwayat',
+        component: RiwayatPenggantianM,
+        name: 'data-riwayat-penggantian-mgn',
     },
     {
         path: '/admin-mtc/riwayat',

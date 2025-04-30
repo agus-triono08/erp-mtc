@@ -29,14 +29,14 @@
 
     <!-- Heading -->
     <br><div class="sidebar-heading">
-        <strong>Master Data</strong>
+        <strong>Alat/Mesin</strong>
     </div>
 
     <!-- Nav Item - Data -->
     <li class="nav-item {{ request()->routeIs('data.user') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('data.user') }}">
             <i class="fas fa-fw {{ request()->routeIs('data.user') ? 'fa-tools' : 'fa-toolbox' }}"></i>
-            <span>Master Data</span>
+            <span>Alat/Mesin</span>
         </a>
     </li>
 

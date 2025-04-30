@@ -29,6 +29,8 @@ class CreateToolsTable extends Migration
             $table->text('deskripsi')->nullable();
             $table->string('gambar')->nullable();
             $table->integer('jadwal_perawatan')->nullable();
+            $table->integer('waktu_perawatan')->nullable();
+            $table->integer('jumlah_orang_perawatan')->nullable();
             $table->timestamps();
         });
     }

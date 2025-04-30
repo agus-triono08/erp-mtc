@@ -1,5 +1,13 @@
 <template>
   <div class="container-fluid">
+    <!-- Loader -->
+    <div class="loader" v-if="isLoading">
+      <div class="loading-overlay">
+        <div class="loading-spinner">
+            <span class="sr-only">Loading...</span>          
+        </div>
+      </div>
+    </div>
     <h1 class="h3 mb-4 mt-4 text-gray-900"><b>Layout</b></h1>
     <div class="row align-items-center justify-content-end m-3">
       <!-- Tambah Data -->
@@ -23,20 +31,22 @@
             <th class="text-black-1">Ruang</th>
             <th class="text-black-1">Lantai</th>
             <th class="text-black-1">Rak</th>
+            <th class="text-black-1">Koordinat</th>
             <th class="text-black-1">Aksi</th>
           </tr>
         </thead>
         <tbody v-if="paginatedData.length === 0">
           <tr class="text-center">
-            <td colspan="5">Data tidak ditemukan</td>
+            <td colspan="6">Data tidak ditemukan</td>
           </tr>
         </tbody>
         <tbody v-for="(item, index) in paginatedData" :key="index">
           <tr class="text-center">
             <td>{{ index + 1 }}</td>
-            <td>{{ item.ruang }}</td>
-            <td>{{ item.lantai }}</td>
-            <td>{{ item.rak }}</td>
+            <td>{{ item.ruang || '-' }}</td>
+            <td>{{ item.lantai || '-' }}</td>
+            <td>{{ item.rak || '-' }}</td>
+            <td>{{ item.koordinat || '-' }}</td>
             <td>
               <div class="dropdown text-center">
                 <button
@@ -53,9 +63,9 @@
                   <a class="dropdown-item" @click="openModal('edit', item, index)">
                     <i class="fas fa-edit text-primary"></i> Edit
                   </a>
-                  <a class="dropdown-item" @click="deleteData(index, item)">
+                  <!-- <a class="dropdown-item" @click="deleteData(index, item)">
                     <i class="fas fa-trash text-danger"></i> Hapus
-                  </a>
+                  </a> -->
                 </div>
               </div>
             </td>
@@ -85,7 +95,7 @@
     <!-- Modal untuk Input dan Edit Data -->
     <div v-if="isModalOpen" class="modal fade show" style="display: block;" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog" role="document">
-        <div class="modal-content">
+        <div class="modal-content" style="max-height: 90vh; overflow-y: auto;">
           <div class="modal-header">
             <h5 class="modal-title">{{ modalTitle }}</h5>
             <button type="button" class="close" @click="closeModal">
@@ -94,16 +104,32 @@
           </div>
           <div class="modal-body">
             <div class="form-group">
-              <label for="ruang">Ruang</label>
-              <input type="text" class="form-control" id="ruang" v-model="form.ruang">
+              <label for="ruang" style="color: #000;">
+                <b>Ruang</b>
+                <sup style="color: red;"> *</sup>
+              </label>
+              <input type="text" class="form-control" id="ruang" v-model="form.ruang" placeholder="Masukkan Nama Ruangan">
             </div>
             <div class="form-group">
-              <label for="lantai">Lantai</label>
-              <input type="text" class="form-control" id="lantai" v-model="form.lantai">
+              <label for="lantai" style="color: #000;">
+                <b>Lantai</b>
+                <sup style="color: red;"> *</sup>                
+              </label>
+              <input type="number" class="form-control" id="lantai" v-model="form.lantai" placeholder="Masukkan Lantai Berapa">
             </div>
             <div class="form-group">
-              <label for="rak">Rak</label>
-              <input type="text" class="form-control" id="rak" v-model="form.rak">
+              <label for="rak" style="color: #000;">
+                <b>Rak</b>
+                <sup style="color: red;"> *</sup>                
+              </label>
+              <input type="text" class="form-control" id="rak" v-model="form.rak" placeholder="Masukkan Nama Rak">
+            </div>
+            <div class="form-group">
+              <label for="koordinat" style="color: #000;">
+                <b>Koordinat</b>
+                <sup style="color: red;"> *</sup>
+              </label>
+              <input type="text" class="form-control" id="koordinat" v-model="form.koordinat" placeholder="Masukkan Titik Koordinat">
             </div>
           </div>
           <div class="modal-footer">
@@ -128,17 +154,20 @@ export default {
       form: {
         ruang: '',
         lantai: '',
-        rak: ''
+        rak: '',
+        koordinat: '',
       },
       currentIndex: null,
       modalTitle: '',
       modalAction: '',
       isModalOpen: false, // Flag untuk modal open/close
       rowsPerPage: 10, // Menentukan jumlah item per halaman
-      currentPage: 1 // Halaman saat ini
+      currentPage: 1, // Halaman saat ini
+      isLoading: false,
     }
   },
   mounted() {
+    this.isLoading = true;
     this.getLayouts();
   },
   computed: {
@@ -165,12 +194,14 @@ export default {
   },
   methods: {
     getLayouts() {
-      axios.get('/api/layouts')
+      axios.get('/api/v1/layouts')
         .then(response => {
           this.layouts = response.data;
+          this.isLoading = false;
         })
         .catch(error => {
           console.error(error);
+          this.isLoading = false;
         });
     },
     openModal(action, item = null, index = null) {
@@ -180,6 +211,7 @@ export default {
         this.form.ruang = '';
         this.form.lantai = '';
         this.form.rak = '';
+        this.form.koordinat = '';
         this.currentIndex = null;
         this.currentId = null;
       } else if (action === 'edit' && item) {
@@ -188,6 +220,7 @@ export default {
         this.form.ruang = item.ruang;
         this.form.lantai = item.lantai;
         this.form.rak = item.rak;
+        this.form.koordinat = item.koordinat;
         this.currentIndex = index;
         this.currentId = item.id;
       }
@@ -199,7 +232,7 @@ export default {
     saveData() {
       if (this.currentIndex === null) {
         // Tambah Data
-        axios.post('/api/layouts', this.form)
+        axios.post('/api/v1/layouts', this.form)
           .then(response => {
             this.layouts.push(response.data);
             this.closeModal();
@@ -211,7 +244,7 @@ export default {
           });
       } else {
         // Edit Data
-        axios.put(`/api/layouts/${this.currentId}`, this.form)
+        axios.put(`/api/v1/layouts/${this.currentId}`, this.form)
           .then(response => {
             this.layouts[this.currentIndex] = response.data;
             this.closeModal();
@@ -224,7 +257,7 @@ export default {
       }
     },
     deleteData(index, item) {
-      axios.delete(`/api/layouts/${item.id}`)
+      axios.delete(`/api/v1/layouts/${item.id}`)
         .then(response => {
           this.layouts.splice(index, 1);
         })

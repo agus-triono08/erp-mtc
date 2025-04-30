@@ -33,12 +33,21 @@
           <b>Kategori</b>
           <sup style="color: red;">*</sup>
         </label>
-        <select v-model="form.kategori_id" class="form-control" @change="fetchMerek">
+        <v-select
+          :options="kategori"
+          v-model="form.kategori_id"
+          :reduce="option => option.id"
+          label="nama_kategori"
+          placeholder="Pilih Kategori"
+          :searchable="true"
+          @input="fetchMerek"
+        />
+        <!-- <select v-model="form.kategori_id" class="form-control" @change="fetchMerek">
           <option disabled value="">Pilih Kategori</option>
           <option v-for="k in kategori" :key="k.id" :value="k.id">
             {{ k.nama_kategori }}
           </option>
-        </select>
+        </select> -->
       </div>
       
       <div class="row">
@@ -48,12 +57,21 @@
             <b>Merek</b>
             <sup style="color: red;">*</sup>
           </label>
-          <select v-model="form.merek_id" class="form-control" @change="fetchTipe">
+          <v-select
+            :options="merek"
+            v-model="form.merek_id"
+            :reduce="option => option.id"
+            label="nama_merek"
+            placeholder="Pilih Merek"
+            :searchable="true"
+            @input="fetchTipe"
+          />
+          <!-- <select v-model="form.merek_id" class="form-control" @change="fetchTipe">
             <option disabled value="">Pilih Merek</option>
             <option v-for="m in merek" :key="m.id" :value="m.id">
               {{ m.nama_merek }}
             </option>
-          </select>
+          </select> -->
         </div>
 
         <!-- Dropdown Tipe -->
@@ -62,12 +80,20 @@
             <b>Tipe</b>
             <sup style="color: red;">*</sup>
           </label>
-          <select v-model="form.tipe_id" class="form-control">
+          <v-select
+            :options="tipe"
+            v-model="form.tipe_id"
+            :reduce="option => option.id"
+            label="nama_tipe"
+            placeholder="Pilih Tipe"
+            :searchable="true"            
+          />
+          <!-- <select v-model="form.tipe_id" class="form-control">
             <option disabled value="">Pilih Tipe</option>
             <option v-for="t in tipe" :key="t.id" :value="t.id">
               {{ t.nama_tipe }}
             </option>
-          </select>
+          </select> -->
         </div>
       </div>      
 
@@ -142,6 +168,51 @@
             <option value="Stok Lama">Stok Lama</option>
             <option value="Peminjaman">Peminjaman</option>                
           </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-md-4">
+          <label for="jadwal_perawatan" style="color: #000;">
+            <b>Jadwal Perawatan</b>
+            <sup style="color: red;"> *</sup>
+          </label>
+          <!-- <select 
+            id="jadwal_perawatan"
+            v-model="form.jadwal_perawatan"
+            @change="onJadwalChange"
+            class="form-control"
+            required> -->
+          <select 
+            id="jadwal_perawatan"
+            v-model="form.jadwal_perawatan"
+            class="form-control"
+            required>
+            <option value="" disabled selected>Pilih Interval Perawatan</option>
+            <option value="0">Tidak Ada Perawatan</option>
+            <option value="1">Setiap 1 Bulan</option>
+            <option value="3">Setiap 3 Bulan</option>
+            <option value="6">Setiap 6 Bulan</option>
+            <option value="12">Setiap 12 Bulan</option>
+            <!-- <option value="other">Lainnya</option> -->
+          </select>
+        </div>
+
+        <div class="form-group col-md-4">
+          <label for="waktu_perawatan" style="color: #000;">
+            <b>Waktu Total Perawatan</b>
+            <sup style="color: red;"> *</sup>
+          </label>
+          <input type="time" v-model="form.waktu_perawatan" class="form-control" required placeholder="Masukkan Waktu Perawatan">
+          <small class="form-text" style="color: red;">Masukkan Total Perkiraan Waktu Perawatan Semua Stok</small>
+        </div>
+
+        <div class="form-group col-md-4">
+          <label for="jumlah_orang_perawatan" style="color: #000;">
+            <b>Total PIC Perawatan</b>
+            <sup style="color: red;"> *</sup>
+          </label>
+          <input type="number" v-model="form.jumlah_orang_perawatan" class="form-control" required placeholder="Masukkan Total PIC Perawatan">
         </div>
       </div>
 
@@ -229,32 +300,7 @@
       <!-- <div class="form-group">
         <label>Jadwal Perawatan</label>
         <input v-model="form.jadwal_perawatan" type="date" class="form-control" />
-      </div> -->
-
-      <div class="form-group">
-        <label for="jadwal_perawatan" style="color: #000;">
-          <b>Jadwal Perawatan</b>
-          <sup style="color: red;"> *</sup>
-        </label>
-        <!-- <select 
-          id="jadwal_perawatan"
-          v-model="form.jadwal_perawatan"
-          @change="onJadwalChange"
-          class="form-control"
-          required> -->
-        <select 
-          id="jadwal_perawatan"
-          v-model="form.jadwal_perawatan"
-          class="form-control"
-          required>
-          <option value="" disabled selected>Pilih Interval Perawatan</option>
-          <option value="1">Setiap 1 Bulan</option>
-          <option value="3">Setiap 3 Bulan</option>
-          <option value="6">Setiap 6 Bulan</option>
-          <option value="12">Setiap 12 Bulan</option>
-          <!-- <option value="other">Lainnya</option> -->
-        </select>
-      </div>
+      </div> -->      
 
       <!-- Manual Input Interval Perawatan (Jika tidak ada pilihan di atas) -->
       <!-- <div class="form-group" v-if="showManualInputJadwal">
@@ -308,9 +354,13 @@
 <script>
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import vSelect from 'vue-select';
 
 export default {
   name: 'ToolForm',
+  components: {
+    vSelect,
+  },
   data() {
     return {
       form: {
@@ -329,6 +379,8 @@ export default {
         fungsi: '',
         deskripsi: '',
         jadwal_perawatan: '',
+        waktu_perawatan: '',
+        jumlah_orang_perawatan: '',
         gambar: null,
       },
       jenis: [],
@@ -372,7 +424,7 @@ export default {
       axios.get('/api/v1/layouts')
       .then(response => {
         this.Layout = response.data;
-        console.log(this.Layout);
+        // console.log(this.Layout);
       })
       .catch(error => {
         console.error(error);
@@ -383,6 +435,11 @@ export default {
     },
     async submitForm() {
       const formData = new FormData();
+
+       // Konversi waktu perawatan dari format time ke integer (menit)
+      const [hours, minutes] = this.form.waktu_perawatan.split(':');
+      this.form.waktu_perawatan = parseInt(hours) * 60 + parseInt(minutes); // Mengonversi ke menit
+
       for (let key in this.form) {
         formData.append(key, this.form[key]);
       }

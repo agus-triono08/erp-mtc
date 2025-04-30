@@ -23,6 +23,7 @@ class NoSeri extends Model
         'tanggal_kondisi',
         'kondisi',
         'kondisi_after',
+        'reject_reason'
     ];
 
     public function layout(): BelongsTo
@@ -38,5 +39,19 @@ class NoSeri extends Model
     public function perawatan()
     {
         return $this->hasMany(Perawatan::class);
+    }
+
+    public function peminjaman()
+    {
+        return $this->belongsToMany(Peminjaman::class, 'peminjaman_no_seri', 'no_seri_id', 'peminjaman_id')
+            ->withPivot('created_at') // Jika kamu ingin mengakses data dari pivot
+            ->withTimestamps();
+    }
+
+    public function permintaan()
+    {
+        return $this->belongsToMany(Permintaan::class, 'permintaan_no_seri', 'no_seri_id', 'permintaan_id')
+            ->withPivot('created_at') // Jika kamu ingin mengakses data dari pivot
+            ->withTimestamps();
     }
 }

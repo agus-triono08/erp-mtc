@@ -1,92 +1,138 @@
 <template>
-    <div class="container-fluid" style="margin-top: 30px;">
-      <!-- Modal Input Data -->
-      <!--<div id="app" class="modal-input" :class="{'is-visible': showModalInput}" @click.self="tutupModal">
-        <div class="modal-content-input">
-          <input-alat-error @tutup-modal="tutupModal"></input-alat-error>
-        </div>
-      </div>-->
-
-      <!-- Modal Edit Data -->
-      <div id="app" class="modal-input" :class="{'is-visible' :showModalEdit}">
-        <div class="modal-content-input">
-          <edit-alat-dipinjam @tutup-modal="tutupModal" :id="idEdit"></edit-alat-dipinjam>
-        </div>      
-      </div>
-  
-      <!-- Tombol untuk membuka modal -->
-      <!--<div class="d-flex justify-content-between mb-4">
-        <div></div>
-        <div>
-          <form class="d-flex align-items-center">
-            <a @click="tambahDataError" class="btn btn-icon-split btn-plus">
-              <span class="icon text-white-50">
-                <i class="fas fa-plus-circle"></i>
-              </span>
-              <span class="text">Alat Error</span>
-            </a>
-          </form>
-        </div>
-      </div>-->
-      <diV class="row align-items-center justify-content-end mr-3 mt-3 mb-4">        
-        <!-- Search -->
-        <div class="search-wrapper">
-          <div class="input-group">
-            <input type="text" placeholder="search..." class="form-control"
-              v-model="searchQuery"
-              @input="debouncedFetchAlats"/>
+  <div class="container-fluid">
+    <div class="row align-items-center justify-content-end mr-3 mt-4 mb-2">          
+          <div class="search-wrapper col-3">
+            <div class="input-group">
+              <input type="text" placeholder="Search..." class="form-control"
+                v-model="searchQuery"
+                @input="debouncedFetchNoSeri"
+              />            
             </div>
           </div>
-      </diV>
-      <div class="table-responsive text-wrape">
-        <table class="table table-border no-border table-custom text-center">
-          <thead>
-            <tr class="bg-table">
-              <th class="text-center text-black-1 tr-center">#</th>
-              <th class="text-center text-black-1 tr-center">No. Seri Alat</th>
-              <th class="text-center text-black-1 tr-center">No. Pinjam</th>
-              <th class="text-center text-black-1 tr-center">Tgl Pinjam</th>
-              <th class="text-center text-black-1 tr-center">Dipinjam Oleh</th>
-              <th class="text-center text-black-1 tr-center">Divisi</th>
-              <th class="text-center text-black-1 tr-center">Tgl Kembali</th>
-              <th class="text-center text-black-1 tr-center">Durasi</th>
-              <th class="text-center text-black-1 tr-center">Status</th>
-              <!-- <th class="text-center text-black-1 tr-center">Aksi</th> -->
-            </tr>
-          </thead>
-          <tbody v-if="filteredData.length===0">
-            <tr>
-              <td colspan="10" class="text-center">Tidak Ada Data</td>
-            </tr>
-          </tbody>
-          <tbody v-for="(peminjamanalat, index) in filteredData" :key="index">
-            <tr class="text-center">
-              <td class="text-center">{{ index + 1 }}</td>
-              <td class="text-center">{{ peminjamanalat.no_seri_alat ? peminjamanalat.no_seri_alat.no_seri_alat : '-' }}</td>
-              <td class="text-center">{{ peminjamanalat.no_pinjam || '-' }}</td>
-              <td class="text-center">{{ peminjamanalat.tanggal_pinjam || '-' }}</td>
-              <td class="text-center">{{ peminjamanalat.pengguna ? peminjamanalat.pengguna.nama_pengguna : '-' }}</td>
-              <td class="text-center">{{ peminjamanalat.pengguna ? peminjamanalat.pengguna.divisi : '-' }}</td>
-              <td class="text-center">{{ peminjamanalat.tanggal_kembali || '-' }}</td>
-              <td class="text-center">
-                {{ durasiData[index] !== '-' ? durasiData[index] + ' Hari' : '-' }} <br>
-                <small>
-                  <i :class="{'fas fa-clock': !durasiDataKembali[index].includes('Hari Lebih'), 'fas fa-exclamation-circle text-danger': durasiDataKembali[index].includes('Hari Lebih')}"></i>
-                  <span :class="{'text-danger': durasiDataKembali[index].includes('Hari Lebih')}">
-                    {{ durasiDataKembali[index] }}
-                  </span>
-                </small>
-              </td>
-              <td>
-              <div              
-                class="btn-sts"                
-                :class="{
-                          'status-active': peminjamanalat.status === 'Selesai', 
-                          'status-rusak': peminjamanalat.status === 'Sedang Dipinjam', 
-                          'status-error': peminjamanalat.status === 'Barang Siap Diambil'}"
-              >{{ peminjamanalat.status || '-' }}</div></td>
-              <!-- <td>
-                <div class="dropdown text-center">
+        </div>
+    <div class="row align-items-center justify-content-end mr-3 mt-4 mb-2">
+      <div class="ml-2">
+        <!-- <div class="input-group">
+          <label class="mr-2" style="color: #000;"><b>Tanggal Awal:</b></label>
+          <input type="date" class="form-control" v-model="tanggalAwal" style="border-radius: 5px;"/>
+          <label class="ml-2 mr-2" style="color: #000;"><b>Tanggal Akhir:</b></label>
+          <input type="date" class="form-control" v-model="tanggalAkhir" style="border-radius: 5px;">          
+        </div> -->
+      </div>
+    </div>
+        <div class="table-responsive p-3">
+          <table class="table table-border no-border table-custom" style="overflow-x: auto;">
+            <thead>
+              <tr class="bg-table text-center">
+                <th class="text-center" style="width: 10px; color: #000;">#</th>
+
+                <th @click="sortBy('no_peminjaman')" style="cursor: pointer; color: #000;">
+                  No Peminjaman
+                  <i v-if="sortKey === 'no_peminjaman'" :class="sortOrder === 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'"></i>
+                </th>
+                <th @click="sortBy('total')" style="cursor: pointer; color: #000;">
+                  Total 
+                  <i v-if="sortKey === 'total'" :class="sortOrder === 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'"></i>
+                </th>
+
+                <!-- <th @click="sortBy('no_seri.no_seri')" style="cursor: pointer; color: #000;">
+                  No Seri
+                  <i v-if="sortKey === 'no_seri.no_seri'" :class="sortOrder === 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'"></i>
+                </th> -->
+
+                <th @click="sortBy('tgl_pinjam')" style="cursor: pointer; color: #000;">
+                  Tgl Pinjam
+                  <i v-if="sortKey === 'tgl_pinjam'" :class="sortOrder === 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'"></i>
+                </th>
+
+                <th @click="sortBy('staff.nama_staff')" style="cursor: pointer; color: #000;">
+                  Dipinjam Oleh
+                  <i v-if="sortKey === 'staff.nama_staff'" :class="sortOrder === 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'"></i>
+                </th>
+
+                <th @click="sortBy('divisi')" style="cursor: pointer; color: #000;">
+                  Divisi
+                  <i v-if="sortKey === 'divisi'" :class="sortOrder === 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'"></i>
+                </th>
+
+                <th @click="sortBy('tgl_kembali')" style="cursor: pointer; color: #000;">
+                  Tgl Kembali
+                  <i v-if="sortKey === 'tgl_kembali'" :class="sortOrder === 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'"></i>
+                </th>
+
+                <th style="color: #000;">Durasi</th>
+
+                <!-- <th @click="sortBy('no_seri.kondisi')" style="cursor: pointer; color: #000;">
+                  Kondisi
+                  <i v-if="sortKey === 'no_seri.kondisi'" :class="sortOrder === 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'"></i>
+                </th> -->
+
+                <th @click="sortBy('status_kondisi')" style="cursor: pointer; color: #000;">
+                  Status
+                  <i v-if="sortKey === 'status_kondisi'" :class="sortOrder === 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down'"></i>
+                </th>
+                <th style="color: #000;">Aksi</th>
+              </tr>
+            </thead>
+            <tbody v-if="filteredData.length===0">
+              <tr class="text-center">
+                <td colspan="8">Tidak Ada Data</td>
+              </tr>
+            </tbody>
+            <tbody v-for="(rynoseri, index) in filteredData" :key="index">
+              <tr class="text-center">
+                <td>{{ index + 1 }}</td>
+                <td>{{ rynoseri.no_peminjaman || '-' }}</td>
+                <td>{{ rynoseri.total || '-' }}</td>
+                <!-- <td>
+                  <div v-for="(noseri, i) in rynoseri.tools.no_seri" :key="i">
+                    {{ noseri.no_seri }}
+                  </div>
+                </td> -->
+                <td>{{ rynoseri.tgl_pinjam || '-' }}</td>
+                <td>{{ rynoseri.kondisi || '-' }}</td>
+                <td>{{ rynoseri.staff ? rynoseri.staff.nama_staff : '-' }}</td>
+                <td>{{ rynoseri.tgl_kembali }}</td>
+                <td>
+                  {{ durasiData[index] !== '-' ? durasiData[index] + ' Hari' : '-' }} <br>
+                  <small>
+                    <i :class="{'fas fa-clock': !durasiDataKembali[index].includes('Hari Lebih'), 'fas fa-exclamation-circle text-danger': durasiDataKembali[index].includes('Hari Lebih')}"></i>
+                    <span :class="{'text-danger': durasiDataKembali[index].includes('Hari Lebih')}">
+                      {{ durasiDataKembali[index] }}
+                    </span>
+                  </small>
+                </td>
+                <!-- <td>
+                  <div v-for="(noseri, i) in rynoseri.tools.no_seri" :key="i">
+                    <div
+                      class="status-pill parent-element"
+                      :class="{
+                        'status-active': noseri.kondisi === 'OK',
+                        'status-error': noseri.kondisi === 'Error',
+                        'status-rusak': noseri.kondisi === 'Rusak',
+                        'status-musnah': noseri.kondisi === 'Musnah',
+                        'status-hilang': noseri.kondisi === 'Hilang',
+                      }"
+                    >
+                      {{ noseri.kondisi }}
+                    </div>
+                  </div>
+                </td> -->
+                <td>
+                  <div
+                    class="status-pill parent-element"
+                    :class="{
+                      'status-active': rynoseri.status_kondisi === 'Selesai',
+                      'status-error': rynoseri.status_kondisi === 'Menunggu Diambil',
+                      'status-rusak': rynoseri.status_kondisi === 'Ditolak',
+                      'status-musnah': rynoseri.status_kondisi === 'Dipinjam',
+                      'status-hilang': rynoseri.status_kondisi === 'Belum Diproses',
+                    }"
+                  >
+                    {{ rynoseri.status_kondisi || '-' }}
+                  </div>
+                </td>
+                <td>
                   <button
                     class="btn btn-sm"
                     type="button"
@@ -98,21 +144,16 @@
                     <i class="fas fa-ellipsis-v"></i>
                   </button>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" @click="viewDetail(noseri.id)">
-                      <i class="fas fa-eye text-info"></i> Riwayat
-                    </a>
-                    <a class="dropdown-item" @click="editData(noseri.id)">
-                      <i class="fas fa-edit text-primary"></i> Edit
+                    <a class="dropdown-item" @click="openDetailModal(rynoseri.no_seri)">
+                      <i class="fas fa-eye text-info"></i> Detail
                     </a>
                   </div>
-                </div>
-              </td> -->
-            </tr>
-          </tbody>          
-        </table>                             
-      </div>
-      <!-- Pagination -->                
-      <div class="d-flex justify-content-between align-items-center mt-3 mb-4" style="border-radius: 10px; background-color: #f3f4f6; height: 50px; color: #000;">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- Pagination -->
+          <div class="d-flex justify-content-between align-items-center mb-3 mt-3" style="border-radius: 10px; background-color: #f3f4f6; height: 50px; color: #000;">
             <div class="ml-3">
               Rows per page:
               <span>{{ rowsPerPage }}</span>
@@ -127,202 +168,249 @@
                 <i class="fas fa-angle-right"></i>
               </button>
             </div>
-        </div> 
-    </div>
-  </template>
-  
-  <script>
-  import axios from "axios";
-  
-  export default {
-    props: {
-      kodeAlat: String
-    },
-    data() {
-      return {
-        user: {
-          nama_pengguna:'',
-          divisi: ''
-        },
-        noseri: {
-          no_seri_alat: '',
-        },
-        dataPeminjamanAlat: [], // Menyimpan data error
-        showModalInput: false, // Tambahkan variabel untuk mengontrol tampilan modal input
-        searchQuery: '',
-        idEdit: null,
-        showModalEdit: '',
-        rowsPerPage: 10,
-        currentPage: 1,
-      };
-    },
-    computed: {
-      durasiData() {
-        return this.dataPeminjamanAlat.map(peminjamanalat => {
-          if (peminjamanalat.tanggal_kembali) {
-            const tanggalPinjam = new Date(peminjamanalat.tanggal_pinjam);
-            const tanggalKembali = new Date(peminjamanalat.tanggal_kembali);
-            const selisihHari = Math.abs(tanggalKembali - tanggalPinjam);
-            const hari = Math.ceil(selisihHari / (1000 * 60 * 60 * 24));
-            return hari;
-          }
-        });
-      },
-      durasiDataKembali() {
-        return this.dataPeminjamanAlat.map(peminjamanalat => {
-          if (peminjamanalat.tanggal_kembali) {
-            const tanggalTerkini = new Date();
-            const tanggalKembali = new Date(peminjamanalat.tanggal_kembali);
-            const selisihHari = Math.abs(tanggalKembali - tanggalTerkini);
-            const hari = Math.ceil(selisihHari / (1000 * 60 * 60 * 24));
+          </div>
+        </div>
 
-            // Jika tanggal terkininya kurang dari tanggal kembali
-            if (tanggalTerkini < tanggalKembali) {
-              return hari + ' Hari Lagi';
-            } else {
-              // Jika tanggal terkininya lebih dari tanggal kembali
-              const excessDays = Math.ceil((tanggalTerkini - tanggalKembali) / (1000 * 60 * 60 * 24));
-              return excessDays + ' Hari Lebih';
-            }
-          }
-        });
-      },
-      totalPages() {
-        return Math.ceil(this.dataPeminjamanAlat.length / this.rowsPerPage);
-      },
-      paginationInfo() {
-        const start = (this.currentPage - 1) * this.rowsPerPage + 1;
-        const end = Math.min(this.currentPage * this.rowsPerPage, this.dataPeminjamanAlat.length);
-        return `Showing ${start} to ${end} of ${this.dataPeminjamanAlat.length} entries`;
-      },
-      paginatedData() {
-        const start = (this.currentPage - 1) * this.rowsPerPage;
-        const end = start + this.rowsPerPage;
-        return this.dataPeminjamanAlat.slice(start, end);
-      },
-      filteredData() {
-        return this.dataPeminjamanAlat.filter(peminjamanalat => {
-          const searchQueryLower = this.searchQuery.toLowerCase();
-          const noSeriAlat = peminjamanalat.no_seri_alat && peminjamanalat.no_seri_alat.no_seri_alat;
-          const namaPeminjam = peminjamanalat.pengguna && peminjamanalat.pengguna.nama_pengguna;
-          const divisiPeminjam = peminjamanalat.pengguna && peminjamanalat.pengguna.divisi;
-          const noPinjam = peminjamanalat.no_pinjam;
+        <!-- Modal Detail No Seri -->
+        <div v-if="isDetailModalOpen" class="modal fade show" style="display: block;" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content" style="max-height: 90vh; overflow-y: auto;">
+              <div class="modal-header">
+                <h5 class="modal-title"><b>Detail No Seri</b></h5>
+                <button type="button" class="close" @click="closeDetailModal">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <table class="table table-bordered">
+                  <thead class="thead-light">
+                    <tr>
+                      <th>No Seri</th>
+                      <th>Kondisi</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(item, index) in selectedNoSeri" :key="index">
+                      <td>{{ item.no_seri }}</td>
+                      <td>{{ item.kondisi }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" @click="closeDetailModal">Tutup</button>
+              </div>
+            </div>
+          </div>
+        </div>
+  </div>
+</template>
+<script>
+import axios from 'axios';
+import _ from 'lodash'; // pastikan lodash tersedia
 
-          return (
-            (noSeriAlat && noSeriAlat.toLowerCase().includes(searchQueryLower)) ||
-            (namaPeminjam && namaPeminjam.toLowerCase().includes(searchQueryLower)) ||
-            (divisiPeminjam && divisiPeminjam.toLowerCase().includes(searchQueryLower)) ||
-            (noPinjam && noPinjam.toLowerCase().includes(searchQueryLower))
-          );
-        });
-      },
-    },
-    methods: {
-      async fetchAlatError() {
-        try {
-          const kodeAlat = this.kodeAlat; // Kode alat di URL
-          //console.log(this.kodeAlat);
-          const response = await axios.get(`/api/peminjaman/alats/${kodeAlat}`);
-          this.dataPeminjamanAlat = response.data; // Menyimpan data alat
-          //console.log(this.dataPeminjamanAlat); // Debug data
-        } catch (error) {
-          console.error("Error fetching alat error detail:", error);
-          //alert("Gagal memuat detail data alat error.");
-        }
-      },
-      debouncedFetchAlats: _.debounce(function () {
-        this.fetchAlatError();
-      }, 300),
-      tambahDataError() {
-        this.showModalInput = true;
-      },
-      editData(id) {
-        this.idEdit = id;
-        this.showModalEdit = true;
-      },
-      tutupModal() {
-        this.showModalInput = false;
-        this.showModalEdit = false;
-      },
-      prevPage() {
-        if (this.currentPage > 1) {
-          this.currentPage--;
-        }
-      },
-      nextPage() {
-        if (this.currentPage < this.totalPages) {
-          this.currentPage++;
-        }
-      }
-    },    
-    watch: {
-      rowsPerPage() {
-        this.currentPage = 1; // Reset ke halaman pertama saat rowsPerPage berubah
-      }
-    },
-    mounted() {
-      this.fetchAlatError();
+export default {
+  props: {
+    kodeAlat: String,
+  },
+  data() {
+    return {
+      searchQuery: '',
+      datanoseri: [], // harus array!
+      rowsPerPage: 10,
+      currentPage: 1,
+      tanggalAwal: '',
+      tanggalAkhir: '',
+      tujuanDivisiFilter: '',
+      jenisFilter: '',
+      kondisiFilter: '',
+      tujuanDivisiOptions: [],
+      jenisOptions: [],
+      kondisiOptions: [],
+      sortKey: '',
+      sortOrder: 'asc',
+      isDetailModalOpen: false,
+      selectedNoSeri: [],
     }
+  },
+  computed: {
+    // durasiData() {
+    //   return this.datanoseri.map(noseri => {
+    //     if (noseri.tgl_permintaan) {
+    //       const tanggal = new Date(noseri.tgl_permintaan);
+    //       const tanggalTerkini = new Date();
+    //       const durasi = tanggalTerkini - tanggal;
+    //       const hari = Math.floor(durasi / (1000 * 60 * 60 * 24));
+    //       return hari;
+    //     }
+    //     return '-';
+    //   });
+    // },
+    durasiData() {
+      return this.datanoseri.map(peminjamanalat => {
+        if (peminjamanalat.tgl_kembali) {
+          const tanggalPinjam = new Date(peminjamanalat.tgl_pinjam);
+          const tanggalKembali = new Date(peminjamanalat.tgl_kembali);
+          const selisihHari = Math.abs(tanggalKembali - tanggalPinjam);
+          const hari = Math.ceil(selisihHari / (1000 * 60 * 60 * 24));
+          return hari;
+        }
+      });
+    },
+    durasiDataKembali() {
+      return this.datanoseri.map(peminjamanalat => {
+        if (peminjamanalat.tgl_kembali) {
+          const tanggalTerkini = new Date();
+          const tanggalKembali = new Date(peminjamanalat.tgl_kembali);
+          const selisihHari = Math.abs(tanggalKembali - tanggalTerkini);
+          const hari = Math.ceil(selisihHari / (1000 * 60 * 60 * 24));
+
+          // Jika tanggal terkininya kurang dari tanggal kembali
+          if (tanggalTerkini < tanggalKembali) {
+            return hari + ' Hari Lagi';
+          } else {
+            // Jika tanggal terkininya lebih dari tanggal kembali
+            const excessDays = Math.ceil((tanggalTerkini - tanggalKembali) / (1000 * 60 * 60 * 24));
+            return excessDays + ' Hari Lebih';
+          }
+        }
+      });
+    },
+    totalPages() {
+      return Math.ceil(this.datanoseri.length / this.rowsPerPage);
+    },
+    paginationInfo() {
+      const start = (this.currentPage - 1) * this.rowsPerPage + 1;
+      const end = Math.min(this.currentPage * this.rowsPerPage, this.datanoseri.length);
+      return `Showing ${start} to ${end} of ${this.datanoseri.length} entries`;
+    },
+    paginatedData() {
+      if (!Array.isArray(this.datanoseri)) return []; // perlindungan
+      const start = (this.currentPage - 1) * this.rowsPerPage;
+      const end = this.currentPage * this.rowsPerPage;
+      return this.datanoseri.slice(start, end);
+    },
+    filteredData() {
+      if (
+        this.searchQuery ||
+        this.tanggalAwal ||
+        this.tanggalAkhir ||
+        this.tujuanDivisiFilter ||
+        this.jenisFilter ||
+        this.kondisiFilter
+      ) {
+        return this.paginatedData.filter(datanoseri => {
+          const tanggalMatch = this.tanggalAwal && this.tanggalAkhir
+            ? datanoseri.tgl_permintaan >= this.tanggalAwal && datanoseri.tgl_permintaan <= this.tanggalAkhir
+            : true;
+
+          const searchMatch = this.searchQuery
+            ? (datanoseri.tools.no_seri.no_seri && datanoseri.tools.no_seri.no_seri.toLowerCase().includes(this.searchQuery.toLowerCase())) ||
+            (datanoseri.no_peminjaman && datanoseri.no_peminjaman.toLowerCase().includes(this.searchQuery.toLowerCase()))
+            : true;
+
+          const tujuanDivisiMatch = this.tujuanDivisiFilter
+            ? datanoseri.tujuan === this.tujuanDivisiFilter
+            : true;
+
+          const jenisMatch = this.jenisFilter
+            ? datanoseri.jenis === this.jenisFilter
+            : true;
+
+          const kondisiMatch = this.kondisiFilter
+            ? datanoseri.kondisi === this.kondisiFilter
+            : true;
+
+          return tanggalMatch && searchMatch && tujuanDivisiMatch && jenisMatch && kondisiMatch;
+        });
+      } else {
+        return this.paginatedData;
+      }
+    }
+  },
+  methods: {
+    async fetchNoSeriAlat() {
+      try {
+        const kodeAlat = this.kodeAlat;
+        // console.log(this.kodeAlat);
+        const response = await axios.get(`/api/v1/peminjaman/getPeminjaman/${kodeAlat}`);
+        // console.log('Respon dari backend:', response.data);
+
+        // Penyesuaian jika backend mengirim data sebagai object { data: [...] }
+        const result = response.data;
+        if (Array.isArray(result)) {
+          this.datanoseri = result;
+        } else if (Array.isArray(result.data)) {
+          this.datanoseri = result.data;
+        } else {
+          // console.warn('Response tidak sesuai format yang diharapkan.');
+          this.datanoseri = [];
+        }
+      } catch (error) {
+        console.error('Gagal fetch data:', error);
+        this.datanoseri = [];
+      }
+    },
+    debouncedFetchNoSeri: _.debounce(function () {
+      this.fetchNoSeriAlat();
+    }, 300),
+    prevPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+      }
+    },
+    nextPage() {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+      }
+    },
+    sortBy(key) {
+      if (this.sortKey === key) {
+        this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
+      } else {
+        this.sortKey = key;
+        this.sortOrder = 'asc';
+      }
+
+      this.datanoseri.sort((a, b) => {
+        let aVal = _.get(a, key);
+        let bVal = _.get(b, key);
+
+        // Normalize undefined/null
+        aVal = aVal === undefined || aVal === null ? '' : aVal;
+        bVal = bVal === undefined || bVal === null ? '' : bVal;
+
+        if (typeof aVal === 'string') aVal = aVal.toLowerCase();
+        if (typeof bVal === 'string') bVal = bVal.toLowerCase();
+
+        if (aVal < bVal) return this.sortOrder === 'asc' ? -1 : 1;
+        if (aVal > bVal) return this.sortOrder === 'asc' ? 1 : -1;
+        return 0;
+      });
+    },
+    openDetailModal(noseriList) {
+      this.selectedNoSeri = noseriList;
+      this.isDetailModalOpen = true;
+    },
+    closeDetailModal() {
+      this.isDetailModalOpen = false;
+      this.selectedNoSeri = [];
+    },
+  },
+  mounted() {
+    this.fetchNoSeriAlat();
   }
-  </script>
-  
-  <style>
-    .no-border {
-      border: none;
-    }
-  
-    .no-border th,
-    .no-border td {
-      border-top: none !important;
-      border-bottom: none !important;
-    }
-  
-    .compact-table th,
-    .compact-table td {
-      padding: 0.1rem 0.3rem;
-    }
-  
-    .compact-table tbody tr {
-      margin-bottom: 0;
-    }
-  
-    .compact-table th {
-      padding-left: 0.2rem;
-      padding-right: 0.2rem;
-    }
-  
-    .compact-table td {
-      padding-left: 0.2rem;
-      padding-right: 0.2rem;
-    }
-  
-    .text-wrap {
-      white-space: normal; /* Atau gunakan pre-wrap jika ingin mempertahankan spasi */
-      word-wrap: break-word; /* Memungkinkan kata untuk terputus jika terlalu panjang */
-      overflow-wrap: break-word; /* Memastikan kata panjang terputus */
-    }
-  
-    .modal-input {
-      display: none; /* Sembunyikan modal secara default */
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5); /* Latar belakang transparan */
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-    }
-  
-    .modal-input.is-visible {
-      display: flex; /* Tampilkan modal saat is-visible aktif */
-    }
-  
-    .modal-content-input {
-      background-color: white;
-      padding: 20px;
-      border-radius: 20px;
-      width: 100%;
-    }
-  </style>
+}
+</script>
+<style>
+  .btn-sts {
+    border: 1px solid transparent;
+    transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
+    height: 25px;
+    width: auto;
+    border-radius: 10px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+  }
+</style>

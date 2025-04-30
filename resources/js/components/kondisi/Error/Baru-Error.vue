@@ -14,9 +14,9 @@
     </ul>
     <div class="row align-items-center justify-content-end m-3">      
       <!-- Tambah Data -->
-      <!-- <button class="btn btn-sm btn-outline-primary mr-2 ml-1" @click="openModal('add')">
+      <button class="btn btn-sm btn-outline-primary mr-2 ml-1" @click="openModal('add')">
         <i class="fa fa-plus-circle"></i> Tambah Data
-      </button> -->
+      </button>
       <div class="search-wrapper">
         <div class="input-group">
           <input type="text" placeholder="Search..." class="form-control"
@@ -192,6 +192,7 @@
 <script>
 import vSelect from 'vue-select';
 import Swal from 'sweetalert2';
+import axios from "axios";
 
 export default {
   components: {
@@ -205,9 +206,9 @@ export default {
         { text: 'Bob Smith', value: 'Bob Smith' },
         { text: 'Alice Johnson', value: 'Alice Johnson' },
       ],
-      data: [
-        { no_seri: '1122wscj121', nama: 'Clamp', tgl: '2025-02-01', kondisi: 'Error', detail: 'Sensor tidak berfungsi', pic: 'John Doe', status: 'Belum' },
-        { no_seri: '1122wscj122', nama: 'Clamp', tgl: '2025-02-10', kondisi: 'Error', detail: 'Koneksi kabel terputus', pic: 'Jane Doe', status: 'Belum' },
+      dataPerbaikan: [
+        // { no_seri: '1122wscj121', nama: 'Clamp', tgl: '2025-02-01', kondisi: 'Error', detail: 'Sensor tidak berfungsi', pic: 'John Doe', status: 'Belum' },
+        // { no_seri: '1122wscj122', nama: 'Clamp', tgl: '2025-02-10', kondisi: 'Error', detail: 'Koneksi kabel terputus', pic: 'Jane Doe', status: 'Belum' },
       ],
       paginatedData: [],
       searchQuery: '',
@@ -229,15 +230,30 @@ export default {
   },
   computed: {
     totalPages() {
-      return Math.ceil(this.data.length / this.rowsPerPage);
+      return Math.ceil(this.dataPerbaikan.length / this.rowsPerPage);
     },
     paginationInfo() {
       const start = (this.currentPage - 1) * this.rowsPerPage + 1;
-      const end = Math.min(start + this.rowsPerPage - 1, this.data.length);
-      return `Menampilkan ${start} - ${end} dari ${this.data.length} data`;
-    }
+      const end = Math.min(start + this.rowsPerPage - 1, this.dataPerbaikan.length);
+      return `Menampilkan ${start} - ${end} dari ${this.dataPerbaikan.length} data`;
+    },
+  },
+  mounted(){
+    this.fetchData();
   },
   methods: {
+    fetchData() {
+      axios.get('/api/v1/perbaikan')
+        .then(response => {
+          console.log('Data perbaikan:', response.data);
+          this.dataPerbaikan = response.data;
+          console.log('Data perbaikan setelah diassign:', this.dataPerbaikan);
+          // this.updatePaginatedData();
+        })
+        .catch(error => {
+          console.error('Error pada fetchData:', error);
+        })
+    },
     openModal(action, item = null, index = null) {
       this.isModalOpen = true;
       this.modalAction = action === 'add' ? 'Simpan' : 'Perbarui';
@@ -261,23 +277,23 @@ export default {
     },
     saveData() {
       if (this.modalAction === 'Simpan') {
-        this.data.push({ ...this.form });
+        this.dataPerbaikan.push({ ...this.form });
       } else {
-        const index = this.data.findIndex(item => item.no_seri === this.form.no_seri);
+        const index = this.dataPerbaikan.findIndex(item => item.no_seri === this.form.no_seri);
         if (index !== -1) {
-          this.$set(this.data, index, { ...this.form });
+          this.$set(this.dataPerbaikan, index, { ...this.form });
         }
       }
       this.closeModal();
       this.updatePaginatedData();
     },
     deleteData(index) {
-      this.data.splice(index, 1);
+      this.dataPerbaikan.splice(index, 1);
       this.updatePaginatedData();
     },
     updatePaginatedData() {
       const start = (this.currentPage - 1) * this.rowsPerPage;
-      this.paginatedData = this.data.slice(start, start + this.rowsPerPage);
+      this.paginatedData = this.dataPerbaikan.slice(start, start + this.rowsPerPage);
     },
     perbaikanData(index) {
       Swal.fire({
@@ -289,7 +305,7 @@ export default {
         cancelButtonText: 'Tidak, batalkan!',
       }).then((result) => {
         if (result.isConfirmed) {
-          this.data.splice(index, 1);
+          this.dataPerbaikan.splice(index, 1);
           this.updatePaginatedData();
           Swal.fire('Berhasil!', 'Data telah diperbaiki.', 'success');
         }

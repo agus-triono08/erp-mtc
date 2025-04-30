@@ -176,6 +176,10 @@ Route::get('/manajer-mtc/alat/data-error/input', function () {
 Route::get('/manajer-mtc/layout', function() {
     return view('manajer-mtc.Main.layout');
 })->name('layout.manajermtc');
+
+Route::get('/manager-mtc/inventory', function() {
+    return view('manajer-mtc.Main.kategori');
+})->name('kategori.managermtc');
 });
 
 // Kondisi

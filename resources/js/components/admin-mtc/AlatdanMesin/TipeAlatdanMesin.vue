@@ -319,8 +319,14 @@ export default {
       }
     },
     getSortValue(item, key) {
-      if (key === 'jenis') {
-        return item.jenis?.nama_jenis;
+      if (key === 'kategori') {
+        return item.kategorimerek && item.kategorimerek.kategori ? item.kategorimerek.kategori.nama_kategori : '';
+      } else if (key === 'merek') {
+        return item.kategorimerek && item.kategorimerek.merek ? item.kategorimerek.merek.nama_merek : '';
+      } else if (key === 'kode_kategori') {
+        return item.kode_tipe || '';
+      } else if (key === 'nama_kategori') {
+        return item.nama_tipe || '';
       }
       return item[key];
     },
