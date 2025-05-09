@@ -10,8 +10,16 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::all();
-        return response()->json($users);
+        $all = User::all();
+
+        $byPIC = User::where('divisi_id', 1)
+                    ->whereNotIn('jabatan_id', [1, 2])
+                    ->get();
+
+        return response()->json([
+            'all' => $all,
+            'byPIC' => $byPIC,
+        ]);
     }
 
     public function store(Request $request)

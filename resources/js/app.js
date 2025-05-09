@@ -188,6 +188,7 @@ const UserDataPermintaan = require('./components/user/PeminjamanAlat/PermintaanA
 const UserInputPermintaan = require('./components/user/PeminjamanAlat/PermintaanAlat/InputPermintaan.vue').default;
 const UserDetailPermintaan  = require('./components/user/PeminjamanAlat/PermintaanAlat/DetailPermintaanAlat.vue').default;
 const UserPermintaanPengeluaran = require('./components/user/PeminjamanAlat/PermintaanAlat/DataRincianPermintaanAlat.vue').default;
+const UserInputPerubahanPeminjaman = require('./components/user/PeminjamanAlat/InputPerubahanPeminjaman.vue').default;
 
 // KONDISI ERROR
 const BaruError = require('./components/kondisi/Error/Baru-Error.vue').default;
@@ -305,6 +306,7 @@ Vue.component('user-detail-peminjaman', UserDetaiPeminjaman);
 Vue.component('user-data-permintaan', UserDataPermintaan);
 Vue.component('user-input-permintaan', UserInputPermintaan);
 Vue.component('user-permintaan-pengeluaran', UserPermintaanPengeluaran);
+Vue.component('user-input-perubahan-peminjaman', UserInputPerubahanPeminjaman);
 
 
 /**

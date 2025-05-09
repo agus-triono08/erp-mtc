@@ -6,7 +6,11 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Inventory\NoSeri;
 use App\Models\Inventory\Musnah;
+use App\Models\Inventory\MusnahActivity;
+use App\Models\User;
 use App\Models\Inventory\Tools;
+use App\Models\Inventory\NoSeriLog;
+use Illuminate\Support\Facades\Storage;
 
 class MusnahController extends Controller
 {
@@ -16,10 +20,35 @@ class MusnahController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return Musnah::with([
-            'noSeri.tools'
-        ])->get();
+    {        
+        $all = Musnah::with([
+            'noSeri.tools',
+            'noSeri.layout'
+        ])
+        ->orderBy('updated_at', 'desc')
+        ->get();
+
+        $byStatusProses = Musnah::with([
+            'noSeri.tools',
+            'noSeri.layout',
+        ])
+        ->where('status', 'Proses')
+        ->orderBy('updated_at', 'desc')
+        ->get();
+
+        $byStatusSelesai = Musnah::with([
+            'noSeri.tools',
+            'noSeri.layout',
+        ])
+        ->where('status', 'Selesai')
+        ->orderBy('updated_at', 'desc')
+        ->get();
+
+        return response()->json([
+            'all' => $all,
+            'byStatusProses' => $byStatusProses,
+            'byStatusSelesai' => $byStatusSelesai,
+        ]);
     }
 
     /**
@@ -72,11 +101,26 @@ class MusnahController extends Controller
         // Update kondisi pada tabel no_seri
         $noSeri = NoSeri::find($request->no_seri_id);
         if ($noSeri) {
-            $noSeri->kondisi = $request->kondisi;
+
+            $oldKondisi = $noSeri->kondisi;
+            $newKondisi = $request->kondisi;
+
+            if ($oldKondisi !== $newKondisi) {
+                // Simpan log perubahan kondisi
+                NoSeriLog::create([
+                    'no_seri_id'  => $noSeri->id,
+                    'old_kondisi' => $oldKondisi,
+                    'new_kondisi' => $newKondisi,
+                    'changed_at'  => now(),
+                    'changed_by'  => auth()->id() ?? 1, // pastikan user sudah login
+                ]);
+            }
+
+            $noSeri->kondisi = $newKondisi;
             $noSeri->save();
 
             // Kurangi stok_akhir dan harga_total pada tabel tools jika kondisi musnah
-            if ($noSeri->tools_id && strtolower($request->kondisi) === 'musnah') {
+            if ($noSeri->tools_id && strtolower($newKondisi) === 'musnah') {
                 $tool = Tools::find($noSeri->tools_id);
                 if ($tool) {
                     if ($tool->stok_akhir > 0) {
@@ -104,7 +148,27 @@ class MusnahController extends Controller
      */
     public function show($id)
     {
-        //
+        $pemusnahan = Musnah::with([
+            'noSeri.tools',
+            'noSeri.layout',
+            'users',
+            'musnah_activity' => function($q) {
+                $q->orderBy('changed_at', 'desc');
+            }
+        ])
+        ->orderBy('updated_at', 'desc')
+        ->findOrFail($id);
+        // Get the collection of related models
+        $musnahActivities = $pemusnahan->musnah_activity;
+        // Use the map method on the collection
+        $musnahActivities = $musnahActivities->map(function ($item) {
+            $item->changed_at = \Carbon\Carbon::parse($item->changed_at)->format('Y-m-d');
+            return $item;
+        });
+        // Update the musnah_activity attribute of the pemus$pemusnahan model
+        $pemusnahan->musnah_activity = $musnahActivities;
+
+        return response()->json($pemusnahan);
     }
 
     /**
@@ -163,5 +227,49 @@ class MusnahController extends Controller
         }
 
         return response()->json($pemusnahan);
+    }
+
+    public function addActivity(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:musnah,id',
+            'dokumen_pemusnahan' => 'required|array', // Ini sudah benar, karena kita akan mengirim array file
+            'dokumen_pemusnahan.*' => 'file|mimes:pdf,jpg,jpeg,png|max:2048', // Validasi tiap file
+            'berita_acara' => 'nullable|file|mimes:pdf',
+            'detail_pemusnahan' => 'nullable|string',
+        ]);
+
+        $pemusnahan = Musnah::findOrFail($request->id);
+
+        $pemusnahan->update([
+            'status' => 'Selesai',
+        ]);
+
+        // Proses file dokumen_pemusnahan yang merupakan array
+        $dokumenPaths = [];
+        if ($request->hasFile('dokumen_pemusnahan')) {
+            foreach ($request->file('dokumen_pemusnahan') as $file) {
+                // Simpan setiap file ke folder storage
+                $dokumenPaths[] = $file->store('pemusnahan/dokumen', 'public');
+            }
+        }
+
+        // Simpan file berita acara, jika ada
+        $baPath = null;
+        if ($request->hasFile('berita_acara')) {
+            $baPath = $request->file('berita_acara')->store('pemusnahan/ba', 'public');
+        }
+
+        // Simpan aktivitas pemusnahan ke database
+        MusnahActivity::create([
+            'musnah_id' => $pemusnahan->id,
+            'dokumen_pemusnahan' => json_encode($dokumenPaths), // Menyimpan array file paths dalam format JSON
+            'berita_acara' => $baPath,
+            'detail_pemusnahan' => $request->detail_pemusnahan,
+            'status' => 'Selesai',
+            'changed_at' => now()->format('Y-m-d'),
+        ]);
+
+        return response()->json(['message' => 'Berhasil menyimpan aktivitas pemusnahan.']);
     }
 }

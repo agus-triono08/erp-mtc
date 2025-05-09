@@ -36,21 +36,21 @@
       <table class="table table-border no-border table-custom" style="border-radius: 5px;">
         <thead class="bg-table">
           <tr>
-            <th class="text-center p-2 border cursor-pointer" @click="sortBy('tanggal_masuk')" style="color: #000;">
-              Tanggal Masuk
-              <span v-if="sortKey === 'tanggal_masuk'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+            <th class="text-center p-2 border cursor-pointer" @click="sortBy('changed_at')" style="color: #000;">
+              Tanggal
+              <span v-if="sortKey === 'changed_at'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
             </th>
-            <th class="text-center p-2 border cursor-pointer" @click="sortBy('tools.nama')" style="color: #000;">
+            <th class="text-center p-2 border cursor-pointer" @click="sortBy('no_seri.tools.nama')" style="color: #000;">
               Nama Alat/Mesin
-              <span v-if="sortKey === 'tools.nama'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+              <span v-if="sortKey === 'no_seri.tools.nama'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
             </th>
-            <th class="text-center p-2 border cursor-pointer" @click="sortBy('no_seri')" style="color: #000;">
+            <th class="text-center p-2 border cursor-pointer" @click="sortBy('no_seri.no_seri')" style="color: #000;">
               No Seri
-              <span v-if="sortKey === 'no_seri'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+              <span v-if="sortKey === 'no_seri.no_seri'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
             </th>
-            <th class="text-center p-2 border cursor-pointer" @click="sortBy('kondisi')" style="color: #000;">
+            <th class="text-center p-2 border cursor-pointer" @click="sortBy('bew_kondisi')" style="color: #000;">
               Kondisi
-              <span v-if="sortKey === 'kondisi'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+              <span v-if="sortKey === 'bew_kondisi'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
             </th>
           </tr>
         </thead>
@@ -61,20 +61,20 @@
         </tbody>
         <tbody>
           <tr v-for="item in paginatedData" :key="item.id">
-            <td class="text-center p-2 border">{{ item.tanggal_masuk }}</td>
-            <td class="text-center p-2 border">{{ item.tools.nama }}</td>
-            <td class="text-center p-2 border">{{ item.no_seri }}</td>
+            <td class="text-center p-2 border">{{ item.changed_at }}</td>
+            <td class="text-center p-2 border">{{ item.no_seri.tools.nama }}</td>
+            <td class="text-center p-2 border">{{ item.no_seri.no_seri }}</td>
             <td class="text-center">
               <div 
                 class="btn-sts"
-                  :class="{'status-active': item.kondisi === 'OK', 
-                          'status-error': item.kondisi === 'Error',
-                          'status-rusak': item.kondisi === 'Rusak',
-                          'status-hilang': item.kondisi === 'Hilang',
-                          'status-dipinjam': item.kondisi === 'Musnah',
+                  :class="{'status-active': item.new_kondisi === 'OK', 
+                          'status-error': item.new_kondisi === 'Error',
+                          'status-rusak': item.new_kondisi === 'Rusak',
+                          'status-hilang': item.new_kondisi === 'Hilang',
+                          'status-dipinjam': item.new_kondisi === 'Musnah',
                 }"
               >
-                {{ item.kondisi || '-' }}
+                {{ item.new_kondisi || '-' }}
               </div>
             </td>
           </tr>
@@ -130,16 +130,16 @@ export default {
       return [...new Set(names)];
     },
     kondisiOptions() {
-      const kondisi = this.noseriData.map(item => item.kondisi);
+      const kondisi = this.noseriData.map(item => item.new_kondisi);
       return [...new Set(kondisi)];
     },
     filteredData() {
       let data = this.noseriData.filter(item => {
         return (
-          (!this.selectedNama || item.tools.nama === this.selectedNama) &&
-          (!this.selectedKondisi || item.kondisi === this.selectedKondisi) &&
-          (item.no_seri.toLowerCase().includes(this.search.toLowerCase()) ||
-          item.tools.nama.toLowerCase().includes(this.search.toLowerCase()))
+          (!this.selectedNama || item.no_seri.tools.nama === this.selectedNama) &&
+          (!this.selectedKondisi || item.new_kondisi === this.selectedKondisi) &&
+          (item.no_seri.no_seri.toLowerCase().includes(this.search.toLowerCase()) ||
+          item.no_seri.tools.nama.toLowerCase().includes(this.search.toLowerCase()))
         );
       });
 
@@ -175,22 +175,22 @@ export default {
   },
   methods: {
     async fetchData() {
-      const res = await fetch('/api/v1/noseri');
+      const res = await fetch('/api/v1/logs/noseri');
       const data = await res.json();
-      this.noseriData = data;
+      this.noseriData = data;    
     },
     exportToExcel() {
       const worksheet = XLSX.utils.json_to_sheet(
         this.filteredData.map(item => ({
-          'Tanggal Masuk': item.tanggal_masuk,
-          'Nama Alat/Mesin': item.tools.nama,
-          'No Seri': item.no_seri,
-          'Kondisi': item.kondisi
+          'Tanggal': item.changed_at,
+          'Nama Alat/Mesin': item.no_seri.tools.nama,
+          'No Seri': item.no_seri.no_seri,
+          'Kondisi': item.new_kondisi,
         }))
       );
       const workbook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(workbook, worksheet, 'Noseri');
-      XLSX.writeFile(workbook, 'noseri.xlsx');
+      XLSX.utils.book_append_sheet(workbook, worksheet, 'Noseri Per Kondisi');
+      XLSX.writeFile(workbook, 'Riwayat Per Kondisi.xlsx');
     },
     sortBy(key) {
       if (this.sortKey === key) {

@@ -36,25 +36,29 @@
       <table class="table table-border no-border table-custom" style="border-radius: 5px;">
         <thead class="bg-table">
           <tr>
-            <th class="text-center p-2 border cursor-pointer" @click="sortBy('no_peminjaman')" style="color: #000;">
+            <th class="text-center p-2 border cursor-pointer" @click="sortBy('changed_at')" style="color: #000;">
+              Tgl
+              <span v-if="sortKey === 'changed_at'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+            </th>
+            <th class="text-center p-2 border cursor-pointer" @click="sortBy('permintaan.no_permintaan')" style="color: #000;">
               No Permintaan
-              <span v-if="sortKey === 'no_peminjaman'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+              <span v-if="sortKey === 'permintaan.no_permintaan'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
             </th>
-            <th class="text-center p-2 border cursor-pointer" @click="sortBy('no_seri.tools.nama')" style="color: #000;">
+            <th class="text-center p-2 border cursor-pointer" @click="sortBy('permintaan.no_seri.tools.nama')" style="color: #000;">
               Nama Alat/Mesin
-              <span v-if="sortKey === 'no_seri.tools.nama'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+              <span v-if="sortKey === 'permintaan.no_seri.tools.nama'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
             </th>
-            <th class="text-center p-2 border cursor-pointer" @click="sortBy('total')" style="color: #000;">
+            <th class="text-center p-2 border cursor-pointer" @click="sortBy('permintaan.total')" style="color: #000;">
               Total
-              <span v-if="sortKey === 'total'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+              <span v-if="sortKey === 'permintaan.total'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
             </th>
             <!-- <th class="text-center p-2 border cursor-pointer" @click="sortBy('no_seri')" style="color: #000;">
               No Seri
               <span v-if="sortKey === 'no_seri'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
-            </th> -->
-            <th class="text-center p-2 border cursor-pointer" @click="sortBy('tanggal_pinjam')" style="color: #000;">
+            </th> -->            
+            <th class="text-center p-2 border cursor-pointer" @click="sortBy('permintaan.tgl_permintaan')" style="color: #000;">
               Tgl Permintaan
-              <span v-if="sortKey === 'tanggal_pinjam'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+              <span v-if="sortKey === 'permintaan.tgl_permintaan'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
             </th>
             <th class="text-center p-2 border cursor-pointer" @click="sortBy('diminta_oleh')" style="color: #000;">
               Diminta Oleh
@@ -72,9 +76,9 @@
               Kondisi
               <span v-if="sortKey === 'kondisi'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
             </th> -->
-            <th class="text-center p-2 border cursor-pointer" @click="sortBy('status')" style="color: #000;">
+            <th class="text-center p-2 border cursor-pointer" @click="sortBy('new_status')" style="color: #000;">
               Status
-              <span v-if="sortKey === 'status'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+              <span v-if="sortKey === 'new_status'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
             </th>
             <th class="text-center p-2 border" style="color: #000;">Aksi</th>
           </tr>
@@ -86,11 +90,12 @@
         </tbody>
         <tbody>
           <tr v-for="item in paginatedData" :key="item.id">
-            <td class="text-center p-2 border">{{ item.no_permintaan || '-' }}</td>
-            <td class="text-center p-2 border">{{ item.tools.nama || '-' }}</td>
-            <td class="text-center p-2 border">{{ item.total }}</td>
+            <td class="text-center p-2 border">{{ item.changed_at }}</td>
+            <td class="text-center p-2 border">{{ item.permintaan.no_permintaan || '-' }}</td>
+            <td class="text-center p-2 border">{{ getNamaAlat(item) }}</td>
+            <td class="text-center p-2 border">{{ item.permintaan.total }}</td>
             <!-- <td class="text-center p-2 border">{{ item.no_seri.no_seri || '-' }}</td> -->
-            <td class="text-center p-2 border">{{ item.tgl_permintaan || '-' }}</td>
+            <td class="text-center p-2 border">{{ item.permintaan.tgl_permintaan || '-' }}</td>
             <td class="text-center p-2 border">-</td>
             <td class="text-center p-2 border">-</td>
             <!-- <td class="text-center p-2 border">{{ item.tgl_kembali ||'-'}}</td> -->
@@ -111,14 +116,14 @@
               <div
                 class="status-pill parent-element"
                 :class="{
-                  'status-active': item.status_kondisi === 'Selesai',
-                  'status-error': item.status_kondisi === 'Menunggu Diambil',
-                  'status-rusak': item.status_kondisi === 'Ditolak',
-                  'status-musnah': item.status_kondisi === 'Digunakan',
-                  'status-hilang': item.status_kondisi === 'Belum Diproses',
+                  'status-active': item.new_status === 'Selesai',
+                  'status-error': item.new_status === 'Menunggu Diambil',
+                  'status-rusak': item.new_status === 'Ditolak',
+                  'status-musnah': item.new_status === 'Digunakan',
+                  'status-hilang': item.new_status === 'Belum Diproses',
                 }"
               >
-                {{ item.status_kondisi || '-' }}
+                {{ item.new_status || '-' }}
               </div>
             </td>
             <td>
@@ -133,7 +138,7 @@
                 <i class="fas fa-ellipsis-v"></i>
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" @click="openDetailModal(item.no_seri)">
+                <a class="dropdown-item" @click="openDetailModal(item.permintaan.no_seri)">
                   <i class="fas fa-eye text-info"></i> Detail
                 </a>
               </div>
@@ -235,8 +240,9 @@ export default {
           // (!this.selectedNama || item.no_seri && item.no_seri.tools.nama === this.selectedNama) &&
           // (!this.selectedKondisi || item.no_seri.kondisi === this.selectedKondisi) &&
           // (item.no_seri.no_seri.toLowerCase().includes(this.search.toLowerCase()) ||
-          (item.tools.nama.toLowerCase().includes(this.search.toLowerCase()) ||
-          item.no_peminjaman.toLowerCase().includes(this.search.toLowerCase()))
+          (item.permintaan &&
+          item.permintaan.no_seri?.[0]?.tools?.nama?.toLowerCase().includes(this.search.toLowerCase()) ||
+          item.permintaan && item.permintaan.no_permintaan.toLowerCase().includes(this.search.toLowerCase()))
         );
       });
 
@@ -272,23 +278,23 @@ export default {
   },
   methods: {
     async fetchData() {
-      const res = await fetch('/api/v1/permintaan');
+      const res = await fetch('/api/v1/logs-permintaan');
       const data = await res.json();
-      this.permintaanData = data.all;
+      this.permintaanData = data;
     },
     exportToExcel() {
       const worksheet = XLSX.utils.json_to_sheet(
         this.filteredData.map(item => ({
-          'No Permintaan': item.no_permintaan,
-          'Nama Alat/Mesin': item.tools.nama,
-          'Total': item.total,
+          'No Permintaan': item.permintaan && item.permintaan.no_permintaan,
+          'Nama Alat/Mesin': this.getNamaAlat(item),
+          'Total': item.permintaan && item.permintaan.total,
           // 'No Seri': item.no_seri.no_seri,
-          'Tanggal Permintaan': item.tgl_permintaan,
+          'Tanggal Permintaan': item.permintaan && item.permintaan.tgl_permintaan,
           'Dipinjam Oleh': '-',
           'Divisi': '-',
           // 'Tanggal Kembali': item.tgl_kembali,
           // 'Kondisi': item.no_seri.kondisi,
-          'Status': item.status_kondisi,
+          'Status': item.new_status,
         }))
       );
       const workbook = XLSX.utils.book_new();
@@ -315,6 +321,10 @@ export default {
     closeDetailModal() {
       this.isDetailModalOpen = false;
       this.selectedNoSeri = [];
+    },
+    getNamaAlat(item) {
+      const ns = item?.permintaan?.no_seri?.[0];
+      return ns?.tools?.nama || '-';
     },
   },
   mounted() {

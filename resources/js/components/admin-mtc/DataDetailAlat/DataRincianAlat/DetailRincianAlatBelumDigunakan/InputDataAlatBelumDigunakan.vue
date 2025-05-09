@@ -177,7 +177,7 @@ export default {
     async submitForm() {
       try {
         const kodeAlat = this.kodeAlat; // Kode alat di URL
-        // console.log(this.kodeAlat);
+        console.log(this.kodeAlat);
 
         // Konversi waktu perawatan dari format time ke integer (menit)
         const [hours, minutes] = this.form.waktu_perawatan.split(':');

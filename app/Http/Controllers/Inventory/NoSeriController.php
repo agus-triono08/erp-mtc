@@ -3,7 +3,13 @@
 namespace App\Http\Controllers\Inventory;
 
 use App\Models\Inventory\NoSeri;
+use App\Models\Inventory\NoSeriLog;
 use App\Models\Inventory\Tools;
+use App\Models\Inventory\Error;
+use App\Models\Inventory\Rusak;
+use App\Models\Inventory\PermintaanLog;
+use App\Models\Inventory\PeminjamanLog;
+use App\Models\Inventory\PerubahanPeminjaman;
 use App\Models\Layout;
 use Carbon\Carbon;
 use App\Models\Inventory\Perawatan;
@@ -20,7 +26,7 @@ class NoSeriController extends Controller
      */
     public function index()
     {
-        $noseri = NoSeri::with('tools', 'layout')                        
+        $noseri = NoSeri::with('tools', 'layout',)                        
                         ->orderBy('updated_at', 'desc') // urutkan dari yang terbaru
                         ->get();
 
@@ -279,25 +285,6 @@ class NoSeriController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // public function update(Request $request, $id)
-    // {
-    //     $noseri = NoSeri::findorFail($id);
-
-    //     $request->validate([
-    //         'no_seri' => 'nullable|string',
-    //         'no_seri_default' => 'nullable|string',
-    //         'tanggal_masuk' => 'nullable|date',
-    //         'harga' => 'nullable|numeric',
-    //         'kondisi' => 'nullable|string',
-    //         'layout_id' => 'nullable|exists:layouts,id',
-    //     ]);
-
-    //     $data = $request->only(['no_seri', 'no_seri_default', 'tanggal_masuk', 'harga', 'kondisi', 'layout_id']);
-
-    //     $noseri->update($data);
-
-    //     return response()->json(['message' => 'Data berhasil diupdate'], 200);
-    // }
 
     public function update(Request $request, $id)
     {
@@ -371,23 +358,46 @@ class NoSeriController extends Controller
     {
         $request->validate([
             'id' => 'required|exists:no_seri,id',
+            'status' => 'required|string|max:255',
             'reason' => 'required|string|max:255',
         ]);
+
+        // Tambahan validasi manual jika status adalah "Ditolak"
+        if ($request->status === 'Ditolak' && empty($request->reason)) {
+            return response()->json(['message' => 'Alasan penolakan harus diisi.'], 422);
+        }
 
         // Update NoSeri
         $noseri = NoSeri::findOrFail($request->id);
         $noseri->update([
-            'kondisi_after' => 'Ditolak',
+            'kondisi_after' => $request->status,
             'reject_reason' => $request->reason,
         ]);
 
         // Update semua Peminjaman terkait NoSeri ini
         foreach ($noseri->peminjaman as $peminjaman) {
-            $peminjaman->update([
-                'status' => 'Ditolak',
-                'status_kondisi' => 'Ditolak',
-                'alasan_penolakan' => $request->reason,
-            ]);
+            if ($peminjaman) {
+                $oldStatus = $peminjaman->status;
+                $newStatus = $request->status;
+    
+                // Simpan log jika status berubah
+                if ($oldStatus !== $newStatus) {
+                    PeminjamanLog::create([
+                        'peminjaman_id' => $peminjaman->id,
+                        'old_status' => $oldStatus,
+                        'new_status' => $newStatus,
+                        'changed_at'  => now(),
+                        'changed_by'  => auth()->id() ?? 1,
+                    ]);
+                }
+    
+                // Update status peminjaman
+                $peminjaman->update([
+                    'status' => $newStatus,
+                    'status_kondisi' => $newStatus,
+                    'alasan_penolakan' => $request->reason,
+                ]);
+            }
         }
 
         return response()->json(['message' => 'No Seri dan Peminjaman berhasil ditolak.']);
@@ -408,11 +418,29 @@ class NoSeriController extends Controller
         ]);
 
         foreach ($noseri->peminjaman as $peminjaman) {
-            $peminjaman->update([
-                'status' => $request->status,
-                'status_kondisi' => $request->status,
-                'alasan_penolakan' => $request->reason,
-            ]);
+            // Simpan log HANYA jika status berubah menjadi "Menunggu Diambil"
+            if ($peminjaman) {
+                $oldStatus = $peminjaman->status;
+                $newStatus = $request->status;
+        
+                if ($oldStatus !== $newStatus && $newStatus === 'Menunggu Diambil') {
+                    // Simpan log perubahan status
+                    PeminjamanLog::create([
+                        'peminjaman_id' => $peminjaman->id,
+                        'old_status' => $oldStatus,
+                        'new_status' => $newStatus,
+                        'changed_at'  => now(),
+                        'changed_by'  => auth()->id() ?? 1, // pastikan user sudah login
+                    ]);
+                }
+        
+                // Update status peminjaman
+                $peminjaman->update([
+                    'status' => $newStatus,
+                    'status_kondisi' => $newStatus,
+                    'alasan_penolakan' => $request->reason,
+                ]);
+            }
         }
 
         return response()->json(['message' => 'Status No Seri dan Peminjaman berhasil diperbarui.']);
@@ -434,11 +462,29 @@ class NoSeriController extends Controller
             ]);
 
             foreach ($noseri->peminjaman as $peminjaman) {
-                $peminjaman->update([
-                    'status' => $request->status,
-                    'status_kondisi' => $request->status,
-                    'alasan_penolakan' => null,
-                ]);
+                // Simpan log HANYA jika status berubah menjadi "Menunggu Diambil"
+                if ($peminjaman) {
+                    $oldStatus = $peminjaman->status;
+                    $newStatus = $request->status;
+            
+                    if ($oldStatus !== $newStatus && $newStatus === 'Menunggu Diambil') {
+                        // Simpan log perubahan status
+                        PeminjamanLog::create([
+                            'peminjaman_id' => $peminjaman->id,
+                            'old_status' => $oldStatus,
+                            'new_status' => $newStatus,
+                            'changed_at'  => now(),
+                            'changed_by'  => auth()->id() ?? 1, // pastikan user sudah login
+                        ]);
+                    }
+            
+                    // Update status peminjaman
+                    $peminjaman->update([
+                        'status' => $newStatus,
+                        'status_kondisi' => $newStatus,
+                        'alasan_penolakan' => null,
+                    ]);
+                }
             }
         }
 
@@ -449,26 +495,47 @@ class NoSeriController extends Controller
     {
         $request->validate([
             'id' => 'required|exists:no_seri,id',
-            'reason' => 'required|string|max:255',
+            'status' => 'required|string|max:255',
+            'reason' => 'nullable|string|max:255',
         ]);
-
-        // Update NoSeri
+    
+        // Tambahan validasi manual jika status adalah "Ditolak"
+        if ($request->status === 'Ditolak' && empty($request->reason)) {
+            return response()->json(['message' => 'Alasan penolakan harus diisi.'], 422);
+        }
+    
         $noseri = NoSeri::findOrFail($request->id);
         $noseri->update([
-            'kondisi_after' => 'Ditolak',
+            'kondisi_after' => $request->status,
             'reject_reason' => $request->reason,
         ]);
-
-        // Update semua Permintaan terkait NoSeri ini
+    
         foreach ($noseri->permintaan as $permintaan) {
-            $permintaan->update([
-                'status' => 'Ditolak',
-                'status_kondisi' => 'Ditolak',
-                'alasan_penolakan' => $request->reason,
-            ]);
+            if ($permintaan) {
+                $oldStatus = $permintaan->status;
+                $newStatus = $request->status;
+    
+                // Simpan log jika status berubah
+                if ($oldStatus !== $newStatus) {
+                    PermintaanLog::create([
+                        'permintaan_id' => $permintaan->id,
+                        'old_status' => $oldStatus,
+                        'new_status' => $newStatus,
+                        'changed_at'  => now(),
+                        'changed_by'  => auth()->id() ?? 1,
+                    ]);
+                }
+    
+                // Update status permintaan
+                $permintaan->update([
+                    'status' => $newStatus,
+                    'status_kondisi' => $newStatus,
+                    'alasan_penolakan' => $request->reason,
+                ]);
+            }
         }
-
-        return response()->json(['message' => 'No Seri dan Permintaan berhasil ditolak.']);
+    
+        return response()->json(['message' => 'Status No Seri dan Permintaan berhasil diperbarui.']);
     }
 
     public function updateStatusPermintaan(Request $request)
@@ -486,12 +553,30 @@ class NoSeriController extends Controller
         ]);
 
         foreach ($noseri->permintaan as $permintaan) {
-            $permintaan->update([
-                'status' => $request->status,
-                'status_kondisi' => $request->status,
-                'alasan_penolakan' => $request->reason,
-            ]);
-        }
+            // Simpan log HANYA jika status berubah menjadi "Menunggu Diambil"
+            if ($permintaan) {
+                $oldStatus = $permintaan->status;
+                $newStatus = $request->status;
+        
+                if ($oldStatus !== $newStatus && $newStatus === 'Menunggu Diambil') {
+                    // Simpan log perubahan status
+                    PermintaanLog::create([
+                        'permintaan_id' => $permintaan->id,
+                        'old_status' => $oldStatus,
+                        'new_status' => $newStatus,
+                        'changed_at'  => now(),
+                        'changed_by'  => auth()->id() ?? 1, // pastikan user sudah login
+                    ]);
+                }
+        
+                // Update status permintaan
+                $permintaan->update([
+                    'status' => $newStatus,
+                    'status_kondisi' => $newStatus,
+                    'alasan_penolakan' => $request->reason,
+                ]);
+            }
+        }      
 
         return response()->json(['message' => 'Status No Seri dan Permintaan berhasil diperbarui.']);
     }
@@ -512,14 +597,509 @@ class NoSeriController extends Controller
             ]);
 
             foreach ($noseri->permintaan as $permintaan) {
-                $permintaan->update([
-                    'status' => $request->status,
-                    'status_kondisi' => $request->status,
-                    'alasan_penolakan' => null,
-                ]);
-            }
+                // Simpan log HANYA jika status berubah menjadi "Menunggu Diambil"
+                if ($permintaan) {
+                    $oldStatus = $permintaan->status;
+                    $newStatus = $request->status;
+            
+                    if ($oldStatus !== $newStatus && $newStatus === 'Menunggu Diambil') {
+                        // Simpan log perubahan status
+                        PermintaanLog::create([
+                            'permintaan_id' => $permintaan->id,
+                            'old_status' => $oldStatus,
+                            'new_status' => $newStatus,
+                            'changed_at'  => now(),
+                            'changed_by'  => auth()->id() ?? 1, // pastikan user sudah login
+                        ]);
+                    }
+            
+                    // Update status permintaan
+                    $permintaan->update([
+                        'status' => $newStatus,
+                        'status_kondisi' => $newStatus,
+                        'alasan_penolakan' => null,
+                    ]);
+                }
+            }   
         }
 
         return response()->json(['message' => 'Semua No Seri dan Permintaan berhasil diperbarui.']);
     }
+
+    public function editLog(Request $request, $id)
+    {
+        $noseri = NoSeri::findOrFail($id);
+        $oldKondisi = $noseri->kondisi;
+        $newKondisi = $request->input('kondisi');
+
+        if ($oldKondisi !== $newKondisi) {
+            // update Kondisi
+            $noseri->update(['kondisi' => $newKondisi]);
+
+            // Simpan Log Perubahan
+            NoSeriLog::create([
+                'no_seri_id' => $noseri->id,
+                'old_kondisi' => $oldKondisi,
+                'new_kondisi' => $newKondisi,
+                'changed_at' => now(),
+                // 'changed_by' => auth()->user()->id, // tambahkan nilai untuk kolom changed_by
+                'changed_by' => auth()->id() ?? 1, // ID default (misalnya admin)
+            ]);
+        }
+
+        return response ()->json(['message' => 'Kondisi Diperbaharui']);
+    }
+
+    public function updateStatusPermintaanUser(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:no_seri,id',
+            'status' => 'required|string|max:255',
+            'reason' => 'nullable|string|max:255',
+        ]);
+
+        $noseri = NoSeri::findOrFail($request->id);
+        $noseri->update([
+            'kondisi_after' => $request->status,
+            'reject_reason' => $request->reason,
+        ]);
+
+        foreach ($noseri->permintaan as $permintaan) {
+            // Simpan log HANYA jika status berubah menjadi "Menunggu Diambil"
+            if ($permintaan) {
+                $oldStatus = $permintaan->status;
+                $newStatus = $request->status;
+        
+                if ($oldStatus !== $newStatus && $newStatus === 'Digunakan') {
+                    // Simpan log perubahan status
+                    PermintaanLog::create([
+                        'permintaan_id' => $permintaan->id,
+                        'old_status' => $oldStatus,
+                        'new_status' => $newStatus,
+                        'changed_at'  => now(),
+                        'changed_by'  => auth()->id() ?? 3, // pastikan user sudah login
+                    ]);
+
+                    // Kurangi stok akhir pada tabel tools
+                    $tool = Tools::where('id', $noseri->tools_id)->first();
+                    if ($tool) {
+                        $tool->update([
+                            'stok_akhir' => $tool->stok_akhir - 1,
+                        ]);
+                    }
+                }
+        
+                // Update status permintaan
+                $permintaan->update([
+                    'status' => $newStatus,
+                    'status_kondisi' => $newStatus,
+                    'alasan_penolakan' => $request->reason,
+                ]);
+            }
+        }      
+
+        return response()->json(['message' => 'Status No Seri dan Permintaan berhasil diperbarui.']);
+    }
+
+    public function bulkUpdateStatusPermintaanUser(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:no_seri,id',
+            'status' => 'required|string|max:255',
+        ]);
+
+        foreach ($request->ids as $id) {
+            $noseri = NoSeri::findOrFail($id);
+            $noseri->update([
+                'kondisi_after' => $request->status,
+                'reject_reason' => null, // kosongkan alasan penolakan saat update status biasa
+            ]);
+
+            foreach ($noseri->permintaan as $permintaan) {
+                // Simpan log HANYA jika status berubah menjadi "Menunggu Diambil"
+                if ($permintaan) {
+                    $oldStatus = $permintaan->status;
+                    $newStatus = $request->status;
+            
+                    if ($oldStatus !== $newStatus && $newStatus === 'Digunakan') {
+                        // Simpan log perubahan status
+                        PermintaanLog::create([
+                            'permintaan_id' => $permintaan->id,
+                            'old_status' => $oldStatus,
+                            'new_status' => $newStatus,
+                            'changed_at'  => now(),
+                            'changed_by'  => auth()->id() ?? 1, // pastikan user sudah login
+                        ]);
+                    }
+            
+                    // Update status permintaan
+                    $permintaan->update([
+                        'status' => $newStatus,
+                        'status_kondisi' => $newStatus,
+                        'alasan_penolakan' => null,
+                    ]);
+                }
+            }   
+        }
+
+        return response()->json(['message' => 'Semua No Seri dan Permintaan berhasil diperbarui.']);
+    }
+
+    public function updateStatusPeminjamanUser (Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:no_seri,id',
+            'status' => 'required|string|max:255',
+            'reason' => 'nullable|string|max:255',
+        ]);
+
+        $noseri = NoSeri::findOrFail($request->id);
+        $noseri->update([
+            'kondisi_after' => $request->status,
+            'reject_reason' => $request->reason,
+        ]);
+
+        foreach ($noseri->peminjaman as $peminjaman) {
+            // Simpan log HANYA jika status berubah menjadi "Menunggu Diambil"
+            if ($peminjaman) {
+                $oldStatus = $peminjaman->status;
+                $newStatus = $request->status;
+            
+                if ($oldStatus !== $newStatus && $newStatus === 'Dipinjam') {
+                    // Simpan log perubahan status
+                    PeminjamanLog::create([
+                        'peminjaman_id' => $peminjaman->id,
+                        'old_status' => $oldStatus,
+                        'new_status' => $newStatus,
+                        'changed_at'  => now(),
+                        'changed_by'  => auth()->id() ?? 3, // pastikan user sudah login
+                    ]);
+
+                    // Kurangi stok akhir pada tabel tools
+                    $tool = Tools::where('id', $noseri->tools_id)->first();
+                    if ($tool) {
+                        $tool->update([
+                            'stok_akhir' => $tool->stok_akhir - 1,
+                        ]);
+                    }
+                }
+            
+                // Update status peminjaman
+                $peminjaman->update([
+                    'status' => $newStatus,
+                    'status_kondisi' => $newStatus,
+                    'alasan_penolakan' => $request->reason,
+                ]);
+            }
+        }  
+        return response()->json(['message' => 'Status No Seri dan Peminjaman berhasil diperbarui.']);
+    }
+
+    public function bulkUpdateStatusPeminjamanUser(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:no_seri,id',
+            'status' => 'required|string|max:255',
+        ]);
+
+        foreach ($request->ids as $id) {
+            $noseri = NoSeri::findOrFail($id);
+            $noseri->update([
+                'kondisi_after' => $request->status,
+                'reject_reason' => null, // kosongkan alasan penolakan saat update status biasa
+            ]);
+
+            foreach ($noseri->peminjaman as $peminjaman) {
+                // Simpan log HANYA jika status berubah menjadi "Menunggu Diambil"
+                if ($peminjaman) {
+                    $oldStatus = $peminjaman->status;
+                    $newStatus = $request->status;
+                    $total = $peminjaman->total;
+            
+                    if ($oldStatus !== $newStatus && $newStatus === 'Dipinjam') {
+                        // Simpan log perubahan status
+                        PeminjamanLog::create([
+                            'peminjaman_id' => $peminjaman->id,
+                            'old_status' => $oldStatus,
+                            'new_status' => $newStatus,
+                            'changed_at'  => now(),
+                            'changed_by'  => auth()->id() ?? 1, // pastikan user sudah login
+                        ]);
+
+                        // Kurangi stok akhir pada tabel tools
+                        $tool = Tools::where('id', $noseri->tools_id)->first();
+                        if ($tool) {
+                            $tool->update([
+                                'stok_akhir' => $tool->stok_akhir - $total,
+                            ]);
+                        }
+                    }
+            
+                    // Update status peminjaman
+                    $peminjaman->update([
+                        'status' => $newStatus,
+                        'status_kondisi' => $newStatus,
+                        'alasan_penolakan' => null,
+                    ]);
+                }
+            }   
+        }
+
+        return response()->json(['message' => 'Semua No Seri dan Peminjaman berhasil diperbarui.']);
+    }
+
+    public function updateStatusPerubahanPeminjaman(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:no_seri,id',
+            'status' => 'required|string|max:255',
+            'reason' => 'nullable|string|max:255',
+        ]);
+
+        $noseri = NoSeri::findOrFail($request->id);
+        $tgl_perubahan = $noseri->tgl_perubahan;
+
+        // Update NoSeri
+        $noseri->update([
+            'status_perubahan' => $request->status,
+            'alasan_penolakan_perubahan' => $request->reason,
+        ]);
+
+        // Ambil peminjaman terbaru dari NoSeri
+        $peminjaman = $noseri->peminjaman()->latest('peminjaman.created_at')->first();
+
+        if ($peminjaman) {
+            // Update tgl_kembali jika tgl_perubahan tersedia
+            if ($request->status === 'Disetujui' && $tgl_perubahan) {
+                $peminjaman->update([
+                    'tgl_kembali' => $tgl_perubahan,
+                ]);
+            }
+
+            // Ambil perubahan peminjaman terbaru terkait peminjaman ini
+            $perubahan = $peminjaman->perubahan()->latest('created_at')->first();
+
+            if ($perubahan) {
+                // Update status perubahan peminjaman
+                $perubahan->update([
+                    'status' => $request->status,
+                ]);
+
+                // Cek apakah perubahan peminjaman berhasil diupdate
+                if ($perubahan->save()) {
+                    // Perubahan peminjaman berhasil diupdate
+                    return response()->json(['message' => 'Status perubahan peminjaman berhasil diperbarui.']);
+                } else {
+                    // Perubahan peminjaman gagal diupdate
+                    return response()->json(['message' => 'Gagal memperbarui status perubahan peminjaman.'], 500);
+                }
+            } else {
+                // Tidak ada perubahan peminjaman terbaru
+                return response()->json(['message' => 'Tidak ada perubahan peminjaman terbaru.'], 404);
+            }
+        }
+
+        return response()->json(['message' => 'Status No Seri, Peminjaman, dan Perubahan Peminjaman berhasil diperbarui.']);
+    }
+
+    public function bulkUpdateStatusPerubahanPeminjaman(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:no_seri,id',
+            'status' => 'required|string|max:255',
+        ]);
+
+        foreach ($request->ids as $id) {
+            $noseri = NoSeri::findOrFail($id);
+            $tgl_perubahan = $noseri->tgl_perubahan;
+            $noseri->update([
+                'status_perubahan' => $request->status,
+                'alasan_penolakan_perubahan' => null,
+            ]);
+
+            // Ambil peminjaman terbaru dari NoSeri
+            $peminjaman = $noseri->peminjaman()->latest('peminjaman.created_at')->first();
+
+            if ($peminjaman) {
+                // Update tgl_kembali jika tgl_perubahan tersedia
+                if ($request->status === 'Disetujui' && $tgl_perubahan) {
+                    $peminjaman->update([
+                        'tgl_kembali' => $tgl_perubahan,
+                    ]);
+                }
+
+                // Ambil perubahan peminjaman terbaru terkait peminjaman ini
+                $perubahan = $peminjaman->perubahan()->latest('created_at')->first();
+
+                if ($perubahan) {
+                    // Update status perubahan peminjaman
+                    $perubahan->update([
+                        'status' => $request->status,
+                        'alasan_penolakan' => null,
+                    ]);
+
+                    // Cek apakah perubahan peminjaman berhasil diupdate
+                    if ($perubahan->save()) {
+                        // Perubahan peminjaman berhasil diupdate
+                        return response()->json(['message' => 'Status perubahan peminjaman berhasil diperbarui.']);
+                    } else {
+                        // Perubahan peminjaman gagal diupdate
+                        return response()->json(['message' => 'Gagal memperbarui status perubahan peminjaman.'], 500);
+                    }
+                } else {
+                    // Tidak ada perubahan peminjaman terbaru
+                    return response()->json(['message' => 'Tidak ada perubahan peminjaman terbaru.'], 404);
+                }
+            }
+        }
+    }
+
+    public function rejectPerubahanPeminjaman(Request $request) 
+    {
+        $request->validate([
+            'id' => 'required|exists:no_seri,id',
+            'status' => 'required|string|max:255',
+            'reason' => 'required|string|max:255',
+        ]);
+
+        $noseri = NoSeri::findOrFail($request->id);
+
+        // Update NoSeri
+        $noseri->update([
+            'status_perubahan' => $request->status,
+            'alasan_penolakan_perubahan' => $request->reason,
+        ]);
+
+        // Ambil peminjaman terbaru dari NoSeri
+        $peminjaman = $noseri->peminjaman()->first();
+
+        // Ambil perubahan peminjaman terbaru terkait peminjaman ini
+        $perubahan = $peminjaman->perubahan()->first();
+
+        if ($perubahan) {
+            // Update status perubahan peminjaman
+            $perubahan->update([
+                'status' => $request->status,
+                'alasan_penolakan' => $request->reason,
+            ]);
+
+            return response()->json(['message' => 'Status perubahan peminjaman berhasil diperbarui.']);
+        } else {
+            return response()->json(['message' => 'Tidak ada perubahan peminjaman terbaru.'], 404);
+        }
+    }
+
+    public function cekKondisi(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:no_seri,id',
+            'tgl_pengecekan' => 'required|date',
+            'kondisi' => 'required|string|max:255',
+            'deskripsi_cek' => 'required|string|max:255',
+        ]);
+
+        $noseri = NoSeri::findOrFail($request->id);
+        $oldKondisi = $noseri->kondisi;
+        $newKondisi = $request->kondisi;
+
+        // Update NoSeri
+        $noseri->update([            
+            'tgl_pengecekan' => $request->tgl_pengecekan,
+            'deskripsi_cek' => $request->deskripsi_cek,
+            'kondisi_after' => 'Selesai',
+        ]);
+
+        // update Kondisi
+        $noseri->update(['kondisi' => $newKondisi]);
+
+        // Simpan Log Perubahan
+        NoSeriLog::create([
+            'no_seri_id' => $noseri->id,
+            'old_kondisi' => $oldKondisi,
+            'new_kondisi' => $newKondisi,
+            'changed_at' => now(),
+            'changed_by' => auth()->id() ?? 1,
+        ]);
+
+        // Jika kondisi Error, simpan ke tabel Error
+        if (strtolower($newKondisi) === 'error') {
+            // Ambil nomor urutan terakhir
+            $lastError = Error::orderBy('id', 'desc')->first();
+            $lastNumber = 0;
+
+            if ($lastError && preg_match('/PB(\d{8})/', $lastError->no_perbaikan, $matches)) {
+                $lastNumber = (int) $matches[1];
+            }
+
+            $newNumber = $lastNumber + 1;
+            $no_perbaikan = 'PB' . str_pad($newNumber, 8, '0', STR_PAD_LEFT);
+
+            Error::create([
+                'no_seri_id' => $noseri->id,
+                'kondisi' => 'Error',
+                'users_id' => auth()->id() ?? 1,
+                'no_perbaikan' => $no_perbaikan,
+                'tgl_perbaikan' => $request->tgl_pengecekan,
+            ]);
+        }
+
+        // Jika kondisi Rusak, simpan ke tabel Rusak
+        if (strtolower($newKondisi) === 'rusak') {
+            // Ambil nomor urutan terakhir
+            $lastRusak = Rusak::orderBy('id', 'desc')->first();
+            $lastNumber = 0;
+
+            if ($lastRusak && preg_match('/KR(\d{8})/', $lastRusak->no_kerusakan, $matches)) {
+                $lastNumber = (int) $matches[1];
+            }
+
+            $newNumber = $lastNumber + 1;
+            $no_kerusakan = 'KR' . str_pad($newNumber, 8, '0', STR_PAD_LEFT);
+
+            Rusak::create([
+                'no_seri_id' => $noseri->id,
+                'kondisi' => 'Rusak',
+                'users_id' => auth()->id() ?? 1,
+                'no_kerusakan' => $no_kerusakan,
+                'tgl_kerusakan' => $request->tgl_pengecekan,
+            ]);
+        }
+
+        foreach ($noseri->peminjaman as $peminjaman) {
+            if ($peminjaman) {
+                $oldStatus = $peminjaman->status;
+                $newStatus = 'Selesai';
+
+                // Simpan log perubahan status
+                PeminjamanLog::create([
+                    'peminjaman_id' => $peminjaman->id,
+                    'old_status' => $oldStatus,
+                    'new_status' => $newStatus,
+                    'changed_at'  => now(),
+                    'changed_by'  => auth()->id() ?? 1,
+                ]);
+
+                // Kurangi stok akhir pada tabel tools
+                $tool = Tools::find($noseri->tools_id);
+                if ($tool) {
+                    $tool->update([
+                        'stok_akhir' => $tool->stok_akhir + 1,
+                    ]);
+                }
+
+                $peminjaman->update([
+                    'status' => $newStatus,
+                    'status_kondisi' => $newStatus,
+                    'deskripsi_cek' => $request->deskripsi_cek,
+                    'tgl_cek' => $request->tgl_pengecekan,
+                ]);
+            }
+        }
+
+        return response()->json(['message' => 'Status No Seri, Peminjaman, dan Perubahan Peminjaman berhasil diperbarui.']);
+    }
+
 }

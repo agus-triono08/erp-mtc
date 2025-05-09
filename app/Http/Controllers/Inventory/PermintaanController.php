@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Inventory\NoSeri;
 use App\Models\Inventory\Permintaan;
 use App\Models\Inventory\Tools;
+use App\Models\Inventory\PermintaanLog;
 use Illuminate\Support\Facades\DB;
 
 class PermintaanController extends Controller
@@ -82,6 +83,7 @@ class PermintaanController extends Controller
         $request->validate([
             'tools_id' => 'required|exists:tools,id',
             'tgl_permintaan' => 'required|date',
+            'detail_permintaan' => 'required|string',
             'status' => 'nullable|string',
             'total' => 'required|integer|min:1',
         ]);
@@ -104,72 +106,64 @@ class PermintaanController extends Controller
             'tools_id' => $request->tools_id,
             'no_permintaan' => $no_permintaan,
             'tgl_permintaan' => $request->tgl_permintaan,
+            'detail_permintaan' => $request->detail_permintaan,
             'status' => $status,
             'status_kondisi' => $status,
-            'total' => $request->total, // ✅ Ini ditambahkan
+            'total' => $request->total,
         ];
 
         // Buat Permintaan
         $permintaan = Permintaan::create($data);
 
-        // Ambil tools yang sesuai dengan tools_id
+        // Ambil tools dan data noseri terkait
         $tools = Tools::with('noSeri')->find($request->tools_id);
 
-        // Ambil ID no_seri yang sudah digunakan
         $usedNoSeriIds = DB::table('peminjaman_no_seri')->pluck('no_seri_id')
-                            ->merge(DB::table('permintaan_no_seri')->pluck('no_seri_id'))
-                            ->toArray();
+            ->merge(DB::table('permintaan_no_seri')->pluck('no_seri_id'))
+            ->toArray();
 
-        // Cari no_seri yang sesuai dengan kondisi 'OK' dan kondisi_after null
-        // $availabeleNoSeri = $tools->noSeri->where('kondisi', 'OK')
-        //                                 ->whereNull('kondisi_after')
-        //                                 ->take($request->total);
-                                    
-        // Ambil no_seri yang tersedia
         $availableNoSeri = $tools->noSeri->where('kondisi', 'OK')
-                            ->whereNull('kondisi_after')
-                            ->whereNotIn('id', $usedNoSeriIds)
-                            ->take($request->total);
+            ->whereNull('kondisi_after')
+            ->whereNotIn('id', $usedNoSeriIds)
+            ->take($request->total);
 
-        // Jika jumlah no_seri yang ditemukan kurang dari yang diminta
-        if ($availableNoSeri->count() < $request->total) 
-        {
-            return response()
-            ->json(['message' => 'Jumlah no seri yang tersedia tidak cukup atau sudah digunakan.'], 400);
+        if ($availableNoSeri->count() < $request->total) {
+            return response()->json([
+                'message' => 'Jumlah no seri yang tersedia tidak cukup atau sudah digunakan.'
+            ], 400);
         }
 
         $noSeriIds = [];
 
-        // Proses permintaan no_seri
-        foreach ($availableNoSeri as $noseri)
-        {
+        foreach ($availableNoSeri as $noseri) {
             $noSeriIds[] = $noseri->id;
 
-            // Update kondisi_after dan tanggal_kondisi untuk semua no seri yang diambil
             $noseri->update([
                 'kondisi_after' => $status,
                 'tanggal_kondisi' => $request->tgl_permintaan,
             ]);
-
-            // if ($request->status == 'Digunakan')
-            // {
-            //     // Update kondisi_after untuk no_seri yang dipinta
-            //     $noseri->update([
-            //         'kondisi_after' => 'Digunakan',
-            //         'tanggal_kondisi' => $request->tgl_permintaan,
-            //     ]);
-            // }            
         }
 
-        // Hubungkan ke Pivot
         $permintaan->noSeri()->attach($noSeriIds);
 
-        // Kurangi stok_akhir pada tools hanya kalau sattus = Digunakan
-        if($status == 'Digunakan')
-        {
-            $tools->stok_akhir = max(0, $tools->stok_akhir - $request->total); //Hindari nilai negative
+        // Update stok jika status Digunakan
+        if ($status == 'Digunakan') {
+            $tools->stok_akhir = max(0, $tools->stok_akhir - $request->total);
             $tools->save();
-        }        
+        }
+
+        if ($status === 'Belum Diproses') {
+            PermintaanLog::create([
+                'permintaan_id' => $permintaan->id,
+                'old_status' => null,
+                'new_status' => $status,
+                'changed_at' => now(),
+                'changed_by' => auth()->id() ?? 1,
+            ]);
+        }
+
+        // $permintaan->status = $request->status;
+        // $permintaan->save();
 
         return response()->json([
             'message' => 'Data permintaan berhasil disimpan.',

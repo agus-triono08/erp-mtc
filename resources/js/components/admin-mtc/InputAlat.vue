@@ -200,11 +200,11 @@
 
         <div class="form-group col-md-4">
           <label for="waktu_perawatan" style="color: #000;">
-            <b>Waktu Total Perawatan</b>
+            <b>Waktu Perawatan</b>
             <sup style="color: red;"> *</sup>
           </label>
           <input type="time" v-model="form.waktu_perawatan" class="form-control" required placeholder="Masukkan Waktu Perawatan">
-          <small class="form-text" style="color: red;">Masukkan Total Perkiraan Waktu Perawatan Semua Stok</small>
+          <small class="form-text" style="color: red;">Masukkan Waktu Perawatan Per No Seri</small>
         </div>
 
         <div class="form-group col-md-4">

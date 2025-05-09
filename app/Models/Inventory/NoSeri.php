@@ -23,7 +23,12 @@ class NoSeri extends Model
         'tanggal_kondisi',
         'kondisi',
         'kondisi_after',
-        'reject_reason'
+        'reject_reason',
+        'status_perubahan',
+        'alasan_penolakan_perubahan',
+        'tgl_perubahan',
+        'tgl_pengecekan',
+        'deskripsi_cek',
     ];
 
     public function layout(): BelongsTo
@@ -53,5 +58,15 @@ class NoSeri extends Model
         return $this->belongsToMany(Permintaan::class, 'permintaan_no_seri', 'no_seri_id', 'permintaan_id')
             ->withPivot('created_at') // Jika kamu ingin mengakses data dari pivot
             ->withTimestamps();
+    }
+
+    public function logs() 
+    {
+        return $this->hasMany(NoSeriLog::class);
+    }
+
+    public function perbaikan()
+    {
+        return $this->hasMany(Error::class);
     }
 }

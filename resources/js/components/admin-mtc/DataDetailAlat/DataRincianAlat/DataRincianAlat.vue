@@ -20,16 +20,16 @@
         :class="{active: showBelumDigunakan}"
         @click="toggleBelumDigunakan"
       >
-        <span v-if="showBelumDigunakan">Belum Digunakan</span>
-        <span v-else>Belum Digunakan</span>
+        <span v-if="showBelumDigunakan">Alat/Mesin Ready</span>
+        <span v-else>Alat/Mesin Ready</span>
       </button>
       <button 
         class="btn btn-show mb-3 ml-1 mr-1"
         :class="{active: showSudahDigunakan}"
         @click="toggleSudahDigunakan"
       >
-        <span v-if="showSudahDigunakan">Sudah Digunakan</span>
-        <span v-else>Sudah Digunakan</span>
+        <span v-if="showSudahDigunakan">Permintaan</span>
+        <span v-else>Permintaan</span>
       </button>
       <button 
         class="btn btn-show mb-3 ml-1 mr-1"
@@ -137,7 +137,7 @@
                 <small style="color: #444;"><i class="fas fa-clock"></i> {{ durasiData[index] !== '-' ? durasiData[index] + ' Hari' : '-' }}</small>
               </td>
               <td>{{ formatRupiah(noseri.harga) }} <br>
-                <small v-if="noseri.kode_alat && noseri.kode_alat.startsWith('2-')" style="color: #444;">                  
+                <small v-if="noseri.tools.kode && noseri.tools.kode.startsWith('2-')" style="color: rgba(247, 0, 255)">                  
                   <!-- {{ formatRupiah(getNilaiBuku(noseri)) }} -->
                   <span :style="{ color: getNilaiBuku(noseri) === 'Sudah Tidak Bernilai' ? 'red' : '' }"><i class="bi bi-cash-coin"></i> {{ getNilaiBuku(noseri) }}</span>
                 </small>
@@ -262,7 +262,7 @@
                   <b>Tanggal Masuk</b>
                   <!-- <sup style="color: red;"> *</sup> -->
                 </label>
-                <input type="date" class="form-control" id="tanggal-masuk" v-model="form.tanggal_masuk">
+                <input type="date" class="form-control" id="tanggal-masuk" v-model="form.tanggal_masuk" disabled>
               </div>
             </div>
             <div class="row">
@@ -479,13 +479,13 @@ export default {
       }
     },
     formatRupiah(harga) {
-      return harga ? new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(harga) : 'Rp -';
+      return harga ? new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(harga) : 'Rp. -';
     },
     depresiasiMesin(noseri) {
       if (noseri.kode_alat && noseri.kode_alat.startsWith('2-')) {
         const harga = noseri.harga;
         const depresiasi = harga / (8 * 12);
-        return `Rp ${this.formatRupiah(depresiasi)}`;
+        return `Rp. ${this.formatRupiah(depresiasi)}`;
       } else {
         return '-';
       }
@@ -514,7 +514,7 @@ export default {
     //   }
     // },
     getNilaiBuku(noseri) {
-      if (noseri.kode_alat && noseri.kode_alat.startsWith('2-')) {
+      if (noseri.tools.kode && noseri.tools.kode.startsWith('2-')) {
         const harga = noseri.harga;
         const tanggalMasuk = new Date(noseri.tanggal_masuk);
         const tanggalSekarang = new Date();

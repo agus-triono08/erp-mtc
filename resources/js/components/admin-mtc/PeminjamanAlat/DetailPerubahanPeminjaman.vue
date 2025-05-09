@@ -20,15 +20,15 @@
             <th class="text-center" style="width: 10px; color: #000;">#</th>
             <th class="text-center" style="width: 10px; color: #000;">No Perubahan</th>
             <th class="text-center" style="width: 10px; color: #000;">Kode</th>
-            <th class="text-center" style="width: 10px; color: #000;">Nama</th>            
-            <th class="text-center" style="width: 10px; color: #000;">Tanggal Pengambilan</th>
-            <th class="text-center" style="width: 10px; color: #000;">Ket. Permitaan</th>
-            <th class="text-center" style="width: 10px; color: #000;">Hasil</th>
+            <th class="text-center" style="width: 10px; color: #000;">Nama</th>
+            <th class="text-center" style="width: 10px; color: #000;">Tgl Pengembalian</th>
+            <th class="text-center" style="width: 10px; color: #000;">Ket. Perubahan</th>
+            <th class="text-center" style="width: 10px; color: #000;">Status</th>
             <th class="text-center" style="width: 10px; color: #000;">Alasan Ditolak</th>
             <th class="text-center" style="width: 10px; color: #000;">Aksi</th>
           </tr>
         </thead>
-        <tbody v-if="data.length === 0">
+        <tbody v-if="paginatedData.length === 0">
           <tr>
             <td colspan="9" class="text-center">Tidak Ada Data</td>
           </tr>
@@ -36,16 +36,33 @@
         <tbody v-for="(item, index) in paginatedMainData" :key="item.id">
           <tr class="text-center">
             <td>{{ index + 1 }}</td>
-            <td>{{ item.no_perubahan }}</td>
-            <td>{{ item.kode }}</td>
-            <td>{{ item.nama }}</td>
-            <td>{{ item.tanggal_peminjaman }}</td>
-            <td>{{ item.keterangan_peminjaman }}</td>
-            <td>{{ item.hasil }}</td>
-            <td>{{ item.alasan_ditolak || '-' }}</td>
+            <td>{{ item.no_perubahan || '-' }}</td>
+            <td>{{ item.peminjaman && item.peminjaman.tools ? item.peminjaman.tools.kode : '-' }}</td>
+            <td>{{ item.peminjaman && item.peminjaman.tools ? item.peminjaman.tools.nama : '-' }}</td>
+            <td>{{ item.tgl_kembali || '-' }}</td>
+            <td>{{ item.keterangan_perubahan || '-' }}</td>
             <td>
+              <div
+                class="btn-sts"
+                :class="{'status-active': item.status === 'Disetujui',
+                                'status-error' : item.status === 'Menunggu Diambil',
+                                'status-rusak' : item.status === 'Ditolak',
+                                'status-musnah' : item.status === 'Dipinjam',
+                                'status-hilang' : item.status === 'Belum Diproses',
+                }"
+              >
+                {{ item.status || '-'}}
+              </div>
+            </td>
+            <td>{{ item.alasan_penolakan || '-' }}</td>
+            <!-- <td class="text-center">
               <button class="btn btn-info btn-sm" @click="toggleDetail(index)">
                 {{ isDetailVisible(index) ? 'Sembunyikan Detail' : 'Detail' }}
+              </button>
+            </td> -->
+            <td>
+              <button @click="toggleDetailModal(item.peminjaman.no_seri)" class="btn btn-primary">
+                {{ showModal ? 'Sembunyikan Detail' : 'Detail' }}
               </button>
             </td>
           </tr>
@@ -73,8 +90,9 @@
     </div>
 
     <!-- Modal Tabel Detail (sub-tabel) -->
-    <div v-for="(item, index) in data" :key="'detail-' + item.id" class="table-responsive p-3" v-if="isDetailVisible(index)">
-      <span style="color: #000;"><b>{{ item.nama }}</b></span>
+    <div v-for="(item, index) in dataPeminjaman" :key="'detail-' + item.id" class="table-responsive p-3" v-if="isDetailVisible(index)">
+      <span style="color: #000;"><b>{{ item.tools.nama }}</b></span>
+
       <!-- Modal Tabel Detail Inner (Fitur lain seperti tombol dan search) -->
       <div class="container-fluid">
         <div class="row align-items-center justify-content-end mr-3 mb-2">
@@ -83,8 +101,9 @@
             v-if="selectedItems.length > 0 && !isStatusUpdated" 
             class="btn btn-primary m-3" 
             @click="updateStatusToMenungguDiambil">
-            Disetujui
+            Menunggu Diambil
           </button>
+
           <div class="search-wrapper">
             <div class="input-group">
               <input 
@@ -111,29 +130,32 @@
                 </th>
                 <th class="text-center" style="width: 10px; color: #000;">#</th>
                 <th class="text-center" style="width: 10px; color: #000;">No Seri Alat</th>
-                <th class="text-center" style="width: 10px; color: #000;">Tgl Perubahan</th>
+                <th class="text-center" style="width: 10px; color: #000;">Tgl Peminjaman</th>
+                <th class="text-center" style="width: 10px; color: #000;">Kondisi</th>
                 <th class="text-center" style="width: 10px; color: #000;">Status</th>
                 <th class="text-center" style="width: 10px; color: #000;">Aksi</th>
               </tr>
             </thead>
-            <tbody v-if="filteredData.length == 0">
+            <tbody v-if="filteredData.length === 0">
               <tr>
-                <td colspan="6" class="text-center">Tidak Ada Data</td>
+                <td colspan="7" class="text-center">Tidak Ada Data</td>
               </tr>
             </tbody>
-            <tbody v-for="(peminjaman, index) in filteredData" :key="index">
+            <!-- <tbody v-for="(peminjaman, index) in filteredData" :key="index"> -->
+              <tbody>
               <tr class="text-center">
                 <td>
                   <input 
                     type="checkbox" 
-                    :value="peminjaman.id" 
+                    :value="item.id" 
                     v-model="selectedItems"
                   />
                 </td>
                 <td>{{ index + 1 }}</td>
-                <td>{{ peminjaman.no_seri_alat ? peminjaman.no_seri_alat.no_seri_alat : '-' }}</td>
-                <td>{{ peminjaman.tanggal_peminjaman || '-' }}</td>
-                <td>{{ peminjaman.status || '-' }}</td>
+                <td>{{ item.tools.no_seri.no_seri || '-' }}</td>
+                <td>{{ item.tgl_pinjam || '-' }}</td>
+                <td>{{ item.tools.no_seri.kondisi || '-' }}</td>
+                <td>{{ item.status }}</td>
                 <td class="text-center">
                   <div class="dropdown text-center">
                     <button
@@ -147,10 +169,10 @@
                       <i class="fas fa-ellipsis-v" style="color: #000;"></i>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">                
-                      <a class="dropdown-item" @click="setStatus(peminjaman, 'Setuju')">
-                        <i class="fas fa-clock text-info"></i> Disetujui
+                      <a class="dropdown-item" @click="setStatus(item, 'Menunggu Diambil')">
+                        <i class="fas fa-clock text-info"></i> Menunggu Diambil
                       </a>
-                      <a class="dropdown-item" @click="openRejectModal(peminjaman)">
+                      <a class="dropdown-item" @click="openRejectModal(item)">
                         <i class="fas fa-times text-danger"></i> Ditolak
                       </a>
                     </div>
@@ -159,52 +181,128 @@
               </tr>
             </tbody>
           </table>
-
-          <!-- Pagination -->
-          <div class="d-flex justify-content-between align-items-center mt-3 mb-3" style="border-radius: 10px; background-color: #f3f4f6; height: 50px; color: #000;">
-            <div class="ml-3">
-              Rows per page:
-              <span>{{ rowsPerPage }}</span>
-            </div>
-            <div class="mr-3">          
-              <span>{{ paginationInfo }}</span>
-              <button @click="prevPage" :disabled="currentPage === 1" class="btn btn-sm btn-light">
-                <i class="fas fa-angle-left"></i>
-              </button>
-              <span>  </span>
-              <button @click="nextPage" :disabled="currentPage === totalPages" class="btn btn-sm btn-light">
-                <i class="fas fa-angle-right"></i>
-              </button>
-            </div>
-          </div>          
-        </div>
-      </div>
-
-      <!-- Modal Penolakan -->
-      <div v-if="isRejectModalVisible" class="modal fade show" tabindex="-1" style="display: block;" id="rejectModal" aria-labelledby="rejectModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="rejectModalLabel">Masukkan Alasan Penolakan</h5>
-              <button type="button" class="close" @click="closeRejectModal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <textarea 
-                v-model="rejectionReason" 
-                class="form-control" 
-                rows="3" 
-                placeholder="Masukkan alasan penolakan di sini..."></textarea>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" @click="closeRejectModal">Batal</button>
-              <button type="button" class="btn btn-danger" @click="submitRejection">Kirim</button>
-            </div>
-          </div>
         </div>
       </div>
     </div>
+
+    <!-- Modal -->
+    <div v-if="showModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full" id="my-modal">
+      <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+        <div class="mt-3 text-center">
+          <h3 class="text-lg leading-6 font-medium" style="color: #000;"><b>Detail No Seri</b></h3>
+          <div class="mt-2">
+
+            <div class="row align-items-center justify-content-end mr-3 mb-2">
+              <!-- Tombol hanya muncul jika ada item yang dipilih dan status belum diperbarui -->
+              <button 
+                v-if="selectedItems.length > 0 && !isStatusUpdated" 
+                class="btn btn-primary m-3" 
+                @click="updateStatusToMenungguDiambil">
+                Disetujui
+              </button>
+
+              <!-- <div class="search-wrapper">
+                <div class="input-group">
+                  <input 
+                    type="text" 
+                    placeholder="search..." 
+                    class="form-control"
+                    v-model="searchQuery"
+                    @input="debouncedFetchAlats"/> 
+                </div>
+              </div>     -->
+            </div>
+
+            <table class="table table-border no-border table-custom" style="overflow-x: auto;">
+              <thead>
+                <tr class="bg-table text-center">
+                  <th class="text-center" style="width: 10px; color: #000;">
+                    <input 
+                      type="checkbox" 
+                      @change="toggleSelectAll" 
+                      :checked="isAllSelected" 
+                      :indeterminate="isIndeterminate"
+                    />
+                  </th>
+                  <th class="border p-2" style="color: #000;">No Seri</th>                  
+                  <th class="border p-2" style="color: #000;">Kondisi</th>
+                  <!-- <th class="border p-2" style="color: #000;">Tanggal Peminjaman</th> -->
+                  <th class="border p-2" style="color: #000;">Status</th>
+                  <th class="border p-2" style="color: #000;">Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(item, index) in selectedNoSeri" :key="index">
+                  <td>
+                    <input 
+                      type="checkbox" 
+                      :value="item.id" 
+                      v-model="selectedItems"
+                    />
+                  </td>
+                  <td class="border p-2">{{ item.no_seri || '-' }}</td>
+                  <td class="border p-2">
+                    <div
+                      class="btn-sts"
+                        :class="{'status-active': item.kondisi === 'OK',
+                                'status-error' : item.kondisi === 'Error',
+                                'status-rusak' : item.kondisi === 'Rusak',
+                                'status-hilang' : item.kondisi === 'Hilang',
+                                'status-dipinjam' : item.kondisi === 'Musnah',
+                      }"
+                    >
+                      {{ item.kondisi || '-'}}
+                    </div>
+                  </td>
+                  <!-- <td class="border p-2">{{ item.tanggal_kondisi || '-'}}</td>                   -->
+                  <td class="border p-2">
+                    <div
+                      class="btn-sts"
+                        :class="{'status-active': item.status_perubahan === 'Disetujui',
+                                'status-error' : item.status_perubahan === 'Menunggu Diambil',
+                                'status-rusak' : item.status_perubahan === 'Ditolak',
+                                'status-musnah' : item.status_perubahan === 'Dipinjam',
+                                'status-hilang' : item.status_perubahan === 'Belum Diproses',
+                      }"
+                    >
+                      {{ item.status_perubahan || '-'}}
+                    </div>
+                  </td>
+                  <td class="text-center">
+                    <div class="dropdown text-center">
+                      <button
+                        class="btn btn-sm"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        <i class="fas fa-ellipsis-v" style="color: #000;"></i>
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">                
+                        <a class="dropdown-item" @click="setStatus(item, 'Disetujui')">
+                          <i class="fas fa-clock text-info"></i> Disetujui
+                        </a>
+                        <a class="dropdown-item" @click="openRejectModal(item)">
+                          <i class="fas fa-times text-danger"></i> Ditolak
+                        </a>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- <div class="items-center px-4 py-3">
+            <button @click="closeDetailModal" class="px-4 py-2 bg-red-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-red-600">
+              Close
+            </button>
+          </div> -->
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -216,26 +314,7 @@ export default {
   },
   data() {
     return {
-      data: [
-        {
-          id: 1,
-          no_perubahan: "PR001",
-          kode: "K001",
-          nama: "Clamp",
-          tanggal_peminjaman: "2025-02-18",
-          keterangan_peminjaman: "Peminjaman alat untuk keperluan proyek A.",
-          hasil: "Proses",
-          alasan_ditolak: null,
-        },
-      ],
-      dataPeminjaman: [
-        {
-          id: 1,
-          no_seri_alat: { no_seri_alat: 'A1001' },
-          tanggal_peminjaman: "2025-02-17",
-          status: "Proses",
-        },
-      ],
+      dataPeminjaman: [],
       searchQuery: '',
       searchQueryMain: '',
       rowsPerPage: 10,
@@ -248,6 +327,8 @@ export default {
       rejectionReason: '',
       currentRejectItem: null,
       isRejectModalVisible: false,
+      showModal: false,
+      selectedNoSeri: [],
     }
   },
   computed: {
@@ -268,8 +349,8 @@ export default {
       if (this.searchQuery) {
         return this.paginatedData.filter(item => {
           return (
-            item.no_seri_alat?.no_seri_alat?.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-            item.tanggal_peminjaman.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+            item.tools.no_seri.no_seri.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+            item.tgl_pinjam.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
             item.status.toLowerCase().includes(this.searchQuery.toLowerCase())
           );
         });
@@ -277,33 +358,45 @@ export default {
         return this.paginatedData;
       }
     },
+    // isAllSelected() {
+    //   return this.selectedItems.length === this.filteredData.length;
+    // },
     isAllSelected() {
-      return this.selectedItems.length === this.filteredData.length;
+      return this.selectedItems.length === this.selectedNoSeri.length && this.selectedNoSeri.length > 0;
     },
+    // isIndeterminate() {
+    //   return this.selectedItems.length > 0 && this.selectedItems.length < this.filteredData.length;
+    // },
     isIndeterminate() {
-      return this.selectedItems.length > 0 && this.selectedItems.length < this.filteredData.length;
+      return this.selectedItems.length > 0 && this.selectedItems.length < this.selectedNoSeri.length;
     },
     // Pagination info for main table
     totalMainPages() {
-      return Math.ceil(this.data.length / this.mainRowsPerPage);
+      return Math.ceil(this.dataPeminjaman.length / this.mainRowsPerPage);
     },
     mainPaginationInfo() {
       const start = (this.currentMainPage - 1) * this.mainRowsPerPage + 1;
-      const end = Math.min(this.currentMainPage * this.mainRowsPerPage, this.data.length);
-      return `Showing ${start} to ${end} of ${this.data.length} entries`;
+      const end = Math.min(this.currentMainPage * this.mainRowsPerPage, this.dataPeminjaman.length);
+      return `Showing ${start} to ${end} of ${this.dataPeminjaman.length} entries`;
     },
     paginatedMainData() {
       const start = (this.currentMainPage - 1) * this.mainRowsPerPage;
       const end = start + this.mainRowsPerPage;
-      return this.data.slice(start, end);
+      return this.dataPeminjaman.slice(start, end);
     },
   },
   methods: {
     async fetchPeminjaman() {
       try {
         const noPinjam = this.noPinjam;
-        const response = await axios.get(`/api/permintaan/rincian/noper/${noPinjam}`);
-        this.dataPeminjaman = response.data;
+        // console.log(this.noPinjam);
+        const response = await axios.get(`/api/v1/getPerubahanNoPeminjaman/${noPinjam}`);
+        if (Array.isArray(response.data)) {
+          this.dataPeminjaman = response.data;
+        } else {
+          this.dataPeminjaman = [response.data];
+        }
+        // console.log(this.dataPeminjaman);
       } catch (error) {
         console.error("Error fetching data peminjaman", error);
       }
@@ -325,70 +418,216 @@ export default {
         this.selectedMainItems = [index];
       }
     },
-    toggleSelectAll() {
-      if (this.isAllSelected) {
-        this.selectedItems = [];
+    // toggleSelectAll() {
+    //   if (this.isAllSelected) {
+    //     this.selectedItems = [];
+    //   } else {
+    //     this.selectedItems = this.filteredData.map(item => item.id);
+    //   }
+    // },
+    toggleSelectAll(event) {
+      if (event.target.checked) {
+        this.selectedItems = this.selectedNoSeri.map(item => item.id);
       } else {
-        this.selectedItems = this.filteredData.map(item => item.id);
+        this.selectedItems = [];
       }
     },
     // updateStatusToMenungguDiambil() {
     //   const selectedPeminjaman = this.dataPeminjaman.filter(item => this.selectedItems.includes(item.id));
     //   selectedPeminjaman.forEach(item => {
-    //     item.status = 'Setuju';
+    //     item.status = 'Menunggu Diambil';
     //   });
 
     //   this.isStatusUpdated = true;
     // },
+    // updateStatusToMenungguDiambil() {
+    //   Swal.fire({
+    //     title: 'Konfirmasi',
+    //     text: 'Apakah Anda yakin ingin mengupdate status menjadi "Menunggu Diambil"?',
+    //     icon: 'warning',
+    //     showCancelButton: true,
+    //     confirmButtonText: 'Ya, update!',
+    //     cancelButtonText: 'Tidak, batalkan!',
+    //   }).then((result) => {
+    //     if (result.isConfirmed) {
+    //       const selectedPeminjaman = this.dataPeminjaman.filter(item => this.selectedItems.includes(item.id));
+    //       selectedPeminjaman.forEach(item => {
+    //         item.status = 'Menunggu Diambil';
+    //       });
+    //       this.isStatusUpdated = true;
+    //       Swal.fire('Berhasil!', 'Status telah diupdate.', 'success');
+    //     }
+    //   });
+    // },
     updateStatusToMenungguDiambil() {
+      if (this.selectedItems.length === 0) {
+        Swal.fire('Peringatan', 'Tidak ada item yang dipilih.', 'warning');
+        return;
+      }
+
+      const ditolakItems = this.selectedNoSeri.filter(item =>
+        this.selectedItems.includes(item.id) &&
+        (item.status_perubahan === 'Ditolak')
+      );
+
+      if (ditolakItems.length > 0) {
+        Swal.fire(
+          'Tidak Bisa',
+          'Beberapa item yang dipilih memiliki status "Ditolak" dan tidak dapat diubah.',
+          'error'
+        );
+        return;
+      }
+
       Swal.fire({
-        title: 'Konfirmasi',
-        text: 'Apakah Anda yakin ingin mengupdate status menjadi "Setuju"?',
-        icon: 'warning',
+        title: 'Yakin?',
+        text: 'Semua item terpilih akan diubah menjadi "Disetujui".',
+        icon: 'question',
         showCancelButton: true,
-        confirmButtonText: 'Ya, update!',
-        cancelButtonText: 'Tidak, batalkan!',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, ubah!'
       }).then((result) => {
         if (result.isConfirmed) {
-          const selectedPeminjaman = this.dataPeminjaman.filter(item => this.selectedItems.includes(item.id));
-          selectedPeminjaman.forEach(item => {
-            item.status = 'Setuju';
+          axios.post('/api/v1/noseri/bulk-update-status-perubahan', {
+            ids: this.selectedItems,
+            status: 'Disetujui'
+          })
+          .then(response => {
+            this.selectedNoSeri.forEach(item => {
+              if (this.selectedItems.includes(item.id)) {
+                item.status_perubahan = 'Disetujui';
+              }
+            });
+            this.isStatusUpdated = true;
+            Swal.fire('Berhasil!', 'Status semua item telah diperbarui.', 'success');
+          })
+          .catch(error => {
+            console.error(error);
+            Swal.fire('Gagal', 'Gagal memperbarui status.', 'error');
           });
-          this.isStatusUpdated = true;
-          Swal.fire('Berhasil!', 'Status telah diupdate.', 'success');
         }
       });
     },
     // setStatus(peminjaman, status) {
     //   peminjaman.status = status;
-    //   if (status === 'Ditolak') {
+    //   if (status === 'ditolak') {
     //     this.openRejectModal(peminjaman);
     //   }
     // },
-    setStatus(peminjaman, status) {
+    // setStatus(peminjaman, status) {
+    //   Swal.fire({
+    //     title: 'Konfirmasi',
+    //     text: `Apakah Anda yakin ingin mengupdate status menjadi "${status}"?`,
+    //     icon: 'warning',
+    //     showCancelButton: true,
+    //     confirmButtonText: 'Ya, update!',
+    //     cancelButtonText: 'Tidak, batalkan!',
+    //   }).then((result) => {
+    //     if (result.isConfirmed) {
+    //       peminjaman.status = status;
+    //       if (status === 'ditolak') {
+    //         this.openRejectModal(peminjaman);
+    //       }
+    //     }
+    //   });
+    // },
+    setStatus(item, status, reason = '') {
+      if (['Ditolak'].includes(item.status_perubahan)) {
+        Swal.fire('Tidak Bisa Diubah', `Status No Seri ${item.no_seri} sudah ${item.status_perubahan} dan tidak dapat diubah.`, 'warning');
+        return;
+      }
+
+      if (status === 'Ditolak' && !reason) {
+        Swal.fire('Alasan Diperlukan', 'Silahkan isi alasan penolakan sebelum menolak No Seri.', 'warning');
+        return;
+      }
+
+      axios.post('/api/v1/noseri/update-status-perubahan', {
+        id: item.id,
+        status: status,
+        reason: reason
+      })
+      .then(response => {
+        // Update local data untuk sinkronisasi tampilan
+        item.status_perubahan = status;
+        if (status === 'Ditolak') {
+          this.$set(item, 'alasan_penolakan_perubahan', reason);
+        } else {
+          this.$set(item, 'alasan_penolakan_perubahan', null);
+        }
+
+        this.isStatusUpdated = true;
+        Swal.fire('Berhasil!', `Status No Seri ${item.no_seri} telah diubah menjadi ${status}.`, 'success');
+      })
+      .catch(error => {
+        console.error(error);
+        Swal.fire('Gagal', 'Gagal memperbarui status No Seri.', 'error');
+      });
+    },
+    // openRejectModal(peminjaman) {
+    //   this.currentRejectItem = peminjaman;
+    //   this.rejectionReason = ''; // Clear previous reason
+    //   this.isRejectModalVisible = true; // Show modal
+    // },
+    openRejectModal(item) {
+      if (['Disetujui'].includes(item.status_perubahan)) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Tidak Bisa Ditolak',
+          text: `No Seri ${item.no_seri} sedang dalam status ${item.status_perubahan} dan tidak dapat ditolak.`,
+        });
+        return; // hentikan proses
+      }
+
       Swal.fire({
-        title: 'Konfirmasi',
-        text: `Apakah Anda yakin ingin mengupdate status menjadi "${status}"?`,
-        icon: 'warning',
+        title: 'Tolak No Seri',
+        input: 'text',
+        inputLabel: `Masukkan alasan penolakan untuk No Seri ${item.no_seri}:`,
+        inputPlaceholder: 'Alasan penolakan...',
+        inputAttributes: {
+          'aria-label': 'Alasan penolakan'
+        },
         showCancelButton: true,
-        confirmButtonText: 'Ya, update!',
-        cancelButtonText: 'Tidak, batalkan!',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Tolak',
+        cancelButtonText: 'Batal',
+        preConfirm: (reason) => {
+          if (!reason) {
+            Swal.showValidationMessage('Alasan harus diisi!');
+          }
+          return reason;
+        }
       }).then((result) => {
         if (result.isConfirmed) {
-          peminjaman.status = status;
-          if (status === 'ditolak') {
-            this.openRejectModal(peminjaman);
-          }
+          axios.post('/api/v1/noseri/reject-perubahan', {
+            id: item.id,
+            status: 'Ditolak',
+            reason: result.value
+          })
+          .then(response => {
+            this.setStatus(item, 'Ditolak', result.value);
+            Swal.fire('Berhasil!', `No Seri ${item.no_seri} telah ditolak.`, 'success');
+          })
+          .catch(error => {
+            if (error.response && error.response.status === 422) {
+              console.log('Validation errors:', error.response.data.errors);
+            } else {
+              console.error(error);
+            }
+            Swal.fire('Gagal', 'Gagal menolak No Seri.', 'error');
+          });
         }
       });
     },
-    openRejectModal(peminjaman) {
-      this.currentRejectItem = peminjaman;
-      this.rejectionReason = ''; // Clear previous reason
-      this.isRejectModalVisible = true; // Show modal
-    },
-    closeRejectModal() {
-      this.isRejectModalVisible = false; // Hide modal
+    // closeRejectModal() {
+    //   this.isRejectModalVisible = false; // Hide modal
+    // },
+    closeDetailModal() {
+      this.showModal = false;
+      this.selectedItems = [];
+      this.isStatusUpdated = false;
     },
     submitRejection() {
       if (!this.rejectionReason.trim()) {
@@ -419,6 +658,19 @@ export default {
       if (this.currentMainPage < this.totalMainPages) {
         this.currentMainPage++;
       }
+    },
+    toggleDetailModal(noseriList) {
+      if (this.showModal) {
+        this.showModal = false;  // Menutup modal jika sudah terbuka
+        this.selectedNoSeri = [];
+      } else {
+        this.selectedNoSeri = noseriList;  // Menyimpan data no_seri
+        this.showModal = true;  // Membuka modal
+      }
+    },
+    closeDetailModal() {
+      this.showModal = false;
+      this.selectedNoSeri = [];
     },
   },
   mounted() {

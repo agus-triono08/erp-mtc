@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <!-- Head -->
     <div class="row mb-2 align-items-center" >
-      <div class="col-sm-6"><h3 class="text-black-10" style="font-family: Raleway;">Detail Kerusakan Alat/Mesin</h3> 
+      <div class="col-sm-6"><h3 style="font-family: Raleway;" class="text-black-10">Detail Kerusakan Alat/Mesin</h3> 
         <h6 style="color: rgb(128, 128, 128);"></h6>
       </div> 
       <div class="col-sm-6 mt-3">
@@ -20,58 +20,38 @@
     <div class="card shadow">
       <div class="row m-1">
         <div class="col-12">
-          <h4 class="text-capitalize text-primary text-bold"><b>No Seri #{{ $route.params.id }}</b></h4>
+          <h4 class="text-capitalize text-primary text-bold"><b>No Kerusakan #{{ dataBaru.no_kerusakan }}</b></h4>
         </div>
-        <div class="col-3">
-          <dt style="color: #000;">PIC Kerusakan</dt>
-          <dd>{{ data[0].pic }}</dd>
-        </div>
-        <div class="col-3">
-          <dt style="color: #000;">Nama Alat/Mesin</dt>
-          <dd>{{ data[0].nama }}</dd>
+        <div class="col-6">
+          <dt style="color: #000;">Nama Produk</dt>
+          <dd>{{ dataBaru.no_seri && dataBaru.no_seri.tools && dataBaru.no_seri.tools.nama }}</dd>
           <dt class="text-black-10">Layout</dt>
-          <dd>{{ data[0].layout }}</dd>
-        </div>
-        <div class="col-3">
-          <dt style="color: #000;">Tanggal Kerusakan</dt>
-          <dd>{{ data[0].tgl }}</dd>          
-        </div>
-        <!-- <div class="col-3">
-          <dt style="color: #000;">Target</dt>
-          <dd>{{ data[0].tgl_selesai }} <br>
-            <small>
-              <i :class="{'fas fa-clock': !durasidata[0].includes('hari lewat') && !durasidata[0].includes('hari lagi'), 'fas fa-exclamation-circle text-danger': durasidata[0].includes('hari lewat') || durasidata[0].includes('hari lagi')}"></i>
-              <span :class="{'text-danger': durasidata[0].includes('hari lewat') || durasidata[0].includes('hari lagi')}">
-                {{ durasidata[0] }}
-              </span>
-            </small>
+          <dd v-if="dataBaru.no_seri && dataBaru.no_seri.layout">
+            Ruang {{ dataBaru.no_seri.layout.ruang }} / Rak {{ dataBaru.no_seri.layout.rak }} / Lantai {{ dataBaru.no_seri.layout.lantai }} / Koordinat: {{ dataBaru.no_seri.layout.koordinat }}
           </dd>
-        </div> -->
-        <!-- <div class="col-3">
+        </div>
+        <div class="col-6">
           <dt style="color: #000;">Status</dt>
           <dd>
             <div 
               class="badge"
               :class="{
-                        'status-active': data[0].status === 'Selesai',
-                        'status-hilang': data[0].status === 'Proses',}">
-              {{ data[0].status }}
+                        'status-active': dataBaru.status === 'Selesai',
+                        'status-musnah': dataBaru.status === 'Belum',}">
+              {{ dataBaru.status }}
             </div>
           </dd>
-        </div> -->
+        </div>
       </div>        
     </div>
     <!-- Aktivity -->
     <div class="card shadow mt-5 mb-3">
       <div class="m-2">
         <div class="col-12">
-          <h4 class="text-capitalize text-primary text-bold"><b>Aktivitas Pemusnahan</b></h4>
+          <h4 class="text-capitalize text-primary text-bold"><b>Aktivitas Perbaikan</b></h4>
         </div>        
-        <div class="row align-items-center justify-content-end m-3">          
-          <!-- Tombol Tambah Aktivitas akan hilang jika aktivitas sudah selesai -->
-          <button v-if="shouldShowTambahAktivitas" class="btn btn-primary mr-2" @click="showModal = true" :disabled="isAktivitasSelesai || isAllAktivitasCompleted">Tambah Aktivitas</button>      
-          <!-- Tombol Selesai hanya muncul jika kondisi aktivitas terakhir adalah OK atau Rusak -->
-          <button v-if="isLastAktivitasCompleted && !isAktivitasSelesai" class="btn btn-success mr-2" @click="selesaiAktivitas" :disabled="!isLastAktivitasCompleted">Selesai</button>
+        <div class="row align-items-center justify-content-end m-3">
+          <!-- <button class="btn btn-primary mr-3" @click="openAktivitasModal">Tambah Aktivitas</button>           -->          
           <div class="search-wrapper">
             <div class="input-group">
               <input type="text" placeholder="Search..." class="form-control"
@@ -82,13 +62,14 @@
           </div>
         </div>
         <div class="col-12 table-responsive p-3">
-          <table class="table table-border no-border table-custom">
+          <table class="table table-border no-border table-custom"  style="overflow-y: auto; min-width: 1500px;">
             <thead class="bg-table">
               <tr class="text-center" style="color: #000;">
                 <th>#</th>
-                <th>Tanggal Pemusnahan</th>
-                <th>Waktu Pemusnahan</th>
-                <th>PIC Pemusnahan</th>
+                <th>Tanggal Perbaikan</th>
+                <th>Waktu Perbaikan</th>
+                <th>PIC</th>
+                <th>Detail</th>
                 <th>Kondisi</th>
                 <th>Status</th>
                 <th>Alasan Penolakan</th>
@@ -96,37 +77,42 @@
                 <th>Aksi</th>
               </tr>
             </thead>
-            <tbody >
-              <tr v-for="(item, index) in aktivitasList" :key="index" class="text-center">
+            <tbody v-if="dataBaru.rusak_activity && dataBaru.rusak_activity.length === 0">
+              <tr>
+                <td colspan="9" class="text-center">Tidak Ada Data</td>
+              </tr>
+            </tbody>
+            <tbody>
+              <tr v-for="(item, index) in dataBaru.rusak_activity" :key="item.id" class="text-center">
                 <td>{{ index + 1 }}</td>
-                <td>{{ item.tanggal }}</td>
-                <td>{{ item.waktu_mulai }} - {{ item.waktu_selesai }}</td>
-                <td>{{ item.pic }}</td>
+                <td>{{ item.changed_at || '-' }}</td>
+                <td>{{ item.waktu_mulai || '-'}} - {{ item.waktu_selesai || '-' }}</td>
+                <td>{{ item.nama_pic || '-'}}</td>
+                <td>{{ item.detail_kerusakan || '-'}}</td>
                 <td>
                   <div 
-                    class="badge"
+                    class="btn-sts"
                     :class="{
                       'status-rusak': item.kondisi === 'Rusak',
                       'status-active': item.kondisi === 'OK',
                       'status-error': item.kondisi === 'Error',
-                      'status-musnah': item.kondisi === 'Musnah',
                     }">
                     {{ item.kondisi }}
                     </div>
                 </td>
                 <td>
                   <div 
-                    class="badge"
+                    class="btn-sts"
                     :class="{
                       'status-rusak': item.status === 'Ditolak',
-                      'status-active': item.status === 'Diterima',
-                      'status-hilang': item.status === 'Menunggu Persetujuan Atasan',
+                      'status-active': item.status === 'Disetujui',
+                      'status-error': item.status === 'Menunggu Persetujuan Atasan',
                     }">
                     {{ item.status }}
                     </div>
                 </td>
-                <td>{{ item.alasanPenolakan }}</td>
-                <td>{{ item.catatan }}</td>
+                <td>{{ item.alasan_penolakan || '-'}}</td>
+                <td>{{ item.catatan || '-'}}</td>
                 <td>
                   <div class="dropdown text-center" v-if="item.status === 'Menunggu Persetujuan Atasan'">
                     <button
@@ -151,33 +137,34 @@
                 </td>
               </tr>
             </tbody>
-          </table>           
-        </div>
-        <!-- Pagination -->
-        <div class="d-flex justify-content-between align-items-center m-3" style="border-radius: 10px; background-color: #f3f4f6; height: 50px; color: #000;">
-          <div class="ml-3">
-            Rows per page:
-            <span>{{ rowsPerPage }}</span>
-          </div>
-          <div class="mr-3">          
-            <span>{{ paginationInfo }}</span>
-            <button @click="prevPage" :disabled="currentPage === 1" class="btn btn-sm btn-light">
-              <i class="fas fa-angle-left"></i>
-            </button>
-            <span>  </span>
-            <button @click="nextPage" :disabled="currentPage === totalPages" class="btn btn-sm btn-light">
-              <i class="fas fa-angle-right"></i>
-            </button>
-          </div>
-        </div>  
+          </table>     
+          <!-- Pagination -->
+          <div class="d-flex justify-content-between align-items-center mt-3 mb-3" style="min-width: 1500px; border-radius: 10px; background-color: #f3f4f6; height: 50px; color: #000;">
+            <div class="ml-3">
+              Rows per page:
+              <span>{{ rowsPerPage }}</span>
+            </div>
+            <div class="mr-3">          
+              <span>{{ paginationInfo }}</span>
+              <button @click="prevPage" :disabled="currentPage === 1" class="btn btn-sm btn-light">
+                <i class="fas fa-angle-left"></i>
+              </button>
+              <span>  </span>
+              <button @click="nextPage" :disabled="currentPage === totalPages" class="btn btn-sm btn-light">
+                <i class="fas fa-angle-right"></i>
+              </button>
+            </div>
+          </div>        
+        </div> 
       </div>                  
-    </div>    
+    </div>
+
     <!-- Modal -->
-    <div class="modal fade show" id="modalAktivitas" tabindex="-1" role="dialog" aria-labelledby="modalAktivitasLabel" v-if="showModal">
+    <div class="modal fade show" id="modalAktivitasRusak" tabindex="-1" role="dialog" aria-labelledby="modalAktivitasRusakLabel" v-if="showModal" style="overflow-y: auto;">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="modalAktivitasLabel">Aktivitas Pemusnahan</h5>
+            <h5 class="modal-title" id="modalAktivitasRusakLabel">Aktivitas Pemusnahan</h5>
             <button type="button" class="close" @click="showModal = false" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -185,50 +172,42 @@
           <div class="modal-body">
             <form>
               <div class="form-group">
-                <label for="tanggal" class="text-black-10"><b>Tanggal Pemusnahan <sup class="text-danger"> *</sup> </b></label>
-                <input type="date" class="form-control" id="tanggal" v-model="aktivitas.tanggal" required>
-              </div>
-              <div class="form-group"> 
-                <label for="waktu" class="text-black-10"><b>Waktu Pemusnahan (Mulai - Selesai) <sup class="text-danger"> *</sup> </b></label> 
-                <div class="input-group"> <input type="time" class="form-control" id="waktu_mulai" v-model="aktivitas.waktu_mulai" required>
-                  <span class="input-group-text">-</span> 
-                  <input type="time" class="form-control" id="waktu_selesai" v-model="aktivitas.waktu_selesai" required> 
-                </div> 
+                <label for="waktu" class="text-black-10"><b>Waktu (Mulai - Selesai) <sup class="text-danger">*</sup></b></label>
+                <div class="input-group">
+                  <input type="time" class="form-control" id="waktu_mulai" v-model="aktivitas.waktu_mulai" required>
+                  <span class="input-group-text">-</span>
+                  <input type="time" class="form-control" id="waktu_selesai" v-model="aktivitas.waktu_selesai" required>
+                </div>
               </div>
               <div class="form-group">
-                <label for="pic" class="text-black-10"><b>PIC Pemusnahan</b></label>
+                <label for="pic" class="text-black-10"><b>PIC</b></label>
                 <v-select
-                  :options="picOptions"
+                  :options="users"
                   v-model="aktivitas.pic"
                   multiple
-                  label="text"
-                  :reduce="(pic) => pic.value"
+                  placeholder="Pilih PIC"
+                  :searchable="true"
+                  label="nama"
+                  :reduce="user => user.id"
                 />
               </div>
-              <!-- <div class="form-group">
-                <label for="detail" class="text-black-10"><b>Detail <sup class="text-danger"> *</sup></b></label>
-                <textarea class="form-control" id="detail" v-model="aktivitas.detail" required></textarea>
-              </div> -->
-              <!-- <div class="form-group">
-                <label for="kondisi" class="text-black-10"><b>Kondisi <sup class="text-danger"> *</sup></b></label>
-                <select class="form-control" id="kondisi" v-model="aktivitas.kondisi" required>
-                  <option value="" disabled>Pilih Kondisi</option>
-                  <option value="Musnah">Musnah</option>
-                  <option value="OK">OK</option>            
-                  <option value="Error">Error</option>
-                  <option value="Rusak">Rusak</option>
-                </select>
-              </div> -->
-              <!-- <div class="form-group">
-                <label for="status" class="text-black-10"><b>Status <sup class="text-danger"> *</sup></b></label>
-                <select class="form-control" id="status" v-model="aktivitas.staus" required>
-                  <option value="" disabled>Pilih Status</option>
-                  <option value="Musnah">Musnah</option>
-                  <option value="OK">OK</option>            
-                  <option value="Error">Error</option>
-                  <option value="Rusak">Rusak</option>
-                </select>
-              </div> -->
+              <div class="form-group">
+                <label for="detail" class="text-black-10"><b>Detail <sup class="text-danger">*</sup></b></label>
+                <!-- <textarea class="form-control" id="detail" v-model="aktivitas.detail_kerusakan" required placeholder="Masukkan Detail Perbaikan"></textarea> -->
+                <div class="textarea-wrapper">
+                  <textarea
+                    id="detail_kerusakan"                
+                    v-model="aktivitas.detail_kerusakan"
+                    class="form-control"
+                    rows="3"
+                    placeholder="Masukkan Detail Kerusakan (Maksimal 200 Karakter)"
+                    maxlength="200"
+                  ></textarea>
+                  <small class="text-muted char-counter">
+                    {{ aktivitas.detail_kerusakan.length }} / 200
+                  </small>
+                </div>
+              </div>
             </form>
           </div>
           <div class="modal-footer">
@@ -238,51 +217,6 @@
         </div>
       </div>
     </div>
-    <!-- Tambahkan modal untuk input alasan penolakan -->
-    <div class="modal fade show" id="modalTolakAktivitas" tabindex="-1" role="dialog" aria-labelledby="modalTolakAktivitasLabel" v-if="showTolakModal">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modalTolakAktivitasLabel">Alasan Penolakan</h5>
-            <button type="button" class="close" @click="showTolakModal = false" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="form-group">
-                <label for="alasan" class="text-black-10"><b>Alasan Penolakan <sup class="text-danger"> *</sup> </b></label>
-                <textarea class="form-control" id="alasan" v-model="alasanPenolakan" required></textarea>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" @click="showTolakModal = false">Batal</button>
-            <button type="button" class="btn btn-primary" @click="simpanTolakAktivitas">Simpan</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Modal Selesai Aktivitas -->
-    <!-- <div class="modal fade show" id="modalSelesaiAktivitas" tabindex="-1" role="dialog" aria-labelledby="modalSelesaiAktivitasLabel" v-if="showSelesaiModal">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modalSelesaiAktivitasLabel">Selesai Aktivitas</h5>
-            <button type="button" class="close" @click="showSelesaiModal = false" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <p>Apakah Anda yakin ingin menyelesaikan aktivitas ini?</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" @click="showSelesaiModal = false">Batal</button>
-            <button type="button" class="btn btn-primary" @click="selesaiAktivitas">Selesai</button>
-          </div>
-        </div>
-      </div>
-    </div> -->
   </div>
 </template>
 
@@ -305,54 +239,51 @@ export default {
       showModal: false,
       showSelesaiModal: false,
       aktivitas: {
-        tanggal: '',        
+        id: null,
         waktu_mulai: '',
         waktu_selesai: '',
-        pic: '',
-        detail: '',
-        kondisi: '',
-        alasanPenolakan: '',
-        catatan: '',
+        detail_kerusakan: '',
+        // kondisi: 'Rusak',
+        // layout: '',
+        pic: [],
       },
-      aktivitasList: [
-        { tanggal: '2025-02-01', waktu_mulai: '08:00', waktu_selesai: '12:00', pic: 'Jane Doe', detail: 'Contoh detail 1', kondisi: 'Rusak', status: 'Menunggu Persetujuan Atasan' },      
-      ],
-      data: [
-        { no_seri: '1122wscj121', nama: 'Clamp', layout: 'E7', tgl: '2025-02-01', kondisi: 'Error', detail: 'Sensor tidak berfungsi', pic: 'John Doe', tgl_selesai: '2025-02-05', status: 'Proses' },        
-      ],
+      aktivitasList: [],
+      dataBaru: [],
+      dataAktivitas: [],
+      layouts: [],
+      users: [],
       searchQuery: '',
       rowsPerPage: 10,
       currentPage: 1,
       isAktivitasSelesai: false,
-      showTolakModal: false,
-      tolakIndex: null,
-      alasanPenolakan: '',
-      catatan: '',
     }
   },
   computed: {
+    detailItem() {
+      return this.dataBaru.find(item => item.no_perbaikan == this.$route.params.id);
+    },
     isLastAktivitasCompleted() {
-      const lastAktivitas = this.aktivitasList[this.aktivitasList.length - 1];
-      return lastAktivitas && (lastAktivitas.kondisi === 'Musnah' && lastAktivitas.status === 'Diterima');
+      const lastAktivitas = this.dataAktivitas[this.dataAktivitas.length - 1];
+      return lastAktivitas && (lastAktivitas.kondisi === 'OK' || lastAktivitas.kondisi === 'Rusak');
     },
     isAllAktivitasCompleted() {
-      return this.aktivitasList.every(item => item.kondisi === 'Musnah' && item.status === 'Diterima');
+      return this.dataAktivitas.every(item => item.kondisi === 'OK' || item.kondisi === 'Rusak');
     },
     // Hanya tampilkan tombol "Tambah Aktivitas" jika aktivitas tidak selesai
     shouldShowTambahAktivitas() {
       return !this.isLastAktivitasCompleted && !this.isAllAktivitasCompleted;
     },
     shouldShowDiterima() {
-      return this.aktivitasList.length > 0 && this.aktivitasList[this.aktivitasList.length - 1].status === 'Menunggu Persetujuan Atasan';
+      return this.dataBaru.rusak_activity.length > 0 && this.dataBaru.rusak_activity[this.dataBaru.rusak_activity.length - 1].status === 'Menunggu Persetujuan Atasan';
     },
     shouldShowDitolak() {
-      return this.aktivitasList.length > 0 && this.aktivitasList[this.aktivitasList.length - 1].status === 'Menunggu Persetujuan Atasan';
+      return this.dataBaru.rusak_activity.length > 0 && this.dataBaru.rusak_activity[this.dataBaru.rusak_activity.length - 1].status === 'Menunggu Persetujuan Atasan';
     },
     durasidata() {
-      return this.data.map(item => {
-        if (item.tgl_selesai && item.tgl) {
+      return this.dataBaru.map(item => {
+        if (item.tgl_selesai && item.tgl_perbaikan) {
           const tglSelesai = new Date(item.tgl_selesai);
-          const tglSekarang = new Date(item.tgl);
+          const tglSekarang = new Date(item.tgl_perbaikan);
           const tglSaatIni = new Date();
           const selisihHari = Math.abs(tglSelesai - tglSekarang);
           const hari = Math.floor(selisihHari / (1000 * 60 * 60 * 24 ));
@@ -372,58 +303,30 @@ export default {
         }
       })
     },
+    filteredData() {
+      let result = this.dataBaru.filter(item => {
+        return (
+          item.detail_kerusakan.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+          item.kondisi.toLowerCase().includes(this.searchQuery.toLowerCase()) 
+        );
+      });
+      return result;
+    },
+    paginatedData() {
+      const start = (this.currentPage - 1) * this.rowsPerPage;
+      const end = start + this.rowsPerPage;
+      return this.filteredData.slice(start, end);
+    },
     totalPages() {
-      return Math.ceil(this.aktivitasList.length / this.rowsPerPage);
+      return Math.ceil(this.dataBaru.length / this.rowsPerPage);
     },
     paginationInfo() {
       const start = (this.currentPage - 1) * this.rowsPerPage + 1;
-      const end = Math.min(start + this.rowsPerPage - 1, this.aktivitasList.length);
-      return `Menampilkan ${start} - ${end} dari ${this.aktivitasList.length} data`;
+      const end = Math.min(start + this.rowsPerPage - 1, this.dataBaru.length);
+      return `Showing ${start} to ${end} of ${this.dataBaru.length} entries`;
     }
   },
-  methods: {
-    addAktivitas() {      
-      this.aktivitasList.push({ 
-        tanggal: this.aktivitas.tanggal,        
-        waktu_mulai: this.aktivitas.waktu_mulai,
-        waktu_selesai: this.aktivitas.waktu_selesai,
-        pic: this.aktivitas.pic,
-        kondisi: 'Rusak',
-        status: 'Menunggu Persetujuan Atasan' // tambahkan status menjadi "Proses"
-      });
-      this.aktivitas.tanggal = '';
-      this.aktivitas.waktu_mulai = '';
-      this.aktivitas.waktu_selesai = '';
-      this.aktivitas.pic = '';
-      this.aktivitas.kondisi = '';
-      this.showModal = false;
-    },
-    selesaiAktivitas() {
-      Swal.fire({
-        title: 'Selesai Aktivitas?',
-        text: 'Apakah Anda yakin ingin menyelesaikan aktivitas ini?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Selesai',
-        cancelButtonText: 'Batal',
-      }).then((result) => {
-        if (result.isConfirmed) {
-          // Lakukan aksi selesai aktivitas disini
-          this.data[0].status = 'Proses';
-          
-          // Setelah aktivitas selesai, kita set isAktivitasSelesai menjadi true
-          this.isAktivitasSelesai = true;
-          this.showSelesaiModal = false;
-          this.isLastAktivitasCompleted = false; // tambahkan ini untuk membuat tombol selesai hilang
-          Swal.fire('Berhasil!', 'Aktivitas telah selesai.', 'success');
-          this.$router.push('/kondisi-rusak');
-        }
-      });
-    },
-    updatePaginatedData() {
-      const start = (this.currentPage - 1) * this.rowsPerPage;
-      this.paginatedData = this.aktivitasList.slice(start, start + this.rowsPerPage);
-    },
+  methods: {    
     prevPage() {
       if (this.currentPage > 1) {
         this.currentPage--;
@@ -440,10 +343,103 @@ export default {
       // Implement debounce logic for search
       this.updatePaginatedData();
     },
-    // terimaAktivitas(index) {
-    //   this.aktivitasList[index].status = 'Diterima';
-    //   this.aktivitasList[index].kondisi = 'Musnah';
-    // },
+    async fetchData() {
+      const id = this.$route.params.id;
+      const res = await fetch(`/api/v1/kerusakan/${id}`);
+      const data = await res.json();
+      this.dataBaru = data;
+      // console.log(this.dataBaru);
+    },
+    async fetchInitialData() {
+      try {
+        const [layoutsRes, usersRes] = await Promise.all([
+          // axios.get('/api/v1/tools'),
+          axios.get('/api/v1/layouts'),
+          axios.get('/api/v1/users')
+        ]);
+        // this.tools = toolsRes.data;
+        this.layouts = layoutsRes.data;
+        this.users = usersRes.data.byPIC;
+      } catch (err) {
+        console.error('Gagal fetch data awal:', err);
+      }
+    },
+    openAktivitasModal() {
+      if (this.dataBaru.rusak_activity && this.dataBaru.rusak_activity.length > 0) {
+        const lastAktivitas = this.dataBaru.rusak_activity[this.dataBaru.rusak_activity.length - 1];
+        if (lastAktivitas.status === 'Menunggu Persetujuan Atasan') {
+          Swal.fire({
+            icon: 'error',
+            title: 'Tidak dapat menambah Aktivitas',
+            text: 'Aktivitas sebelumnya masih Menunggu Persetujuan Atasan.',
+          });
+          return;
+        }
+      }
+      // Siapkan form modal
+      this.aktivitas = {
+        id: this.$route.params.id,
+        waktu_mulai: '',
+        waktu_selesai: '',
+        detail_kerusakan: '',
+        // kondisi: '',
+        // layout: '',
+        pic: [],
+      };
+      this.showModal = true;
+    },
+    async addAktivitas() {
+      // Validasi frontend manual
+      if (
+        !this.aktivitas.waktu_mulai || 
+        !this.aktivitas.waktu_selesai || 
+        !this.aktivitas.detail_kerusakan || 
+        // !this.aktivitas.kondisi || 
+        this.aktivitas.pic.length === 0 
+        // (this.aktivitas.kondisi === 'Rusak' && !this.aktivitas.layout)
+      ) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Data tidak lengkap',
+          text: 'Pastikan semua field wajib telah diisi.',
+        });
+        return;
+      }
+
+      try {
+        const payload = {
+          ...this.aktivitas,
+          pic: this.aktivitas.pic, // array of user IDs
+          // layout: this.aktivitas.layout || null,
+        };
+
+        const confirm = await Swal.fire({
+          title: 'Konfirmasi',
+          text: 'Apakah Anda yakin ingin mengirim hasil pengecekan?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Ya, kirim!',
+          cancelButtonText: 'Tidak, batalkan!',
+        });
+
+        if (confirm.isConfirmed) {
+          await axios.post('/api/v1/kerusakan/add-activity', payload);
+          Swal.fire('Terkirim!', 'Data aktivitas berhasil disimpan.', 'success');
+          this.showModal = false;
+        }
+
+      } catch (error) {
+        let msg = 'Terjadi kesalahan saat mengirim data.';
+        if (error.response && error.response.data && error.response.data.message) {
+          msg = error.response.data.message;
+        }
+        Swal.fire({
+          icon: 'error',
+          title: 'Gagal mengirim',
+          text: msg,
+        });
+      }
+    },
     terimaAktivitas(index) {
       Swal.fire({
         title: 'Konfirmasi',
@@ -456,29 +452,96 @@ export default {
         inputPlaceholder: 'Masukkan catatan',
         inputValidator: (value) => {
           if (!value) {
-            return 'Harap masukkan catatan!'
+            return 'Harap masukkan catatan!';
           }
         }
-      }).then((result) => {
+      }).then(async (result) => {
         if (result.isConfirmed) {
-          this.aktivitasList[index].status = 'Diterima';
-          this.aktivitasList[index].kondisi = 'Musnah';
-          this.aktivitasList[index].catatan = result.value;
-          Swal.fire('Berhasil!', 'Aktivitas telah diterima.', 'success');
+          try {
+            const aktivitas = this.dataBaru.rusak_activity[index]; // ← akses langsung dari tabel
+
+            const payload = {
+              id: aktivitas.id, // harus merupakan ID dari rusak_activity
+              status: 'Diterima',
+              catatan: result.value
+            };
+
+            await axios.post('/api/v1/kerusakan/pemusnahan-diterima', payload);
+
+            // Update nilai di frontend setelah berhasil
+            this.dataBaru.rusak_activity[index].status = 'Diterima';
+            this.dataBaru.rusak_activity[index].kondisi = 'Musnah';
+            this.dataBaru.rusak_activity[index].catatan = result.value;
+
+            Swal.fire('Berhasil!', 'Aktivitas telah diterima.', 'success');
+          } catch (error) {
+            let msg = 'Terjadi kesalahan saat menyimpan data.';
+            if (error.response && error.response.data && error.response.data.message) {
+              msg = error.response.data.message;
+            }
+            Swal.fire('Gagal!', msg, 'error');
+          }
         }
       });
     },
     tolakAktivitas(index) {
-      this.showTolakModal = true;
-      this.tolakIndex = index;
+      Swal.fire({
+        title: 'Konfirmasi',
+        text: 'Apakah Anda yakin ingin menolak aktivitas ini?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, tolak!',
+        cancelButtonText: 'Tidak, batalkan!',
+        input: 'textarea',
+        inputPlaceholder: 'Masukkan Alasan Penolakan',
+        inputValidator: (value) => {
+          if (!value) {
+            return 'Harap masukkan catatan!';
+          }
+        }
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+            const aktivitas = this.dataBaru.rusak_activity[index]; // ← akses langsung dari tabel
+            const payload = {
+              id: aktivitas.id, // harus merupakan ID dari rusak_activity
+              status: 'Ditolak',
+              alasan_penolakan: result.value
+            };
+            await axios.post('/api/v1/kerusakan/pemusnahan-ditolak', payload);
+
+            // Update nilai di frontend setelah berhasil
+            this.dataBaru.rusak_activity[index].status = 'Ditolak';
+            this.dataBaru.rusak_activity[index].kondisi = 'Rusak';
+            this.dataBaru.rusak_activity[index].alasan_penolakan = result.value;
+
+            Swal.fire('Berhasil!', 'Aktivitas telah ditolak.', 'success');
+          } catch (error) {
+            let msg = 'Terjadi kesalahan saat menyimpan data.';
+            if (error.response && error.response.data && error.response.data.message) {
+              msg = error.response.data.message;
+            }
+            Swal.fire('Gagal!', msg, 'error');
+          }
+        }
+      })
     },
-    simpanTolakAktivitas() {
-      this.aktivitasList[this.tolakIndex].status = 'Ditolak';
-      this.aktivitasList[this.tolakIndex].kondisi = 'Rusak';
-      this.aktivitasList[this.tolakIndex].alasanPenolakan = this.alasanPenolakan;
-      this.showTolakModal = false;
-      this.alasanPenolakan = '';
-    },
+    // tolakAktivitas(index) {
+    //   this.showTolakModal = true;
+    //   this.tolakIndex = index;
+    // },
+    // simpanTolakAktivitas() {
+    //   this.aktivitasList[this.tolakIndex].status = 'Ditolak';
+    //   this.aktivitasList[this.tolakIndex].kondisi = 'Rusak';
+    //   this.aktivitasList[this.tolakIndex].alasanPenolakan = this.alasanPenolakan;
+    //   this.showTolakModal = false;
+    //   this.alasanPenolakan = '';
+    // },
+  },
+  mounted() {
+    this.fetchData();
+    // this.fetchDataAktivitas();
+    this.fetchInitialData();
   }
 }
 </script>

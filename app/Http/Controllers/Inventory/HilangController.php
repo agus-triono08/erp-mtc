@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Inventory\NoSeri;
 use App\Models\Inventory\Hilang;
 use App\Models\Inventory\Tools;
+use App\Models\Inventory\NoSeriLog;
 
 class HilangController extends Controller
 {
@@ -74,11 +75,26 @@ class HilangController extends Controller
         // Update kondisi pada tabel no_seri
         $noSeri = NoSeri::find($request->no_seri_id);
         if ($noSeri) {
-            $noSeri->kondisi = $request->kondisi; // Update kondisi
+
+            $oldKondisi = $noSeri->kondisi;
+            $newKondisi = $request->kondisi;
+
+            if ($oldKondisi !== $newKondisi) {
+                // Simpan log perubahan kondisi
+                NoSeriLog::create([
+                    'no_seri_id'  => $noSeri->id,
+                    'old_kondisi' => $oldKondisi,
+                    'new_kondisi' => $newKondisi,
+                    'changed_at'  => now(),
+                    'changed_by'  => auth()->id() ?? 1, // pastikan user sudah login
+                ]);
+            }
+
+            $noSeri->kondisi = $newKondisi; // Update kondisi
             $noSeri->save();
 
             // Kurangi stok_akhir dan harga_total pada tabel tools jika kondisi hilang
-            if ($noSeri->tools_id && strtolower($request->kondisi) === 'hilang') {
+            if ($noSeri->tools_id && strtolower($newKondisi) === 'hilang') {
                 $tool = Tools::find($noSeri->tools_id);
                 if ($tool) {
                     if ($tool->stok_akhir > 0) {

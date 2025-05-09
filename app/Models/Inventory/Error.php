@@ -20,10 +20,16 @@ class Error extends Model
         'kondisi',
         'detail_perbaikan',
         'status',
+        'tgl_selesai',
     ];
 
     public function noSeri() :BelongsTo 
     {
         return $this->belongsTo(NoSeri::class, 'no_seri_id', 'id');
+    }
+
+    public function error_activity()
+    {
+        return $this->hasMany(ErrorActivity::class);
     }
 }

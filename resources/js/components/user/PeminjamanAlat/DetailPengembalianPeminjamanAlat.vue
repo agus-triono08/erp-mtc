@@ -21,10 +21,11 @@
             <th class="text-center" style="width: 10px; color: #000;">Kode</th>
             <th class="text-center" style="width: 10px; color: #000;">Nama</th>
             <th class="text-center" style="width: 10px; color: #000;">Jumlah</th>
+            <th class="text-center" style="width: 10px; color: #000;">Tanggal Pengembalian</th>
             <th class="text-center" style="width: 10px; color: #000;">Aksi</th>
           </tr>
         </thead>
-        <tbody v-if="data.length === 0">
+        <tbody v-if="paginatedData.length === 0">
           <tr>
             <td colspan="6" class="text-center">Tidak Ada Data</td>
           </tr>
@@ -32,12 +33,18 @@
         <tbody v-for="(item, index) in paginatedMainData" :key="item.id">
           <tr class="text-center">
             <td>{{ index + 1 }}</td>
-            <td>{{ item.kode }}</td>
-            <td>{{ item.nama }}</td>
-            <td>{{ item.jumlah }}</td>
-            <td class="text-center">
+            <td>{{ item.tools.kode || '-' }}</td>
+            <td>{{ item.tools.nama || '-' }}</td>
+            <td>{{ item.total }}</td>
+            <td>{{ item.tgl_kembali }}</td>
+            <!-- <td class="text-center">
               <button class="btn btn-info btn-sm" @click="toggleDetail(index)">
                 {{ isDetailVisible(index) ? 'Sembunyikan Detail' : 'Detail' }}
+              </button>
+            </td> -->
+            <td>
+              <button @click="toggleDetailModal(item.no_seri)" class="btn btn-primary">
+                {{ showModal ? 'Sembunyikan Detail' : 'Detail' }}
               </button>
             </td>
           </tr>
@@ -65,17 +72,20 @@
     </div>
 
     <!-- Modal Tabel Detail (sub-tabel) -->
-    <div v-for="(item, index) in data" :key="'detail-' + item.id" class="table-responsive p-3" v-if="isDetailVisible(index)">
-      <span style="color: #000;"><b>{{ item.nama }}</b></span>
+    <div v-for="(item, index) in dataPeminjaman" :key="'detail-' + item.id" class="table-responsive p-3" v-if="isDetailVisible(index)">
+      <span style="color: #000;"><b>{{ item.tools.nama }}</b></span>
 
+      <!-- Modal Tabel Detail Inner (Fitur lain seperti tombol dan search) -->
       <div class="container-fluid">
         <div class="row align-items-center justify-content-end mr-3 mb-2">
+          <!-- Tombol hanya muncul jika ada item yang dipilih dan status belum diperbarui -->
           <button 
             v-if="selectedItems.length > 0 && !isStatusUpdated" 
             class="btn btn-primary m-3" 
-            @click="updateStatusToProses">
-            Proses
+            @click="updateStatusToMenungguDiambil">
+            Menunggu Diambil
           </button>
+
           <div class="search-wrapper">
             <div class="input-group">
               <input 
@@ -88,45 +98,47 @@
           </div>    
         </div>
 
-        <!-- Tabel Peminjaman -->
         <div class="table-responsive p-3">
           <table class="table table-border no-border table-custom" style="overflow-x: auto;">
             <thead>
               <tr class="bg-table text-center">
-                <!-- <th class="text-center" style="width: 10px; color: #000;">
+                <th class="text-center" style="width: 10px; color: #000;">
                   <input 
                     type="checkbox" 
                     @change="toggleSelectAll" 
                     :checked="isAllSelected" 
                     :indeterminate="isIndeterminate"
                   />
-                </th> -->
+                </th>
                 <th class="text-center" style="width: 10px; color: #000;">#</th>
                 <th class="text-center" style="width: 10px; color: #000;">No Seri Alat</th>
-                <th class="text-center" style="width: 10px; color: #000;">Tanggal Kembali</th>
+                <th class="text-center" style="width: 10px; color: #000;">Tgl Peminjaman</th>
+                <th class="text-center" style="width: 10px; color: #000;">Kondisi</th>
                 <th class="text-center" style="width: 10px; color: #000;">Status</th>
-                <!-- <th class="text-center" style="width: 10px; color: #000;">Aksi</th> -->
+                <th class="text-center" style="width: 10px; color: #000;">Aksi</th>
               </tr>
             </thead>
             <tbody v-if="filteredData.length == 0">
               <tr>
-                <td colspan="6" class="text-center">Tidak Ada Data</td>
+                <td colspan="7" class="text-center">Tidak Ada Data</td>
               </tr>
             </tbody>
-            <tbody v-for="(peminjaman, index) in filteredData" :key="index">
+            <!-- <tbody v-for="(peminjaman, index) in filteredData" :key="index"> -->
+              <tbody>
               <tr class="text-center">
-                <!-- <td>
+                <td>
                   <input 
                     type="checkbox" 
-                    :value="peminjaman.id" 
+                    :value="item.id" 
                     v-model="selectedItems"
                   />
-                </td> -->
+                </td>
                 <td>{{ index + 1 }}</td>
-                <td>{{ peminjaman.no_seri_alat ? peminjaman.no_seri_alat.no_seri_alat : '-' }}</td>
-                <td>{{ peminjaman.tanggal_kembali || '-' }}</td>
-                <td>{{ peminjaman.status || '-' }}</td>
-                <!-- <td class="text-center">
+                <td>{{ item.tools.no_seri.no_seri || '-' }}</td>
+                <td>{{ item.tgl_pinjam || '-' }}</td>
+                <td>{{ item.tools.no_seri.kondisi || '-' }}</td>
+                <td>{{ item.status }}</td>
+                <td class="text-center">
                   <div class="dropdown text-center">
                     <button
                       class="btn btn-sm"
@@ -139,122 +151,204 @@
                       <i class="fas fa-ellipsis-v" style="color: #000;"></i>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">                
-                      <a class="dropdown-item" @click="setStatus(peminjaman, 'proses')">
-                        <i class="fas fa-cogs text-info"></i> Cek
+                      <a class="dropdown-item" @click="setStatus(item, 'Menunggu Diambil')">
+                        <i class="fas fa-clock text-info"></i> Menunggu Diambil
                       </a>
-                      <a class="dropdown-item" @click="openRejectModal(peminjaman)">
+                      <a class="dropdown-item" @click="openRejectModal(item)">
                         <i class="fas fa-times text-danger"></i> Ditolak
                       </a>
                     </div>
                   </div>
-                </td> -->
+                </td>
               </tr>
             </tbody>
           </table>
         </div>
+      </div>
+    </div>
 
-        <!-- Modal Pop-up untuk Pengujian -->
-        <div v-if="isTestModalVisible" class="modal fade show" tabindex="-1" style="display: block;" id="testModal" aria-labelledby="testModalLabel" aria-hidden="true">
-          <div class="modal-dialog" style="width: 80%;"> <!-- Custom width set to 80% -->
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="testModalLabel" style="color: #000;">Pengujian Alat</h5>
-                <button type="button" class="close" @click="closeTestModal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <!-- Tanggal Pengujian -->
-                <div class="mb-3">
-                  <label for="testDate" class="form-label" style="color: #000;"><b>Tanggal Pengujian:</b></label>
-                  <input type="date" v-model="testDate" class="form-control" />
-                </div>
+    <!-- Modal -->
+    <div v-if="showModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full" id="my-modal">
+      <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+        <div class="mt-3 text-center">
+          <h3 class="text-lg leading-6 font-medium" style="color: #000;"><b>Detail No Seri</b></h3>
+          <div class="mt-2">
 
-                <!-- Hasil Pengujian -->
-                <div class="mb-3">
-                  <label class="form-label" style="color: #000;"><b>Hasil Pengujian:</b></label>
-                  <div>
-                    <div class="form-check form-check-inline">
-                      <input type="radio" v-model="testResult" value="Error" id="error" class="form-check-input" />
-                      <label class="form-check-label" for="error" style="color: #000;"><b>Error</b></label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input type="radio" v-model="testResult" value="Ready" id="ready" class="form-check-input" />
-                      <label class="form-check-label" for="ready" style="color: #000;"><b>Ready</b></label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input type="radio" v-model="testResult" value="Rusak" id="rusak" class="form-check-input" />
-                      <label class="form-check-label" for="rusak" style="color: #000;"><b>Rusak</b></label>
-                    </div>
-                  </div>
-                </div>
+            <div class="row align-items-center justify-content-end mr-3 mb-2">
+              <!-- Tombol hanya muncul jika ada item yang dipilih dan status belum diperbarui -->
+              <button 
+                v-if="selectedItems.length > 0 && !isStatusUpdated" 
+                class="btn btn-primary m-3" 
+                @click="updateStatusToMenungguDiambil">
+                Menunggu Diambil
+              </button>
 
-                <!-- Keterangan -->
-                <div class="mb-3">
-                  <label for="testNotes" class="form-label" style="color: #000;"><b>Keterangan:</b></label>
-                  <textarea 
-                    v-model="testNotes" 
-                    class="form-control" 
-                    rows="3" 
-                    placeholder="Masukkan keterangan di sini..."></textarea>
+              <!-- <div class="search-wrapper">
+                <div class="input-group">
+                  <input 
+                    type="text" 
+                    placeholder="search..." 
+                    class="form-control"
+                    v-model="searchQuery"
+                    @input="debouncedFetchAlats"/> 
                 </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-danger" @click="closeTestModal">Batal</button>
-                <button type="button" class="btn btn-primary" @click="submitTestResult">Kirim</button>
-              </div>
+              </div>     -->
             </div>
+
+            <table class="table table-border no-border table-custom" style="overflow-x: auto;">
+              <thead>
+                <tr class="bg-table text-center">
+                  <!-- <th class="text-center" style="width: 10px; color: #000;">
+                    <input 
+                      type="checkbox" 
+                      @change="toggleSelectAll" 
+                      :checked="isAllSelected" 
+                      :indeterminate="isIndeterminate"
+                    />
+                  </th> -->
+                  <th class="border p-2" style="color: #000;">No Seri</th>                  
+                  <th class="border p-2" style="color: #000;">Kondisi</th>
+                  <th class="border p-2" style="color: #000;">Tanggal Pengecekan</th>
+                  <th class="border p-2" style="color: #000;">Ket. Pengecekan</th>
+                  <th class="border p-2" style="color: #000;">Status</th>
+                  <!-- <th class="border p-2" style="color: #000;">Aksi</th> -->
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(item, index) in selectedNoSeri" :key="index">
+                  <!-- <td>
+                    <input 
+                      type="checkbox" 
+                      :value="item.id" 
+                      v-model="selectedItems"
+                    />
+                  </td> -->
+                  <td class="border p-2">{{ item.no_seri || '-' }}</td>
+                  <td class="border p-2">
+                    <div
+                      class="btn-sts"
+                        :class="{'status-active': item.kondisi === 'OK',
+                                'status-error' : item.kondisi === 'Error',
+                                'status-rusak' : item.kondisi === 'Rusak',
+                                'status-hilang' : item.kondisi === 'Hilang',
+                                'status-dipinjam' : item.kondisi === 'Musnah',
+                      }"
+                    >
+                      {{ item.kondisi || '-'}}
+                    </div>
+                  </td>
+                  <td class="border p-2">{{ item.tgl_pengecekan || '-'}}</td> 
+                  <td class="border p-2">{{ item.deskripsi_cek || '-'}}</td>                                    
+                  <td class="border p-2">
+                    <div
+                      class="btn-sts"
+                        :class="{'status-active': item.kondisi_after === 'Selesai',
+                                'status-error' : item.kondisi_after === 'Menunggu Diambil',
+                                'status-rusak' : item.kondisi_after === 'Ditolak',
+                                'status-musnah' : item.kondisi_after === 'Dipinjam',
+                                'status-hilang' : item.kondisi_after === 'Belum Diproses',
+                      }"
+                    >
+                      {{ item.kondisi_after || '-'}}
+                    </div>
+                  </td>
+                  <!-- <td class="text-center">
+                    <div class="dropdown text-center">
+                      <button
+                        class="btn btn-sm"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        <i class="fas fa-ellipsis-v" style="color: #000;"></i>
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">                
+                        <a class="dropdown-item" @click="openTestModal(item.id)">
+                          <i class="fas fa-check-circle text-success"></i> Cek Kondisi
+                        </a>
+                      </div>
+                    </div>
+                  </td> -->
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Modal Penolakan -->
-    <!-- <div v-if="isRejectModalVisible" class="modal fade show" tabindex="-1" style="display: block;" id="rejectModal" aria-labelledby="rejectModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
+    <!-- Modal Cek Kondisi -->
+    <div v-if="isTestModalVisible" class="modal fade show" tabindex="-1" role="dialog" aria-hidden="true" style="display: block;">
+      <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="rejectModalLabel">Masukkan Alasan Penolakan</h5>
-            <button type="button" class="close" @click="closeRejectModal" aria-label="Close">
+            <h5 class="modal-title" id="modalCekKondisiLabel">Cek Kondisi No Seri</h5>
+            <button type="button" class="close" @click="closeTestModal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <textarea 
-              v-model="rejectionReason" 
-              class="form-control" 
-              rows="3" 
-              placeholder="Masukkan alasan penolakan di sini..."></textarea>
+            <!-- Tanggal Pengecekan -->
+            <div class="mb-3">
+              <label class="form-label" style="color: #000;"><b>Tanggal Pengecekan:</b></label>
+              <input type="date" v-model="form.tgl_pengecekan" class="form-control" />
+            </div>
+
+            <!-- Hasil Pengecekan -->
+            <div class="mb-3">
+              <label class="form-label" style="color: #000;"><b>Hasil Pengecekan:</b></label>
+              <div>
+                <div class="form-check form-check-inline">
+                  <input type="radio" v-model="form.kondisi" value="OK" id="ok" class="form-check-input" />
+                  <label class="form-check-label" for="ok" style="color: #000;"><b>OK</b></label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input type="radio" v-model="form.kondisi" value="Error" id="error" class="form-check-input" />
+                  <label class="form-check-label" for="error" style="color: #000;"><b>Error</b></label>
+                </div>                
+                <div class="form-check form-check-inline">
+                  <input type="radio" v-model="form.kondisi" value="Rusak" id="rusak" class="form-check-input" />
+                  <label class="form-check-label" for="rusak" style="color: #000;"><b>Rusak</b></label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input type="radio" v-model="form.kondisi" value="Hilang" id="hilang" class="form-check-input" />
+                  <label class="form-check-label" for="hilang" style="color: #000;"><b>Hilang</b></label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Keterangan -->
+            <div class="mb-3">
+              <label for="deskripsi_cek" class="form-label" style="color: #000;"><b>Keterangan:</b></label>
+              <textarea 
+                v-model="form.deskripsi_cek" 
+                class="form-control" 
+                rows="3" 
+                placeholder="Masukkan keterangan di sini..."></textarea>
+            </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" @click="closeRejectModal">Batal</button>
-            <button type="button" class="btn btn-danger" @click="submitRejection">Kirim</button>
+            <button type="button" class="btn btn-danger" @click="closeTestModal">Batal</button>
+            <button type="button" class="btn btn-primary" @click="submitTestResult">Kirim</button>
           </div>
         </div>
       </div>
-    </div> -->
+    </div>   
 
   </div>
 </template>
 
 <script>
+import Swal from 'sweetalert2';
 export default {
   props: {
     noPinjam: String,
   },
   data() {
     return {
-      data: [
-        { id: 1, kode: 'A001', nama: 'Clamp', jumlah: 1, tanggal_pengambilan: '2025-02-17' },
-      ],
-      dataPeminjaman: [
-        {
-          id: 1,
-          no_seri_alat: { no_seri_alat: 'A1001' },
-          tanggal_peminjaman: "2025-02-17",
-          status: "Proses",
-        },
-      ],
+      dataPeminjaman: [],
       searchQuery: '',
       searchQueryMain: '',
       rowsPerPage: 10,
@@ -267,11 +361,15 @@ export default {
       rejectionReason: '',
       currentRejectItem: null,
       isRejectModalVisible: false,
+      showModal: false,
+      selectedNoSeri: [],
       isTestModalVisible: false,
-      testDate: '',
-      testResult: '',
-      testNotes: '',
-      currentTestItem: null,
+      form: {
+        id: null,
+        tgl_pengecekan: '',
+        kondisi: '',
+        deskripsi_cek: '',
+      },
     }
   },
   computed: {
@@ -292,7 +390,7 @@ export default {
       if (this.searchQuery) {
         return this.paginatedData.filter(item => {
           return (
-            item.no_seri_alat?.no_seri_alat?.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+            item.tools.no_seri.no_seri.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
             item.tgl_pinjam.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
             item.status.toLowerCase().includes(this.searchQuery.toLowerCase())
           );
@@ -301,33 +399,45 @@ export default {
         return this.paginatedData;
       }
     },
+    // isAllSelected() {
+    //   return this.selectedItems.length === this.filteredData.length;
+    // },
     isAllSelected() {
-      return this.selectedItems.length === this.filteredData.length;
+      return this.selectedItems.length === this.selectedNoSeri.length && this.selectedNoSeri.length > 0;
     },
+    // isIndeterminate() {
+    //   return this.selectedItems.length > 0 && this.selectedItems.length < this.filteredData.length;
+    // },
     isIndeterminate() {
-      return this.selectedItems.length > 0 && this.selectedItems.length < this.filteredData.length;
+      return this.selectedItems.length > 0 && this.selectedItems.length < this.selectedNoSeri.length;
     },
     // Pagination info for main table
     totalMainPages() {
-      return Math.ceil(this.data.length / this.mainRowsPerPage);
+      return Math.ceil(this.dataPeminjaman.length / this.mainRowsPerPage);
     },
     mainPaginationInfo() {
       const start = (this.currentMainPage - 1) * this.mainRowsPerPage + 1;
-      const end = Math.min(this.currentMainPage * this.mainRowsPerPage, this.data.length);
-      return `Showing ${start} to ${end} of ${this.data.length} entries`;
+      const end = Math.min(this.currentMainPage * this.mainRowsPerPage, this.dataPeminjaman.length);
+      return `Showing ${start} to ${end} of ${this.dataPeminjaman.length} entries`;
     },
     paginatedMainData() {
       const start = (this.currentMainPage - 1) * this.mainRowsPerPage;
       const end = start + this.mainRowsPerPage;
-      return this.data.slice(start, end);
+      return this.dataPeminjaman.slice(start, end);
     },
   },
   methods: {
     async fetchPeminjaman() {
       try {
         const noPinjam = this.noPinjam;
-        const response = await axios.get(`/api/peminjaman/alats/nopin/${noPinjam}`);
-        this.dataPeminjaman = response.data;
+        // console.log(this.noPinjam);
+        const response = await axios.get(`/api/v1/peminjaman/getNoPeminjaman/${noPinjam}`);
+        if (Array.isArray(response.data)) {
+          this.dataPeminjaman = response.data;
+        } else {
+          this.dataPeminjaman = [response.data];
+        }
+        // console.log(this.dataPeminjaman);
       } catch (error) {
         console.error("Error fetching data peminjaman", error);
       }
@@ -349,34 +459,67 @@ export default {
         this.selectedMainItems = [index];
       }
     },
-    toggleSelectAll() {
-      if (this.isAllSelected) {
-        this.selectedItems = [];
+    toggleSelectAll(event) {
+      if (event.target.checked) {
+        this.selectedItems = this.selectedNoSeri.map(item => item.id);
       } else {
-        this.selectedItems = this.filteredData.map(item => item.id);
+        this.selectedItems = [];
       }
     },
     updateStatusToMenungguDiambil() {
-      const selectedPeminjaman = this.dataPeminjaman.filter(item => this.selectedItems.includes(item.id));
-      selectedPeminjaman.forEach(item => {
-        item.status = 'Menunggu Diambil';
-      });
-
-      this.isStatusUpdated = true;
-    },
-    setStatus(peminjaman, status) {
-      peminjaman.status = status;
-      if (status === 'ditolak') {
-        this.openRejectModal(peminjaman);
+      if (this.selectedItems.length === 0) {
+        Swal.fire('Peringatan', 'Tidak ada item yang dipilih.', 'warning');
+        return;
       }
-    },
-    openRejectModal(peminjaman) {
-      this.currentRejectItem = peminjaman;
-      this.rejectionReason = ''; // Clear previous reason
-      this.isRejectModalVisible = true; // Show modal
-    },
-    closeRejectModal() {
-      this.isRejectModalVisible = false; // Hide modal
+
+      const ditolakItems = this.selectedNoSeri.filter(item =>
+        this.selectedItems.includes(item.id) &&
+        (item.kondisi_after === 'Ditolak' || item.kondisi_after === 'Dipinjam')
+      );
+
+      if (ditolakItems.length > 0) {
+        Swal.fire(
+          'Tidak Bisa',
+          'Beberapa item yang dipilih memiliki status "Ditolak" atau "Dipinjam" dan tidak dapat diubah.',
+          'error'
+        );
+        return;
+      }
+
+      Swal.fire({
+        title: 'Yakin?',
+        text: 'Semua item terpilih akan diubah menjadi "Menunggu Diambil".',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, ubah!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios.post('/api/v1/noseri/bulk-update-status', {
+            ids: this.selectedItems,
+            status: 'Menunggu Diambil'
+          })
+          .then(response => {
+            this.selectedNoSeri.forEach(item => {
+              if (this.selectedItems.includes(item.id)) {
+                item.kondisi_after = 'Menunggu Diambil';
+              }
+            });
+            this.isStatusUpdated = true;
+            Swal.fire('Berhasil!', 'Status semua item telah diperbarui.', 'success');
+          })
+          .catch(error => {
+            console.error(error);
+            Swal.fire('Gagal', 'Gagal memperbarui status.', 'error');
+          });
+        }
+      });
+    },      
+    closeDetailModal() {
+      this.showModal = false;
+      this.selectedItems = [];
+      this.isStatusUpdated = false;
     },
     submitRejection() {
       if (!this.rejectionReason.trim()) {
@@ -408,37 +551,55 @@ export default {
         this.currentMainPage++;
       }
     },
-    // Method to handle the "Proses" action
-    setStatus(peminjaman, status) {
-      peminjaman.status = status;
-      if (status === 'proses') {
-        this.openTestModal(peminjaman);
+    toggleDetailModal(noseriList) {
+      if (this.showModal) {
+        this.showModal = false;  // Menutup modal jika sudah terbuka
+        this.selectedNoSeri = [];
+      } else {
+        this.selectedNoSeri = noseriList;  // Menyimpan data no_seri
+        this.showModal = true;  // Membuka modal
       }
     },
-    // Open the Test Modal
-    openTestModal(peminjaman) {
-      this.currentTestItem = peminjaman;
-      this.testDate = '';
-      this.testResult = '';
-      this.testNotes = '';
+    closeDetailModal() {
+      this.showModal = false;
+      this.selectedNoSeri = [];
+    },
+    openTestModal(noseriId) {
+      this.form.id = noseriId;
+      this.form.tgl_pengecekan = new Date().toISOString().substr(0, 10); // default today
+      this.form.kondisi = '';
+      this.form.deskripsi_cek = '';
       this.isTestModalVisible = true;
     },
-    // Close the Test Modal
     closeTestModal() {
       this.isTestModalVisible = false;
     },
-    // Submit the test result
     submitTestResult() {
-      if (!this.testDate || !this.testResult) {
-        alert('Tanggal pengujian dan hasil pengujian harus diisi.');
-        return;
-      }
+      axios.post('/api/v1/noseri/cek-kondisi', this.form)
+        .then((response) => {
+          Swal.fire({
+            title: 'Konfirmasi',
+            text: 'Apakah Anda yakin ingin mengirim hasil pengecekan?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, kirim!',
+            cancelButtonText: 'Tidak, batalkan!',
+          });
+          this.closeTestModal();
+          this.$emit('refreshData'); // opsional jika ingin refresh tabel parent
+        })
+        .catch((error) => {
+          let msg = 'Tanggal pengecekan, kondisi, dan keterangan harus diisi.';
+          if (error.response && error.response.data && error.response.data.message) {
+            msg = error.response.data.message;
+          }
 
-      this.currentTestItem.tanggal_pengujian = this.testDate;
-      this.currentTestItem.hasil_pengujian = this.testResult;
-      this.currentTestItem.keterangan_pengujian = this.testNotes;
-
-      this.closeTestModal();
+          Swal.fire({
+            icon: 'error',
+            title: 'Data tidak lengkap',
+            text: msg,
+          });
+        });
     },
   },
   mounted() {
@@ -446,3 +607,11 @@ export default {
   },
 }
 </script>
+<style scoped>
+.modal {
+  z-index: 2000 !important;
+}
+.modal-backdrop {
+  z-index: 1990 !important;
+}
+</style>

@@ -40,10 +40,10 @@
               <span v-else>+</span>
             </button></td>
             <td>{{ index +1 }}</td>
-            <td>{{ peminjamanalat.kode_alat }}</td>
-            <td>{{ peminjamanalat.stok }}</td>
-            <td>{{ peminjamanalat.tanggal_pinjam }}</td>
-            <td>{{ peminjamanalat.tanggal_kembali }}</td>
+            <td>{{ peminjamanalat.tools.kode || '-' }}</td>
+            <td>{{ peminjamanalat.total || '-'}}</td>
+            <td>{{ peminjamanalat.tgl_pinjam || '-'}}</td>
+            <td>{{ peminjamanalat.tgl_kembali || '-'}}</td>
           </tr>
           <tr v-if="Detail_no_seri" style="background: rgb(244, 246, 249);">
             <td colspan="100%">
@@ -58,8 +58,10 @@
                 <tbody>
                   <tr class="text-center" v-for="(noSeri, index) in dataPeminjamanAlat" :key="index">
                     <td>{{ index + 1 }}</td>
-                    <td>{{ noSeri.no_seri_alat ? noSeri.no_seri_alat.no_seri_alat : '-' }}</td>
-                    <td>{{ noSeri.tanggal_kembali }}</td>
+                    <td>
+                      {{ noSeri.no_seri && noSeri.no_seri.length ? noSeri.no_seri.map(n => n.no_seri).join(', ') : '-' }}
+                    </td>
+                    <td>{{ noSeri.tgl_kembali || '-' }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -126,7 +128,7 @@ export default {
       if (this.searchQuery) {
         return this.paginatedData.filter(peminjamanalat => {
           return (
-            peminjamanalat.kode_alat.toLowerCase().includes(this.searchQuery.toLowerCase())
+            peminjamanalat.tools.kode.toLowerCase().includes(this.searchQuery.toLowerCase())
           );
         });
       } else {
@@ -139,9 +141,9 @@ export default {
       try {
         const noPinjam =this.noPinjam;
         //console.log(this.noPinjam);
-        const response = await axios.get(`/api/peminjaman/alats/nopin/${noPinjam}`);
+        const response = await axios.get(`/api/v1/peminjaman/getNoPeminjaman/${noPinjam}`);
         this.dataPeminjamanAlat = response.data;
-        console.log(this.dataPeminjamanAlat);
+        // console.log(this.dataPeminjamanAlat);
       } catch (error) {
         console.error("Error fetching data peminjaman", error);
       }
@@ -186,12 +188,12 @@ export default {
       const divisi = this.filteredData[0]?.pengguna?.divisi || "Tidak Diketahui"; // Ambil divisi peminjam pertama atau "Tidak Diketahui" jika kosong
       doc.text(`Divisi: ${divisi}`, 14, 36); // Menampilkan divisi
 
-      const tanggalPinjam = this.filteredData[0]?.tanggal_pinjam || "Tidak Diketahui";
+      const tanggalPinjam = this.filteredData[0]?.tgl_pinjam || "Tidak Diketahui";
       doc.text(`Tanggal Peminjaman: ${tanggalPinjam}`, 100, 30);
 
       // Menghitung Durasi (selisih antara Tanggal Peminjaman dan Tanggal Pengembalian)
-      const tanggalPeminjaman = new Date(this.filteredData[0]?.tanggal_pinjam);
-      const tanggalPengembalian = new Date(this.filteredData[0]?.tanggal_kembali);
+      const tanggalPeminjaman = new Date(this.filteredData[0]?.tgl_pinjam);
+      const tanggalPengembalian = new Date(this.filteredData[0]?.tgl_kembali);
       const durasiInMillis = tanggalPengembalian - tanggalPeminjaman;
       const durasiInDays = Math.floor(durasiInMillis / (1000 * 3600 * 24)); // Menghitung durasi dalam hari
       
@@ -207,8 +209,7 @@ export default {
         "Nama",
         "Kode",
         "Jumlah",
-        "No Seri",
-        "Kondisi",
+        "No Seri"
       ];
       const rows = [];
 
@@ -216,11 +217,10 @@ export default {
       this.filteredData.forEach((item, index) => {
         rows.push([
           index + 1,
-          item?.alat?.nama_alat,
-          item?.alat?.kode_alat,
-          item.stok,
-          item?.no_seri_alat?.no_seri_alat,
-          item?.no_seri_alat?.status,
+          item.tools.nama,
+          item.tools.kode,          
+          item.total,
+          item.no_seri && item.no_seri.length ? item.no_seri.map(n => n.no_seri).join(', ') : '-'
         ]);
       });
 
@@ -247,7 +247,7 @@ export default {
 
       // Menyimpan PDF
       doc.save("peminjaman-alat.pdf");
-    }
+    },
   },
   mounted() {
     this.fetchPeminjamanAlat();

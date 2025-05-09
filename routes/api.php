@@ -17,13 +17,18 @@ use App\Http\Controllers\Inventory\KategoriMerekController;
 use App\Http\Controllers\Inventory\TipeController;
 use App\Http\Controllers\Inventory\ToolsController;
 use App\Http\Controllers\Inventory\NoSeriController;
+use App\Http\Controllers\Inventory\NoSeriLogController;
 use App\Http\Controllers\Inventory\PerawatanController;
 use App\Http\Controllers\Inventory\ErrorController;
+use App\Http\Controllers\Inventory\ErrorActivityController;
 use App\Http\Controllers\Inventory\RusakController;
 use App\Http\Controllers\Inventory\MusnahController;
 use App\Http\Controllers\Inventory\HilangController;
 use App\Http\Controllers\Inventory\PermintaanController;
+use App\Http\Controllers\Inventory\PermintaanLogController;
 use App\Http\Controllers\Inventory\PeminjamanController;
+use App\Http\Controllers\Inventory\PeminjamanLogController;
+use App\Http\Controllers\Inventory\PerubahanPeminjamanController;
 use App\Http\Controllers\Auth\LoginController;
 
 /*
@@ -159,6 +164,7 @@ Route::apiResource('v1/tools', ToolsController::class);
 Route::get('/v1/tools/{id}/no-seri', [ToolsController::class, 'getNoSeriByTool']);
 //NOSeri
 Route::apiResource('v1/noseri', NoseriController::class);
+Route::put('/v1/noseri/editlogs/{id}', [NoSeriController::class, 'editLog']);
 Route::post('/v1/noseri/store/{kodeAlat}', [NoSeriController::class, 'store']);
 Route::get('/v1/noseri/getNoSeri/{kodeAlat}', [NoseriController::class, 'getNoSeri']);
 Route::prefix('v1/noseri')->group(function () {
@@ -168,18 +174,41 @@ Route::prefix('v1/noseri')->group(function () {
     Route::post('/reject-permintaan', [NoseriController::class, 'rejectPermintaan']);
     Route::post('/update-status-permintaan', [NoseriController::class, 'updateStatusPermintaan']);
     Route::post('/bulk-update-status-permintaan', [NoseriController::class, 'bulkUpdateStatusPermintaan']);
+    Route::post('/update-status-permintaan-user', [NoseriController::class, 'updateStatusPermintaanUser']);
+    Route::post('/update-status-peminjaman-user', [NoseriController::class, 'updateStatusPeminjamanUser']);    
+    Route::post('/bulk-update-status-permintaan-user', [NoseriController::class, 'bulkUpdateStatusPermintaanUser']);
+    Route::post('/bulk-update-status-peminjaman-user', [NoseriController::class, 'bulkUpdateStatusPeminjamanUser']);
+    Route::post('/update-status-perubahan', [NoseriController::class, 'updateStatusPerubahanPeminjaman']);
+    Route::post('/bulk-update-status-perubahan', [NoseriController::class, 'bulkUpdateStatusPerubahanPeminjaman']);
+    Route::post('/reject-perubahan', [NoseriController::class, 'rejectPerubahanPeminjaman']);
+    Route::post('/cek-kondisi', [NoseriController::class, 'cekKondisi']);
 });
+Route::get('/v1/logs/noseri', [NoSeriLogController::class, 'index']);
+Route::get('/v1/noseri/{noSeriId}/logs', [NoSeriLogController::class, 'getLogs']);
 //Perawatan
 Route::apiResource('v1/perawatan', PerawatanController::class);
 //Perbaikan
 Route::apiResource('v1/perbaikan', ErrorController::class);
 Route::get('/v1/perbaikan/getError/{noSeri}', [ErrorController::class, 'getError']);
+Route::prefix('v1/perbaikan')->group(function() {
+    Route::post('/update-status', [ErrorController::class, 'updateStatus']);
+    Route::post('/add-activity', [ErrorController::class, 'addActivity']);
+});
+Route::apiResource('/v1/activity-perbaikan', ErrorActivityController::class);
 // Kerusakan
 Route::apiResource('v1/kerusakan', RusakController::class);
 Route::get('/v1/kerusakan/getRusak/{noSeri}', [RusakController::class, 'getRusak']);
+Route::prefix('v1/kerusakan')->group(function() {
+    Route::post('/add-activity', [RusakController::class, 'addActivity']);
+    Route::post('/pemusnahan-diterima', [RusakController::class, 'pemusnahanDiterima']);
+    Route::post('/pemusnahan-ditolak', [RusakController::class, 'pemusnahanDitolak']);
+});
 // Pemusnahan
 Route::apiResource('v1/pemusnahan', MusnahController::class);
 Route::get('/v1/pemusnahan/getMusnah/{noSeri}', [MusnahController::class, 'getMusnah']);
+Route::prefix('v1/pemusnahan')->group(function() {
+    Route::post('/add-activity', [MusnahController::class, 'addActivity']);    
+});
 // Kehilangan
 Route::apiResource('v1/kehilangan', HilangController::class);
 Route::get('/v1/kehilangan/getHilang/{noSeri}', [HilangController::class, 'getHilang']);
@@ -188,8 +217,17 @@ Route::apiResource('v1/permintaan', PermintaanController::class);
 Route::get('/v1/permintaan/getPermintaan/{kodeAlat}', [PermintaanController::class, 'getPermintaan']);
 Route::get('/v1/permintaan/getNoPermintaan/{noPermintaan}', [PermintaanController::class, 'getNoPermintaan']);
 Route::get('/v1/permintaan/getPengajuanNoPermintaan/{noPermintaan}', [PermintaanController::class, 'getPengajuanNoPermintaan']);
+Route::get('/v1/logs-permintaan', [PermintaanLogController::class, 'index']);
 // Peminjaman
 Route::apiResource('v1/peminjaman', PeminjamanController::class);
 Route::get('/v1/peminjaman/getPeminjaman/{kodeAlat}', [PeminjamanController::class, 'getPeminjaman']);
 Route::get('/v1/peminjaman/getNoPeminjaman/{noPinjam}', [PeminjamanController::class, 'getNoPeminjaman']);
 Route::get('/v1/peminjaman/getPengajuanNoPeminjaman/{noPinjam}', [PeminjamanController::class, 'getPengajuanNoPeminjaman']);
+Route::get('/v1/logs-peminjaman', [PeminjamanLogController::class, 'index']);
+// Perubahan Peminjaman
+Route::apiResource('v1/perubahan-perminjaman', PerubahanPeminjamanController::class);
+Route::post('/v1/perubahan-peminjaman/store/{noPinjam}', [PerubahanPeminjamanController::class, 'store']);
+Route::get('/v1/getPerubahanNoPeminjaman/{noPinjam}', [PerubahanPeminjamanController::class, 'getPerubahanNoPeminjaman']);
+Route::prefix('v1/perubahan-peminjaman')->group(function () {
+    Route::post('/reject-perubahan', [PerubahanPeminjamanController::class, 'rejectPerubahan']);
+});

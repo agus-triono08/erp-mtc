@@ -82,8 +82,15 @@
           <button 
             v-if="selectedItems.length > 0 && !isStatusUpdated" 
             class="btn btn-primary m-3" 
-            @click="updateStatusToMenungguDiambil">
+            @click="updateStatus('Menunggu Diambil')">
             Menunggu Diambil
+          </button>
+
+          <button 
+            v-if="selectedItems.length > 0 && !isStatusUpdated" 
+            class="btn btn-danger m-3" 
+            @click="updateStatus('Ditolak')">
+            Tolak Permintaan
           </button>
 
           <div class="search-wrapper">
@@ -182,6 +189,19 @@
                 @click="updateStatusToMenungguDiambil">
                 Menunggu Diambil
               </button>
+              <!-- <button 
+                v-if="selectedItems.length > 0 && !isStatusUpdated" 
+                class="btn btn-primary m-3" 
+                @click="updateStatus('Menunggu Diambil')">
+                Menunggu Diambil
+              </button>
+
+              <button 
+                v-if="selectedItems.length > 0 && !isStatusUpdated" 
+                class="btn btn-danger m-3" 
+                @click="updateStatus('Ditolak')">
+                Tolak Permintaan
+              </button> -->
 
               <!-- <div class="search-wrapper">
                 <div class="input-group">
@@ -243,8 +263,8 @@
                         :class="{'status-active': item.kondisi_after === 'Selesai',
                                 'status-error' : item.kondisi_after === 'Menunggu Diambil',
                                 'status-rusak' : item.kondisi_after === 'Ditolak',
-                                'status-hilang' : item.kondisi_after === 'Dipinjam',
-                                'status-dipinjam' : item.kondisi_after === 'Belum Diproses',
+                                'status-musnah': item.kondisi_after === 'Digunakan',
+                                'status-hilang': item.kondisi_after === 'Belum Diproses',
                       }"
                     >
                       {{ item.kondisi_after || '-'}}
@@ -450,6 +470,20 @@ export default {
         return;
       }
 
+      const ditolakItems = this.selectedNoSeri.filter(item =>
+        this.selectedItems.includes(item.id) &&
+        (item.kondisi_after === 'Ditolak' || item.kondisi_after === 'Digunakan')
+      );
+
+      if (ditolakItems.length > 0) {
+        Swal.fire(
+          'Tidak Bisa',
+          'Beberapa item yang dipilih memiliki status "Ditolak" atau "Digunakan" dan tidak dapat diubah.',
+          'error'
+        );
+        return;
+      }
+
       Swal.fire({
         title: 'Yakin?',
         text: 'Semua item terpilih akan diubah menjadi "Menunggu Diambil".',
@@ -504,6 +538,18 @@ export default {
     //   });
     // },
     setStatus(item, status, reason = '') {
+      // Cek jika status saat ini sudah "Ditolak" atau "Digunakan"
+      if (['Ditolak', 'Digunakan'].includes(item.kondisi_after)) {
+        Swal.fire('Tidak Bisa Diubah', `Status No Seri ${item.no_seri} sudah ${item.kondisi_after} dan tidak dapat diubah.`, 'warning');
+        return;
+      }
+
+      // Cek jika ingin mengubah ke status "Ditolak" tanpa alasan
+      if (status === 'Ditolak' && !reason) {
+        Swal.fire('Alasan Diperlukan', 'Silakan isi alasan penolakan sebelum menolak No Seri.', 'warning');
+        return;
+      }
+
       axios.post('/api/v1/noseri/update-status-permintaan', {
         id: item.id,
         status: status,
@@ -528,6 +574,15 @@ export default {
     //   this.isRejectModalVisible = true; // Show modal
     // },
     openRejectModal(item) {
+      if (['Menunggu Diambil', 'Digunakan'].includes(item.kondisi_after)) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Tidak Bisa Ditolak',
+          text: `No Seri ${item.no_seri} sedang dalam status ${item.kondisi_after} dan tidak dapat ditolak.`,
+        });
+        return; // hentikan proses
+      }
+
       Swal.fire({
         title: 'Tolak No Seri',
         input: 'text',
@@ -551,6 +606,7 @@ export default {
         if (result.isConfirmed) {
           axios.post('/api/v1/noseri/reject-permintaan', {
             id: item.id,
+            status: 'Ditolak', // tambahkan status
             reason: result.value
           })
           .then(response => {

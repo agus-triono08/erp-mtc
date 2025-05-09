@@ -1,140 +1,154 @@
 <template>
-  <div class="container-fluid" style="width: 700px;">
-    <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold" style="color: #169ea8; border-radius: 15px;">
-        Form Input Peminjaman
-        <button type="button" class="close" @click="tutupModal">&times;</button>
-      </h6>
+  <form @submit.prevent="submitForm">
+    <h6 class="mb-3 font-weight-bold" style="color: #169ea8; border-radius: 15px;">
+      Form Input Peminjaman
+      <button type="button" class="close" @click="tutupModal">&times;</button>
+    </h6>
+    <div class="form-group">
+      <label for="tools_id" style="color: #000;">
+        <b>Nama Alat/Mesin</b>
+        <sup style="color: red;"> *</sup>
+      </label>
+      <v-select
+        v-model="form.tools_id"
+        :options="tools"
+        label="nama"
+        :reduce="tool => tool.id"
+        placeholder="Pilih Alat/Mesin"
+      />
+      <!-- <select v-model="form.tools_id" class="form-control" required>
+        <option disabled value="">Pilih alat</option>
+        <option v-for="tool in tools" :key="tool.id" :value="tool.id">
+          {{ tool.nama }}
+        </option>
+      </select> -->
     </div>
-    <div class="card-body" style="border-radius: 15px;">
-      <form @submit.prevent="submitAlat">
-        <!-- Jenis Alat -->
-        <div class="form-group">
-          <label for="jenis">Jenis</label>
-          <select v-model="form.jenis" id="jenis" class="form-control" @change="updateKodeOptions">
-            <option value="" disabled selected>Pilih Jenis Alat</option>
-            <option value="alat">Alat</option>
-            <option value="mesin">Mesin</option>
-          </select>
-        </div>
 
-        <!-- Kode Alat -->
-        <div class="form-group">
-          <label for="kode">Kode</label>
-          <select v-model="form.kode" id="kode" class="form-control" @change="updateNoSeriOptions" :disabled="!form.jenis">
-            <option value="" disabled selected>Pilih Kode</option>
-            <option v-for="kode in kodeOptions" :key="kode" :value="kode">{{ kode }}</option>
-          </select>
-        </div>
-
-        <!-- No Seri -->
-        <div class="form-group">
-          <label for="noSeri">No Seri</label>
-          <select v-model="form.noSeri" id="noSeri" class="form-control" :disabled="!form.kode">
-            <option value="" disabled selected>Pilih No Seri</option>
-            <option v-for="noSeri in noSeriOptions" :key="noSeri" :value="noSeri">{{ noSeri }}</option>
-          </select>
-        </div>
-
-        <!-- Tanggal Pinjam -->
-        <div class="form-group">
-          <label for="tanggalPinjam">Tanggal Pinjam</label>
-          <input type="date" v-model="form.tanggalPinjam" id="tanggalPinjam" class="form-control" required />
-        </div>
-
-        <!-- Tanggal Kembali -->
-        <div class="form-group">
-          <label for="tanggalKembali">Tanggal Kembali</label>
-          <input type="date" v-model="form.tanggalKembali" id="tanggalKembali" class="form-control" required />
-        </div>
-
-        <!-- Tujuan Peminjaman (Text Area) -->
-        <div class="form-group">
-          <label for="tujuanPeminjaman">Tujuan Peminjaman</label>
-          <textarea v-model="form.tujuanPeminjaman" id="tujuanPeminjaman" class="form-control" placeholder="Masukkan Tujuan Peminjaman" rows="4" required></textarea>
-        </div>
-
-        <!-- Submit Button -->
-        <div class="row align-items-center justify-content-end">
-          <button type="submit" class="btn btn-primary mr-3">Submit</button>
-          <button type="button" class="btn btn-danger" @click="tutupModal">Batal</button>
-        </div>
-      </form>
+    <div class="form-group">
+      <label for="tgl_pinjam" style="color: #000;">
+        <b>Tanggal Peminjaman</b>
+        <sup style="color: red;"> *</sup>
+      </label>
+      <input type="date" v-model="form.tgl_pinjam" class="form-control" required />
     </div>
-  </div>
+
+    <div class="form-group">
+      <label for="tgl_kembali" style="color: #000;">
+        <b>Tanggal Pengembalian</b>
+        <sup style="color: red;"> *</sup>
+      </label>
+      <input type="date" v-model="form.tgl_kembali" class="form-control" required />
+    </div>
+
+    <!-- <div class="form-group">
+      <label for="status" style="color: #000;">
+        <b>Status</b>
+        <sup style="color: red;"> *</sup>
+      </label>
+      <select v-model="form.status" class="form-control">
+        <option value="Belum Diproses">Belum Diproses</option>
+        <option value="Digunakan">Digunakan</option>
+        <option value="Rusak">Rusak</option>
+        Tambahkan status lain sesuai kebutuhan
+      </select>
+    </div> -->
+
+    <div class="form-group">
+      <label for="total" style="color: #000;">
+        <b>Jumlah</b>
+        <sup style="color: red;"> *</sup>
+      </label>
+      <input type="number" v-model.number="form.total" class="form-control" min="1" required />
+    </div>
+    
+    <div class="form-group">
+      <label for="detail_peminjaman" style="color: #000;">
+        <b>Alasan Peminjaman Alat/Mesin</b>
+        <sup style="color: red;"> *</sup>
+      </label>
+      <div class="textarea-wrapper">
+        <textarea 
+          id="detail_peminjaman"
+          v-model="form.detail_peminjaman"
+          class="form-control"
+          rows="2"
+          placeholder="Masukkan Alasan Peminjaman Alat/Mesin (Maksimal 100 Karakter)"
+          maxlength="100"
+        >
+        </textarea>
+        <small class="text-muted char-counter">
+          {{ form.detail_peminjaman ? form.detail_peminjaman.length : 0 }} / 100
+        </small>
+      </div>
+    </div>
+
+    <div class="row align-items-center justify-content-end">
+      <button type="submit" class="btn btn-primary mr-3">Simpan</button>
+      <button type="button" class="btn btn-danger" @click="tutupModal">Batal</button>
+    </div>
+  </form>
 </template>
 <script>
+import axios from 'axios';
+import vSelect from 'vue-select';
+import Swal from 'sweetalert2';
+
 export default {
+  components: {
+    vSelect,
+  },
   data() {
     return {
+      tools: [],
+      selectedTool: null,
       form: {
-        jenis: '',
-        kode: '',
-        noSeri: '',
-        tanggalPinjam: '',
-        tanggalKembali: '',
-        tujuanPeminjaman: '',
-      },
-      kodeOptions: [],
-      noSeriOptions: [],
-      alatMesinData: {
-        alat: {
-          kode: ['A001', 'A002', 'A003'],
-          noSeri: {
-            A001: ['S001', 'S002'],
-            A002: ['S003', 'S004'],
-            A003: ['S005', 'S006'],
-          }
-        },
-        mesin: {
-          kode: ['M001', 'M002', 'M003'],
-          noSeri: {
-            M001: ['M001-1', 'M001-2'],
-            M002: ['M002-1', 'M002-2'],
-            M003: ['M003-1', 'M003-2'],
-          }
-        }
+        tools_id: '',
+        tgl_pinjam: '',
+        tgl_kembali: '',
+        detail_peminjaman: '',
+        // status: '',
+        total: 1
       }
-    }
+    };
+  },
+  mounted() {
+    this.fetchTools();
   },
   methods: {
+    fetchTools() {
+      axios.get('/api/v1/tools') // sesuaikan endpoint ini
+        .then(response => {
+          this.tools = response.data;
+        })
+        .catch(error => {
+          console.error('Gagal mengambil data alat:', error);
+        });
+    },
+    submitForm() {
+      axios.post('/api/v1/peminjaman', this.form)
+        .then(response => {
+          Swal.fire({
+            title: 'Berhasil!',
+            text: 'Data berhasil disimpan.',
+            icon: 'success',
+            confirmButtonText: 'OK'
+          });
+          this.$emit('tutup-modal');
+          this.form = {}; // reset form
+        })
+        .catch(error => {
+          console.error('Gagal menyimpan peminjaman:', error.response);
+          Swal.fire({
+            title: 'Gagal!',
+            text: 'Gagal menyimpan peminjaman.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
+        });
+    },
     tutupModal() {
       this.$emit('tutup-modal');
     },
-
-    // Update the kode options based on the jenis selected
-    updateKodeOptions() {
-      if (this.form.jenis) {
-        this.kodeOptions = this.alatMesinData[this.form.jenis].kode;
-        this.form.kode = ''; // Reset kode and noSeri when jenis changes
-        this.form.noSeri = '';
-        this.noSeriOptions = [];
-      }
-    },
-
-    // Update the no seri options based on the kode selected
-    updateNoSeriOptions() {
-      if (this.form.kode) {
-        this.noSeriOptions = this.alatMesinData[this.form.jenis].noSeri[this.form.kode] || [];
-        this.form.noSeri = ''; // Reset noSeri when kode changes
-      }
-    },
-
-    submitAlat() {
-      // Here, you can submit the form data, for example, to an API.
-      console.log('Form Submitted:', this.form);
-      // Reset form data
-      this.form = {
-        jenis: '',
-        kode: '',
-        noSeri: '',
-        tanggalPinjam: '',
-        tanggalKembali: '',
-        tujuanPeminjaman: '',
-      };
-      this.kodeOptions = [];
-      this.noSeriOptions = [];
-    }
   }
-}
+};
 </script>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Inventory\NoSeri;
 use App\Models\Inventory\Peminjaman;
+use App\Models\Inventory\PeminjamanLog;
 use App\Models\Inventory\Tools;
 use Illuminate\Support\Facades\DB;
 
@@ -83,6 +84,7 @@ class PeminjamanController extends Controller
             'tools_id' => 'required|exists:tools,id',
             'tgl_pinjam' => 'required|date',
             'tgl_kembali' => 'required|date|after_or_equal:tgl_pinjam',
+            'detail_peminjaman' => 'required|string',
             'status' => 'nullable|string',
             'total' => 'required|integer|min:1',
         ]);
@@ -106,6 +108,7 @@ class PeminjamanController extends Controller
             'no_peminjaman' => $no_peminjaman,
             'tgl_pinjam' => $request->tgl_pinjam,
             'tgl_kembali' => $request->tgl_kembali,
+            'detail_peminjaman' => $request->detail_peminjaman,
             'status' => $status,
             'status_kondisi' => $status,
             'total' => $request->total,
@@ -123,10 +126,15 @@ class PeminjamanController extends Controller
                             ->toArray();
 
         // Ambil no_seri yang tersedia
-        $availableNoSeri = $tools->noSeri->where('kondisi', 'OK')
-                            ->whereNull('kondisi_after')
-                            ->whereNotIn('id', $usedNoSeriIds)
-                            ->take($request->total);
+        $availableNoSeri = $tools->noSeri()
+                                ->where('kondisi', 'OK')
+                                ->where(function ($query) {
+                                    $query->whereNull('kondisi_after')
+                                        ->orWhere('kondisi_after', 'Selesai');
+                                })
+                                ->whereNotIn('id', $usedNoSeriIds)
+                                ->take($request->total)
+                                ->get();
 
         if ($availableNoSeri->count() < $request->total) {
             return response()->json([
@@ -153,6 +161,16 @@ class PeminjamanController extends Controller
         if ($status === 'Dipinjam') {
             $tools->stok_akhir = max(0, $tools->stok_akhir - $request->total);
             $tools->save();
+        }
+
+        if ($status === 'Belum Diproses') {
+            PeminjamanLog::create([
+                'peminjaman_id' => $peminjaman->id,
+                'old_status' => null,
+                'new_status' => $status,
+                'changed_at' => now(),
+                'changed_by' => auth()->id() ?? 1,
+            ]);
         }
 
         return response()->json([
@@ -249,7 +267,7 @@ class PeminjamanController extends Controller
                 'tools',
                 'noSeri' => function ($query) {
                     // Ambil no_seri yang kondisinya 'Dipinjam' dan urutkan berdasarkan created_at
-                    $query->select('no_seri.id', 'no_seri.no_seri', 'no_seri.kondisi', 'no_seri.kondisi_after', 'no_seri.tanggal_kondisi', 'no_seri.reject_reason');
+                    $query->select('no_seri.id', 'no_seri.no_seri', 'no_seri.kondisi', 'no_seri.kondisi_after', 'no_seri.tanggal_kondisi', 'no_seri.reject_reason', 'no_seri.tgl_pengecekan', 'no_seri.deskripsi_cek');
                         // ->where('kondisi_after', 'Dipinjam')
                         // ->orderBy('no_seri.created_at', 'desc');
                 }

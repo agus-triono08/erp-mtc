@@ -26,4 +26,9 @@ class Rusak extends Model
     {
         return $this->belongsTo(NoSeri::class, 'no_seri_id', 'id');
     }
+
+    public function rusak_activity()
+    {
+        return $this->hasMany(RusakActivity::class);
+    }
 }

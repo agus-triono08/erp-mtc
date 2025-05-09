@@ -18,6 +18,7 @@ class Permintaan extends Model
         'tools_id',
         'tgl_permintaan',
         'alasan_penolakan',
+        'detail_permintaan',
         'total',
         'status',
         'status_kondisi',
@@ -33,5 +34,10 @@ class Permintaan extends Model
         return $this->belongsToMany(NoSeri::class, 'permintaan_no_seri', 'permintaan_id', 'no_seri_id')
             ->withPivot('created_at') // Jika kamu ingin mengakses data dari pivot
             ->withTimestamps();
+    }
+
+    public function logs()
+    {
+        return $this->hasMany(PermintaanLog::class);
     }
 }

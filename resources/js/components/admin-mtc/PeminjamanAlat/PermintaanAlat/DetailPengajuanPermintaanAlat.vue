@@ -24,7 +24,7 @@
             <th class="text-center" style="width: 10px; color: #000;">Alasan Ditolak</th>            
           </tr>
         </thead>
-        <tbody v-if="filteredData.length==0">
+        <tbody v-if="filteredData.length===1">
           <tr>
             <td colspan="5" class="text-center">Tidak Ada Data</td>
           </tr>

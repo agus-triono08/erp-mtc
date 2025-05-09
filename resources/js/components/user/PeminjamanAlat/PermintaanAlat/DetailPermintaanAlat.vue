@@ -7,12 +7,12 @@
           class="fas fa-angle-left text-teal mr-2"
           style="cursor: pointer;"
           @click="goBack"
-        > Back</i>  
+        > Back to Permintaan</i>  
       </h1>
     </div>
     
     <div class="d-flex justify-content-between align-items-center mb-3">
-      <h1 class="h3" style="color: #000;"><b>Detail Permintaan</b></h1>
+      <h1 class="h3" style="color: #000;"><b>Detail Permintaan Alat</b></h1>
       <div class="d-flex align-items-center justify-content-center">
         <div class="card shadow" style="max-width: auto; border-radius: 5px;">
           <div class="card-body text-center" style="border-radius: 5px; height: 30px;">
@@ -41,13 +41,28 @@
               </div>
               <div class="col-3">
                 <dd>Tujuan Permintaan</dd>
-                <dt style="color: #000; margin-top: -10px;" class="mb-2">{{ dataPermintaan.keterangan || '-' }}</dt>
+                <dt style="color: #000; margin-top: -10px;" class="mb-2">{{ dataPermintaan.detail_permintaan || '-' }}</dt>
               </div>
               <div class="col-3">
                 <dd>Tanggal Permintaan</dd>
-                <dt style="color: #000; margin-top: -10px;" class="mb-2">{{ dataPermintaan.tanggal_permintaan || '-' }}</dt>
+                <dt style="color: #000; margin-top: -10px;" class="mb-2">{{ dataPermintaan.tgl_permintaan || '-' }}</dt>
               </div>
               <div class="col-3">
+                <dd>Status</dd>
+                <dt>
+                  <div
+                    class="btn-sts w-50"
+                    :class="{
+                      'status-active': dataPermintaan.status === 'Selesai',
+                      'status-error': dataPermintaan.status === 'Menunggu Diambil',
+                      'status-rusak': dataPermintaan.status === 'Ditolak',
+                      'status-musnah': dataPermintaan.status === 'Digunakan',
+                      'status-hilang': dataPermintaan.status === 'Belum Diproses',
+                    }"
+                  >
+                  {{ dataPermintaan.status || '-' }}
+                  </div>
+                </dt>
                 <dd>Durasi</dd>
                 <dt style="color: red; margin-top: -10px;" class="mb-2">{{ durasiData !== '-' ? durasiData + ' Hari' : '-' }}</dt>
               </div>
@@ -111,9 +126,9 @@ export default {
   },
   computed: {
     durasiData() {
-      if (this.dataPermintaan.tanggal_permintaan) {
+      if (this.dataPermintaan.tgl_permintaan) {
         const tanggalTerkini = new Date();
-        const tanggalPermintaan = new Date(this.dataPermintaan.tanggal_permintaan);
+        const tanggalPermintaan = new Date(this.dataPermintaan.tgl_permintaan);
         const selisih = Math.abs(tanggalTerkini - tanggalPermintaan);
         const hari = Math.floor(selisih / (1000 * 60 * 60 * 24));
         return hari;
@@ -125,15 +140,15 @@ export default {
       try {
         const id = this.$route.params.id;
         //console.log(id);
-        const response = await axios.get(`/api/permintaan/${id}`);
+        const response = await axios.get(`/api/v1/permintaan/${id}`);
         this.dataPermintaan = response.data;
-        //console.log(this.dataPermintaan);
+        // console.log(this.dataPermintaan);
       } catch (error) {
         alert("Gagal memuat detail alat permintaan.");
       }
     },
     goBack() {
-      this.$router.push('/user/peminjaman');
+      this.$router.push('/admin-mtc/peminjaman');
     },
     togglePengeluaran() {
       if (!this.showRincianPermintaan) {

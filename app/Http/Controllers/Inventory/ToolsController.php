@@ -9,6 +9,7 @@ use App\Models\Inventory\Merek;
 use App\Models\Inventory\KategoriMerek;
 use App\Models\Inventory\Tipe;
 use App\Models\Inventory\NoSeri;
+use App\Models\Inventory\NoSeriLog;
 use App\Models\Inventory\Perawatan;
 use App\Models\Layout;
 use App\Models\User;
@@ -53,7 +54,7 @@ class ToolsController extends Controller
                     $q4->where('id', $request->tipe_id);
                 });
             }
-        })->get();
+        })->orderBy('updated_at', 'desc')->get();
     
         return response()->json($tools);
     }     
@@ -104,6 +105,8 @@ class ToolsController extends Controller
         $kategori = Kategori::find($request->kategori_id);
         $merek = Merek::find($request->merek_id);
         $tipe = Tipe::find($request->tipe_id);
+        $layout = Layout::find($request->layout_id);
+        $user = User::find($request->users_id);
     
         $prefix = "{$jenis->kode_jenis}-{$kategori->kode_kategori}-{$merek->kode_merek}-{$tipe->kode_tipe}";
         $lastTool = Tools::where('kode', 'like', "$prefix-%")->orderByDesc('id')->first();
@@ -131,24 +134,25 @@ class ToolsController extends Controller
     
         $stok = $tool->stok_awal ?? 1;
         $inisial_kategori = strtoupper(Str::limit(preg_replace('/[^A-Za-z]/', '', $kategori->nama_kategori), 2, ''));
-        $layout = Layout::find($request->layout_id);
-        $user = User::find($request->users_id);
+        $kode_kategori = str_pad($tipe->id, 2, '0', STR_PAD_LEFT);
     
         $waktuPerNoSeri = (int) $tool->waktu_perawatan;
         $jumlahOrang = max((int) $tool->jumlah_orang_perawatan, 1);
         $jadwalPerawatan = (int) $request->jadwal_perawatan;
-
-        // Hitung waktu per noseri hanya jika semua > 0
+    
+        // $userId = auth()->id() ?? $request->users_id;
+        $userId = auth()->id() ?? $request->users_id ?? 1; // fallback ID 1 atau ID admin sistem
+    
         if ($jadwalPerawatan > 0 && $waktuPerNoSeri > 0 && $jumlahOrang > 0) {
-            $waktuPerNoSeriEffisien = ceil($waktuPerNoSeri / $jumlahOrang / $stok);
+            $waktuPerNoSeriEffisien = ceil($waktuPerNoSeri / $jumlahOrang);
             $startTime = Carbon::createFromTime(8, 0);
-
+    
             for ($i = 0; $i < $stok; $i++) {
-                $nomorUrut = str_pad($i + 1, 8, '0', STR_PAD_LEFT); // Nomor urut 8 digit
-                $no_seri = $inisial_kategori . $nomorUrut;
-
+                $nomorUrut = str_pad($i + 1, 6, '0', STR_PAD_LEFT);
+                $no_seri = $inisial_kategori . $kode_kategori . $nomorUrut;
+    
                 [$waktuMulai, $waktuSelesai] = $this->nextWorkTime($startTime, $waktuPerNoSeriEffisien);
-
+    
                 $noSeriRecord = NoSeri::create([
                     'tools_id' => $tool->id,
                     'layout_id' => $layout->id,
@@ -157,9 +161,18 @@ class ToolsController extends Controller
                     'tanggal_masuk' => now(),
                     'harga' => $tool->harga_total ? $tool->harga_total / $stok : null,
                 ]);
-
+    
+                // Buat log kondisi awal OK
+                NoSeriLog::create([
+                    'no_seri_id' => $noSeriRecord->id,
+                    'old_kondisi' => null,
+                    'new_kondisi' => 'OK',
+                    'changed_at' => now(),
+                    'changed_by' => $userId,
+                ]);
+    
                 $noPerawatan = 'JP' . str_pad($i + 1, 8, '0', STR_PAD_LEFT);
-
+    
                 Perawatan::create([
                     'no_seri_id' => $noSeriRecord->id,
                     'users_id' => $user->id ?? null,
@@ -167,16 +180,15 @@ class ToolsController extends Controller
                     'tgl_perawatan' => $waktuMulai,
                     'waktu_perawatan' => gmdate('H:i:s', $waktuPerNoSeriEffisien * 60),
                 ]);
-
+    
                 $startTime = $waktuSelesai;
             }
         } else {
-            // Jika salah satu 0, tetap buat NoSeri saja tanpa Perawatan
             for ($i = 0; $i < $stok; $i++) {
-                $random8 = str_pad(mt_rand(0, 99999999), 8, '0', STR_PAD_LEFT);
-                $no_seri = $inisial_kategori . $random8;
-
-                NoSeri::create([
+                $nomorUrut = str_pad($i + 1, 6, '0', STR_PAD_LEFT);
+                $no_seri = $inisial_kategori . $kode_kategori . $nomorUrut;
+    
+                $noSeriRecord = NoSeri::create([
                     'tools_id' => $tool->id,
                     'layout_id' => $layout->id,
                     'no_seri' => $no_seri,
@@ -184,11 +196,19 @@ class ToolsController extends Controller
                     'tanggal_masuk' => now(),
                     'harga' => $tool->harga_total ? $tool->harga_total / $stok : null,
                 ]);
+    
+                NoSeriLog::create([
+                    'no_seri_id' => $noSeriRecord->id,
+                    'old_kondisi' => null,
+                    'new_kondisi' => 'OK',
+                    'changed_at' => now(),
+                    'changed_by' => $userId,
+                ]);
             }
         }
     
         return response()->json($tool->load('jenis.kategori.merek.tipe'), 201);
-    }
+    }     
     
     // Helper method
     protected function nextWorkTime(Carbon $startTime, $durationMinutes)

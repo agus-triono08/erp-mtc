@@ -4,6 +4,7 @@ namespace App\Models\Inventory;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Musnah extends Model
@@ -25,5 +26,15 @@ class Musnah extends Model
     public function noSeri() : BelongsTo
     {
         return $this->belongsTo(NoSeri::class, 'no_seri_id', 'id');
+    }
+
+    public function users() : BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function musnah_activity()
+    {
+        return $this->hasMany(MusnahActivity::class);
     }
 }

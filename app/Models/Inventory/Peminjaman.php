@@ -39,4 +39,14 @@ class Peminjaman extends Model
             ->withTimestamps();
     }
 
+    public function logs()
+    {
+        return $this->hasMany(PeminjamanLog::class);
+    }
+
+    public function perubahan()
+    {
+        return $this->hasMany(PerubahanPeminjaman::class);
+    }
+
 }
