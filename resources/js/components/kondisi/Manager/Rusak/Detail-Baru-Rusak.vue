@@ -48,7 +48,7 @@
     <div class="card shadow mt-5 mb-3">
       <div class="m-2">
         <div class="col-12">
-          <h4 class="text-capitalize text-primary text-bold"><b>Aktivitas Perbaikan</b></h4>
+          <h4 class="text-capitalize text-primary text-bold"><b>Aktivitas Kerusakan</b></h4>
         </div>        
         <div class="row align-items-center justify-content-end m-3">
           <!-- <button class="btn btn-primary mr-3" @click="openAktivitasModal">Tambah Aktivitas</button>           -->          

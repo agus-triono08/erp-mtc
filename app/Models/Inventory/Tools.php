@@ -31,50 +31,10 @@ class Tools extends Model
         'jumlah_orang_perawatan',
     ];
 
-    // public function jenis()
-    // {
-    //     return $this->belongsTo(Jenis::class);
-    // }
-
-    // public function kategori()
-    // {
-    //     return $this->hasOneThrough(Kategori::class, Jenis::class, 'id', 'jenis_id', 'jenis_id', 'id');
-    // }
-
-    // public function kategoriMerek()
-    // {
-    //     return $this->hasOneThrough(KategoriMerek::class, Kategori::class, 'id', 'kategori_id', 'kategori_id', 'id');
-    // }
-
-    // public function merek()
-    // {
-    //     return $this->hasOneThrough(Merek::class, KategoriMerek::class, 'id', 'id', 'kategori_merek_id', 'merek_id');
-    // }
-
-    // public function tipe()
-    // {
-    //     return $this->hasOneThrough(Tipe::class, KategoriMerek::class, 'id', 'kategori_merek_id', 'kategori_merek_id', 'id');
-    // }
-
     public function jenis()
     {
         return $this->belongsTo(Jenis::class);
     }
-
-    // public function kategori()
-    // {
-    //     return $this->belongsTo(Kategori::class);
-    // }
-
-    // public function merek()
-    // {
-    //     return $this->belongsTo(Merek::class);
-    // }
-
-    // public function tipe()
-    // {
-    //     return $this->belongsTo(Tipe::class);
-    // }
 
     public function noSeri()
     {
@@ -84,6 +44,16 @@ class Tools extends Model
     public function layout()
     {
         return $this->belongsTo(Layout::class);
+    }
+
+    public function kategori()
+    {
+        return $this->belongsTo(Kategori::class);
+    }
+
+    public function tipe()
+    {
+        return $this->belongsTo(Tipe::class);
     }
 
 }

@@ -16,11 +16,6 @@ class Merek extends Model
         'nama_merek',
     ];
 
-    // public function kategoriMerek()
-    // {
-    //     return $this->hasMany(KategoriMerek::class);
-    // }
-
     public function kategori()
     {
         return $this->belongsToMany(Kategori::class, 'kategori_merek');

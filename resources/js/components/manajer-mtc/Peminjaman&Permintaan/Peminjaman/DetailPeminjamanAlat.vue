@@ -18,7 +18,7 @@
           <div class="card-body text-center" style="border-radius: 5px; height: 30px;">
             <p>
               <span class="m-2" style="color: #169ea8;"> Detail Peminjaman</span>/
-              <span class="mt-2 mb-2 mr-2 ml-1" style="color: #e6494b;">{{ peminjaman.no_pinjam }}</span>
+              <span class="mt-2 mb-2 mr-2 ml-1" style="color: #e6494b;">{{ peminjaman.no_peminjaman }}</span>
             </p>
           </div>
         </div>
@@ -30,7 +30,7 @@
         <div class="card shadow mb-0" style="border-radius: 10px;">
           <div class="card-body p-0" style="border-radius: 20px;">
             <div class="d-flex justify-content-between align-items-center" style="margin: 10px;">
-              <h5 class="m-0 font-weight-bold" style="color: #169ea8;">Peminjaman {{ peminjaman.no_pinjam }}</h5>              
+              <h5 class="m-0 font-weight-bold" style="color: #169ea8;">Peminjaman {{ peminjaman.no_peminjaman }}</h5>              
             </div>
             <div class="row m-1">
               <div class="col-2">
@@ -41,25 +41,27 @@
               </div>
               <div class="col-2">
                 <dd>Tujuan Peminjaman</dd>
-                <dt style="color: #000; margin-top: -10px;">{{ peminjaman.detail_peminjaman }}</dt>
+                <dt style="color: #000; margin-top: -10px;">{{ peminjaman.detail_peminjaman || '-' }}</dt>
               </div>
               <div class="col-2">
                 <dd>Tanggal Peminjaman</dd>
-                <dt style="color: #000; margin-top: -10px;" class="mb-2">{{ peminjaman.tanggal_pinjam }}</dt>
+                <dt style="color: #000; margin-top: -10px;" class="mb-2">{{ peminjaman.tgl_pinjam }}</dt>
                 <dd>Tanggal Kebutuhan</dd>
-                <dt style="color: #000; margin-top: -10px;" class="mb-2">{{ peminjaman.tanggal_kembali }}</dt>
+                <dt style="color: #000; margin-top: -10px;" class="mb-2">{{ peminjaman.tgl_pinjam }}</dt>
               </div>
               <div class="col-2">
                 <dd>Estimasi Pengembalian</dd>
-                <dt style="color: #000; margin-top: -10px;">{{ peminjaman.tanggal_kembali }}</dt>
+                <dt style="color: #000; margin-top: -10px;">{{ peminjaman.tgl_kembali }}</dt>
               </div>
               <div class="col-2">
                 <dd style="margin-bottom: -2px;">Status</dd>
                 <dt class="status-pill parent-element"                
                 :class="{
-                  'status-active': peminjaman.status == 'Selesai',
-                  'status-error': peminjaman.status == 'Barang Siap Diambil',
-                  'status-rusak': peminjaman.status == 'Sedang Dipinjam',
+                  'status-active': peminjaman.status === 'Selesai',
+                  'status-error': peminjaman.status === 'Menunggu Diambil',
+                  'status-rusak': peminjaman.status === 'Ditolak',
+                  'status-musnah': peminjaman.status === 'Dipinjam',
+                  'status-hilang': peminjaman.status === 'Belum Diproses',
                 }">{{ peminjaman.status || '-' }}</dt>
               </div>
               <div class="col-2">
@@ -132,24 +134,24 @@
       </div>
 
       <!-- Card Konten Pengeluaran -->
-      <div id="app" v-if="showPengeluaran && peminjaman.no_pinjam" class="card-body">
-        <pengeluaran-peminjaman :no-pinjam="peminjaman.no_pinjam"></pengeluaran-peminjaman>
+      <div id="app" v-if="showPengeluaran && peminjaman.no_peminjaman" class="card-body">
+        <pengeluaran-peminjaman :no-pinjam="peminjaman.no_peminjaman"></pengeluaran-peminjaman>
       </div>
       <!-- Card Konten Pengajuan -->
-      <div id="app" v-if="showPengajuan && peminjaman.no_pinjam" class="card-body">
-        <pengajuan-peminjaman :no-pinjam="peminjaman.no_pinjam"></pengajuan-peminjaman>
+      <div id="app" v-if="showPengajuan && peminjaman.no_peminjaman" class="card-body">
+        <pengajuan-peminjaman :no-pinjam="peminjaman.no_peminjaman"></pengajuan-peminjaman>
       </div>
       <!-- Card Konten Detail -->
-      <div id="app" v-if="showDetailPeminjaman && peminjaman.no_pinjam" class="card-body">
-        <data-rincian-peminjaman-alat :no-pinjam="peminjaman.no_pinjam"></data-rincian-peminjaman-alat>
+      <div id="app" v-if="showDetailPeminjaman && peminjaman.no_peminjaman" class="card-body">
+        <data-rincian-peminjaman-alat :no-pinjam="peminjaman.no_peminjaman"></data-rincian-peminjaman-alat>
       </div>
       <!-- Card Konten Perubahan -->
-      <div id="app" v-if="showPerubahan && peminjaman.no_pinjam" class="card-body">
-        <perubahan-peminjaman :no-pinjam="peminjaman.no_pinjam"></perubahan-peminjaman>
+      <div id="app" v-if="showPerubahan && peminjaman.no_peminjaman" class="card-body">
+        <perubahan-peminjaman :no-pinjam="peminjaman.no_peminjaman"></perubahan-peminjaman>
       </div>
       <!-- Card Konten Pengembalian -->
-      <div id="app" v-if="showPengembalian && peminjaman.no_pinjam" class="card-body">
-        <pengembalian-peminjaman :no-pinjam="peminjaman.no_pinjam"></pengembalian-peminjaman>
+      <div id="app" v-if="showPengembalian && peminjaman.no_peminjaman" class="card-body">
+        <pengembalian-peminjaman :no-pinjam="peminjaman.no_peminjaman"></pengembalian-peminjaman>
       </div>
       
     </div>    
@@ -175,9 +177,9 @@ export default {
   },
   computed:{
     durasiData() {
-      if (this.peminjaman.tanggal_kembali) {
-        const tanggalPinjam = new Date(this.peminjaman.tanggal_pinjam);
-        const tanggalKembali = new Date(this.peminjaman.tanggal_kembali);
+      if (this.peminjaman.tgl_kembali) {
+        const tanggalPinjam = new Date(this.peminjaman.tgl_pinjam);
+        const tanggalKembali = new Date(this.peminjaman.tgl_kembali);
         const selisihHari = Math.abs(tanggalKembali - tanggalPinjam) / (1000 * 60 * 60 * 24);
         return Math.ceil(selisihHari);
       } else {
@@ -185,9 +187,9 @@ export default {
       }
     },
     durasiDataKembali() {
-      if (this.peminjaman.tanggal_kembali) {
+      if (this.peminjaman.tgl_kembali) {
         const tanggalTerkini = new Date();
-        const tanggalKembali = new Date(this.peminjaman.tanggal_kembali);
+        const tanggalKembali = new Date(this.peminjaman.tgl_kembali);
         const selisihHari = Math.abs(tanggalKembali - tanggalTerkini);
         const hari = Math.ceil(selisihHari / (1000 * 60 * 60 * 24));
 
@@ -208,9 +210,9 @@ export default {
     async fetchAlatDetailPeminjaman() {
       try {
         const id = this.$route.params.id;
-        const response = await axios.get(`/api/peminjaman/${id}`);
+        const response = await axios.get(`/api/v1/peminjaman/${id}`);
         this.peminjaman = response.data;
-        console.log(this.peminjaman)
+        // console.log(this.peminjaman)
       } catch (error) {
         alert("Gagal memuat detail alat peminjaman.");
       }
@@ -261,7 +263,7 @@ export default {
       }
     },
     goBack(){
-      this.$router.push('/manajemen-mtc/peminjaman');
+      this.$router.push('/manajer-mtc/peminjaman');
     }
   },
   mounted() {

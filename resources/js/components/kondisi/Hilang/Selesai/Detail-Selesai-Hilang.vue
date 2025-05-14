@@ -2,16 +2,16 @@
   <div class="container-fluid">
     <!-- Head -->
     <div class="row mb-2 align-items-center" >
-      <div class="col-sm-6"><h3 class="text-black-10" style="font-family: Raleway;">Detail Penggantian Alat/Mesin</h3> 
+      <div class="col-sm-6"><h3 style="font-family: Raleway;" class="text-black-10">Detail Pengantian Alat/Mesin</h3> 
         <h6 style="color: rgb(128, 128, 128);"></h6>
       </div> 
       <div class="col-sm-6 mt-3">
         <ol class="breadcrumb float-sm-right bg-table" style="border-radius: 10px;">
           <li class="breadcrumb-item">
-            <a style="color: #169ea8; text-decoration: none;" href="/admin-mtc/data-hilang">Penggantian Alat/Mesin</a>
+            <a style="color: #169ea8; text-decoration: none;" href="javascript:history.back()">Pengantian Alat/Mesin</a>
           </li>
           <li class="breadcrumb-item active" style="color: red;">
-            <span>Detail Penggantian Alat/Mesin</span>
+            <span>Detail Pengantian Alat/Mesin</span>
           </li>
         </ol>
       </div>
@@ -20,46 +20,38 @@
     <div class="card shadow">
       <div class="row m-1">
         <div class="col-12">
-          <h4 class="text-capitalize text-primary text-bold"><b>No Penggantian #{{ $route.params.id }}</b></h4>
+          <h4 class="text-capitalize text-primary text-bold"><b>No Kehilangan #{{ dataProses.no_kehilangan }}</b></h4>
         </div>
-        <div class="col-2">
+        <div class="col-3">
           <dt style="color: #000;">Nama Peminjam</dt>
-          <dd>{{ data[0].pic }}</dd>
-          <dt style="color: #000;">Divisi</dt>
-          <dd>{{ data[0].divisi }}</dd>
+          <dd>{{ dataProses.users && dataProses.users.nama }}</dd>
+          <dt class="text-black-10">Divisi</dt>
+          <dd>{{ dataProses.users && dataProses.users.divisi && dataProses.users.divisi.divisi }}</dd>          
         </div>
-        <div class="col-2">
-          <dt style="color: #000;">Nama Alat/Mesin</dt>
-          <dd>{{ data[0].nama }}</dd>
-        </div>
-        <div class="col-2">
-          <dt style="color: #000;">Detail Alat/Mesin Hilang</dt>
-          <dd>{{ data[0].detail }}</dd>
-        </div>
-        <div class="col-2">
-          <dt style="color: #000;">Tanggal Hilang Alat/Mesin</dt>
-          <dd>{{ data[0].tgl }}</dd>          
-        </div>
-        <!-- <div class="col-3">
-          <dt style="color: #000;">Target</dt>
-          <dd>{{ data[0].tgl_selesai }} <br>
-            <small>
-              <i :class="{'fas fa-clock': !durasidata[0].includes('hari lewat') && !durasidata[0].includes('hari lagi'), 'fas fa-exclamation-circle text-danger': durasidata[0].includes('hari lewat') || durasidata[0].includes('hari lagi')}"></i>
-              <span :class="{'text-danger': durasidata[0].includes('hari lewat') || durasidata[0].includes('hari lagi')}">
-                {{ durasidata[0] }}
-              </span>
-            </small>
+        <div class="col-3">
+          <dt style="color: #000;">Nama Produk</dt>
+          <dd>{{ dataProses.no_seri && dataProses.no_seri.tools && dataProses.no_seri.tools.nama }}</dd>
+          <dt class="text-black-10">Layout</dt>
+          <dd v-if="dataProses.no_seri && dataProses.no_seri.layout">
+            Ruang {{ dataProses.no_seri.layout.ruang }} / Rak {{ dataProses.no_seri.layout.rak }} / Lantai {{ dataProses.no_seri.layout.lantai }} / Koordinat: {{ dataProses.no_seri.layout.koordinat }}
           </dd>
-        </div> -->
-        <div class="col-2">
+        </div>
+        <div class="col-3">
+          <dt style="color: #000;">Detail Hilang</dt>
+          <dd>{{ dataProses.detail_hilang }}</dd>
+          <dt class="text-black-10">Tanggal Kehilangan</dt>
+          <dd>{{ dataProses.tgl_kehilangan }}</dd>          
+        </div>
+        <div class="col-3">
           <dt style="color: #000;">Status</dt>
           <dd>
             <div 
               class="badge"
               :class="{
-                        'status-active': data[0].status === 'Selesai',
-                        'status-hilang': data[0].status === 'Proses',}">
-              {{ data[0].status }}
+                        'status-active': dataProses.status === 'Selesai',
+                        'status-musnah': dataProses.status === 'Belum',
+                        'status-error': dataProses.status === 'Proses'}">
+              {{ dataProses.status }}
             </div>
           </dd>
         </div>
@@ -69,14 +61,10 @@
     <div class="card shadow mt-5 mb-3">
       <div class="m-2">
         <div class="col-12">
-          <h4 class="text-capitalize text-primary text-bold"><b>Aktivitas Penggantian Alat/Mesin</b></h4>
+          <h4 class="text-capitalize text-primary text-bold"><b>Aktivitas Kehilangan</b></h4>
         </div>        
         <div class="row align-items-center justify-content-end m-3">
-          <!-- <button class="btn btn-primary mr-2" @click="downloadBukti(aktivitasList.length - 1)"><i class="fas fa-download"></i> Download Bukti Pertanggung Jawaban</button> -->
-          <!-- Tombol Tambah Aktivitas akan hilang jika aktivitas sudah selesai -->
-          <!-- <button v-if="shouldShowTambahAktivitas" class="btn btn-primary mr-2" @click="showModal = true" :disabled="isAktivitasSelesai || isAllAktivitasCompleted">Tambah Aktivitas</button>       -->
-          <!-- Tombol Selesai hanya muncul jika kondisi aktivitas terakhir adalah OK atau Rusak -->
-          <button v-if="isLastAktivitasCompleted && !isAktivitasSelesai" class="btn btn-success mr-2" @click="selesaiAktivitas" :disabled="!isLastAktivitasCompleted">Selesai</button>
+          <!-- <button class="btn btn-primary mr-3" @click="openAktivitasModal">Tambah Aktivitas</button>           -->          
           <div class="search-wrapper">
             <div class="input-group">
               <input type="text" placeholder="Search..." class="form-control"
@@ -87,7 +75,7 @@
           </div>
         </div>
         <div class="col-12 table-responsive p-3">
-          <table class="table table-border no-border table-custom">
+          <table class="table table-border no-border table-custom"  style="overflow-y: auto; min-width: 1300px;">
             <thead class="bg-table">
               <tr class="text-center" style="color: #000;">
                 <th>#</th>
@@ -99,16 +87,30 @@
                 <!-- <th>Aksi</th> -->
               </tr>
             </thead>
+            <tbody v-if="dataProses.hilang_activity_proses && dataProses.hilang_activity_proses.length === 0">
+              <tr>
+                <td colspan="7" class="text-center">Tidak Ada Data</td>
+              </tr>
+            </tbody>
             <tbody>
-              <tr v-for="(item, index) in aktivitasList" :key="index" class="text-center">
+              <tr v-for="(item, index) in dataProses.hilang_activity_proses" :key="item.id" class="text-center">
                 <td>{{ index + 1 }}</td>
-                <td>{{ item.tanggal }}</td>
-                <td>{{ item.no_seri_lama }}</td>
-                <td>{{ item.no_seri_baru }}</td>
-                <td>{{ item.harga }}</td>
-                <td>{{ item.status }}</td>
+                <td>{{ item.tgl_penggantian || '-'}}</td>
+                <td>{{ item.no_seri_old || '-'}}</td>
+                <td>{{ item.no_seri_new || '-'}}</td>
+                <td>{{ item.harga || '-'}}</td>
+                <td>
+                  <div 
+                    class="btn-sts"
+                    :class="{
+                      'status-rusak': item.status === 'Menunggu Konfirmasi',
+                      'status-active': item.status === 'Diterima',
+                      'status-error': item.status === 'Serahkan Alat/Mesin',
+                    }">
+                    {{ item.status }}
+                  </div>
+                </td>               
                 <!-- <td>
-                  Dropdown yang berfungsi dengan benar
                   <div class="dropdown text-center">
                     <button
                       class="btn btn-sm"
@@ -121,46 +123,45 @@
                       <i class="fas fa-ellipsis-v"></i>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      Tombol Serahkan Alat/Mesin
-                      <a v-if="!item.isSerah" class="dropdown-item" @click="serahkanAlat(item)">
+                      <a v-if="shouldShowDiserahkan" class="dropdown-item" @click="serahkanAlat(index)">
                         <i class="fas fa-share text-primary"></i> Serahkan Alat/Mesin
                       </a>
-                      Tombol Diterima hanya muncul setelah Serahkan Alat/Mesin ditekan
-                      <a v-if="item.isSerah" class="dropdown-item" @click="terimaAktivitas(item)">
+                      <a v-if="shouldShowNoSeriDiterima" class="dropdown-item" @click="terimaAktivitas(index)">
                         <i class="fas fa-check text-success"></i> Diterima
                       </a>
                     </div>
                   </div>
-                </td> -->
+                </td>    -->
               </tr>
             </tbody>
-          </table>           
-        </div>
-        <!-- Pagination -->
-        <div class="d-flex justify-content-between align-items-center m-3" style="border-radius: 10px; background-color: #f3f4f6; height: 50px; color: #000;">
-          <div class="ml-3">
-            Rows per page:
-            <span>{{ rowsPerPage }}</span>
-          </div>
-          <div class="mr-3">          
-            <span>{{ paginationInfo }}</span>
-            <button @click="prevPage" :disabled="currentPage === 1" class="btn btn-sm btn-light">
-              <i class="fas fa-angle-left"></i>
-            </button>
-            <span>  </span>
-            <button @click="nextPage" :disabled="currentPage === totalPages" class="btn btn-sm btn-light">
-              <i class="fas fa-angle-right"></i>
-            </button>
-          </div>
-        </div>  
+          </table>     
+          <!-- Pagination -->
+          <div class="d-flex justify-content-between align-items-center mt-3 mb-3" style="min-width: 1300px; border-radius: 10px; background-color: #f3f4f6; height: 50px; color: #000;">
+            <div class="ml-3">
+              Rows per page:
+              <span>{{ rowsPerPage }}</span>
+            </div>
+            <div class="mr-3">          
+              <span>{{ paginationInfo }}</span>
+              <button @click="prevPage" :disabled="currentPage === 1" class="btn btn-sm btn-light">
+                <i class="fas fa-angle-left"></i>
+              </button>
+              <span>  </span>
+              <button @click="nextPage" :disabled="currentPage === totalPages" class="btn btn-sm btn-light">
+                <i class="fas fa-angle-right"></i>
+              </button>
+            </div>
+          </div>        
+        </div> 
       </div>                  
-    </div>    
+    </div>
+
     <!-- Modal -->
-    <div class="modal fade show" id="modalAktivitas" tabindex="-1" role="dialog" aria-labelledby="modalAktivitasLabel" v-if="showModal">
+    <div class="modal fade show" id="modalAktivitasRusak" tabindex="-1" role="dialog" aria-labelledby="modalAktivitasRusakLabel" v-if="showModal" style="overflow-y: auto;">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="modalAktivitasLabel">Aktivitas Penggantian Alat/Mesin</h5>
+            <h5 class="modal-title" id="modalAktivitasRusakLabel">Aktivitas Pemusnahan</h5>
             <button type="button" class="close" @click="showModal = false" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -168,83 +169,42 @@
           <div class="modal-body">
             <form>
               <div class="form-group">
-                <label for="tanggal" class="text-black-10"><b>Tanggal Penggantian Alat/Mesin <sup class="text-danger"> *</sup> </b></label>
-                <input type="date" class="form-control" id="tanggal" v-model="aktivitas.tanggal" required>
-              </div>
-              <div class="form-group">
-                <label for="noSeriLama" class="text-black-10"><b>No Seri Lama <sup class="text-danger"> *</sup> </b></label>
-                <input type="text" class="form-control" id="noSeriLama" v-model="aktivitas.no_seri_lama" required>
-              </div>
-              <div class="form-group">
-                <label for="noSeriBaru" class="text-black-10"><b>No Seri Baru <sup class="text-danger"> *</sup> </b></label>
-                <input type="text" class="form-control" id="noSeriBaru" v-model="aktivitas.no_seri_baru" required>
-              </div>
-              <div class="form-group">
-                <label for="harga" class="text-black-10"><b>Harga <sup class="text-danger"> *</sup> </b></label>
-                <input type="text" class="form-control" id="harga" v-model="aktivitas.harga" required>
-              </div>
-              <!-- <form @submit.prevent="handleUploadBA">
-              <div class="form-group">
-                <label for="baFile">Pilih File Bukti Pertanggung Jawaban (PDF)</label>
-                
-                Area Drag and Drop
-                <div 
-                  class="drag-drop-area" 
-                  @dragover.prevent="onDragOver" 
-                  @dragleave="onDragLeave" 
-                  @drop="onDrop" 
-                  @click="triggerFileInput"
-                  :class="{'dragging': isDragging}"
-                  >
-                  <p v-if="!file">Seret dan jatuhkan file PDF di sini, atau klik untuk memilih</p>
-                  <p v-else>{{ file.name }}</p>
+                <label for="waktu" class="text-black-10"><b>Waktu (Mulai - Selesai) <sup class="text-danger">*</sup></b></label>
+                <div class="input-group">
+                  <input type="time" class="form-control" id="waktu_mulai" v-model="aktivitas.waktu_mulai" required>
+                  <span class="input-group-text">-</span>
+                  <input type="time" class="form-control" id="waktu_selesai" v-model="aktivitas.waktu_selesai" required>
                 </div>
-
-                Hidden Input File for Selecting File
-                <input type="file" class="form-control" id="baFile" ref="fileInput" @change="onBAFileChange" accept="application/pdf" style="display: none;" required>
-              </div>
-            </form> -->
-              <!-- <div class="form-group"> 
-                <label for="waktu" class="text-black-10"><b>Waktu Pemusnahan (Mulai - Selesai) <sup class="text-danger"> *</sup> </b></label> 
-                <div class="input-group"> <input type="time" class="form-control" id="waktu_mulai" v-model="aktivitas.waktu_mulai" required>
-                  <span class="input-group-text">-</span> 
-                  <input type="time" class="form-control" id="waktu_selesai" v-model="aktivitas.waktu_selesai" required> 
-                </div> 
               </div>
               <div class="form-group">
-                <label for="pic" class="text-black-10"><b>PIC Pemusnahan</b></label>
+                <label for="pic" class="text-black-10"><b>PIC</b></label>
                 <v-select
-                  :options="picOptions"
+                  :options="users"
                   v-model="aktivitas.pic"
                   multiple
-                  label="text"
-                  :reduce="(pic) => pic.value"
+                  placeholder="Pilih PIC"
+                  :searchable="true"
+                  label="nama"
+                  :reduce="user => user.id"
                 />
-              </div> -->
-              <!-- <div class="form-group">
-                <label for="detail" class="text-black-10"><b>Detail <sup class="text-danger"> *</sup></b></label>
-                <textarea class="form-control" id="detail" v-model="aktivitas.detail" required></textarea>
-              </div> -->
-              <!-- <div class="form-group">
-                <label for="kondisi" class="text-black-10"><b>Kondisi <sup class="text-danger"> *</sup></b></label>
-                <select class="form-control" id="kondisi" v-model="aktivitas.kondisi" required>
-                  <option value="" disabled>Pilih Kondisi</option>
-                  <option value="Musnah">Musnah</option>
-                  <option value="OK">OK</option>            
-                  <option value="Error">Error</option>
-                  <option value="Rusak">Rusak</option>
-                </select>
-              </div> -->
-              <!-- <div class="form-group">
-                <label for="status" class="text-black-10"><b>Status <sup class="text-danger"> *</sup></b></label>
-                <select class="form-control" id="status" v-model="aktivitas.staus" required>
-                  <option value="" disabled>Pilih Status</option>
-                  <option value="Musnah">Musnah</option>
-                  <option value="OK">OK</option>            
-                  <option value="Error">Error</option>
-                  <option value="Rusak">Rusak</option>
-                </select>
-              </div> -->
+              </div>
+              <div class="form-group">
+                <label for="detail" class="text-black-10"><b>Detail <sup class="text-danger">*</sup></b></label>
+                <!-- <textarea class="form-control" id="detail" v-model="aktivitas.detail_kerusakan" required placeholder="Masukkan Detail Perbaikan"></textarea> -->
+                <div class="textarea-wrapper">
+                  <textarea
+                    id="detail_kerusakan"                
+                    v-model="aktivitas.detail_kerusakan"
+                    class="form-control"
+                    rows="3"
+                    placeholder="Masukkan Detail Kerusakan (Maksimal 200 Karakter)"
+                    maxlength="200"
+                  ></textarea>
+                  <small class="text-muted char-counter">
+                    {{ aktivitas.detail_kerusakan.length }} / 200
+                  </small>
+                </div>
+              </div>
             </form>
           </div>
           <div class="modal-footer">
@@ -254,65 +214,16 @@
         </div>
       </div>
     </div>
-    <!-- Tambahkan modal untuk input alasan penolakan -->
-    <div class="modal fade show" id="modalTolakAktivitas" tabindex="-1" role="dialog" aria-labelledby="modalTolakAktivitasLabel" v-if="showTolakModal">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modalTolakAktivitasLabel">Alasan Penolakan</h5>
-            <button type="button" class="close" @click="showTolakModal = false" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="form-group">
-                <label for="alasan" class="text-black-10"><b>Alasan Penolakan <sup class="text-danger"> *</sup> </b></label>
-                <textarea class="form-control" id="alasan" v-model="alasanPenolakan" required></textarea>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" @click="showTolakModal = false">Batal</button>
-            <button type="button" class="btn btn-primary" @click="simpanTolakAktivitas">Simpan</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Modal Selesai Aktivitas -->
-    <!-- <div class="modal fade show" id="modalSelesaiAktivitas" tabindex="-1" role="dialog" aria-labelledby="modalSelesaiAktivitasLabel" v-if="showSelesaiModal">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modalSelesaiAktivitasLabel">Selesai Aktivitas</h5>
-            <button type="button" class="close" @click="showSelesaiModal = false" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <p>Apakah Anda yakin ingin menyelesaikan aktivitas ini?</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" @click="showSelesaiModal = false">Batal</button>
-            <button type="button" class="btn btn-primary" @click="selesaiAktivitas">Selesai</button>
-          </div>
-        </div>
-      </div>
-    </div> -->
   </div>
 </template>
 
 <script>
 import vSelect from 'vue-select';
 import Swal from 'sweetalert2';
-import pdf from 'vue-pdf';
-import jsPDF from "jspdf";
-import 'jspdf-autotable';
 
 export default {
   components: {
     vSelect,
-    pdf,
   },
   data() {
     return {
@@ -325,65 +236,67 @@ export default {
       showModal: false,
       showSelesaiModal: false,
       aktivitas: {
-        tanggal: '',        
-        waktu_mulai: '',
-        waktu_selesai: '',
-        pic: '',
-        detail: '',
-        kondisi: '',
-        alasanPenolakan: '',
-        harga: '',
-        no_seri_lama: '',
-        no_seri_baru: '',
+        id: null,
+        alasan_penolakan: '',
       },
-      aktivitasList: [
-      { 
-        tanggal: '2025-02-01', 
-        no_seri_lama: '1122wscj121', 
-        no_seri_baru: '1122wscj122', 
-        harga: 'Rp 6.000', 
-        BuktiPertanggungJawaban: '/file/Berita-Acara-Pemusnahan-Barang.pdf', 
-        status: 'Diterima',
-        isSerah: false        
-      },  
-      ],
-      data: [
-        { no_seri: '1122wscj121', nama: 'Clamp', layout: 'E7', tgl: '2025-02-01', kondisi: 'Error', detail: 'Lupa di taroh dimana', pic: 'John Doe', divisi: 'Maintenance', tgl_selesai: '2025-02-05', status: 'Selesai' },        
-      ],
+      aktivitasList: [],
+      dataProses: [],
+      dataAktivitas: [],
+      layouts: [],
+      users: [],
       searchQuery: '',
       rowsPerPage: 10,
       currentPage: 1,
       isAktivitasSelesai: false,
-      showTolakModal: false,
-      tolakIndex: null,
-      alasanPenolakan: '',
-      file:[],
-      isDragging: false,
+      isSerah: false,
     }
   },
   computed: {
+    detailItem() {
+      return this.dataProses.find(item => item.no_perbaikan == this.$route.params.id);
+    },
     isLastAktivitasCompleted() {
-      const lastAktivitas = this.aktivitasList[this.aktivitasList.length - 1];
-      return lastAktivitas && (lastAktivitas.kondisi === 'Musnah' && lastAktivitas.status === 'Diterima');
+      const lastAktivitas = this.dataAktivitas[this.dataAktivitas.length - 1];
+      return lastAktivitas && (lastAktivitas.kondisi === 'OK' || lastAktivitas.kondisi === 'Rusak');
     },
     isAllAktivitasCompleted() {
-      return this.aktivitasList.every(item => item.kondisi === 'Musnah' && item.status === 'Diterima');
+      return this.dataAktivitas.every(item => item.kondisi === 'OK' || item.kondisi === 'Rusak');
     },
     // Hanya tampilkan tombol "Tambah Aktivitas" jika aktivitas tidak selesai
     shouldShowTambahAktivitas() {
       return !this.isLastAktivitasCompleted && !this.isAllAktivitasCompleted;
     },
     shouldShowDiterima() {
-      return this.aktivitasList.length > 0 && this.aktivitasList[this.aktivitasList.length - 1].status === 'Menunggu Persetujuan Atasan';
+      return this.dataProses.hilang_activity_baru.length > 0 && this.dataProses.hilang_activity_baru[this.dataProses.hilang_activity_baru.length - 1].status === 'Belum';
     },
+    shouldShowDiserahkan() {
+      return this.dataProses.hilang_activity_proses.length > 0 && this.dataProses.hilang_activity_proses[this.dataProses.hilang_activity_proses.length - 1].status === 'Menunggu Konfirmasi';
+    },
+    // shouldShowDiserahkan() {
+    //   return (
+    //     item.hilang_activity_proses &&
+    //     item.hilang_activity_proses.length > 0 &&
+    //     item.hilang_activity_proses[item.hilang_activity_proses.length - 1].status === 'Menunggu Konfirmasi'
+    //   );
+    // },
+    shouldShowNoSeriDiterima() {
+      return this.dataProses.hilang_activity_proses.length > 0 && this.dataProses.hilang_activity_proses[this.dataProses.hilang_activity_proses.length - 1].status === 'Serahkan Alat/Mesin';
+    },
+    // shouldShowNoSeriDiterima(item) {
+    //   return (
+    //     item.hilang_activity_proses &&
+    //     item.hilang_activity_proses.length > 0 &&
+    //     item.hilang_activity_proses[item.hilang_activity_proses.length - 1].status === 'Serahkan Alat/Mesin'
+    //   );
+    // },
     shouldShowDitolak() {
-      return this.aktivitasList.length > 0 && this.aktivitasList[this.aktivitasList.length - 1].status === 'Menunggu Persetujuan Atasan';
+      return this.dataProses.hilang_activity_baru.length > 0 && this.dataProses.hilang_activity_baru[this.dataProses.hilang_activity_baru.length - 1].status === 'Belum';
     },
     durasidata() {
-      return this.data.map(item => {
-        if (item.tgl_selesai && item.tgl) {
+      return this.dataProses.map(item => {
+        if (item.tgl_selesai && item.tgl_perbaikan) {
           const tglSelesai = new Date(item.tgl_selesai);
-          const tglSekarang = new Date(item.tgl);
+          const tglSekarang = new Date(item.tgl_perbaikan);
           const tglSaatIni = new Date();
           const selisihHari = Math.abs(tglSelesai - tglSekarang);
           const hari = Math.floor(selisihHari / (1000 * 60 * 60 * 24 ));
@@ -403,113 +316,30 @@ export default {
         }
       })
     },
+    filteredData() {
+      let result = this.dataProses.filter(item => {
+        return (
+          item.detail_kerusakan.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+          item.kondisi.toLowerCase().includes(this.searchQuery.toLowerCase()) 
+        );
+      });
+      return result;
+    },
+    paginatedData() {
+      const start = (this.currentPage - 1) * this.rowsPerPage;
+      const end = start + this.rowsPerPage;
+      return this.filteredData.slice(start, end);
+    },
     totalPages() {
-      return Math.ceil(this.aktivitasList.length / this.rowsPerPage);
+      return Math.ceil(this.dataProses.length / this.rowsPerPage);
     },
     paginationInfo() {
       const start = (this.currentPage - 1) * this.rowsPerPage + 1;
-      const end = Math.min(start + this.rowsPerPage - 1, this.aktivitasList.length);
-      return `Menampilkan ${start} - ${end} dari ${this.aktivitasList.length} data`;
+      const end = Math.min(start + this.rowsPerPage - 1, this.dataProses.length);
+      return `Showing ${start} to ${end} of ${this.dataProses.length} entries`;
     }
   },
-  methods: {
-    addAktivitas() {      
-      this.aktivitasList.push({ 
-        tanggal: this.aktivitas.tanggal,  
-        // BuktiPertanggungJawaban: URL.createObjectURL(this.file),
-        no_seri_lama: this.aktivitas.no_seri_lama,
-        no_seri_baru: this.aktivitas.no_seri_baru,
-        harga: this.aktivitas.harga,      
-        // waktu_mulai: this.aktivitas.waktu_mulai,
-        // waktu_selesai: this.aktivitas.waktu_selesai,
-        // pic: this.aktivitas.pic,
-        // kondisi: 'Rusak',
-        // status: 'Menunggu Persetujuan Atasan' // tambahkan status menjadi "Proses"
-      });
-      this.aktivitas.tanggal = '';
-      // this.aktivitas.waktu_mulai = '';
-      // this.aktivitas.waktu_selesai = '';
-      // this.aktivitas.pic = '';
-      // this.aktivitas.kondisi = '';
-      this.showModal = false;
-    },
-     // Fungsi untuk menangani event dragover
-     onDragOver(event) {
-      event.preventDefault(); // Mencegah perilaku default
-      this.isDragging = true; // Menandakan bahwa file sedang di-drag
-    },
-
-    // Fungsi untuk menangani event dragleave
-    onDragLeave(event) {
-      this.isDragging = false; // Menandakan bahwa file tidak lagi di-drag
-    },
-
-    // Fungsi untuk menangani event drop
-    onDrop(event) {
-      this.isDragging = false; // Menandakan bahwa file sudah dijatuhkan
-      const droppedFile = event.dataTransfer.files[0]; // Mengambil file yang dijatuhkan
-      if (droppedFile && droppedFile.type === 'application/pdf') {
-        this.file = droppedFile; // Menyimpan file jika valid
-      } else {
-        alert('Hanya file PDF yang diperbolehkan!');
-      }
-    },
-
-    // Fungsi untuk memicu input file ketika area drag-and-drop diklik
-    triggerFileInput() {
-      this.$refs.fileInput.click(); // Men-trigger click pada input file
-    },
-
-    // Fungsi untuk menangani perubahan file melalui file explorer
-    onBAFileChange(event) {
-      const selectedFile = event.target.files[0];
-      if (selectedFile && selectedFile.type === 'application/pdf') {
-        this.file = selectedFile; // Menyimpan file yang dipilih
-      } else {
-        alert('Hanya file PDF yang diperbolehkan!');
-      }
-    },
-
-    // Fungsi untuk meng-handle upload
-    handleUploadBA() {
-      if (this.file) {
-        // Implementasikan logika untuk meng-upload file
-        alert('File berhasil di-upload: ' + this.file.name);
-        this.showSelesaiModal = false; // Tambahkan kode ini untuk menutup modal
-      } else {
-        alert('Harap pilih file PDF terlebih dahulu!');
-      }
-    },
-    downloadBuktiPertanggungJawaban(item) {
-      const link = document.createElement('a');
-      link.href = item.BuktiPertanggungJawaban;
-      link.download = 'Bukti Pertanggung Jawaban.pdf';
-      link.click();
-    },
-    selesaiAktivitas() {
-      Swal.fire({
-        title: 'Selesai Aktivitas?',
-        text: 'Apakah Anda yakin ingin melanjutkan aktivitas ini ke tahapan proses?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Ya',
-        cancelButtonText: 'Tidak',
-      }).then((result) => {
-        if (result.isConfirmed) {
-          // Lakukan aksi selesai aktivitas disini
-          this.data[0].status = 'Diterima';
-          // Update the underlying data instead of assigning to isLastAktivitasCompleted
-          this.aktivitasList[this.aktivitasList.length - 1].kondisi = 'Musnah';
-          this.aktivitasList[this.aktivitasList.length - 1].status = 'Diterima';
-          Swal.fire('Berhasil!', 'Aktivitas telah selesai.', 'success');
-          this.$router.push('/admin-mtc/data-hilang');
-        }
-      });
-    },
-    updatePaginatedData() {
-      const start = (this.currentPage - 1) * this.rowsPerPage;
-      this.paginatedData = this.aktivitasList.slice(start, start + this.rowsPerPage);
-    },
+  methods: {    
     prevPage() {
       if (this.currentPage > 1) {
         this.currentPage--;
@@ -526,131 +356,232 @@ export default {
       // Implement debounce logic for search
       this.updatePaginatedData();
     },
-    terimaAktivitas(index) {
-      this.aktivitasList[index].status = 'Diterima';
-      this.aktivitasList[index].kondisi = 'Musnah';
+    async fetchData() {
+      const id = this.$route.params.id;
+      const res = await fetch(`/api/v1/kehilangan/${id}`);
+      const data = await res.json();
+      this.dataProses = data;
+      // console.log(this.dataProses);
     },
-    tolakAktivitas(index) {
-      this.showTolakModal = true;
-      this.tolakIndex = index;
-    },
-    simpanTolakAktivitas() {
-      this.aktivitasList[this.tolakIndex].status = 'Ditolak';
-      this.aktivitasList[this.tolakIndex].kondisi = 'Rusak';
-      this.aktivitasList[this.tolakIndex].alasanPenolakan = this.alasanPenolakan;
-      this.showTolakModal = false;
-      this.alasanPenolakan = '';
-    },
-    serahkanAlat(item) {
-      // Update the status to 'Serah' (or any state you choose)
-      item.status = 'Serah';
-      // Here you can implement any logic for when the item is 'Serah'
-      item.isSerah = true;
-    },
-    terimaAktivitas(item) {
-      // Update the status to 'Diterima'
-      item.status = 'Diterima';
-
-      // Redirect to the /admin-mtc/data-hilang page
-      this.$router.push('/admin-mtc/data-hilang');
-    },
-    downloadBukti(index) {
-      const ba = this.aktivitasList[index].ba;
-      const filename = 'Bukti-Pertanggung-Jawaban.pdf';
-
-      // Buat elemen canvas untuk render PDF
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-
-      // Membuat objek jsPDF
-      const pdf = new jsPDF();
-
-      // Set font menjadi bold dan ukuran 16
-      pdf.setFont('helvetica', 'bold');
-      pdf.setFontSize(16);
-
-      // Menambahkan judul Berita Acara Pemusnahan Barang dengan teks di tengah
-      const title = 'SURAT PERNYATAAN PERTANGGUNG JAWABAN GANTI RUGI';
-      const titleWidth = pdf.getStringUnitWidth(title) * pdf.getFontSize() / pdf.internal.scaleFactor;
-      const pageWidth = pdf.internal.pageSize.width;
-      const xPos = (pageWidth - titleWidth) / 2;
-      pdf.text(title, xPos, 16);
-
-      // Set font menjadi normal untuk teks berikutnya
-      pdf.setFont('helvetica', 'normal');
-      pdf.setFontSize(12);
-
-      // Menambahkan informasi lainnya
-      pdf.text(`Yang bertanda tangan di bawah ini : `, 25, 30);
-      pdf.text(`Nama`, 14, 36);
-      pdf.text(`Jabatan`, 14, 42);
-      pdf.text(`Divisi`, 14, 48);
-      pdf.text(`:`, 40, 36);
-      pdf.text(`:`, 40, 42);      
-      pdf.text(`:`, 40, 48);
-
-      // Menambahkan garis panjang
-      pdf.line(43, 38, 100, 38); // garis panjang untuk nama
-      pdf.line(43, 44, 100, 44); // garis panjang untuk jabatan
-      pdf.line(43, 50, 100, 50); // garis panjang untuk divisi
-
-      pdf.text(`Dengan ini menyatakan bahwa saya bertanggung jawab atas penghilangan alat/mesin yang`, 25, 56);
-      pdf.text(`terjadi pada tanggal `, 14, 62);
-      pdf.line(53, 63, 100, 63); // garis panjang untuk tanggal
-      pdf.text(`di area PT SINKO PRIMA ALLOY. `, 102, 62);
-
-      pdf.text(`Adapun alat/mesin yang hilang antara lain:`, 18, 68);
-
-      const headers = [
-        "#",
-        "Nama Alat/Mesin",
-        "No Seri",
-      ];
-      const rows = [];
-
-      this.data.forEach((item, index) => {
-        rows.push([
-          index + 1,
-          item.nama,
-          item?.no_seri,
+    async fetchInitialData() {
+      try {
+        const [layoutsRes, usersRes] = await Promise.all([
+          // axios.get('/api/v1/tools'),
+          axios.get('/api/v1/layouts'),
+          axios.get('/api/v1/users')
         ]);
+        // this.tools = toolsRes.data;
+        this.layouts = layoutsRes.data;
+        this.users = usersRes.data.byPIC;
+      } catch (err) {
+        console.error('Gagal fetch data awal:', err);
+      }
+    },
+    openAktivitasModal() {
+      if (this.dataProses.rusak_activity && this.dataProses.rusak_activity.length > 0) {
+        const lastAktivitas = this.dataProses.rusak_activity[this.dataProses.rusak_activity.length - 1];
+        if (lastAktivitas.status === 'Menunggu Persetujuan Atasan') {
+          Swal.fire({
+            icon: 'error',
+            title: 'Tidak dapat menambah Aktivitas',
+            text: 'Aktivitas sebelumnya masih Menunggu Persetujuan Atasan.',
+          });
+          return;
+        }
+      }
+      // Siapkan form modal
+      this.aktivitas = {
+        id: this.$route.params.id,
+        waktu_mulai: '',
+        waktu_selesai: '',
+        detail_kerusakan: '',
+        // kondisi: '',
+        // layout: '',
+        pic: [],
+      };
+      this.showModal = true;
+    },
+    async addAktivitas() {
+      // Validasi frontend manual
+      if (
+        !this.aktivitas.waktu_mulai || 
+        !this.aktivitas.waktu_selesai || 
+        !this.aktivitas.detail_kerusakan || 
+        // !this.aktivitas.kondisi || 
+        this.aktivitas.pic.length === 0 
+        // (this.aktivitas.kondisi === 'Rusak' && !this.aktivitas.layout)
+      ) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Data tidak lengkap',
+          text: 'Pastikan semua field wajib telah diisi.',
+        });
+        return;
+      }
+
+      try {
+        const payload = {
+          ...this.aktivitas,
+          pic: this.aktivitas.pic, // array of user IDs
+          // layout: this.aktivitas.layout || null,
+        };
+
+        const confirm = await Swal.fire({
+          title: 'Konfirmasi',
+          text: 'Apakah Anda yakin ingin mengirim hasil pengecekan?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Ya, kirim!',
+          cancelButtonText: 'Tidak, batalkan!',
+        });
+
+        if (confirm.isConfirmed) {
+          await axios.post('/api/v1/kerusakan/add-activity', payload);
+          Swal.fire('Terkirim!', 'Data aktivitas berhasil disimpan.', 'success');
+          this.showModal = false;
+        }
+
+      } catch (error) {
+        let msg = 'Terjadi kesalahan saat mengirim data.';
+        if (error.response && error.response.data && error.response.data.message) {
+          msg = error.response.data.message;
+        }
+        Swal.fire({
+          icon: 'error',
+          title: 'Gagal mengirim',
+          text: msg,
+        });
+      }
+    },
+    serahkanAlat(index) {
+      Swal.fire({
+        title: 'Konfirmasi',
+        text: 'Apakah Anda yakin ingin melanjutkan aktivitas ini?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, lanjutkan!',
+        cancelButtonText: 'Tidak, batalkan!',
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+            const aktivitas = this.dataProses.hilang_activity_proses[index];
+
+            const payload = {
+              id: aktivitas.id,
+              status: 'Serahkan Alat/Mesin'
+            };
+
+            await axios.post('/api/v1/kehilangan/alat-diserahkan', payload);
+
+            // Update nilai di frontend setelah berhasil
+            this.dataProses.hilang_activity_proses[index].status = 'Serahkan Alat/Mesin';
+
+            Swal.fire('Berhasil!', 'Aktivitas telah berhasil.', 'success');
+          } catch (error) {
+            let msg = 'Terjadi kesalahan saat menyimpan data.';
+            if (error.response && error.response.data && error.response.data.message) {
+              msg = error.response.data.message;
+            }
+            Swal.fire('Gagal!', msg, 'error');
+          }
+        }
       });
+    },
+    terimaAktivitas(index) {
+      Swal.fire({
+        title: 'Konfirmasi',
+        text: 'Apakah Anda yakin ingin menerima aktivitas ini?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Ya, terima!',
+        cancelButtonText: 'Tidak, batalkan!',
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+            const aktivitas = this.dataProses.hilang_activity_proses[index];
 
-      pdf.autoTable({
-        head: [headers],
-        body: rows,
-        startY: 75, // Menyesuaikan posisi tabel setelah judul, nama peminjam, dan divisi
+            const payload = {
+              id: aktivitas.id,
+              status: 'Diterima'
+            };
+
+            await axios.post('/api/v1/kehilangan/alat-diterima', payload);
+
+            // Update nilai di frontend setelah berhasil
+            this.dataProses.hilang_activity_proses[index].status = 'Diterima';
+
+            Swal.fire('Berhasil!', 'Aktivitas telah diterima.', 'success');
+          } catch (error) {
+            let msg = 'Terjadi kesalahan saat menyimpan data.';
+            if (error.response && error.response.data && error.response.data.message) {
+              msg = error.response.data.message;
+            }
+            Swal.fire('Gagal!', msg, 'error');
+          }
+        }
       });
+    },
+    // tolakAktivitas(index) {
+    //   Swal.fire({
+    //     title: 'Konfirmasi',
+    //     text: 'Apakah Anda yakin ingin menolak aktivitas ini?',
+    //     icon: 'warning',
+    //     showCancelButton: true,
+    //     confirmButtonText: 'Ya, tolak!',
+    //     cancelButtonText: 'Tidak, batalkan!',
+    //     input: 'textarea',
+    //     inputPlaceholder: 'Masukkan Alasan Penolakan',
+    //     inputValidator: (value) => {
+    //       if (!value) {
+    //         return 'Harap masukkan catatan!';
+    //       }
+    //     }
+    //   }).then(async (result) => {
+    //     if (result.isConfirmed) {
+    //       try {
+    //         const aktivitas = this.dataProses.hilang_activity_baru[index]; // ← akses langsung dari tabel
+    //         const payload = {
+    //           id: aktivitas.id, // harus merupakan ID dari hilang_activity_baru
+    //           status: 'Ditolak',
+    //           alasan_penolakan: result.value
+    //         };
+    //         await axios.post('/api/v1/kehilangan/pengantian-ditolak', payload);
 
-      const textY = pdf.lastAutoTable.finalY + 10;
-      pdf.text("Saya menyatakan bahwa saya bertanggung jawab atas ganti rugi atas penghilangan ", 25, textY);
-      pdf.text("alat/mesin tersebut dan saya berkomitmen untuk menganti alat/mesin tersebut dengan alat/mesin ", 14, textY + 6);
-      pdf.text("yang sama atau yang lebih baik kepada PT SINKO PRIMA ALLOY.", 14, textY + 12);
+    //         // Update nilai di frontend setelah berhasil
+    //         this.dataProses.hilang_activity_baru[index].status = 'Ditolak';
+    //         this.dataProses.hilang_activity_baru[index].alasan_penolakan = result.value;
 
-      pdf.text("Saya menyatakan bahwa pernyataan ini dibuat dengan sadar dan tanpa paksaan dari pihak", 25, textY + 18);
-      pdf.text("manapun.", 14, textY + 24);
-
-      pdf.text("Demikian pernyataan ini saya buat dengan sebenar-benarnya.", 25, textY + 30);
-
-      const signatureSectionY = textY + 38;
-      pdf.text("Dibuat Oleh,", 155, signatureSectionY);
-
-      const gapY = signatureSectionY + 30;
-      pdf.line(150, gapY, 190, gapY);
-
-      // Simpan PDF ke dalam file
-      const pdfData = pdf.output('blob');
-      const url = URL.createObjectURL(pdfData);
-
-      // Buat elemen link untuk download file
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = filename;
-      link.click();
-
-      // Hapus elemen link setelah download selesai
-      link.remove();
-    }
+    //         Swal.fire('Berhasil!', 'Aktivitas telah ditolak.', 'success');
+    //       } catch (error) {
+    //         let msg = 'Terjadi kesalahan saat menyimpan data.';
+    //         if (error.response && error.response.data && error.response.data.message) {
+    //           msg = error.response.data.message;
+    //         }
+    //         Swal.fire('Gagal!', msg, 'error');
+    //       }
+    //     }
+    //   })
+    // },
+    downloadPJ(item) {
+      if (item.bukti_pertanggung_jawaban) {
+        const link = document.createElement('a');
+        link.href = `/storage/${item.bukti_pertanggung_jawaban}`;
+        link.download = item.bukti_pertanggung_jawaban;
+        link.click();
+        link.remove();
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Gagal',
+          text: 'Berita Acara tidak tersedia.',
+        });
+      }
+    },
+  },
+  mounted() {
+    this.fetchData();
+    // this.fetchDataAktivitas();
+    this.fetchInitialData();
   }
 }
 </script>
@@ -668,22 +599,5 @@ export default {
 }
 .text-black-10 {
   color: #000;
-}
-.drag-drop-area {
-  border: 2px dashed #ccc;
-  padding: 20px;
-  text-align: center;
-  cursor: pointer;
-  background-color: #fff;
-}
-
-.dragging {
-  border-color: #169ea8;
-  background-color: #e9f7ff;
-}
-
-.drag-drop-area p {
-  margin: 0;
-  font-size: 16px;
 }
 </style>

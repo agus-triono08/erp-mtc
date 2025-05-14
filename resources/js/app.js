@@ -624,9 +624,9 @@ const routes = [
       name: 'kondisi-selesai-error',
     },
     {
-      path: '/admin-mtc/kondisi-error/selesai/:id',
-      component: DetailSelesaiError,
-      name: 'kondisi-detail-selesai-error',
+        path: '/admin-mtc/kondisi-error/selesai/:id',
+        component: DetailSelesaiError,
+        name: 'kondisi-detail-selesai-error',
     },
     //KONDISI RUSAK
     {

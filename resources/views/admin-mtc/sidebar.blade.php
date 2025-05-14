@@ -54,6 +54,14 @@
         </a>
     </li>
 
+    {{-- Nav Item - Data Hilang --}}
+    <li class="nav-item {{ request()->routeIs('datahilang.adminmtc') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('datahilang.adminmtc') }}">
+            <i class="bi {{ request()->routeIs('datahilang.adminmtc') ? 'bi-repeat' : 'bi-arrow-repeat' }}"></i>
+            <span>Penggantian Alat/Mesin</span>
+        </a>
+    </li>
+
     <!-- Heading -->
     <br><div class="sidebar-heading">
         <strong>Inventory Alat/Mesin</strong>
@@ -78,7 +86,7 @@
             <i class="bi {{ request()->routeIs('layout.adminmtc') ? 'bi-door-open-fill' : 'bi-door-closed-fill' }}"></i>
             <span>Layout</span>
         </a>
-    </li>
+    </li>    
 
     <!-- Heading -->
     <!--<br><div class="sidebar-heading">
@@ -216,17 +224,9 @@
     </li>
 
     <!-- Heading -->
-    <br><div class="sidebar-heading">
+    {{-- <br><div class="sidebar-heading">
         <strong>Pengantian</strong>
-    </div>
-
-    {{-- Nav Item - Data Hilang --}}
-    <li class="nav-item {{ request()->routeIs('datahilang.adminmtc') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('datahilang.adminmtc') }}">
-            <i class="bi {{ request()->routeIs('datahilang.adminmtc') ? 'bi-repeat' : 'bi-arrow-repeat' }}"></i>
-            <span>Penggantian Alat/Mesin</span>
-        </a>
-    </li>
+    </div> --}}    
 
     <!-- Divider -->
     <!--<hr class="sidebar-divider d-none d-md-block">-->

@@ -7,6 +7,7 @@ use App\Models\Inventory\NoSeriLog;
 use App\Models\Inventory\Tools;
 use App\Models\Inventory\Error;
 use App\Models\Inventory\Rusak;
+use App\Models\Inventory\Hilang;
 use App\Models\Inventory\PermintaanLog;
 use App\Models\Inventory\PeminjamanLog;
 use App\Models\Inventory\PerubahanPeminjaman;
@@ -1068,10 +1069,32 @@ class NoSeriController extends Controller
             ]);
         }
 
+        if (strtolower($newKondisi) === 'hilang') {
+            // Ambil nomor urutan terakhir
+            $lastHilang = Hilang::orderBy('id', 'desc')->first();
+            $lastNumber = 0;
+
+            if ($lastHilang && preg_match('/KH(\d{8})/', $lastHilang->no_kehilangan, $matches)) {
+                $lastNumber = (int) $matches[1];
+            }
+
+            $newNumber = $lastNumber + 1;
+            $no_kehilangan = 'KH' . str_pad($newNumber, 8, '0', STR_PAD_LEFT);
+
+            Hilang::create([
+                'no_seri_id' => $noseri->id,
+                'kondisi' => 'Hilang',
+                'users_id' => auth()->id() ?? 3,
+                'no_kehilangan' => $no_kehilangan,
+                'tgl_kehilangan' => $request->tgl_pengecekan,
+                'detail_hilang' => $request->deskripsi_cek,
+            ]);
+        }
+
         foreach ($noseri->peminjaman as $peminjaman) {
             if ($peminjaman) {
                 $oldStatus = $peminjaman->status;
-                $newStatus = 'Selesai';
+                $newStatus = 'Dipinjam';
 
                 // Simpan log perubahan status
                 PeminjamanLog::create([
@@ -1079,16 +1102,16 @@ class NoSeriController extends Controller
                     'old_status' => $oldStatus,
                     'new_status' => $newStatus,
                     'changed_at'  => now(),
-                    'changed_by'  => auth()->id() ?? 1,
+                    'changed_by'  => auth()->id() ?? 3,
                 ]);
 
                 // Kurangi stok akhir pada tabel tools
-                $tool = Tools::find($noseri->tools_id);
-                if ($tool) {
-                    $tool->update([
-                        'stok_akhir' => $tool->stok_akhir + 1,
-                    ]);
-                }
+                // $tool = Tools::find($noseri->tools_id);
+                // if ($tool) {
+                //     $tool->update([
+                //         'stok_akhir' => $tool->stok_akhir + 1,
+                //     ]);
+                // }
 
                 $peminjaman->update([
                     'status' => $newStatus,

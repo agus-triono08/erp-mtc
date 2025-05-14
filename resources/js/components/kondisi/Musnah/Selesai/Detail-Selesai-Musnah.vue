@@ -85,6 +85,7 @@
                 <th>Berita Acara</th>
                 <th>Detail</th>
                 <th>Tanggal Dimusnahkan</th>
+                <th>Aksi</th>
               </tr>
             </thead>
             <tbody v-if="dataProses.musnah_activity && dataProses.musnah_activity.length === 0">
@@ -156,6 +157,28 @@
                 </td> -->
                 <td>{{ item.detail_pemusnahan || '-'}}</td>
                 <td>{{ item.changed_at || '-'}}</td>
+                <td>
+                  <div class="dropdown text-center">
+                    <button
+                      class="btn btn-sm"
+                      type="button"
+                      id="dropdownMenuButton"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      <i class="fas fa-ellipsis-v"></i>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">                      
+                      <a class="dropdown-item" @click="downloadDokumenPemusnahan(item)">
+                        <i class="fas fa-download text-primary"></i> Dokumen Pemusnahan
+                      </a>
+                      <a class="dropdown-item" @click="downloadBeritaAcara(item)">
+                        <i class="fas fa-download text-primary"></i> Berita Acara
+                      </a>
+                    </div>
+                  </div>
+                </td>
               </tr>
             </tbody>
           </table>     
@@ -562,6 +585,31 @@ export default {
       link.download = filename;
       link.click();
       link.remove();
+    },
+    downloadDokumenPemusnahan(item) {
+      const dokumenPemusnahan = JSON.parse(item.dokumen_pemusnahan);
+      dokumenPemusnahan.forEach((doc) => {
+        const link = document.createElement('a');
+        link.href = `/storage/${doc}`;
+        link.download = doc;
+        link.click();
+        link.remove();
+      });
+    },
+    downloadBeritaAcara(item) {
+      if (item.berita_acara) {
+        const link = document.createElement('a');
+        link.href = `/storage/${item.berita_acara}`;
+        link.download = item.berita_acara;
+        link.click();
+        link.remove();
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Gagal',
+          text: 'Berita Acara tidak tersedia.',
+        });
+      }
     },
   },
   mounted() {

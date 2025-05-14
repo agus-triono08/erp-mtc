@@ -125,12 +125,12 @@
     </li>
 
     <!-- Nav Item - Perawatan -->
-    <li class="nav-item {{ request()->routeIs('perawatan.manajermtc') ? 'active' : '' }}">
+    {{-- <li class="nav-item {{ request()->routeIs('perawatan.manajermtc') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('perawatan.manajermtc') }}">
             <i class="fas fa-fw {{ request()->routeIs('perawatan.manajermtc') ? 'fa-cogs' : 'fa-cog' }}"></i>
             <span>Perawatan</span>
         </a>
-    </li>
+    </li> --}}
 
     <!-- Nav Item - Kerusakan -->
     <li class="nav-item {{ request()->routeIs('kondisirusak.managermtc') ? 'active' : '' }}">

@@ -212,6 +212,14 @@ Route::prefix('v1/pemusnahan')->group(function() {
 // Kehilangan
 Route::apiResource('v1/kehilangan', HilangController::class);
 Route::get('/v1/kehilangan/getHilang/{noSeri}', [HilangController::class, 'getHilang']);
+Route::prefix('v1/kehilangan')->group(function() {
+    Route::post('/add-activity', [HilangController::class, 'addActivity']);    
+    Route::post('/add-activity-proses', [HilangController::class, 'addActivityProses']);
+    Route::post('/pengantian-diterima', [HilangController::class, 'pengantianDiterima']);
+    Route::post('/pengantian-ditolak', [HilangController::class, 'pengantianDitolak']);
+    Route::post('/alat-diserahkan', [HilangController::class, 'alatDiserahkan']);
+    Route::post('/alat-diterima', [HilangController::class, 'alatDiterima']);
+});
 // Permintaan
 Route::apiResource('v1/permintaan', PermintaanController::class);
 Route::get('/v1/permintaan/getPermintaan/{kodeAlat}', [PermintaanController::class, 'getPermintaan']);

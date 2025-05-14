@@ -75,6 +75,31 @@ Jika Anda ingin mengisi database dengan data dummy, Anda dapat menjalankan perin
 php artisan db:seed
 ```
 
+Jika Anda ingin menambahkan Jadwal Perawatan secara manual, Anda dapat menjalankan perintah berikut:
+```bash
+php artisan maintenance:generate-next-year
+```
+
+Jika Anda ingin Jadwal Perawatan secara otomatis, Anda dapat menjalankan perintah berikut:
+#### 1. Tambahkan cron job ke sistem
+```bash
+crontab -e
+```
+
+#### 2. Tambahkan baris berikut ke file cron job
+Gantilah /path/to/artisan dengan path sebenarnya ke file artisan Laravel di server kamu:
+```bash
+* * * * * cd /path/to/your/project && php artisan schedule:run >> /dev/null 2>&1
+```
+**Penjelasan:**
+- "* * * * * = jalankan setiap menit."
+
+- "cd /path/to/your/project = masuk ke direktori Laravel kamu."
+
+- "php artisan schedule:run = jalankan Laravel scheduler."
+
+- ">> /dev/null 2>&1 = redirect output supaya tidak membanjiri log."
+
 ### 8. Jalankan Aplikasi Laravel
 
 Setelah langkah-langkah di atas selesai, Anda dapat menjalankan aplikasi menggunakan perintah berikut:
@@ -103,8 +128,4 @@ Aplikasi akan berjalan di http://127.0.0.1:8000/. Anda dapat mengaksesnya melalu
 The license used in developing this project is the [GPL-3.0 license](https://www.gnu.org/licenses/gpl-3.0.html).
 
 ## Kontak
-<<<<<<< HEAD
 Jika Anda memiliki pertanyaan atau masalah terkait aplikasi ini, silakan hubungi saya melalui [GitHub Issues](https://github.com/agus-triono08/erp-mtc/issues).
-=======
-Jika Anda memiliki pertanyaan atau masalah terkait aplikasi ini, silakan hubungi saya melalui [GitHub Issues](https://github.com/agus-triono08/erp-mtc/issues).
->>>>>>> bcef79c2aca1a816ded52fb7d126bfb5b8aec8da

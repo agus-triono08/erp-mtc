@@ -17,11 +17,6 @@ class KategoriMerek extends Model
         'kategori_id',
     ];
 
-    // public function tipe()
-    // {
-    //     return $this->hasMany(Tipe::class, 'kategori_merek_id');
-    // }
-
     public function merek(): BelongsTo
     {
         return $this->belongsTo(Merek::class, 'merek_id', 'id');

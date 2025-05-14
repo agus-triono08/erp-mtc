@@ -12,7 +12,7 @@
       <v-select
         v-model="form.tools_id"
         :options="tools"
-        label="nama"
+        label="label"
         :reduce="tool => tool.id"
         placeholder="Pilih Alat/Mesin"
       />
@@ -107,13 +107,30 @@ export default {
   },
   methods: {
     fetchTools() {
-      axios.get('/api/v1/tools') // sesuaikan endpoint ini
+      axios.get('/api/v1/tools')
         .then(response => {
-          this.tools = response.data;
+          this.tools = response.data.map(tool => {
+            const nama = tool?.nama || '-';
+            const namaTipe = this.getNamaTipe(tool);
+            return {
+              ...tool,
+              label: `${nama} - ${namaTipe}`
+            };
+          });
+          console.log(this.tools);
         })
         .catch(error => {
           console.error('Gagal mengambil data alat:', error);
         });
+    },
+    getNamaTipe(item) {
+      const parts = item.kode?.split('-') || [];
+      const kodeTipe = parts[3]; // ambil bagian tipe dari kode, misal "T0" dari "1-S3-G0-T0-001"
+      const tipe = item.jenis?.kategori
+        ?.flatMap(k => k.merek || [])
+        .flatMap(m => m.tipe || [])
+        .find(t => t.kode_tipe === kodeTipe);
+      return tipe ? tipe.nama_tipe : '-';
     },
     submitForm() {
       axios.post('/api/v1/permintaan', this.form)
