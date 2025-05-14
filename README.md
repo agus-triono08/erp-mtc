@@ -19,7 +19,7 @@ git clone https://github.com/agus-triono08/erp-mtc.git
 Masuk ke direktori proyek dan install semua dependensi yang diperlukan menggunakan Composer:
 
 ```bash
-cd personal-light-instagram
+cd erp_mtc
 composer install
 npm install
 ```
@@ -61,19 +61,61 @@ Ini akan membuat symlink baru di ```public/storage``` yang akan menunjuk ke ```s
 php artisan storage:link
 ```
 
-### 7. Jalankan Migrasi Database
-
-Setelah mengonfigurasi database, jalankan migrasi untuk membuat struktur tabel di database Anda:
-
-```bash
+## Cara Migrasi Aplikasi ini
+#### 1. Layout
+``` bash
+php artisan migrate --path=database\migrations\2025_03_04_084059_create_layout_table.php
+```
+#### 2. Divisi
+``` bash
+php artisan migrate --path=database\migrations\2025_03_05_012010_create_divisis_table.php
+```
+#### 3. Jabatan
+``` bash
+php artisan migrate --path=database\migrations\2025_03_05_015205_create_jabatans_table.php
+```
+#### 4. Users
+``` bash
+php artisan migrate --path=database\migrations\2025_03_05_022752_create_users_table.php
+```
+#### 5. Merek
+``` bash
+php artisan migrate --path=database\migrations\2025_03_25_074016_create_merek_table.php
+```
+#### 6. Jenis
+``` bash
+php artisan migrate --path=database\migrations\2025_03_25_074843_create_jenis_table.php
+```
+#### 7. Kategori
+``` bash
+php artisan migrate --path=database\migrations\2025_03_25_074707_create_kategori_table.php
+```
+#### 8. Kategori Merek
+``` bash
+php artisan migrate --path=database\migrations\2025_03_25_074454_create_kategori_merek_table.php
+```
+#### 9. Tipe
+``` bash
+php artisan migrate --path=database\migrations\2025_03_25_074207_create_tipe_table.php
+```
+#### 10. All
+``` bash
 php artisan migrate
 ```
 
-Jika Anda ingin mengisi database dengan data dummy, Anda dapat menjalankan perintah berikut untuk menjalankan seeder:
+### 7. Jalankan Migrasi Database
+
+<!-- Setelah mengonfigurasi database, jalankan migrasi untuk membuat struktur tabel di database Anda:
+
+```bash
+php artisan migrate
+``` -->
+
+<!-- Jika Anda ingin mengisi database dengan data dummy, Anda dapat menjalankan perintah berikut untuk menjalankan seeder:
 
 ```bash
 php artisan db:seed
-```
+``` -->
 
 Jika Anda ingin menambahkan Jadwal Perawatan secara manual, Anda dapat menjalankan perintah berikut:
 ```bash
