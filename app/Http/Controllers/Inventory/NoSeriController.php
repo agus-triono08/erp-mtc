@@ -1094,7 +1094,7 @@ class NoSeriController extends Controller
         foreach ($noseri->peminjaman as $peminjaman) {
             if ($peminjaman) {
                 $oldStatus = $peminjaman->status;
-                $newStatus = 'Dipinjam';
+                $newStatus = 'Selesai';
 
                 // Simpan log perubahan status
                 PeminjamanLog::create([

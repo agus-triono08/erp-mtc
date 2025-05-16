@@ -72,7 +72,7 @@ class MerekController extends Controller
         $kode_merek = $inisial . $urutanTerakhir;
 
         // Jika nama merek adalah "NO MEREK", maka kode_merek = 'XX'
-        if ($nama_merek == 'NO MEREK') {
+        if ($nama_merek == 'NO MERK') {
             $kode_merek = 'XX';
         }
 

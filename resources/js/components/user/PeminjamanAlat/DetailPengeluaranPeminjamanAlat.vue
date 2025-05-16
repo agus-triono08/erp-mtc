@@ -353,7 +353,12 @@ export default {
           this.$set(item, 'reject_reason', reason);
         }
         this.isStatusUpdated = true;
-        Swal.fire('Berhasil!', `Status No Seri ${item.no_seri} telah diubah menjadi ${status}.`, 'success');
+        Swal.fire('Berhasil!', `Status No Seri ${item.no_seri} telah diubah menjadi ${status}.`, 'success')
+          .then(() => {
+            this.fetchPeminjaman(); // Reload data utama
+            this.toggleDetailModal(this.selectedNoSeri, status); // Refresh modal detail
+            this.$emit('refresh-data');
+          });
       })
       .catch(error => {
         console.error(error);
@@ -446,10 +451,10 @@ export default {
         this.showModal = false;
         this.selectedNoSeri = [];
       } else {
-        // Tambahkan status_kondisi ke setiap no_seri
         this.selectedNoSeri = noseriList.map(item => ({
           ...item,
-          status_kondisi: statusKondisi
+          status_kondisi: statusKondisi,
+          kondisi_after: item.kondisi_after || statusKondisi // Tambahkan ini untuk memastikan kondisi_after ada
         }));
         this.showModal = true;
       }

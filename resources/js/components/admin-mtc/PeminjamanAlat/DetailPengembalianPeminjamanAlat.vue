@@ -438,10 +438,10 @@ export default {
         this.showModal = false;
         this.selectedNoSeri = [];
       } else {
-        // Tambahkan status_kondisi ke setiap no_seri
         this.selectedNoSeri = noseriList.map(item => ({
           ...item,
-          status_kondisi: statusKondisi
+          status_kondisi: statusKondisi,
+          kondisi_after: item.kondisi_after || statusKondisi // Tambahkan ini untuk memastikan kondisi_after ada
         }));
         this.showModal = true;
       }
@@ -479,7 +479,18 @@ export default {
             cancelButtonText: 'Tidak, batalkan!',
           });
           this.closeTestModal();
-          this.$emit('refreshData'); // opsional jika ingin refresh tabel parent
+          // Refresh data utama
+          this.fetchPeminjaman().then(() => {
+            // Jika modal detail terbuka, refresh dengan data terbaru
+            if (this.showModal) {
+              const updatedNoseri = this.dataPeminjaman
+                .find(item => item.no_seri.some(ns => ns.id === this.form.id))
+                ?.no_seri || [];
+              this.toggleDetailModal(updatedNoseri, 'Dipinjam');
+            }
+          });
+          // this.toggleDetailModal(this.selectedNoSeri, 'Dipinjam'); // Refresh modal detail
+          this.$emit('refresh-data'); // opsional jika ingin refresh tabel parent
         })
         .catch((error) => {
           let msg = 'Tanggal pengecekan, kondisi, dan keterangan harus diisi.';

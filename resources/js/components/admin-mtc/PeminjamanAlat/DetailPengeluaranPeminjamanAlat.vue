@@ -324,7 +324,12 @@ export default {
               }
             });
             this.isStatusUpdated = true;
-            Swal.fire('Berhasil!', 'Status semua item telah diperbarui.', 'success');
+            Swal.fire('Berhasil!', 'Status semua item telah diperbarui.', 'success')
+              .then(() => {
+                this.fetchPeminjaman(); // Reload data utama
+                this.$emit('refresh-data');
+                this.toggleDetailModal(this.selectedNoSeri, 'Menunggu Diambil'); // Refresh modal detail
+              });
           })
           .catch(error => {
             console.error(error);
@@ -355,7 +360,12 @@ export default {
           this.$set(item, 'reject_reason', reason);
         }
         this.isStatusUpdated = true;
-        Swal.fire('Berhasil!', `Status No Seri ${item.no_seri} telah diubah menjadi ${status}.`, 'success');
+        Swal.fire('Berhasil!', `Status No Seri ${item.no_seri} telah diubah menjadi ${status}.`, 'success')
+          .then(() => {
+            this.fetchPeminjaman(); // Reload data utama
+            this.toggleDetailModal(this.selectedNoSeri, status); // Refresh modal detail
+            this.$emit('refresh-data');
+          });
       })
       .catch(error => {
         console.error(error);
@@ -363,51 +373,65 @@ export default {
       });
     },
     openRejectModal(item) {
-      if (['Menunggu Diambil', 'Dipinjam', 'Selesai'].includes(item.kondisi_after)) {
-        Swal.fire({
-          icon: 'warning',
-          title: 'Tidak Bisa Ditolak',
-          text: `No Seri ${item.no_seri} sedang dalam status ${item.kondisi_after} dan tidak dapat ditolak.`,
-        });
-        return; // hentikan proses
-      }
+  if (['Menunggu Diambil', 'Dipinjam', 'Selesai'].includes(item.kondisi_after)) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Tidak Bisa Ditolak',
+      text: `No Seri ${item.no_seri} sedang dalam status ${item.kondisi_after} dan tidak dapat ditolak.`,
+    });
+    return;
+  }
 
-      Swal.fire({
-        title: 'Tolak No Seri',
-        input: 'text',
-        inputLabel: `Masukkan alasan penolakan untuk No Seri ${item.no_seri}:`,
-        inputPlaceholder: 'Alasan penolakan...',
-        inputAttributes: {
-          'aria-label': 'Alasan penolakan'
-        },
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Tolak',
-        cancelButtonText: 'Batal',
-        preConfirm: (reason) => {
-          if (!reason) {
-            Swal.showValidationMessage('Alasan harus diisi!');
-          }
-          return reason;
-        }
-      }).then((result) => {
-        if (result.isConfirmed) {
-          axios.post('/api/v1/noseri/reject', {
-            id: item.id,
-            reason: result.value
-          })
-          .then(response => {
-            this.setStatus(item, 'Ditolak', result.value);
-            Swal.fire('Berhasil!', `No Seri ${item.no_seri} telah ditolak.`, 'success');
-          })
-          .catch(error => {
-            console.error(error);
-            Swal.fire('Gagal', 'Gagal menolak No Seri.', 'error');
-          });
-        }
-      });
+  Swal.fire({
+    title: 'Tolak No Seri',
+    input: 'text',
+    inputLabel: `Masukkan alasan penolakan untuk No Seri ${item.no_seri}:`,
+    inputPlaceholder: 'Alasan penolakan...',
+    inputAttributes: {
+      'aria-label': 'Alasan penolakan'
     },
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Tolak',
+    cancelButtonText: 'Batal',
+    preConfirm: (reason) => {
+      if (!reason) {
+        Swal.showValidationMessage('Alasan harus diisi!');
+      }
+      return reason;
+    }
+  }).then((result) => {
+    if (result.isConfirmed) {
+      axios.post('/api/v1/noseri/reject', {
+        id: item.id,
+        status: 'Ditolak', // Tambahkan field status yang diperlukan
+        reason: result.value
+      })
+      .then(response => {
+        // Perbarui status item
+        item.kondisi_after = 'Ditolak';
+        item.status_kondisi = 'Ditolak';
+        item.reject_reason = result.value;
+        
+        Swal.fire('Berhasil!', `No Seri ${item.no_seri} telah ditolak.`, 'success')
+          .then(() => {
+            this.fetchPeminjaman();
+            this.$emit('refresh-data');
+            
+            // Jika modal detail terbuka, perbarui data
+            if (this.showModal) {
+              this.toggleDetailModal(this.selectedNoSeri, 'Ditolak');
+            }
+          });
+      })
+      .catch(error => {
+        console.error(error);
+        Swal.fire('Gagal', 'Gagal menolak No Seri.', 'error');
+      });
+    }
+  });
+},
     closeDetailModal() {
       this.showModal = false;
       this.selectedItems = [];
@@ -448,10 +472,10 @@ export default {
         this.showModal = false;
         this.selectedNoSeri = [];
       } else {
-        // Tambahkan status_kondisi ke setiap no_seri
         this.selectedNoSeri = noseriList.map(item => ({
           ...item,
-          status_kondisi: statusKondisi
+          status_kondisi: statusKondisi,
+          kondisi_after: item.kondisi_after || statusKondisi // Tambahkan ini untuk memastikan kondisi_after ada
         }));
         this.showModal = true;
       }

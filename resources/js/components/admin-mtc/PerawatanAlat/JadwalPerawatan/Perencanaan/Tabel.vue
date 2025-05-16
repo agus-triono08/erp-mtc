@@ -35,7 +35,7 @@
       <h5 style="color: #000;"><b>Perencanaan</b></h5>
       <table class="table table-custom has-text-centered is-bordered" style="white-space: nowrap" id="export_table">
         <thead class="bg-table">
-          <tr style="color: #000;">
+          <tr style="color: #000;" class="text-center">
             <th rowspan="2">No Perawatan</th>
             <th rowspan="2">Nama Alat/Mesin</th>
             <th rowspan="2">No Seri</th>
@@ -48,7 +48,7 @@
           </tr>
         </thead>
         <tbody v-if="filteredJadwalPerawatan.length > 0">
-          <tr v-for="item in filteredJadwalPerawatan.slice((currentPage - 1) * perPage, currentPage * perPage)" :key="item.id">
+          <tr v-for="item in filteredJadwalPerawatan.slice((currentPage - 1) * perPage, currentPage * perPage)" :key="item.id" class="text-center">
             <td>{{ item.no_perawatan }}</td>
             <td>{{ item.no_seri.tools.nama }}</td>
             <td>{{ item.no_seri.no_seri }}</td>
@@ -94,21 +94,28 @@
           <div class="modal-body">
             <form>
               <div class="form-group">
-                <label for="tools" style="color: #000;">
+                <label for="tgl_perawatan" style="color: #000;">
                   <b>Tanggal Perawatan</b>
                   <sup style="color: red;"> *</sup>
                 </label>
                 <input v-model="tglPerawatan" type="date" class="form-control" :max="dateFormatter()" :min="minDateFormatter()">
               </div>
               <div class="form-group">
-                <label for="tools" style="color: #000;">
+                <label for="waktu_perawatan" style="color: #000;">
+                  <b>Waktu Perawatan</b>
+                  <sup style="color: red;"> *</sup>
+                </label>
+                <input v-model="waktuPerawatan" type="time" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="nama" style="color: #000;">
                   <b>Alat/Mesin</b>
                   <sup style="color: red;"> *</sup>
                 </label>
                 <select v-model="selectedToolId" @change="getNoSeri" class="form-control">
                   <option disabled value="">-- Pilih Tool --</option>
                   <option v-for="tool in tools" :key="tool.id" :value="tool.id">
-                    {{ tool.nama }}
+                    {{ tool.nama }} - {{ getNamaTipe(tool) }}
                   </option>
                 </select>
               </div>
@@ -122,7 +129,7 @@
                 </select>
               </div> -->
               <div class="form-group">
-                <label for="tools" style="color: #000;">
+                <label for="no_seri" style="color: #000;">
                   <b>No Seri</b>
                   <sup style="color: red;"> *</sup>
                 </label>
@@ -164,12 +171,7 @@ export default {
       selectedToolId: '',
       selectedNoSeriId: '',
       tglPerawatan: '',
-      picOptions: [
-        { text: 'John Doe', value: 'John Doe' },
-        { text: 'Jane Doe', value: 'Jane Doe' },
-        { text: 'Bob Smith', value: 'Bob Smith' },
-        { text: 'Alice Johnson', value: 'Alice Johnson' },
-      ],
+      waktuPerawatan: '',
       jadwalPerawatan: [],
       status: '',
       currentPage: 1,
@@ -333,7 +335,15 @@ export default {
         console.error('Gagal mengambil data tools:', error);
       }
     },
-
+    getNamaTipe(item) {
+      const parts = item.kode?.split('-') || [];
+      const kodeTipe = parts[3]; // ambil bagian tipe dari kode, misal "T0" dari "1-S3-G0-T0-001"
+      const tipe = item.jenis?.kategori
+        ?.flatMap(k => k.merek || [])
+        .flatMap(m => m.tipe || [])
+        .find(t => t.kode_tipe === kodeTipe);
+      return tipe ? tipe.nama_tipe : '-';
+    },
     async getNoSeri() {
       try {
         if (this.selectedToolId) {
@@ -351,7 +361,8 @@ export default {
       try {
         const payload = {
           tgl_perawatan: this.tglPerawatan,
-          no_seri_id: this.selectedNoSeriId
+          no_seri_id: this.selectedNoSeriId,
+          waktu_perawatan: this.waktuPerawatan,
         };
 
         const response = await axios.post('/api/v1/perawatan', payload);
@@ -365,6 +376,7 @@ export default {
         });
         // Reset form jika ingin
         this.tglPerawatan = '';
+        this.waktuPerawatan = '';
         this.selectedToolId = '';
         this.selectedNoSeriId = '';
         this.noSeriList = [];

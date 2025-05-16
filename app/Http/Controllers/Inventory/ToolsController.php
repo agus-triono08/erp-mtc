@@ -76,7 +76,6 @@ class ToolsController extends Controller
      * @return \Illuminate\Http\Response
      */
     
-    
     // public function store(Request $request)
     // {
     //     $request->validate([
@@ -100,25 +99,36 @@ class ToolsController extends Controller
     //         'waktu_perawatan' => 'nullable|integer|min:0',
     //         'jumlah_orang_perawatan' => 'nullable|integer|min:0',
     //     ]);
-    
+        
     //     $jenis = Jenis::find($request->jenis_id);
     //     $kategori = Kategori::find($request->kategori_id);
     //     $merek = Merek::find($request->merek_id);
     //     $tipe = Tipe::find($request->tipe_id);
     //     $layout = Layout::find($request->layout_id);
     //     $user = User::find($request->users_id);
-    
+        
+    //     // Kode untuk penentuan kode alat tetap seperti sebelumnya
     //     $prefix = "{$jenis->kode_jenis}-{$kategori->kode_kategori}-{$merek->kode_merek}-{$tipe->kode_tipe}";
     //     $lastTool = Tools::where('kode', 'like', "$prefix-%")->orderByDesc('id')->first();
     //     $nextNumber = $lastTool ? (int)substr($lastTool->kode, -3) + 1 : 1;
     //     $kode = $prefix . '-' . str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
-    
+        
     //     $data = $request->except('kode');
     //     $data['kode'] = $kode;
     //     $data['jenis_id'] = $jenis->id;
-    //     $data['waktu_perawatan'] = $request->waktu_perawatan;
+    //     if ($request->jumlah_orang_perawatan > 0) {
+    //         $waktuPerawatan = ($request->waktu_perawatan * ($request->stok_awal ?? 1)) / ($request->jumlah_orang_perawatan ?? 1);
+    //     } else {
+    //         // Atur nilai default untuk $waktuPerawatan jika $request->jumlah_orang_perawatan bernilai 0
+    //         $waktuPerawatan = $request->waktu_perawatan * ($request->stok_awal ?? 1);
+    //     }
+    //     // $waktuPerawatan = ($request->waktu_perawatan * ($request->stok_awal ?? 1)) / ($request->jumlah_orang_perawatan ?? 1);
+    //     $data['waktu_perawatan'] = $waktuPerawatan; // Menggunakan hasil perhitungan waktu perawatan
+    //     // $data['waktu_perawatan'] = $request->waktu_perawatan;
+    //     // $data['waktu_perawatan'] = ($request->waktu_perawatan * ($request->stok_awal ?? 1)) / ($request->jumlah_orang_perawatan ?? 1);
     //     $data['jumlah_orang_perawatan'] = $request->jumlah_orang_perawatan;
-    
+
+    //     // Menangani upload gambar (jika ada)
     //     if ($request->hasFile('gambar')) {
     //         $file = $request->file('gambar');
     //         $filename = time() . '_' . Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME));
@@ -127,32 +137,46 @@ class ToolsController extends Controller
     //         Storage::disk('public')->put($path, file_get_contents($file));
     //         $data['gambar'] = $path;
     //     }
-    
+        
+    //     // Membuat alat baru
     //     $tool = Tools::create($data);
     //     $tool->stok_akhir = $tool->stok_awal;
     //     $tool->save();
-    
+        
+    //     // Proses stok dan penentuan kategori
     //     $stok = $tool->stok_awal ?? 1;
     //     $inisial_kategori = strtoupper(Str::limit(preg_replace('/[^A-Za-z]/', '', $kategori->nama_kategori), 2, ''));
     //     $kode_kategori = str_pad($tipe->id, 2, '0', STR_PAD_LEFT);
-    
-    //     $waktuPerNoSeri = (int) $tool->waktu_perawatan;
+        
+    //     // $waktuPerNoSeri = (int) $tool->waktu_perawatan;
+    //     $waktuPerNoSeri = $request->waktu_perawatan;
     //     $jumlahOrang = max((int) $tool->jumlah_orang_perawatan, 1);
-    //     $jadwalPerawatan = (int) $request->jadwal_perawatan;
-    
-    //     // $userId = auth()->id() ?? $request->users_id;
-    //     $userId = auth()->id() ?? $request->users_id ?? 1; // fallback ID 1 atau ID admin sistem
-    
+    //     $jadwalPerawatan = (int) $request->jadwal_perawatan;  // Interval perawatan yang dimasukkan oleh user (dalam bulan)
+        
+    //     // ID pengguna yang akan membuat perawatan
+    //     $userId = auth()->id() ?? $request->users_id ?? 1; 
+        
     //     if ($jadwalPerawatan > 0 && $waktuPerNoSeri > 0 && $jumlahOrang > 0) {
-    //         $waktuPerNoSeriEffisien = ceil($waktuPerNoSeri / $jumlahOrang);
-    //         $startTime = Carbon::createFromTime(8, 0);
-    
+    //         // Hitung waktu perawatan dengan interval
+    //         // $waktuPerNoSeriEffisien = ceil($waktuPerNoSeri / $jumlahOrang);
+    //         if ($jumlahOrang > 0) {
+    //             $waktuPerNoSeriEffisien = ceil($waktuPerNoSeri / $jumlahOrang);
+    //         } else {
+    //             // Atur nilai default untuk $waktuPerNoSeriEffisien jika $jumlahOrang bernilai 0
+    //             $waktuPerNoSeriEffisien = $waktuPerNoSeri;
+    //         }
+
+    //         // $startTime = Carbon::createFromTime(8, 0); // Mulai dari jam 8:00
+    //         $startTime = Carbon::today()->setTime(8, 0); // Mulai dari hari ini jam 08:00
+
+    //         // Loop untuk stok dan penjadwalan perawatan
     //         for ($i = 0; $i < $stok; $i++) {
     //             $nomorUrut = str_pad($i + 1, 6, '0', STR_PAD_LEFT);
     //             $no_seri = $inisial_kategori . $kode_kategori . $nomorUrut;
-    
-    //             [$waktuMulai, $waktuSelesai] = $this->nextWorkTime($startTime, $waktuPerNoSeriEffisien);
-    
+                
+    //             [$waktuMulai, $waktuSelesai] = $this->advanceWorkTime($startTime, $waktuPerNoSeriEffisien);
+
+    //             // Buat record NoSeri
     //             $noSeriRecord = NoSeri::create([
     //                 'tools_id' => $tool->id,
     //                 'layout_id' => $layout->id,
@@ -161,7 +185,7 @@ class ToolsController extends Controller
     //                 'tanggal_masuk' => now(),
     //                 'harga' => $tool->harga_total ? $tool->harga_total / $stok : null,
     //             ]);
-    
+                
     //             // Buat log kondisi awal OK
     //             NoSeriLog::create([
     //                 'no_seri_id' => $noSeriRecord->id,
@@ -170,84 +194,44 @@ class ToolsController extends Controller
     //                 'changed_at' => now(),
     //                 'changed_by' => $userId,
     //             ]);
-    
+
+    //             // Buat perawatan pertama
     //             $noPerawatan = 'JP' . str_pad($i + 1, 8, '0', STR_PAD_LEFT);
-    
+                
     //             Perawatan::create([
     //                 'no_seri_id' => $noSeriRecord->id,
     //                 'users_id' => $user->id ?? null,
     //                 'no_perawatan' => $noPerawatan,
     //                 'tgl_perawatan' => $waktuMulai,
-    //                 'waktu_perawatan' => gmdate('H:i:s', $waktuPerNoSeriEffisien * 60),
+    //                 // 'waktu_perawatan' => gmdate('H:i:s', $waktuPerNoSeriEffisien * 60),
+    //                 'waktu_perawatan' => gmdate('H:i:s', $waktuPerNoSeri * 60),
     //             ]);
 
-    //             // Menghitung perawatan berdasarkan interval (misalnya setiap 1 bulan, 3 bulan, dll)
-    //             $currentDate = $waktuSelesai;
+    //             // Menghitung perawatan berdasarkan interval yang dimasukkan
+    //             // $currentDate = $waktuSelesai->copy();
+
+    //             $currentDate = $waktuSelesai->copy()->addMonths($jadwalPerawatan);
     //             while ($currentDate->year == now()->year) {
-    //                 $currentDate->addMonths($jadwalPerawatan); // Tambahkan interval perawatan
-                    
     //                 // Buat perawatan berulang
     //                 Perawatan::create([
     //                     'no_seri_id' => $noSeriRecord->id,
     //                     'users_id' => $user->id ?? null,
     //                     'no_perawatan' => 'JP' . str_pad($i + 1, 8, '0', STR_PAD_LEFT), 
     //                     'tgl_perawatan' => $currentDate,
-    //                     'waktu_perawatan' => gmdate('H:i:s', $waktuPerNoSeriEffisien * 60),
+    //                     // 'waktu_perawatan' => gmdate('H:i:s', $waktuPerNoSeriEffisien * 60),
+    //                     'waktu_perawatan' => gmdate('H:i:s', $waktuPerNoSeri * 60),
     //                 ]);
-    //             }
-    
-    //             $startTime = $waktuSelesai;
+    //                 $currentDate->addMonths($jadwalPerawatan); // Tambahkan setelah pengecekan dan insert
+    //             }                
+    //             $startTime = $waktuSelesai; // Update waktu mulai untuk perawatan berikutnya
     //         }
-    //     } 
-    //     // if ($jadwalPerawatan > 0 && $waktuPerNoSeri > 0 && $jumlahOrang > 0) {
-    //     //     $waktuPerNoSeriEffisien = ceil($waktuPerNoSeri / $jumlahOrang);
-    //     //     $startDate = Carbon::createFromTime(8, 0);
-    //     //     $nowYear = $startDate->year;
-        
-    //     //     for ($i = 0; $i < $stok; $i++) {
-    //     //         $nomorUrut = str_pad($i + 1, 6, '0', STR_PAD_LEFT);
-    //     //         $no_seri = $inisial_kategori . $kode_kategori . $nomorUrut;
-        
-    //     //         $noSeriRecord = NoSeri::create([
-    //     //             'tools_id' => $tool->id,
-    //     //             'layout_id' => $layout->id,
-    //     //             'no_seri' => $no_seri,
-    //     //             'no_seri_default' => null,
-    //     //             'tanggal_masuk' => now(),
-    //     //             'harga' => $tool->harga_total ? $tool->harga_total / $stok : null,
-    //     //         ]);
-        
-    //     //         NoSeriLog::create([
-    //     //             'no_seri_id' => $noSeriRecord->id,
-    //     //             'old_kondisi' => null,
-    //     //             'new_kondisi' => 'OK',
-    //     //             'changed_at' => now(),
-    //     //             'changed_by' => $userId,
-    //     //         ]);
-        
-    //     //         // Menghitung perawatan berdasarkan interval (misalnya setiap 1 bulan, 3 bulan, dll)
-    //     //         $currentDate = $waktuSelesai;
-    //     //         while ($currentDate->year == now()->year) {
-    //     //             $currentDate->addMonths($intervalPerawatan); // Tambahkan interval perawatan
-        
-    //     //             Perawatan::create([
-    //     //                 'no_seri_id' => $noSeriRecord->id,
-    //     //                 'users_id' => $user->id ?? null,
-    //     //                 'no_perawatan' => $noPerawatan,
-    //     //                 'tgl_perawatan' => $currentDate,
-    //     //                 'waktu_perawatan' => gmdate('H:i:s', $waktuPerNoSeriEffisien * 60),
-    //     //             ]);
-        
-    //     //             $scheduleDate = $scheduleDate->addDays($jadwalPerawatan);
-    //     //             $counter++;
-    //     //         }
-    //     //     }
-    //     // }        
-    //     else {
+    //     } else {
+    //         // Proses jika tidak ada perawatan terjadwal
     //         for ($i = 0; $i < $stok; $i++) {
     //             $nomorUrut = str_pad($i + 1, 6, '0', STR_PAD_LEFT);
     //             $no_seri = $inisial_kategori . $kode_kategori . $nomorUrut;
-    
+                
+    //             // Buat record NoSeri
     //             $noSeriRecord = NoSeri::create([
     //                 'tools_id' => $tool->id,
     //                 'layout_id' => $layout->id,
@@ -256,7 +240,8 @@ class ToolsController extends Controller
     //                 'tanggal_masuk' => now(),
     //                 'harga' => $tool->harga_total ? $tool->harga_total / $stok : null,
     //             ]);
-    
+                
+    //             // Buat log kondisi awal OK
     //             NoSeriLog::create([
     //                 'no_seri_id' => $noSeriRecord->id,
     //                 'old_kondisi' => null,
@@ -266,10 +251,10 @@ class ToolsController extends Controller
     //             ]);
     //         }
     //     }
-    
+        
     //     return response()->json($tool->load('jenis.kategori.merek.tipe'), 201);
-    // } 
-    
+    // }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -310,7 +295,13 @@ class ToolsController extends Controller
         $data = $request->except('kode');
         $data['kode'] = $kode;
         $data['jenis_id'] = $jenis->id;
-        $waktuPerawatan = ($request->waktu_perawatan * ($request->stok_awal ?? 1)) / ($request->jumlah_orang_perawatan ?? 1);
+        if ($request->jumlah_orang_perawatan > 0) {
+            $waktuPerawatan = ($request->waktu_perawatan * ($request->stok_awal ?? 1)) / ($request->jumlah_orang_perawatan ?? 1);
+        } else {
+            // Atur nilai default untuk $waktuPerawatan jika $request->jumlah_orang_perawatan bernilai 0
+            $waktuPerawatan = $request->waktu_perawatan * ($request->stok_awal ?? 1);
+        }
+        // $waktuPerawatan = ($request->waktu_perawatan * ($request->stok_awal ?? 1)) / ($request->jumlah_orang_perawatan ?? 1);
         $data['waktu_perawatan'] = $waktuPerawatan; // Menggunakan hasil perhitungan waktu perawatan
         // $data['waktu_perawatan'] = $request->waktu_perawatan;
         // $data['waktu_perawatan'] = ($request->waktu_perawatan * ($request->stok_awal ?? 1)) / ($request->jumlah_orang_perawatan ?? 1);
@@ -346,15 +337,22 @@ class ToolsController extends Controller
         
         if ($jadwalPerawatan > 0 && $waktuPerNoSeri > 0 && $jumlahOrang > 0) {
             // Hitung waktu perawatan dengan interval
-            $waktuPerNoSeriEffisien = ceil($waktuPerNoSeri / $jumlahOrang);
+            // $waktuPerNoSeriEffisien = ceil($waktuPerNoSeri / $jumlahOrang);
+            if ($jumlahOrang > 0) {
+                // $waktuPerNoSeriEffisien = ceil($waktuPerNoSeri / $jumlahOrang);
+                $waktuPerNoSeriEffisien = $waktuPerNoSeri;
+            } else {
+                // Atur nilai default untuk $waktuPerNoSeriEffisien jika $jumlahOrang bernilai 0
+                $waktuPerNoSeriEffisien = $waktuPerNoSeri;
+            }
+
             $startTime = Carbon::createFromTime(8, 0); // Mulai dari jam 8:00
 
-            // Loop untuk stok dan penjadwalan perawatan
             for ($i = 0; $i < $stok; $i++) {
                 $nomorUrut = str_pad($i + 1, 6, '0', STR_PAD_LEFT);
                 $no_seri = $inisial_kategori . $kode_kategori . $nomorUrut;
-                
-                [$waktuMulai, $waktuSelesai] = $this->nextWorkTime($startTime, $waktuPerNoSeriEffisien);
+
+                [$waktuMulai, $waktuSelesai] = $this->advanceWorkTime($startTime, $waktuPerNoSeriEffisien );
 
                 // Buat record NoSeri
                 $noSeriRecord = NoSeri::create([
@@ -365,7 +363,7 @@ class ToolsController extends Controller
                     'tanggal_masuk' => now(),
                     'harga' => $tool->harga_total ? $tool->harga_total / $stok : null,
                 ]);
-                
+
                 // Buat log kondisi awal OK
                 NoSeriLog::create([
                     'no_seri_id' => $noSeriRecord->id,
@@ -377,33 +375,30 @@ class ToolsController extends Controller
 
                 // Buat perawatan pertama
                 $noPerawatan = 'JP' . str_pad($i + 1, 8, '0', STR_PAD_LEFT);
-                
+
                 Perawatan::create([
                     'no_seri_id' => $noSeriRecord->id,
                     'users_id' => $user->id ?? null,
                     'no_perawatan' => $noPerawatan,
                     'tgl_perawatan' => $waktuMulai,
-                    // 'waktu_perawatan' => gmdate('H:i:s', $waktuPerNoSeriEffisien * 60),
                     'waktu_perawatan' => gmdate('H:i:s', $waktuPerNoSeri * 60),
                 ]);
 
-                // Menghitung perawatan berdasarkan interval yang dimasukkan
-                // $currentDate = $waktuSelesai->copy();
-
+                // Buat perawatan berulang selama tahun ini
                 $currentDate = $waktuSelesai->copy()->addMonths($jadwalPerawatan);
                 while ($currentDate->year == now()->year) {
-                    // Buat perawatan berulang
                     Perawatan::create([
                         'no_seri_id' => $noSeriRecord->id,
                         'users_id' => $user->id ?? null,
-                        'no_perawatan' => 'JP' . str_pad($i + 1, 8, '0', STR_PAD_LEFT), 
+                        'no_perawatan' => 'JP' . str_pad($i + 1, 8, '0', STR_PAD_LEFT),
                         'tgl_perawatan' => $currentDate,
-                        // 'waktu_perawatan' => gmdate('H:i:s', $waktuPerNoSeriEffisien * 60),
                         'waktu_perawatan' => gmdate('H:i:s', $waktuPerNoSeri * 60),
                     ]);
-                    $currentDate->addMonths($jadwalPerawatan); // Tambahkan setelah pengecekan dan insert
-                }                
-                $startTime = $waktuSelesai; // Update waktu mulai untuk perawatan berikutnya
+                    $currentDate->addMonths($jadwalPerawatan);
+                }
+
+                // Update start time untuk alat berikutnya
+                $startTime = $waktuSelesai->copy();
             }
         } else {
             // Proses jika tidak ada perawatan terjadwal
@@ -433,6 +428,42 @@ class ToolsController extends Controller
         }
         
         return response()->json($tool->load('jenis.kategori.merek.tipe'), 201);
+    }
+
+    protected function advanceWorkTime(Carbon $currentStart, $durationMinutes)
+    {
+        $baseDate = $currentStart->copy()->startOfDay(); // tanggal hari itu
+
+        $workPeriods = [
+            ['start' => $baseDate->copy()->setTime(8, 0), 'end' => $baseDate->copy()->setTime(12, 0)],
+            ['start' => $baseDate->copy()->setTime(13, 0), 'end' => $baseDate->copy()->setTime(17, 0)],
+        ];
+
+        while (true) {
+            foreach ($workPeriods as $period) {
+                $start = $period['start']->copy()->setDateFrom($currentStart);
+                $end = $period['end']->copy()->setDateFrom($currentStart);
+
+                if ($currentStart->lt($start)) {
+                    $currentStart = $start->copy();
+                }
+
+                if ($currentStart->between($start, $end, true)) {
+                    $available = $currentStart->diffInMinutes($end, false);
+
+                    if ($available >= $durationMinutes) {
+                        $finish = $currentStart->copy()->addMinutes($durationMinutes);
+                        return [$currentStart->copy(), $finish];
+                    } else {
+                        $durationMinutes -= $available;
+                        $currentStart = $end->copy(); // move to next session
+                    }
+                }
+            }
+
+            // Tambah hari, mulai lagi jam 08:00
+            $currentStart = $currentStart->copy()->addDay()->setTime(8, 0);
+        }
     }
     
     // Helper method

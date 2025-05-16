@@ -151,7 +151,9 @@ export default {
             confirmButtonText: 'OK'
           });
           this.$emit('tutup-modal');
+          this.$emit('refresh-data');
           this.form = {}; // reset form
+          // window.location.reload();
         })
         .catch(error => {
           console.error('Gagal menyimpan peminjaman:', error.response);

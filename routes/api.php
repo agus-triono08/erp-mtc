@@ -187,6 +187,10 @@ Route::get('/v1/logs/noseri', [NoSeriLogController::class, 'index']);
 Route::get('/v1/noseri/{noSeriId}/logs', [NoSeriLogController::class, 'getLogs']);
 //Perawatan
 Route::apiResource('v1/perawatan', PerawatanController::class);
+Route::prefix('v1/perawatan')->group(function() {
+    Route::post('/status-pelaksanaan', [PerawatanController::class, 'statusPelaksanaan']);
+    Route::post('/status-selesai', [PerawatanController::class, 'statusSelesai']);    
+});
 //Perbaikan
 Route::apiResource('v1/perbaikan', ErrorController::class);
 Route::get('/v1/perbaikan/getError/{noSeri}', [ErrorController::class, 'getError']);

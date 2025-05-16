@@ -1,8 +1,9 @@
-<ul class="navbar-nav bg-gradient-white sidebar sidebar-dark accordion" id="accordionSidebar">
+<ul class="navbar-nav bg-gradient-white sidebar sidebar-dark accordion" id="accordionSidebar"
+style="position: sticky; height: 100vh; top: 0;">
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard.manajermtc') }}">
-        <div class="sidebar-brand-icon rotate-n-15"
+        <div class="sidebar-brand-icon"
             style="background-color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; width: 50px; height: 50px;">
             <img src="https://image1ws.indotrading.com/s3/webp/co48220/companylogo/w200-h200/sinkoprimaalloy3ecab9ce-ecdf-4b3a-b6d0-db7126ae03f4.png" 
                 alt="LOGO" 

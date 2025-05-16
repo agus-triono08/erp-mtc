@@ -4,7 +4,7 @@
     <!-- Modal Input Data -->
     <div id="app" class="modal-input" :class="{'is-visible': showModalInput}">
       <div class="modal-content-input">
-        <user-input-peminjaman @tutup-modal="tutupModal"></user-input-peminjaman>
+        <user-input-peminjaman @tutup-modal="tutupModal" @refresh-data="fetchData"></user-input-peminjaman>
       </div>
     </div>
 

@@ -106,7 +106,7 @@
     {{-- Nav Item - Data Hilang --}}
     <li class="nav-item {{ request()->routeIs('datahilang.user') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('datahilang.user') }}">
-            <i class="fas fa-fw {{ request()->routeIs('datahilang.user') ? 'fa-hand-holding-heart' : 'fa-hand-holding' }}"></i>
+            <i class="bi {{ request()->routeIs('datahilang.user') ? 'fa-hand-holding-heart' : 'fa-hand-holding' }}"></i>
             <span>Penggantian Alat/Mesin</span>
         </a>
     </li>

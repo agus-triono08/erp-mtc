@@ -1,8 +1,9 @@
-<ul class="navbar-nav bg-gradient-white sidebar sidebar-dark accordion" id="accordionSidebar">
+<ul class="navbar-nav bg-gradient-white sidebar sidebar-dark accordion" id="accordionSidebar"
+    style="position: sticky; top: 0; height: 100vh; z-index: 1020;">
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard.adminmtc') }}">
-        <div class="sidebar-brand-icon rotate-n-15"
+        <div class="sidebar-brand-icon"
             style="background-color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; width: 50px; height: 50px;">
             <img src="https://image1ws.indotrading.com/s3/webp/co48220/companylogo/w200-h200/sinkoprimaalloy3ecab9ce-ecdf-4b3a-b6d0-db7126ae03f4.png" 
                 alt="LOGO" 
@@ -15,7 +16,7 @@
 
     <!-- Divider -->
     <!--<hr class="sidebar-divider my-0">-->
-
+ 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item {{ request()->routeIs('dashboard.adminmtc') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('dashboard.adminmtc') }}">
@@ -156,45 +157,8 @@
 
     <!-- Heading -->
     <br><div class="sidebar-heading">
-        <strong>Perbaikan & Kerusakan</strong>
-    </div>
-
-    <!-- Nav Item - Perbaikan -->
-    <li class="nav-item {{ request()->routeIs('kondisi-error') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('kondisi-error') }}">
-            <i class="fas fa-fw {{ request()->routeIs('kondisi-error') ? 'fa-tools' : 'fa-wrench' }}"></i>
-            <span>Perbaikan</span>
-        </a>
-    </li>
-
-    <!-- Nav Item - Kerusakan -->
-    <li class="nav-item {{ request()->routeIs('kondisi-rusak') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('kondisi-rusak') }}">
-            <i class="fas fa-fw {{ request()->routeIs('kondisi-rusak') ? 'fa-exclamation-circle' : 'fa-exclamation-triangle' }}"></i>
-            <span>Kerusakan</span>
-        </a>
-    </li>    
-
-    <!-- Heading -->
-    <br><div class="sidebar-heading">
         <strong>Jadwal Perawatan</strong>
     </div>
-
-    <!-- Nav Item - Perawatan -->
-    {{-- <li class="nav-item {{ request()->routeIs('perawatan.adminmtc') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('perawatan.adminmtc') }}">
-            <i class="fas fa-fw {{ request()->routeIs('perawatan.adminmtc') ? 'fa-cogs' : 'fa-cog' }}"></i>
-            <span>Perawatan</span>
-        </a>
-    </li> --}}
-
-    <!-- Nav Item - Perawatan -->
-    {{-- <li class="nav-item {{ request()->routeIs('jadwalperawatan.adminmtc') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('jadwalperawatan.adminmtc') }}">
-            <i class="bi {{ request()->routeIs('jadwalperawatan.adminmtc') ? 'bi-calendar-check' : 'bi-calendar-check-fill' }}"></i>
-            <span>Jadwal Perawatan</span>
-        </a>
-    </li> --}}
 
     <li class="nav-item">
         <a class="nav-link" href="#" data-toggle="collapse" data-target="#jadwal-collapse" aria-expanded="true" aria-controls="jadwal-collapse">
@@ -222,6 +186,43 @@
             <span>Riwayat Perawatan</span>
         </a>
     </li>
+
+    <!-- Heading -->
+    <br><div class="sidebar-heading">
+        <strong>Perbaikan & Kerusakan</strong>
+    </div>
+
+    <!-- Nav Item - Perbaikan -->
+    <li class="nav-item {{ request()->routeIs('kondisi-error') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('kondisi-error') }}">
+            <i class="fas fa-fw {{ request()->routeIs('kondisi-error') ? 'fa-tools' : 'fa-wrench' }}"></i>
+            <span>Perbaikan</span>
+        </a>
+    </li>
+
+    <!-- Nav Item - Kerusakan -->
+    <li class="nav-item {{ request()->routeIs('kondisi-rusak') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('kondisi-rusak') }}">
+            <i class="fas fa-fw {{ request()->routeIs('kondisi-rusak') ? 'fa-exclamation-circle' : 'fa-exclamation-triangle' }}"></i>
+            <span>Kerusakan</span>
+        </a>
+    </li>    
+
+    <!-- Nav Item - Perawatan -->
+    {{-- <li class="nav-item {{ request()->routeIs('perawatan.adminmtc') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('perawatan.adminmtc') }}">
+            <i class="fas fa-fw {{ request()->routeIs('perawatan.adminmtc') ? 'fa-cogs' : 'fa-cog' }}"></i>
+            <span>Perawatan</span>
+        </a>
+    </li> --}}
+
+    <!-- Nav Item - Perawatan -->
+    {{-- <li class="nav-item {{ request()->routeIs('jadwalperawatan.adminmtc') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('jadwalperawatan.adminmtc') }}">
+            <i class="bi {{ request()->routeIs('jadwalperawatan.adminmtc') ? 'bi-calendar-check' : 'bi-calendar-check-fill' }}"></i>
+            <span>Jadwal Perawatan</span>
+        </a>
+    </li> --}}    
 
     <!-- Heading -->
     {{-- <br><div class="sidebar-heading">

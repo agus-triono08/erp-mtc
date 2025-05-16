@@ -117,7 +117,7 @@ export default {
               label: `${nama} - ${namaTipe}`
             };
           });
-          console.log(this.tools);
+          //console.log(this.tools);
         })
         .catch(error => {
           console.error('Gagal mengambil data alat:', error);

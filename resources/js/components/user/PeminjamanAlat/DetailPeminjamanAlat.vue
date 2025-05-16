@@ -135,7 +135,7 @@
 
       <!-- Card Konten Pengeluaran -->
       <div id="app" v-if="showPengeluaran && peminjaman.no_peminjaman" class="card-body">
-        <user-detail-pengeluaran :no-pinjam="peminjaman.no_peminjaman"></user-detail-pengeluaran>
+        <user-detail-pengeluaran :no-pinjam="peminjaman.no_peminjaman" @refresh-data="fetchAlatDetailPeminjaman"></user-detail-pengeluaran>
       </div>
       <!-- Card Konten Pengajuan -->
       <div id="app" v-if="showPengajuan && peminjaman.no_peminjaman" class="card-body">

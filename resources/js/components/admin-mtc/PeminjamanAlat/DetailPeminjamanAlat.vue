@@ -135,7 +135,7 @@
 
       <!-- Card Konten Pengeluaran -->
       <div id="app" v-if="showPengeluaran && peminjaman.no_peminjaman" class="card-body">
-        <pengeluaran-peminjaman :no-pinjam="peminjaman.no_peminjaman"></pengeluaran-peminjaman>
+        <pengeluaran-peminjaman :no-pinjam="peminjaman.no_peminjaman" @refresh-data="fetchAlatDetailPeminjaman"></pengeluaran-peminjaman>
       </div>
       <!-- Card Konten Pengajuan -->
       <div id="app" v-if="showPengajuan && peminjaman.no_peminjaman" class="card-body">
@@ -151,7 +151,7 @@
       </div>
       <!-- Card Konten Pengembalian -->
       <div id="app" v-if="showPengembalian && peminjaman.no_peminjaman" class="card-body">
-        <pengembalian-peminjaman :no-pinjam="peminjaman.no_peminjaman"></pengembalian-peminjaman>
+        <pengembalian-peminjaman :no-pinjam="peminjaman.no_peminjaman" @refresh-data="fetchAlatDetailPeminjaman"></pengembalian-peminjaman>
       </div>
       
     </div>    

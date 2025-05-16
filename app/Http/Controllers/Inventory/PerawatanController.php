@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Inventory;
 
 use App\Models\Inventory\Perawatan;
 use App\Models\Inventory\NoSeri;
+use App\Models\Inventory\NoSeriLog;
 use App\Models\Inventory\Tools;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class PerawatanController extends Controller
 {
@@ -32,7 +34,7 @@ class PerawatanController extends Controller
                 ->orderBy('updated_at', 'desc') // Urutkan berdasarkan aktivitas terakhir
                 ->get();
         } elseif ($request->has('bulan_besok')) {
-            $perawatan = Perawatan::with('noSeri.tools')
+            $perawatan = Perawatan::with('noSeri.tools.jenis.kategori.merek.tipe')
                 ->whereMonth('tgl_perawatan', $bulanBesok)
                 ->whereYear('tgl_perawatan', $tahunBesok)
                 ->get();
@@ -64,19 +66,27 @@ class PerawatanController extends Controller
      */
     public function store(Request $request)
     {
-        // Validasi awal
+        // Normalisasi input agar string kosong jadi null
+        $request->merge([
+            'waktu_perawatan' => $request->waktu_perawatan !== '' ? $request->waktu_perawatan : null,
+        ]);
+
+        // Validasi input: waktu dalam format "HH:MM"
         $validated = $request->validate([
             'tgl_perawatan' => 'required|date',
+            'waktu_perawatan' => 'nullable|date_format:H:i',
             'no_seri_id' => 'required|exists:no_seri,id',
         ]);
 
+        // Simpan waktu asli dalam format TIME untuk tabel Perawatan
+        $waktuTime = $validated['waktu_perawatan'] 
+            ? $validated['waktu_perawatan'] . ':00' 
+            : null;
+
         // Ambil NoSeri dan Tool terkait
         $noSeri = NoSeri::find($validated['no_seri_id']);
-        if (!$noSeri) {
-            return response()->json(['message' => 'No seri tidak ditemukan.'], 404);
-        }
-
         $tool = Tools::find($noSeri->tools_id);
+
         if (!$tool) {
             return response()->json(['message' => 'Tool tidak ditemukan.'], 404);
         }
@@ -84,7 +94,7 @@ class PerawatanController extends Controller
         // Generate nomor perawatan
         $noPerawatan = 'JP' . str_pad($noSeri->id, 8, '0', STR_PAD_LEFT);
 
-        // Cek apakah perawatan ini sudah ada (optional: berdasarkan no_perawatan atau kombinasi)
+        // Cek duplikat
         $exists = Perawatan::where('no_perawatan', $noPerawatan)
             ->where('tgl_perawatan', $validated['tgl_perawatan'])
             ->first();
@@ -98,10 +108,22 @@ class PerawatanController extends Controller
         // Simpan data perawatan
         $perawatan = Perawatan::create([
             'tgl_perawatan' => $validated['tgl_perawatan'],
+            'waktu_perawatan' => $waktuTime,
             'no_seri_id' => $noSeri->id,
             'no_perawatan' => $noPerawatan,
             'nama_tool' => $tool->nama,
         ]);
+
+        // Tambahkan waktu ke tools.waktu_perawatan (dalam satuan menit misalnya)
+        if (!is_null($validated['waktu_perawatan'])) {
+            // Ubah waktu H:i menjadi total menit
+            [$jam, $menit] = explode(':', $validated['waktu_perawatan']);
+            $totalMenitBaru = ((int) $jam * 60) + (int) $menit;
+
+            // Tambahkan ke existing waktu perawatan (integer)
+            $tool->waktu_perawatan = ($tool->waktu_perawatan ?? 0) + $totalMenitBaru;
+            $tool->save();
+        }
 
         return response()->json([
             'message' => 'Data perawatan berhasil disimpan.',
@@ -181,5 +203,71 @@ class PerawatanController extends Controller
         //
     }
 
+    public function statusPelaksanaan(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:perawatan,id',
+            'status' => 'nullable|string',
+            'pic' => 'required|array',
+            'pic.*' => 'integer|exists:users,id',
+        ]);
 
+        $perawatan = Perawatan::findOrFail($request->id);
+
+        if (strtolower($request->status) !== 'belum di lakukan perawatan') {
+            $perawatan->update([
+                'status' => 'Dalam Proses Perawatan',
+                'pic' => implode(',', $request->pic),
+                // 'pic' => $request->pic,
+                'tgl_mulai_perawatan' => now()->format('Y-m-d'),
+                'waktu_mulai' => Carbon::now('Asia/Jakarta')->format('H:i:s')
+            ]);
+        } else {
+            $perawatan->update([
+                'status' => 'Belum Dilakukan Perawatan',
+            ]);
+        }
+    
+        return response()->json(['message' => 'Data berhasil diperbarui.']);
+    }
+
+    public function statusSelesai(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:perawatan,id',
+            'detail_perawatan' => 'nullable|string',
+            'kondisi' => 'nullable|string',
+        ]);
+
+        $perawatan = Perawatan::findOrFail($request->id);
+
+        $oldKondisi = $perawatan->noSeri->kondisi;
+
+        if (strtolower($request->status) !== 'belum di lakukan perawatan') {
+            $perawatan->update([
+                'status' => 'Selesai Perawatan',
+                'detail_perawatan' => $request->detail_perawatan,
+                'tgl_selesai_perawatan' => now()->format('Y-m-d'),
+                'waktu_selesai' => Carbon::now('Asia/Jakarta')->format('H:i:s')
+            ]);
+        } else {
+            $perawatan->update([
+                'status' => 'Dalam Proses Perawatan',
+            ]);
+        }
+
+        $perawatan->noSeri->update([
+            'kondisi' => $request->kondisi,
+        ]);
+
+        NoSeriLog::create([
+            'no_seri_id' => $perawatan->no_seri_id,
+            'old_kondisi' => $oldKondisi,
+            'new_kondisi' => $request->kondisi,
+            'changed_at' => Carbon::today()->format('Y-m-d'),
+            'changed_by' => auth()->id() ?? 1,
+        ]);
+
+        return response()->json(['message' => 'Data berhasil diperbarui']);
+    }
 }

@@ -24,6 +24,7 @@ class Perawatan extends Model
         'waktu_perawatan',
         'waktu_mulai',
         'waktu_selesai',
+        'pic',
     ];
 
     public function users()
