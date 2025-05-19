@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Inventory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Inventory\NoSeri;
+use App\Models\User;
 use App\Models\Inventory\Peminjaman;
 use App\Models\Inventory\PeminjamanLog;
 use App\Models\Inventory\Tools;
@@ -22,6 +23,7 @@ class PeminjamanController extends Controller
         // Ambil semua data peminjaman beserta tools dan no_seri jika status = Dipinjam
         $all = Peminjaman::with([
                 'tools',
+                'users',
                 'noSeri' => function ($query) {
                     $query->select('no_seri.id', 'no_seri.no_seri', 'no_seri.kondisi', 'no_seri.kondisi_after')
                         // ->where('kondisi_after', 'Dipinjam')
@@ -41,6 +43,7 @@ class PeminjamanController extends Controller
         // Ambil data by status
         $byStatus = Peminjaman::with([
                 'tools',
+                'users.divisi',
                 'noSeri' => function ($query) {
                     $query->select('no_seri.id', 'no_seri.no_seri', 'no_seri.kondisi', 'no_seri.kondisi_after')
                         ->orderBy('no_seri.created_at', 'asc');
@@ -112,6 +115,7 @@ class PeminjamanController extends Controller
             'status' => $status,
             'status_kondisi' => $status,
             'total' => $request->total,
+            'users_id' => auth()->id() ?? 4,
         ];
 
         // Buat peminjaman

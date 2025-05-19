@@ -149,8 +149,8 @@
             <!-- <td class="text-center p-2 border">{{ item.no_seri.tools.nama || '-' }}</td>
             <td class="text-center p-2 border">{{ item.no_seri.no_seri || '-' }}</td> -->
             <td class="text-center p-2 border">{{ item.tgl_pinjam || '-' }}</td>
-            <td class="text-center p-2 border">-</td>
-            <td class="text-center p-2 border">-</td>
+            <td class="text-center p-2 border">{{ item.users && item.users.nama || '-' }}</td>
+            <td class="text-center p-2 border">{{ item.users && item.users.divisi && item.users.divisi.divisi || '-' }}</td>
             <td class="text-center p-2 border">{{ item.tgl_kembali ||'-'}}</td>
             <!-- <td class="text-center">
               <div 

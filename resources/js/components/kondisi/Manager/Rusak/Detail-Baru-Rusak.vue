@@ -37,6 +37,7 @@
               class="badge"
               :class="{
                         'status-active': dataBaru.status === 'Selesai',
+                        
                         'status-musnah': dataBaru.status === 'Belum',}">
               {{ dataBaru.status }}
             </div>
@@ -426,6 +427,10 @@ export default {
           await axios.post('/api/v1/kerusakan/add-activity', payload);
           Swal.fire('Terkirim!', 'Data aktivitas berhasil disimpan.', 'success');
           this.showModal = false;
+
+          // Reload data setelah berhasil menambahkan aktivitas
+          await this.fetchData();
+          // await this.fetchDataAktivitas();
         }
 
       } catch (error) {
@@ -467,6 +472,9 @@ export default {
             };
 
             await axios.post('/api/v1/kerusakan/pemusnahan-diterima', payload);
+
+            // Refresh data setelah berhasil
+            await this.fetchData();
 
             // Update nilai di frontend setelah berhasil
             this.dataBaru.rusak_activity[index].status = 'Diterima';
@@ -510,6 +518,9 @@ export default {
             };
             await axios.post('/api/v1/kerusakan/pemusnahan-ditolak', payload);
 
+            // Refresh data setelah berhasil
+            await this.fetchData();
+
             // Update nilai di frontend setelah berhasil
             this.dataBaru.rusak_activity[index].status = 'Ditolak';
             this.dataBaru.rusak_activity[index].kondisi = 'Rusak';
@@ -526,17 +537,6 @@ export default {
         }
       })
     },
-    // tolakAktivitas(index) {
-    //   this.showTolakModal = true;
-    //   this.tolakIndex = index;
-    // },
-    // simpanTolakAktivitas() {
-    //   this.aktivitasList[this.tolakIndex].status = 'Ditolak';
-    //   this.aktivitasList[this.tolakIndex].kondisi = 'Rusak';
-    //   this.aktivitasList[this.tolakIndex].alasanPenolakan = this.alasanPenolakan;
-    //   this.showTolakModal = false;
-    //   this.alasanPenolakan = '';
-    // },
   },
   mounted() {
     this.fetchData();

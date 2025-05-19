@@ -199,21 +199,22 @@
         </div>
 
         <div class="form-group col-md-4">
+          <label for="tanggal_mulai_perawatan" style="color: #000;">
+            <b>Tanggal Mulai Perawatan</b>
+            <sup style="color: red;"> *</sup>
+          </label>
+          <input type="date" v-model="form.jadwal_mulai_perawatan" class="form-control" required placeholder="Masukkan Tanggal Mulai Perawatan">
+          <small class="form-text" style="color: red;">Masukkan Tanggal Mulai Perawatan Awal</small>
+        </div> 
+
+        <div class="form-group col-md-4">
           <label for="waktu_perawatan" style="color: #000;">
             <b>Waktu Perawatan</b>
             <sup style="color: red;"> *</sup>
           </label>
           <input type="time" v-model="form.waktu_perawatan" class="form-control" required placeholder="Masukkan Waktu Perawatan">
           <small class="form-text" style="color: red;">Masukkan Waktu Perawatan Per No Seri</small>
-        </div>
-
-        <div class="form-group col-md-4">
-          <label for="jumlah_orang_perawatan" style="color: #000;">
-            <b>Total PIC Perawatan</b>
-            <sup style="color: red;"> *</sup>
-          </label>
-          <input type="number" v-model="form.jumlah_orang_perawatan" class="form-control" required placeholder="Masukkan Total PIC Perawatan">
-        </div>
+        </div>               
       </div>
 
       <!-- <div class="form-group">
@@ -222,7 +223,15 @@
       </div> -->            
 
       <div class="row">
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-4">
+          <label for="jumlah_orang_perawatan" style="color: #000;">
+            <b>Total PIC Perawatan</b>
+            <sup style="color: red;"> *</sup>
+          </label>
+          <input type="number" v-model="form.jumlah_orang_perawatan" class="form-control" required placeholder="Masukkan Total PIC Perawatan">
+        </div>
+
+        <div class="form-group col-md-4">
           <label style="color: black;">
             <b>Vendor</b>
             <!-- <sup style="color: red;">*</sup> -->
@@ -243,7 +252,7 @@
           </div>
         </div>
 
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-4">
           <label for="layout" style="color: #000;">
             <b>Layout</b>
             <sup style="color: red;"> *</sup>
@@ -382,6 +391,7 @@ export default {
         waktu_perawatan: '',
         jumlah_orang_perawatan: '',
         gambar: null,
+        jadwal_mulai_perawatan: '',
       },
       jenis: [],
       Layout: [],

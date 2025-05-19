@@ -248,7 +248,10 @@ export default {
       .then((response) => {
         item.status = status;
         this.isStatusUpdated = true;
-        Swal.fire('Berhasil!', `Status No Perbaikan ${item.no_perbaikan} telah diubah menjadi ${status}.`, 'success');
+        Swal.fire('Berhasil!', `Status No Perbaikan ${item.no_perbaikan} telah diubah menjadi ${status}.`, 'success')
+          .then(() => {
+            window.location.reload();
+          });
       })
       .catch(error => {
         console.error(error);

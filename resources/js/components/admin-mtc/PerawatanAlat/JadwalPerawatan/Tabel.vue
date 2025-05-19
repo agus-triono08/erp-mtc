@@ -107,6 +107,7 @@
             <th rowspan="2">No Perawatan</th>
             <th rowspan="2">Nama Alat/Mesin</th>
             <th rowspan="2">No Seri</th>
+            <th rowspan="2">PIC</th>
             <th rowspan="2" class="text-center">Rentang Waktu</th>
             <th rowspan="2">Progres</th>
             <th rowspan="2">Selesai</th>
@@ -128,10 +129,16 @@
             <td>{{ item.no_perawatan }}</td>
             <td>{{ item.no_seri.tools.nama }}</td>
             <td>{{ item.no_seri.no_seri }}</td>
+            <td>
+              {{ item.users && item.users.length
+                    ? item.users.map(u => u.nama).join(', ')
+                    : '–'
+              }}
+            </td>
             <td class="text-center">{{ item.tgl_mulai_perawatan || '-' }} s/d {{ item.tgl_selesai_perawatan || '-' }}<br>
               <small>{{ item.waktu_mulai || '-' }} s/d {{ item.waktu_selesai || '-' }}</small>
-              <br><small :style="{ color: durasiDataPerawatan[index].color }">
-                    {{ durasiDataPerawatan[index].status }}
+              <br><small :style="{ color: getDurasiStatus(item).color }">
+                    {{ getDurasiStatus(item).status }}
                   </small>
             </td>
             <td class="text-center">
@@ -165,10 +172,10 @@
               </div>
             </td>
             <td v-for="i in Array.from(Array(last_date).keys())" :key="i" :style="{ backgroundColor: getBackgroundColor(item, i + 1) }">
-              <div v-if="picPerTanggal[item.id] && picPerTanggal[item.id][i + 1]" style="font-size: 12px; color: #000;">
-                <!-- {{ picPerTanggal[item.id][i + 1] }} -->
+              <!-- <div v-if="picPerTanggal[item.id] && picPerTanggal[item.id][i + 1]" style="font-size: 12px; color: #000;">
+                {{ picPerTanggal[item.id][i + 1] }}
                   {{ item.pic }}
-              </div>
+              </div> -->
             </td>
           </tr>
         </tbody>
@@ -403,90 +410,7 @@ export default {
           };
         }
       })
-    },
-    durasiDataPerawatan() {
-      return this.jadwalPerawatan.map((item) => {
-        if (!item.tgl_perawatan) {
-          return {
-            status: '-',
-            color: 'black' // warna default
-          };
-        }
-
-        const tglPerawatan = new Date(item.tgl_perawatan);
-        const tglMulai = item.tgl_mulai_perawatan ? new Date(item.tgl_mulai_perawatan) : null;
-        const tglSelesai = item.tgl_selesai_perawatan ? new Date(item.tgl_selesai_perawatan) : null;
-
-        // Jika belum ada pelaksanaan sama sekali
-        if (!tglMulai && !tglSelesai) {
-          return {
-            status: '-',
-            color: 'black'
-          };
-        }
-
-        // Jika sudah mulai tapi belum selesai
-        if (tglMulai && !tglSelesai) {
-          if (tglMulai < tglPerawatan) {
-            return {
-              status: 'Maju dari Jadwal Perawatan',
-              color: 'blue'
-            };
-          } else if (tglMulai > tglPerawatan) {
-            return {
-              status: 'Telat dari Jadwal Perawatan',
-              color: 'red'
-            };
-          } else {
-            return {
-              status: 'Sesuai Jadwal Perawatan',
-              color: 'green'
-            };
-          }
-        }
-
-        // Jika sudah selesai
-        if (tglMulai && tglSelesai) {
-          // Cek waktu mulai
-          if (tglMulai < tglPerawatan && tglSelesai < tglPerawatan) {
-            return {
-              status: 'Lebih Cepat dari Jadwal Perawatan',
-              color: 'blue'
-            };
-          } else if (tglMulai > tglPerawatan && tglSelesai > tglPerawatan) {
-            return {
-              status: 'Lewat dari Jadwal Perawatan',
-              color: 'red'
-            };
-          } else if (tglMulai.getTime() === tglPerawatan.getTime() && 
-                    tglSelesai.getTime() === tglPerawatan.getTime()) {
-            return {
-              status: 'Sesuai Jadwal Perawatan',
-              color: 'green'
-            };
-          } else {
-            // Kasus campuran (mulai lebih awal/sesuai, selesai lebih lambat)
-            if (tglSelesai > tglPerawatan) {
-              return {
-                status: 'Lewat dari Jadwal Perawatan',
-                color: 'red'
-              };
-            } else {
-              return {
-                status: 'Lebih Cepat dari Jadwal Perawatan',
-                color: 'blue'
-              };
-            }
-          }
-        }
-
-        // Default fallback
-        return {
-          status: '-',
-          color: 'black'
-        };
-      });
-    },
+    },    
     currentMonth() {
       const date = new Date();
       const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
@@ -534,7 +458,7 @@ export default {
       try {
         const response = await axios.get('/api/v1/perawatan')
         this.jadwalPerawatan = response.data;
-        // console.log(this.jadwalPerawatan);
+        console.log(this.jadwalPerawatan);
       } catch (error) {
         console.error(error);
       }
@@ -973,6 +897,88 @@ export default {
       } catch (err) {
         console.error('Gagal fetch data awal:', err);
       }
+    },
+    // Ganti computed property dengan method
+    getDurasiStatus(item) {
+      if (!item.tgl_perawatan) {
+        return {
+          status: '-',
+          color: 'black'
+        };
+      }
+
+      const tglPerawatan = new Date(item.tgl_perawatan);
+      const tglMulai = item.tgl_mulai_perawatan ? new Date(item.tgl_mulai_perawatan) : null;
+      const tglSelesai = item.tgl_selesai_perawatan ? new Date(item.tgl_selesai_perawatan) : null;
+
+      // Jika belum ada pelaksanaan sama sekali
+      if (!tglMulai && !tglSelesai) {
+        return {
+          status: '-',
+          color: 'black'
+        };
+      }
+
+      // Jika sudah mulai tapi belum selesai
+      if (tglMulai && !tglSelesai) {
+        if (tglMulai < tglPerawatan) {
+          return {
+            status: 'Maju dari Jadwal Perawatan',
+            color: 'blue'
+          };
+        } else if (tglMulai > tglPerawatan) {
+          return {
+            status: 'Telat dari Jadwal Perawatan',
+            color: 'red'
+          };
+        } else {
+          return {
+            status: 'Sesuai Jadwal Perawatan',
+            color: 'green'
+          };
+        }
+      }
+
+      // Jika sudah selesai
+      if (tglMulai && tglSelesai) {
+        // Cek waktu mulai
+        if (tglMulai < tglPerawatan && tglSelesai < tglPerawatan) {
+          return {
+            status: 'Lebih Cepat dari Jadwal Perawatan',
+            color: 'blue'
+          };
+        } else if (tglMulai > tglPerawatan && tglSelesai > tglPerawatan) {
+          return {
+            status: 'Lewat dari Jadwal Perawatan',
+            color: 'red'
+          };
+        } else if (tglMulai.getTime() === tglPerawatan.getTime() && 
+                  tglSelesai.getTime() === tglPerawatan.getTime()) {
+          return {
+            status: 'Sesuai Jadwal Perawatan',
+            color: 'green'
+          };
+        } else {
+          // Kasus campuran (mulai lebih awal/sesuai, selesai lebih lambat)
+          if (tglSelesai > tglPerawatan) {
+            return {
+              status: 'Lewat dari Jadwal Perawatan',
+              color: 'red'
+            };
+          } else {
+            return {
+              status: 'Lebih Cepat dari Jadwal Perawatan',
+              color: 'blue'
+            };
+          }
+        }
+      }
+
+      // Default fallback
+      return {
+        status: '-',
+        color: 'black'
+      };
     },
   },
   watch: {

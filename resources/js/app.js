@@ -630,12 +630,12 @@ const routes = [
     },
     //KONDISI RUSAK
     {
-        path: '/manager-mtc/kondisi-rusak',
+        path: '/manajer-mtc/kondisi-rusak',
         component: MBaruRusak,
         name: 'm-kondisi-baru-rusak',
     },
     {
-        path: '/manager-mtc/kondisi-rusak/:id',
+        path: '/manajer-mtc/kondisi-rusak/:id',
         component: MDetailBaruRusak,
         name: 'm-kondisi-detail-rusak',
     },

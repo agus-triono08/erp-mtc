@@ -1,8 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth; // Add this line
-
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,203 +14,204 @@ use Illuminate\Support\Facades\Auth; // Add this line
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
 Route::get('/', function () {
     return view('authen.login');
 })->name('login');
 
-
-Route::group(['middleware' => 'guest'], function () {
-Route::get('/admin-mtc/dashboard', function () {
-    return view('admin-mtc.Main.dashboard');
-})->name('dashboard.adminmtc');
-
-Route::get('/admin-mtc/data-alat', function () {
-    return view('admin-mtc.Main.data');
-})->name('data.adminmtc');
-
-Route::get('/admin-mtc/data-alat/input', function () {
-    return view('admin-mtc.Main.component.inputalat');
-})->name('data.input.adminmtc');
-
-Route::get('/admin-mtc/data-rincian-alat/input', function () {
-    return view('admin-mtc.Main.component.inputrincianalat');
-})->name('data.input.rincian.adminmtc');
-
-Route::get('/admin-mtc/data-alat/detail', function () {
-    return view('admin-mtc.Main.component.detailalat');
-})->name('data.detail.adminmtc');
-
-Route::get('/admin-mtc/riwayat', function(){
-    return view('admin-mtc.Main.riwayat');
-})->name('adminmtc-riwayat');
-
-Route::get('/admin-mtc/peminjaman', function () {
-    return view('admin-mtc.Main.peminjaman');
-})->name('peminjaman.adminmtc');
-
-Route::get('/admin-mtc/permintaan', function () {
-    return view('admin-mtc.Main.permintaan');
-})->name('permintaan.adminmtc');
-
-// PERAWATAN
-Route::get('/admin-mtc/perawatan', function() {
-    return view('admin-mtc.Main.perawatan');
-})->name('perawatan.adminmtc');
-
-Route::get('/admin-mtc/jadwal-perawatan', function() {
-    return view('admin-mtc.Main.jadwal-perawatan');
-})->name('jadwalperawatan.adminmtc');
-
-Route::get('/admin-mtc/perencanaan/jadwal-perawatan', function() {
-    return view('admin-mtc.Main.perencanaan-jadwal-perawatan');
-})->name('perencanaanjadwalperawatan.adminmtc');
-
-Route::get('/admin-mtc/riwayat-perawatan', function() {
-    return view('admin-mtc.Main.riwayat-perawatan');
-})->name('riwayatperawatan.adminmtc');
-
-Route::get('/admin-mtc/lapor-kendala', function () {
-    return view('admin-mtc.Main.laporkendala');
-})->name('laporkendala.adminmtc');
-
-Route::get('/admin-mtc/alat/data-error', function () {
-    return view('admin-mtc.Main.component.alat.error.data');
-})->name('dataalaterror.adminmtc');
-
-Route::get('/admin-mtc/alat/data-error/input', function () {
-    return view('admin-mtc.Main.component.alat.error.input');
-})->name('input.dataalaterror.adminmtc');
-
-Route::get('/admin-mtc/layout', function() {
-    return view('admin-mtc.Main.layout');
-})->name('layout.adminmtc');
-
-Route::get('/admin-mtc/inventory', function() {
-    return view('admin-mtc.Main.kategori');
-})->name('kategori.adminmtc');
+// Route untuk guest (belum login)
+Route::middleware(['guest'])->group(function () {
+    // Anda bisa menambahkan route untuk login/register di sini jika diperlukan
 });
 
-// USER MAINTENANCE
-Route::get('/user-mtc/dashboard', function () {
-    return view('user-mtc.Main.dashboard');
-})->name('dashboard.user-mtc');
+// Route untuk Admin MTC (harus login)
+Route::middleware(['guest'])->prefix('admin-mtc')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('admin-mtc.Main.dashboard');
+    })->name('dashboard.adminmtc');
 
-Route::get('/user-mtc/data', function () {
-    return view('user-mtc.Main.data');
-})->name('data.user-mtc');
+    Route::get('/data-alat', function () {
+        return view('admin-mtc.Main.data');
+    })->name('data.adminmtc');
 
-Route::get('/user-mtc/peminjaman', function () {
-    return view('user-mtc.Main.peminjaman');
-})->name('peminjaman.user-mtc');
+    Route::get('/data-alat/input', function () {
+        return view('admin-mtc.Main.component.inputalat');
+    })->name('data.input.adminmtc');
 
-Route::group(['middleware' => 'guest'], function () {
-// USER
-Route::get('/user/dashboard', function () {
-    return view('user.Main.dashboard');
-})->name('dashboard.user');
+    Route::get('/data-rincian-alat/input', function () {
+        return view('admin-mtc.Main.component.inputrincianalat');
+    })->name('data.input.rincian.adminmtc');
 
-Route::get('/user/data', function () {
-    return view('user.Main.data');
-})->name('data.user');
+    Route::get('/data-alat/detail', function () {
+        return view('admin-mtc.Main.component.detailalat');
+    })->name('data.detail.adminmtc');
 
-Route::get('/user/peminjaman', function () {
-    return view('user.Main.peminjaman');
-})->name('peminjaman.user');
+    Route::get('/riwayat', function(){
+        return view('admin-mtc.Main.riwayat');
+    })->name('adminmtc-riwayat');
+
+    Route::get('/peminjaman', function () {
+        return view('admin-mtc.Main.peminjaman');
+    })->name('peminjaman.adminmtc');
+
+    Route::get('/permintaan', function () {
+        return view('admin-mtc.Main.permintaan');
+    })->name('permintaan.adminmtc');
+
+    // PERAWATAN
+    Route::get('/perawatan', function() {
+        return view('admin-mtc.Main.perawatan');
+    })->name('perawatan.adminmtc');
+
+    Route::get('/jadwal-perawatan', function() {
+        return view('admin-mtc.Main.jadwal-perawatan');
+    })->name('jadwalperawatan.adminmtc');
+
+    Route::get('/perencanaan/jadwal-perawatan', function() {
+        return view('admin-mtc.Main.perencanaan-jadwal-perawatan');
+    })->name('perencanaanjadwalperawatan.adminmtc');
+
+    Route::get('/riwayat-perawatan', function() {
+        return view('admin-mtc.Main.riwayat-perawatan');
+    })->name('riwayatperawatan.adminmtc');
+
+    Route::get('/lapor-kendala', function () {
+        return view('admin-mtc.Main.laporkendala');
+    })->name('laporkendala.adminmtc');
+
+    Route::get('/alat/data-error', function () {
+        return view('admin-mtc.Main.component.alat.error.data');
+    })->name('dataalaterror.adminmtc');
+
+    Route::get('/alat/data-error/input', function () {
+        return view('admin-mtc.Main.component.alat.error.input');
+    })->name('input.dataalaterror.adminmtc');
+
+    Route::get('/layout', function() {
+        return view('admin-mtc.Main.layout');
+    })->name('layout.adminmtc');
+
+    Route::get('/inventory', function() {
+        return view('admin-mtc.Main.kategori');
+    })->name('kategori.adminmtc');
 });
 
-Route::group(['middleware' => 'guest'], function () {
-// MANAJER MTC
-Route::get('/manajer-mtc/dashboard', function () {
-    return view('manajer-mtc.Main.dashboard');
-})->name('dashboard.manajermtc');
+// Route untuk User MTC (harus login)
+Route::middleware(['guest'])->prefix('user-mtc')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('user-mtc.Main.dashboard');
+    })->name('dashboard.user-mtc');
 
-Route::get('/manajer-mtc/master-data', function () {
-    return view('manajer-mtc.Main.data');
-})->name('data.manajermtc');
+    Route::get('/data', function () {
+        return view('user-mtc.Main.data');
+    })->name('data.user-mtc');
 
-Route::get('/manajer-mtc/master-data/input', function () {
-    return view('manajer-mtc.Main.component.inputalat');
-})->name('data.input.manajermtc');
-
-Route::get('/manajer-mtc/data-rincian-alat/input', function () {
-    return view('manajer-mtc.Main.component.inputrincianalat');
-})->name('data.input.rincian.manajermtc');
-
-Route::get('/manajer-mtc/data-alat/detail', function () {
-    return view('manajer-mtc.Main.component.detailalat');
-})->name('data.detail.manajermtc');
-
-Route::get('/manajer-mtc/riwayat', function(){
-    return view('manajer-mtc.Main.riwayat');
-})->name('manajermtc-riwayat');
-
-Route::get('/manajer-mtc/peminjaman', function () {
-    return view('manajer-mtc.Main.peminjaman');
-})->name('peminjaman.manajermtc');
-
-Route::get('/manajer-mtc/permintaan', function () {
-    return view('manajer-mtc.Main.permintaan');
-})->name('permintaan.manajermtc');
-
-Route::get('/manajer-mtc/perawatan', function() {
-    return view('manajer-mtc.Main.perawatan');
-})->name('perawatan.manajermtc');
-
-Route::get('/manajer-mtc/lapor-kendala', function () {
-    return view('manajer-mtc.Main.laporkendala');
-})->name('laporkendala.manajermtc');
-
-Route::get('/manajer-mtc/alat/data-error', function () {
-    return view('manajer-mtc.Main.component.alat.error.data');
-})->name('dataalaterror.manajermtc');
-
-Route::get('/manajer-mtc/alat/data-error/input', function () {
-    return view('manajer-mtc.Main.component.alat.error.input');
-})->name('input.dataalaterror.manajermtc');
-
-Route::get('/manajer-mtc/layout', function() {
-    return view('manajer-mtc.Main.layout');
-})->name('layout.manajermtc');
-
-Route::get('/manager-mtc/inventory', function() {
-    return view('manajer-mtc.Main.kategori');
-})->name('kategori.managermtc');
+    Route::get('/peminjaman', function () {
+        return view('user-mtc.Main.peminjaman');
+    })->name('peminjaman.user-mtc');
 });
 
-// Kondisi
-Route::get('/kondisi-error', function(){
-    return view('admin-mtc.Main.Kondisi.kondisi-error');
-})->name('kondisi-error');
+// Route untuk User biasa (harus login)
+Route::middleware(['guest'])->prefix('user')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('user.Main.dashboard');
+    })->name('dashboard.user');
 
-Route::get('manager-mtc/kondisi-rusak', function(){
-    return view('manajer-mtc.Main.Kondisi.kondisi-rusak');
-})->name('kondisirusak.managermtc');
+    Route::get('/data', function () {
+        return view('user.Main.data');
+    })->name('data.user');
 
-Route::get('/kondisi-rusak', function(){
-    return view('admin-mtc.Main.Kondisi.kondisi-rusak');
-})->name('kondisi-rusak');
+    Route::get('/peminjaman', function () {
+        return view('user.Main.peminjaman');
+    })->name('peminjaman.user');
 
-Route::get('/kondisi-musnah', function(){
-    return view('admin-mtc.Main.Kondisi.kondisi-musnah');
-})->name('kondisi-musnah');
+    Route::get('/data-hilang', function(){
+        return view('user.Main.Kondisi.data-hilang');
+    })->name('datahilang.user');
+});
 
-// DATA HILANG
-Route::get('/admin-mtc/data-hilang', function(){
-    return view('admin-mtc.Main.Kondisi.data-hilang');
-})->name('datahilang.adminmtc');
+// Route untuk Manajer MTC (harus login)
+Route::middleware(['guest'])->prefix('manajer-mtc')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('manajer-mtc.Main.dashboard');
+    })->name('dashboard.manajermtc');
 
-Route::get('/user/data-hilang', function(){
-    return view('user.Main.Kondisi.data-hilang');
-})->name('datahilang.user');
+    Route::get('/master-data', function () {
+        return view('manajer-mtc.Main.data');
+    })->name('data.manajermtc');
 
-// Auth::routes();
+    Route::get('/master-data/input', function () {
+        return view('manajer-mtc.Main.component.inputalat');
+    })->name('data.input.manajermtc');
 
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/data-rincian-alat/input', function () {
+        return view('manajer-mtc.Main.component.inputrincianalat');
+    })->name('data.input.rincian.manajermtc');
 
-// Auth::routes();
+    Route::get('/data-alat/detail', function () {
+        return view('manajer-mtc.Main.component.detailalat');
+    })->name('data.detail.manajermtc');
 
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/riwayat', function(){
+        return view('manajer-mtc.Main.riwayat');
+    })->name('manajermtc-riwayat');
+
+    Route::get('/peminjaman', function () {
+        return view('manajer-mtc.Main.peminjaman');
+    })->name('peminjaman.manajermtc');
+
+    Route::get('/permintaan', function () {
+        return view('manajer-mtc.Main.permintaan');
+    })->name('permintaan.manajermtc');
+
+    Route::get('/perawatan', function() {
+        return view('manajer-mtc.Main.perawatan');
+    })->name('perawatan.manajermtc');
+
+    Route::get('/lapor-kendala', function () {
+        return view('manajer-mtc.Main.laporkendala');
+    })->name('laporkendala.manajermtc');
+
+    Route::get('/alat/data-error', function () {
+        return view('manajer-mtc.Main.component.alat.error.data');
+    })->name('dataalaterror.manajermtc');
+
+    Route::get('/alat/data-error/input', function () {
+        return view('manajer-mtc.Main.component.alat.error.input');
+    })->name('input.dataalaterror.manajermtc');
+
+    Route::get('/layout', function() {
+        return view('manajer-mtc.Main.layout');
+    })->name('layout.manajermtc');
+
+    Route::get('/inventory', function() {
+        return view('manajer-mtc.Main.kategori');
+    })->name('kategori.managermtc');
+
+    Route::get('/kondisi-rusak', function(){
+        return view('manajer-mtc.Main.Kondisi.kondisi-rusak');
+    })->name('kondisirusak.managermtc');
+    
+});
+
+// Route untuk kondisi (bisa disesuaikan apakah perlu guest atau tidak)
+Route::middleware(['guest'])->group(function () {
+    Route::get('/kondisi-error', function(){
+        return view('admin-mtc.Main.Kondisi.kondisi-error');
+    })->name('kondisi-error');
+
+    Route::get('/kondisi-rusak', function(){
+        return view('admin-mtc.Main.Kondisi.kondisi-rusak');
+    })->name('kondisi-rusak');
+
+    Route::get('/kondisi-musnah', function(){
+        return view('admin-mtc.Main.Kondisi.kondisi-musnah');
+    })->name('kondisi-musnah');
+
+    Route::get('/admin-mtc/data-hilang', function(){
+        return view('admin-mtc.Main.Kondisi.data-hilang');
+    })->name('datahilang.adminmtc');
+});
+
+// Auth routes (jika menggunakan Laravel Auth bawaan)
+Auth::routes();
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

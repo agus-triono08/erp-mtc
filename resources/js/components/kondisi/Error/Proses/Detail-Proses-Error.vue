@@ -22,10 +22,6 @@
         <div class="col-12">
           <h4 class="text-capitalize text-primary text-bold"><b>No Perbaikan #{{ dataProses.no_perbaikan }}</b></h4>
         </div>
-        <!-- <div class="col-3">
-          <dt style="color: #000;">PIC</dt>
-          <dd>{{ '-' }}</dd>
-        </div> -->
         <div class="col-3">
           <dt style="color: #000;">Nama Produk</dt>
           <dd>{{ dataProses.no_seri && dataProses.no_seri.tools && dataProses.no_seri.tools.nama }}</dd>
@@ -37,12 +33,6 @@
         <div class="col-3">
           <dt style="color: #000;">Target</dt>
           <dd>{{ dataProses.tgl_selesai }} <br>
-            <!-- <small>
-              <i :class="{'fas fa-clock': !durasidata[0].includes('hari lewat') && !durasidata[0].includes('hari lagi'), 'fas fa-exclamation-circle text-danger': durasidata[0].includes('hari lewat') || durasidata[0].includes('hari lagi')}"></i>
-              <span :class="{'text-danger': durasidata[0].includes('hari lewat') || durasidata[0].includes('hari lagi')}">
-                {{ durasidata[0] }}
-              </span>
-            </small> -->
           </dd>
         </div>
         <div class="col-3">
@@ -66,11 +56,7 @@
           <h4 class="text-capitalize text-primary text-bold"><b>Aktivitas Perbaikan</b></h4>
         </div>        
         <div class="row align-items-center justify-content-end m-3">
-          <button class="btn btn-primary mr-3" @click="openAktivitasModal">Tambah Aktivitas</button>          
-          <!-- Tombol Tambah Aktivitas akan hilang jika aktivitas sudah selesai -->
-          <!-- <button v-if="shouldShowTambahAktivitas" class="btn btn-primary mr-2" @click="showModal = true" :disabled="isAktivitasSelesai || isAllAktivitasCompleted">Tambah Aktivitas</button>       -->
-          <!-- Tombol Selesai hanya muncul jika kondisi aktivitas terakhir adalah OK atau Rusak -->
-          <!-- <button v-if="isLastAktivitasCompleted && !isAktivitasSelesai" class="btn btn-success mr-2" @click="selesaiAktivitas" :disabled="!isLastAktivitasCompleted">Selesai</button> -->
+          <button class="btn btn-primary mr-3" @click="openAktivitasModal">Tambah Aktivitas</button>
           <div class="search-wrapper">
             <div class="input-group">
               <input type="text" placeholder="Search..." class="form-control"
@@ -218,92 +204,6 @@
         </div>
       </div>
     </div>
-
-    <!-- Modal -->
-    <!-- <div class="modal fade show" id="modalAktivitas" tabindex="-1" role="dialog" aria-labelledby="modalAktivitasLabel" v-if="showModal" style="overflow-y: auto;">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modalAktivitasLabel">Aktivitas Perbaikan</h5>
-            <button type="button" class="close" @click="showModal = false" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="form-group"> 
-                <label for="waktu" class="text-black-10"><b>Waktu (Mulai - Selesai) <sup class="text-danger"> *</sup> </b></label> 
-                <div class="input-group"> <input type="time" class="form-control" id="waktu_mulai" v-model="aktivitas.waktu_mulai" required>
-                  <span class="input-group-text">-</span> 
-                  <input type="time" class="form-control" id="waktu_selesai" v-model="aktivitas.waktu_selesai" required> 
-                </div> 
-              </div>
-              <div class="form-group">
-                <label for="pic" class="text-black-10"><b>PIC</b></label>
-                <v-select
-                  :options="users"
-                  v-model="aktivitas.pic"
-                  multiple
-                  placeholder="Pilih PIC"
-                  :searchable="true"
-                  label="nama"
-                  :reduce="user => user.id"
-                />
-              </div>
-              <div class="form-group">
-                <label for="detail" class="text-black-10"><b>Detail <sup class="text-danger"> *</sup></b></label>
-                <textarea class="form-control" id="detail" v-model="aktivitas.detail" required></textarea>
-              </div>
-              <div class="form-group">
-                <label for="kondisi" class="text-black-10"><b>Kondisi <sup class="text-danger"> *</sup></b></label>
-                <select class="form-control" id="kondisi" v-model="aktivitas.kondisi" required>
-                  <option value="">Pilih Kondisi</option>
-                  <option value="OK">OK</option>
-                  <option value="Rusak">Rusak</option>
-                  <option value="Error">Error</option>
-                </select>
-              </div>
-              <div class="form-group" v-if="aktivitas.kondisi === 'Rusak'">
-                <label for="layout" class="text-black-10"><b>Layout</b><sup style="color: red;"> *</sup></label>                
-                <v-select
-                  v-model="aktivitas.layout"
-                  required
-                  placeholder="Pilih Layout"
-                  :options="layouts"
-                  label="ruang"
-                  :searchable="true"
-                  :reduce="layout => layout.id"
-                />
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger" @click="showModal = false">Batal</button>
-            <button type="button" class="btn btn-primary" @click="addAktivitas">Simpan</button>
-          </div>
-        </div>
-      </div>
-    </div> -->
-    <!-- Modal Selesai Aktivitas -->
-    <!-- <div class="modal fade show" id="modalSelesaiAktivitas" tabindex="-1" role="dialog" aria-labelledby="modalSelesaiAktivitasLabel" v-if="showSelesaiModal">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modalSelesaiAktivitasLabel">Selesai Aktivitas</h5>
-            <button type="button" class="close" @click="showSelesaiModal = false" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <p>Apakah Anda yakin ingin menyelesaikan aktivitas ini?</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" @click="showSelesaiModal = false">Batal</button>
-            <button type="button" class="btn btn-primary" @click="selesaiAktivitas">Selesai</button>
-          </div>
-        </div>
-      </div>
-    </div> -->
   </div>
 </template>
 
@@ -408,46 +308,6 @@ export default {
     }
   },
   methods: {
-    // addAktivitas() {    
-    //   if (this.aktivitas.kondisi === 'Rusak' && !this.aktivitas.layout) {
-    //     Swal.fire('Error', 'Layout harus diisi jika status adalah "Rusak"', 'error');
-    //     return;
-    //   }  
-    //   this.aktivitasList.push({ ...this.aktivitas });
-    //   this.aktivitas.tanggal = '';
-    //   this.aktivitas.waktu_mulai = '';
-    //   this.aktivitas.waktu_selesai = '';
-    //   this.aktivitas.pic = '';
-    //   this.aktivitas.detail = '';
-    //   this.aktivitas.kondisi = '';
-    //   this.showModal = false;
-    // },
-    // selesaiAktivitas() {
-    //   Swal.fire({
-    //     title: 'Selesai Aktivitas?',
-    //     text: 'Apakah Anda yakin ingin menyelesaikan aktivitas ini?',
-    //     icon: 'warning',
-    //     showCancelButton: true,
-    //     confirmButtonText: 'Selesai',
-    //     cancelButtonText: 'Batal',
-    //   }).then((result) => {
-    //     if (result.isConfirmed) {
-    //       // Lakukan aksi selesai aktivitas disini
-    //       this.data[0].status = 'Selesai';
-          
-    //       // Setelah aktivitas selesai, kita set isAktivitasSelesai menjadi true
-    //       this.isAktivitasSelesai = true;
-    //       this.showSelesaiModal = false;
-    //       this.isLastAktivitasCompleted = false; // tambahkan ini untuk membuat tombol selesai hilang
-    //       Swal.fire('Berhasil!', 'Aktivitas telah selesai.', 'success');
-    //       this.$router.push('/kondisi-error');
-    //     }
-    //   });
-    // },
-    // updatePaginatedData() {
-    //   const start = (this.currentPage - 1) * this.rowsPerPage;
-    //   this.paginatedData = this.dataAktivitas.slice(start, start + this.rowsPerPage);
-    // },
     prevPage() {
       if (this.currentPage > 1) {
         this.currentPage--;
@@ -542,6 +402,10 @@ export default {
         await axios.post('/api/v1/perbaikan/add-activity', payload);
         Swal.fire('Terkirim!', 'Data aktivitas berhasil disimpan.', 'success');
         this.showModal = false;
+
+        // Reload data setelah berhasil menambahkan aktivitas
+        await this.fetchData();
+        await this.fetchDataAktivitas();
       }
 
     } catch (error) {
@@ -556,26 +420,6 @@ export default {
       });
     }
   },
-    // async addAktivitas() {
-    //   try {
-    //     const payload = {
-    //       id: this.aktivitas.id,
-    //       waktu_mulai: this.aktivitas.waktu_mulai,
-    //       waktu_selesai: this.aktivitas.waktu_selesai,
-    //       detail_perbaikan: this.aktivitas.detail_perbaikan,
-    //       kondisi: this.aktivitas.kondisi,
-    //       layout: this.aktivitas.layout,
-    //       pic: this.aktivitas.pic.join(','),
-    //     };
-
-    //     await axios.post('/api/v1/perbaikan/add-activity', payload);
-    //     this.showModal = false;
-    //     this.$toast.success('Aktivitas berhasil disimpan');
-    //   } catch (error) {
-    //     console.error(error);
-    //     this.$toast.error('Gagal menyimpan aktivitas');
-    //   }
-    // },
   },
   mounted() {
     this.fetchData();
@@ -588,7 +432,7 @@ export default {
 <style scoped>
 .modal {
   display: block;
-  z-index: 1000;
+  z-index: 1020;
   position: fixed;
   top: 0;
   left: 0;

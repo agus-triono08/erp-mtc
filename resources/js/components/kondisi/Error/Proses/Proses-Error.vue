@@ -1,13 +1,5 @@
 <template>
   <div class="container-fluid">
-    <!-- Loader -->
-    <!-- <div class="loader" v-if="isLoading">
-      <div class="loading-overlay">
-        <div class="loading-spinner">
-            <span class="sr-only">Loading...</span>          
-        </div>
-      </div>
-    </div> -->
     <h1 class="h3 mb-4 mt-4 text-gray-900"><b>Perbaikan Alat/Mesin</b></h1>
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item" role="presentation">
@@ -21,10 +13,6 @@
       </li>
     </ul>
     <div class="row align-items-center justify-content-end m-3">
-      <!-- Tambah Data -->
-      <!-- <button class="btn btn-sm btn-outline-primary mr-2 ml-1" @click="openModal('add')">
-        <i class="fa fa-plus-circle"></i> Tambah Data
-      </button> -->
       <div class="search-wrapper">
         <div class="input-group">
           <input type="text" placeholder="Search..." class="form-control"
@@ -74,13 +62,6 @@
                 'fa-sort-down': sortKey === 'tgl_selesai' && sortDirection === 'desc'
               }"></i>
             </th>
-            <!-- <th @click="sortBy('pic')" style="cursor: pointer; color: #000;">
-              PIC
-              <i class="fas" :class="{
-                'fa-sort-up': sortKey === 'pic' && sortDirection === 'asc',
-                'fa-sort-down': sortKey === 'pic' && sortDirection === 'desc'
-              }"></i>
-            </th> -->
             <th @click="sortBy('status')" style="cursor: pointer; color: #000;">
               Status
               <i class="fas" :class="{
@@ -111,7 +92,6 @@
                 </span>
               </small>
             </td>
-            <!-- <td>{{ item.PIC || '-' }}</td> -->
             <td>
               <div
                 class="btn-sts"
@@ -142,9 +122,6 @@
                   <router-link :to="{ name: 'kondisi-detail-proses-error', params: { id: item.id } }" class="dropdown-item">
                     <i class="fas fa-eye text-info"></i> Detail
                   </router-link>
-                  <!-- <a class="dropdown-item" @click="deleteData(index, item)">
-                    <i class="fas fa-trash text-danger"></i> Hapus
-                  </a> -->
                 </div>
               </div>
             </td>

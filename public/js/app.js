@@ -36435,6 +36435,15 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -36464,7 +36473,8 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         jadwal_perawatan: '',
         waktu_perawatan: '',
         jumlah_orang_perawatan: '',
-        gambar: null
+        gambar: null,
+        jadwal_mulai_perawatan: ''
       },
       jenis: [],
       Layout: [],
@@ -45971,6 +45981,13 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -46033,87 +46050,6 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         }
       });
     },
-    durasiDataPerawatan: function durasiDataPerawatan() {
-      return this.jadwalPerawatan.map(function (item) {
-        if (!item.tgl_perawatan) {
-          return {
-            status: '-',
-            color: 'black' // warna default
-          };
-        }
-        var tglPerawatan = new Date(item.tgl_perawatan);
-        var tglMulai = item.tgl_mulai_perawatan ? new Date(item.tgl_mulai_perawatan) : null;
-        var tglSelesai = item.tgl_selesai_perawatan ? new Date(item.tgl_selesai_perawatan) : null;
-
-        // Jika belum ada pelaksanaan sama sekali
-        if (!tglMulai && !tglSelesai) {
-          return {
-            status: '-',
-            color: 'black'
-          };
-        }
-
-        // Jika sudah mulai tapi belum selesai
-        if (tglMulai && !tglSelesai) {
-          if (tglMulai < tglPerawatan) {
-            return {
-              status: 'Maju dari Jadwal Perawatan',
-              color: 'blue'
-            };
-          } else if (tglMulai > tglPerawatan) {
-            return {
-              status: 'Telat dari Jadwal Perawatan',
-              color: 'red'
-            };
-          } else {
-            return {
-              status: 'Sesuai Jadwal Perawatan',
-              color: 'green'
-            };
-          }
-        }
-
-        // Jika sudah selesai
-        if (tglMulai && tglSelesai) {
-          // Cek waktu mulai
-          if (tglMulai < tglPerawatan && tglSelesai < tglPerawatan) {
-            return {
-              status: 'Lebih Cepat dari Jadwal Perawatan',
-              color: 'blue'
-            };
-          } else if (tglMulai > tglPerawatan && tglSelesai > tglPerawatan) {
-            return {
-              status: 'Lewat dari Jadwal Perawatan',
-              color: 'red'
-            };
-          } else if (tglMulai.getTime() === tglPerawatan.getTime() && tglSelesai.getTime() === tglPerawatan.getTime()) {
-            return {
-              status: 'Sesuai Jadwal Perawatan',
-              color: 'green'
-            };
-          } else {
-            // Kasus campuran (mulai lebih awal/sesuai, selesai lebih lambat)
-            if (tglSelesai > tglPerawatan) {
-              return {
-                status: 'Lewat dari Jadwal Perawatan',
-                color: 'red'
-              };
-            } else {
-              return {
-                status: 'Lebih Cepat dari Jadwal Perawatan',
-                color: 'blue'
-              };
-            }
-          }
-        }
-
-        // Default fallback
-        return {
-          status: '-',
-          color: 'black'
-        };
-      });
-    },
     currentMonth: function currentMonth() {
       var date = new Date();
       var monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
@@ -46169,18 +46105,18 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             case 3:
               response = _context.sent;
               _this.jadwalPerawatan = response.data;
-              // console.log(this.jadwalPerawatan);
-              _context.next = 10;
+              console.log(_this.jadwalPerawatan);
+              _context.next = 11;
               break;
-            case 7:
-              _context.prev = 7;
+            case 8:
+              _context.prev = 8;
               _context.t0 = _context["catch"](0);
               console.error(_context.t0);
-            case 10:
+            case 11:
             case "end":
               return _context.stop();
           }
-        }, _callee, null, [[0, 7]]);
+        }, _callee, null, [[0, 8]]);
       }))();
     },
     getTanggalStart: function getTanggalStart(item) {
@@ -46732,6 +46668,86 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
           }
         }, _callee7, null, [[0, 9]]);
       }))();
+    },
+    // Ganti computed property dengan method
+    getDurasiStatus: function getDurasiStatus(item) {
+      if (!item.tgl_perawatan) {
+        return {
+          status: '-',
+          color: 'black'
+        };
+      }
+      var tglPerawatan = new Date(item.tgl_perawatan);
+      var tglMulai = item.tgl_mulai_perawatan ? new Date(item.tgl_mulai_perawatan) : null;
+      var tglSelesai = item.tgl_selesai_perawatan ? new Date(item.tgl_selesai_perawatan) : null;
+
+      // Jika belum ada pelaksanaan sama sekali
+      if (!tglMulai && !tglSelesai) {
+        return {
+          status: '-',
+          color: 'black'
+        };
+      }
+
+      // Jika sudah mulai tapi belum selesai
+      if (tglMulai && !tglSelesai) {
+        if (tglMulai < tglPerawatan) {
+          return {
+            status: 'Maju dari Jadwal Perawatan',
+            color: 'blue'
+          };
+        } else if (tglMulai > tglPerawatan) {
+          return {
+            status: 'Telat dari Jadwal Perawatan',
+            color: 'red'
+          };
+        } else {
+          return {
+            status: 'Sesuai Jadwal Perawatan',
+            color: 'green'
+          };
+        }
+      }
+
+      // Jika sudah selesai
+      if (tglMulai && tglSelesai) {
+        // Cek waktu mulai
+        if (tglMulai < tglPerawatan && tglSelesai < tglPerawatan) {
+          return {
+            status: 'Lebih Cepat dari Jadwal Perawatan',
+            color: 'blue'
+          };
+        } else if (tglMulai > tglPerawatan && tglSelesai > tglPerawatan) {
+          return {
+            status: 'Lewat dari Jadwal Perawatan',
+            color: 'red'
+          };
+        } else if (tglMulai.getTime() === tglPerawatan.getTime() && tglSelesai.getTime() === tglPerawatan.getTime()) {
+          return {
+            status: 'Sesuai Jadwal Perawatan',
+            color: 'green'
+          };
+        } else {
+          // Kasus campuran (mulai lebih awal/sesuai, selesai lebih lambat)
+          if (tglSelesai > tglPerawatan) {
+            return {
+              status: 'Lewat dari Jadwal Perawatan',
+              color: 'red'
+            };
+          } else {
+            return {
+              status: 'Lebih Cepat dari Jadwal Perawatan',
+              color: 'blue'
+            };
+          }
+        }
+      }
+
+      // Default fallback
+      return {
+        status: '-',
+        color: 'black'
+      };
     }
   },
   watch: {
@@ -51013,7 +51029,9 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       }).then(function (response) {
         item.status = status;
         _this3.isStatusUpdated = true;
-        sweetalert2__WEBPACK_IMPORTED_MODULE_1___default().fire('Berhasil!', "Status No Perbaikan ".concat(item.no_perbaikan, " telah diubah menjadi ").concat(status, "."), 'success');
+        sweetalert2__WEBPACK_IMPORTED_MODULE_1___default().fire('Berhasil!', "Status No Perbaikan ".concat(item.no_perbaikan, " telah diubah menjadi ").concat(status, "."), 'success').then(function () {
+          window.location.reload();
+        });
       })["catch"](function (error) {
         console.error(error);
         sweetalert2__WEBPACK_IMPORTED_MODULE_1___default().fire('Gagal', 'Gagal memperbarui status.', 'error');
@@ -51082,106 +51100,6 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -51500,45 +51418,6 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     }
   },
   methods: {
-    // addAktivitas() {    
-    //   if (this.aktivitas.kondisi === 'Rusak' && !this.aktivitas.layout) {
-    //     Swal.fire('Error', 'Layout harus diisi jika status adalah "Rusak"', 'error');
-    //     return;
-    //   }  
-    //   this.aktivitasList.push({ ...this.aktivitas });
-    //   this.aktivitas.tanggal = '';
-    //   this.aktivitas.waktu_mulai = '';
-    //   this.aktivitas.waktu_selesai = '';
-    //   this.aktivitas.pic = '';
-    //   this.aktivitas.detail = '';
-    //   this.aktivitas.kondisi = '';
-    //   this.showModal = false;
-    // },
-    // selesaiAktivitas() {
-    //   Swal.fire({
-    //     title: 'Selesai Aktivitas?',
-    //     text: 'Apakah Anda yakin ingin menyelesaikan aktivitas ini?',
-    //     icon: 'warning',
-    //     showCancelButton: true,
-    //     confirmButtonText: 'Selesai',
-    //     cancelButtonText: 'Batal',
-    //   }).then((result) => {
-    //     if (result.isConfirmed) {
-    //       // Lakukan aksi selesai aktivitas disini
-    //       this.data[0].status = 'Selesai';
-    //       // Setelah aktivitas selesai, kita set isAktivitasSelesai menjadi true
-    //       this.isAktivitasSelesai = true;
-    //       this.showSelesaiModal = false;
-    //       this.isLastAktivitasCompleted = false; // tambahkan ini untuk membuat tombol selesai hilang
-    //       Swal.fire('Berhasil!', 'Aktivitas telah selesai.', 'success');
-    //       this.$router.push('/kondisi-error');
-    //     }
-    //   });
-    // },
-    // updatePaginatedData() {
-    //   const start = (this.currentPage - 1) * this.rowsPerPage;
-    //   this.paginatedData = this.dataAktivitas.slice(start, start + this.rowsPerPage);
-    // },
     prevPage: function prevPage() {
       if (this.currentPage > 1) {
         this.currentPage--;
@@ -51685,7 +51564,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             case 7:
               confirm = _context4.sent;
               if (!confirm.isConfirmed) {
-                _context4.next = 13;
+                _context4.next = 17;
                 break;
               }
               _context4.next = 11;
@@ -51693,11 +51572,18 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             case 11:
               sweetalert2__WEBPACK_IMPORTED_MODULE_1___default().fire('Terkirim!', 'Data aktivitas berhasil disimpan.', 'success');
               _this6.showModal = false;
-            case 13:
-              _context4.next = 20;
-              break;
+
+              // Reload data setelah berhasil menambahkan aktivitas
+              _context4.next = 15;
+              return _this6.fetchData();
             case 15:
-              _context4.prev = 15;
+              _context4.next = 17;
+              return _this6.fetchDataAktivitas();
+            case 17:
+              _context4.next = 24;
+              break;
+            case 19:
+              _context4.prev = 19;
               _context4.t0 = _context4["catch"](3);
               msg = 'Terjadi kesalahan saat mengirim data.';
               if (_context4.t0.response && _context4.t0.response.data && _context4.t0.response.data.message) {
@@ -51708,31 +51594,13 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
                 title: 'Gagal mengirim',
                 text: msg
               });
-            case 20:
+            case 24:
             case "end":
               return _context4.stop();
           }
-        }, _callee4, null, [[3, 15]]);
+        }, _callee4, null, [[3, 19]]);
       }))();
-    } // async addAktivitas() {
-    //   try {
-    //     const payload = {
-    //       id: this.aktivitas.id,
-    //       waktu_mulai: this.aktivitas.waktu_mulai,
-    //       waktu_selesai: this.aktivitas.waktu_selesai,
-    //       detail_perbaikan: this.aktivitas.detail_perbaikan,
-    //       kondisi: this.aktivitas.kondisi,
-    //       layout: this.aktivitas.layout,
-    //       pic: this.aktivitas.pic.join(','),
-    //     };
-    //     await axios.post('/api/v1/perbaikan/add-activity', payload);
-    //     this.showModal = false;
-    //     this.$toast.success('Aktivitas berhasil disimpan');
-    //   } catch (error) {
-    //     console.error(error);
-    //     this.$toast.error('Gagal menyimpan aktivitas');
-    //   }
-    // },
+    }
   },
   mounted: function mounted() {
     this.fetchData();
@@ -51764,29 +51632,6 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -56516,44 +56361,6 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -56751,6 +56558,7 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+//
 //
 //
 //
@@ -57225,7 +57033,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             case 7:
               confirm = _context3.sent;
               if (!confirm.isConfirmed) {
-                _context3.next = 13;
+                _context3.next = 15;
                 break;
               }
               _context3.next = 11;
@@ -57233,11 +57041,15 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             case 11:
               sweetalert2__WEBPACK_IMPORTED_MODULE_1___default().fire('Terkirim!', 'Data aktivitas berhasil disimpan.', 'success');
               _this5.showModal = false;
-            case 13:
-              _context3.next = 20;
-              break;
+
+              // Reload data setelah berhasil menambahkan aktivitas
+              _context3.next = 15;
+              return _this5.fetchData();
             case 15:
-              _context3.prev = 15;
+              _context3.next = 22;
+              break;
+            case 17:
+              _context3.prev = 17;
               _context3.t0 = _context3["catch"](3);
               msg = 'Terjadi kesalahan saat mengirim data.';
               if (_context3.t0.response && _context3.t0.response.data && _context3.t0.response.data.message) {
@@ -57248,11 +57060,11 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
                 title: 'Gagal mengirim',
                 text: msg
               });
-            case 20:
+            case 22:
             case "end":
               return _context3.stop();
           }
-        }, _callee3, null, [[3, 15]]);
+        }, _callee3, null, [[3, 17]]);
       }))();
     },
     terimaAktivitas: function terimaAktivitas(index) {
@@ -57278,7 +57090,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             while (1) switch (_context4.prev = _context4.next) {
               case 0:
                 if (!result.isConfirmed) {
-                  _context4.next = 17;
+                  _context4.next = 19;
                   break;
                 }
                 _context4.prev = 1;
@@ -57292,26 +57104,29 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
                 _context4.next = 6;
                 return axios.post('/api/v1/kerusakan/pemusnahan-diterima', payload);
               case 6:
+                _context4.next = 8;
+                return _this6.fetchData();
+              case 8:
                 // Update nilai di frontend setelah berhasil
                 _this6.dataBaru.rusak_activity[index].status = 'Diterima';
                 _this6.dataBaru.rusak_activity[index].kondisi = 'Musnah';
                 _this6.dataBaru.rusak_activity[index].catatan = result.value;
                 sweetalert2__WEBPACK_IMPORTED_MODULE_1___default().fire('Berhasil!', 'Aktivitas telah diterima.', 'success');
-                _context4.next = 17;
+                _context4.next = 19;
                 break;
-              case 12:
-                _context4.prev = 12;
+              case 14:
+                _context4.prev = 14;
                 _context4.t0 = _context4["catch"](1);
                 msg = 'Terjadi kesalahan saat menyimpan data.';
                 if (_context4.t0.response && _context4.t0.response.data && _context4.t0.response.data.message) {
                   msg = _context4.t0.response.data.message;
                 }
                 sweetalert2__WEBPACK_IMPORTED_MODULE_1___default().fire('Gagal!', msg, 'error');
-              case 17:
+              case 19:
               case "end":
                 return _context4.stop();
             }
-          }, _callee4, null, [[1, 12]]);
+          }, _callee4, null, [[1, 14]]);
         }));
         return function (_x) {
           return _ref.apply(this, arguments);
@@ -57341,7 +57156,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             while (1) switch (_context5.prev = _context5.next) {
               case 0:
                 if (!result.isConfirmed) {
-                  _context5.next = 17;
+                  _context5.next = 19;
                   break;
                 }
                 _context5.prev = 1;
@@ -57355,42 +57170,35 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
                 _context5.next = 6;
                 return axios.post('/api/v1/kerusakan/pemusnahan-ditolak', payload);
               case 6:
+                _context5.next = 8;
+                return _this7.fetchData();
+              case 8:
                 // Update nilai di frontend setelah berhasil
                 _this7.dataBaru.rusak_activity[index].status = 'Ditolak';
                 _this7.dataBaru.rusak_activity[index].kondisi = 'Rusak';
                 _this7.dataBaru.rusak_activity[index].alasan_penolakan = result.value;
                 sweetalert2__WEBPACK_IMPORTED_MODULE_1___default().fire('Berhasil!', 'Aktivitas telah ditolak.', 'success');
-                _context5.next = 17;
+                _context5.next = 19;
                 break;
-              case 12:
-                _context5.prev = 12;
+              case 14:
+                _context5.prev = 14;
                 _context5.t0 = _context5["catch"](1);
                 msg = 'Terjadi kesalahan saat menyimpan data.';
                 if (_context5.t0.response && _context5.t0.response.data && _context5.t0.response.data.message) {
                   msg = _context5.t0.response.data.message;
                 }
                 sweetalert2__WEBPACK_IMPORTED_MODULE_1___default().fire('Gagal!', msg, 'error');
-              case 17:
+              case 19:
               case "end":
                 return _context5.stop();
             }
-          }, _callee5, null, [[1, 12]]);
+          }, _callee5, null, [[1, 14]]);
         }));
         return function (_x2) {
           return _ref2.apply(this, arguments);
         };
       }());
-    } // tolakAktivitas(index) {
-    //   this.showTolakModal = true;
-    //   this.tolakIndex = index;
-    // },
-    // simpanTolakAktivitas() {
-    //   this.aktivitasList[this.tolakIndex].status = 'Ditolak';
-    //   this.aktivitasList[this.tolakIndex].kondisi = 'Rusak';
-    //   this.aktivitasList[this.tolakIndex].alasanPenolakan = this.alasanPenolakan;
-    //   this.showTolakModal = false;
-    //   this.alasanPenolakan = '';
-    // },
+    }
   },
   mounted: function mounted() {
     this.fetchData();
@@ -60066,29 +59874,6 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -60187,18 +59972,6 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     handleBAUpload: function handleBAUpload(event) {
       this.aktivitas.ba = event.target.files[0];
     },
-    // handleBAUpload(event) {
-    //   const file = event.target.files[0];
-    //   if (file && file.type === "application/pdf") {
-    //     // Mengonversi file PDF menjadi URL objek yang dapat diakses oleh komponen
-    //     this.aktivitas.ba = URL.createObjectURL(file);
-    //     // console.log("Berita Acara berhasil diunggah:", this.aktivitas.ba);
-    //     // alert(`File "${file.name}" uploaded successfully!`);
-    //   } else {
-    //     alert("Hanya file PDF yang diperbolehkan untuk Berita Acara!");
-    //     this.aktivitas.ba = null;
-    //   }
-    // },
     handleBuktiPemusnahanUpload: function handleBuktiPemusnahanUpload(event) {
       this.aktivitas.buktiPemusnahan = Array.from(event.target.files).filter(function (file) {
         var allowedTypes = ['pdf', 'jpg', 'jpeg', 'png'];
@@ -60207,22 +59980,6 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         return allowedTypes.includes(fileType);
       });
     },
-    // handleBuktiPemusnahanUpload(event) {
-    //   const files = event.target.files;
-    //   const validFiles = [];
-    //   for (let i = 0; i < files.length; i++) {
-    //     const file = files[i];
-    //     if (file.type === 'application/pdf' || file.type.startsWith('image/')) {
-    //       // Mengonversi file menjadi URL objek
-    //       validFiles.push(URL.createObjectURL(file));
-    //     } else {
-    //       alert("Hanya file PDF atau gambar yang diperbolehkan untuk Bukti Pemusnahan!");
-    //     }
-    //   }
-    //   // Memperbarui buktiPemusnahan dengan file yang valid (URL objek)
-    //   this.aktivitas.buktiPemusnahan = validFiles;
-    //   // console.log('Bukti Pemusnahan berhasil diunggah:', this.aktivitas.buktiPemusnahan);
-    // },
     addAktivitas: function addAktivitas() {
       var _this3 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
@@ -60281,21 +60038,26 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
                 ba: null,
                 buktiPemusnahan: []
               };
-              _context.next = 26;
-              break;
+
+              // Refresh data setelah berhasil
+              _context.next = 23;
+              return _this3.fetchData();
             case 23:
-              _context.prev = 23;
+              _context.next = 28;
+              break;
+            case 25:
+              _context.prev = 25;
               _context.t0 = _context["catch"](9);
               sweetalert2__WEBPACK_IMPORTED_MODULE_1___default().fire({
                 icon: 'error',
                 title: 'Gagal',
                 text: _context.t0.message || 'Terjadi kesalahan saat menyimpan data.'
               });
-            case 26:
+            case 28:
             case "end":
               return _context.stop();
           }
-        }, _callee, null, [[9, 23]]);
+        }, _callee, null, [[9, 25]]);
       }))();
     },
     prevPage: function prevPage() {
@@ -62505,130 +62267,6 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -62658,8 +62296,6 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         waktu_mulai: '',
         waktu_selesai: '',
         detail_kerusakan: '',
-        // kondisi: 'Rusak',
-        // layout: '',
         pic: []
       },
       aktivitasList: [],
@@ -62779,11 +62415,6 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         }, _callee);
       }))();
     },
-    // async fetchDataAktivitas() {
-    //   const res = await fetch('/api/v1/activity-perbaikan');
-    //   const data = await res.json();
-    //   this.dataAktivitas = data.all;
-    // },
     fetchInitialData: function fetchInitialData() {
       var _this4 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
@@ -62880,7 +62511,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             case 7:
               confirm = _context3.sent;
               if (!confirm.isConfirmed) {
-                _context3.next = 13;
+                _context3.next = 15;
                 break;
               }
               _context3.next = 11;
@@ -62888,11 +62519,15 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             case 11:
               sweetalert2__WEBPACK_IMPORTED_MODULE_1___default().fire('Terkirim!', 'Data aktivitas berhasil disimpan.', 'success');
               _this5.showModal = false;
-            case 13:
-              _context3.next = 20;
-              break;
+
+              // Reload data setelah berhasil menambahkan aktivitas
+              _context3.next = 15;
+              return _this5.fetchData();
             case 15:
-              _context3.prev = 15;
+              _context3.next = 22;
+              break;
+            case 17:
+              _context3.prev = 17;
               _context3.t0 = _context3["catch"](3);
               msg = 'Terjadi kesalahan saat mengirim data.';
               if (_context3.t0.response && _context3.t0.response.data && _context3.t0.response.data.message) {
@@ -62903,31 +62538,13 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
                 title: 'Gagal mengirim',
                 text: msg
               });
-            case 20:
+            case 22:
             case "end":
               return _context3.stop();
           }
-        }, _callee3, null, [[3, 15]]);
+        }, _callee3, null, [[3, 17]]);
       }))();
-    } // async addAktivitas() {
-    //   try {
-    //     const payload = {
-    //       id: this.aktivitas.id,
-    //       waktu_mulai: this.aktivitas.waktu_mulai,
-    //       waktu_selesai: this.aktivitas.waktu_selesai,
-    //       detail_kerusakan: this.aktivitas.detail_kerusakan,
-    //       kondisi: this.aktivitas.kondisi,
-    //       layout: this.aktivitas.layout,
-    //       pic: this.aktivitas.pic.join(','),
-    //     };
-    //     await axios.post('/api/v1/perbaikan/add-activity', payload);
-    //     this.showModal = false;
-    //     this.$toast.success('Aktivitas berhasil disimpan');
-    //   } catch (error) {
-    //     console.error(error);
-    //     this.$toast.error('Gagal menyimpan aktivitas');
-    //   }
-    // },
+    }
   },
   mounted: function mounted() {
     this.fetchData();
@@ -86922,7 +86539,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* Tambahkan CSS untuk garis bawah */\n.table td[data-v-69bbc481] {\r\n  border: 1px solid #fff;\n}\n#pills-tab .nav-link[data-v-69bbc481] {\r\n  color: #000;\n}\n#pills-tab .nav-link.active[data-v-69bbc481] {\r\n  background-color: #169ea8;\r\n  color: #fff;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* Tambahkan CSS untuk garis bawah */\n.table td[data-v-69bbc481] {\r\n  border: 1px solid #fff;\n}\n#pills-tab .nav-link[data-v-69bbc481] {\r\n  color: #000;\n}\n#pills-tab .nav-link.active[data-v-69bbc481] {\r\n  background-color: #169ea8;\r\n  color: #fff;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -87210,7 +86827,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* Pastikan backdrop tidak menutupi modal */\n.modal-backdrop[data-v-5eba1ab9] {\r\n  z-index: 1040 !important; /* Atur backdrop di bawah modal */\n}\n.modal[data-v-5eba1ab9] {\r\n  z-index: 1050 !important; /* Modal di atas backdrop */\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* Pastikan backdrop tidak menutupi modal */\n.modal-backdrop[data-v-5eba1ab9] {\r\n  z-index: 1040 !important; /* Atur backdrop di bawah modal */\n}\n.modal[data-v-5eba1ab9] {\r\n  z-index: 1050 !important; /* Modal di atas backdrop */\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -87234,7 +86851,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.modal[data-v-dc20c0e8] {\r\n  display: block;\r\n  z-index: 1000;\r\n  position: fixed;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  height: 100%;\r\n  background-color: rgba(0, 0, 0, 0.5);\n}\n.text-black-10[data-v-dc20c0e8] {\r\n  color: #000;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.modal[data-v-dc20c0e8] {\r\n  display: block;\r\n  z-index: 1020;\r\n  position: fixed;\r\n  top: 0;\r\n  left: 0;\r\n  width: 100%;\r\n  height: 100%;\r\n  background-color: rgba(0, 0, 0, 0.5);\n}\n.text-black-10[data-v-dc20c0e8] {\r\n  color: #000;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -87258,7 +86875,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* Pastikan backdrop tidak menutupi modal */\n.modal-backdrop[data-v-12211884] {\r\n  z-index: 1040 !important; /* Atur backdrop di bawah modal */\n}\n.modal[data-v-12211884] {\r\n  z-index: 1050 !important; /* Modal di atas backdrop */\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* Pastikan backdrop tidak menutupi modal */\n.modal-backdrop[data-v-12211884] {\r\n  z-index: 1040 !important; /* Atur backdrop di bawah modal */\n}\n.modal[data-v-12211884] {\r\n  z-index: 1050 !important; /* Modal di atas backdrop */\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -87474,7 +87091,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* Pastikan backdrop tidak menutupi modal */\n.modal-backdrop[data-v-36b29fbb] {\r\n  z-index: 1040 !important; /* Atur backdrop di bawah modal */\n}\n.modal[data-v-36b29fbb] {\r\n  z-index: 1050 !important; /* Modal di atas backdrop */\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* Pastikan backdrop tidak menutupi modal */\n.modal-backdrop[data-v-36b29fbb] {\r\n  z-index: 1040 !important; /* Atur backdrop di bawah modal */\n}\n.modal[data-v-36b29fbb] {\r\n  z-index: 1050 !important; /* Modal di atas backdrop */\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -189042,6 +188659,46 @@ var render = function () {
                 {
                   name: "model",
                   rawName: "v-model",
+                  value: _vm.form.jadwal_mulai_perawatan,
+                  expression: "form.jadwal_mulai_perawatan",
+                },
+              ],
+              staticClass: "form-control",
+              attrs: {
+                type: "date",
+                required: "",
+                placeholder: "Masukkan Tanggal Mulai Perawatan",
+              },
+              domProps: { value: _vm.form.jadwal_mulai_perawatan },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.form,
+                    "jadwal_mulai_perawatan",
+                    $event.target.value
+                  )
+                },
+              },
+            }),
+            _vm._v(" "),
+            _c(
+              "small",
+              { staticClass: "form-text", staticStyle: { color: "red" } },
+              [_vm._v("Masukkan Tanggal Mulai Perawatan Awal")]
+            ),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group col-md-4" }, [
+            _vm._m(12),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
                   value: _vm.form.waktu_perawatan,
                   expression: "form.waktu_perawatan",
                 },
@@ -189069,9 +188726,11 @@ var render = function () {
               [_vm._v("Masukkan Waktu Perawatan Per No Seri")]
             ),
           ]),
-          _vm._v(" "),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "form-group col-md-4" }, [
-            _vm._m(12),
+            _vm._m(13),
             _vm._v(" "),
             _c("input", {
               directives: [
@@ -189103,11 +188762,9 @@ var render = function () {
               },
             }),
           ]),
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "form-group col-md-6" }, [
-            _vm._m(13),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group col-md-4" }, [
+            _vm._m(14),
             _vm._v(" "),
             _c("div", { staticClass: "textarea-wrapper" }, [
               _c("textarea", {
@@ -189148,8 +188805,8 @@ var render = function () {
             ]),
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "form-group col-md-6" }, [
-            _vm._m(14),
+          _c("div", { staticClass: "form-group col-md-4" }, [
+            _vm._m(15),
             _vm._v(" "),
             _c(
               "select",
@@ -189203,7 +188860,7 @@ var render = function () {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "form-group" }, [
-          _vm._m(15),
+          _vm._m(16),
           _vm._v(" "),
           _c("div", { staticClass: "textarea-wrapper" }, [
             _c("textarea", {
@@ -189244,7 +188901,7 @@ var render = function () {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "form-group" }, [
-          _vm._m(16),
+          _vm._m(17),
           _vm._v(" "),
           _c("div", { staticClass: "textarea-wrapper" }, [
             _c("textarea", {
@@ -189285,7 +188942,7 @@ var render = function () {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "form-group" }, [
-          _vm._m(17),
+          _vm._m(18),
           _vm._v(" "),
           _c(
             "div",
@@ -189453,6 +189110,23 @@ var staticRenderFns = [
       { staticStyle: { color: "#000" }, attrs: { for: "jadwal_perawatan" } },
       [
         _c("b", [_vm._v("Jadwal Perawatan")]),
+        _vm._v(" "),
+        _c("sup", { staticStyle: { color: "red" } }, [_vm._v(" *")]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticStyle: { color: "#000" },
+        attrs: { for: "tanggal_mulai_perawatan" },
+      },
+      [
+        _c("b", [_vm._v("Tanggal Mulai Perawatan")]),
         _vm._v(" "),
         _c("sup", { staticStyle: { color: "red" } }, [_vm._v(" *")]),
       ]
@@ -191042,11 +190716,20 @@ var render = function () {
                         ]),
                         _vm._v(" "),
                         _c("td", { staticClass: "text-center p-2 border" }, [
-                          _vm._v("-"),
+                          _vm._v(
+                            _vm._s((item.users && item.users.nama) || "-")
+                          ),
                         ]),
                         _vm._v(" "),
                         _c("td", { staticClass: "text-center p-2 border" }, [
-                          _vm._v("-"),
+                          _vm._v(
+                            _vm._s(
+                              (item.users &&
+                                item.users.divisi &&
+                                item.users.divisi.divisi) ||
+                                "-"
+                            )
+                          ),
                         ]),
                         _vm._v(" "),
                         _c("td", { staticClass: "text-center p-2 border" }, [
@@ -200874,6 +200557,8 @@ var render = function () {
                 _vm._v(" "),
                 _c("th", { attrs: { rowspan: "2" } }, [_vm._v("No Seri")]),
                 _vm._v(" "),
+                _c("th", { attrs: { rowspan: "2" } }, [_vm._v("PIC")]),
+                _vm._v(" "),
                 _c(
                   "th",
                   { staticClass: "text-center", attrs: { rowspan: "2" } },
@@ -200928,6 +200613,22 @@ var render = function () {
                         _vm._v(" "),
                         _c("td", [_vm._v(_vm._s(item.no_seri.no_seri))]),
                         _vm._v(" "),
+                        _c("td", [
+                          _vm._v(
+                            "\n            " +
+                              _vm._s(
+                                item.users && item.users.length
+                                  ? item.users
+                                      .map(function (u) {
+                                        return u.nama
+                                      })
+                                      .join(", ")
+                                  : "–"
+                              ) +
+                              "\n          "
+                          ),
+                        ]),
+                        _vm._v(" "),
                         _c("td", { staticClass: "text-center" }, [
                           _vm._v(
                             _vm._s(item.tgl_mulai_perawatan || "-") +
@@ -200948,16 +200649,12 @@ var render = function () {
                           _c(
                             "small",
                             {
-                              style: {
-                                color: _vm.durasiDataPerawatan[index].color,
-                              },
+                              style: { color: _vm.getDurasiStatus(item).color },
                             },
                             [
                               _vm._v(
                                 "\n                  " +
-                                  _vm._s(
-                                    _vm.durasiDataPerawatan[index].status
-                                  ) +
+                                  _vm._s(_vm.getDurasiStatus(item).status) +
                                   "\n                "
                               ),
                             ]
@@ -201047,39 +200744,15 @@ var render = function () {
                         _vm._l(
                           Array.from(Array(_vm.last_date).keys()),
                           function (i) {
-                            return _c(
-                              "td",
-                              {
-                                key: i,
-                                style: {
-                                  backgroundColor: _vm.getBackgroundColor(
-                                    item,
-                                    i + 1
-                                  ),
-                                },
+                            return _c("td", {
+                              key: i,
+                              style: {
+                                backgroundColor: _vm.getBackgroundColor(
+                                  item,
+                                  i + 1
+                                ),
                               },
-                              [
-                                _vm.picPerTanggal[item.id] &&
-                                _vm.picPerTanggal[item.id][i + 1]
-                                  ? _c(
-                                      "div",
-                                      {
-                                        staticStyle: {
-                                          "font-size": "12px",
-                                          color: "#000",
-                                        },
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                " +
-                                            _vm._s(item.pic) +
-                                            "\n            "
-                                        ),
-                                      ]
-                                    )
-                                  : _vm._e(),
-                              ]
-                            )
+                            })
                           }
                         ),
                       ],
@@ -215424,6 +215097,7 @@ var render = function () {
                 staticClass: "badge",
                 class: {
                   "status-active": _vm.dataBaru.status === "Selesai",
+
                   "status-musnah": _vm.dataBaru.status === "Belum",
                 },
               },
@@ -221414,6 +221088,7 @@ var render = function () {
                 staticClass: "badge",
                 class: {
                   "status-active": _vm.dataBaru.status === "Selesai",
+                  "status-error": _vm.dataProses.status === "Proses",
                   "status-musnah": _vm.dataBaru.status === "Belum",
                 },
               },
@@ -237115,11 +236790,20 @@ var render = function () {
                         ]),
                         _vm._v(" "),
                         _c("td", { staticClass: "text-center p-2 border" }, [
-                          _vm._v("-"),
+                          _vm._v(
+                            _vm._s((item.users && item.users.nama) || "-")
+                          ),
                         ]),
                         _vm._v(" "),
                         _c("td", { staticClass: "text-center p-2 border" }, [
-                          _vm._v("-"),
+                          _vm._v(
+                            _vm._s(
+                              (item.users &&
+                                item.users.divisi &&
+                                item.users.divisi.divisi) ||
+                                "-"
+                            )
+                          ),
                         ]),
                         _vm._v(" "),
                         _c("td", { staticClass: "text-center p-2 border" }, [
@@ -240711,7 +240395,6 @@ var render = function () {
               attrs: { tabindex: "-1", role: "dialog", "aria-hidden": "true" },
             },
             [
-              _vm._v(">\n    "),
               _c(
                 "div",
                 { staticClass: "modal-dialog", attrs: { role: "document" } },
@@ -284731,11 +284414,11 @@ var routes = [{
 },
 //KONDISI RUSAK
 {
-  path: '/manager-mtc/kondisi-rusak',
+  path: '/manajer-mtc/kondisi-rusak',
   component: MBaruRusak,
   name: 'm-kondisi-baru-rusak'
 }, {
-  path: '/manager-mtc/kondisi-rusak/:id',
+  path: '/manajer-mtc/kondisi-rusak/:id',
   component: MDetailBaruRusak,
   name: 'm-kondisi-detail-rusak'
 }, {

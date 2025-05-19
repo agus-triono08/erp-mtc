@@ -4,6 +4,8 @@ namespace App\Models\Inventory;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
+
 
 class Perawatan extends Model
 {
@@ -29,7 +31,8 @@ class Perawatan extends Model
 
     public function users()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsToMany(User::class, 'perawatan_user')
+                    ->withTimestamps();
     }
 
     public function noSeri()

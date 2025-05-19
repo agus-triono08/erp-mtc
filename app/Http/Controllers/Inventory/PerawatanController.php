@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Inventory;
 
 use App\Models\Inventory\Perawatan;
 use App\Models\Inventory\NoSeri;
+use App\Models\User;
 use App\Models\Inventory\NoSeriLog;
 use App\Models\Inventory\Tools;
 use App\Http\Controllers\Controller;
@@ -30,16 +31,16 @@ class PerawatanController extends Controller
         $tahunBesok = date('Y', strtotime('+1 month'));
         
         if ($request->has('all')) {
-            $perawatan = Perawatan::with('noSeri.tools')
+            $perawatan = Perawatan::with('noSeri.tools', 'users')
                 ->orderBy('updated_at', 'desc') // Urutkan berdasarkan aktivitas terakhir
                 ->get();
         } elseif ($request->has('bulan_besok')) {
-            $perawatan = Perawatan::with('noSeri.tools.jenis.kategori.merek.tipe')
+            $perawatan = Perawatan::with('noSeri.tools.jenis.kategori.merek.tipe', 'users')
                 ->whereMonth('tgl_perawatan', $bulanBesok)
                 ->whereYear('tgl_perawatan', $tahunBesok)
                 ->get();
         } else {
-            $perawatan = Perawatan::with('noSeri.tools')
+            $perawatan = Perawatan::with('noSeri.tools', 'users:id,nama,username')
                 ->whereMonth('tgl_perawatan', $bulanSekarang)
                 ->whereYear('tgl_perawatan', $tahunSekarang)
                 ->get();
@@ -218,14 +219,19 @@ class PerawatanController extends Controller
             $perawatan->update([
                 'status' => 'Dalam Proses Perawatan',
                 'pic' => implode(',', $request->pic),
+                // 'users_id' => implode(',', $request->pic),
                 // 'pic' => $request->pic,
                 'tgl_mulai_perawatan' => now()->format('Y-m-d'),
                 'waktu_mulai' => Carbon::now('Asia/Jakarta')->format('H:i:s')
             ]);
+             // simpan PIC ke tabel pivot
+            $perawatan->users()->sync($request->pic);   // <─ di sinilah multiple ID disimpan
         } else {
             $perawatan->update([
                 'status' => 'Belum Dilakukan Perawatan',
             ]);
+            // kosongkan PIC jika perlu
+            $perawatan->users()->detach();
         }
     
         return response()->json(['message' => 'Data berhasil diperbarui.']);

@@ -30,17 +30,6 @@
             Ruang {{ dataProses.no_seri.layout.ruang }} / Rak {{ dataProses.no_seri.layout.rak }} / Lantai {{ dataProses.no_seri.layout.lantai }} / Koordinat: {{ dataProses.no_seri.layout.koordinat }}
           </dd>
         </div>
-        <!-- <div class="col-3">
-          <dt style="color: #000;">Target</dt>
-          <dd>{{ dataProses.tgl_selesai }} <br>
-            <small>
-              <i :class="{'fas fa-clock': !durasidata[0].includes('hari lewat') && !durasidata[0].includes('hari lagi'), 'fas fa-exclamation-circle text-danger': durasidata[0].includes('hari lewat') || durasidata[0].includes('hari lagi')}"></i>
-              <span :class="{'text-danger': durasidata[0].includes('hari lewat') || durasidata[0].includes('hari lagi')}">
-                {{ durasidata[0] }}
-              </span>
-            </small>
-          </dd>
-        </div> -->
         <div class="col-6">
           <dt style="color: #000;">Status</dt>
           <dd>
@@ -115,16 +104,9 @@
                         class="img-thumbnail"
                         style="width: 100px; height: 100px"
                       />
-                      <!-- Tipe lain -->
-                      <!-- <a v-else :href="`/storage/${doc}`" target="_blank">Lihat Dokumen {{ idx + 1 }}</a> -->
                     </li>
                   </ul>
                 </td>
-                <!-- <td>
-                  <div v-for="(image, index) in item.dokumen_pemusnahan" :key="index">
-                    <iframe :src="image" frameborder="0"height="500" style="margin: 5px;"></iframe>
-                  </div>
-                </td> -->
                 <!-- === BERITA ACARA === -->
                 <td>
                   <div v-if="item.berita_acara">
@@ -149,11 +131,6 @@
                   </div>
                   <span v-else>Tidak ada berita acara</span>
                 </td>
-                <!-- <td>
-                  <div style="text-align: center;">
-                    <pdf :src="item.berita_acara" :page="1" :rotate="0" @num-pages="numPages = $event" @page-loaded="currentPage = $event" @link-clicked="currentPage = $event" style="width: max-content; height: max-content; margin: 0 auto;" />
-                  </div>
-                </td> -->
                 <td>{{ item.detail_pemusnahan || '-'}}</td>
                 <td>{{ item.changed_at || '-'}}</td>
               </tr>
@@ -316,18 +293,6 @@ export default {
     handleBAUpload(event) {
       this.aktivitas.ba = event.target.files[0];
     },
-    // handleBAUpload(event) {
-    //   const file = event.target.files[0];
-    //   if (file && file.type === "application/pdf") {
-    //     // Mengonversi file PDF menjadi URL objek yang dapat diakses oleh komponen
-    //     this.aktivitas.ba = URL.createObjectURL(file);
-    //     // console.log("Berita Acara berhasil diunggah:", this.aktivitas.ba);
-    //     // alert(`File "${file.name}" uploaded successfully!`);
-    //   } else {
-    //     alert("Hanya file PDF yang diperbolehkan untuk Berita Acara!");
-    //     this.aktivitas.ba = null;
-    //   }
-    // },
     handleBuktiPemusnahanUpload(event) {
       this.aktivitas.buktiPemusnahan = Array.from(event.target.files).filter(file => {
         const allowedTypes = ['pdf', 'jpg', 'jpeg', 'png'];
@@ -336,24 +301,6 @@ export default {
         return allowedTypes.includes(fileType);
       });
     },
-    // handleBuktiPemusnahanUpload(event) {
-    //   const files = event.target.files;
-    //   const validFiles = [];
-
-    //   for (let i = 0; i < files.length; i++) {
-    //     const file = files[i];
-    //     if (file.type === 'application/pdf' || file.type.startsWith('image/')) {
-    //       // Mengonversi file menjadi URL objek
-    //       validFiles.push(URL.createObjectURL(file));
-    //     } else {
-    //       alert("Hanya file PDF atau gambar yang diperbolehkan untuk Bukti Pemusnahan!");
-    //     }
-    //   }
-
-    //   // Memperbarui buktiPemusnahan dengan file yang valid (URL objek)
-    //   this.aktivitas.buktiPemusnahan = validFiles;
-    //   // console.log('Bukti Pemusnahan berhasil diunggah:', this.aktivitas.buktiPemusnahan);
-    // },
     async addAktivitas() {
       const id = this.$route.params.id;
 
@@ -396,6 +343,9 @@ export default {
 
         this.showModal = false;
         this.aktivitas = { detail: '', ba: null, buktiPemusnahan: [] };
+
+        // Refresh data setelah berhasil
+        await this.fetchData();
 
       } catch (err) {
         Swal.fire({
