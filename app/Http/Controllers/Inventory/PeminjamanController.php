@@ -323,5 +323,93 @@ class PeminjamanController extends Controller
         return response()->json($peminjaman);
     }
 
+    public function countBelumDiproses()
+    {
+        try {
+            // Menghitung jumlah peminjaman dengan status 'Belum Diproses'
+            $count = Peminjaman::where('status', 'Belum Diproses')->count();
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Jumlah peminjaman dengan status Belum Diproses',
+                'count' => $count
+    
+            ], 200);
+            
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal mengambil data: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+
+    // Bisa gunakan ini buat chart Dasboard
+    public function monthlyCompletedLoans()
+    {
+        // Query untuk mendapatkan data peminjaman selesai per bulan
+        $monthlyData = Peminjaman::select(
+                DB::raw('MONTH(tgl_pinjam) as month'),
+                DB::raw('YEAR(tgl_pinjam) as year'),
+                DB::raw('COUNT(*) as total')
+            )
+            ->where('status', 'Selesai')
+            ->groupBy('year', 'month')
+            ->orderBy('year', 'asc')
+            ->orderBy('month', 'asc')
+            ->get();
+
+        // Format data untuk chart
+        $labels = [];
+        $data = [];
+
+        foreach ($monthlyData as $item) {
+            $monthName = date('F', mktime(0, 0, 0, $item->month, 1));
+            $labels[] = $monthName . ' ' . $item->year;
+            $data[] = $item->total;
+        }
+
+        return response()->json([
+            'labels' => $labels,
+            'data' => $data,
+            'message' => 'Data peminjaman selesai per bulan berhasil diambil'
+        ]);
+    }
+
+    // Alternatif: Jika Anda ingin data dalam format yang berbeda
+    public function monthlyCompletedLoansAlternative()
+    {
+        $currentYear = date('Y');
+        $months = [
+            'January', 'February', 'March', 'April', 'May', 'June',
+            'July', 'August', 'September', 'October', 'November', 'December'
+        ];
+
+        $data = Peminjaman::select(
+                DB::raw('MONTH(tgl_pinjam) as month'),
+                DB::raw('COUNT(*) as total')
+            )
+            ->where('status', 'Selesai')
+            ->whereYear('tgl_pinjam', $currentYear)
+            ->groupBy('month')
+            ->orderBy('month', 'asc')
+            ->get();
+
+        // Inisialisasi array dengan 0 untuk semua bulan
+        $monthlyCounts = array_fill(0, 12, 0);
+
+        foreach ($data as $item) {
+            $monthlyCounts[$item->month - 1] = $item->total;
+        }
+
+        return response()->json([
+            'labels' => $months,
+            'data' => $monthlyCounts,
+            'year' => $currentYear,
+            'message' => 'Data peminjaman selesai tahun ' . $currentYear . ' berhasil diambil'
+        ]);
+    }
+
 
 }

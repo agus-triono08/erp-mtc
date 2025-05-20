@@ -9,7 +9,7 @@
                 alt="LOGO" 
                 style="width: 30px; height: 30px; object-fit: contain;">
         </div>
-        <div class="sidebar-brand-text mx-3" style="text-transform: none; white-space: nowrap;">Sinko Prima Alloy</div>
+        <div class="sidebar-brand-text mx-1" style="text-transform: none; white-space: nowrap; font-size: 13px;">Sinko Prima Alloy</div>
     </a>
 
 

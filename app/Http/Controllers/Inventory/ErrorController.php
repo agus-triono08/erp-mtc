@@ -340,4 +340,25 @@ class ErrorController extends Controller
         return response()->json(['message' => 'Status No Seri, Error, dan Error Activity berhasil diperbarui.']);
     }
 
+    public function countBelum()
+    {
+        try {
+            // Menghitung jumlah peminjaman dengan status 'Belum Diproses'
+            $count = Error::where('status', 'Belum')->count();
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Jumlah Perbaikan dengan status Belum',
+                'count' => $count
+    
+            ], 200);
+            
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal mengambil data: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
 }

@@ -1,0 +1,566 @@
+<template>
+  <div class="container-fluid mt-3 mr-3 mb-3">
+    <h1 class="h3 mb-4 text-gray-900"><b>Dashboard</b></h1>
+    <!-- Card 1 -->
+    <div class="row">
+			<!-- Jumlah Stok Tools <= 1 -->
+      <div class="col-xl-3 col-md-4 mb-4">
+        <div class="border-left-primary shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col ml-2 mr-2">
+                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                  Jumlah Stok Di Bawah Batas Minimum
+                </div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ lowStockCount }}</div>                                                  
+              </div>
+							<div class="col-auto">
+								<i class="bi bi-graph-down-arrow fa-2x mr-3" style="color: rgba(22, 158, 168, 0.2);"></i>
+							</div>
+            </div>
+          </div>
+        </div>
+      </div>
+			<!-- Peminjaman -->
+			<div class="col-xl-3 col-md-4 mb-4">
+        <div class="border-left-primary shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col ml-2">
+                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                  Peminjamanan Alat/Mesin yang Menunggu Persetujuan
+                </div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ peminjamanStokCount }}</div>                                                  
+              </div>
+							<div class="col-auto">
+								<i class="bi bi-hourglass-split fa-2x mr-3" style="color: rgba(22, 158, 168, 0.2);"></i>
+							</div>
+            </div>
+          </div>
+        </div>
+      </div>
+			<!-- Permintaan -->
+			<div class="col-xl-3 col-md-4 mb-4">
+        <div class="border-left-primary shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col ml-2">
+                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                  Permintaan Alat/Mesin yang Menunggu Persetujuan
+                </div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ permintaanStokCount }}</div>                                                  
+              </div>
+							<div class="col-auto">
+								<i class="bi bi-hourglass-split fa-2x mr-3" style="color: rgba(22, 158, 168, 0.2);"></i>
+							</div>
+            </div>
+          </div>
+        </div>
+      </div>
+			<!-- Perbaikan -->
+			<div class="col-xl-3 col-md-4 mb-4">
+        <div class="border-left-primary shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col ml-2">
+                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                  Perbaikan Alat/Mesin yang Belum Diperbaiki
+                </div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ perbaikanStokCount }}</div>                                                  
+              </div>
+							<div class="col-auto">
+								<i class="bi bi-tools fa-2x mr-3" style="color: rgba(22, 158, 168, 0.2);"></i>
+							</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Card 2 -->
+		<div class="row">
+			<!-- Kerusakan -->
+			<div class="col-xl-3 col-md-4 mb-4">
+        <div class="border-left-primary shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col ml-2">
+                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                  Alat/Mesin yang Rusak
+                </div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ kerusakanStockCount }}</div>                                                  
+              </div>
+							<div class="col-auto">
+								<i class="bi bi-exclamation-triangle fa-2x mr-3" style="color: rgba(22, 158, 168, 0.2);"></i>
+							</div>
+            </div>
+          </div>
+        </div>
+      </div>
+			<!-- Pemusnahan -->
+			<div class="col-xl-3 col-md-4 mb-4">
+        <div class="border-left-primary shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col ml-2">
+                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                  Alat/Mesin yang Sudah Dimusnahkan
+                </div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ pemusnahanStokCount }}</div>                                                  
+              </div>
+							<div class="col-auto">
+								<i class="bi bi-fire fa-2x mr-3" style="color: rgba(22, 158, 168, 0.2);"></i>
+							</div>
+            </div>
+          </div>
+        </div>
+      </div>
+			<!-- Kehilangan -->
+			<div class="col-xl-3 col-md-4 mb-4">
+        <div class="border-left-primary shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col ml-2">
+                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                  Alat/Mesin yang Hilang dan Belum Diganti
+                </div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ kehilanganStokCount }}</div>                                                  
+              </div>
+							<div class="col-auto">
+								<i class="bi bi-repeat fa-2x mr-3" style="color: rgba(22, 158, 168, 0.2);"></i>
+							</div>
+            </div>
+          </div>
+        </div>
+      </div>
+			<!-- Perawatan -->
+			<div class="col-xl-3 col-md-4 mb-4">
+        <div class="border-left-primary shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col ml-2">
+                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                  Alat/Mesin yang Belum Dilakukan Perawatan
+                </div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ perawatanStokCount }}</div>                                                  
+              </div>
+							<div class="col-auto">
+								<i class="bi bi-calendar2-week fa-2x mr-3" style="color: rgba(22, 158, 168, 0.2);"></i>
+							</div>
+            </div>
+          </div>
+        </div>
+      </div>
+		</div>
+    <!-- Chart -->
+		<div class="row">
+			<!-- Area Chart Peminjaman -->
+			<div class="col-xl-6 col-lg-7">
+				<div class="card shadow mb-4">
+					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+						<h6 class="m-0 font-weight-bold text-primary">Statistik Peminjaman Selesai Bulanan</h6>
+					</div>
+					<!-- Card Body -->
+					<div class="card-body">
+						<div class="chart-area">
+							<canvas ref="monthlyLoansChart" class="m-3"></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
+      <!-- Area Chart Permintaan -->
+			<div class="col-xl-6 col-lg-7">
+				<div class="card shadow mb-4">
+					<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+						<h6 class="m-0 font-weight-bold text-primary">Statistik Permintaan Selesai Bulanan</h6>
+					</div>
+					<!-- Card Body -->
+					<div class="card-body">
+						<div class="chart-area">
+							<canvas ref="monthlyLoansChartPermintaan" class="m-3"></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+    <!-- Bar Perawatan -->
+    <div class="row">
+      <div class="col-lg-12 mb-4">
+        <div class="card shadow mb-4">
+          <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Perawatan Alat/Mesin</h6>
+          </div>
+          <div class="card-body" v-if="!loading">
+            <h4 class="small font-weight-bold m-4">
+              Belum Dilakukan Perawatan
+              <span class="float-right">{{ progressData.belum_dilakukan }}% ({{ progressData.counts.belum_dilakukan }} Alat/Mesin)</span>
+            </h4>
+            <div class="progress m-4">
+              <div
+                class="progress-bar bg-danger"
+                role="progressbar"
+                :style="'width: ' + progressData.belum_dilakukan + '%'"
+                :aria-valuenow="progressData.belum_dilakukan"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+            
+            <h4 class="small font-weight-bold m-4">
+              Dalam Proses Perawatan
+              <span class="float-right">{{ progressData.dalam_proses }}% ({{ progressData.counts.dalam_proses }} Alat/Mesin)</span>
+            </h4>
+            <div class="progress m-4">
+              <div
+                class="progress-bar bg-warning"
+                role="progressbar"
+                :style="'width: ' + progressData.dalam_proses + '%'"
+                :aria-valuenow="progressData.dalam_proses"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+            
+            <h4 class="small font-weight-bold m-4">
+              Selesai Perawatan
+              <span class="float-right">{{ progressData.selesai }}% ({{ progressData.counts.selesai }} Alat/Mesin)</span>
+            </h4>
+            <div class="progress m-4">
+              <div
+                class="progress-bar bg-success"
+                role="progressbar"
+                :style="'width: ' + progressData.selesai + '%'"
+                :aria-valuenow="progressData.selesai"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+            
+            <div class="text-center mt-4">
+              <small class="text-muted">Total Perawatan: {{ progressData.total }} Alat/Mesin</small>
+            </div>
+          </div>
+          <div class="card-body text-center" v-else>
+            <div class="spinner-border text-primary" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+            <p>Memuat data progress perawatan...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import Chart from 'chart.js/auto';
+import axios from 'axios'
+export default {
+  data() {
+    return {
+			chart: null,
+      chartPermintaan: null,
+      lowStockCount: 0,
+			peminjamanStokCount: 0,
+			permintaanStokCount: 0,
+			perbaikanStokCount: 0,
+			kerusakanStockCount: 0,
+			pemusnahanStokCount: 0,
+			kehilanganStokCount: 0,
+			perawatanStokCount: 0,
+      progressData: {
+        belum_dilakukan: 0,
+        dalam_proses: 0,
+        selesai: 0,
+        total: 0,
+        counts: {
+          belum_dilakukan: 0,
+          dalam_proses: 0,
+          selesai: 0
+        }
+      },
+      loading: true,
+    }
+  },
+  mounted() {
+    this.fetchLowStockCount();
+		this.fetchPeminjamanStokCount();
+		this.fetchPermintaanStokCount();
+		this.fetchPerbaikanStokCount();
+		this.fetchKerusakanStockCount();
+		this.fetchPemusnahanStokCount();
+		this.fetchKehilanganStokCount();
+		this.fetchPerawatanStokCount();
+		this.fetchMonthlyCompletedLoans();
+    this.fetchMonthlyCompletedLoansPermintaan();
+    this.fetchProgressData();
+  },
+  methods: {
+    async fetchLowStockCount() {
+      try {
+        const response = await axios.get('/api/v1/tools/low-stock/count');
+        if (response.data.success) {
+          this.lowStockCount = response.data.total_low_stock;
+        }
+      } catch (error) {
+        console.error('Error fetching low stock count:', error);
+        // Anda bisa menambahkan notifikasi error di sini
+      }
+    },		
+		async fetchPeminjamanStokCount() {
+      try {
+        const response = await axios.get('/api/v1/peminjaman/belum-diproses/count');
+        if (response.data.success) {
+          this.peminjamanStokCount = response.data.count;
+        }
+      } catch (error) {
+        console.error('Error fetching low stock count:', error);
+        // Anda bisa menambahkan notifikasi error di sini
+      }
+    },
+		async fetchPermintaanStokCount() {
+      try {
+        const response = await axios.get('/api/v1/permintaan/belum-diproses/count');
+        if (response.data.success) {
+          this.permintaanStokCount = response.data.count;
+        }
+      } catch (error) {
+        console.error('Error fetching low stock count:', error);
+        // Anda bisa menambahkan notifikasi error di sini
+      }
+    },
+		async fetchPerbaikanStokCount() {
+      try {
+        const response = await axios.get('/api/v1/perbaikan/belum/count');
+        if (response.data.success) {
+          this.perbaikanStokCount = response.data.count;
+        }
+      } catch (error) {
+        console.error('Error fetching low stock count:', error);
+        // Anda bisa menambahkan notifikasi error di sini
+      }
+    },
+		async fetchKerusakanStockCount() {
+      try {
+        const response = await axios.get('/api/v1/kerusakan/belum/count');
+        if (response.data.success) {
+          this.kerusakanStockCount = response.data.count;
+        }
+      } catch (error) {
+        console.error('Error fetching low stock count:', error);
+        // Anda bisa menambahkan notifikasi error di sini
+      }
+    },
+		async fetchPemusnahanStokCount() {
+      try {
+        const response = await axios.get('/api/v1/pemusnahan/selesai/count');
+        if (response.data.success) {
+          this.pemusnahanStokCount = response.data.count;
+        }
+      } catch (error) {
+        console.error('Error fetching low stock count:', error);
+        // Anda bisa menambahkan notifikasi error di sini
+      }
+    },
+		async fetchKehilanganStokCount() {
+      try {
+        const response = await axios.get('/api/v1/kehilangan/belum/count');
+        if (response.data.success) {
+          this.kehilanganStokCount = response.data.count;
+        }
+      } catch (error) {
+        console.error('Error fetching low stock count:', error);
+        // Anda bisa menambahkan notifikasi error di sini
+      }
+    },
+		async fetchPerawatanStokCount() {
+      try {
+        const response = await axios.get('/api/v1/perawatan/belum/count');
+        if (response.data.success) {
+          this.perawatanStokCount = response.data.count;
+        }
+      } catch (error) {
+        console.error('Error fetching low stock count:', error);
+        // Anda bisa menambahkan notifikasi error di sini
+      }
+    },
+    async fetchMonthlyCompletedLoans() {
+      try {
+        const response = await axios.get('/api/v1/peminjaman/chart/monthly-completed');
+        this.renderChart(response.data);
+      } catch (error) {
+        console.error('Error fetching monthly completed loans:', error);
+      }
+    },
+    async fetchMonthlyCompletedLoansPermintaan() {
+      try {
+        const response = await axios.get('/api/v1/permintaan/chart/monthly-completed');
+        this.renderChartPermintaan(response.data);
+      } catch (error) {
+        console.error('Error fetching monthly completed loans:', error);
+      }
+    },
+    renderChart(chartData) {
+      // Hancurkan chart sebelumnya jika ada
+      if (this.chart) {
+        this.chart.destroy();
+      }
+
+      const ctx = this.$refs.monthlyLoansChart.getContext('2d');
+      this.chart = new Chart(ctx, {
+        type: 'bar', // Anda bisa ganti dengan 'line' untuk chart garis
+        data: {
+          labels: chartData.labels,
+          datasets: [{
+            label: 'Peminjaman Selesai',
+            data: chartData.data,
+            backgroundColor: 'rgba(22, 158, 168, 0.5)',
+            borderColor: 'rgba(22, 158, 168, 1)',
+            borderWidth: 1,
+            pointBackgroundColor: 'rgba(22, 158, 168, 1)',
+            pointBorderColor: '#fff',
+            pointHoverBackgroundColor: '#fff',
+            pointHoverBorderColor: 'rgba(22, 158, 168, 1)'
+          }]
+        },
+        options: {
+          maintainAspectRatio: false,
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: {
+                callback: function(value) {
+                  if (Number.isInteger(value)) {
+                    return value;
+                  }
+                },
+                stepSize: 1
+              }
+            }
+          },
+          plugins: {
+            legend: {
+              display: true,
+              position: 'top'
+            },
+            tooltip: {
+              backgroundColor: 'rgba(0, 0, 0, 0.7)',
+              titleFont: {
+                size: 14
+              },
+              bodyFont: {
+                size: 12
+              },
+              callbacks: {
+                label: function(context) {
+                  return `Peminjaman: ${context.raw}`;
+                }
+              }
+            }
+          }
+        }
+      });
+    },
+    renderChartPermintaan(chartDataPermintaan) {
+      // Hancurkan chart sebelumnya jika ada
+      if (this.chartPermintaan) {
+        this.chart.destroy();
+      }
+
+      const ctx = this.$refs.monthlyLoansChartPermintaan.getContext('2d');
+      this.chartPermintaan = new Chart(ctx, {
+        type: 'bar', // Anda bisa ganti dengan 'line' untuk chart garis
+        data: {
+          labels: chartDataPermintaan.labels,
+          datasets: [{
+            label: 'Permintaan Selesai',
+            data: chartDataPermintaan.data,
+            backgroundColor: 'rgba(22, 158, 168, 0.5)',
+            borderColor: 'rgba(22, 158, 168, 1)',
+            borderWidth: 1,
+            pointBackgroundColor: 'rgba(22, 158, 168, 1)',
+            pointBorderColor: '#fff',
+            pointHoverBackgroundColor: '#fff',
+            pointHoverBorderColor: 'rgba(22, 158, 168, 1)'
+          }]
+        },
+        options: {
+          maintainAspectRatio: false,
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: {
+                callback: function(value) {
+                  if (Number.isInteger(value)) {
+                    return value;
+                  }
+                },
+                stepSize: 1
+              }
+            }
+          },
+          plugins: {
+            legend: {
+              display: true,
+              position: 'top'
+            },
+            tooltip: {
+              backgroundColor: 'rgba(0, 0, 0, 0.7)',
+              titleFont: {
+                size: 14
+              },
+              bodyFont: {
+                size: 12
+              },
+              callbacks: {
+                label: function(context) {
+                  return `Permintaan: ${context.raw}`;
+                }
+              }
+            }
+          }
+        }
+      });
+    },
+    async fetchProgressData() {
+      try {
+        this.loading = true;
+        const response = await axios.get('/api/inventory/perawatan/progress');
+        
+        if (response.data.success) {
+          this.progressData = response.data.data;
+        }
+      } catch (error) {
+        console.error('Error fetching progress data:', error);
+        this.$toast.error('Gagal memuat data progress perawatan');
+      } finally {
+        this.loading = false;
+      }
+    }
+  },
+  beforeDestroy() {
+    // Hancurkan chart saat komponen di-destroy
+    if (this.chart) {
+      this.chart.destroy();
+    } 
+    if (this.chartPermintaan) {
+      this.chartPermintaan.destroy();
+    }
+  }
+}
+</script>
+<style scoped>
+.chart-area {
+  position: relative;
+  height: 20rem;
+}
+@media (min-width: 768px) {
+  .chart-area {
+    height: 25rem;
+  }
+}
+.progress {
+  height: 20px;
+}
+</style>

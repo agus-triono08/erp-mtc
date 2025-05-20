@@ -514,4 +514,25 @@ class HilangController extends Controller
         return response()->json(['message' => 'Data berhasil diperbarui']);
     }
 
+    public function countBelum()
+    {
+        try {
+            // Menghitung jumlah peminjaman dengan status 'Belum Diproses'
+            $count = Hilang::where('status', 'Belum')->count();
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Jumlah Kehilangan dengan status Belum',
+                'count' => $count
+    
+            ], 200);
+            
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal mengambil data: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
 }

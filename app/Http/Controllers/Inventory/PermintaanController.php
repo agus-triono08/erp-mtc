@@ -306,4 +306,58 @@ class PermintaanController extends Controller
         return response()->json($permintaan);
     }
 
+    public function countBelumDiproses()
+    {
+        try {
+            // Menghitung jumlah peminjaman dengan status 'Belum Diproses'
+            $count = Permintaan::where('status', 'Belum Diproses')->count();
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Jumlah permintaan dengan status Belum Diproses',
+                'count' => $count
+    
+            ], 200);
+            
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal mengambil data: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function monthlyCompletedLoansAlternative()
+    {
+        $currentYear = date('Y');
+        $months = [
+            'January', 'February', 'March', 'April', 'May', 'June',
+            'July', 'August', 'September', 'October', 'November', 'December'
+        ];
+
+        $data = Permintaan::select(
+                DB::raw('MONTH(tgl_permintaan) as month'),
+                DB::raw('COUNT(*) as total')
+            )
+            ->where('status', 'Selesai')
+            ->whereYear('tgl_permintaan', $currentYear)
+            ->groupBy('month')
+            ->orderBy('month', 'asc')
+            ->get();
+
+        // Inisialisasi array dengan 0 untuk semua bulan
+        $monthlyCounts = array_fill(0, 12, 0);
+
+        foreach ($data as $item) {
+            $monthlyCounts[$item->month - 1] = $item->total;
+        }
+
+        return response()->json([
+            'labels' => $months,
+            'data' => $monthlyCounts,
+            'year' => $currentYear,
+            'message' => 'Data permintaan selesai tahun ' . $currentYear . ' berhasil diambil'
+        ]);
+    }
+
 }

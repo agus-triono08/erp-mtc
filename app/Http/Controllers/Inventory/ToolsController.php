@@ -425,6 +425,23 @@ class ToolsController extends Controller
             ->select('id', 'no_seri')
             ->get();
     }
+
+    public function apiLowStockTools()
+    {
+        $lowStockTools = Tools::where('stok_akhir', '<=', 1)
+            ->orderBy('stok_akhir', 'asc')
+            ->with(['jenis', 'kategori', 'tipe'])
+            ->get();
+
+        $totalLowStock = $lowStockTools->count();
+
+        return response()->json([
+            'success' => true,
+            'data' => $lowStockTools,
+            'total_low_stock' => $totalLowStock,
+            'message' => 'Data tools dengan stok rendah berhasil diambil'
+        ]);
+    }
 }
 
 

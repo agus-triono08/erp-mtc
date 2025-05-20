@@ -65,6 +65,9 @@ const DetailPerawatanM = require('./components/manajer-mtc/Perawatan/DetailPeraw
 // LOGIN
 const Login = require('./components/auth/login.vue').default;
 
+// Dashboard
+const Dashboard = require('./components/admin-mtc/Dashboard/dashboard.vue').default;
+
 /**Komponen Data Alat */
 const DataAlat = require('./components/admin-mtc/DataAlat.vue').default;
 const InputAlat = require('./components/admin-mtc/InputAlat.vue').default;
@@ -318,6 +321,12 @@ const routes = [
     {
         path: '/',
         component: Login,
+    },
+    // Dashboard
+    {
+        path: '/admin-mtc/dashboard',
+        component: Dashboard,
+        name: 'dashboard-adminmtc',
     },
     // MANAJER
     {

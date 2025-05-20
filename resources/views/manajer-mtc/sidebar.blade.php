@@ -1,5 +1,5 @@
 <ul class="navbar-nav bg-gradient-white sidebar sidebar-dark accordion" id="accordionSidebar"
-style="position: sticky; height: 100vh; top: 0;">
+    style="position: sticky; top: 0; height: 100vh; z-index: 1020;">
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard.manajermtc') }}">

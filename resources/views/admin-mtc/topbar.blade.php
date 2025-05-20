@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" >
+<nav class="navbar navbar-expand navbar-light bg-white topbar shadow position-fixed" style="width: 100%;">
 
     <!-- Sidebar Toggle (Topbar) -->
     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -10,7 +10,7 @@
     </div>
 
     <!-- Topbar Navbar -->
-    <ul class="navbar-nav ml-auto">
+    <ul class="navbar-nav" style="margin-left:auto!important; min-width:650px;">
 
         <!-- Nav Item Report -->
         <li class="nav-item dropdown no-arrow mx-1">

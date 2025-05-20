@@ -348,4 +348,25 @@ class RusakController extends Controller
 
         return response()->json(['message' => 'Data berhasil ditolak']);
     }
+
+    public function countBelum()
+    {
+        try {
+            // Menghitung jumlah peminjaman dengan status 'Belum Diproses'
+            $count = rusak::where('status', 'Belum')->count();
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Jumlah Rusak dengan status Belum',
+                'count' => $count
+    
+            ], 200);
+            
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal mengambil data: ' . $e->getMessage()
+            ], 500);
+        }
+    }
 }

@@ -10,6 +10,7 @@ use App\Models\Inventory\Tools;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 
 class PerawatanController extends Controller
 {
@@ -275,5 +276,66 @@ class PerawatanController extends Controller
         ]);
 
         return response()->json(['message' => 'Data berhasil diperbarui']);
+    }
+
+    public function countBelum()
+    {
+        try {
+            // Menghitung jumlah peminjaman dengan status 'Belum Diproses'
+            $count = Perawatan::where('status', 'Belum Dilakukan Perawatan')->count();
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Jumlah Perawatan yang Belum Dilakukan Perawatan',
+                'count' => $count
+    
+            ], 200);
+            
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal mengambil data: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function getProgressData(): JsonResponse
+    {
+        // Hitung total semua perawatan
+        $totalPerawatan = Perawatan::count();
+        
+        // Jika tidak ada data perawatan, set semua nilai ke 0
+        if ($totalPerawatan === 0) {
+            $progressData = [
+                'belum_dilakukan' => 0,
+                'dalam_proses' => 0,
+                'selesai' => 0,
+                'total' => 0
+            ];
+        } else {
+            // Hitung jumlah per status
+            $belumDilakukan = Perawatan::where('status', 'Belum Dilakukan Perawatan')->count();
+            $dalamProses = Perawatan::where('status', 'Dalam Proses Perawatan')->count();
+            $selesai = Perawatan::where('status', 'Selesai Perawatan')->count();
+            
+            // Hitung persentase
+            $progressData = [
+                'belum_dilakukan' => round(($belumDilakukan / $totalPerawatan) * 100, 2),
+                'dalam_proses' => round(($dalamProses / $totalPerawatan) * 100, 2),
+                'selesai' => round(($selesai / $totalPerawatan) * 100, 2),
+                'total' => $totalPerawatan,
+                'counts' => [
+                    'belum_dilakukan' => $belumDilakukan,
+                    'dalam_proses' => $dalamProses,
+                    'selesai' => $selesai
+                ]
+            ];
+        }
+        
+        return response()->json([
+            'success' => true,
+            'data' => $progressData,
+            'message' => 'Data progress perawatan berhasil diambil'
+        ]);
     }
 }

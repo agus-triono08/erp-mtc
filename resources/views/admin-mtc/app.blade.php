@@ -20,7 +20,7 @@
             <!-- Main Content -->
             <div id="content">
 
-                <div class="sticky-top">
+                <div class="sticky-top" >
                 <!-- Topbar -->
                 @include('admin-mtc.topbar')
                 <!-- End of Topbar -->
