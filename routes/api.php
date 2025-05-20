@@ -187,6 +187,7 @@ Route::prefix('v1/noseri')->group(function () {
 });
 Route::get('/v1/logs/noseri', [NoSeriLogController::class, 'index']);
 Route::get('/v1/noseri/{noSeriId}/logs', [NoSeriLogController::class, 'getLogs']);
+Route::get('/v1/tool-conditions', [NoSeriController::class, 'getToolConditionData']);
 //Perawatan
 Route::apiResource('v1/perawatan', PerawatanController::class);
 Route::prefix('v1/perawatan')->group(function() {
@@ -248,6 +249,7 @@ Route::get('/v1/logs-permintaan', [PermintaanLogController::class, 'index']);
 Route::get('/v1/permintaan/belum-diproses/count', [PermintaanController::class, 'countBelumDiproses'])
         ->name('permintaan.belum-diproses-count');
 Route::get('/v1/permintaan/chart/monthly-completed', [PermintaanController::class, 'monthlyCompletedLoansAlternative']);
+Route::get('/v1/permintaan/chart/available-years', [PermintaanController::class, 'availableYears']);
 // Peminjaman
 Route::apiResource('v1/peminjaman', PeminjamanController::class);
 Route::get('/v1/peminjaman/getPeminjaman/{kodeAlat}', [PeminjamanController::class, 'getPeminjaman']);
@@ -256,7 +258,8 @@ Route::get('/v1/peminjaman/getPengajuanNoPeminjaman/{noPinjam}', [PeminjamanCont
 Route::get('/v1/logs-peminjaman', [PeminjamanLogController::class, 'index']);
 Route::get('/v1/peminjaman/belum-diproses/count', [PeminjamanController::class, 'countBelumDiproses'])
         ->name('peminjaman.belum-diproses-count');
-Route::get('/v1/peminjaman/chart/monthly-completed', [PeminjamanController::class, 'monthlyCompletedLoansAlternative']);
+Route::get('/v1/peminjaman/chart/monthly-completed', [PeminjamanController::class, 'monthlyCompletedLoans']);
+Route::get('/v1/peminjaman/chart/available-years', [PeminjamanController::class, 'availableYears']);
 // Perubahan Peminjaman
 Route::apiResource('v1/perubahan-perminjaman', PerubahanPeminjamanController::class);
 Route::post('/v1/perubahan-peminjaman/store/{noPinjam}', [PerubahanPeminjamanController::class, 'store']);

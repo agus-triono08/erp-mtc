@@ -14,7 +14,8 @@
 
         <!-- Nav Item Report -->
         <li class="nav-item dropdown no-arrow mx-1">
-            <a class="nav-link" href="{{ route('laporkendala.adminmtc') }}">
+            {{-- <a class="nav-link" href="{{ route('laporkendala.adminmtc') }}"> --}}
+            <a class="nav-link" href="https://docs.google.com/forms/d/e/1FAIpQLSeuESWTp3A3C39v86JGDB9uGcWohM-hpsGqCxTyadv2BTvzZg/viewform" target="_blank">
                 <i class="fas fa-fw fa-exclamation-triangle" style="color: #ffac32"></i>
                 <span>Lapor Kendala Teknis</span></a>
         </li>

@@ -67,6 +67,8 @@ const Login = require('./components/auth/login.vue').default;
 
 // Dashboard
 const Dashboard = require('./components/admin-mtc/Dashboard/dashboard.vue').default;
+const DashboardM = require('./components/manajer-mtc/Dashboard/dashboard.vue').default;
+const DashboardU = require('./components/user/Dashboard/dashboard.vue').default;
 
 /**Komponen Data Alat */
 const DataAlat = require('./components/admin-mtc/DataAlat.vue').default;
@@ -328,6 +330,16 @@ const routes = [
         component: Dashboard,
         name: 'dashboard-adminmtc',
     },
+    {
+        path: '/manajer-mtc/dashboard',
+        component: DashboardM,
+        name: 'dashboard-manajermtc',
+    },
+    {
+        path: '/user/dashboard',
+        component: DashboardU,
+        name: 'dashboard-user',
+    },
     // MANAJER
     {
         path: '/manajer-mtc/master-data',
@@ -376,7 +388,7 @@ const routes = [
     },
     //Inventory
     {
-        path: '/manager-mtc/inventory',
+        path: '/manajer-mtc/inventory',
         component: KategoriM,
         name: 'kategori-mgn',
     },
@@ -386,7 +398,7 @@ const routes = [
         name: 'kategori',
     },
     {
-        path: '/manager-mtc/inventory',
+        path: '/manajer-mtc/inventory',
         component: MerekM,
         name: 'merek-mgn',
     },
@@ -396,7 +408,7 @@ const routes = [
         name: 'merek',
     },
     {
-        path: '/manager-mtc/inventory',
+        path: '/manajer-mtc/inventory',
         component: TipeM,
         name: 'tipe-mgn',
     },
@@ -695,22 +707,22 @@ const routes = [
         name: 'kondisi-detail-selesai-musnah',
     },
     {
-        path: '/manager-mtc/kondisi-musnah/proses',
+        path: '/manajer-mtc/kondisi-musnah/proses',
         component: MProsesMusnah,
         name: 'm-kondisi-proses-musnah',
     },
     {
-        path: '/manager-mtc/kondisi-musnah/:id',
+        path: '/manajer-mtc/kondisi-musnah/:id',
         component: MDetailProsesMusnah,
         name: 'm-kondisi-detail-proses-musnah',
     },
     {
-        path: '/manager-mtc/kondisi-musnah/selesai',
+        path: '/manajer-mtc/kondisi-musnah/selesai',
         component: MSelesaiMusnah,
         name: 'm-kondisi-selesai-musnah',
     },
     {
-        path: '/manager-mtc/kondisi-musnah/selesai/:id',
+        path: '/manajer-mtc/kondisi-musnah/selesai/:id',
         component: MDetailSelesaiMusnah,
         name: 'm-kondisi-detail-selesai-musnah',
     },

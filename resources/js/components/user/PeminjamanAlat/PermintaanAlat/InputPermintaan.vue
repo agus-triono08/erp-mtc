@@ -142,6 +142,7 @@ export default {
             confirmButtonText: 'OK'
           });
           this.$emit('tutup-modal');
+          this.$emit('refresh-data');
           this.form = {}; // reset form
         })
         .catch(error => {

@@ -99,7 +99,7 @@
 
       <!-- Card Konten Detail -->
       <div class="card_body" id="app" v-if="showRincianPermintaan && dataPermintaan.no_permintaan">
-        <user-permintaan-pengeluaran :no-permintaan="dataPermintaan.no_permintaan"></user-permintaan-pengeluaran>
+        <user-permintaan-pengeluaran :no-permintaan="dataPermintaan.no_permintaan" @refresh-data="fetchDetailPermintaan"></user-permintaan-pengeluaran>
       </div>
 
       <!-- Card Konten Detail Pengajuan -->

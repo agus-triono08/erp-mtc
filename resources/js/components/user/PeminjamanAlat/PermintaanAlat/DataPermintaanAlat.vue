@@ -3,7 +3,7 @@
     <!-- Modal Input Data -->
     <div id="app" class="modal-input" :class="{'is-visible': showModalInput}">
       <div class="modal-content-input">
-        <user-input-permintaan @tutup-modal="tutupModal"></user-input-permintaan>
+        <user-input-permintaan @tutup-modal="tutupModal" @refresh-data="fetchPermintaan"></user-input-permintaan>
       </div>
     </div>
     <div class="d-flex justify-content-between mb-2">

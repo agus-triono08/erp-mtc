@@ -19,11 +19,6 @@ class PerawatanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    // public function index()
-    // {
-    //     $perawatan = Perawatan::with('noSeri.tools')->get();
-    //     return response()->json($perawatan);
-    // }
     public function index(Request $request)
     {
         $bulanSekarang = date('m');
@@ -132,33 +127,6 @@ class PerawatanController extends Controller
             'data' => $perawatan
         ], 201);
     }
-    // public function store(Request $request)
-    // {
-    //     $request->validate([
-    //         'tgl_perawatan' => 'required|date',
-    //         'no_seri_id' => 'required|exists:no_seri,id',            
-    //     ]);
-
-    //     $noSeri = NoSeri::find($request->no_seri_id);
-    //     $tool = Tools::find($noSeri->tools_id);
-
-    //     $noPerawatan = 'JP' . str_pad($request->no_seri_id, 8, '0', STR_PAD_LEFT);
-
-    //     Perawatan::create([
-    //         'tgl_perawatan' => $request->tgl_perawatan,
-    //         'no_seri_id' => $request->no_seri_id,
-    //         'no_perawatan' => $noPerawatan,
-    //         'nama_tool' => $tool->nama,
-    //     ]);
-
-    //     return response()->json([
-    //         'message' => 'Data perawatan berhasil disimpan',
-    //         'no_perawatan' => $noPerawatan,
-    //         'nama_tool' => $tool->nama,
-    //         'tgl_perawatan' => $request->tgl_perawatan,
-    //         'no_seri_id' => $noSeri->id,
-    //     ]);
-    // }
 
     /**
      * Display the specified resource.
@@ -281,14 +249,16 @@ class PerawatanController extends Controller
     public function countBelum()
     {
         try {
-            // Menghitung jumlah peminjaman dengan status 'Belum Diproses'
-            $count = Perawatan::where('status', 'Belum Dilakukan Perawatan')->count();
+            // Menghitung jumlah peminjaman dengan status 'Belum Diproses' pada bulan ini
+            $count = Perawatan::where('status', 'Belum Dilakukan Perawatan')
+                ->whereMonth('tgl_perawatan', now()->month) // Ganti dengan kolom yang sesuai
+                ->whereYear('tgl_perawatan', now()->year)
+                ->count();
             
             return response()->json([
                 'success' => true,
-                'message' => 'Jumlah Perawatan yang Belum Dilakukan Perawatan',
+                'message' => 'Jumlah Perawatan yang Belum Dilakukan Perawatan Bulan Ini',
                 'count' => $count
-    
             ], 200);
             
         } catch (\Exception $e) {

@@ -327,36 +327,48 @@ class PermintaanController extends Controller
         }
     }
 
-    public function monthlyCompletedLoansAlternative()
+    public function monthlyCompletedLoansAlternative(Request $request)
     {
-        $currentYear = date('Y');
-        $months = [
-            'January', 'February', 'March', 'April', 'May', 'June',
-            'July', 'August', 'September', 'October', 'November', 'December'
-        ];
-
+        $year = $request->input('year', date('Y'));
+        
+        // Inisialisasi data untuk semua bulan
+        $monthlyData = array_fill(0, 12, 0);
+        
+        // Query untuk data aktual
         $data = Permintaan::select(
                 DB::raw('MONTH(tgl_permintaan) as month'),
                 DB::raw('COUNT(*) as total')
             )
-            ->where('status', 'Selesai')
-            ->whereYear('tgl_permintaan', $currentYear)
+            ->where('status', 'Digunakan')
+            ->whereYear('tgl_permintaan', $year)
             ->groupBy('month')
             ->orderBy('month', 'asc')
             ->get();
-
-        // Inisialisasi array dengan 0 untuk semua bulan
-        $monthlyCounts = array_fill(0, 12, 0);
-
+        
+        // Isi data aktual ke array
         foreach ($data as $item) {
-            $monthlyCounts[$item->month - 1] = $item->total;
+            $monthlyData[$item->month - 1] = $item->total;
         }
-
+        
         return response()->json([
-            'labels' => $months,
-            'data' => $monthlyCounts,
-            'year' => $currentYear,
-            'message' => 'Data permintaan selesai tahun ' . $currentYear . ' berhasil diambil'
+            'labels' => ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Ags', 'Sep', 'Okt', 'Nov', 'Des'],
+            'data' => $monthlyData,
+            'year' => $year,
+            'message' => 'Data permintaan selesai tahun ' . $year . ' berhasil diambil'
+        ]);
+    }
+
+    public function availableYears()
+    {
+        $years = Permintaan::select(DB::raw('YEAR(tgl_permintaan) as year'))
+            ->where('status', 'Digunakan')
+            ->groupBy('year')
+            ->orderBy('year', 'desc')
+            ->pluck('year');
+        
+        return response()->json([
+            'years' => $years->toArray(),
+            'message' => 'Daftar tahun tersedia berhasil diambil'
         ]);
     }
 

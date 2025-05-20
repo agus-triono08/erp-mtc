@@ -346,34 +346,48 @@ class PeminjamanController extends Controller
 
 
     // Bisa gunakan ini buat chart Dasboard
-    public function monthlyCompletedLoans()
+    public function monthlyCompletedLoans(Request $request)
     {
-        // Query untuk mendapatkan data peminjaman selesai per bulan
-        $monthlyData = Peminjaman::select(
+        $year = $request->input('year', date('Y'));
+        
+        // Inisialisasi data untuk semua bulan
+        $monthlyData = array_fill(0, 12, 0);
+        
+        // Query untuk data aktual
+        $data = Peminjaman::select(
                 DB::raw('MONTH(tgl_pinjam) as month'),
-                DB::raw('YEAR(tgl_pinjam) as year'),
                 DB::raw('COUNT(*) as total')
             )
             ->where('status', 'Selesai')
-            ->groupBy('year', 'month')
-            ->orderBy('year', 'asc')
+            ->whereYear('tgl_pinjam', $year)
+            ->groupBy('month')
             ->orderBy('month', 'asc')
             ->get();
-
-        // Format data untuk chart
-        $labels = [];
-        $data = [];
-
-        foreach ($monthlyData as $item) {
-            $monthName = date('F', mktime(0, 0, 0, $item->month, 1));
-            $labels[] = $monthName . ' ' . $item->year;
-            $data[] = $item->total;
+        
+        // Isi data aktual ke array
+        foreach ($data as $item) {
+            $monthlyData[$item->month - 1] = $item->total;
         }
-
+        
         return response()->json([
-            'labels' => $labels,
-            'data' => $data,
-            'message' => 'Data peminjaman selesai per bulan berhasil diambil'
+            'labels' => ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Ags', 'Sep', 'Okt', 'Nov', 'Des'],
+            'data' => $monthlyData,
+            'year' => $year,
+            'message' => 'Data peminjaman selesai tahun ' . $year . ' berhasil diambil'
+        ]);
+    }
+
+    public function availableYears()
+    {
+        $years = Peminjaman::select(DB::raw('YEAR(tgl_pinjam) as year'))
+            ->where('status', 'Selesai')
+            ->groupBy('year')
+            ->orderBy('year', 'desc')
+            ->pluck('year');
+        
+        return response()->json([
+            'years' => $years->toArray(),
+            'message' => 'Daftar tahun tersedia berhasil diambil'
         ]);
     }
 

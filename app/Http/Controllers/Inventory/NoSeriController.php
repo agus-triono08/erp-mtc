@@ -1125,4 +1125,37 @@ class NoSeriController extends Controller
         return response()->json(['message' => 'Status No Seri, Peminjaman, dan Perubahan Peminjaman berhasil diperbarui.']);
     }
 
+    public function getToolConditionData()
+    {
+        $conditions = NoSeri::select('kondisi')
+            ->selectRaw('count(*) as total')
+            ->groupBy('kondisi')
+            ->get();
+
+        $labels = [];
+        $data = [];
+        $backgroundColors = [];
+
+        $colors = [
+            'OK' => '#169ea8',
+            'Error' => '#f6c23e',
+            'Rusak' => '#fd7e14',
+            'Musnah' => '#e74a3b',
+            'Hilang' => '#6610f2',
+        ];
+
+        foreach ($conditions as $condition) {
+            $labels[] = $condition->kondisi;
+            $data[] = $condition->total;
+            $backgroundColors[] = $colors[$condition->kondisi] ?? '#6c757d'; // default color if not defined
+        }
+
+        return response()->json([
+            'labels' => $labels,
+            'data' => $data,
+            'colors' => $backgroundColors,
+        ]);
+    }
+
+
 }
