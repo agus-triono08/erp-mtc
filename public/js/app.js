@@ -24974,7 +24974,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
                   return "Permintaan: ".concat(context.raw);
                 },
                 title: function title(context) {
-                  return "".concat(context[0].label, " ").concat(chartData.year);
+                  return "".concat(context[0].label, " ").concat(chartDataPermintaan.year);
                 }
               }
             }
@@ -47726,18 +47726,18 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             case 3:
               response = _context.sent;
               _this.jadwalPerawatan = response.data;
-              console.log(_this.jadwalPerawatan);
-              _context.next = 11;
+              // console.log(this.jadwalPerawatan);
+              _context.next = 10;
               break;
-            case 8:
-              _context.prev = 8;
+            case 7:
+              _context.prev = 7;
               _context.t0 = _context["catch"](0);
               console.error(_context.t0);
-            case 11:
+            case 10:
             case "end":
               return _context.stop();
           }
-        }, _callee, null, [[0, 8]]);
+        }, _callee, null, [[0, 7]]);
       }))();
     },
     getTanggalStart: function getTanggalStart(item) {
@@ -69672,7 +69672,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
                   return "Permintaan: ".concat(context.raw);
                 },
                 title: function title(context) {
-                  return "".concat(context[0].label, " ").concat(chartData.year);
+                  return "".concat(context[0].label, " ").concat(chartDataPermintaan.year);
                 }
               }
             }
@@ -76418,7 +76418,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
                   return "Permintaan: ".concat(context.raw);
                 },
                 title: function title(context) {
-                  return "".concat(context[0].label, " ").concat(chartData.year);
+                  return "".concat(context[0].label, " ").concat(chartDataPermintaan.year);
                 }
               }
             }
@@ -207576,7 +207576,6 @@ var render = function () {
               staticClass: "form-control",
               attrs: {
                 type: "date",
-                required: "",
                 placeholder: "Masukkan Tanggal Mulai Perawatan",
               },
               domProps: { value: _vm.form.jadwal_mulai_perawatan },
@@ -208035,11 +208034,7 @@ var staticRenderFns = [
         staticStyle: { color: "#000" },
         attrs: { for: "tanggal_mulai_perawatan" },
       },
-      [
-        _c("b", [_vm._v("Tanggal Mulai Perawatan")]),
-        _vm._v(" "),
-        _c("sup", { staticStyle: { color: "red" } }, [_vm._v(" *")]),
-      ]
+      [_c("b", [_vm._v("Tanggal Mulai Perawatan")])]
     )
   },
   function () {

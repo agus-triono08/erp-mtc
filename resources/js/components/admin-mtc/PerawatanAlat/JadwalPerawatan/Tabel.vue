@@ -458,7 +458,7 @@ export default {
       try {
         const response = await axios.get('/api/v1/perawatan')
         this.jadwalPerawatan = response.data;
-        console.log(this.jadwalPerawatan);
+        // console.log(this.jadwalPerawatan);
       } catch (error) {
         console.error(error);
       }

@@ -201,9 +201,9 @@
         <div class="form-group col-md-4">
           <label for="tanggal_mulai_perawatan" style="color: #000;">
             <b>Tanggal Mulai Perawatan</b>
-            <sup style="color: red;"> *</sup>
+            <!-- <sup style="color: red;"> *</sup> -->
           </label>
-          <input type="date" v-model="form.jadwal_mulai_perawatan" class="form-control" required placeholder="Masukkan Tanggal Mulai Perawatan">
+          <input type="date" v-model="form.jadwal_mulai_perawatan" class="form-control" placeholder="Masukkan Tanggal Mulai Perawatan">
           <small class="form-text" style="color: red;">Masukkan Tanggal Mulai Perawatan Awal</small>
         </div> 
 

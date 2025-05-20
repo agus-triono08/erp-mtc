@@ -631,7 +631,7 @@ export default {
                   return `Permintaan: ${context.raw}`;
                 },
                 title: function(context) {
-                  return `${context[0].label} ${chartData.year}`;
+                  return `${context[0].label} ${chartDataPermintaan.year}`;
                 }
               }
             }
