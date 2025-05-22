@@ -17,19 +17,6 @@
     </ul>
     <div class="row align-items-center justify-content-end m-3">
       <button @click="exportToExcel" class="btn btn-sm btn-primary-1 mr-2"><i class="fas fa-file-excel"></i> Export Excel</button>
-      <!-- <select v-model="selectedNama" class="border p-2 rounded">
-        <option value="">Semua Alat/Mesin</option>
-        <option v-for="nama in namaOptions" :key="nama" :value="nama">{{ nama }}</option>
-      </select> -->
-      <!-- <select v-model="selectedKondisi" class="btn btn-sm border p-2 rounded mr-2">
-        <option value="">Semua Kondisi</option>
-        <option v-for="kondisi in kondisiOptions" :key="kondisi" :value="kondisi">{{ kondisi }}</option>    
-        <option value="OK">OK</option>
-        <option value="Rusak">Rusak</option>
-        <option value="Musnah">Musnah</option>
-        <option value="Hilang">Hilang</option>
-        <option value="Error">Error</option>      
-      </select>  -->
       <input v-model="search" type="text" placeholder="Search..." class="btn btn-sm border p-2 rounded w-1/3" />
     </div>
     <div class="table-responsive p-3">
@@ -51,11 +38,7 @@
             <th class="text-center p-2 border cursor-pointer" @click="sortBy('peminjaman.total')" style="color: #000;">
               Total
               <span v-if="sortKey === 'peminjaman.total'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
-            </th>
-            <!-- <th class="text-center p-2 border cursor-pointer" @click="sortBy('no_seri')" style="color: #000;">
-              No Seri
-              <span v-if="sortKey === 'no_seri'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
-            </th> -->            
+            </th>           
             <th class="text-center p-2 border cursor-pointer" @click="sortBy('peminjaman.tgl_pinjam')" style="color: #000;">
               Tgl Peminjaman
               <span v-if="sortKey === 'peminjaman.tgl_pinjam'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
@@ -72,14 +55,6 @@
               Divisi
               <span v-if="sortKey === 'divisi'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
             </th>
-            <!-- <th class="text-center p-2 border cursor-pointer" @click="sortBy('tanggal_kembali')" style="color: #000;">
-              Tgl Kembali
-              <span v-if="sortKey === 'tanggal_kembali'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
-            </th>             -->
-            <!-- <th class="text-center p-2 border cursor-pointer" @click="sortBy('kondisi')" style="color: #000;">
-              Kondisi
-              <span v-if="sortKey === 'kondisi'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
-            </th> -->
             <th class="text-center p-2 border cursor-pointer" @click="sortBy('new_status')" style="color: #000;">
               Status
               <span v-if="sortKey === 'new_status'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
@@ -98,25 +73,10 @@
             <td class="text-center p-2 border">{{ item.peminjaman.no_peminjaman || '-' }}</td>
             <td class="text-center p-2 border">{{ getNamaAlat(item) }}</td>
             <td class="text-center p-2 border">{{ item.peminjaman.total }}</td>
-            <!-- <td class="text-center p-2 border">{{ item.no_seri.no_seri || '-' }}</td> -->
             <td class="text-center p-2 border">{{ item.peminjaman.tgl_pinjam || '-' }}</td>
             <td class="text-center p-2 border">{{ item.peminjaman.tgl_kembali || '-' }}</td>
             <td class="text-center p-2 border">-</td>
             <td class="text-center p-2 border">-</td>
-            <!-- <td class="text-center p-2 border">{{ item.tgl_kembali ||'-'}}</td> -->
-            <!-- <td class="text-center">
-              <div 
-                class="btn-sts"
-                  :class="{'status-active': item.no_seri.kondisi === 'OK', 
-                          'status-error': item.no_seri.kondisi === 'Error',
-                          'status-rusak': item.no_seri.kondisi === 'Rusak',
-                          'status-hilang': item.no_seri.kondisi === 'Hilang',
-                          'status-dipinjam': item.no_seri.kondisi === 'Musnah',
-                }"
-              >
-                {{ item.no_seri.kondisi || '-' }}
-              </div>
-            </td> -->
             <td>
               <div
                 class="status-pill parent-element"
@@ -231,20 +191,9 @@ export default {
     };
   },
   computed: {
-    // namaOptions() {
-    //   const names = this.peminjamanData.map(item => item.no_seri && item.no_seri.tools.nama);
-    //   return [...new Set(names)];
-    // },
-    // kondisiOptions() {
-    //   const kondisi = this.peminjamanData.map(item => item.tools.no_seri.kondisi);
-    //   return [...new Set(kondisi)];
-    // },
     filteredData() {
       let data = this.peminjamanData.filter(item => {
         return (
-          // (!this.selectedNama || item.no_seri && item.no_seri.tools.nama === this.selectedNama) &&
-          // (!this.selectedKondisi || item.no_seri.kondisi === this.selectedKondisi) &&
-          // (item.no_seri.no_seri.toLowerCase().includes(this.search.toLowerCase()) ||
           (item.peminjaman &&
           item.peminjaman.no_seri?.[0]?.tools?.nama?.toLowerCase().includes(this.search.toLowerCase()) ||
           item.peminjaman && item.peminjaman.no_peminjaman.toLowerCase().includes(this.search.toLowerCase()))
@@ -293,12 +242,10 @@ export default {
           'No Peminjaman': item.peminjaman && item.peminjaman.no_peminjaman,
           'Nama Alat/Mesin': this.getNamaAlat(item),
           'Total': item.peminjaman && item.peminjaman.total,
-          // 'No Seri': item.no_seri.no_seri,
           'Tanggal Peminjaman': item.peminjaman && item.peminjaman.tgl_pinjam,
           'Dipinjam Oleh': '-',
           'Divisi': '-',
           'Tanggal Kembali': item.peminjaman && item.peminjaman.tgl_kembali,
-          // 'Kondisi': item.no_seri.kondisi,
           'Status': item.new_status,
         }))
       );

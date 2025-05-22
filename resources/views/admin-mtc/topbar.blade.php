@@ -56,6 +56,13 @@
 
 </nav>
 
+<style>
+    /* Tambahkan style untuk modal */
+    .modal {
+        z-index: 1050 !important; /* Modal di atas backdrop */
+    }
+</style>
+
 <!-- Logout Modal-->
 <div class="modal fade show" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
     <div class="modal-dialog" role="document">
@@ -82,7 +89,7 @@
 </div>
 
 <!-- Profile Modal -->
-<div class="modal fade show" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel"
+<div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel"
     aria-hidden="false">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

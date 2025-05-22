@@ -51641,22 +51641,13 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      noseriData: [],
+      logsData: [],
       search: '',
-      selectedNama: '',
       selectedKondisi: '',
       sortKey: '',
       sortDirection: 'asc',
@@ -51665,32 +51656,23 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
     };
   },
   computed: {
-    namaOptions: function namaOptions() {
-      var names = this.noseriData.map(function (item) {
-        return item.tools.nama;
-      });
-      return _toConsumableArray(new Set(names));
-    },
     kondisiOptions: function kondisiOptions() {
-      var kondisi = this.noseriData.map(function (item) {
+      var kondisi = this.logsData.map(function (item) {
         return item.new_kondisi;
       });
-      return _toConsumableArray(new Set(kondisi));
+      return _toConsumableArray(new Set(kondisi)).filter(function (k) {
+        return k;
+      });
     },
     filteredData: function filteredData() {
       var _this = this;
-      var data = this.noseriData.filter(function (item) {
-        return (!_this.selectedNama || item.no_seri.tools.nama === _this.selectedNama) && (!_this.selectedKondisi || item.new_kondisi === _this.selectedKondisi) && (item.no_seri.no_seri.toLowerCase().includes(_this.search.toLowerCase()) || item.no_seri.tools.nama.toLowerCase().includes(_this.search.toLowerCase()));
+      var data = this.logsData.filter(function (item) {
+        return (!_this.selectedKondisi || item.new_kondisi === _this.selectedKondisi) && (item.no_seri.toLowerCase().includes(_this.search.toLowerCase()) || item.nama_tool.toLowerCase().includes(_this.search.toLowerCase()));
       });
       if (this.sortKey) {
         data.sort(function (a, b) {
-          var getValue = function getValue(obj, path) {
-            return path.split('.').reduce(function (o, i) {
-              return o === null || o === void 0 ? void 0 : o[i];
-            }, obj);
-          };
-          var valA = getValue(a, _this.sortKey);
-          var valB = getValue(b, _this.sortKey);
+          var valA = a[_this.sortKey];
+          var valB = b[_this.sortKey];
           if (valA == null) return 1;
           if (valB == null) return -1;
           if (_this.sortDirection === 'asc') {
@@ -51723,34 +51705,52 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
-              _context.next = 2;
+              _context.prev = 0;
+              _context.next = 3;
               return fetch('/api/v1/logs/noseri');
-            case 2:
+            case 3:
               res = _context.sent;
-              _context.next = 5;
+              _context.next = 6;
               return res.json();
-            case 5:
+            case 6:
               data = _context.sent;
-              _this2.noseriData = data;
-            case 7:
+              _this2.logsData = data;
+              _context.next = 13;
+              break;
+            case 10:
+              _context.prev = 10;
+              _context.t0 = _context["catch"](0);
+              console.error('Error fetching data:', _context.t0);
+            case 13:
             case "end":
               return _context.stop();
           }
-        }, _callee);
+        }, _callee, null, [[0, 10]]);
       }))();
+    },
+    getStatusClass: function getStatusClass(kondisi) {
+      return {
+        'status-active': kondisi === 'OK',
+        'status-error': kondisi === 'Error',
+        'status-rusak': kondisi === 'Rusak',
+        'status-hilang': kondisi === 'Hilang',
+        'status-dipinjam': kondisi === 'Musnah'
+      };
     },
     exportToExcel: function exportToExcel() {
       var worksheet = xlsx__WEBPACK_IMPORTED_MODULE_0__.utils.json_to_sheet(this.filteredData.map(function (item) {
         return {
           'Tanggal': item.changed_at,
-          'Nama Alat/Mesin': item.no_seri.tools.nama,
-          'No Seri': item.no_seri.no_seri,
-          'Kondisi': item.new_kondisi
+          'Nama Alat/Mesin': item.nama_tool,
+          'No Seri': item.no_seri,
+          'Kondisi Sebelumnya': item.old_kondisi,
+          'Kondisi Baru': item.new_kondisi,
+          'Keterangan': item.deskripsi_cek
         };
       }));
       var workbook = xlsx__WEBPACK_IMPORTED_MODULE_0__.utils.book_new();
-      xlsx__WEBPACK_IMPORTED_MODULE_0__.utils.book_append_sheet(workbook, worksheet, 'Noseri Per Kondisi');
-      xlsx__WEBPACK_IMPORTED_MODULE_0__.writeFile(workbook, 'Riwayat Per Kondisi.xlsx');
+      xlsx__WEBPACK_IMPORTED_MODULE_0__.utils.book_append_sheet(workbook, worksheet, 'Riwayat Perubahan Kondisi');
+      xlsx__WEBPACK_IMPORTED_MODULE_0__.writeFile(workbook, 'Riwayat_Perubahan_Kondisi.xlsx');
     },
     sortBy: function sortBy(key) {
       if (this.sortKey === key) {
@@ -51963,46 +51963,6 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -52021,24 +51981,11 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     };
   },
   computed: {
-    // namaOptions() {
-    //   const names = this.peminjamanData.map(item => item.no_seri && item.no_seri.tools.nama);
-    //   return [...new Set(names)];
-    // },
-    // kondisiOptions() {
-    //   const kondisi = this.peminjamanData.map(item => item.tools.no_seri.kondisi);
-    //   return [...new Set(kondisi)];
-    // },
     filteredData: function filteredData() {
       var _this = this;
       var data = this.peminjamanData.filter(function (item) {
         var _item$peminjaman$no_s;
-        return (
-          // (!this.selectedNama || item.no_seri && item.no_seri.tools.nama === this.selectedNama) &&
-          // (!this.selectedKondisi || item.no_seri.kondisi === this.selectedKondisi) &&
-          // (item.no_seri.no_seri.toLowerCase().includes(this.search.toLowerCase()) ||
-          item.peminjaman && ((_item$peminjaman$no_s = item.peminjaman.no_seri) === null || _item$peminjaman$no_s === void 0 || (_item$peminjaman$no_s = _item$peminjaman$no_s[0]) === null || _item$peminjaman$no_s === void 0 || (_item$peminjaman$no_s = _item$peminjaman$no_s.tools) === null || _item$peminjaman$no_s === void 0 || (_item$peminjaman$no_s = _item$peminjaman$no_s.nama) === null || _item$peminjaman$no_s === void 0 ? void 0 : _item$peminjaman$no_s.toLowerCase().includes(_this.search.toLowerCase())) || item.peminjaman && item.peminjaman.no_peminjaman.toLowerCase().includes(_this.search.toLowerCase())
-        );
+        return item.peminjaman && ((_item$peminjaman$no_s = item.peminjaman.no_seri) === null || _item$peminjaman$no_s === void 0 || (_item$peminjaman$no_s = _item$peminjaman$no_s[0]) === null || _item$peminjaman$no_s === void 0 || (_item$peminjaman$no_s = _item$peminjaman$no_s.tools) === null || _item$peminjaman$no_s === void 0 || (_item$peminjaman$no_s = _item$peminjaman$no_s.nama) === null || _item$peminjaman$no_s === void 0 ? void 0 : _item$peminjaman$no_s.toLowerCase().includes(_this.search.toLowerCase())) || item.peminjaman && item.peminjaman.no_peminjaman.toLowerCase().includes(_this.search.toLowerCase());
       });
       if (this.sortKey) {
         data.sort(function (a, b) {
@@ -52104,12 +52051,10 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
           'No Peminjaman': item.peminjaman && item.peminjaman.no_peminjaman,
           'Nama Alat/Mesin': _this3.getNamaAlat(item),
           'Total': item.peminjaman && item.peminjaman.total,
-          // 'No Seri': item.no_seri.no_seri,
           'Tanggal Peminjaman': item.peminjaman && item.peminjaman.tgl_pinjam,
           'Dipinjam Oleh': '-',
           'Divisi': '-',
           'Tanggal Kembali': item.peminjaman && item.peminjaman.tgl_kembali,
-          // 'Kondisi': item.no_seri.kondisi,
           'Status': item.new_status
         };
       }));
@@ -106964,7 +106909,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\nth[data-v-3e0927de], td[data-v-3e0927de] {\r\n  text-align: left;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\nth[data-v-3e0927de], td[data-v-3e0927de] {\r\n  text-align: left;\n}\n.btn-sts[data-v-3e0927de] {\r\n  padding: 5px 10px;\r\n  border-radius: 20px;\r\n  font-size: 12px;\r\n  font-weight: 500;\r\n  display: inline-block;\n}\n.status-active[data-v-3e0927de] {\r\n  background-color: #d1fae5;\r\n  color: #065f46;\n}\n.status-error[data-v-3e0927de] {\r\n  background-color: #fee2e2;\r\n  color: #b91c1c;\n}\n.status-rusak[data-v-3e0927de] {\r\n  background-color: #ffedd5;\r\n  color: #9a3412;\n}\n.status-hilang[data-v-3e0927de] {\r\n  background-color: #e0e7ff;\r\n  color: #4338ca;\n}\n.status-dipinjam[data-v-3e0927de] {\r\n  background-color: #f3e8ff;\r\n  color: #7e22ce;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -228735,13 +228680,13 @@ var render = function () {
                   staticStyle: { color: "#000" },
                   on: {
                     click: function ($event) {
-                      return _vm.sortBy("no_seri.tools.nama")
+                      return _vm.sortBy("nama_tool")
                     },
                   },
                 },
                 [
                   _vm._v("\n            Nama Alat/Mesin\n            "),
-                  _vm.sortKey === "no_seri.tools.nama"
+                  _vm.sortKey === "nama_tool"
                     ? _c("span", [
                         _vm._v(_vm._s(_vm.sortDirection === "asc" ? "▲" : "▼")),
                       ])
@@ -228756,13 +228701,34 @@ var render = function () {
                   staticStyle: { color: "#000" },
                   on: {
                     click: function ($event) {
-                      return _vm.sortBy("no_seri.no_seri")
+                      return _vm.sortBy("no_seri")
                     },
                   },
                 },
                 [
                   _vm._v("\n            No Seri\n            "),
-                  _vm.sortKey === "no_seri.no_seri"
+                  _vm.sortKey === "no_seri"
+                    ? _c("span", [
+                        _vm._v(_vm._s(_vm.sortDirection === "asc" ? "▲" : "▼")),
+                      ])
+                    : _vm._e(),
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  staticClass: "text-center p-2 border cursor-pointer",
+                  staticStyle: { color: "#000" },
+                  on: {
+                    click: function ($event) {
+                      return _vm.sortBy("old_kondisi")
+                    },
+                  },
+                },
+                [
+                  _vm._v("\n            Kondisi Sebelumnya\n            "),
+                  _vm.sortKey === "old_kondisi"
                     ? _c("span", [
                         _vm._v(_vm._s(_vm.sortDirection === "asc" ? "▲" : "▼")),
                       ])
@@ -228782,7 +228748,7 @@ var render = function () {
                   },
                 },
                 [
-                  _vm._v("\n            Kondisi\n            "),
+                  _vm._v("\n            Kondisi Baru\n            "),
                   _vm.sortKey === "new_kondisi"
                     ? _c("span", [
                         _vm._v(_vm._s(_vm.sortDirection === "asc" ? "▲" : "▼")),
@@ -228798,13 +228764,13 @@ var render = function () {
                   staticStyle: { color: "#000" },
                   on: {
                     click: function ($event) {
-                      return _vm.sortBy("no_seri.deskripsi_cek")
+                      return _vm.sortBy("deskripsi_cek")
                     },
                   },
                 },
                 [
                   _vm._v("\n            Keterangan\n            "),
-                  _vm.sortKey === "no_seri.deskripsi_cek"
+                  _vm.sortKey === "deskripsi_cek"
                     ? _c("span", [
                         _vm._v(_vm._s(_vm.sortDirection === "asc" ? "▲" : "▼")),
                       ])
@@ -228825,25 +228791,36 @@ var render = function () {
                 ]),
                 _vm._v(" "),
                 _c("td", { staticClass: "text-center p-2 border" }, [
-                  _vm._v(_vm._s(item.no_seri.tools.nama)),
+                  _vm._v(_vm._s(item.nama_tool)),
                 ]),
                 _vm._v(" "),
                 _c("td", { staticClass: "text-center p-2 border" }, [
-                  _vm._v(_vm._s(item.no_seri.no_seri)),
+                  _vm._v(_vm._s(item.no_seri)),
                 ]),
                 _vm._v(" "),
-                _c("td", { staticClass: "text-center" }, [
+                _c("td", { staticClass: "text-center p-2 border" }, [
                   _c(
                     "div",
                     {
                       staticClass: "btn-sts",
-                      class: {
-                        "status-active": item.new_kondisi === "OK",
-                        "status-error": item.new_kondisi === "Error",
-                        "status-rusak": item.new_kondisi === "Rusak",
-                        "status-hilang": item.new_kondisi === "Hilang",
-                        "status-dipinjam": item.new_kondisi === "Musnah",
-                      },
+                      class: _vm.getStatusClass(item.old_kondisi),
+                    },
+                    [
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(item.old_kondisi || "-") +
+                          "\n            "
+                      ),
+                    ]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "text-center p-2 border" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "btn-sts",
+                      class: _vm.getStatusClass(item.new_kondisi),
                     },
                     [
                       _vm._v(
@@ -228856,7 +228833,7 @@ var render = function () {
                 ]),
                 _vm._v(" "),
                 _c("td", { staticClass: "text-center p-2 border" }, [
-                  _vm._v(_vm._s(item.no_seri.deskripsi_cek || "-")),
+                  _vm._v(_vm._s(item.deskripsi_cek || "-")),
                 ]),
               ])
             }),
@@ -228880,7 +228857,7 @@ var render = function () {
         [
           _c("div", { staticClass: "ml-3" }, [
             _vm._v("\n        Rows per page:\n        "),
-            _c("span", [_vm._v(_vm._s(_vm.paginatedData.length))]),
+            _c("span", [_vm._v(_vm._s(_vm.itemsPerPage))]),
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "mr-3" }, [
@@ -228935,7 +228912,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("td", { staticClass: "text-center", attrs: { colspan: "4" } }, [
+      _c("td", { staticClass: "text-center", attrs: { colspan: "6" } }, [
         _vm._v("Tidak Ada Data"),
       ]),
     ])

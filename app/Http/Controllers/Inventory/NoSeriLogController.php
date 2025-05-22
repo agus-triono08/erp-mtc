@@ -18,24 +18,62 @@ class NoSeriLogController extends Controller
     public function index()
     {
         try {
-            $logs = NoSeriLog::with('noSeri.tools')
-                ->orderBy('changed_at', 'desc')->get();
+            $logs = NoSeriLog::with(['noSeri.tools', 'noSeri.layout'])
+                ->orderBy('changed_at', 'desc')
+                ->get();
 
             if ($logs->isEmpty()) {
                 return response()->json(['message' => 'Data tidak ditemukan'], 404);
             }
 
-            // Ubah format tanggal pada kolom changed_at
+            // Transformasi data untuk menampilkan deskripsi_cek sesuai perubahan
             $logs->transform(function ($log) {
-                $log->changed_at = Carbon::parse($log->changed_at)->format('Y-m-d');
-                return $log;
+                return [
+                    'id' => $log->id,
+                    'no_seri_id' => $log->no_seri_id,
+                    'no_seri' => $log->noSeri->no_seri ?? null,
+                    'nama_tool' => $log->noSeri->tools->nama ?? null,
+                    'layout' => $log->noSeri->layout->nama ?? null,
+                    'old_kondisi' => $log->old_kondisi,
+                    'new_kondisi' => $log->new_kondisi,
+                    'changed_at' => Carbon::parse($log->changed_at)->format('Y-m-d H:i:s'),
+                    'changed_by' => $log->changed_by,
+                    'deskripsi_cek' => ($log->old_kondisi !== $log->new_kondisi) ? $log->noSeri->deskripsi_cek : null,
+                    'tanggal_pengecekan' => $log->noSeri->tgl_pengecekan ?? null,
+                    'kondisi_sekarang' => $log->noSeri->kondisi ?? null,
+                    'status_perubahan' => $log->noSeri->status_perubahan ?? null
+                ];
             });
 
             return response()->json($logs);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Terjadi kesalahan'], 500);
+            return response()->json([
+                'message' => 'Terjadi kesalahan',
+                'error' => $e->getMessage()
+            ], 500);
         }
     }
+    // public function index()
+    // {
+    //     try {
+    //         $logs = NoSeriLog::with('noSeri.tools')
+    //             ->orderBy('changed_at', 'desc')->get();
+
+    //         if ($logs->isEmpty()) {
+    //             return response()->json(['message' => 'Data tidak ditemukan'], 404);
+    //         }
+
+    //         // Ubah format tanggal pada kolom changed_at
+    //         $logs->transform(function ($log) {
+    //             $log->changed_at = Carbon::parse($log->changed_at)->format('Y-m-d');
+    //             return $log;
+    //         });
+
+    //         return response()->json($logs);
+    //     } catch (\Exception $e) {
+    //         return response()->json(['message' => 'Terjadi kesalahan'], 500);
+    //     }
+    // }
 
     /**
      * Show the form for creating a new resource.
