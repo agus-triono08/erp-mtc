@@ -48,9 +48,13 @@
               No Seri
               <span v-if="sortKey === 'no_seri.no_seri'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
             </th>
-            <th class="text-center p-2 border cursor-pointer" @click="sortBy('bew_kondisi')" style="color: #000;">
+            <th class="text-center p-2 border cursor-pointer" @click="sortBy('new_kondisi')" style="color: #000;">
               Kondisi
-              <span v-if="sortKey === 'bew_kondisi'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+              <span v-if="sortKey === 'new_kondisi'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+            </th>
+            <th class="text-center p-2 border cursor-pointer" @click="sortBy('no_seri.deskripsi_cek')" style="color: #000;">
+              Keterangan
+              <span v-if="sortKey === 'no_seri.deskripsi_cek'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
             </th>
           </tr>
         </thead>
@@ -77,6 +81,7 @@
                 {{ item.new_kondisi || '-' }}
               </div>
             </td>
+            <td class="text-center p-2 border">{{ item.no_seri.deskripsi_cek || '-' }}</td>
           </tr>
         </tbody>
       </table>

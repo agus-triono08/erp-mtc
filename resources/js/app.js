@@ -426,6 +426,7 @@ const routes = [
     {
         path: '/admin-mtc/data-alat',
         component: DataAlat,
+        name: 'data-alat',
     },
     {
         path: '/admin-mtc/data-alat/edit/:id',

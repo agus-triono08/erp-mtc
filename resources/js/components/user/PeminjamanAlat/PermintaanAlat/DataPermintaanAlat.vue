@@ -90,8 +90,8 @@
             <td>{{ permintaan.no_permintaan || '-' }}</td>
             <td>{{ permintaan.tgl_permintaan || '-' }}</td>
             <td>{{ permintaan.total || '-' }}</td>
-            <td>{{ permintaan.pengguna ? permintaan.pengguna.nama_pengguna : '-' }}</td>
-            <td>{{ permintaan.pengguna ? permintaan.pengguna.divisi : '-' }}</td>       
+            <td>{{ permintaan.users && permintaan.users.nama || '-' }}</td>
+            <td>{{ permintaan.users && permintaan.users.divisi && permintaan.users.divisi.divisi || '-' }}</td>       
             <td>
               <div
                 class="btn-sts"

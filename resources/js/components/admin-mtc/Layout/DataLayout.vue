@@ -93,7 +93,7 @@
       </div>
 
     <!-- Modal untuk Input dan Edit Data -->
-    <div v-if="isModalOpen" class="modal fade show" style="display: block;" tabindex="-1" role="dialog" aria-hidden="true">
+    <div v-if="isModalOpen" class="ove fade show" style="display: block;" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content" style="max-height: 90vh; overflow-y: auto;">
           <div class="modal-header">

@@ -347,6 +347,9 @@ export default {
 
         this.showModal = false;
         this.aktivitas = { buktiPertanggungJawaban: null };
+
+        await this.fetchData();
+
       } catch (err) {
         Swal.fire({
           icon: 'error',

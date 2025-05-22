@@ -28,7 +28,7 @@ class NoSeri extends Model
         'alasan_penolakan_perubahan',
         'tgl_perubahan',
         'tgl_pengecekan',
-        'deskripsi_cek',
+        'deskripsi_cek',        
     ];
 
     public function layout(): BelongsTo

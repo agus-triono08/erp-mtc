@@ -379,17 +379,134 @@ class ToolsController extends Controller
             'vendor' => 'nullable|string',
             'fungsi' => 'nullable|string',
             'deskripsi' => 'nullable|string',
+            'jadwal_perawatan' => 'nullable|numeric',
+            'waktu_perawatan' => 'nullable|integer|min:0',
+            'jumlah_orang_perawatan' => 'nullable|integer|min:0',
+            'jadwal_mulai_perawatan' => 'nullable|date',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'note_perubahan_jadwal' => 'nullable|string',
         ]);
 
         // Ambil data yang diizinkan untuk diubah
-        $data = $request->only(['pembelian', 'unit', 'sumber', 'vendor', 'fungsi', 'deskripsi']);
+        $data = $request->only(['pembelian', 'unit', 'sumber', 'vendor', 'fungsi', 'deskripsi', 
+                            'jadwal_perawatan', 'waktu_perawatan', 'jumlah_orang_perawatan', 'note_perubahan_jadwal']);
+
+        // Menangani upload gambar (jika ada)
+        if ($request->hasFile('gambar')) {
+            // Hapus gambar lama jika ada
+            if ($tool->gambar && Storage::disk('public')->exists($tool->gambar)) {
+                Storage::disk('public')->delete($tool->gambar);
+            }
+            
+            $file = $request->file('gambar');
+            $filename = time() . '_' . Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME));
+            $extension = $file->getClientOriginalExtension();
+            $path = "tools/{$filename}.{$extension}";
+            Storage::disk('public')->put($path, file_get_contents($file));
+            $data['gambar'] = $path;
+        }
 
         // Update data alat
         $tool->update($data);
 
+        // Jika ada perubahan pada jadwal perawatan atau waktu perawatan
+        if ($request->has(['jadwal_perawatan', 'waktu_perawatan', 'jumlah_orang_perawatan'])) {
+            $this->updateMaintenanceSchedule($tool, $request);
+        }
+
         // Mengembalikan response dengan data lengkap termasuk relasi
         return response()->json($tool->load('jenis.kategori.merek.tipe', 'layout'));
     }
+
+    protected function updateMaintenanceSchedule($tool, $request)
+    {
+        // Jika tidak ada jadwal perawatan, tidak perlu melakukan apa-apa
+        if (empty($request->jadwal_perawatan) || empty($request->waktu_perawatan)) {
+            return;
+        }
+
+        $jadwalPerawatan = (int) $request->jadwal_perawatan;
+        $waktuPerNoSeri = (int) $request->waktu_perawatan;
+        $jumlahOrang = max((int) $request->jumlah_orang_perawatan, 1);
+        
+        // Gunakan jadwal_mulai_perawatan jika ada, atau gunakan tanggal sekarang
+        $startTime = $request->jadwal_mulai_perawatan 
+            ? Carbon::parse($request->jadwal_mulai_perawatan)
+            : now();
+
+        // ID pengguna yang akan membuat perawatan
+        $userId = auth()->id() ?? $request->users_id ?? 1;
+
+        // Dapatkan semua nomor seri yang terkait dengan alat ini
+        $noSeriRecords = NoSeri::where('tools_id', $tool->id)->get();
+
+        foreach ($noSeriRecords as $noSeriRecord) {
+            // Hapus semua perawatan yang belum dilakukan (masih akan datang)
+            Perawatan::where('no_seri_id', $noSeriRecord->id)
+                    ->where('tgl_perawatan', '>', now())
+                    ->delete();
+
+            // Hitung waktu perawatan
+            $waktuPerNoSeriEffisien = $jumlahOrang > 0 ? $waktuPerNoSeri : $waktuPerNoSeri;
+
+            // Buat perawatan pertama
+            $noPerawatan = 'JP' . str_pad($noSeriRecord->id, 8, '0', STR_PAD_LEFT);
+
+            // Hitung waktu mulai dan selesai
+            [$waktuMulai, $waktuSelesai] = $this->advanceWorkTime($startTime, $waktuPerNoSeriEffisien);
+
+            Perawatan::create([
+                'no_seri_id' => $noSeriRecord->id,
+                'users_id' => $userId,
+                'no_perawatan' => $noPerawatan,
+                'tgl_perawatan' => $waktuMulai,
+                'waktu_perawatan' => gmdate('H:i:s', $waktuPerNoSeri * 60),
+            ]);
+
+            // Buat perawatan berulang selama tahun ini
+            $currentDate = $waktuSelesai->copy()->addMonths($jadwalPerawatan);
+            while ($currentDate->year == now()->year) {
+                Perawatan::create([
+                    'no_seri_id' => $noSeriRecord->id,
+                    'users_id' => $userId,
+                    'no_perawatan' => $noPerawatan,
+                    'tgl_perawatan' => $currentDate,
+                    'waktu_perawatan' => gmdate('H:i:s', $waktuPerNoSeri * 60),
+                ]);
+                $currentDate->addMonths($jadwalPerawatan);
+            }
+
+            // Update start time untuk alat berikutnya
+            $startTime = $waktuSelesai->copy();
+        }
+    }
+    // public function update(Request $request, $id)
+    // {
+    //     $tool = Tools::findOrFail($id);
+
+    //     // Validasi hanya untuk field yang dapat diedit
+    //     $request->validate([
+    //         'pembelian' => 'nullable|string',
+    //         'unit' => 'nullable|string',
+    //         'sumber' => 'nullable|string',
+    //         'vendor' => 'nullable|string',
+    //         'fungsi' => 'nullable|string',
+    //         'deskripsi' => 'nullable|string',
+    //         'jadwal_perawatan' => 'nullable|numeric',
+    //         'waktu_perawatan' => 'nullable|integer|min:0',
+    //         'jumlah_orang_perawatan' => 'nullable|integer|min:0',
+    //         'jadwal_mulai_perawatan' => 'nullable|date', // Validasi baru
+    //     ]);
+
+    //     // Ambil data yang diizinkan untuk diubah
+    //     $data = $request->only(['pembelian', 'unit', 'sumber', 'vendor', 'fungsi', 'deskripsi']);
+
+    //     // Update data alat
+    //     $tool->update($data);
+
+    //     // Mengembalikan response dengan data lengkap termasuk relasi
+    //     return response()->json($tool->load('jenis.kategori.merek.tipe', 'layout'));
+    // }
 
     /**
      * Remove the specified resource from storage.
@@ -441,6 +558,27 @@ class ToolsController extends Controller
             'total_low_stock' => $totalLowStock,
             'message' => 'Data tools dengan stok rendah berhasil diambil'
         ]);
+    }
+
+    public function listLowStockTools()
+    {
+        try {
+            $stok = Tools::with(['noSeri'])
+                ->where('stok_akhir', '<=', 1)
+                ->orderBy('created_at', 'desc')
+                ->get();
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Daftar stok yang kurang sama dengan 1',
+                'data' => $stok
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal mengambil data: ' . $e->getMessage()
+            ], 500);
+        }
     }
 }
 

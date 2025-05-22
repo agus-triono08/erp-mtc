@@ -269,26 +269,78 @@ class PerawatanController extends Controller
         }
     }
 
-    public function getProgressData(): JsonResponse
+    public function listBelum()
     {
-        // Hitung total semua perawatan
-        $totalPerawatan = Perawatan::count();
+        try {
+            $perawatan = Perawatan::with(['noSeri.tools'])
+                ->where('status', 'Belum Dilakukan Perawatan')
+                ->whereMonth('tgl_perawatan', now()->month)
+                ->whereYear('tgl_perawatan', now()->year)
+                ->orderBy('created_at', 'desc')
+                ->get();
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Daftar perawatan belum dilakukan perawatan',
+                'data' => $perawatan
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal mengambil data: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function getProgressData(Request $request): JsonResponse
+    {
+        // Ambil parameter tanggal atau set default bulan ini
+        $startDate = $request->input('start_date', now()->startOfMonth()->format('Y-m-d'));
+        $endDate = $request->input('end_date', now()->endOfMonth()->format('Y-m-d'));
+
+        // Query dengan filter tanggal berdasarkan tgl_perawatan
+        $query = Perawatan::query();
         
-        // Jika tidak ada data perawatan, set semua nilai ke 0
+        // Filter berdasarkan range tanggal perawatan
+        $query->where(function($q) use ($startDate, $endDate) {
+            $q->whereBetween('tgl_perawatan', [$startDate, $endDate])
+            ->orWhere(function($q2) use ($startDate, $endDate) {
+                $q2->whereNotNull('tgl_mulai_perawatan')
+                    ->whereNotNull('tgl_selesai_perawatan')
+                    ->where(function($q3) use ($startDate, $endDate) {
+                        $q3->whereBetween('tgl_mulai_perawatan', [$startDate, $endDate])
+                            ->orWhereBetween('tgl_selesai_perawatan', [$startDate, $endDate])
+                            ->orWhere(function($q4) use ($startDate, $endDate) {
+                                $q4->where('tgl_mulai_perawatan', '<=', $startDate)
+                                ->where('tgl_selesai_perawatan', '>=', $endDate);
+                            });
+                    });
+            });
+        });
+
+        $totalPerawatan = $query->count();
+        
         if ($totalPerawatan === 0) {
             $progressData = [
                 'belum_dilakukan' => 0,
                 'dalam_proses' => 0,
                 'selesai' => 0,
-                'total' => 0
+                'total' => 0,
+                'counts' => [
+                    'belum_dilakukan' => 0,
+                    'dalam_proses' => 0,
+                    'selesai' => 0
+                ],
+                'date_range' => [
+                    'start' => $startDate,
+                    'end' => $endDate
+                ]
             ];
         } else {
-            // Hitung jumlah per status
-            $belumDilakukan = Perawatan::where('status', 'Belum Dilakukan Perawatan')->count();
-            $dalamProses = Perawatan::where('status', 'Dalam Proses Perawatan')->count();
-            $selesai = Perawatan::where('status', 'Selesai Perawatan')->count();
+            $belumDilakukan = $query->clone()->where('status', 'Belum Dilakukan Perawatan')->count();
+            $dalamProses = $query->clone()->where('status', 'Dalam Proses Perawatan')->count();
+            $selesai = $query->clone()->where('status', 'Selesai Perawatan')->count();
             
-            // Hitung persentase
             $progressData = [
                 'belum_dilakukan' => round(($belumDilakukan / $totalPerawatan) * 100, 2),
                 'dalam_proses' => round(($dalamProses / $totalPerawatan) * 100, 2),
@@ -298,6 +350,10 @@ class PerawatanController extends Controller
                     'belum_dilakukan' => $belumDilakukan,
                     'dalam_proses' => $dalamProses,
                     'selesai' => $selesai
+                ],
+                'date_range' => [
+                    'start' => $startDate,
+                    'end' => $endDate
                 ]
             ];
         }

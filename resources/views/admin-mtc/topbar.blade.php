@@ -14,10 +14,10 @@
 
         <!-- Nav Item Report -->
         <li class="nav-item dropdown no-arrow mx-1">
-            {{-- <a class="nav-link" href="{{ route('laporkendala.adminmtc') }}"> --}}
             <a class="nav-link" href="https://docs.google.com/forms/d/e/1FAIpQLSeuESWTp3A3C39v86JGDB9uGcWohM-hpsGqCxTyadv2BTvzZg/viewform" target="_blank">
                 <i class="fas fa-fw fa-exclamation-triangle" style="color: #ffac32"></i>
-                <span>Lapor Kendala Teknis</span></a>
+                <span>Lapor Kendala Teknis</span>
+            </a>
         </li>
 
         <div class="topbar-divider d-none d-sm-block"></div>
@@ -26,26 +26,25 @@
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin Maintenance</span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                    @auth
+                        {{ Auth::user()->nama }} 
+                        {{-- ({{ Auth::user()->jabatan->nama ?? 'Unknown Role' }}) --}}
+                    @else
+                        Guest
+                    @endauth
+                </span>
                 <img class="img-profile rounded-circle"
-                    src="{{ asset('vendor/sb-admin/img/undraw_profile.svg') }}">
+                    src="{{ Auth::user()->foto ? asset('storage/' . Auth::user()->foto) : asset('vendor/sb-admin/img/undraw_profile.svg') }}">
             </a>
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                 aria-labelledby="userDropdown">
-                {{-- <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#profileModal">
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                     Profile
                 </a>
-                <a class="dropdown-item" href="#">
-                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Settings
-                </a>
-                <a class="dropdown-item" href="#">
-                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Activity Log
-                </a> --}}
-                {{-- <div class="dropdown-divider"></div> --}}
+                <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                     Logout
@@ -56,3 +55,72 @@
     </ul>
 
 </nav>
+
+<!-- Logout Modal-->
+<div class="modal fade show" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" href="{{ route('logout') }}" 
+                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    Logout
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Profile Modal -->
+<div class="modal fade show" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel"
+    aria-hidden="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="profileModalLabel">User Profile</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @auth
+                <div class="text-center mb-3">
+                    <img class="img-profile rounded-circle" width="100"
+                        src="{{ Auth::user()->foto ? asset('storage/' . Auth::user()->foto) : asset('vendor/sb-admin/img/undraw_profile.svg') }}">
+                </div>
+                <div class="form-group">
+                    <label>Nama:</label>
+                    <input type="text" class="form-control" value="{{ Auth::user()->nama }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Username:</label>
+                    <input type="text" class="form-control" value="{{ Auth::user()->username }}" readonly>
+                </div>
+                {{-- <div class="form-group">
+                    <label>Divisi:</label>
+                    <input type="text" class="form-control" value="{{ Auth::user()->divisi->nama ?? 'N/A' }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Jabatan:</label>
+                    <input type="text" class="form-control" value="{{ Auth::user()->jabatan->nama ?? 'N/A' }}" readonly>
+                </div> --}}
+                @else
+                <p>No user data available</p>
+                @endauth
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

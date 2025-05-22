@@ -5,6 +5,7 @@ namespace App\Models\Inventory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\User;
 
 class Error extends Model
 {
@@ -22,6 +23,11 @@ class Error extends Model
         'status',
         'tgl_selesai',
     ];
+
+    public function users() : BelongsTo
+    {
+        return $this->belongsTo(User::class, 'users_id', 'id');
+    }
 
     public function noSeri() :BelongsTo 
     {

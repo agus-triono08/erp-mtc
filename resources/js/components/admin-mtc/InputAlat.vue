@@ -189,7 +189,7 @@
             class="form-control"
             required>
             <option value="" disabled selected>Pilih Interval Perawatan</option>
-            <option value="0">Tidak Ada Perawatan</option>
+            <option value="0">Tanpa Perawatan</option>
             <option value="1">Setiap 1 Bulan</option>
             <option value="3">Setiap 3 Bulan</option>
             <option value="6">Setiap 6 Bulan</option>
@@ -353,7 +353,7 @@
             required
           />
         </div>
-      </div>          
+      </div>
 
       <button class="btn btn-primary mb-3 float-right">Simpan</button>
     </form>

@@ -20,9 +20,11 @@
             <!-- Main Content -->
             <div id="content">
 
+                <div class="sticky-top" >
                 <!-- Topbar -->
                 @include('user-mtc.topbar')
                 <!-- End of Topbar -->
+                </div>
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">

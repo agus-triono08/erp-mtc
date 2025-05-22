@@ -19,12 +19,12 @@ Route::get('/', function () {
 })->name('login');
 
 // Route untuk guest (belum login)
-Route::middleware(['guest'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     // Anda bisa menambahkan route untuk login/register di sini jika diperlukan
 });
 
 // Route untuk Admin MTC (harus login)
-Route::middleware(['guest'])->prefix('admin-mtc')->group(function () {
+Route::middleware(['auth', 'jabatan:1'])->prefix('admin-mtc')->group(function () {
     Route::get('/dashboard', function () {
         return view('admin-mtc.Main.dashboard');
     })->name('dashboard.adminmtc');
@@ -96,7 +96,7 @@ Route::middleware(['guest'])->prefix('admin-mtc')->group(function () {
 });
 
 // Route untuk User MTC (harus login)
-Route::middleware(['guest'])->prefix('user-mtc')->group(function () {
+Route::middleware(['auth', 'jabatan:3'])->prefix('user-mtc')->group(function () {
     Route::get('/dashboard', function () {
         return view('user-mtc.Main.dashboard');
     })->name('dashboard.user-mtc');
@@ -111,7 +111,7 @@ Route::middleware(['guest'])->prefix('user-mtc')->group(function () {
 });
 
 // Route untuk User biasa (harus login)
-Route::middleware(['guest'])->prefix('user')->group(function () {
+Route::middleware(['auth', 'jabatan:4'])->prefix('user')->group(function () {
     Route::get('/dashboard', function () {
         return view('user.Main.dashboard');
     })->name('dashboard.user');
@@ -130,7 +130,7 @@ Route::middleware(['guest'])->prefix('user')->group(function () {
 });
 
 // Route untuk Manajer MTC (harus login)
-Route::middleware(['guest'])->prefix('manajer-mtc')->group(function () {
+Route::middleware(['auth', 'jabatan:2'])->prefix('manajer-mtc')->group(function () {
     Route::get('/dashboard', function () {
         return view('manajer-mtc.Main.dashboard');
     })->name('dashboard.manajermtc');
@@ -194,7 +194,7 @@ Route::middleware(['guest'])->prefix('manajer-mtc')->group(function () {
 });
 
 // Route untuk kondisi (bisa disesuaikan apakah perlu guest atau tidak)
-Route::middleware(['guest'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/kondisi-error', function(){
         return view('admin-mtc.Main.Kondisi.kondisi-error');
     })->name('kondisi-error');

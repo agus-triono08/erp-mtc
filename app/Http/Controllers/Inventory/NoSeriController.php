@@ -678,7 +678,7 @@ class NoSeriController extends Controller
                         'old_status' => $oldStatus,
                         'new_status' => $newStatus,
                         'changed_at'  => now(),
-                        'changed_by'  => auth()->id() ?? 3, // pastikan user sudah login
+                        'changed_by'  => auth()->id() ?? 4, // pastikan user sudah login
                     ]);
 
                     // Kurangi stok akhir pada tabel tools
@@ -774,7 +774,7 @@ class NoSeriController extends Controller
                         'old_status' => $oldStatus,
                         'new_status' => $newStatus,
                         'changed_at'  => now(),
-                        'changed_by'  => auth()->id() ?? 3, // pastikan user sudah login
+                        'changed_by'  => auth()->id() ?? 4, // pastikan user sudah login
                     ]);
 
                     // Kurangi stok akhir pada tabel tools
@@ -1084,7 +1084,7 @@ class NoSeriController extends Controller
             Hilang::create([
                 'no_seri_id' => $noseri->id,
                 'kondisi' => 'Hilang',
-                'users_id' => auth()->id() ?? 3,
+                'users_id' => auth()->id() ?? 4,
                 'no_kehilangan' => $no_kehilangan,
                 'tgl_kehilangan' => $request->tgl_pengecekan,
                 'detail_hilang' => $request->deskripsi_cek,
@@ -1102,7 +1102,7 @@ class NoSeriController extends Controller
                     'old_status' => $oldStatus,
                     'new_status' => $newStatus,
                     'changed_at'  => now(),
-                    'changed_by'  => auth()->id() ?? 3,
+                    'changed_by'  => auth()->id() ?? 4,
                 ]);
 
                 // Kurangi stok akhir pada tabel tools

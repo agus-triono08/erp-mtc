@@ -37,7 +37,7 @@
               class="badge"
               :class="{
                         'status-active': dataBaru.status === 'Selesai',
-                        'status-error': dataProses.status === 'Proses',
+                        'status-error': dataBaru.status === 'Proses',
                         'status-musnah': dataBaru.status === 'Belum',}">
               {{ dataBaru.status }}
             </div>

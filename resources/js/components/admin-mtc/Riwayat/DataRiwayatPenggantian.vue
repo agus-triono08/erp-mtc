@@ -73,6 +73,11 @@
             <td>{{ item.users.divisi.divisi }}</td>
           </tr>
         </tbody> -->
+        <tbody v-if="paginatedData.length === 0">
+          <tr>
+            <td class="text-center" colspan="8">Tidak Ada Data</td>
+          </tr>
+        </tbody>
         <tbody v-for="item in paginatedData" :key="item.id">
           <tr v-for="(proses, index) in item.hilang_activity_proses" :key="proses.id">
             <td class="text-center p-2 border">{{ proses.tgl_penggantian || '-' }}</td>

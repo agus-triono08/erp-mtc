@@ -24423,6 +24423,577 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -24439,13 +25010,29 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       availableYearsPermintaan: [],
       errorMessagePermintaan: '',
       lowStockCount: 0,
+      stokList: [],
+      loadingStok: false,
       peminjamanStokCount: 0,
+      peminjamanList: [],
+      loadingPeminjaman: false,
       permintaanStokCount: 0,
+      permintaanList: [],
+      loadingPermintaan: false,
       perbaikanStokCount: 0,
+      perbaikanList: [],
+      loadingPerbaikan: false,
       kerusakanStockCount: 0,
+      kerusakanList: [],
+      loadingKerusakan: false,
       pemusnahanStokCount: 0,
+      pemusnahanList: [],
+      loadingPemusnahan: false,
       kehilanganStokCount: 0,
+      kehilanganList: [],
+      loadingKehilangan: false,
       perawatanStokCount: 0,
+      perawatanList: [],
+      loadingPerawatan: false,
       progressData: {
         belum_dilakukan: 0,
         dalam_proses: 0,
@@ -24455,7 +25042,15 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
           belum_dilakukan: 0,
           dalam_proses: 0,
           selesai: 0
+        },
+        date_range: {
+          start: '',
+          end: ''
         }
+      },
+      filter: {
+        start_date: '',
+        end_date: ''
       },
       loading: true,
       chartData: {
@@ -24465,6 +25060,11 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       },
       pieChart: null
     };
+  },
+  created: function created() {
+    // Set default ke awal dan akhir bulan ini
+    this.setDefaultDateRange();
+    this.fetchProgressData();
   },
   mounted: function mounted() {
     this.fetchLowStockCount();
@@ -24498,50 +25098,68 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
               if (response.data.success) {
                 _this.lowStockCount = response.data.total_low_stock;
               }
-              _context.next = 10;
+              _context.next = 11;
               break;
             case 7:
               _context.prev = 7;
               _context.t0 = _context["catch"](0);
               console.error('Error fetching low stock count:', _context.t0);
+              _this.$toast.error('Gagal memuat jumlah stok tools <= 1');
               // Anda bisa menambahkan notifikasi error di sini
-            case 10:
+            case 11:
             case "end":
               return _context.stop();
           }
         }, _callee, null, [[0, 7]]);
       }))();
     },
-    fetchPeminjamanStokCount: function fetchPeminjamanStokCount() {
+    showStokModal: function showStokModal() {
       var _this2 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-        var response;
+        var response, _error$response;
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) switch (_context2.prev = _context2.next) {
             case 0:
               _context2.prev = 0;
-              _context2.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/peminjaman/belum-diproses/count');
-            case 3:
+              _this2.loadingStok = true;
+              _context2.next = 4;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/tools/low-stock/list');
+            case 4:
               response = _context2.sent;
-              if (response.data.success) {
-                _this2.peminjamanStokCount = response.data.count;
+              if (!response.data.success) {
+                _context2.next = 10;
+                break;
               }
-              _context2.next = 10;
+              _this2.stokList = response.data.data;
+              $('#stokModal').modal('show');
+              _context2.next = 11;
               break;
-            case 7:
-              _context2.prev = 7;
-              _context2.t0 = _context2["catch"](0);
-              console.error('Error fetching low stock count:', _context2.t0);
-              // Anda bisa menambahkan notifikasi error di sini
             case 10:
+              throw new Error(response.data.message || 'Invalid response format');
+            case 11:
+              _context2.next = 17;
+              break;
+            case 13:
+              _context2.prev = 13;
+              _context2.t0 = _context2["catch"](0);
+              console.error('Error fetching stok tools list:', _context2.t0);
+              _this2.$toast.error(((_error$response = _context2.t0.response) === null || _error$response === void 0 || (_error$response = _error$response.data) === null || _error$response === void 0 ? void 0 : _error$response.message) || 'Gagal memuat daftar perbaikan');
+            case 17:
+              _context2.prev = 17;
+              _this2.loadingStok = false;
+              return _context2.finish(17);
+            case 20:
             case "end":
               return _context2.stop();
           }
-        }, _callee2, null, [[0, 7]]);
+        }, _callee2, null, [[0, 13, 17, 20]]);
       }))();
     },
-    fetchPermintaanStokCount: function fetchPermintaanStokCount() {
+    viewDetailStok: function viewDetailStok() {
+      $('#stokModal').modal('hide');
+      this.$router.push('/admin-mtc/data-alat');
+    },
+    fetchPeminjamanStokCount: function fetchPeminjamanStokCount() {
       var _this3 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
         var response;
@@ -24550,56 +25168,100 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             case 0:
               _context3.prev = 0;
               _context3.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/permintaan/belum-diproses/count');
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/peminjaman/belum-diproses/count');
             case 3:
               response = _context3.sent;
               if (response.data.success) {
-                _this3.permintaanStokCount = response.data.count;
+                _this3.peminjamanStokCount = response.data.count;
               }
-              _context3.next = 10;
+              _context3.next = 11;
               break;
             case 7:
               _context3.prev = 7;
               _context3.t0 = _context3["catch"](0);
-              console.error('Error fetching low stock count:', _context3.t0);
-              // Anda bisa menambahkan notifikasi error di sini
-            case 10:
+              console.error('Error fetching peminjaman count:', _context3.t0);
+              _this3.$toast.error('Gagal memuat jumlah peminjaman');
+            case 11:
             case "end":
               return _context3.stop();
           }
         }, _callee3, null, [[0, 7]]);
       }))();
     },
-    fetchPerbaikanStokCount: function fetchPerbaikanStokCount() {
+    showPeminjamanModal: function showPeminjamanModal() {
       var _this4 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
-        var response;
+        var response, _error$response2;
         return _regeneratorRuntime().wrap(function _callee4$(_context4) {
           while (1) switch (_context4.prev = _context4.next) {
             case 0:
               _context4.prev = 0;
-              _context4.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/perbaikan/belum/count');
-            case 3:
+              _this4.loadingPeminjaman = true;
+              _context4.next = 4;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/peminjaman/belum-diproses/list');
+            case 4:
               response = _context4.sent;
-              if (response.data.success) {
-                _this4.perbaikanStokCount = response.data.count;
+              if (!response.data.success) {
+                _context4.next = 10;
+                break;
               }
-              _context4.next = 10;
+              _this4.peminjamanList = response.data.data;
+              $('#peminjamanModal').modal('show');
+              _context4.next = 11;
               break;
-            case 7:
-              _context4.prev = 7;
-              _context4.t0 = _context4["catch"](0);
-              console.error('Error fetching low stock count:', _context4.t0);
-              // Anda bisa menambahkan notifikasi error di sini
             case 10:
+              throw new Error(response.data.message || 'Invalid response format');
+            case 11:
+              _context4.next = 17;
+              break;
+            case 13:
+              _context4.prev = 13;
+              _context4.t0 = _context4["catch"](0);
+              console.error('Error fetching peminjaman list:', _context4.t0);
+              _this4.$toast.error(((_error$response2 = _context4.t0.response) === null || _error$response2 === void 0 || (_error$response2 = _error$response2.data) === null || _error$response2 === void 0 ? void 0 : _error$response2.message) || 'Gagal memuat daftar peminjaman');
+            case 17:
+              _context4.prev = 17;
+              _this4.loadingPeminjaman = false;
+              return _context4.finish(17);
+            case 20:
             case "end":
               return _context4.stop();
           }
-        }, _callee4, null, [[0, 7]]);
+        }, _callee4, null, [[0, 13, 17, 20]]);
       }))();
     },
-    fetchKerusakanStockCount: function fetchKerusakanStockCount() {
+    viewDetailPeminjaman: function viewDetailPeminjaman(id) {
+      // Tutup modal terlebih dahulu
+      $('#peminjamanModal').modal('hide');
+
+      // Navigasi ke halaman detail
+      this.$router.push("/admin-mtc/data-alat/detail-peminjaman/".concat(id));
+    },
+    closeModal: function closeModal() {
+      $('#peminjamanModal').modal('hide');
+    },
+    closeModalPermintaan: function closeModalPermintaan() {
+      $('#permintaanModal').modal('hide');
+    },
+    closeModalPerbaikan: function closeModalPerbaikan() {
+      $('#perbaikanModal').modal('hide');
+    },
+    closeModalKerusakan: function closeModalKerusakan() {
+      $('#kerusakanModal').modal('hide');
+    },
+    closeModalPemusnahan: function closeModalPemusnahan() {
+      $('#pemusnahanModal').modal('hide');
+    },
+    closeModalHilang: function closeModalHilang() {
+      $('#kehilanganModal').modal('hide');
+    },
+    closeModalStok: function closeModalStok() {
+      $('#stokModal').modal('hide');
+    },
+    closeModalPerawatan: function closeModalPerawatan() {
+      $('#perawatanModal').modal('hide');
+    },
+    fetchPermintaanStokCount: function fetchPermintaanStokCount() {
       var _this5 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
         var response;
@@ -24608,56 +25270,77 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             case 0:
               _context5.prev = 0;
               _context5.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/kerusakan/belum/count');
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/permintaan/belum-diproses/count');
             case 3:
               response = _context5.sent;
               if (response.data.success) {
-                _this5.kerusakanStockCount = response.data.count;
+                _this5.permintaanStokCount = response.data.count;
               }
-              _context5.next = 10;
+              _context5.next = 11;
               break;
             case 7:
               _context5.prev = 7;
               _context5.t0 = _context5["catch"](0);
               console.error('Error fetching low stock count:', _context5.t0);
+              _this5.$toast.error('Gagal memuat jumlah permintaan');
               // Anda bisa menambahkan notifikasi error di sini
-            case 10:
+            case 11:
             case "end":
               return _context5.stop();
           }
         }, _callee5, null, [[0, 7]]);
       }))();
     },
-    fetchPemusnahanStokCount: function fetchPemusnahanStokCount() {
+    showPermintaanModal: function showPermintaanModal() {
       var _this6 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
-        var response;
+        var response, _error$response3;
         return _regeneratorRuntime().wrap(function _callee6$(_context6) {
           while (1) switch (_context6.prev = _context6.next) {
             case 0:
               _context6.prev = 0;
-              _context6.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/pemusnahan/selesai/count');
-            case 3:
+              _this6.loadingPermintaan = true;
+              _context6.next = 4;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/permintaan/belum-diproses/list');
+            case 4:
               response = _context6.sent;
-              if (response.data.success) {
-                _this6.pemusnahanStokCount = response.data.count;
+              if (!response.data.success) {
+                _context6.next = 10;
+                break;
               }
-              _context6.next = 10;
+              _this6.permintaanList = response.data.data;
+              $('#permintaanModal').modal('show');
+              _context6.next = 11;
               break;
-            case 7:
-              _context6.prev = 7;
-              _context6.t0 = _context6["catch"](0);
-              console.error('Error fetching low stock count:', _context6.t0);
-              // Anda bisa menambahkan notifikasi error di sini
             case 10:
+              throw new Error(response.data.message || 'Invalid response format');
+            case 11:
+              _context6.next = 17;
+              break;
+            case 13:
+              _context6.prev = 13;
+              _context6.t0 = _context6["catch"](0);
+              console.error('Error fetching permintaan list:', _context6.t0);
+              _this6.$toast.error(((_error$response3 = _context6.t0.response) === null || _error$response3 === void 0 || (_error$response3 = _error$response3.data) === null || _error$response3 === void 0 ? void 0 : _error$response3.message) || 'Gagal memuat daftar permintaan');
+            case 17:
+              _context6.prev = 17;
+              _this6.loadingPermintaan = false;
+              return _context6.finish(17);
+            case 20:
             case "end":
               return _context6.stop();
           }
-        }, _callee6, null, [[0, 7]]);
+        }, _callee6, null, [[0, 13, 17, 20]]);
       }))();
     },
-    fetchKehilanganStokCount: function fetchKehilanganStokCount() {
+    viewDetailPermintaan: function viewDetailPermintaan(id) {
+      // Tutup modal terlebih dahulu
+      $('#permintaanModal').modal('hide');
+
+      // Navigasi ke halaman detail
+      this.$router.push("/admin-mtc/data-alat/permintaan/detail/".concat(id));
+    },
+    fetchPerbaikanStokCount: function fetchPerbaikanStokCount() {
       var _this7 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee7() {
         var response;
@@ -24666,56 +25349,77 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             case 0:
               _context7.prev = 0;
               _context7.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/kehilangan/belum/count');
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/perbaikan/belum/count');
             case 3:
               response = _context7.sent;
               if (response.data.success) {
-                _this7.kehilanganStokCount = response.data.count;
+                _this7.perbaikanStokCount = response.data.count;
               }
-              _context7.next = 10;
+              _context7.next = 11;
               break;
             case 7:
               _context7.prev = 7;
               _context7.t0 = _context7["catch"](0);
               console.error('Error fetching low stock count:', _context7.t0);
+              _this7.$toast.error('Gagal memuat jumlah perbaikan');
               // Anda bisa menambahkan notifikasi error di sini
-            case 10:
+            case 11:
             case "end":
               return _context7.stop();
           }
         }, _callee7, null, [[0, 7]]);
       }))();
     },
-    fetchPerawatanStokCount: function fetchPerawatanStokCount() {
+    showPerbaikanModal: function showPerbaikanModal() {
       var _this8 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee8() {
-        var response;
+        var response, _error$response4;
         return _regeneratorRuntime().wrap(function _callee8$(_context8) {
           while (1) switch (_context8.prev = _context8.next) {
             case 0:
               _context8.prev = 0;
-              _context8.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/perawatan/belum/count');
-            case 3:
+              _this8.loadingPerbaikan = true;
+              _context8.next = 4;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/perbaikan/belum-diproses/list');
+            case 4:
               response = _context8.sent;
-              if (response.data.success) {
-                _this8.perawatanStokCount = response.data.count;
+              if (!response.data.success) {
+                _context8.next = 10;
+                break;
               }
-              _context8.next = 10;
+              _this8.perbaikanList = response.data.data;
+              $('#perbaikanModal').modal('show');
+              _context8.next = 11;
               break;
-            case 7:
-              _context8.prev = 7;
-              _context8.t0 = _context8["catch"](0);
-              console.error('Error fetching low stock count:', _context8.t0);
-              // Anda bisa menambahkan notifikasi error di sini
             case 10:
+              throw new Error(response.data.message || 'Invalid response format');
+            case 11:
+              _context8.next = 17;
+              break;
+            case 13:
+              _context8.prev = 13;
+              _context8.t0 = _context8["catch"](0);
+              console.error('Error fetching perbaikan list:', _context8.t0);
+              _this8.$toast.error(((_error$response4 = _context8.t0.response) === null || _error$response4 === void 0 || (_error$response4 = _error$response4.data) === null || _error$response4 === void 0 ? void 0 : _error$response4.message) || 'Gagal memuat daftar perbaikan');
+            case 17:
+              _context8.prev = 17;
+              _this8.loadingPerbaikan = false;
+              return _context8.finish(17);
+            case 20:
             case "end":
               return _context8.stop();
           }
-        }, _callee8, null, [[0, 7]]);
+        }, _callee8, null, [[0, 13, 17, 20]]);
       }))();
     },
-    fetchAvailableYears: function fetchAvailableYears() {
+    viewDetailPerbaikan: function viewDetailPerbaikan(id) {
+      // Tutup modal terlebih dahulu
+      $('#perbaikanModal').modal('hide');
+
+      // Navigasi ke halaman detail
+      this.$router.push('/kondisi-error');
+    },
+    fetchKerusakanStockCount: function fetchKerusakanStockCount() {
       var _this9 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee9() {
         var response;
@@ -24724,67 +25428,82 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             case 0:
               _context9.prev = 0;
               _context9.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/peminjaman/chart/available-years');
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/kerusakan/belum/count');
             case 3:
               response = _context9.sent;
-              _this9.availableYears = response.data.years;
-              // Set tahun terakhir sebagai tahun yang dipilih secara default
-              if (_this9.availableYears.length > 0) {
-                _this9.selectedYear = Math.max.apply(Math, _toConsumableArray(_this9.availableYears));
+              if (response.data.success) {
+                _this9.kerusakanStockCount = response.data.count;
               }
-              _context9.next = 12;
+              _context9.next = 11;
               break;
-            case 8:
-              _context9.prev = 8;
+            case 7:
+              _context9.prev = 7;
               _context9.t0 = _context9["catch"](0);
-              console.error('Error fetching available years:', _context9.t0);
-              _this9.errorMessage = 'Gagal memuat daftar tahun';
-            case 12:
+              console.error('Error fetching low stock count:', _context9.t0);
+              _this9.$toast.error('Gagal memuat jumlah kerusakan');
+              // Anda bisa menambahkan notifikasi error di sini
+            case 11:
             case "end":
               return _context9.stop();
           }
-        }, _callee9, null, [[0, 8]]);
+        }, _callee9, null, [[0, 7]]);
       }))();
     },
-    fetchMonthlyCompletedLoans: function fetchMonthlyCompletedLoans() {
+    showKerusakanModal: function showKerusakanModal() {
       var _this10 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee10() {
-        var response;
+        var response, _error$response5;
         return _regeneratorRuntime().wrap(function _callee10$(_context10) {
           while (1) switch (_context10.prev = _context10.next) {
             case 0:
-              _this10.isloading = true;
-              _this10.errorMessage = '';
-              _context10.prev = 2;
-              _context10.next = 5;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/v1/peminjaman/chart/monthly-completed?year=".concat(_this10.selectedYear));
-            case 5:
+              _context10.prev = 0;
+              _this10.loadingKerusakan = true;
+              _context10.next = 4;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/kerusakan/belum/list');
+            case 4:
               response = _context10.sent;
-              _this10.renderChart(response.data);
-              _context10.next = 14;
-              break;
-            case 9:
-              _context10.prev = 9;
-              _context10.t0 = _context10["catch"](2);
-              console.error('Error fetching monthly completed loans:', _context10.t0);
-              _this10.errorMessage = 'Gagal memuat data peminjaman';
-              // Hancurkan chart jika ada error
-              if (_this10.chart) {
-                _this10.chart.destroy();
-                _this10.chart = null;
+              if (!response.data.success) {
+                _context10.next = 10;
+                break;
               }
-            case 14:
-              _context10.prev = 14;
-              _this10.isloading = false;
-              return _context10.finish(14);
+              _this10.kerusakanList = response.data.data;
+              $('#kerusakanModal').modal('show');
+              _context10.next = 11;
+              break;
+            case 10:
+              throw new Error(response.data.message || 'Invalid response format');
+            case 11:
+              _context10.next = 17;
+              break;
+            case 13:
+              _context10.prev = 13;
+              _context10.t0 = _context10["catch"](0);
+              console.error('Error fetching kerusakan list:', _context10.t0);
+              _this10.$toast.error(((_error$response5 = _context10.t0.response) === null || _error$response5 === void 0 || (_error$response5 = _error$response5.data) === null || _error$response5 === void 0 ? void 0 : _error$response5.message) || 'Gagal memuat daftar kerusakan');
             case 17:
+              _context10.prev = 17;
+              _this10.loadingKerusakan = false;
+              return _context10.finish(17);
+            case 20:
             case "end":
               return _context10.stop();
           }
-        }, _callee10, null, [[2, 9, 14, 17]]);
+        }, _callee10, null, [[0, 13, 17, 20]]);
       }))();
     },
-    fetchAvailableYearsPermintaan: function fetchAvailableYearsPermintaan() {
+    viewDetailKerusakan: function viewDetailKerusakan(id) {
+      // Tutup modal terlebih dahulu
+      $('#kerusakanModal').modal('hide');
+
+      // Navigasi ke halaman detail
+      this.$router.push({
+        name: 'kondisi-detail-baru-rusak',
+        params: {
+          id: id
+        }
+      });
+    },
+    fetchPemusnahanStokCount: function fetchPemusnahanStokCount() {
       var _this11 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee11() {
         var response;
@@ -24793,64 +25512,377 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             case 0:
               _context11.prev = 0;
               _context11.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/permintaan/chart/available-years');
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/pemusnahan/selesai/count');
             case 3:
               response = _context11.sent;
-              _this11.availableYearsPermintaan = response.data.years;
-              // Set tahun terakhir sebagai tahun yang dipilih secara default
-              if (_this11.availableYearsPermintaan.length > 0) {
-                _this11.selectedYearPermintaan = Math.max.apply(Math, _toConsumableArray(_this11.availableYearsPermintaan));
+              if (response.data.success) {
+                _this11.pemusnahanStokCount = response.data.count;
               }
-              _context11.next = 12;
+              _context11.next = 11;
               break;
-            case 8:
-              _context11.prev = 8;
+            case 7:
+              _context11.prev = 7;
               _context11.t0 = _context11["catch"](0);
-              console.error('Error fetching available years:', _context11.t0);
-              _this11.errorMessagePermintaan = 'Gagal memuat daftar tahun';
-            case 12:
+              console.error('Error fetching low stock count:', _context11.t0);
+              _this11.$toast.error('Gagal memuat jumlah pemusnahan');
+              // Anda bisa menambahkan notifikasi error di sini
+            case 11:
             case "end":
               return _context11.stop();
           }
-        }, _callee11, null, [[0, 8]]);
+        }, _callee11, null, [[0, 7]]);
       }))();
     },
-    fetchMonthlyCompletedLoansPermintaan: function fetchMonthlyCompletedLoansPermintaan() {
+    showPemusnahanModal: function showPemusnahanModal() {
       var _this12 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee12() {
-        var response;
+        var response, _error$response6;
         return _regeneratorRuntime().wrap(function _callee12$(_context12) {
           while (1) switch (_context12.prev = _context12.next) {
             case 0:
-              _this12.isloading = true;
-              _this12.errorMessagePermintaan = '';
-              _context12.prev = 2;
-              _context12.next = 5;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/v1/permintaan/chart/monthly-completed?year=".concat(_this12.selectedYearPermintaan));
-            case 5:
+              _context12.prev = 0;
+              _this12.loadingPemusnahan = true;
+              _context12.next = 4;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/pemusnahan/selesai/list');
+            case 4:
               response = _context12.sent;
-              _this12.renderChartPermintaan(response.data);
-              _context12.next = 14;
-              break;
-            case 9:
-              _context12.prev = 9;
-              _context12.t0 = _context12["catch"](2);
-              console.error('Error fetching monthly completed loans:', _context12.t0);
-              _this12.errorMessagePermintaan = 'Gagal memuat data permintaan';
-              // Hancurkan chart jika ada error
-              if (_this12.chartPermintaan) {
-                _this12.chartPermintaan.destroy();
-                _this12.chartPermintaan = null;
+              if (!response.data.success) {
+                _context12.next = 10;
+                break;
               }
-            case 14:
-              _context12.prev = 14;
-              _this12.isloading = false;
-              return _context12.finish(14);
+              _this12.pemusnahanList = response.data.data;
+              $('#pemusnahanModal').modal('show');
+              _context12.next = 11;
+              break;
+            case 10:
+              throw new Error(response.data.message || 'Invalid response format');
+            case 11:
+              _context12.next = 17;
+              break;
+            case 13:
+              _context12.prev = 13;
+              _context12.t0 = _context12["catch"](0);
+              console.error('Error fetching pemusnahan list:', _context12.t0);
+              _this12.$toast.error(((_error$response6 = _context12.t0.response) === null || _error$response6 === void 0 || (_error$response6 = _error$response6.data) === null || _error$response6 === void 0 ? void 0 : _error$response6.message) || 'Gagal memuat daftar pemusnahan');
             case 17:
+              _context12.prev = 17;
+              _this12.loadingPemusnahan = false;
+              return _context12.finish(17);
+            case 20:
             case "end":
               return _context12.stop();
           }
-        }, _callee12, null, [[2, 9, 14, 17]]);
+        }, _callee12, null, [[0, 13, 17, 20]]);
+      }))();
+    },
+    viewDetailPemusnahan: function viewDetailPemusnahan(id) {
+      // Tutup modal terlebih dahulu
+      $('#pemusnahanModal').modal('hide');
+
+      // Navigasi ke halaman detail
+      this.$router.push({
+        name: 'kondisi-detail-proses-musnah',
+        params: {
+          id: id
+        }
+      });
+    },
+    fetchKehilanganStokCount: function fetchKehilanganStokCount() {
+      var _this13 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee13() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee13$(_context13) {
+          while (1) switch (_context13.prev = _context13.next) {
+            case 0:
+              _context13.prev = 0;
+              _context13.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/kehilangan/belum/count');
+            case 3:
+              response = _context13.sent;
+              if (response.data.success) {
+                _this13.kehilanganStokCount = response.data.count;
+              }
+              _context13.next = 11;
+              break;
+            case 7:
+              _context13.prev = 7;
+              _context13.t0 = _context13["catch"](0);
+              console.error('Error fetching low stock count:', _context13.t0);
+              _this13.$toast.error('Gagal memuat jumlah kehilangan');
+              // Anda bisa menambahkan notifikasi error di sini
+            case 11:
+            case "end":
+              return _context13.stop();
+          }
+        }, _callee13, null, [[0, 7]]);
+      }))();
+    },
+    showKehilanganModal: function showKehilanganModal() {
+      var _this14 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee14() {
+        var response, _error$response7;
+        return _regeneratorRuntime().wrap(function _callee14$(_context14) {
+          while (1) switch (_context14.prev = _context14.next) {
+            case 0:
+              _context14.prev = 0;
+              _this14.loadingKehilangan = true;
+              _context14.next = 4;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/kehilangan/belum/list');
+            case 4:
+              response = _context14.sent;
+              if (!response.data.success) {
+                _context14.next = 10;
+                break;
+              }
+              _this14.kehilanganList = response.data.data;
+              $('#kehilanganModal').modal('show');
+              _context14.next = 11;
+              break;
+            case 10:
+              throw new Error(response.data.message || 'Invalid response format');
+            case 11:
+              _context14.next = 17;
+              break;
+            case 13:
+              _context14.prev = 13;
+              _context14.t0 = _context14["catch"](0);
+              console.error('Error fetching kehilangan list:', _context14.t0);
+              _this14.$toast.error(((_error$response7 = _context14.t0.response) === null || _error$response7 === void 0 || (_error$response7 = _error$response7.data) === null || _error$response7 === void 0 ? void 0 : _error$response7.message) || 'Gagal memuat daftar kehilangan');
+            case 17:
+              _context14.prev = 17;
+              _this14.loadingKehilangan = false;
+              return _context14.finish(17);
+            case 20:
+            case "end":
+              return _context14.stop();
+          }
+        }, _callee14, null, [[0, 13, 17, 20]]);
+      }))();
+    },
+    viewDetailKehilanagan: function viewDetailKehilanagan(id) {
+      // Tutup modal terlebih dahulu
+      $('#kehilanganModal').modal('hide');
+
+      // Navigasi ke halaman detail
+      this.$router.push({
+        name: 'data-detail-baru-hilang',
+        params: {
+          id: id
+        }
+      });
+    },
+    fetchPerawatanStokCount: function fetchPerawatanStokCount() {
+      var _this15 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee15() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee15$(_context15) {
+          while (1) switch (_context15.prev = _context15.next) {
+            case 0:
+              _context15.prev = 0;
+              _context15.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/perawatan/belum/count');
+            case 3:
+              response = _context15.sent;
+              if (response.data.success) {
+                _this15.perawatanStokCount = response.data.count;
+              }
+              _context15.next = 11;
+              break;
+            case 7:
+              _context15.prev = 7;
+              _context15.t0 = _context15["catch"](0);
+              console.error('Error fetching low stock count:', _context15.t0);
+              _this15.$toast.error('Gagal memuat jumlah perawatan yang belum dilakukan');
+              // Anda bisa menambahkan notifikasi error di sini
+            case 11:
+            case "end":
+              return _context15.stop();
+          }
+        }, _callee15, null, [[0, 7]]);
+      }))();
+    },
+    showPerawatanModal: function showPerawatanModal() {
+      var _this16 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee16() {
+        var response, _error$response8;
+        return _regeneratorRuntime().wrap(function _callee16$(_context16) {
+          while (1) switch (_context16.prev = _context16.next) {
+            case 0:
+              _context16.prev = 0;
+              _this16.loadingPerawatan = true;
+              _context16.next = 4;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/perawatan/belum/list');
+            case 4:
+              response = _context16.sent;
+              if (!response.data.success) {
+                _context16.next = 10;
+                break;
+              }
+              _this16.perawatanList = response.data.data;
+              $('#perawatanModal').modal('show');
+              _context16.next = 11;
+              break;
+            case 10:
+              throw new Error(response.data.message || 'Invalid response format');
+            case 11:
+              _context16.next = 17;
+              break;
+            case 13:
+              _context16.prev = 13;
+              _context16.t0 = _context16["catch"](0);
+              console.error('Error fetching perawatan belum dilakukan perawatan list:', _context16.t0);
+              _this16.$toast.error(((_error$response8 = _context16.t0.response) === null || _error$response8 === void 0 || (_error$response8 = _error$response8.data) === null || _error$response8 === void 0 ? void 0 : _error$response8.message) || 'Gagal memuat daftar perbaikan');
+            case 17:
+              _context16.prev = 17;
+              _this16.loadingPerawatan = false;
+              return _context16.finish(17);
+            case 20:
+            case "end":
+              return _context16.stop();
+          }
+        }, _callee16, null, [[0, 13, 17, 20]]);
+      }))();
+    },
+    viewDetailPerawatan: function viewDetailPerawatan() {
+      $('#perawatanModal').modal('hide');
+      this.$router.push('/admin-mtc/jadwal-perawatan');
+    },
+    fetchAvailableYears: function fetchAvailableYears() {
+      var _this17 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee17() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee17$(_context17) {
+          while (1) switch (_context17.prev = _context17.next) {
+            case 0:
+              _context17.prev = 0;
+              _context17.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/peminjaman/chart/available-years');
+            case 3:
+              response = _context17.sent;
+              _this17.availableYears = response.data.years;
+              // Set tahun terakhir sebagai tahun yang dipilih secara default
+              if (_this17.availableYears.length > 0) {
+                _this17.selectedYear = Math.max.apply(Math, _toConsumableArray(_this17.availableYears));
+              }
+              _context17.next = 12;
+              break;
+            case 8:
+              _context17.prev = 8;
+              _context17.t0 = _context17["catch"](0);
+              console.error('Error fetching available years:', _context17.t0);
+              _this17.errorMessage = 'Gagal memuat daftar tahun';
+            case 12:
+            case "end":
+              return _context17.stop();
+          }
+        }, _callee17, null, [[0, 8]]);
+      }))();
+    },
+    fetchMonthlyCompletedLoans: function fetchMonthlyCompletedLoans() {
+      var _this18 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee18() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee18$(_context18) {
+          while (1) switch (_context18.prev = _context18.next) {
+            case 0:
+              _this18.isloading = true;
+              _this18.errorMessage = '';
+              _context18.prev = 2;
+              _context18.next = 5;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/v1/peminjaman/chart/monthly-completed?year=".concat(_this18.selectedYear));
+            case 5:
+              response = _context18.sent;
+              _this18.renderChart(response.data);
+              _context18.next = 14;
+              break;
+            case 9:
+              _context18.prev = 9;
+              _context18.t0 = _context18["catch"](2);
+              console.error('Error fetching monthly completed loans:', _context18.t0);
+              _this18.errorMessage = 'Gagal memuat data peminjaman';
+              // Hancurkan chart jika ada error
+              if (_this18.chart) {
+                _this18.chart.destroy();
+                _this18.chart = null;
+              }
+            case 14:
+              _context18.prev = 14;
+              _this18.isloading = false;
+              return _context18.finish(14);
+            case 17:
+            case "end":
+              return _context18.stop();
+          }
+        }, _callee18, null, [[2, 9, 14, 17]]);
+      }))();
+    },
+    fetchAvailableYearsPermintaan: function fetchAvailableYearsPermintaan() {
+      var _this19 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee19() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee19$(_context19) {
+          while (1) switch (_context19.prev = _context19.next) {
+            case 0:
+              _context19.prev = 0;
+              _context19.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/permintaan/chart/available-years');
+            case 3:
+              response = _context19.sent;
+              _this19.availableYearsPermintaan = response.data.years;
+              // Set tahun terakhir sebagai tahun yang dipilih secara default
+              if (_this19.availableYearsPermintaan.length > 0) {
+                _this19.selectedYearPermintaan = Math.max.apply(Math, _toConsumableArray(_this19.availableYearsPermintaan));
+              }
+              _context19.next = 12;
+              break;
+            case 8:
+              _context19.prev = 8;
+              _context19.t0 = _context19["catch"](0);
+              console.error('Error fetching available years:', _context19.t0);
+              _this19.errorMessagePermintaan = 'Gagal memuat daftar tahun';
+            case 12:
+            case "end":
+              return _context19.stop();
+          }
+        }, _callee19, null, [[0, 8]]);
+      }))();
+    },
+    fetchMonthlyCompletedLoansPermintaan: function fetchMonthlyCompletedLoansPermintaan() {
+      var _this20 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee20() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee20$(_context20) {
+          while (1) switch (_context20.prev = _context20.next) {
+            case 0:
+              _this20.isloading = true;
+              _this20.errorMessagePermintaan = '';
+              _context20.prev = 2;
+              _context20.next = 5;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/v1/permintaan/chart/monthly-completed?year=".concat(_this20.selectedYearPermintaan));
+            case 5:
+              response = _context20.sent;
+              _this20.renderChartPermintaan(response.data);
+              _context20.next = 14;
+              break;
+            case 9:
+              _context20.prev = 9;
+              _context20.t0 = _context20["catch"](2);
+              console.error('Error fetching monthly completed loans:', _context20.t0);
+              _this20.errorMessagePermintaan = 'Gagal memuat data permintaan';
+              // Hancurkan chart jika ada error
+              if (_this20.chartPermintaan) {
+                _this20.chartPermintaan.destroy();
+                _this20.chartPermintaan = null;
+              }
+            case 14:
+              _context20.prev = 14;
+              _this20.isloading = false;
+              return _context20.finish(14);
+            case 17:
+            case "end":
+              return _context20.stop();
+          }
+        }, _callee20, null, [[2, 9, 14, 17]]);
       }))();
     },
     renderChart: function renderChart(chartData) {
@@ -24982,51 +26014,87 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         }
       });
     },
+    setDefaultDateRange: function setDefaultDateRange() {
+      var now = new Date();
+      var firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
+      var lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+      this.filter.start_date = this.formatDateForInput(firstDay);
+      this.filter.end_date = this.formatDateForInput(lastDay);
+    },
     fetchProgressData: function fetchProgressData() {
-      var _this13 = this;
-      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee13() {
-        var response;
-        return _regeneratorRuntime().wrap(function _callee13$(_context13) {
-          while (1) switch (_context13.prev = _context13.next) {
+      var _this21 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee21() {
+        var params, response;
+        return _regeneratorRuntime().wrap(function _callee21$(_context21) {
+          while (1) switch (_context21.prev = _context21.next) {
             case 0:
-              _context13.prev = 0;
-              _this13.loading = true;
-              _context13.next = 4;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/inventory/perawatan/progress');
-            case 4:
-              response = _context13.sent;
+              _context21.prev = 0;
+              _this21.loading = true;
+              params = {
+                start_date: _this21.filter.start_date,
+                end_date: _this21.filter.end_date
+              };
+              _context21.next = 5;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/inventory/perawatan/progress', {
+                params: params
+              });
+            case 5:
+              response = _context21.sent;
               if (response.data.success) {
-                _this13.progressData = response.data.data;
+                _this21.progressData = response.data.data;
               }
-              _context13.next = 12;
+              _context21.next = 13;
               break;
-            case 8:
-              _context13.prev = 8;
-              _context13.t0 = _context13["catch"](0);
-              console.error('Error fetching progress data:', _context13.t0);
-              _this13.$toast.error('Gagal memuat data progress perawatan');
-            case 12:
-              _context13.prev = 12;
-              _this13.loading = false;
-              return _context13.finish(12);
-            case 15:
+            case 9:
+              _context21.prev = 9;
+              _context21.t0 = _context21["catch"](0);
+              console.error('Error fetching progress data:', _context21.t0);
+              _this21.$toast.error('Gagal memuat data progress perawatan');
+            case 13:
+              _context21.prev = 13;
+              _this21.loading = false;
+              return _context21.finish(13);
+            case 16:
             case "end":
-              return _context13.stop();
+              return _context21.stop();
           }
-        }, _callee13, null, [[0, 8, 12, 15]]);
+        }, _callee21, null, [[0, 9, 13, 16]]);
       }))();
     },
+    applyFilter: function applyFilter() {
+      // Validasi tanggal
+      if (new Date(this.filter.start_date) > new Date(this.filter.end_date)) {
+        this.$toast.error('Tanggal mulai tidak boleh lebih besar dari tanggal akhir');
+        return;
+      }
+      this.fetchProgressData();
+    },
+    resetFilter: function resetFilter() {
+      this.setDefaultDateRange();
+      this.fetchProgressData();
+    },
+    formatDate: function formatDate(dateString) {
+      var options = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      };
+      return new Date(dateString).toLocaleDateString('id-ID', options);
+    },
+    formatDateForInput: function formatDateForInput(date) {
+      return date.toISOString().split('T')[0];
+    },
     fetchChartData: function fetchChartData() {
-      var _this14 = this;
+      var _this22 = this;
       axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/tool-conditions').then(function (response) {
-        _this14.chartData = response.data;
-        _this14.renderChartNoSeri();
+        _this22.chartData = response.data;
+        _this22.renderChartNoSeri();
       })["catch"](function (error) {
         console.error('Error fetching chart data:', error);
       });
     },
     renderChartNoSeri: function renderChartNoSeri() {
-      var _this15 = this;
+      var _this23 = this;
       if (this.pieChart) {
         this.pieChart.destroy();
       }
@@ -25072,12 +26140,13 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       legendContainer.style.flexWrap = 'wrap'; // Agar tetap responsif jika panjang
 
       this.chartData.labels.forEach(function (label, index) {
-        var color = _this15.chartData.colors[index];
+        var color = _this23.chartData.colors[index];
         var item = document.createElement('div');
         item.style.display = 'flex';
         item.style.alignItems = 'center';
         item.style.marginRight = '16px';
-        // item.style.marginBottom = '8px';
+        item.style.marginBottom = '10px';
+        item.style.marginTop = '10px';
         item.innerHTML = "\n          <span style=\"width: 12px; height: 12px; background-color: ".concat(color, "; display: inline-block; margin-right: 6px; border-radius: 2px;\"></span>\n          <span style=\"font-size: 14px;\">").concat(label, "</span>\n        ");
         legendContainer.appendChild(item);
       });
@@ -45849,8 +46918,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _fullcalendar_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fullcalendar/core */ "./node_modules/@fullcalendar/core/index.js");
 /* harmony import */ var _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fullcalendar/daygrid */ "./node_modules/@fullcalendar/daygrid/index.js");
 /* harmony import */ var _fullcalendar_timegrid__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fullcalendar/timegrid */ "./node_modules/@fullcalendar/timegrid/index.js");
@@ -45858,6 +46925,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var xlsx__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! xlsx */ "./node_modules/xlsx/xlsx.mjs");
 /* harmony import */ var _fullcalendar_multimonth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fullcalendar/multimonth */ "./node_modules/@fullcalendar/multimonth/index.js");
 /* harmony import */ var _fullcalendar_resource_timegrid__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @fullcalendar/resource-timegrid */ "./node_modules/@fullcalendar/resource-timegrid/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -45891,16 +46960,6 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -45910,178 +46969,14 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 
 
 
-// import resourceDayGridPlugin from '@fullcalendar/resource-daygrid';
-
-// Tambahkan kode berikut untuk mendefinisikan nama bulan Indonesia
-var locale = {
-  id: 'id',
-  firstDay: 0,
-  // hari pertama dalam seminggu (0 = Minggu, 1 = Senin)
-  dayNames: ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'],
-  dayNamesShort: ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'],
-  monthNames: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
-  monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
-  titleFormat: {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  }
-};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  // mixins: [mixins],
   data: function data() {
     return {
-      jadwalPerawatan: [
-        // {
-        //   id: 1,
-        //   no_perawatan: 'R-01',
-        //   nama_alat: 'Bor',
-        //   no_seri: 'B-01',
-        //   tanggal_start: '2025-03-06',
-        //   tanggal_end: '2025-03-10',
-        //   waktu_mulai: '08:00',
-        //   waktu_selesai: '08:30',
-        //   pic: 'Jhon',
-        //   detail: '',
-        //   kondisi: '',
-        //   status: 'Selesai'
-        // },
-        // {
-        //   id: 2,
-        //   no_perawatan: 'R-02',
-        //   nama_alat: 'Bor',
-        //   no_seri: 'B-02',
-        //   tanggal_start: '2025-03-13',
-        //   tanggal_end: '2025-03-13',
-        //   waktu_mulai: '08:00',
-        //   waktu_selesai: '09:30',
-        //   pic: 'Adam',
-        //   detail: '',
-        //   kondisi: '',
-        //   status: 'Pelaksanaan'
-        // },
-        // {
-        //   id: 3,
-        //   no_perawatan: 'R-03',
-        //   nama_alat: 'Bor',
-        //   no_seri: 'B-03',
-        //   tanggal_start: '2025-03-19',
-        //   tanggal_end: '2025-03-25',
-        //   waktu_mulai: '08:00',
-        //   waktu_selesai: '09:00',
-        //   pic: 'Thomas',
-        //   detail: '',
-        //   kondisi: '',
-        //   status: 'Belum Selesai'
-        // },
-        // {
-        //   id: 4,
-        //   no_perawatan: 'R-04',
-        //   nama_alat: 'Bor',
-        //   no_seri: 'B-04',
-        //   tanggal_start: '2025-11-03',
-        //   tanggal_end: '2025-11-05',
-        //   waktu_mulai: '10:20',
-        //   waktu_selesai: '11:00',
-        //   pic: 'Atom',
-        //   detail: '',
-        //   kondisi: '',
-        //   status: 'Belum Selesai'
-        // },
-        // tambahkan data lainnya
-      ]
+      jadwalPerawatan: []
     };
   },
   mounted: function mounted() {
     this.fetchData();
-    // const calendarEl = document.getElementById('calendar');
-    // const calendar = new Calendar(calendarEl, {
-    //   plugins: [multiMonthPlugin, dayGridPlugin, timeGridPlugin, listPlugin, resourceTimeGridPlugin],
-    //   headerToolbar: {
-    //     left: 'prev,next today',
-    //     center: 'title',
-    //     right: 'multiMonthYear,dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-    //   },
-    //   initialDate: new Date(),
-    //   initialView: 'resourceTimeGridDay',
-    //   // initialView: 'resourceDayGridDay',
-    //   schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
-    //   initialView: 'multiMonthYear',
-    //   navLinks: true, // can click day/week names to navigate views
-    //   editable: true,
-    //   dayMaxEvents: true, // allow "more" link when too many events
-    //   locale: 'id', // tambahkan opsi locale
-    //   hiddenDays: [0, 6],
-    //   slotMinTime: '08:00',
-    //   slotMaxTime: '17:00',
-    //   // events: this.jadwalPerawatan.map((item) => {
-    //   //   if (item.waktu_mulai && item.waktu_selesai) {
-    //   //     return {
-    //   //       title: `${item.nama_alat} - ${item.no_seri}`,
-    //   //       start: item.tanggal_start,
-    //   //       end: item.tanggal_end,
-    //   //       allDay: false,
-    //   //       startTime: item.waktu_mulai,
-    //   //       endTime: item.waktu_selesai,
-    //   //       backgroundColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
-    //   //       borderColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
-    //   //       display: 'block',
-    //   //     }
-    //   //   } else {
-    //   //     return {
-    //   //       title: `${item.nama_alat} - ${item.no_seri}`,
-    //   //       start: item.tanggal_start,
-    //   //       end: item.tanggal_end,
-    //   //       allDay: true,
-    //   //       backgroundColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
-    //   //       borderColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
-    //   //       display: 'block',
-    //   //     }
-    //   //   }
-    //   // }),
-    //   // resources: [{
-    //   //   id: 'Adi',
-    //   //   title: 'Adi'
-    //   // }],
-    //   resourceAreaWidth: '200px',
-    //   resourceAreaHeaderContent: 'PIC',
-    //   resources: this.jadwalPerawatan.map((item) => {
-    //     const resource = {
-    //       id: item.id,
-    //       title: item.pic,  // pastikan pic terisi dengan benar
-    //     };
-    //     // console.log(resource); // Cek apakah resources terisi dengan benar
-    //     return resource;
-    //   }),
-    //   events: this.jadwalPerawatan.map((item) => {
-    //     const startDate = new Date(item.tanggal_start);
-    //     const endDate = new Date(item.tanggal_end);
-    //     startDate.setHours(item.waktu_mulai.split(":")[0]);
-    //     startDate.setMinutes(item.waktu_mulai.split(":")[1]);
-    //     endDate.setHours(item.waktu_selesai.split(":")[0]);
-    //     endDate.setMinutes(item.waktu_selesai.split(":")[1]);
-    //     return {
-    //       title: `${item.nama_alat} - ${item.no_seri}`,
-    //       start: startDate,
-    //       end: endDate,
-    //       allDay: false,
-    //       resourceId: item.id,
-    //       backgroundColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
-    //       borderColor: item.status === 'Belum Selesai' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
-    //       display: 'block',
-    //     }
-    //   }),
-    //   select: (arg) => {
-    //     const tanggalPerawatan = this.jadwalPerawatan.find((item) => {
-    //       return (arg.start >= item.tanggal_start && arg.start <= item.tanggal_end) || (arg.end >= item.tanggal_start && arg.end <= item.tanggal_end);
-    //     });
-    //     if (tanggalPerawatan) {
-    //       alert('Tanggal ini sudah terblokir');
-    //       return false;
-    //     }
-    //   }
-    // });
-    // calendar.render();
   },
   methods: {
     fetchData: function fetchData() {
@@ -46102,7 +46997,6 @@ var locale = {
             case 4:
               response = _context.sent;
               _this.jadwalPerawatan = response.data;
-              // console.log(this.jadwalPerawatan);
               _this.renderCalendar();
               _context.next = 12;
               break;
@@ -46138,6 +47032,22 @@ var locale = {
         slotMaxTime: '17:00',
         resourceAreaWidth: '200px',
         resourceAreaHeaderContent: 'PIC',
+        // Konfigurasi untuk menghilangkan jam di list view
+        displayEventTime: false,
+        // Menyembunyikan waktu di semua view
+        views: {
+          listWeek: {
+            displayEventTime: false,
+            // Khusus untuk list view
+            listDayFormat: {
+              month: 'long',
+              day: 'numeric',
+              year: 'numeric',
+              omitCommas: false
+            },
+            listDaySideFormat: false // Menghilangkan hari di samping
+          }
+        },
         resources: this.jadwalPerawatan.map(function (item) {
           var _item$no_seri;
           return {
@@ -46149,8 +47059,6 @@ var locale = {
           var _item$no_seri2, _item$no_seri3;
           var alat = (_item$no_seri2 = item.no_seri) === null || _item$no_seri2 === void 0 ? void 0 : _item$no_seri2.tools;
           var noSeri = (_item$no_seri3 = item.no_seri) === null || _item$no_seri3 === void 0 ? void 0 : _item$no_seri3.no_seri;
-
-          // Gunakan tgl_perawatan sebagai tanggal event jika tidak ada waktu mulai/selesai
           var startDate = item.tgl_mulai_perawatan ? new Date(item.tgl_mulai_perawatan) : new Date(item.tgl_perawatan);
           var endDate = item.tgl_selesai_perawatan ? new Date(item.tgl_selesai_perawatan) : new Date(item.tgl_perawatan);
           if (item.waktu_mulai) {
@@ -46177,7 +47085,20 @@ var locale = {
             borderColor: item.status === 'Belum Dilakukan Perawatan' ? '#dc3545' : item.status === 'Pelaksanaan' ? '#169ea8' : '#28a745',
             display: 'block'
           };
-        })
+        }),
+        // Custom event render untuk kontrol lebih detail
+        eventContent: function eventContent(arg) {
+          // Jika view adalah list, tampilkan tanpa waktu
+          if (arg.view.type === 'listWeek') {
+            return {
+              html: "<div class=\"fc-list-event-title\">".concat(arg.event.title, "</div>")
+            };
+          }
+          // Untuk view lainnya, tampilkan normal
+          return {
+            html: "<div class=\"fc-event-title-container\">\n                     <div class=\"fc-event-time\">".concat(arg.timeText, "</div>\n                     <div class=\"fc-event-title\">").concat(arg.event.title, "</div>\n                   </div>")
+          };
+        }
       });
       calendar.render();
     },
@@ -46207,44 +47128,6 @@ var locale = {
       var workbook = xlsx__WEBPACK_IMPORTED_MODULE_7__.utils.book_new();
       xlsx__WEBPACK_IMPORTED_MODULE_7__.utils.book_append_sheet(workbook, worksheet, 'Jadwal Perawatan');
       xlsx__WEBPACK_IMPORTED_MODULE_7__.writeFile(workbook, "Jadwal_Perawatan_".concat(tahun, ".xlsx"));
-    },
-    // exportToExcel() {
-    //   const tahun = new Date().getFullYear();
-    //   const data = this.jadwalPerawatan.filter((item) => {
-    //     const tanggalStart = new Date(item.tanggal_start);
-    //     return tanggalStart.getFullYear() === tahun;
-    //   });
-    //   const worksheet = XLSX.utils.json_to_sheet(data);
-    //   const workbook = XLSX.utils.book_new();
-    //   XLSX.utils.book_append_sheet(workbook, worksheet, 'Jadwal Perawatan');
-    //   XLSX.writeFile(workbook, `Jadwal Perawatan ${tahun}.xlsx`);
-    // },
-    printCalendar: function printCalendar() {
-      // // Menyembunyikan elemen-elemen lain
-      // const elements = document.body.children;
-      // for (let i = 0; i < elements.length; i++) {
-      //   if (elements[i].id !== 'calendar') {
-      //     elements[i].style.display = true;
-      //   }
-      // }
-
-      // // Mencetak halaman yang hanya berisi kalender
-      // window.print();
-
-      // // Setelah print, tampilkan kembali elemen-elemen yang disembunyikan
-      // for (let i = 0; i < elements.length; i++) {
-      //   elements[i].style.display = '';
-      // }
-      var calendarEl = document.getElementById('calendar');
-      var calendarHtml = calendarEl.outerHTML;
-      var printWindow = window.open('', '', 'height=600,width=800');
-      printWindow.document.write('<html><head><title>Kalender Perawatan</title>');
-      printWindow.document.write('<link rel="stylesheet" href="' + document.location.protocol + '//' + document.location.host + '/css/style.css">');
-      printWindow.document.write('</head><body>');
-      printWindow.document.write(calendarHtml);
-      printWindow.document.write('</body></html>');
-      printWindow.print();
-      printWindow.close();
     }
   }
 });
@@ -50761,6 +51644,11 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -51279,6 +52167,11 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+//
+//
+//
+//
+//
 //
 //
 //
@@ -51969,7 +52862,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-select */ "./node_modules/vue-select/dist/vue-select.js");
+/* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_select__WEBPACK_IMPORTED_MODULE_2__);
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
@@ -52061,11 +52962,133 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'ToolEditForm',
+  components: {
+    vSelect: (vue_select__WEBPACK_IMPORTED_MODULE_2___default())
+  },
   data: function data() {
     return {
       form: {
@@ -52076,8 +53099,18 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         vendor: '',
         fungsi: '',
         deskripsi: '',
-        gambar: null // tetap dimasukkan karena ada pengecekan jika diubah
-      }
+        jadwal_perawatan: '',
+        waktu_perawatan: '',
+        jumlah_orang_perawatan: '',
+        gambar: null,
+        jadwal_mulai_perawatan: '',
+        note_perubahan_jadwal: ''
+      },
+      previewImage: null,
+      // ✅ buat tampilan preview
+      dragActive: false,
+      isSubmitting: false,
+      submitError: null
     };
   },
   mounted: function mounted() {
@@ -52087,50 +53120,93 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     fetchToolData: function fetchToolData() {
       var _this = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-        var toolId, res, _res$data, id, pembelian, unit, sumber, vendor, fungsi, deskripsi;
+        var toolId, _data$jadwal_perawata, _data$jumlah_orang_pe, res, data, waktuPerawatan;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
               toolId = _this.$route.params.id;
-              _context.next = 3;
+              _context.prev = 1;
+              _context.next = 4;
               return axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/v1/tools/".concat(toolId));
-            case 3:
+            case 4:
               res = _context.sent;
-              _res$data = res.data, id = _res$data.id, pembelian = _res$data.pembelian, unit = _res$data.unit, sumber = _res$data.sumber, vendor = _res$data.vendor, fungsi = _res$data.fungsi, deskripsi = _res$data.deskripsi;
-              _this.form = _objectSpread(_objectSpread({}, _this.form), {}, {
-                id: id,
-                pembelian: pembelian,
-                sumber: sumber,
-                unit: unit,
-                vendor: vendor,
-                fungsi: fungsi,
-                deskripsi: deskripsi
+              data = res.data; // Konversi menit ke format HH:mm
+              waktuPerawatan = data.waktu_perawatan ? _this.convertMinutesToTime(data.waktu_perawatan) : null;
+              _this.form = _objectSpread(_objectSpread(_objectSpread({}, _this.form), data), {}, {
+                waktu_perawatan: waktuPerawatan,
+                jadwal_perawatan: ((_data$jadwal_perawata = data.jadwal_perawatan) === null || _data$jadwal_perawata === void 0 ? void 0 : _data$jadwal_perawata.toString()) || '',
+                jumlah_orang_perawatan: ((_data$jumlah_orang_pe = data.jumlah_orang_perawatan) === null || _data$jumlah_orang_pe === void 0 ? void 0 : _data$jumlah_orang_pe.toString()) || ''
               });
-              // console.log(this.form);
-            case 6:
+              if (data.gambar) {
+                _this.previewImage = "/storage/".concat(data.gambar);
+              }
+              _context.next = 14;
+              break;
+            case 11:
+              _context.prev = 11;
+              _context.t0 = _context["catch"](1);
+              console.error("Gagal mengambil data alat:", _context.t0);
+            case 14:
             case "end":
               return _context.stop();
           }
-        }, _callee);
+        }, _callee, null, [[1, 11]]);
       }))();
+    },
+    // Helper function untuk konversi menit ke format waktu
+    convertMinutesToTime: function convertMinutesToTime(minutes) {
+      if (!minutes) return '00:00';
+      var hrs = Math.floor(minutes / 60);
+      var mins = minutes % 60;
+      return "".concat(String(hrs).padStart(2, '0'), ":").concat(String(mins).padStart(2, '0'));
     },
     submitForm: function submitForm() {
       var _this2 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-        var formData, allowedFields, _err$response;
+        var formData, _this2$form$waktu_per, _this2$form$waktu_per2, hours, minutes, totalMinutes, fields, response;
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) switch (_context2.prev = _context2.next) {
             case 0:
-              formData = new FormData();
-              allowedFields = ['pembelian', 'sumber', 'unit', 'vendor', 'fungsi', 'deskripsi'];
-              allowedFields.forEach(function (field) {
-                var _this2$form$field;
-                formData.append(field, (_this2$form$field = _this2.form[field]) !== null && _this2$form$field !== void 0 ? _this2$form$field : '');
-              });
-              _context2.prev = 3;
-              _context2.next = 6;
-              return axios__WEBPACK_IMPORTED_MODULE_0___default().post("/api/v1/tools/".concat(_this2.form.id, "?_method=PUT"), formData);
+              _this2.isSubmitting = true;
+              _this2.submitError = null;
+              _context2.prev = 2;
+              if (_this2.validateForm()) {
+                _context2.next = 6;
+                break;
+              }
+              _this2.isSubmitting = false;
+              return _context2.abrupt("return");
             case 6:
+              formData = new FormData(); // Konversi waktu perawatan dari HH:mm ke menit
+              if (_this2.form.waktu_perawatan) {
+                _this2$form$waktu_per = _this2.form.waktu_perawatan.split(':'), _this2$form$waktu_per2 = _slicedToArray(_this2$form$waktu_per, 2), hours = _this2$form$waktu_per2[0], minutes = _this2$form$waktu_per2[1];
+                totalMinutes = parseInt(hours) * 60 + parseInt(minutes);
+                formData.append('waktu_perawatan', totalMinutes);
+              }
+
+              // Field lainnya
+              fields = ['pembelian', 'sumber', 'unit', 'vendor', 'fungsi', 'deskripsi', 'jadwal_perawatan', 'jumlah_orang_perawatan', 'jadwal_mulai_perawatan', 'note_perubahan_jadwal'];
+              fields.forEach(function (field) {
+                if (_this2.form[field] !== null && _this2.form[field] !== undefined) {
+                  formData.append(field, _this2.form[field]);
+                }
+              });
+
+              // Handle gambar
+              if (_this2.form.gambar instanceof File) {
+                formData.append('gambar', _this2.form.gambar);
+              }
+
+              // Kirim ke server
+              _context2.next = 13;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default().post("/api/v1/tools/".concat(_this2.form.id, "?_method=PUT"), formData, {
+                headers: {
+                  'Content-Type': 'multipart/form-data'
+                }
+              });
+            case 13:
+              response = _context2.sent;
+              // Handle success
               sweetalert2__WEBPACK_IMPORTED_MODULE_1___default().fire({
                 title: 'Berhasil!',
                 text: 'Data berhasil diubah.',
@@ -52139,27 +53215,110 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
               }).then(function () {
                 _this2.$router.push('/admin-mtc/data-alat');
               });
-              _context2.next = 13;
+              _context2.next = 22;
               break;
-            case 9:
-              _context2.prev = 9;
-              _context2.t0 = _context2["catch"](3);
-              console.error((_err$response = _context2.t0.response) === null || _err$response === void 0 ? void 0 : _err$response.data);
+            case 17:
+              _context2.prev = 17;
+              _context2.t0 = _context2["catch"](2);
+              console.error('Error:', _context2.t0);
+              _this2.submitError = _this2.getErrorMessage(_context2.t0);
               sweetalert2__WEBPACK_IMPORTED_MODULE_1___default().fire({
                 title: 'Gagal!',
-                text: 'Data gagal diubah.',
+                html: _this2.submitError,
                 icon: 'error',
                 confirmButtonText: 'OK'
               });
-            case 13:
+            case 22:
+              _context2.prev = 22;
+              _this2.isSubmitting = false;
+              return _context2.finish(22);
+            case 25:
             case "end":
               return _context2.stop();
           }
-        }, _callee2, null, [[3, 9]]);
+        }, _callee2, null, [[2, 17, 22, 25]]);
       }))();
+    },
+    validateForm: function validateForm() {
+      // Validasi waktu perawatan
+      if (this.form.jadwal_perawatan > 0) {
+        if (!this.form.waktu_perawatan) {
+          this.submitError = 'Waktu perawatan wajib diisi';
+          return false;
+        }
+
+        // Validasi format HH:mm
+        if (!this.form.waktu_perawatan.match(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/)) {
+          this.submitError = 'Format waktu perawatan tidak valid (HH:mm)';
+          return false;
+        }
+      }
+
+      // Validasi gambar jika diperlukan
+      if (this.form.gambar === null && !this.previewImage) {
+        this.submitError = 'Thumbnail image wajib diisi';
+        return false;
+      }
+
+      // Validasi field lainnya
+      if (this.form.jadwal_perawatan > 0) {
+        if (!this.form.waktu_perawatan) {
+          this.submitError = 'Waktu perawatan wajib diisi';
+          return false;
+        }
+        if (!this.form.jumlah_orang_perawatan) {
+          this.submitError = 'Total PIC perawatan wajib diisi';
+          return false;
+        }
+      }
+      return true;
+    },
+    getErrorMessage: function getErrorMessage(error) {
+      if (error.response) {
+        // Error dari server
+        if (error.response.data.errors) {
+          return Object.values(error.response.data.errors).flat().join('<br>');
+        }
+        return error.response.data.message || 'Terjadi kesalahan pada server';
+      }
+      return error.message || 'Terjadi kesalahan jaringan';
     },
     kembali: function kembali() {
       this.$router.push('/admin-mtc/data-alat');
+    },
+    onFileChange: function onFileChange(e) {
+      var file = e.target.files[0];
+      this.handleFileSelection(file);
+    },
+    handleDrop: function handleDrop(e) {
+      this.dragActive = false;
+      var file = e.dataTransfer.files[0];
+      this.handleFileSelection(file);
+    },
+    handleFileSelection: function handleFileSelection(file) {
+      if (!file) return;
+
+      // Validasi ukuran file
+      if (file.size > 2 * 1024 * 1024) {
+        sweetalert2__WEBPACK_IMPORTED_MODULE_1___default().fire("Ukuran gambar terlalu besar", "Maksimal 2MB", "warning");
+        return;
+      }
+
+      // Validasi tipe file
+      if (!file.type.match('image.*')) {
+        sweetalert2__WEBPACK_IMPORTED_MODULE_1___default().fire("Format tidak didukung", "Hanya file gambar yang diperbolehkan", "warning");
+        return;
+      }
+      this.setImagePreview(file);
+    },
+    setImagePreview: function setImagePreview(file) {
+      var _this3 = this;
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        _this3.previewImage = e.target.result;
+      };
+      reader.readAsDataURL(file);
+      this.form.gambar = file;
     }
   }
 });
@@ -65611,21 +66770,27 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
               _this4.aktivitas = {
                 buktiPertanggungJawaban: null
               };
-              _context2.next = 24;
-              break;
+              _context2.next = 21;
+              return _this4.fetchData();
             case 21:
-              _context2.prev = 21;
+              _context2.next = 23;
+              return _context2.sent;
+            case 23:
+              _context2.next = 28;
+              break;
+            case 25:
+              _context2.prev = 25;
               _context2.t0 = _context2["catch"](7);
               sweetalert2__WEBPACK_IMPORTED_MODULE_1___default().fire({
                 icon: 'error',
                 title: 'Gagal',
                 text: _context2.t0.message || 'Terjadi kesalahan saat menyimpan data.'
               });
-            case 24:
+            case 28:
             case "end":
               return _context2.stop();
           }
-        }, _callee2, null, [[7, 21]]);
+        }, _callee2, null, [[7, 25]]);
       }))();
     },
     downloadPJ: function downloadPJ() {
@@ -66133,21 +67298,24 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
               _this4.aktivitas = {
                 buktiPertanggungJawaban: null
               };
-              _context2.next = 25;
-              break;
+              _context2.next = 22;
+              return _this4.fetchData();
             case 22:
-              _context2.prev = 22;
+              _context2.next = 27;
+              break;
+            case 24:
+              _context2.prev = 24;
               _context2.t0 = _context2["catch"](8);
               sweetalert2__WEBPACK_IMPORTED_MODULE_1___default().fire({
                 icon: 'error',
                 title: 'Gagal',
                 text: _context2.t0.message || 'Terjadi kesalahan saat menyimpan data.'
               });
-            case 25:
+            case 27:
             case "end":
               return _context2.stop();
           }
-        }, _callee2, null, [[8, 22]]);
+        }, _callee2, null, [[8, 24]]);
       }))();
     },
     downloadPJ: function downloadPJ() {
@@ -67018,21 +68186,24 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
               _this4.aktivitas = {
                 buktiPertanggungJawaban: null
               };
-              _context2.next = 25;
-              break;
+              _context2.next = 22;
+              return _this4.fetchData();
             case 22:
-              _context2.prev = 22;
+              _context2.next = 27;
+              break;
+            case 24:
+              _context2.prev = 24;
               _context2.t0 = _context2["catch"](8);
               sweetalert2__WEBPACK_IMPORTED_MODULE_1___default().fire({
                 icon: 'error',
                 title: 'Gagal',
                 text: _context2.t0.message || 'Terjadi kesalahan saat menyimpan data.'
               });
-            case 25:
+            case 27:
             case "end":
               return _context2.stop();
           }
-        }, _callee2, null, [[8, 22]]);
+        }, _callee2, null, [[8, 24]]);
       }))();
     },
     downloadPJ: function downloadPJ() {
@@ -69121,6 +70292,577 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -69137,13 +70879,29 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       availableYearsPermintaan: [],
       errorMessagePermintaan: '',
       lowStockCount: 0,
+      stokList: [],
+      loadingStok: false,
       peminjamanStokCount: 0,
+      peminjamanList: [],
+      loadingPeminjaman: false,
       permintaanStokCount: 0,
+      permintaanList: [],
+      loadingPermintaan: false,
       perbaikanStokCount: 0,
+      perbaikanList: [],
+      loadingPerbaikan: false,
       kerusakanStockCount: 0,
+      kerusakanList: [],
+      loadingKerusakan: false,
       pemusnahanStokCount: 0,
+      pemusnahanList: [],
+      loadingPemusnahan: false,
       kehilanganStokCount: 0,
+      kehilanganList: [],
+      loadingKehilangan: false,
       perawatanStokCount: 0,
+      perawatanList: [],
+      loadingPerawatan: false,
       progressData: {
         belum_dilakukan: 0,
         dalam_proses: 0,
@@ -69153,7 +70911,15 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
           belum_dilakukan: 0,
           dalam_proses: 0,
           selesai: 0
+        },
+        date_range: {
+          start: '',
+          end: ''
         }
+      },
+      filter: {
+        start_date: '',
+        end_date: ''
       },
       loading: true,
       chartData: {
@@ -69163,6 +70929,11 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       },
       pieChart: null
     };
+  },
+  created: function created() {
+    // Set default ke awal dan akhir bulan ini
+    this.setDefaultDateRange();
+    this.fetchProgressData();
   },
   mounted: function mounted() {
     this.fetchLowStockCount();
@@ -69196,50 +70967,68 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
               if (response.data.success) {
                 _this.lowStockCount = response.data.total_low_stock;
               }
-              _context.next = 10;
+              _context.next = 11;
               break;
             case 7:
               _context.prev = 7;
               _context.t0 = _context["catch"](0);
               console.error('Error fetching low stock count:', _context.t0);
+              _this.$toast.error('Gagal memuat jumlah stok tools <= 1');
               // Anda bisa menambahkan notifikasi error di sini
-            case 10:
+            case 11:
             case "end":
               return _context.stop();
           }
         }, _callee, null, [[0, 7]]);
       }))();
     },
-    fetchPeminjamanStokCount: function fetchPeminjamanStokCount() {
+    showStokModal: function showStokModal() {
       var _this2 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-        var response;
+        var response, _error$response;
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) switch (_context2.prev = _context2.next) {
             case 0:
               _context2.prev = 0;
-              _context2.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/peminjaman/belum-diproses/count');
-            case 3:
+              _this2.loadingStok = true;
+              _context2.next = 4;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/tools/low-stock/list');
+            case 4:
               response = _context2.sent;
-              if (response.data.success) {
-                _this2.peminjamanStokCount = response.data.count;
+              if (!response.data.success) {
+                _context2.next = 10;
+                break;
               }
-              _context2.next = 10;
+              _this2.stokList = response.data.data;
+              $('#stokModal').modal('show');
+              _context2.next = 11;
               break;
-            case 7:
-              _context2.prev = 7;
-              _context2.t0 = _context2["catch"](0);
-              console.error('Error fetching low stock count:', _context2.t0);
-              // Anda bisa menambahkan notifikasi error di sini
             case 10:
+              throw new Error(response.data.message || 'Invalid response format');
+            case 11:
+              _context2.next = 17;
+              break;
+            case 13:
+              _context2.prev = 13;
+              _context2.t0 = _context2["catch"](0);
+              console.error('Error fetching stok tools list:', _context2.t0);
+              _this2.$toast.error(((_error$response = _context2.t0.response) === null || _error$response === void 0 || (_error$response = _error$response.data) === null || _error$response === void 0 ? void 0 : _error$response.message) || 'Gagal memuat daftar perbaikan');
+            case 17:
+              _context2.prev = 17;
+              _this2.loadingStok = false;
+              return _context2.finish(17);
+            case 20:
             case "end":
               return _context2.stop();
           }
-        }, _callee2, null, [[0, 7]]);
+        }, _callee2, null, [[0, 13, 17, 20]]);
       }))();
     },
-    fetchPermintaanStokCount: function fetchPermintaanStokCount() {
+    viewDetailStok: function viewDetailStok() {
+      $('#stokModal').modal('hide');
+      this.$router.push('/manajer-mtc/master-data');
+    },
+    fetchPeminjamanStokCount: function fetchPeminjamanStokCount() {
       var _this3 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
         var response;
@@ -69248,56 +71037,100 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             case 0:
               _context3.prev = 0;
               _context3.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/permintaan/belum-diproses/count');
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/peminjaman/belum-diproses/count');
             case 3:
               response = _context3.sent;
               if (response.data.success) {
-                _this3.permintaanStokCount = response.data.count;
+                _this3.peminjamanStokCount = response.data.count;
               }
-              _context3.next = 10;
+              _context3.next = 11;
               break;
             case 7:
               _context3.prev = 7;
               _context3.t0 = _context3["catch"](0);
-              console.error('Error fetching low stock count:', _context3.t0);
-              // Anda bisa menambahkan notifikasi error di sini
-            case 10:
+              console.error('Error fetching peminjaman count:', _context3.t0);
+              _this3.$toast.error('Gagal memuat jumlah peminjaman');
+            case 11:
             case "end":
               return _context3.stop();
           }
         }, _callee3, null, [[0, 7]]);
       }))();
     },
-    fetchPerbaikanStokCount: function fetchPerbaikanStokCount() {
+    showPeminjamanModal: function showPeminjamanModal() {
       var _this4 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
-        var response;
+        var response, _error$response2;
         return _regeneratorRuntime().wrap(function _callee4$(_context4) {
           while (1) switch (_context4.prev = _context4.next) {
             case 0:
               _context4.prev = 0;
-              _context4.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/perbaikan/belum/count');
-            case 3:
+              _this4.loadingPeminjaman = true;
+              _context4.next = 4;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/peminjaman/belum-diproses/list');
+            case 4:
               response = _context4.sent;
-              if (response.data.success) {
-                _this4.perbaikanStokCount = response.data.count;
+              if (!response.data.success) {
+                _context4.next = 10;
+                break;
               }
-              _context4.next = 10;
+              _this4.peminjamanList = response.data.data;
+              $('#peminjamanModal').modal('show');
+              _context4.next = 11;
               break;
-            case 7:
-              _context4.prev = 7;
-              _context4.t0 = _context4["catch"](0);
-              console.error('Error fetching low stock count:', _context4.t0);
-              // Anda bisa menambahkan notifikasi error di sini
             case 10:
+              throw new Error(response.data.message || 'Invalid response format');
+            case 11:
+              _context4.next = 17;
+              break;
+            case 13:
+              _context4.prev = 13;
+              _context4.t0 = _context4["catch"](0);
+              console.error('Error fetching peminjaman list:', _context4.t0);
+              _this4.$toast.error(((_error$response2 = _context4.t0.response) === null || _error$response2 === void 0 || (_error$response2 = _error$response2.data) === null || _error$response2 === void 0 ? void 0 : _error$response2.message) || 'Gagal memuat daftar peminjaman');
+            case 17:
+              _context4.prev = 17;
+              _this4.loadingPeminjaman = false;
+              return _context4.finish(17);
+            case 20:
             case "end":
               return _context4.stop();
           }
-        }, _callee4, null, [[0, 7]]);
+        }, _callee4, null, [[0, 13, 17, 20]]);
       }))();
     },
-    fetchKerusakanStockCount: function fetchKerusakanStockCount() {
+    viewDetailPeminjaman: function viewDetailPeminjaman(id) {
+      // Tutup modal terlebih dahulu
+      $('#peminjamanModal').modal('hide');
+
+      // Navigasi ke halaman detail
+      this.$router.push("/manajer-mtc/peminjaman/detail/".concat(id));
+    },
+    closeModal: function closeModal() {
+      $('#peminjamanModal').modal('hide');
+    },
+    closeModalPermintaan: function closeModalPermintaan() {
+      $('#permintaanModal').modal('hide');
+    },
+    closeModalPerbaikan: function closeModalPerbaikan() {
+      $('#perbaikanModal').modal('hide');
+    },
+    closeModalKerusakan: function closeModalKerusakan() {
+      $('#kerusakanModal').modal('hide');
+    },
+    closeModalPemusnahan: function closeModalPemusnahan() {
+      $('#pemusnahanModal').modal('hide');
+    },
+    closeModalHilang: function closeModalHilang() {
+      $('#kehilanganModal').modal('hide');
+    },
+    closeModalStok: function closeModalStok() {
+      $('#stokModal').modal('hide');
+    },
+    closeModalPerawatan: function closeModalPerawatan() {
+      $('#perawatanModal').modal('hide');
+    },
+    fetchPermintaanStokCount: function fetchPermintaanStokCount() {
       var _this5 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
         var response;
@@ -69306,56 +71139,77 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             case 0:
               _context5.prev = 0;
               _context5.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/kerusakan/belum/count');
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/permintaan/belum-diproses/count');
             case 3:
               response = _context5.sent;
               if (response.data.success) {
-                _this5.kerusakanStockCount = response.data.count;
+                _this5.permintaanStokCount = response.data.count;
               }
-              _context5.next = 10;
+              _context5.next = 11;
               break;
             case 7:
               _context5.prev = 7;
               _context5.t0 = _context5["catch"](0);
               console.error('Error fetching low stock count:', _context5.t0);
+              _this5.$toast.error('Gagal memuat jumlah permintaan');
               // Anda bisa menambahkan notifikasi error di sini
-            case 10:
+            case 11:
             case "end":
               return _context5.stop();
           }
         }, _callee5, null, [[0, 7]]);
       }))();
     },
-    fetchPemusnahanStokCount: function fetchPemusnahanStokCount() {
+    showPermintaanModal: function showPermintaanModal() {
       var _this6 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
-        var response;
+        var response, _error$response3;
         return _regeneratorRuntime().wrap(function _callee6$(_context6) {
           while (1) switch (_context6.prev = _context6.next) {
             case 0:
               _context6.prev = 0;
-              _context6.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/pemusnahan/selesai/count');
-            case 3:
+              _this6.loadingPermintaan = true;
+              _context6.next = 4;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/permintaan/belum-diproses/list');
+            case 4:
               response = _context6.sent;
-              if (response.data.success) {
-                _this6.pemusnahanStokCount = response.data.count;
+              if (!response.data.success) {
+                _context6.next = 10;
+                break;
               }
-              _context6.next = 10;
+              _this6.permintaanList = response.data.data;
+              $('#permintaanModal').modal('show');
+              _context6.next = 11;
               break;
-            case 7:
-              _context6.prev = 7;
-              _context6.t0 = _context6["catch"](0);
-              console.error('Error fetching low stock count:', _context6.t0);
-              // Anda bisa menambahkan notifikasi error di sini
             case 10:
+              throw new Error(response.data.message || 'Invalid response format');
+            case 11:
+              _context6.next = 17;
+              break;
+            case 13:
+              _context6.prev = 13;
+              _context6.t0 = _context6["catch"](0);
+              console.error('Error fetching permintaan list:', _context6.t0);
+              _this6.$toast.error(((_error$response3 = _context6.t0.response) === null || _error$response3 === void 0 || (_error$response3 = _error$response3.data) === null || _error$response3 === void 0 ? void 0 : _error$response3.message) || 'Gagal memuat daftar permintaan');
+            case 17:
+              _context6.prev = 17;
+              _this6.loadingPermintaan = false;
+              return _context6.finish(17);
+            case 20:
             case "end":
               return _context6.stop();
           }
-        }, _callee6, null, [[0, 7]]);
+        }, _callee6, null, [[0, 13, 17, 20]]);
       }))();
     },
-    fetchKehilanganStokCount: function fetchKehilanganStokCount() {
+    viewDetailPermintaan: function viewDetailPermintaan(id) {
+      // Tutup modal terlebih dahulu
+      $('#permintaanModal').modal('hide');
+
+      // Navigasi ke halaman detail
+      this.$router.push("/manajer-mtc/permintaan/detail/".concat(id));
+    },
+    fetchPerbaikanStokCount: function fetchPerbaikanStokCount() {
       var _this7 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee7() {
         var response;
@@ -69364,56 +71218,77 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             case 0:
               _context7.prev = 0;
               _context7.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/kehilangan/belum/count');
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/perbaikan/belum/count');
             case 3:
               response = _context7.sent;
               if (response.data.success) {
-                _this7.kehilanganStokCount = response.data.count;
+                _this7.perbaikanStokCount = response.data.count;
               }
-              _context7.next = 10;
+              _context7.next = 11;
               break;
             case 7:
               _context7.prev = 7;
               _context7.t0 = _context7["catch"](0);
               console.error('Error fetching low stock count:', _context7.t0);
+              _this7.$toast.error('Gagal memuat jumlah perbaikan');
               // Anda bisa menambahkan notifikasi error di sini
-            case 10:
+            case 11:
             case "end":
               return _context7.stop();
           }
         }, _callee7, null, [[0, 7]]);
       }))();
     },
-    fetchPerawatanStokCount: function fetchPerawatanStokCount() {
+    showPerbaikanModal: function showPerbaikanModal() {
       var _this8 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee8() {
-        var response;
+        var response, _error$response4;
         return _regeneratorRuntime().wrap(function _callee8$(_context8) {
           while (1) switch (_context8.prev = _context8.next) {
             case 0:
               _context8.prev = 0;
-              _context8.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/perawatan/belum/count');
-            case 3:
+              _this8.loadingPerbaikan = true;
+              _context8.next = 4;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/perbaikan/belum-diproses/list');
+            case 4:
               response = _context8.sent;
-              if (response.data.success) {
-                _this8.perawatanStokCount = response.data.count;
+              if (!response.data.success) {
+                _context8.next = 10;
+                break;
               }
-              _context8.next = 10;
+              _this8.perbaikanList = response.data.data;
+              $('#perbaikanModal').modal('show');
+              _context8.next = 11;
               break;
-            case 7:
-              _context8.prev = 7;
-              _context8.t0 = _context8["catch"](0);
-              console.error('Error fetching low stock count:', _context8.t0);
-              // Anda bisa menambahkan notifikasi error di sini
             case 10:
+              throw new Error(response.data.message || 'Invalid response format');
+            case 11:
+              _context8.next = 17;
+              break;
+            case 13:
+              _context8.prev = 13;
+              _context8.t0 = _context8["catch"](0);
+              console.error('Error fetching perbaikan list:', _context8.t0);
+              _this8.$toast.error(((_error$response4 = _context8.t0.response) === null || _error$response4 === void 0 || (_error$response4 = _error$response4.data) === null || _error$response4 === void 0 ? void 0 : _error$response4.message) || 'Gagal memuat daftar perbaikan');
+            case 17:
+              _context8.prev = 17;
+              _this8.loadingPerbaikan = false;
+              return _context8.finish(17);
+            case 20:
             case "end":
               return _context8.stop();
           }
-        }, _callee8, null, [[0, 7]]);
+        }, _callee8, null, [[0, 13, 17, 20]]);
       }))();
     },
-    fetchAvailableYears: function fetchAvailableYears() {
+    viewDetailPerbaikan: function viewDetailPerbaikan(id) {
+      // Tutup modal terlebih dahulu
+      $('#perbaikanModal').modal('hide');
+
+      // Navigasi ke halaman detail
+      this.$router.push('/kondisi-error');
+    },
+    fetchKerusakanStockCount: function fetchKerusakanStockCount() {
       var _this9 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee9() {
         var response;
@@ -69422,67 +71297,82 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             case 0:
               _context9.prev = 0;
               _context9.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/peminjaman/chart/available-years');
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/kerusakan/belum/count');
             case 3:
               response = _context9.sent;
-              _this9.availableYears = response.data.years;
-              // Set tahun terakhir sebagai tahun yang dipilih secara default
-              if (_this9.availableYears.length > 0) {
-                _this9.selectedYear = Math.max.apply(Math, _toConsumableArray(_this9.availableYears));
+              if (response.data.success) {
+                _this9.kerusakanStockCount = response.data.count;
               }
-              _context9.next = 12;
+              _context9.next = 11;
               break;
-            case 8:
-              _context9.prev = 8;
+            case 7:
+              _context9.prev = 7;
               _context9.t0 = _context9["catch"](0);
-              console.error('Error fetching available years:', _context9.t0);
-              _this9.errorMessage = 'Gagal memuat daftar tahun';
-            case 12:
+              console.error('Error fetching low stock count:', _context9.t0);
+              _this9.$toast.error('Gagal memuat jumlah kerusakan');
+              // Anda bisa menambahkan notifikasi error di sini
+            case 11:
             case "end":
               return _context9.stop();
           }
-        }, _callee9, null, [[0, 8]]);
+        }, _callee9, null, [[0, 7]]);
       }))();
     },
-    fetchMonthlyCompletedLoans: function fetchMonthlyCompletedLoans() {
+    showKerusakanModal: function showKerusakanModal() {
       var _this10 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee10() {
-        var response;
+        var response, _error$response5;
         return _regeneratorRuntime().wrap(function _callee10$(_context10) {
           while (1) switch (_context10.prev = _context10.next) {
             case 0:
-              _this10.isloading = true;
-              _this10.errorMessage = '';
-              _context10.prev = 2;
-              _context10.next = 5;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/v1/peminjaman/chart/monthly-completed?year=".concat(_this10.selectedYear));
-            case 5:
+              _context10.prev = 0;
+              _this10.loadingKerusakan = true;
+              _context10.next = 4;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/kerusakan/belum/list');
+            case 4:
               response = _context10.sent;
-              _this10.renderChart(response.data);
-              _context10.next = 14;
-              break;
-            case 9:
-              _context10.prev = 9;
-              _context10.t0 = _context10["catch"](2);
-              console.error('Error fetching monthly completed loans:', _context10.t0);
-              _this10.errorMessage = 'Gagal memuat data peminjaman';
-              // Hancurkan chart jika ada error
-              if (_this10.chart) {
-                _this10.chart.destroy();
-                _this10.chart = null;
+              if (!response.data.success) {
+                _context10.next = 10;
+                break;
               }
-            case 14:
-              _context10.prev = 14;
-              _this10.isloading = false;
-              return _context10.finish(14);
+              _this10.kerusakanList = response.data.data;
+              $('#kerusakanModal').modal('show');
+              _context10.next = 11;
+              break;
+            case 10:
+              throw new Error(response.data.message || 'Invalid response format');
+            case 11:
+              _context10.next = 17;
+              break;
+            case 13:
+              _context10.prev = 13;
+              _context10.t0 = _context10["catch"](0);
+              console.error('Error fetching kerusakan list:', _context10.t0);
+              _this10.$toast.error(((_error$response5 = _context10.t0.response) === null || _error$response5 === void 0 || (_error$response5 = _error$response5.data) === null || _error$response5 === void 0 ? void 0 : _error$response5.message) || 'Gagal memuat daftar kerusakan');
             case 17:
+              _context10.prev = 17;
+              _this10.loadingKerusakan = false;
+              return _context10.finish(17);
+            case 20:
             case "end":
               return _context10.stop();
           }
-        }, _callee10, null, [[2, 9, 14, 17]]);
+        }, _callee10, null, [[0, 13, 17, 20]]);
       }))();
     },
-    fetchAvailableYearsPermintaan: function fetchAvailableYearsPermintaan() {
+    viewDetailKerusakan: function viewDetailKerusakan(id) {
+      // Tutup modal terlebih dahulu
+      $('#kerusakanModal').modal('hide');
+
+      // Navigasi ke halaman detail
+      this.$router.push({
+        name: 'm-kondisi-detail-rusak',
+        params: {
+          id: id
+        }
+      });
+    },
+    fetchPemusnahanStokCount: function fetchPemusnahanStokCount() {
       var _this11 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee11() {
         var response;
@@ -69491,64 +71381,377 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             case 0:
               _context11.prev = 0;
               _context11.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/permintaan/chart/available-years');
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/pemusnahan/selesai/count');
             case 3:
               response = _context11.sent;
-              _this11.availableYearsPermintaan = response.data.years;
-              // Set tahun terakhir sebagai tahun yang dipilih secara default
-              if (_this11.availableYearsPermintaan.length > 0) {
-                _this11.selectedYearPermintaan = Math.max.apply(Math, _toConsumableArray(_this11.availableYearsPermintaan));
+              if (response.data.success) {
+                _this11.pemusnahanStokCount = response.data.count;
               }
-              _context11.next = 12;
+              _context11.next = 11;
               break;
-            case 8:
-              _context11.prev = 8;
+            case 7:
+              _context11.prev = 7;
               _context11.t0 = _context11["catch"](0);
-              console.error('Error fetching available years:', _context11.t0);
-              _this11.errorMessagePermintaan = 'Gagal memuat daftar tahun';
-            case 12:
+              console.error('Error fetching low stock count:', _context11.t0);
+              _this11.$toast.error('Gagal memuat jumlah pemusnahan');
+              // Anda bisa menambahkan notifikasi error di sini
+            case 11:
             case "end":
               return _context11.stop();
           }
-        }, _callee11, null, [[0, 8]]);
+        }, _callee11, null, [[0, 7]]);
       }))();
     },
-    fetchMonthlyCompletedLoansPermintaan: function fetchMonthlyCompletedLoansPermintaan() {
+    showPemusnahanModal: function showPemusnahanModal() {
       var _this12 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee12() {
-        var response;
+        var response, _error$response6;
         return _regeneratorRuntime().wrap(function _callee12$(_context12) {
           while (1) switch (_context12.prev = _context12.next) {
             case 0:
-              _this12.isloading = true;
-              _this12.errorMessagePermintaan = '';
-              _context12.prev = 2;
-              _context12.next = 5;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/v1/permintaan/chart/monthly-completed?year=".concat(_this12.selectedYearPermintaan));
-            case 5:
+              _context12.prev = 0;
+              _this12.loadingPemusnahan = true;
+              _context12.next = 4;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/pemusnahan/selesai/list');
+            case 4:
               response = _context12.sent;
-              _this12.renderChartPermintaan(response.data);
-              _context12.next = 14;
-              break;
-            case 9:
-              _context12.prev = 9;
-              _context12.t0 = _context12["catch"](2);
-              console.error('Error fetching monthly completed loans:', _context12.t0);
-              _this12.errorMessagePermintaan = 'Gagal memuat data permintaan';
-              // Hancurkan chart jika ada error
-              if (_this12.chartPermintaan) {
-                _this12.chartPermintaan.destroy();
-                _this12.chartPermintaan = null;
+              if (!response.data.success) {
+                _context12.next = 10;
+                break;
               }
-            case 14:
-              _context12.prev = 14;
-              _this12.isloading = false;
-              return _context12.finish(14);
+              _this12.pemusnahanList = response.data.data;
+              $('#pemusnahanModal').modal('show');
+              _context12.next = 11;
+              break;
+            case 10:
+              throw new Error(response.data.message || 'Invalid response format');
+            case 11:
+              _context12.next = 17;
+              break;
+            case 13:
+              _context12.prev = 13;
+              _context12.t0 = _context12["catch"](0);
+              console.error('Error fetching pemusnahan list:', _context12.t0);
+              _this12.$toast.error(((_error$response6 = _context12.t0.response) === null || _error$response6 === void 0 || (_error$response6 = _error$response6.data) === null || _error$response6 === void 0 ? void 0 : _error$response6.message) || 'Gagal memuat daftar pemusnahan');
             case 17:
+              _context12.prev = 17;
+              _this12.loadingPemusnahan = false;
+              return _context12.finish(17);
+            case 20:
             case "end":
               return _context12.stop();
           }
-        }, _callee12, null, [[2, 9, 14, 17]]);
+        }, _callee12, null, [[0, 13, 17, 20]]);
+      }))();
+    },
+    viewDetailPemusnahan: function viewDetailPemusnahan(id) {
+      // Tutup modal terlebih dahulu
+      $('#pemusnahanModal').modal('hide');
+
+      // Navigasi ke halaman detail
+      this.$router.push({
+        name: 'kondisi-detail-proses-musnah',
+        params: {
+          id: id
+        }
+      });
+    },
+    fetchKehilanganStokCount: function fetchKehilanganStokCount() {
+      var _this13 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee13() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee13$(_context13) {
+          while (1) switch (_context13.prev = _context13.next) {
+            case 0:
+              _context13.prev = 0;
+              _context13.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/kehilangan/belum/count');
+            case 3:
+              response = _context13.sent;
+              if (response.data.success) {
+                _this13.kehilanganStokCount = response.data.count;
+              }
+              _context13.next = 11;
+              break;
+            case 7:
+              _context13.prev = 7;
+              _context13.t0 = _context13["catch"](0);
+              console.error('Error fetching low stock count:', _context13.t0);
+              _this13.$toast.error('Gagal memuat jumlah kehilangan');
+              // Anda bisa menambahkan notifikasi error di sini
+            case 11:
+            case "end":
+              return _context13.stop();
+          }
+        }, _callee13, null, [[0, 7]]);
+      }))();
+    },
+    showKehilanganModal: function showKehilanganModal() {
+      var _this14 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee14() {
+        var response, _error$response7;
+        return _regeneratorRuntime().wrap(function _callee14$(_context14) {
+          while (1) switch (_context14.prev = _context14.next) {
+            case 0:
+              _context14.prev = 0;
+              _this14.loadingKehilangan = true;
+              _context14.next = 4;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/kehilangan/belum/list');
+            case 4:
+              response = _context14.sent;
+              if (!response.data.success) {
+                _context14.next = 10;
+                break;
+              }
+              _this14.kehilanganList = response.data.data;
+              $('#kehilanganModal').modal('show');
+              _context14.next = 11;
+              break;
+            case 10:
+              throw new Error(response.data.message || 'Invalid response format');
+            case 11:
+              _context14.next = 17;
+              break;
+            case 13:
+              _context14.prev = 13;
+              _context14.t0 = _context14["catch"](0);
+              console.error('Error fetching kehilangan list:', _context14.t0);
+              _this14.$toast.error(((_error$response7 = _context14.t0.response) === null || _error$response7 === void 0 || (_error$response7 = _error$response7.data) === null || _error$response7 === void 0 ? void 0 : _error$response7.message) || 'Gagal memuat daftar kehilangan');
+            case 17:
+              _context14.prev = 17;
+              _this14.loadingKehilangan = false;
+              return _context14.finish(17);
+            case 20:
+            case "end":
+              return _context14.stop();
+          }
+        }, _callee14, null, [[0, 13, 17, 20]]);
+      }))();
+    },
+    viewDetailKehilanagan: function viewDetailKehilanagan(id) {
+      // Tutup modal terlebih dahulu
+      $('#kehilanganModal').modal('hide');
+
+      // Navigasi ke halaman detail
+      this.$router.push({
+        name: 'm-data-detail-baru-hilang',
+        params: {
+          id: id
+        }
+      });
+    },
+    fetchPerawatanStokCount: function fetchPerawatanStokCount() {
+      var _this15 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee15() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee15$(_context15) {
+          while (1) switch (_context15.prev = _context15.next) {
+            case 0:
+              _context15.prev = 0;
+              _context15.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/perawatan/belum/count');
+            case 3:
+              response = _context15.sent;
+              if (response.data.success) {
+                _this15.perawatanStokCount = response.data.count;
+              }
+              _context15.next = 11;
+              break;
+            case 7:
+              _context15.prev = 7;
+              _context15.t0 = _context15["catch"](0);
+              console.error('Error fetching low stock count:', _context15.t0);
+              _this15.$toast.error('Gagal memuat jumlah perawatan yang belum dilakukan');
+              // Anda bisa menambahkan notifikasi error di sini
+            case 11:
+            case "end":
+              return _context15.stop();
+          }
+        }, _callee15, null, [[0, 7]]);
+      }))();
+    },
+    showPerawatanModal: function showPerawatanModal() {
+      var _this16 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee16() {
+        var response, _error$response8;
+        return _regeneratorRuntime().wrap(function _callee16$(_context16) {
+          while (1) switch (_context16.prev = _context16.next) {
+            case 0:
+              _context16.prev = 0;
+              _this16.loadingPerawatan = true;
+              _context16.next = 4;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/perawatan/belum/list');
+            case 4:
+              response = _context16.sent;
+              if (!response.data.success) {
+                _context16.next = 10;
+                break;
+              }
+              _this16.perawatanList = response.data.data;
+              $('#perawatanModal').modal('show');
+              _context16.next = 11;
+              break;
+            case 10:
+              throw new Error(response.data.message || 'Invalid response format');
+            case 11:
+              _context16.next = 17;
+              break;
+            case 13:
+              _context16.prev = 13;
+              _context16.t0 = _context16["catch"](0);
+              console.error('Error fetching perawatan belum dilakukan perawatan list:', _context16.t0);
+              _this16.$toast.error(((_error$response8 = _context16.t0.response) === null || _error$response8 === void 0 || (_error$response8 = _error$response8.data) === null || _error$response8 === void 0 ? void 0 : _error$response8.message) || 'Gagal memuat daftar perbaikan');
+            case 17:
+              _context16.prev = 17;
+              _this16.loadingPerawatan = false;
+              return _context16.finish(17);
+            case 20:
+            case "end":
+              return _context16.stop();
+          }
+        }, _callee16, null, [[0, 13, 17, 20]]);
+      }))();
+    },
+    viewDetailPerawatan: function viewDetailPerawatan() {
+      $('#perawatanModal').modal('hide');
+      this.$router.push('/admin-mtc/jadwal-perawatan');
+    },
+    fetchAvailableYears: function fetchAvailableYears() {
+      var _this17 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee17() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee17$(_context17) {
+          while (1) switch (_context17.prev = _context17.next) {
+            case 0:
+              _context17.prev = 0;
+              _context17.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/peminjaman/chart/available-years');
+            case 3:
+              response = _context17.sent;
+              _this17.availableYears = response.data.years;
+              // Set tahun terakhir sebagai tahun yang dipilih secara default
+              if (_this17.availableYears.length > 0) {
+                _this17.selectedYear = Math.max.apply(Math, _toConsumableArray(_this17.availableYears));
+              }
+              _context17.next = 12;
+              break;
+            case 8:
+              _context17.prev = 8;
+              _context17.t0 = _context17["catch"](0);
+              console.error('Error fetching available years:', _context17.t0);
+              _this17.errorMessage = 'Gagal memuat daftar tahun';
+            case 12:
+            case "end":
+              return _context17.stop();
+          }
+        }, _callee17, null, [[0, 8]]);
+      }))();
+    },
+    fetchMonthlyCompletedLoans: function fetchMonthlyCompletedLoans() {
+      var _this18 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee18() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee18$(_context18) {
+          while (1) switch (_context18.prev = _context18.next) {
+            case 0:
+              _this18.isloading = true;
+              _this18.errorMessage = '';
+              _context18.prev = 2;
+              _context18.next = 5;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/v1/peminjaman/chart/monthly-completed?year=".concat(_this18.selectedYear));
+            case 5:
+              response = _context18.sent;
+              _this18.renderChart(response.data);
+              _context18.next = 14;
+              break;
+            case 9:
+              _context18.prev = 9;
+              _context18.t0 = _context18["catch"](2);
+              console.error('Error fetching monthly completed loans:', _context18.t0);
+              _this18.errorMessage = 'Gagal memuat data peminjaman';
+              // Hancurkan chart jika ada error
+              if (_this18.chart) {
+                _this18.chart.destroy();
+                _this18.chart = null;
+              }
+            case 14:
+              _context18.prev = 14;
+              _this18.isloading = false;
+              return _context18.finish(14);
+            case 17:
+            case "end":
+              return _context18.stop();
+          }
+        }, _callee18, null, [[2, 9, 14, 17]]);
+      }))();
+    },
+    fetchAvailableYearsPermintaan: function fetchAvailableYearsPermintaan() {
+      var _this19 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee19() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee19$(_context19) {
+          while (1) switch (_context19.prev = _context19.next) {
+            case 0:
+              _context19.prev = 0;
+              _context19.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/permintaan/chart/available-years');
+            case 3:
+              response = _context19.sent;
+              _this19.availableYearsPermintaan = response.data.years;
+              // Set tahun terakhir sebagai tahun yang dipilih secara default
+              if (_this19.availableYearsPermintaan.length > 0) {
+                _this19.selectedYearPermintaan = Math.max.apply(Math, _toConsumableArray(_this19.availableYearsPermintaan));
+              }
+              _context19.next = 12;
+              break;
+            case 8:
+              _context19.prev = 8;
+              _context19.t0 = _context19["catch"](0);
+              console.error('Error fetching available years:', _context19.t0);
+              _this19.errorMessagePermintaan = 'Gagal memuat daftar tahun';
+            case 12:
+            case "end":
+              return _context19.stop();
+          }
+        }, _callee19, null, [[0, 8]]);
+      }))();
+    },
+    fetchMonthlyCompletedLoansPermintaan: function fetchMonthlyCompletedLoansPermintaan() {
+      var _this20 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee20() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee20$(_context20) {
+          while (1) switch (_context20.prev = _context20.next) {
+            case 0:
+              _this20.isloading = true;
+              _this20.errorMessagePermintaan = '';
+              _context20.prev = 2;
+              _context20.next = 5;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/v1/permintaan/chart/monthly-completed?year=".concat(_this20.selectedYearPermintaan));
+            case 5:
+              response = _context20.sent;
+              _this20.renderChartPermintaan(response.data);
+              _context20.next = 14;
+              break;
+            case 9:
+              _context20.prev = 9;
+              _context20.t0 = _context20["catch"](2);
+              console.error('Error fetching monthly completed loans:', _context20.t0);
+              _this20.errorMessagePermintaan = 'Gagal memuat data permintaan';
+              // Hancurkan chart jika ada error
+              if (_this20.chartPermintaan) {
+                _this20.chartPermintaan.destroy();
+                _this20.chartPermintaan = null;
+              }
+            case 14:
+              _context20.prev = 14;
+              _this20.isloading = false;
+              return _context20.finish(14);
+            case 17:
+            case "end":
+              return _context20.stop();
+          }
+        }, _callee20, null, [[2, 9, 14, 17]]);
       }))();
     },
     renderChart: function renderChart(chartData) {
@@ -69680,51 +71883,87 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         }
       });
     },
+    setDefaultDateRange: function setDefaultDateRange() {
+      var now = new Date();
+      var firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
+      var lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+      this.filter.start_date = this.formatDateForInput(firstDay);
+      this.filter.end_date = this.formatDateForInput(lastDay);
+    },
     fetchProgressData: function fetchProgressData() {
-      var _this13 = this;
-      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee13() {
-        var response;
-        return _regeneratorRuntime().wrap(function _callee13$(_context13) {
-          while (1) switch (_context13.prev = _context13.next) {
+      var _this21 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee21() {
+        var params, response;
+        return _regeneratorRuntime().wrap(function _callee21$(_context21) {
+          while (1) switch (_context21.prev = _context21.next) {
             case 0:
-              _context13.prev = 0;
-              _this13.loading = true;
-              _context13.next = 4;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/inventory/perawatan/progress');
-            case 4:
-              response = _context13.sent;
+              _context21.prev = 0;
+              _this21.loading = true;
+              params = {
+                start_date: _this21.filter.start_date,
+                end_date: _this21.filter.end_date
+              };
+              _context21.next = 5;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/inventory/perawatan/progress', {
+                params: params
+              });
+            case 5:
+              response = _context21.sent;
               if (response.data.success) {
-                _this13.progressData = response.data.data;
+                _this21.progressData = response.data.data;
               }
-              _context13.next = 12;
+              _context21.next = 13;
               break;
-            case 8:
-              _context13.prev = 8;
-              _context13.t0 = _context13["catch"](0);
-              console.error('Error fetching progress data:', _context13.t0);
-              _this13.$toast.error('Gagal memuat data progress perawatan');
-            case 12:
-              _context13.prev = 12;
-              _this13.loading = false;
-              return _context13.finish(12);
-            case 15:
+            case 9:
+              _context21.prev = 9;
+              _context21.t0 = _context21["catch"](0);
+              console.error('Error fetching progress data:', _context21.t0);
+              _this21.$toast.error('Gagal memuat data progress perawatan');
+            case 13:
+              _context21.prev = 13;
+              _this21.loading = false;
+              return _context21.finish(13);
+            case 16:
             case "end":
-              return _context13.stop();
+              return _context21.stop();
           }
-        }, _callee13, null, [[0, 8, 12, 15]]);
+        }, _callee21, null, [[0, 9, 13, 16]]);
       }))();
     },
+    applyFilter: function applyFilter() {
+      // Validasi tanggal
+      if (new Date(this.filter.start_date) > new Date(this.filter.end_date)) {
+        this.$toast.error('Tanggal mulai tidak boleh lebih besar dari tanggal akhir');
+        return;
+      }
+      this.fetchProgressData();
+    },
+    resetFilter: function resetFilter() {
+      this.setDefaultDateRange();
+      this.fetchProgressData();
+    },
+    formatDate: function formatDate(dateString) {
+      var options = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      };
+      return new Date(dateString).toLocaleDateString('id-ID', options);
+    },
+    formatDateForInput: function formatDateForInput(date) {
+      return date.toISOString().split('T')[0];
+    },
     fetchChartData: function fetchChartData() {
-      var _this14 = this;
+      var _this22 = this;
       axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/tool-conditions').then(function (response) {
-        _this14.chartData = response.data;
-        _this14.renderChartNoSeri();
+        _this22.chartData = response.data;
+        _this22.renderChartNoSeri();
       })["catch"](function (error) {
         console.error('Error fetching chart data:', error);
       });
     },
     renderChartNoSeri: function renderChartNoSeri() {
-      var _this15 = this;
+      var _this23 = this;
       if (this.pieChart) {
         this.pieChart.destroy();
       }
@@ -69770,12 +72009,13 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       legendContainer.style.flexWrap = 'wrap'; // Agar tetap responsif jika panjang
 
       this.chartData.labels.forEach(function (label, index) {
-        var color = _this15.chartData.colors[index];
+        var color = _this23.chartData.colors[index];
         var item = document.createElement('div');
         item.style.display = 'flex';
         item.style.alignItems = 'center';
         item.style.marginRight = '16px';
-        // item.style.marginBottom = '8px';
+        item.style.marginBottom = '10px';
+        item.style.marginTop = '10px';
         item.innerHTML = "\n          <span style=\"width: 12px; height: 12px; background-color: ".concat(color, "; display: inline-block; margin-right: 6px; border-radius: 2px;\"></span>\n          <span style=\"font-size: 14px;\">").concat(label, "</span>\n        ");
         legendContainer.appendChild(item);
       });
@@ -103524,7 +105764,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.chart-area[data-v-31b9370d] {\r\n  position: relative;\r\n  height: 20rem;\n}\n@media (min-width: 768px) {\n.chart-area[data-v-31b9370d] {\r\n    height: 25rem;\n}\n}\n.dropdown[data-v-31b9370d] {\r\n  display: inline-block;\n}\n.form-control-sm[data-v-31b9370d] {\r\n  width: 100px;\r\n  display: inline-block;\n}\n.progress[data-v-31b9370d] {\r\n  height: 20px;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.chart-area[data-v-31b9370d] {\r\n  position: relative;\r\n  height: 20rem;\n}\n@media (min-width: 768px) {\n.chart-area[data-v-31b9370d] {\r\n    height: 25rem;\n}\n}\n.dropdown[data-v-31b9370d] {\r\n  display: inline-block;\n}\n.form-control-sm[data-v-31b9370d] {\r\n  width: 100px;\r\n  display: inline-block;\n}\n.progress[data-v-31b9370d] {\r\n  height: 20px;\n}\n.modal[data-v-31b9370d] {\r\n  z-index: 1050 !important; /* Modal di atas backdrop */\n}\n.table th[data-v-31b9370d], .table td[data-v-31b9370d] {\r\n  vertical-align: middle;\n}\r\n\r\n/* .btn-sm {\r\n  padding: 0.25rem 0.5rem;\r\n  font-size: 0.875rem;\r\n  line-height: 1.5;\r\n  border-radius: 0.2rem;\r\n} */\n.modal-header .close[data-v-31b9370d] {\r\n  opacity: 1;\r\n  font-size: 1.5rem;\r\n  line-height: 1;\r\n  padding: 0.5rem;\r\n  margin: -0.5rem -0.5rem -0.5rem auto;\n}\n.modal-header .close[data-v-31b9370d]:hover {\r\n  opacity: 0.8;\n}\n.modal-footer .btn[data-v-31b9370d] {\r\n  min-width: 80px;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -104532,7 +106772,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n#calendar {\n  width: 100%;\n  height: 600px;\n}\n#pills-tab .nav-link {\n  color: #000;\n}\n#pills-tab .nav-link.active {\n  background-color: #169ea8;\n  color: #fff;\n}\n@media print {\n  /* body * {\n    visibility: hidden;\n  }\n\n  #calendar,\n  #calendar * {\n    visibility: visible;\n  }\n\n  #calendar {\n    position: absolute;\n    left: 0;\n    top: 0;\n  } */\n#calendar {\n    width: 100%;\n    height: 100%;\n    margin: 0;\n    padding: 0;\n}\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n#calendar {\n  width: 100%;\n  height: 600px;\n}\n#pills-tab .nav-link {\n  color: #000;\n}\n#pills-tab .nav-link.active {\n  background-color: #169ea8;\n  color: #fff;\n}\n\n/* Menghilangkan waktu di list view */\n.fc-list-event-time {\n  display: none !important;\n}\n\n/* Style untuk event di list view */\n.fc-list-event-title {\n  font-size: 14px;\n  padding: 5px;\n}\n@media print {\n#calendar {\n    width: 100%;\n    height: 100%;\n    margin: 0;\n    padding: 0;\n}\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -104820,7 +107060,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.upload-box-1[data-v-47258cfa] {\r\n  width: 100%;\r\n  min-height: 150px;\r\n  border: 2px dashed #ddd;\r\n  text-align: center;\r\n  padding: 15px;\r\n  cursor: pointer;\n}\n.drag-active[data-v-47258cfa] {\r\n  background-color: rgba(0, 0, 0, 0.05);\n}\n.upload-input[data-v-47258cfa] {\r\n  display: none;\n}\n.browse-link[data-v-47258cfa] {\r\n  color: #007bff;\r\n  cursor: pointer;\n}\n.img-preview[data-v-47258cfa] {\r\n  max-width: 100%;\r\n  height: auto;\r\n  margin-top: 10px;\n}\n.char-counter[data-v-47258cfa] {\r\n  text-align: right;\r\n  font-size: 0.9em;\r\n  color: #6c757d;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.upload-box-1[data-v-47258cfa] {\r\n  width: 100%;\r\n  min-height: 150px;\r\n  border: 2px dashed #ddd;\r\n  text-align: center;\r\n  padding: 15px;\r\n  cursor: pointer;\n}\n.drag-active[data-v-47258cfa] {\r\n  background-color: rgba(0, 0, 0, 0.05);\n}\n.upload-input[data-v-47258cfa] {\r\n  position: absolute;\r\n  width: 0;\r\n  height: 0;\r\n  opacity: 0;\r\n  overflow: hidden;\n}\n.browse-link[data-v-47258cfa] {\r\n  color: #169ea8;\r\n  cursor: pointer;\n}\n.upload-box-1[data-v-47258cfa] {\r\n  width: 100%;\r\n  min-height: 150px;\r\n  border: 2px dashed #169ea8;\r\n  border-radius: 8px;\r\n  text-align: center;\r\n  padding: 15px;\r\n  cursor: pointer;\r\n  transition: all 0.3s ease;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: center;\r\n  align-items: center;\r\n  position: relative; /* Tambahkan ini */\n}\n.upload-box-1[data-v-47258cfa]:hover {\r\n  background-color: rgba(22, 158, 168, 0.05);\n}\n.drag-active[data-v-47258cfa] {\r\n  background-color: rgba(22, 158, 168, 0.1);\r\n  border-color: #169ea8;\n}\n.img-preview[data-v-47258cfa] {\r\n  max-width: 100%;\r\n  max-height: 200px;\r\n  -o-object-fit: contain;\r\n     object-fit: contain;\r\n  border-radius: 4px;\r\n  margin-top: 10px;\n}\n.char-counter[data-v-47258cfa] {\r\n  text-align: right;\r\n  font-size: 0.9em;\r\n  color: #6c757d;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -105708,7 +107948,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.chart-area[data-v-40b36bee] {\r\n  position: relative;\r\n  height: 20rem;\n}\n@media (min-width: 768px) {\n.chart-area[data-v-40b36bee] {\r\n    height: 25rem;\n}\n}\n.dropdown[data-v-40b36bee] {\r\n  display: inline-block;\n}\n.form-control-sm[data-v-40b36bee] {\r\n  width: 100px;\r\n  display: inline-block;\n}\n.progress[data-v-40b36bee] {\r\n  height: 20px;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.chart-area[data-v-40b36bee] {\r\n  position: relative;\r\n  height: 20rem;\n}\n@media (min-width: 768px) {\n.chart-area[data-v-40b36bee] {\r\n    height: 25rem;\n}\n}\n.dropdown[data-v-40b36bee] {\r\n  display: inline-block;\n}\n.form-control-sm[data-v-40b36bee] {\r\n  width: 100px;\r\n  display: inline-block;\n}\n.progress[data-v-40b36bee] {\r\n  height: 20px;\n}\n.modal[data-v-40b36bee] {\r\n  z-index: 1050 !important; /* Modal di atas backdrop */\n}\n.table th[data-v-40b36bee], .table td[data-v-40b36bee] {\r\n  vertical-align: middle;\n}\r\n\r\n/* .btn-sm {\r\n  padding: 0.25rem 0.5rem;\r\n  font-size: 0.875rem;\r\n  line-height: 1.5;\r\n  border-radius: 0.2rem;\r\n} */\n.modal-header .close[data-v-40b36bee] {\r\n  opacity: 1;\r\n  font-size: 1.5rem;\r\n  line-height: 1;\r\n  padding: 0.5rem;\r\n  margin: -0.5rem -0.5rem -0.5rem auto;\n}\n.modal-header .close[data-v-40b36bee]:hover {\r\n  opacity: 0.8;\n}\n.modal-footer .btn[data-v-40b36bee] {\r\n  min-width: 80px;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -189790,11 +192030,44 @@ var render = function () {
                   ]
                 ),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "h5 mb-0 font-weight-bold text-gray-800" },
-                  [_vm._v(_vm._s(_vm.lowStockCount))]
-                ),
+                _c("div", { staticClass: "h5 mb-0 font-weight-bold" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "text-decoration-none",
+                      class:
+                        _vm.lowStockCount > 0 ? "text-danger" : "text-gray-800",
+                      attrs: { href: "#" },
+                    },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(_vm.lowStockCount) +
+                          "\n                  "
+                      ),
+                    ]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "mt-2" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "text-primary small text-decoration-none",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function ($event) {
+                          $event.preventDefault()
+                          return _vm.showStokModal.apply(null, arguments)
+                        },
+                      },
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-eye text-primary" }),
+                      _c("b", [_vm._v(" Detail")]),
+                    ]
+                  ),
+                ]),
               ]),
               _vm._v(" "),
               _vm._m(1),
@@ -189802,6 +192075,155 @@ var render = function () {
           ]),
         ]),
       ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          staticStyle: { "overflow-y": "auto" },
+          attrs: {
+            id: "stokModal",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-labelledby": "stokModalLabel",
+            "aria-hidden": "true",
+          },
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-dialog", attrs: { role: "document" } },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "modal-content",
+                  staticStyle: { "max-width": "max-content" },
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "modal-header bg-primary text-white" },
+                    [
+                      _c(
+                        "h5",
+                        {
+                          staticClass: "modal-title",
+                          attrs: { id: "stokModalLabel" },
+                        },
+                        [_vm._v("Daftar Stok Tools kurang sama dengan 1")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "close text-white",
+                          attrs: {
+                            type: "button",
+                            "data-dismiss": "modal",
+                            "aria-label": "Close",
+                          },
+                          on: { click: _vm.closeModalStok },
+                        },
+                        [
+                          _c("span", { attrs: { "aria-hidden": "true" } }, [
+                            _vm._v("×"),
+                          ]),
+                        ]
+                      ),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-body" }, [
+                    _vm.loadingStok
+                      ? _c("div", { staticClass: "text-center py-4" }, [
+                          _vm._m(2),
+                          _vm._v(" "),
+                          _c("p", [_vm._v("Memuat data stok tools...")]),
+                        ])
+                      : _c("div", [
+                          _vm.stokList.length === 0
+                            ? _c("div", { staticClass: "alert alert-info" }, [
+                                _vm._v(
+                                  "\n                  Tidak ada Stok Tools yang di bawah batas minimum.\n                "
+                                ),
+                              ])
+                            : _c("div", { staticClass: "table-responsive" }, [
+                                _c(
+                                  "table",
+                                  {
+                                    staticClass:
+                                      "table table-bordered table-hover",
+                                  },
+                                  [
+                                    _vm._m(3),
+                                    _vm._v(" "),
+                                    _c(
+                                      "tbody",
+                                      _vm._l(_vm.stokList, function (stok) {
+                                        return _c("tr", { key: stok.id }, [
+                                          _c("td", [
+                                            _vm._v(_vm._s(stok.kode || "-")),
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("td", [
+                                            _vm._v(_vm._s(stok.nama || "-")),
+                                          ]),
+                                          _vm._v(" "),
+                                          _c(
+                                            "td",
+                                            { staticClass: "text-center" },
+                                            [
+                                              _c(
+                                                "button",
+                                                {
+                                                  on: {
+                                                    click: function ($event) {
+                                                      return _vm.viewDetailStok(
+                                                        stok.id
+                                                      )
+                                                    },
+                                                  },
+                                                },
+                                                [
+                                                  _c("i", {
+                                                    staticClass:
+                                                      "fas fa-eye text-info",
+                                                  }),
+                                                  _vm._v(
+                                                    " Detail\n                          "
+                                                  ),
+                                                ]
+                                              ),
+                                            ]
+                                          ),
+                                        ])
+                                      }),
+                                      0
+                                    ),
+                                  ]
+                                ),
+                              ]),
+                        ]),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-footer" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-secondary",
+                        attrs: { type: "button", "data-dismiss": "modal" },
+                        on: { click: _vm.closeModalStok },
+                      },
+                      [_vm._v("Tutup")]
+                    ),
+                  ]),
+                ]
+              ),
+            ]
+          ),
+        ]
+      ),
       _vm._v(" "),
       _c("div", { staticClass: "col-xl-3 col-md-4 mb-4" }, [
         _c("div", { staticClass: "border-left-primary shadow h-100 py-2" }, [
@@ -189816,23 +192238,295 @@ var render = function () {
                   },
                   [
                     _vm._v(
-                      "\n                  Peminjamanan Alat/Mesin yang Menunggu Persetujuan\n                "
+                      "\n                  Peminjaman Alat/Mesin yang Menunggu Persetujuan\n                "
                     ),
                   ]
                 ),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "h5 mb-0 font-weight-bold text-gray-800" },
-                  [_vm._v(_vm._s(_vm.peminjamanStokCount))]
-                ),
+                _c("div", { staticClass: "h5 mb-0 font-weight-bold" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "text-decoration-none",
+                      class:
+                        _vm.peminjamanStokCount > 0
+                          ? "text-danger"
+                          : "text-gray-800",
+                      attrs: { href: "#" },
+                    },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(_vm.peminjamanStokCount) +
+                          "\n                  "
+                      ),
+                    ]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "mt-2" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "text-primary small text-decoration-none",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function ($event) {
+                          $event.preventDefault()
+                          return _vm.showPeminjamanModal.apply(null, arguments)
+                        },
+                      },
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-eye text-primary" }),
+                      _c("b", [_vm._v(" Detail")]),
+                    ]
+                  ),
+                ]),
               ]),
               _vm._v(" "),
-              _vm._m(2),
+              _vm._m(4),
             ]),
           ]),
         ]),
       ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          staticStyle: { "overflow-y": "auto" },
+          attrs: {
+            id: "peminjamanModal",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-labelledby": "peminjamanModalLabel",
+            "aria-hidden": "true",
+          },
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-dialog", attrs: { role: "document" } },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "modal-content",
+                  staticStyle: { "max-width": "max-content" },
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "modal-header bg-primary text-white" },
+                    [
+                      _c(
+                        "h5",
+                        {
+                          staticClass: "modal-title",
+                          attrs: { id: "peminjamanModalLabel" },
+                        },
+                        [_vm._v("Daftar Peminjaman Belum Diproses")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "close text-white",
+                          attrs: {
+                            type: "button",
+                            "data-dismiss": "modal",
+                            "aria-label": "Close",
+                          },
+                          on: { click: _vm.closeModal },
+                        },
+                        [
+                          _c("span", { attrs: { "aria-hidden": "true" } }, [
+                            _vm._v("×"),
+                          ]),
+                        ]
+                      ),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-body" }, [
+                    _vm.loadingPeminjaman
+                      ? _c("div", { staticClass: "text-center py-4" }, [
+                          _vm._m(5),
+                          _vm._v(" "),
+                          _c("p", [_vm._v("Memuat data peminjaman...")]),
+                        ])
+                      : _c("div", [
+                          _vm.peminjamanList.length === 0
+                            ? _c("div", { staticClass: "alert alert-info" }, [
+                                _vm._v(
+                                  "\n                  Tidak ada peminjaman yang belum diproses.\n                "
+                                ),
+                              ])
+                            : _c("div", { staticClass: "table-responsive" }, [
+                                _c(
+                                  "table",
+                                  {
+                                    staticClass:
+                                      "table table-bordered table-hover",
+                                  },
+                                  [
+                                    _vm._m(6),
+                                    _vm._v(" "),
+                                    _c(
+                                      "tbody",
+                                      _vm._l(
+                                        _vm.peminjamanList,
+                                        function (peminjaman) {
+                                          return _c(
+                                            "tr",
+                                            { key: peminjaman.id },
+                                            [
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    peminjaman.no_peminjaman
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    peminjaman.users
+                                                      ? peminjaman.users.nama
+                                                      : "-"
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    peminjaman.tools
+                                                      ? peminjaman.tools.nama
+                                                      : "-"
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c(
+                                                "td",
+                                                _vm._l(
+                                                  peminjaman.no_seri,
+                                                  function (noSeri, index) {
+                                                    return _c(
+                                                      "span",
+                                                      { key: noSeri.id },
+                                                      [
+                                                        _vm._v(
+                                                          "\n                            " +
+                                                            _vm._s(
+                                                              noSeri.no_seri
+                                                            )
+                                                        ),
+                                                        index <
+                                                        peminjaman.no_seri
+                                                          .length -
+                                                          1
+                                                          ? _c("span", [
+                                                              _vm._v(", "),
+                                                            ])
+                                                          : _vm._e(),
+                                                      ]
+                                                    )
+                                                  }
+                                                ),
+                                                0
+                                              ),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    _vm.formatDate(
+                                                      peminjaman.tgl_pinjam
+                                                    )
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    _vm.formatDate(
+                                                      peminjaman.tgl_kembali
+                                                    )
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    peminjaman.detail_peminjaman ||
+                                                      "-"
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c(
+                                                "td",
+                                                { staticClass: "text-center" },
+                                                [
+                                                  _c(
+                                                    "button",
+                                                    {
+                                                      on: {
+                                                        click: function (
+                                                          $event
+                                                        ) {
+                                                          return _vm.viewDetailPeminjaman(
+                                                            peminjaman.id
+                                                          )
+                                                        },
+                                                      },
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass:
+                                                          "fas fa-eye text-info",
+                                                      }),
+                                                      _vm._v(
+                                                        " Detail\n                          "
+                                                      ),
+                                                    ]
+                                                  ),
+                                                ]
+                                              ),
+                                            ]
+                                          )
+                                        }
+                                      ),
+                                      0
+                                    ),
+                                  ]
+                                ),
+                              ]),
+                        ]),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-footer" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-secondary",
+                        attrs: { type: "button", "data-dismiss": "modal" },
+                        on: { click: _vm.closeModal },
+                      },
+                      [_vm._v("Tutup")]
+                    ),
+                  ]),
+                ]
+              ),
+            ]
+          ),
+        ]
+      ),
       _vm._v(" "),
       _c("div", { staticClass: "col-xl-3 col-md-4 mb-4" }, [
         _c("div", { staticClass: "border-left-primary shadow h-100 py-2" }, [
@@ -189852,18 +192546,279 @@ var render = function () {
                   ]
                 ),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "h5 mb-0 font-weight-bold text-gray-800" },
-                  [_vm._v(_vm._s(_vm.permintaanStokCount))]
-                ),
+                _c("div", { staticClass: "h5 mb-0 font-weight-bold" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "text-decoration-none",
+                      class:
+                        _vm.permintaanStokCount > 0
+                          ? "text-danger"
+                          : "text-gray-800",
+                      attrs: { href: "#" },
+                    },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(_vm.permintaanStokCount) +
+                          "\n                  "
+                      ),
+                    ]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "mt-2" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "text-primary small text-decoration-none",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function ($event) {
+                          $event.preventDefault()
+                          return _vm.showPermintaanModal.apply(null, arguments)
+                        },
+                      },
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-eye text-primary" }),
+                      _c("b", [_vm._v(" Detail")]),
+                    ]
+                  ),
+                ]),
               ]),
               _vm._v(" "),
-              _vm._m(3),
+              _vm._m(7),
             ]),
           ]),
         ]),
       ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          staticStyle: { "overflow-y": "auto" },
+          attrs: {
+            id: "permintaanModal",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-labelledby": "permintaanModalLabel",
+            "aria-hidden": "true",
+          },
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-dialog", attrs: { role: "document" } },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "modal-content",
+                  staticStyle: { "max-width": "max-content" },
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "modal-header bg-primary text-white" },
+                    [
+                      _c(
+                        "h5",
+                        {
+                          staticClass: "modal-title",
+                          attrs: { id: "permintaanModalLabel" },
+                        },
+                        [_vm._v("Daftar Permintaan Belum Diproses")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "close text-white",
+                          attrs: {
+                            type: "button",
+                            "data-dismiss": "modal",
+                            "aria-label": "Close",
+                          },
+                          on: { click: _vm.closeModalPermintaan },
+                        },
+                        [
+                          _c("span", { attrs: { "aria-hidden": "true" } }, [
+                            _vm._v("×"),
+                          ]),
+                        ]
+                      ),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-body" }, [
+                    _vm.loadingPermintaan
+                      ? _c("div", { staticClass: "text-center py-4" }, [
+                          _vm._m(8),
+                          _vm._v(" "),
+                          _c("p", [_vm._v("Memuat data peminjaman...")]),
+                        ])
+                      : _c("div", [
+                          _vm.permintaanList.length === 0
+                            ? _c("div", { staticClass: "alert alert-info" }, [
+                                _vm._v(
+                                  "\n                  Tidak ada peminjaman yang belum diproses.\n                "
+                                ),
+                              ])
+                            : _c("div", { staticClass: "table-responsive" }, [
+                                _c(
+                                  "table",
+                                  {
+                                    staticClass:
+                                      "table table-bordered table-hover",
+                                  },
+                                  [
+                                    _vm._m(9),
+                                    _vm._v(" "),
+                                    _c(
+                                      "tbody",
+                                      _vm._l(
+                                        _vm.permintaanList,
+                                        function (permintaan) {
+                                          return _c(
+                                            "tr",
+                                            { key: permintaan.id },
+                                            [
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    permintaan.no_permintaan
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    permintaan.users
+                                                      ? permintaan.users.nama
+                                                      : "-"
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    permintaan.tools
+                                                      ? permintaan.tools.nama
+                                                      : "-"
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c(
+                                                "td",
+                                                _vm._l(
+                                                  permintaan.no_seri,
+                                                  function (noSeri, index) {
+                                                    return _c(
+                                                      "span",
+                                                      { key: noSeri.id },
+                                                      [
+                                                        _vm._v(
+                                                          "\n                            " +
+                                                            _vm._s(
+                                                              noSeri.no_seri
+                                                            )
+                                                        ),
+                                                        index <
+                                                        permintaan.no_seri
+                                                          .length -
+                                                          1
+                                                          ? _c("span", [
+                                                              _vm._v(", "),
+                                                            ])
+                                                          : _vm._e(),
+                                                      ]
+                                                    )
+                                                  }
+                                                ),
+                                                0
+                                              ),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    permintaan.tgl_permintaan ||
+                                                      "-"
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    permintaan.detail_permintaan ||
+                                                      "-"
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c(
+                                                "td",
+                                                { staticClass: "text-center" },
+                                                [
+                                                  _c(
+                                                    "button",
+                                                    {
+                                                      on: {
+                                                        click: function (
+                                                          $event
+                                                        ) {
+                                                          return _vm.viewDetailPermintaan(
+                                                            permintaan.id
+                                                          )
+                                                        },
+                                                      },
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass:
+                                                          "fas fa-eye text-info",
+                                                      }),
+                                                      _vm._v(
+                                                        " Detail\n                          "
+                                                      ),
+                                                    ]
+                                                  ),
+                                                ]
+                                              ),
+                                            ]
+                                          )
+                                        }
+                                      ),
+                                      0
+                                    ),
+                                  ]
+                                ),
+                              ]),
+                        ]),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-footer" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-secondary",
+                        attrs: { type: "button", "data-dismiss": "modal" },
+                        on: { click: _vm.closeModalPermintaan },
+                      },
+                      [_vm._v("Tutup")]
+                    ),
+                  ]),
+                ]
+              ),
+            ]
+          ),
+        ]
+      ),
       _vm._v(" "),
       _c("div", { staticClass: "col-xl-3 col-md-4 mb-4" }, [
         _c("div", { staticClass: "border-left-primary shadow h-100 py-2" }, [
@@ -189883,18 +192838,241 @@ var render = function () {
                   ]
                 ),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "h5 mb-0 font-weight-bold text-gray-800" },
-                  [_vm._v(_vm._s(_vm.perbaikanStokCount))]
-                ),
+                _c("div", { staticClass: "h5 mb-0 font-weight-bold" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "text-decoration-none",
+                      class:
+                        _vm.perbaikanStokCount > 0
+                          ? "text-danger"
+                          : "text-gray-800",
+                      attrs: { href: "#" },
+                    },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(_vm.perbaikanStokCount) +
+                          "\n                  "
+                      ),
+                    ]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "mt-2" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "text-primary small text-decoration-none",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function ($event) {
+                          $event.preventDefault()
+                          return _vm.showPerbaikanModal.apply(null, arguments)
+                        },
+                      },
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-eye text-primary" }),
+                      _c("b", [_vm._v(" Detail")]),
+                    ]
+                  ),
+                ]),
               ]),
               _vm._v(" "),
-              _vm._m(4),
+              _vm._m(10),
             ]),
           ]),
         ]),
       ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          staticStyle: { "overflow-y": "auto" },
+          attrs: {
+            id: "perbaikanModal",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-labelledby": "perbaikanModalLabel",
+            "aria-hidden": "true",
+          },
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-dialog", attrs: { role: "document" } },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "modal-content",
+                  staticStyle: { "max-width": "max-content" },
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "modal-header bg-primary text-white" },
+                    [
+                      _c(
+                        "h5",
+                        {
+                          staticClass: "modal-title",
+                          attrs: { id: "perbaikanModalLabel" },
+                        },
+                        [_vm._v("Daftar Perbaikan Belum Diproses")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "close text-white",
+                          attrs: {
+                            type: "button",
+                            "data-dismiss": "modal",
+                            "aria-label": "Close",
+                          },
+                          on: { click: _vm.closeModalPerbaikan },
+                        },
+                        [
+                          _c("span", { attrs: { "aria-hidden": "true" } }, [
+                            _vm._v("×"),
+                          ]),
+                        ]
+                      ),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-body" }, [
+                    _vm.loadingPerbaikan
+                      ? _c("div", { staticClass: "text-center py-4" }, [
+                          _vm._m(11),
+                          _vm._v(" "),
+                          _c("p", [_vm._v("Memuat data peminjaman...")]),
+                        ])
+                      : _c("div", [
+                          _vm.perbaikanList.length === 0
+                            ? _c("div", { staticClass: "alert alert-info" }, [
+                                _vm._v(
+                                  "\n                  Tidak ada peminjaman yang belum diproses.\n                "
+                                ),
+                              ])
+                            : _c("div", { staticClass: "table-responsive" }, [
+                                _c(
+                                  "table",
+                                  {
+                                    staticClass:
+                                      "table table-bordered table-hover",
+                                  },
+                                  [
+                                    _vm._m(12),
+                                    _vm._v(" "),
+                                    _c(
+                                      "tbody",
+                                      _vm._l(
+                                        _vm.perbaikanList,
+                                        function (perbaikan) {
+                                          return _c(
+                                            "tr",
+                                            { key: perbaikan.id },
+                                            [
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(perbaikan.no_perbaikan)
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    (perbaikan.no_seri &&
+                                                      perbaikan.no_seri.tools &&
+                                                      perbaikan.no_seri.tools
+                                                        .nama) ||
+                                                      "-"
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    perbaikan.no_seri
+                                                      ? perbaikan.no_seri
+                                                          .no_seri
+                                                      : "-"
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    perbaikan.tgl_perbaikan ||
+                                                      "-"
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c(
+                                                "td",
+                                                { staticClass: "text-center" },
+                                                [
+                                                  _c(
+                                                    "button",
+                                                    {
+                                                      on: {
+                                                        click: function (
+                                                          $event
+                                                        ) {
+                                                          return _vm.viewDetailPerbaikan(
+                                                            perbaikan.id
+                                                          )
+                                                        },
+                                                      },
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass:
+                                                          "fas fa-eye text-info",
+                                                      }),
+                                                      _vm._v(
+                                                        " Detail\n                          "
+                                                      ),
+                                                    ]
+                                                  ),
+                                                ]
+                                              ),
+                                            ]
+                                          )
+                                        }
+                                      ),
+                                      0
+                                    ),
+                                  ]
+                                ),
+                              ]),
+                        ]),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-footer" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-secondary",
+                        attrs: { type: "button", "data-dismiss": "modal" },
+                        on: { click: _vm.closeModalPerbaikan },
+                      },
+                      [_vm._v("Tutup")]
+                    ),
+                  ]),
+                ]
+              ),
+            ]
+          ),
+        ]
+      ),
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
@@ -189916,18 +193094,229 @@ var render = function () {
                   ]
                 ),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "h5 mb-0 font-weight-bold text-gray-800" },
-                  [_vm._v(_vm._s(_vm.kerusakanStockCount))]
-                ),
+                _c("div", { staticClass: "h5 mb-0 font-weight-bold" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "text-decoration-none",
+                      class:
+                        _vm.kerusakanStockCount > 0
+                          ? "text-danger"
+                          : "text-gray-800",
+                      attrs: { href: "#" },
+                    },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(_vm.kerusakanStockCount) +
+                          "\n                  "
+                      ),
+                    ]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "mt-2" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "text-primary small text-decoration-none",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function ($event) {
+                          $event.preventDefault()
+                          return _vm.showKerusakanModal.apply(null, arguments)
+                        },
+                      },
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-eye text-primary" }),
+                      _c("b", [_vm._v(" Detail")]),
+                    ]
+                  ),
+                ]),
               ]),
               _vm._v(" "),
-              _vm._m(5),
+              _vm._m(13),
             ]),
           ]),
         ]),
       ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          staticStyle: { "overflow-y": "auto" },
+          attrs: {
+            id: "kerusakanModal",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-labelledby": "kerusakanModalLabel",
+            "aria-hidden": "true",
+          },
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-dialog", attrs: { role: "document" } },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "modal-content",
+                  staticStyle: { "max-width": "max-content" },
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "modal-header bg-primary text-white" },
+                    [
+                      _c(
+                        "h5",
+                        {
+                          staticClass: "modal-title",
+                          attrs: { id: "kerusakanModalLabel" },
+                        },
+                        [_vm._v("Daftar Kerusakan Belum Diproses")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "close text-white",
+                          attrs: {
+                            type: "button",
+                            "data-dismiss": "modal",
+                            "aria-label": "Close",
+                          },
+                          on: { click: _vm.closeModalKerusakan },
+                        },
+                        [
+                          _c("span", { attrs: { "aria-hidden": "true" } }, [
+                            _vm._v("×"),
+                          ]),
+                        ]
+                      ),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-body" }, [
+                    _vm.loadingKerusakan
+                      ? _c("div", { staticClass: "text-center py-4" }, [
+                          _vm._m(14),
+                          _vm._v(" "),
+                          _c("p", [_vm._v("Memuat data peminjaman...")]),
+                        ])
+                      : _c("div", [
+                          _vm.kerusakanList.length === 0
+                            ? _c("div", { staticClass: "alert alert-info" }, [
+                                _vm._v(
+                                  "\n                  Tidak ada peminjaman yang belum diproses.\n                "
+                                ),
+                              ])
+                            : _c("div", { staticClass: "table-responsive" }, [
+                                _c(
+                                  "table",
+                                  {
+                                    staticClass:
+                                      "table table-bordered table-hover",
+                                  },
+                                  [
+                                    _vm._m(15),
+                                    _vm._v(" "),
+                                    _c(
+                                      "tbody",
+                                      _vm._l(
+                                        _vm.kerusakanList,
+                                        function (kerusakan) {
+                                          return _c(
+                                            "tr",
+                                            { key: kerusakan.id },
+                                            [
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(kerusakan.no_kerusakan)
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    (kerusakan.no_seri &&
+                                                      kerusakan.no_seri.tools &&
+                                                      kerusakan.no_seri.tools
+                                                        .nama) ||
+                                                      "-"
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    kerusakan.no_seri
+                                                      ? kerusakan.no_seri
+                                                          .no_seri
+                                                      : "-"
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    kerusakan.tgl_kerusakan ||
+                                                      "-"
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c(
+                                                "td",
+                                                { staticClass: "text-center" },
+                                                [
+                                                  _c(
+                                                    "button",
+                                                    {
+                                                      on: {
+                                                        click: function (
+                                                          $event
+                                                        ) {
+                                                          return _vm.viewDetailKerusakan(
+                                                            kerusakan.id
+                                                          )
+                                                        },
+                                                      },
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass:
+                                                          "fas fa-eye text-info",
+                                                      }),
+                                                      _vm._v(
+                                                        " Detail\n                          "
+                                                      ),
+                                                    ]
+                                                  ),
+                                                ]
+                                              ),
+                                            ]
+                                          )
+                                        }
+                                      ),
+                                      0
+                                    ),
+                                  ]
+                                ),
+                              ]),
+                        ]),
+                  ]),
+                ]
+              ),
+            ]
+          ),
+        ]
+      ),
       _vm._v(" "),
       _c("div", { staticClass: "col-xl-3 col-md-4 mb-4" }, [
         _c("div", { staticClass: "border-left-primary shadow h-100 py-2" }, [
@@ -189942,23 +193331,237 @@ var render = function () {
                   },
                   [
                     _vm._v(
-                      "\n                  Alat/Mesin yang Sudah Dimusnahkan\n                "
+                      "\n                  Alat/Mesin yang Sedang Diproses Pemusnahan\n                "
                     ),
                   ]
                 ),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "h5 mb-0 font-weight-bold text-gray-800" },
-                  [_vm._v(_vm._s(_vm.pemusnahanStokCount))]
-                ),
+                _c("div", { staticClass: "h5 mb-0 font-weight-bold" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "text-decoration-none",
+                      class:
+                        _vm.pemusnahanStokCount > 0
+                          ? "text-danger"
+                          : "text-gray-800",
+                      attrs: { href: "#" },
+                    },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(_vm.pemusnahanStokCount) +
+                          "\n                  "
+                      ),
+                    ]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "mt-2" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "text-primary small text-decoration-none",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function ($event) {
+                          $event.preventDefault()
+                          return _vm.showPemusnahanModal.apply(null, arguments)
+                        },
+                      },
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-eye text-primary" }),
+                      _c("b", [_vm._v(" Detail")]),
+                    ]
+                  ),
+                ]),
               ]),
               _vm._v(" "),
-              _vm._m(6),
+              _vm._m(16),
             ]),
           ]),
         ]),
       ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          staticStyle: { "overflow-y": "auto" },
+          attrs: {
+            id: "pemusnahanModal",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-labelledby": "pemusnahanModalLabel",
+            "aria-hidden": "true",
+          },
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-dialog", attrs: { role: "document" } },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "modal-content",
+                  staticStyle: { "max-width": "max-content" },
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "modal-header bg-primary text-white" },
+                    [
+                      _c(
+                        "h5",
+                        {
+                          staticClass: "modal-title",
+                          attrs: { id: "pemusnahanModalLabel" },
+                        },
+                        [_vm._v("Daftar Pemusnahan yang Belum Dimusnahkan")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "close text-white",
+                          attrs: {
+                            type: "button",
+                            "data-dismiss": "modal",
+                            "aria-label": "Close",
+                          },
+                          on: { click: _vm.closeModalPemusnahan },
+                        },
+                        [
+                          _c("span", { attrs: { "aria-hidden": "true" } }, [
+                            _vm._v("×"),
+                          ]),
+                        ]
+                      ),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-body" }, [
+                    _vm.loadingPemusnahan
+                      ? _c("div", { staticClass: "text-center py-4" }, [
+                          _vm._m(17),
+                          _vm._v(" "),
+                          _c("p", [_vm._v("Memuat data peminjaman...")]),
+                        ])
+                      : _c("div", [
+                          _vm.pemusnahanList.length === 0
+                            ? _c("div", { staticClass: "alert alert-info" }, [
+                                _vm._v(
+                                  "\n                  Tidak ada pemusnahan yang Sudah Selesai.\n                "
+                                ),
+                              ])
+                            : _c("div", { staticClass: "table-responsive" }, [
+                                _c(
+                                  "table",
+                                  {
+                                    staticClass:
+                                      "table table-bordered table-hover",
+                                  },
+                                  [
+                                    _vm._m(18),
+                                    _vm._v(" "),
+                                    _c(
+                                      "tbody",
+                                      _vm._l(
+                                        _vm.pemusnahanList,
+                                        function (pemusnahan) {
+                                          return _c(
+                                            "tr",
+                                            { key: pemusnahan.id },
+                                            [
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    pemusnahan.no_pemusnahan
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    (pemusnahan.no_seri &&
+                                                      pemusnahan.no_seri
+                                                        .tools &&
+                                                      pemusnahan.no_seri.tools
+                                                        .nama) ||
+                                                      "-"
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    pemusnahan.no_seri
+                                                      ? pemusnahan.no_seri
+                                                          .no_seri
+                                                      : "-"
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    pemusnahan.tgl_pemusnahan ||
+                                                      "-"
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c(
+                                                "td",
+                                                { staticClass: "text-center" },
+                                                [
+                                                  _c(
+                                                    "button",
+                                                    {
+                                                      on: {
+                                                        click: function (
+                                                          $event
+                                                        ) {
+                                                          return _vm.viewDetailPemusnahan(
+                                                            pemusnahan.id
+                                                          )
+                                                        },
+                                                      },
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass:
+                                                          "fas fa-eye text-info",
+                                                      }),
+                                                      _vm._v(
+                                                        " Detail\n                          "
+                                                      ),
+                                                    ]
+                                                  ),
+                                                ]
+                                              ),
+                                            ]
+                                          )
+                                        }
+                                      ),
+                                      0
+                                    ),
+                                  ]
+                                ),
+                              ]),
+                        ]),
+                  ]),
+                ]
+              ),
+            ]
+          ),
+        ]
+      ),
       _vm._v(" "),
       _c("div", { staticClass: "col-xl-3 col-md-4 mb-4" }, [
         _c("div", { staticClass: "border-left-primary shadow h-100 py-2" }, [
@@ -189978,18 +193581,232 @@ var render = function () {
                   ]
                 ),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "h5 mb-0 font-weight-bold text-gray-800" },
-                  [_vm._v(_vm._s(_vm.kehilanganStokCount))]
-                ),
+                _c("div", { staticClass: "h5 mb-0 font-weight-bold" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "text-decoration-none",
+                      class:
+                        _vm.kehilanganStokCount > 0
+                          ? "text-danger"
+                          : "text-gray-800",
+                      attrs: { href: "#" },
+                    },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(_vm.kehilanganStokCount) +
+                          "\n                  "
+                      ),
+                    ]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "mt-2" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "text-primary small text-decoration-none",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function ($event) {
+                          $event.preventDefault()
+                          return _vm.showKehilanganModal.apply(null, arguments)
+                        },
+                      },
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-eye text-primary" }),
+                      _c("b", [_vm._v(" Detail")]),
+                    ]
+                  ),
+                ]),
               ]),
               _vm._v(" "),
-              _vm._m(7),
+              _vm._m(19),
             ]),
           ]),
         ]),
       ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          staticStyle: { "overflow-y": "auto" },
+          attrs: {
+            id: "kehilanganModal",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-labelledby": "kehilanganModalLabel",
+            "aria-hidden": "true",
+          },
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-dialog", attrs: { role: "document" } },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "modal-content",
+                  staticStyle: { "max-width": "max-content" },
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "modal-header bg-primary text-white" },
+                    [
+                      _c(
+                        "h5",
+                        {
+                          staticClass: "modal-title",
+                          attrs: { id: "kehilanganModalLabel" },
+                        },
+                        [_vm._v("Daftar Kehilangan Belum Diproses")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "close text-white",
+                          attrs: {
+                            type: "button",
+                            "data-dismiss": "modal",
+                            "aria-label": "Close",
+                          },
+                          on: { click: _vm.closeModalHilang },
+                        },
+                        [
+                          _c("span", { attrs: { "aria-hidden": "true" } }, [
+                            _vm._v("×"),
+                          ]),
+                        ]
+                      ),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-body" }, [
+                    _vm.loadingKehilangan
+                      ? _c("div", { staticClass: "text-center py-4" }, [
+                          _vm._m(20),
+                          _vm._v(" "),
+                          _c("p", [_vm._v("Memuat data peminjaman...")]),
+                        ])
+                      : _c("div", [
+                          _vm.kehilanganList.length === 0
+                            ? _c("div", { staticClass: "alert alert-info" }, [
+                                _vm._v(
+                                  "\n                  Tidak ada peminjaman yang belum diproses.\n                "
+                                ),
+                              ])
+                            : _c("div", { staticClass: "table-responsive" }, [
+                                _c(
+                                  "table",
+                                  {
+                                    staticClass:
+                                      "table table-bordered table-hover",
+                                  },
+                                  [
+                                    _vm._m(21),
+                                    _vm._v(" "),
+                                    _c(
+                                      "tbody",
+                                      _vm._l(
+                                        _vm.kehilanganList,
+                                        function (kehilangan) {
+                                          return _c(
+                                            "tr",
+                                            { key: kehilangan.id },
+                                            [
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    kehilangan.no_kehilangan
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    (kehilangan.no_seri &&
+                                                      kehilangan.no_seri
+                                                        .tools &&
+                                                      kehilangan.no_seri.tools
+                                                        .nama) ||
+                                                      "-"
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    kehilangan.no_seri
+                                                      ? kehilangan.no_seri
+                                                          .no_seri
+                                                      : "-"
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    kehilangan.tgl_kehilangan ||
+                                                      "-"
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c(
+                                                "td",
+                                                { staticClass: "text-center" },
+                                                [
+                                                  _c(
+                                                    "button",
+                                                    {
+                                                      on: {
+                                                        click: function (
+                                                          $event
+                                                        ) {
+                                                          return _vm.viewDetailKehilanagan(
+                                                            kehilangan.id
+                                                          )
+                                                        },
+                                                      },
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass:
+                                                          "fas fa-eye text-info",
+                                                      }),
+                                                      _vm._v(
+                                                        " Detail\n                          "
+                                                      ),
+                                                    ]
+                                                  ),
+                                                ]
+                                              ),
+                                            ]
+                                          )
+                                        }
+                                      ),
+                                      0
+                                    ),
+                                  ]
+                                ),
+                              ]),
+                        ]),
+                  ]),
+                ]
+              ),
+            ]
+          ),
+        ]
+      ),
       _vm._v(" "),
       _c("div", { staticClass: "col-xl-3 col-md-4 mb-4" }, [
         _c("div", { staticClass: "border-left-primary shadow h-100 py-2" }, [
@@ -190009,30 +193826,344 @@ var render = function () {
                   ]
                 ),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "h5 mb-0 font-weight-bold text-gray-800" },
-                  [_vm._v(_vm._s(_vm.perawatanStokCount))]
-                ),
+                _c("div", { staticClass: "h5 mb-0 font-weight-bold" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "text-decoration-none",
+                      class:
+                        _vm.perawatanStokCount > 0
+                          ? "text-danger"
+                          : "text-gray-800",
+                      attrs: { href: "#" },
+                    },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(_vm.perawatanStokCount) +
+                          "\n                  "
+                      ),
+                    ]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "h5 mb-0 font-weight-bold" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "text-primary small text-decoration-none",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function ($event) {
+                          $event.preventDefault()
+                          return _vm.showPerawatanModal.apply(null, arguments)
+                        },
+                      },
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-eye text-primary" }),
+                      _c("b", [_vm._v(" Detail")]),
+                    ]
+                  ),
+                ]),
               ]),
               _vm._v(" "),
-              _vm._m(8),
+              _vm._m(22),
             ]),
           ]),
         ]),
       ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          staticStyle: { "overflow-y": "auto" },
+          attrs: {
+            id: "perawatanModal",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-labelledby": "perawatanModalLabel",
+            "aria-hidden": "true",
+          },
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-dialog", attrs: { role: "document" } },
+            [
+              _c("div", { staticClass: "modal-content" }, [
+                _c(
+                  "div",
+                  { staticClass: "modal-header bg-primary text-white" },
+                  [
+                    _c(
+                      "h5",
+                      {
+                        staticClass: "modal-title",
+                        attrs: { id: "perawatanModalLabel" },
+                      },
+                      [_vm._v("Daftar Perawatan Belum Dilakukan")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "close text-white",
+                        attrs: {
+                          type: "button",
+                          "data-dismiss": "modal",
+                          "aria-label": "Close",
+                        },
+                        on: { click: _vm.closeModalPerawatan },
+                      },
+                      [
+                        _c("span", { attrs: { "aria-hidden": "true" } }, [
+                          _vm._v("×"),
+                        ]),
+                      ]
+                    ),
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-body" }, [
+                  _vm.loadingPerawatan
+                    ? _c("div", { staticClass: "text-center py-4" }, [
+                        _vm._m(23),
+                        _vm._v(" "),
+                        _c("p", [
+                          _vm._v("Memuat data perawatan belum dilakukan..."),
+                        ]),
+                      ])
+                    : _c("div", [
+                        _vm.perawatanList.length === 0
+                          ? _c("div", { staticClass: "alert alert-info" }, [
+                              _vm._v(
+                                "\n                  Tidak ada perawatan yang belum dilakukan.\n                "
+                              ),
+                            ])
+                          : _c("div", { staticClass: "table-responsive" }, [
+                              _c(
+                                "table",
+                                {
+                                  staticClass:
+                                    "table table-bordered table-hover",
+                                },
+                                [
+                                  _vm._m(24),
+                                  _vm._v(" "),
+                                  _vm._l(
+                                    _vm.perawatanList,
+                                    function (perawatan) {
+                                      return _c("tr", { key: perawatan.id }, [
+                                        _c("td", [
+                                          _vm._v(
+                                            _vm._s(
+                                              perawatan.no_perawatan || "-"
+                                            )
+                                          ),
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _vm._v(
+                                            _vm._s(
+                                              (perawatan.no_seri &&
+                                                perawatan.no_seri.tools &&
+                                                perawatan.no_seri.tools.nama) ||
+                                                "-"
+                                            )
+                                          ),
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _vm._v(
+                                            _vm._s(
+                                              (perawatan.no_seri &&
+                                                perawatan.no_seri.no_seri) ||
+                                                "-"
+                                            )
+                                          ),
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _vm._v(
+                                            _vm._s(
+                                              perawatan.tgl_perawatan || "-"
+                                            )
+                                          ),
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _vm._v(
+                                            _vm._s(
+                                              perawatan.waktu_perawatan || "-"
+                                            )
+                                          ),
+                                        ]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "td",
+                                          { staticClass: "text-center" },
+                                          [
+                                            _c(
+                                              "button",
+                                              {
+                                                on: {
+                                                  click: function ($event) {
+                                                    return _vm.viewDetailPerawatan(
+                                                      perawatan.id
+                                                    )
+                                                  },
+                                                },
+                                              },
+                                              [
+                                                _c("i", {
+                                                  staticClass:
+                                                    "fas fa-eye text-info",
+                                                }),
+                                                _vm._v(
+                                                  " Detail\n                          "
+                                                ),
+                                              ]
+                                            ),
+                                          ]
+                                        ),
+                                      ])
+                                    }
+                                  ),
+                                ],
+                                2
+                              ),
+                            ]),
+                      ]),
+                ]),
+              ]),
+            ]
+          ),
+        ]
+      ),
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-lg-8 mb-4" }, [
         _c("div", { staticClass: "card shadow mb-4" }, [
-          _vm._m(9),
+          _c(
+            "div",
+            {
+              staticClass:
+                "card-header py-3 d-flex justify-content-between align-items-center",
+            },
+            [
+              _c("h6", { staticClass: "m-0 font-weight-bold text-primary" }, [
+                _vm._v("Perawatan Alat/Mesin"),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "date-filter" }, [
+                _c("div", { staticClass: "input-group" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.filter.start_date,
+                        expression: "filter.start_date",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "date" },
+                    domProps: { value: _vm.filter.start_date },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.filter, "start_date", $event.target.value)
+                      },
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "input-group-text mr-1 ml-1" }, [
+                    _vm._v("s/d"),
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.filter.end_date,
+                        expression: "filter.end_date",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "date" },
+                    domProps: { value: _vm.filter.end_date },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.filter, "end_date", $event.target.value)
+                      },
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary mr-2 ml-2",
+                      on: { click: _vm.applyFilter },
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-filter" }),
+                      _vm._v(" Filter\n                          "),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-secondary",
+                      on: { click: _vm.resetFilter },
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-sync-alt" }),
+                      _vm._v(" Reset\n                          "),
+                    ]
+                  ),
+                ]),
+              ]),
+            ]
+          ),
           _vm._v(" "),
-          !_vm.loading
+          !_vm.isloading
             ? _c("div", { staticClass: "card-body" }, [
+                _vm.progressData.date_range
+                  ? _c("div", { staticClass: "alert alert-info" }, [
+                      _vm._v(
+                        "\n                      Menampilkan data perawatan dari "
+                      ),
+                      _c("strong", [
+                        _vm._v(
+                          _vm._s(
+                            _vm.formatDate(_vm.progressData.date_range.start)
+                          )
+                        ),
+                      ]),
+                      _vm._v(" \n                      sampai "),
+                      _c("strong", [
+                        _vm._v(
+                          _vm._s(
+                            _vm.formatDate(_vm.progressData.date_range.end)
+                          )
+                        ),
+                      ]),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
                 _c("h4", { staticClass: "small font-weight-bold m-4" }, [
                   _vm._v(
-                    "\n              Belum Dilakukan Perawatan\n              "
+                    "\n                      Belum Dilakukan Perawatan\n                      "
                   ),
                   _c("span", { staticClass: "float-right" }, [
                     _vm._v(
@@ -190059,7 +194190,7 @@ var render = function () {
                 _vm._v(" "),
                 _c("h4", { staticClass: "small font-weight-bold m-4" }, [
                   _vm._v(
-                    "\n              Dalam Proses Perawatan\n              "
+                    "\n                      Dalam Proses Perawatan\n                      "
                   ),
                   _c("span", { staticClass: "float-right" }, [
                     _vm._v(
@@ -190085,7 +194216,9 @@ var render = function () {
                 ]),
                 _vm._v(" "),
                 _c("h4", { staticClass: "small font-weight-bold m-4" }, [
-                  _vm._v("\n              Selesai Perawatan\n              "),
+                  _vm._v(
+                    "\n                      Selesai Perawatan\n                      "
+                  ),
                   _c("span", { staticClass: "float-right" }, [
                     _vm._v(
                       _vm._s(_vm.progressData.selesai) +
@@ -190120,14 +194253,14 @@ var render = function () {
                 ]),
               ])
             : _c("div", { staticClass: "card-body text-center" }, [
-                _vm._m(10),
+                _vm._m(25),
                 _vm._v(" "),
                 _c("p", [_vm._v("Memuat data progress perawatan...")]),
               ]),
         ]),
       ]),
       _vm._v(" "),
-      _vm._m(11),
+      _vm._m(26),
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
@@ -190201,7 +194334,7 @@ var render = function () {
             ]),
             _vm._v(" "),
             _vm.isloading
-              ? _c("div", { staticClass: "text-center py-4" }, [_vm._m(12)])
+              ? _c("div", { staticClass: "text-center py-4" }, [_vm._m(27)])
               : _vm._e(),
             _vm._v(" "),
             _vm.errorMessage
@@ -190290,7 +194423,7 @@ var render = function () {
             ]),
             _vm._v(" "),
             _vm.isloading
-              ? _c("div", { staticClass: "text-center py-4" }, [_vm._m(13)])
+              ? _c("div", { staticClass: "text-center py-4" }, [_vm._m(28)])
               : _vm._e(),
             _vm._v(" "),
             _vm.errorMessagePermintaan
@@ -190332,11 +194465,24 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-auto" }, [
-      _c("i", {
-        staticClass: "bi bi-hourglass-split fa-2x mr-3",
-        staticStyle: { color: "rgba(22, 158, 168, 0.2)" },
-      }),
+    return _c(
+      "div",
+      { staticClass: "spinner-border text-primary", attrs: { role: "status" } },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "thead-light" }, [
+      _c("tr", [
+        _c("th", [_vm._v("Kode")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Alat/Mesin")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Aksi")]),
+      ]),
     ])
   },
   function () {
@@ -190348,6 +194494,83 @@ var staticRenderFns = [
         staticClass: "bi bi-hourglass-split fa-2x mr-3",
         staticStyle: { color: "rgba(22, 158, 168, 0.2)" },
       }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "spinner-border text-primary", attrs: { role: "status" } },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "thead-light" }, [
+      _c("tr", [
+        _c("th", [_vm._v("No. Peminjaman")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Peminjam")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Alat/Mesin")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("No. Seri")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Tgl Pinjam")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Tgl Kembali")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Detail")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Aksi")]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-auto" }, [
+      _c("i", {
+        staticClass: "bi bi-hourglass-split fa-2x mr-3",
+        staticStyle: { color: "rgba(22, 158, 168, 0.2)" },
+      }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "spinner-border text-primary", attrs: { role: "status" } },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "thead-light" }, [
+      _c("tr", [
+        _c("th", [_vm._v("No. Permintaan")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Diminta Oleh")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Alat/Mesin")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("No. Seri")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Tgl Permintaan")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Detail")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Aksi")]),
+      ]),
     ])
   },
   function () {
@@ -190365,11 +194588,67 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "spinner-border text-primary", attrs: { role: "status" } },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "thead-light" }, [
+      _c("tr", [
+        _c("th", [_vm._v("No. Perbaikan")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Alat/Mesin")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("No. Seri")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Tgl Error")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Aksi")]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-auto" }, [
       _c("i", {
         staticClass: "bi bi-exclamation-triangle fa-2x mr-3",
         staticStyle: { color: "rgba(22, 158, 168, 0.2)" },
       }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "spinner-border text-primary", attrs: { role: "status" } },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "thead-light" }, [
+      _c("tr", [
+        _c("th", [_vm._v("No. Kerusakan")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Alat/Mesin")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("No. Seri")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Tgl Rusak")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Aksi")]),
+      ]),
     ])
   },
   function () {
@@ -190387,11 +194666,67 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "spinner-border text-primary", attrs: { role: "status" } },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "thead-light" }, [
+      _c("tr", [
+        _c("th", [_vm._v("No. Pemusnahan")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Alat/Mesin")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("No. Seri")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Tgl Musnah")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Aksi")]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-auto" }, [
       _c("i", {
         staticClass: "bi bi-repeat fa-2x mr-3",
         staticStyle: { color: "rgba(22, 158, 168, 0.2)" },
       }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "spinner-border text-primary", attrs: { role: "status" } },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "thead-light" }, [
+      _c("tr", [
+        _c("th", [_vm._v("No. Kehilangan")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Alat/Mesin")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("No. Seri")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Tgl Hilang")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Aksi")]),
+      ]),
     ])
   },
   function () {
@@ -190409,9 +194744,29 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header py-3" }, [
-      _c("h6", { staticClass: "m-0 font-weight-bold text-primary" }, [
-        _vm._v("Perawatan Alat/Mesin Tahun ini"),
+    return _c(
+      "div",
+      { staticClass: "spinner-border text-primary", attrs: { role: "status" } },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "thead-light" }, [
+      _c("tr", [
+        _c("th", [_vm._v("No. Perawatan")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Alat/Mesin")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("No Seri")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Tgl Perawatan")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Waktu Perawatan")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Aksi")]),
       ]),
     ])
   },
@@ -190449,7 +194804,7 @@ var staticRenderFns = [
             _c("canvas", { attrs: { id: "myPieChart" } }),
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "mb-5 text-center small" }, [
+          _c("div", { staticClass: "mb-5 mt-5 text-center small" }, [
             _c("span", { attrs: { id: "chartLegend" } }),
           ]),
         ]),
@@ -207539,7 +211894,7 @@ var render = function () {
                 ),
                 _vm._v(" "),
                 _c("option", { attrs: { value: "0" } }, [
-                  _vm._v("Tidak Ada Perawatan"),
+                  _vm._v("Tanpa Perawatan"),
                 ]),
                 _vm._v(" "),
                 _c("option", { attrs: { value: "1" } }, [
@@ -208940,7 +213295,7 @@ var render = function () {
       ? _c(
           "div",
           {
-            staticClass: "modal fade show",
+            staticClass: "ove fade show",
             staticStyle: { display: "block" },
             attrs: { tabindex: "-1", role: "dialog", "aria-hidden": "true" },
           },
@@ -214007,18 +218362,17 @@ var render = function () {
                   _vm._v(" "),
                   _c("td", [
                     _vm._v(
-                      _vm._s(
-                        permintaan.pengguna
-                          ? permintaan.pengguna.nama_pengguna
-                          : "-"
-                      )
+                      _vm._s((permintaan.users && permintaan.users.nama) || "-")
                     ),
                   ]),
                   _vm._v(" "),
                   _c("td", [
                     _vm._v(
                       _vm._s(
-                        permintaan.pengguna ? permintaan.pengguna.divisi : "-"
+                        (permintaan.users &&
+                          permintaan.users.divisi &&
+                          permintaan.users.divisi.divisi) ||
+                          "-"
                       )
                     ),
                   ]),
@@ -224423,13 +228777,34 @@ var render = function () {
                   staticStyle: { color: "#000" },
                   on: {
                     click: function ($event) {
-                      return _vm.sortBy("bew_kondisi")
+                      return _vm.sortBy("new_kondisi")
                     },
                   },
                 },
                 [
                   _vm._v("\n            Kondisi\n            "),
-                  _vm.sortKey === "bew_kondisi"
+                  _vm.sortKey === "new_kondisi"
+                    ? _c("span", [
+                        _vm._v(_vm._s(_vm.sortDirection === "asc" ? "▲" : "▼")),
+                      ])
+                    : _vm._e(),
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "th",
+                {
+                  staticClass: "text-center p-2 border cursor-pointer",
+                  staticStyle: { color: "#000" },
+                  on: {
+                    click: function ($event) {
+                      return _vm.sortBy("no_seri.deskripsi_cek")
+                    },
+                  },
+                },
+                [
+                  _vm._v("\n            Keterangan\n            "),
+                  _vm.sortKey === "no_seri.deskripsi_cek"
                     ? _c("span", [
                         _vm._v(_vm._s(_vm.sortDirection === "asc" ? "▲" : "▼")),
                       ])
@@ -224478,6 +228853,10 @@ var render = function () {
                       ),
                     ]
                   ),
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "text-center p-2 border" }, [
+                  _vm._v(_vm._s(item.no_seri.deskripsi_cek || "-")),
                 ]),
               ])
             }),
@@ -225592,6 +229971,8 @@ var render = function () {
             ]),
           ]),
           _vm._v(" "),
+          _vm.paginatedData.length === 0 ? _c("tbody", [_vm._m(1)]) : _vm._e(),
+          _vm._v(" "),
           _vm._l(_vm.paginatedData, function (item) {
             return _c(
               "tbody",
@@ -225728,7 +230109,7 @@ var render = function () {
                   },
                   [
                     _c("div", { staticClass: "modal-header" }, [
-                      _vm._m(1),
+                      _vm._m(2),
                       _vm._v(" "),
                       _c(
                         "button",
@@ -225747,7 +230128,7 @@ var render = function () {
                     _vm._v(" "),
                     _c("div", { staticClass: "modal-body" }, [
                       _c("table", { staticClass: "table table-bordered" }, [
-                        _vm._m(2),
+                        _vm._m(3),
                         _vm._v(" "),
                         _c(
                           "tbody",
@@ -225790,6 +230171,16 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("h1", { staticClass: "h3 mb-4 mt-4 text-gray-900" }, [
       _c("b", [_vm._v("Riwayat")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", { staticClass: "text-center", attrs: { colspan: "8" } }, [
+        _vm._v("Tidak Ada Data"),
+      ]),
     ])
   },
   function () {
@@ -226511,8 +230902,253 @@ var render = function () {
       },
       [
         _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "form-group col-md-4" }, [
+          _c("div", { staticClass: "form-group col-md-6" }, [
             _vm._m(1),
+            _vm._v(" "),
+            _c("div", { staticClass: "textarea-wrapper" }, [
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.note_perubahan_jadwal,
+                    expression: "form.note_perubahan_jadwal",
+                  },
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  id: "note_perubahan_jadwal",
+                  rows: "1",
+                  placeholder:
+                    "Masukkan Alasan Melakukan Perubahan (Maksimal 100 karakter)",
+                  maxlength: "100",
+                },
+                domProps: { value: _vm.form.note_perubahan_jadwal },
+                on: {
+                  input: function ($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.form,
+                      "note_perubahan_jadwal",
+                      $event.target.value
+                    )
+                  },
+                },
+              }),
+              _vm._v(" "),
+              _c("small", { staticClass: "text-muted char-counter" }, [
+                _vm._v(
+                  "\n            " +
+                    _vm._s(_vm.form.note_perubahan_jadwal.length) +
+                    " / 100\n          "
+                ),
+              ]),
+            ]),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group col-md-6" }, [
+            _vm._m(2),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.jadwal_perawatan,
+                    expression: "form.jadwal_perawatan",
+                  },
+                ],
+                staticClass: "form-control",
+                attrs: { id: "jadwal_perawatan", required: "" },
+                on: {
+                  change: function ($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function (o) {
+                        return o.selected
+                      })
+                      .map(function (o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.form,
+                      "jadwal_perawatan",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  },
+                },
+              },
+              [
+                _c(
+                  "option",
+                  { attrs: { value: "", disabled: "", selected: "" } },
+                  [_vm._v("Pilih Interval Perawatan")]
+                ),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "0" } }, [
+                  _vm._v("Tanpa Perawatan"),
+                ]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "1" } }, [
+                  _vm._v("Setiap 1 Bulan"),
+                ]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "3" } }, [
+                  _vm._v("Setiap 3 Bulan"),
+                ]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "6" } }, [
+                  _vm._v("Setiap 6 Bulan"),
+                ]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "12" } }, [
+                  _vm._v("Setiap 12 Bulan"),
+                ]),
+              ]
+            ),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "form-group col-md-4" }, [
+            _c(
+              "label",
+              {
+                staticStyle: { color: "#000" },
+                attrs: { for: "tanggal_mulai_perawatan" },
+              },
+              [
+                _c("b", [_vm._v("Tanggal Mulai Perawatan")]),
+                _vm._v(" "),
+                _vm.form.jadwal_perawatan > 0
+                  ? _c("span", { staticStyle: { color: "red" } }, [
+                      _vm._v(" *"),
+                    ])
+                  : _vm._e(),
+              ]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.form.jadwal_mulai_perawatan,
+                  expression: "form.jadwal_mulai_perawatan",
+                },
+              ],
+              staticClass: "form-control",
+              attrs: {
+                type: "date",
+                required: _vm.form.jadwal_perawatan > 0,
+                placeholder: "Masukkan Tanggal Mulai Perawatan",
+              },
+              domProps: { value: _vm.form.jadwal_mulai_perawatan },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.form,
+                    "jadwal_mulai_perawatan",
+                    $event.target.value
+                  )
+                },
+              },
+            }),
+            _vm._v(" "),
+            _vm.form.jadwal_perawatan > 0
+              ? _c(
+                  "small",
+                  { staticClass: "form-text", staticStyle: { color: "red" } },
+                  [
+                    _vm._v(
+                      "\n          Masukkan Tanggal Mulai Perawatan Awal\n        "
+                    ),
+                  ]
+                )
+              : _vm._e(),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group col-md-4" }, [
+            _vm._m(3),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.form.waktu_perawatan,
+                  expression: "form.waktu_perawatan",
+                },
+              ],
+              staticClass: "form-control",
+              attrs: {
+                type: "time",
+                required: "",
+                placeholder: "Masukkan Waktu Perawatan",
+              },
+              domProps: { value: _vm.form.waktu_perawatan },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.form, "waktu_perawatan", $event.target.value)
+                },
+              },
+            }),
+            _vm._v(" "),
+            _c(
+              "small",
+              { staticClass: "form-text", staticStyle: { color: "red" } },
+              [_vm._v("Masukkan Waktu Perawatan Per No Seri")]
+            ),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group col-md-4" }, [
+            _vm._m(4),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.form.jumlah_orang_perawatan,
+                  expression: "form.jumlah_orang_perawatan",
+                },
+              ],
+              staticClass: "form-control",
+              attrs: {
+                type: "number",
+                required: "",
+                placeholder: "Masukkan Total PIC Perawatan",
+              },
+              domProps: { value: _vm.form.jumlah_orang_perawatan },
+              on: {
+                input: function ($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    _vm.form,
+                    "jumlah_orang_perawatan",
+                    $event.target.value
+                  )
+                },
+              },
+            }),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "form-group col-md-4" }, [
+            _vm._m(5),
             _vm._v(" "),
             _c(
               "select",
@@ -226561,7 +231197,7 @@ var render = function () {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "form-group col-md-4" }, [
-            _vm._m(2),
+            _vm._m(6),
             _vm._v(" "),
             _c(
               "select",
@@ -226610,7 +231246,7 @@ var render = function () {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "form-group col-md-4" }, [
-            _vm._m(3),
+            _vm._m(7),
             _vm._v(" "),
             _c(
               "select",
@@ -226666,7 +231302,7 @@ var render = function () {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "form-group" }, [
-          _vm._m(4),
+          _vm._m(8),
           _vm._v(" "),
           _c("textarea", {
             directives: [
@@ -226702,7 +231338,7 @@ var render = function () {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "form-group" }, [
-          _vm._m(5),
+          _vm._m(9),
           _vm._v(" "),
           _c("textarea", {
             directives: [
@@ -226738,7 +231374,7 @@ var render = function () {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "form-group" }, [
-          _vm._m(6),
+          _vm._m(10),
           _vm._v(" "),
           _c("textarea", {
             directives: [
@@ -226774,9 +231410,86 @@ var render = function () {
           ]),
         ]),
         _vm._v(" "),
-        _c("button", { staticClass: "btn btn-primary mb-3 float-right" }, [
-          _vm._v("Simpan"),
+        _c("div", { staticClass: "form-group" }, [
+          _vm._m(11),
+          _vm._v(" "),
+          _c(
+            "label",
+            {
+              staticClass: "upload-box-1",
+              class: { "drag-active": _vm.dragActive },
+              attrs: { for: "fileInput" },
+              on: {
+                dragover: function ($event) {
+                  $event.preventDefault()
+                },
+                drop: function ($event) {
+                  $event.preventDefault()
+                  return _vm.handleDrop.apply(null, arguments)
+                },
+                dragenter: function ($event) {
+                  _vm.dragActive = true
+                },
+                dragleave: function ($event) {
+                  _vm.dragActive = false
+                },
+              },
+            },
+            [
+              !_vm.previewImage
+                ? _c("p", [
+                    _c("i", { staticClass: "fas fa-image" }),
+                    _c("br"),
+                    _vm._v("\n          Drag and drop here "),
+                    _c("br"),
+                    _vm._v("or "),
+                    _c("br"),
+                    _c("span", { staticClass: "browse-link" }, [
+                      _vm._v("Browse"),
+                    ]),
+                  ])
+                : _c("p", [
+                    _c("img", {
+                      staticClass: "img-preview",
+                      attrs: { src: _vm.previewImage, alt: "Preview" },
+                    }),
+                  ]),
+            ]
+          ),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "upload-input",
+            attrs: {
+              id: "fileInput",
+              type: "file",
+              accept: "image/*",
+              required: "",
+            },
+            on: { change: _vm.onFileChange },
+          }),
         ]),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary mb-3 float-right",
+            attrs: { type: "submit", disabled: _vm.isSubmitting },
+          },
+          [
+            _vm.isSubmitting
+              ? _c("span", [
+                  _c("i", { staticClass: "fas fa-spinner fa-spin" }),
+                  _vm._v(" Menyimpan...\n      "),
+                ])
+              : _c("span", [_vm._v("Simpan")]),
+          ]
+        ),
+        _vm._v(" "),
+        _vm.submitError
+          ? _c("div", { staticClass: "alert alert-danger mt-3" }, [
+              _vm._v("\n      " + _vm._s(_vm.submitError) + "\n    "),
+            ])
+          : _vm._e(),
       ]
     ),
   ])
@@ -226796,6 +231509,61 @@ var staticRenderFns = [
         [_vm._v("Form Edit Informasi Alat")]
       ),
     ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticStyle: { color: "black" } }, [
+      _c("b", [_vm._v("Alasan Melakukan Perubahan")]),
+      _vm._v(" "),
+      _c("sup", { staticStyle: { color: "red" } }, [_vm._v(" *")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticStyle: { color: "#000" }, attrs: { for: "jadwal_perawatan" } },
+      [
+        _c("b", [_vm._v("Jadwal Perawatan")]),
+        _vm._v(" "),
+        _c("sup", { staticStyle: { color: "red" } }, [_vm._v(" *")]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticStyle: { color: "#000" }, attrs: { for: "waktu_perawatan" } },
+      [
+        _c("b", [_vm._v("Waktu Perawatan")]),
+        _vm._v(" "),
+        _c("sup", { staticStyle: { color: "red" } }, [_vm._v(" *")]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticStyle: { color: "#000" },
+        attrs: { for: "jumlah_orang_perawatan" },
+      },
+      [
+        _c("b", [_vm._v("Total PIC Perawatan")]),
+        _vm._v(" "),
+        _c("sup", { staticStyle: { color: "red" } }, [_vm._v(" *")]),
+      ]
+    )
   },
   function () {
     var _vm = this
@@ -226844,6 +231612,20 @@ var staticRenderFns = [
     return _c("label", { staticStyle: { color: "black" } }, [
       _c("b", [_vm._v("Deskripsi")]),
     ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticStyle: { color: "#000" }, attrs: { for: "gambar" } },
+      [
+        _c("b", [_vm._v("Thumbnail Image")]),
+        _vm._v(" "),
+        _c("sup", { staticStyle: { color: "red" } }, [_vm._v(" *")]),
+      ]
+    )
   },
 ]
 render._withStripped = true
@@ -239993,7 +244775,7 @@ var render = function () {
                 staticClass: "badge",
                 class: {
                   "status-active": _vm.dataBaru.status === "Selesai",
-                  "status-error": _vm.dataProses.status === "Proses",
+                  "status-error": _vm.dataBaru.status === "Proses",
                   "status-musnah": _vm.dataBaru.status === "Belum",
                 },
               },
@@ -246385,11 +251167,44 @@ var render = function () {
                   ]
                 ),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "h5 mb-0 font-weight-bold text-gray-800" },
-                  [_vm._v(_vm._s(_vm.lowStockCount))]
-                ),
+                _c("div", { staticClass: "h5 mb-0 font-weight-bold" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "text-decoration-none",
+                      class:
+                        _vm.lowStockCount > 0 ? "text-danger" : "text-gray-800",
+                      attrs: { href: "#" },
+                    },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(_vm.lowStockCount) +
+                          "\n                  "
+                      ),
+                    ]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "mt-2" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "text-primary small text-decoration-none",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function ($event) {
+                          $event.preventDefault()
+                          return _vm.showStokModal.apply(null, arguments)
+                        },
+                      },
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-eye text-primary" }),
+                      _c("b", [_vm._v(" Detail")]),
+                    ]
+                  ),
+                ]),
               ]),
               _vm._v(" "),
               _vm._m(1),
@@ -246397,6 +251212,155 @@ var render = function () {
           ]),
         ]),
       ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          staticStyle: { "overflow-y": "auto" },
+          attrs: {
+            id: "stokModal",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-labelledby": "stokModalLabel",
+            "aria-hidden": "true",
+          },
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-dialog", attrs: { role: "document" } },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "modal-content",
+                  staticStyle: { "max-width": "max-content" },
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "modal-header bg-primary text-white" },
+                    [
+                      _c(
+                        "h5",
+                        {
+                          staticClass: "modal-title",
+                          attrs: { id: "stokModalLabel" },
+                        },
+                        [_vm._v("Daftar Stok Tools kurang sama dengan 1")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "close text-white",
+                          attrs: {
+                            type: "button",
+                            "data-dismiss": "modal",
+                            "aria-label": "Close",
+                          },
+                          on: { click: _vm.closeModalStok },
+                        },
+                        [
+                          _c("span", { attrs: { "aria-hidden": "true" } }, [
+                            _vm._v("×"),
+                          ]),
+                        ]
+                      ),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-body" }, [
+                    _vm.loadingStok
+                      ? _c("div", { staticClass: "text-center py-4" }, [
+                          _vm._m(2),
+                          _vm._v(" "),
+                          _c("p", [_vm._v("Memuat data stok tools...")]),
+                        ])
+                      : _c("div", [
+                          _vm.stokList.length === 0
+                            ? _c("div", { staticClass: "alert alert-info" }, [
+                                _vm._v(
+                                  "\n                  Tidak ada Stok Tools yang di bawah batas minimum.\n                "
+                                ),
+                              ])
+                            : _c("div", { staticClass: "table-responsive" }, [
+                                _c(
+                                  "table",
+                                  {
+                                    staticClass:
+                                      "table table-bordered table-hover",
+                                  },
+                                  [
+                                    _vm._m(3),
+                                    _vm._v(" "),
+                                    _c(
+                                      "tbody",
+                                      _vm._l(_vm.stokList, function (stok) {
+                                        return _c("tr", { key: stok.id }, [
+                                          _c("td", [
+                                            _vm._v(_vm._s(stok.kode || "-")),
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("td", [
+                                            _vm._v(_vm._s(stok.nama || "-")),
+                                          ]),
+                                          _vm._v(" "),
+                                          _c(
+                                            "td",
+                                            { staticClass: "text-center" },
+                                            [
+                                              _c(
+                                                "button",
+                                                {
+                                                  on: {
+                                                    click: function ($event) {
+                                                      return _vm.viewDetailStok(
+                                                        stok.id
+                                                      )
+                                                    },
+                                                  },
+                                                },
+                                                [
+                                                  _c("i", {
+                                                    staticClass:
+                                                      "fas fa-eye text-info",
+                                                  }),
+                                                  _vm._v(
+                                                    " Detail\n                          "
+                                                  ),
+                                                ]
+                                              ),
+                                            ]
+                                          ),
+                                        ])
+                                      }),
+                                      0
+                                    ),
+                                  ]
+                                ),
+                              ]),
+                        ]),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-footer" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-secondary",
+                        attrs: { type: "button", "data-dismiss": "modal" },
+                        on: { click: _vm.closeModalStok },
+                      },
+                      [_vm._v("Tutup")]
+                    ),
+                  ]),
+                ]
+              ),
+            ]
+          ),
+        ]
+      ),
       _vm._v(" "),
       _c("div", { staticClass: "col-xl-3 col-md-4 mb-4" }, [
         _c("div", { staticClass: "border-left-primary shadow h-100 py-2" }, [
@@ -246411,23 +251375,295 @@ var render = function () {
                   },
                   [
                     _vm._v(
-                      "\n                  Peminjamanan Alat/Mesin yang Menunggu Persetujuan\n                "
+                      "\n                  Peminjaman Alat/Mesin yang Menunggu Persetujuan\n                "
                     ),
                   ]
                 ),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "h5 mb-0 font-weight-bold text-gray-800" },
-                  [_vm._v(_vm._s(_vm.peminjamanStokCount))]
-                ),
+                _c("div", { staticClass: "h5 mb-0 font-weight-bold" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "text-decoration-none",
+                      class:
+                        _vm.peminjamanStokCount > 0
+                          ? "text-danger"
+                          : "text-gray-800",
+                      attrs: { href: "#" },
+                    },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(_vm.peminjamanStokCount) +
+                          "\n                  "
+                      ),
+                    ]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "mt-2" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "text-primary small text-decoration-none",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function ($event) {
+                          $event.preventDefault()
+                          return _vm.showPeminjamanModal.apply(null, arguments)
+                        },
+                      },
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-eye text-primary" }),
+                      _c("b", [_vm._v(" Detail")]),
+                    ]
+                  ),
+                ]),
               ]),
               _vm._v(" "),
-              _vm._m(2),
+              _vm._m(4),
             ]),
           ]),
         ]),
       ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          staticStyle: { "overflow-y": "auto" },
+          attrs: {
+            id: "peminjamanModal",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-labelledby": "peminjamanModalLabel",
+            "aria-hidden": "true",
+          },
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-dialog", attrs: { role: "document" } },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "modal-content",
+                  staticStyle: { "max-width": "max-content" },
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "modal-header bg-primary text-white" },
+                    [
+                      _c(
+                        "h5",
+                        {
+                          staticClass: "modal-title",
+                          attrs: { id: "peminjamanModalLabel" },
+                        },
+                        [_vm._v("Daftar Peminjaman Belum Diproses")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "close text-white",
+                          attrs: {
+                            type: "button",
+                            "data-dismiss": "modal",
+                            "aria-label": "Close",
+                          },
+                          on: { click: _vm.closeModal },
+                        },
+                        [
+                          _c("span", { attrs: { "aria-hidden": "true" } }, [
+                            _vm._v("×"),
+                          ]),
+                        ]
+                      ),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-body" }, [
+                    _vm.loadingPeminjaman
+                      ? _c("div", { staticClass: "text-center py-4" }, [
+                          _vm._m(5),
+                          _vm._v(" "),
+                          _c("p", [_vm._v("Memuat data peminjaman...")]),
+                        ])
+                      : _c("div", [
+                          _vm.peminjamanList.length === 0
+                            ? _c("div", { staticClass: "alert alert-info" }, [
+                                _vm._v(
+                                  "\n                  Tidak ada peminjaman yang belum diproses.\n                "
+                                ),
+                              ])
+                            : _c("div", { staticClass: "table-responsive" }, [
+                                _c(
+                                  "table",
+                                  {
+                                    staticClass:
+                                      "table table-bordered table-hover",
+                                  },
+                                  [
+                                    _vm._m(6),
+                                    _vm._v(" "),
+                                    _c(
+                                      "tbody",
+                                      _vm._l(
+                                        _vm.peminjamanList,
+                                        function (peminjaman) {
+                                          return _c(
+                                            "tr",
+                                            { key: peminjaman.id },
+                                            [
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    peminjaman.no_peminjaman
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    peminjaman.users
+                                                      ? peminjaman.users.nama
+                                                      : "-"
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    peminjaman.tools
+                                                      ? peminjaman.tools.nama
+                                                      : "-"
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c(
+                                                "td",
+                                                _vm._l(
+                                                  peminjaman.no_seri,
+                                                  function (noSeri, index) {
+                                                    return _c(
+                                                      "span",
+                                                      { key: noSeri.id },
+                                                      [
+                                                        _vm._v(
+                                                          "\n                            " +
+                                                            _vm._s(
+                                                              noSeri.no_seri
+                                                            )
+                                                        ),
+                                                        index <
+                                                        peminjaman.no_seri
+                                                          .length -
+                                                          1
+                                                          ? _c("span", [
+                                                              _vm._v(", "),
+                                                            ])
+                                                          : _vm._e(),
+                                                      ]
+                                                    )
+                                                  }
+                                                ),
+                                                0
+                                              ),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    _vm.formatDate(
+                                                      peminjaman.tgl_pinjam
+                                                    )
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    _vm.formatDate(
+                                                      peminjaman.tgl_kembali
+                                                    )
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    peminjaman.detail_peminjaman ||
+                                                      "-"
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c(
+                                                "td",
+                                                { staticClass: "text-center" },
+                                                [
+                                                  _c(
+                                                    "button",
+                                                    {
+                                                      on: {
+                                                        click: function (
+                                                          $event
+                                                        ) {
+                                                          return _vm.viewDetailPeminjaman(
+                                                            peminjaman.id
+                                                          )
+                                                        },
+                                                      },
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass:
+                                                          "fas fa-eye text-info",
+                                                      }),
+                                                      _vm._v(
+                                                        " Detail\n                          "
+                                                      ),
+                                                    ]
+                                                  ),
+                                                ]
+                                              ),
+                                            ]
+                                          )
+                                        }
+                                      ),
+                                      0
+                                    ),
+                                  ]
+                                ),
+                              ]),
+                        ]),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-footer" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-secondary",
+                        attrs: { type: "button", "data-dismiss": "modal" },
+                        on: { click: _vm.closeModal },
+                      },
+                      [_vm._v("Tutup")]
+                    ),
+                  ]),
+                ]
+              ),
+            ]
+          ),
+        ]
+      ),
       _vm._v(" "),
       _c("div", { staticClass: "col-xl-3 col-md-4 mb-4" }, [
         _c("div", { staticClass: "border-left-primary shadow h-100 py-2" }, [
@@ -246447,18 +251683,279 @@ var render = function () {
                   ]
                 ),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "h5 mb-0 font-weight-bold text-gray-800" },
-                  [_vm._v(_vm._s(_vm.permintaanStokCount))]
-                ),
+                _c("div", { staticClass: "h5 mb-0 font-weight-bold" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "text-decoration-none",
+                      class:
+                        _vm.permintaanStokCount > 0
+                          ? "text-danger"
+                          : "text-gray-800",
+                      attrs: { href: "#" },
+                    },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(_vm.permintaanStokCount) +
+                          "\n                  "
+                      ),
+                    ]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "mt-2" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "text-primary small text-decoration-none",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function ($event) {
+                          $event.preventDefault()
+                          return _vm.showPermintaanModal.apply(null, arguments)
+                        },
+                      },
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-eye text-primary" }),
+                      _c("b", [_vm._v(" Detail")]),
+                    ]
+                  ),
+                ]),
               ]),
               _vm._v(" "),
-              _vm._m(3),
+              _vm._m(7),
             ]),
           ]),
         ]),
       ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          staticStyle: { "overflow-y": "auto" },
+          attrs: {
+            id: "permintaanModal",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-labelledby": "permintaanModalLabel",
+            "aria-hidden": "true",
+          },
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-dialog", attrs: { role: "document" } },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "modal-content",
+                  staticStyle: { "max-width": "max-content" },
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "modal-header bg-primary text-white" },
+                    [
+                      _c(
+                        "h5",
+                        {
+                          staticClass: "modal-title",
+                          attrs: { id: "permintaanModalLabel" },
+                        },
+                        [_vm._v("Daftar Permintaan Belum Diproses")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "close text-white",
+                          attrs: {
+                            type: "button",
+                            "data-dismiss": "modal",
+                            "aria-label": "Close",
+                          },
+                          on: { click: _vm.closeModalPermintaan },
+                        },
+                        [
+                          _c("span", { attrs: { "aria-hidden": "true" } }, [
+                            _vm._v("×"),
+                          ]),
+                        ]
+                      ),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-body" }, [
+                    _vm.loadingPermintaan
+                      ? _c("div", { staticClass: "text-center py-4" }, [
+                          _vm._m(8),
+                          _vm._v(" "),
+                          _c("p", [_vm._v("Memuat data peminjaman...")]),
+                        ])
+                      : _c("div", [
+                          _vm.permintaanList.length === 0
+                            ? _c("div", { staticClass: "alert alert-info" }, [
+                                _vm._v(
+                                  "\n                  Tidak ada peminjaman yang belum diproses.\n                "
+                                ),
+                              ])
+                            : _c("div", { staticClass: "table-responsive" }, [
+                                _c(
+                                  "table",
+                                  {
+                                    staticClass:
+                                      "table table-bordered table-hover",
+                                  },
+                                  [
+                                    _vm._m(9),
+                                    _vm._v(" "),
+                                    _c(
+                                      "tbody",
+                                      _vm._l(
+                                        _vm.permintaanList,
+                                        function (permintaan) {
+                                          return _c(
+                                            "tr",
+                                            { key: permintaan.id },
+                                            [
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    permintaan.no_permintaan
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    permintaan.users
+                                                      ? permintaan.users.nama
+                                                      : "-"
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    permintaan.tools
+                                                      ? permintaan.tools.nama
+                                                      : "-"
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c(
+                                                "td",
+                                                _vm._l(
+                                                  permintaan.no_seri,
+                                                  function (noSeri, index) {
+                                                    return _c(
+                                                      "span",
+                                                      { key: noSeri.id },
+                                                      [
+                                                        _vm._v(
+                                                          "\n                            " +
+                                                            _vm._s(
+                                                              noSeri.no_seri
+                                                            )
+                                                        ),
+                                                        index <
+                                                        permintaan.no_seri
+                                                          .length -
+                                                          1
+                                                          ? _c("span", [
+                                                              _vm._v(", "),
+                                                            ])
+                                                          : _vm._e(),
+                                                      ]
+                                                    )
+                                                  }
+                                                ),
+                                                0
+                                              ),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    permintaan.tgl_permintaan ||
+                                                      "-"
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    permintaan.detail_permintaan ||
+                                                      "-"
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c(
+                                                "td",
+                                                { staticClass: "text-center" },
+                                                [
+                                                  _c(
+                                                    "button",
+                                                    {
+                                                      on: {
+                                                        click: function (
+                                                          $event
+                                                        ) {
+                                                          return _vm.viewDetailPermintaan(
+                                                            permintaan.id
+                                                          )
+                                                        },
+                                                      },
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass:
+                                                          "fas fa-eye text-info",
+                                                      }),
+                                                      _vm._v(
+                                                        " Detail\n                          "
+                                                      ),
+                                                    ]
+                                                  ),
+                                                ]
+                                              ),
+                                            ]
+                                          )
+                                        }
+                                      ),
+                                      0
+                                    ),
+                                  ]
+                                ),
+                              ]),
+                        ]),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-footer" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-secondary",
+                        attrs: { type: "button", "data-dismiss": "modal" },
+                        on: { click: _vm.closeModalPermintaan },
+                      },
+                      [_vm._v("Tutup")]
+                    ),
+                  ]),
+                ]
+              ),
+            ]
+          ),
+        ]
+      ),
       _vm._v(" "),
       _c("div", { staticClass: "col-xl-3 col-md-4 mb-4" }, [
         _c("div", { staticClass: "border-left-primary shadow h-100 py-2" }, [
@@ -246478,18 +251975,241 @@ var render = function () {
                   ]
                 ),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "h5 mb-0 font-weight-bold text-gray-800" },
-                  [_vm._v(_vm._s(_vm.perbaikanStokCount))]
-                ),
+                _c("div", { staticClass: "h5 mb-0 font-weight-bold" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "text-decoration-none",
+                      class:
+                        _vm.perbaikanStokCount > 0
+                          ? "text-danger"
+                          : "text-gray-800",
+                      attrs: { href: "#" },
+                    },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(_vm.perbaikanStokCount) +
+                          "\n                  "
+                      ),
+                    ]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "mt-2" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "text-primary small text-decoration-none",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function ($event) {
+                          $event.preventDefault()
+                          return _vm.showPerbaikanModal.apply(null, arguments)
+                        },
+                      },
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-eye text-primary" }),
+                      _c("b", [_vm._v(" Detail")]),
+                    ]
+                  ),
+                ]),
               ]),
               _vm._v(" "),
-              _vm._m(4),
+              _vm._m(10),
             ]),
           ]),
         ]),
       ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          staticStyle: { "overflow-y": "auto" },
+          attrs: {
+            id: "perbaikanModal",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-labelledby": "perbaikanModalLabel",
+            "aria-hidden": "true",
+          },
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-dialog", attrs: { role: "document" } },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "modal-content",
+                  staticStyle: { "max-width": "max-content" },
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "modal-header bg-primary text-white" },
+                    [
+                      _c(
+                        "h5",
+                        {
+                          staticClass: "modal-title",
+                          attrs: { id: "perbaikanModalLabel" },
+                        },
+                        [_vm._v("Daftar Perbaikan Belum Diproses")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "close text-white",
+                          attrs: {
+                            type: "button",
+                            "data-dismiss": "modal",
+                            "aria-label": "Close",
+                          },
+                          on: { click: _vm.closeModalPerbaikan },
+                        },
+                        [
+                          _c("span", { attrs: { "aria-hidden": "true" } }, [
+                            _vm._v("×"),
+                          ]),
+                        ]
+                      ),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-body" }, [
+                    _vm.loadingPerbaikan
+                      ? _c("div", { staticClass: "text-center py-4" }, [
+                          _vm._m(11),
+                          _vm._v(" "),
+                          _c("p", [_vm._v("Memuat data peminjaman...")]),
+                        ])
+                      : _c("div", [
+                          _vm.perbaikanList.length === 0
+                            ? _c("div", { staticClass: "alert alert-info" }, [
+                                _vm._v(
+                                  "\n                  Tidak ada peminjaman yang belum diproses.\n                "
+                                ),
+                              ])
+                            : _c("div", { staticClass: "table-responsive" }, [
+                                _c(
+                                  "table",
+                                  {
+                                    staticClass:
+                                      "table table-bordered table-hover",
+                                  },
+                                  [
+                                    _vm._m(12),
+                                    _vm._v(" "),
+                                    _c(
+                                      "tbody",
+                                      _vm._l(
+                                        _vm.perbaikanList,
+                                        function (perbaikan) {
+                                          return _c(
+                                            "tr",
+                                            { key: perbaikan.id },
+                                            [
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(perbaikan.no_perbaikan)
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    (perbaikan.no_seri &&
+                                                      perbaikan.no_seri.tools &&
+                                                      perbaikan.no_seri.tools
+                                                        .nama) ||
+                                                      "-"
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    perbaikan.no_seri
+                                                      ? perbaikan.no_seri
+                                                          .no_seri
+                                                      : "-"
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    perbaikan.tgl_perbaikan ||
+                                                      "-"
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c(
+                                                "td",
+                                                { staticClass: "text-center" },
+                                                [
+                                                  _c(
+                                                    "button",
+                                                    {
+                                                      on: {
+                                                        click: function (
+                                                          $event
+                                                        ) {
+                                                          return _vm.viewDetailPerbaikan(
+                                                            perbaikan.id
+                                                          )
+                                                        },
+                                                      },
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass:
+                                                          "fas fa-eye text-info",
+                                                      }),
+                                                      _vm._v(
+                                                        " Detail\n                          "
+                                                      ),
+                                                    ]
+                                                  ),
+                                                ]
+                                              ),
+                                            ]
+                                          )
+                                        }
+                                      ),
+                                      0
+                                    ),
+                                  ]
+                                ),
+                              ]),
+                        ]),
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-footer" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-secondary",
+                        attrs: { type: "button", "data-dismiss": "modal" },
+                        on: { click: _vm.closeModalPerbaikan },
+                      },
+                      [_vm._v("Tutup")]
+                    ),
+                  ]),
+                ]
+              ),
+            ]
+          ),
+        ]
+      ),
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
@@ -246511,18 +252231,229 @@ var render = function () {
                   ]
                 ),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "h5 mb-0 font-weight-bold text-gray-800" },
-                  [_vm._v(_vm._s(_vm.kerusakanStockCount))]
-                ),
+                _c("div", { staticClass: "h5 mb-0 font-weight-bold" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "text-decoration-none",
+                      class:
+                        _vm.kerusakanStockCount > 0
+                          ? "text-danger"
+                          : "text-gray-800",
+                      attrs: { href: "#" },
+                    },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(_vm.kerusakanStockCount) +
+                          "\n                  "
+                      ),
+                    ]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "mt-2" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "text-primary small text-decoration-none",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function ($event) {
+                          $event.preventDefault()
+                          return _vm.showKerusakanModal.apply(null, arguments)
+                        },
+                      },
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-eye text-primary" }),
+                      _c("b", [_vm._v(" Detail")]),
+                    ]
+                  ),
+                ]),
               ]),
               _vm._v(" "),
-              _vm._m(5),
+              _vm._m(13),
             ]),
           ]),
         ]),
       ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          staticStyle: { "overflow-y": "auto" },
+          attrs: {
+            id: "kerusakanModal",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-labelledby": "kerusakanModalLabel",
+            "aria-hidden": "true",
+          },
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-dialog", attrs: { role: "document" } },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "modal-content",
+                  staticStyle: { "max-width": "max-content" },
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "modal-header bg-primary text-white" },
+                    [
+                      _c(
+                        "h5",
+                        {
+                          staticClass: "modal-title",
+                          attrs: { id: "kerusakanModalLabel" },
+                        },
+                        [_vm._v("Daftar Kerusakan Belum Diproses")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "close text-white",
+                          attrs: {
+                            type: "button",
+                            "data-dismiss": "modal",
+                            "aria-label": "Close",
+                          },
+                          on: { click: _vm.closeModalKerusakan },
+                        },
+                        [
+                          _c("span", { attrs: { "aria-hidden": "true" } }, [
+                            _vm._v("×"),
+                          ]),
+                        ]
+                      ),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-body" }, [
+                    _vm.loadingKerusakan
+                      ? _c("div", { staticClass: "text-center py-4" }, [
+                          _vm._m(14),
+                          _vm._v(" "),
+                          _c("p", [_vm._v("Memuat data peminjaman...")]),
+                        ])
+                      : _c("div", [
+                          _vm.kerusakanList.length === 0
+                            ? _c("div", { staticClass: "alert alert-info" }, [
+                                _vm._v(
+                                  "\n                  Tidak ada peminjaman yang belum diproses.\n                "
+                                ),
+                              ])
+                            : _c("div", { staticClass: "table-responsive" }, [
+                                _c(
+                                  "table",
+                                  {
+                                    staticClass:
+                                      "table table-bordered table-hover",
+                                  },
+                                  [
+                                    _vm._m(15),
+                                    _vm._v(" "),
+                                    _c(
+                                      "tbody",
+                                      _vm._l(
+                                        _vm.kerusakanList,
+                                        function (kerusakan) {
+                                          return _c(
+                                            "tr",
+                                            { key: kerusakan.id },
+                                            [
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(kerusakan.no_kerusakan)
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    (kerusakan.no_seri &&
+                                                      kerusakan.no_seri.tools &&
+                                                      kerusakan.no_seri.tools
+                                                        .nama) ||
+                                                      "-"
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    kerusakan.no_seri
+                                                      ? kerusakan.no_seri
+                                                          .no_seri
+                                                      : "-"
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    kerusakan.tgl_kerusakan ||
+                                                      "-"
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c(
+                                                "td",
+                                                { staticClass: "text-center" },
+                                                [
+                                                  _c(
+                                                    "button",
+                                                    {
+                                                      on: {
+                                                        click: function (
+                                                          $event
+                                                        ) {
+                                                          return _vm.viewDetailKerusakan(
+                                                            kerusakan.id
+                                                          )
+                                                        },
+                                                      },
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass:
+                                                          "fas fa-eye text-info",
+                                                      }),
+                                                      _vm._v(
+                                                        " Detail\n                          "
+                                                      ),
+                                                    ]
+                                                  ),
+                                                ]
+                                              ),
+                                            ]
+                                          )
+                                        }
+                                      ),
+                                      0
+                                    ),
+                                  ]
+                                ),
+                              ]),
+                        ]),
+                  ]),
+                ]
+              ),
+            ]
+          ),
+        ]
+      ),
       _vm._v(" "),
       _c("div", { staticClass: "col-xl-3 col-md-4 mb-4" }, [
         _c("div", { staticClass: "border-left-primary shadow h-100 py-2" }, [
@@ -246537,23 +252468,237 @@ var render = function () {
                   },
                   [
                     _vm._v(
-                      "\n                  Alat/Mesin yang Sudah Dimusnahkan\n                "
+                      "\n                  Alat/Mesin yang Sedang Diproses Pemusnahan\n                "
                     ),
                   ]
                 ),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "h5 mb-0 font-weight-bold text-gray-800" },
-                  [_vm._v(_vm._s(_vm.pemusnahanStokCount))]
-                ),
+                _c("div", { staticClass: "h5 mb-0 font-weight-bold" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "text-decoration-none",
+                      class:
+                        _vm.pemusnahanStokCount > 0
+                          ? "text-danger"
+                          : "text-gray-800",
+                      attrs: { href: "#" },
+                    },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(_vm.pemusnahanStokCount) +
+                          "\n                  "
+                      ),
+                    ]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "mt-2" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "text-primary small text-decoration-none",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function ($event) {
+                          $event.preventDefault()
+                          return _vm.showPemusnahanModal.apply(null, arguments)
+                        },
+                      },
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-eye text-primary" }),
+                      _c("b", [_vm._v(" Detail")]),
+                    ]
+                  ),
+                ]),
               ]),
               _vm._v(" "),
-              _vm._m(6),
+              _vm._m(16),
             ]),
           ]),
         ]),
       ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          staticStyle: { "overflow-y": "auto" },
+          attrs: {
+            id: "pemusnahanModal",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-labelledby": "pemusnahanModalLabel",
+            "aria-hidden": "true",
+          },
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-dialog", attrs: { role: "document" } },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "modal-content",
+                  staticStyle: { "max-width": "max-content" },
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "modal-header bg-primary text-white" },
+                    [
+                      _c(
+                        "h5",
+                        {
+                          staticClass: "modal-title",
+                          attrs: { id: "pemusnahanModalLabel" },
+                        },
+                        [_vm._v("Daftar Pemusnahan yang Belum Dimusnahkan")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "close text-white",
+                          attrs: {
+                            type: "button",
+                            "data-dismiss": "modal",
+                            "aria-label": "Close",
+                          },
+                          on: { click: _vm.closeModalPemusnahan },
+                        },
+                        [
+                          _c("span", { attrs: { "aria-hidden": "true" } }, [
+                            _vm._v("×"),
+                          ]),
+                        ]
+                      ),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-body" }, [
+                    _vm.loadingPemusnahan
+                      ? _c("div", { staticClass: "text-center py-4" }, [
+                          _vm._m(17),
+                          _vm._v(" "),
+                          _c("p", [_vm._v("Memuat data peminjaman...")]),
+                        ])
+                      : _c("div", [
+                          _vm.pemusnahanList.length === 0
+                            ? _c("div", { staticClass: "alert alert-info" }, [
+                                _vm._v(
+                                  "\n                  Tidak ada pemusnahan yang Sudah Selesai.\n                "
+                                ),
+                              ])
+                            : _c("div", { staticClass: "table-responsive" }, [
+                                _c(
+                                  "table",
+                                  {
+                                    staticClass:
+                                      "table table-bordered table-hover",
+                                  },
+                                  [
+                                    _vm._m(18),
+                                    _vm._v(" "),
+                                    _c(
+                                      "tbody",
+                                      _vm._l(
+                                        _vm.pemusnahanList,
+                                        function (pemusnahan) {
+                                          return _c(
+                                            "tr",
+                                            { key: pemusnahan.id },
+                                            [
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    pemusnahan.no_pemusnahan
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    (pemusnahan.no_seri &&
+                                                      pemusnahan.no_seri
+                                                        .tools &&
+                                                      pemusnahan.no_seri.tools
+                                                        .nama) ||
+                                                      "-"
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    pemusnahan.no_seri
+                                                      ? pemusnahan.no_seri
+                                                          .no_seri
+                                                      : "-"
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    pemusnahan.tgl_pemusnahan ||
+                                                      "-"
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c(
+                                                "td",
+                                                { staticClass: "text-center" },
+                                                [
+                                                  _c(
+                                                    "button",
+                                                    {
+                                                      on: {
+                                                        click: function (
+                                                          $event
+                                                        ) {
+                                                          return _vm.viewDetailPemusnahan(
+                                                            pemusnahan.id
+                                                          )
+                                                        },
+                                                      },
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass:
+                                                          "fas fa-eye text-info",
+                                                      }),
+                                                      _vm._v(
+                                                        " Detail\n                          "
+                                                      ),
+                                                    ]
+                                                  ),
+                                                ]
+                                              ),
+                                            ]
+                                          )
+                                        }
+                                      ),
+                                      0
+                                    ),
+                                  ]
+                                ),
+                              ]),
+                        ]),
+                  ]),
+                ]
+              ),
+            ]
+          ),
+        ]
+      ),
       _vm._v(" "),
       _c("div", { staticClass: "col-xl-3 col-md-4 mb-4" }, [
         _c("div", { staticClass: "border-left-primary shadow h-100 py-2" }, [
@@ -246573,18 +252718,232 @@ var render = function () {
                   ]
                 ),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "h5 mb-0 font-weight-bold text-gray-800" },
-                  [_vm._v(_vm._s(_vm.kehilanganStokCount))]
-                ),
+                _c("div", { staticClass: "h5 mb-0 font-weight-bold" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "text-decoration-none",
+                      class:
+                        _vm.kehilanganStokCount > 0
+                          ? "text-danger"
+                          : "text-gray-800",
+                      attrs: { href: "#" },
+                    },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(_vm.kehilanganStokCount) +
+                          "\n                  "
+                      ),
+                    ]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "mt-2" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "text-primary small text-decoration-none",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function ($event) {
+                          $event.preventDefault()
+                          return _vm.showKehilanganModal.apply(null, arguments)
+                        },
+                      },
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-eye text-primary" }),
+                      _c("b", [_vm._v(" Detail")]),
+                    ]
+                  ),
+                ]),
               ]),
               _vm._v(" "),
-              _vm._m(7),
+              _vm._m(19),
             ]),
           ]),
         ]),
       ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          staticStyle: { "overflow-y": "auto" },
+          attrs: {
+            id: "kehilanganModal",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-labelledby": "kehilanganModalLabel",
+            "aria-hidden": "true",
+          },
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-dialog", attrs: { role: "document" } },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "modal-content",
+                  staticStyle: { "max-width": "max-content" },
+                },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "modal-header bg-primary text-white" },
+                    [
+                      _c(
+                        "h5",
+                        {
+                          staticClass: "modal-title",
+                          attrs: { id: "kehilanganModalLabel" },
+                        },
+                        [_vm._v("Daftar Kehilangan Belum Diproses")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "close text-white",
+                          attrs: {
+                            type: "button",
+                            "data-dismiss": "modal",
+                            "aria-label": "Close",
+                          },
+                          on: { click: _vm.closeModalHilang },
+                        },
+                        [
+                          _c("span", { attrs: { "aria-hidden": "true" } }, [
+                            _vm._v("×"),
+                          ]),
+                        ]
+                      ),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-body" }, [
+                    _vm.loadingKehilangan
+                      ? _c("div", { staticClass: "text-center py-4" }, [
+                          _vm._m(20),
+                          _vm._v(" "),
+                          _c("p", [_vm._v("Memuat data peminjaman...")]),
+                        ])
+                      : _c("div", [
+                          _vm.kehilanganList.length === 0
+                            ? _c("div", { staticClass: "alert alert-info" }, [
+                                _vm._v(
+                                  "\n                  Tidak ada peminjaman yang belum diproses.\n                "
+                                ),
+                              ])
+                            : _c("div", { staticClass: "table-responsive" }, [
+                                _c(
+                                  "table",
+                                  {
+                                    staticClass:
+                                      "table table-bordered table-hover",
+                                  },
+                                  [
+                                    _vm._m(21),
+                                    _vm._v(" "),
+                                    _c(
+                                      "tbody",
+                                      _vm._l(
+                                        _vm.kehilanganList,
+                                        function (kehilangan) {
+                                          return _c(
+                                            "tr",
+                                            { key: kehilangan.id },
+                                            [
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    kehilangan.no_kehilangan
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    (kehilangan.no_seri &&
+                                                      kehilangan.no_seri
+                                                        .tools &&
+                                                      kehilangan.no_seri.tools
+                                                        .nama) ||
+                                                      "-"
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    kehilangan.no_seri
+                                                      ? kehilangan.no_seri
+                                                          .no_seri
+                                                      : "-"
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    kehilangan.tgl_kehilangan ||
+                                                      "-"
+                                                  )
+                                                ),
+                                              ]),
+                                              _vm._v(" "),
+                                              _c(
+                                                "td",
+                                                { staticClass: "text-center" },
+                                                [
+                                                  _c(
+                                                    "button",
+                                                    {
+                                                      on: {
+                                                        click: function (
+                                                          $event
+                                                        ) {
+                                                          return _vm.viewDetailKehilanagan(
+                                                            kehilangan.id
+                                                          )
+                                                        },
+                                                      },
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass:
+                                                          "fas fa-eye text-info",
+                                                      }),
+                                                      _vm._v(
+                                                        " Detail\n                          "
+                                                      ),
+                                                    ]
+                                                  ),
+                                                ]
+                                              ),
+                                            ]
+                                          )
+                                        }
+                                      ),
+                                      0
+                                    ),
+                                  ]
+                                ),
+                              ]),
+                        ]),
+                  ]),
+                ]
+              ),
+            ]
+          ),
+        ]
+      ),
       _vm._v(" "),
       _c("div", { staticClass: "col-xl-3 col-md-4 mb-4" }, [
         _c("div", { staticClass: "border-left-primary shadow h-100 py-2" }, [
@@ -246604,30 +252963,344 @@ var render = function () {
                   ]
                 ),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "h5 mb-0 font-weight-bold text-gray-800" },
-                  [_vm._v(_vm._s(_vm.perawatanStokCount))]
-                ),
+                _c("div", { staticClass: "h5 mb-0 font-weight-bold" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "text-decoration-none",
+                      class:
+                        _vm.perawatanStokCount > 0
+                          ? "text-danger"
+                          : "text-gray-800",
+                      attrs: { href: "#" },
+                    },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(_vm.perawatanStokCount) +
+                          "\n                  "
+                      ),
+                    ]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "h5 mb-0 font-weight-bold" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "text-primary small text-decoration-none",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function ($event) {
+                          $event.preventDefault()
+                          return _vm.showPerawatanModal.apply(null, arguments)
+                        },
+                      },
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-eye text-primary" }),
+                      _c("b", [_vm._v(" Detail")]),
+                    ]
+                  ),
+                ]),
               ]),
               _vm._v(" "),
-              _vm._m(8),
+              _vm._m(22),
             ]),
           ]),
         ]),
       ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          staticStyle: { "overflow-y": "auto" },
+          attrs: {
+            id: "perawatanModal",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-labelledby": "perawatanModalLabel",
+            "aria-hidden": "true",
+          },
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-dialog", attrs: { role: "document" } },
+            [
+              _c("div", { staticClass: "modal-content" }, [
+                _c(
+                  "div",
+                  { staticClass: "modal-header bg-primary text-white" },
+                  [
+                    _c(
+                      "h5",
+                      {
+                        staticClass: "modal-title",
+                        attrs: { id: "perawatanModalLabel" },
+                      },
+                      [_vm._v("Daftar Perawatan Belum Dilakukan")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "close text-white",
+                        attrs: {
+                          type: "button",
+                          "data-dismiss": "modal",
+                          "aria-label": "Close",
+                        },
+                        on: { click: _vm.closeModalPerawatan },
+                      },
+                      [
+                        _c("span", { attrs: { "aria-hidden": "true" } }, [
+                          _vm._v("×"),
+                        ]),
+                      ]
+                    ),
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-body" }, [
+                  _vm.loadingPerawatan
+                    ? _c("div", { staticClass: "text-center py-4" }, [
+                        _vm._m(23),
+                        _vm._v(" "),
+                        _c("p", [
+                          _vm._v("Memuat data perawatan belum dilakukan..."),
+                        ]),
+                      ])
+                    : _c("div", [
+                        _vm.perawatanList.length === 0
+                          ? _c("div", { staticClass: "alert alert-info" }, [
+                              _vm._v(
+                                "\n                  Tidak ada perawatan yang belum dilakukan.\n                "
+                              ),
+                            ])
+                          : _c("div", { staticClass: "table-responsive" }, [
+                              _c(
+                                "table",
+                                {
+                                  staticClass:
+                                    "table table-bordered table-hover",
+                                },
+                                [
+                                  _vm._m(24),
+                                  _vm._v(" "),
+                                  _vm._l(
+                                    _vm.perawatanList,
+                                    function (perawatan) {
+                                      return _c("tr", { key: perawatan.id }, [
+                                        _c("td", [
+                                          _vm._v(
+                                            _vm._s(
+                                              perawatan.no_perawatan || "-"
+                                            )
+                                          ),
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _vm._v(
+                                            _vm._s(
+                                              (perawatan.no_seri &&
+                                                perawatan.no_seri.tools &&
+                                                perawatan.no_seri.tools.nama) ||
+                                                "-"
+                                            )
+                                          ),
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _vm._v(
+                                            _vm._s(
+                                              (perawatan.no_seri &&
+                                                perawatan.no_seri.no_seri) ||
+                                                "-"
+                                            )
+                                          ),
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _vm._v(
+                                            _vm._s(
+                                              perawatan.tgl_perawatan || "-"
+                                            )
+                                          ),
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _vm._v(
+                                            _vm._s(
+                                              perawatan.waktu_perawatan || "-"
+                                            )
+                                          ),
+                                        ]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "td",
+                                          { staticClass: "text-center" },
+                                          [
+                                            _c(
+                                              "button",
+                                              {
+                                                on: {
+                                                  click: function ($event) {
+                                                    return _vm.viewDetailPerawatan(
+                                                      perawatan.id
+                                                    )
+                                                  },
+                                                },
+                                              },
+                                              [
+                                                _c("i", {
+                                                  staticClass:
+                                                    "fas fa-eye text-info",
+                                                }),
+                                                _vm._v(
+                                                  " Detail\n                          "
+                                                ),
+                                              ]
+                                            ),
+                                          ]
+                                        ),
+                                      ])
+                                    }
+                                  ),
+                                ],
+                                2
+                              ),
+                            ]),
+                      ]),
+                ]),
+              ]),
+            ]
+          ),
+        ]
+      ),
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-lg-8 mb-4" }, [
         _c("div", { staticClass: "card shadow mb-4" }, [
-          _vm._m(9),
+          _c(
+            "div",
+            {
+              staticClass:
+                "card-header py-3 d-flex justify-content-between align-items-center",
+            },
+            [
+              _c("h6", { staticClass: "m-0 font-weight-bold text-primary" }, [
+                _vm._v("Perawatan Alat/Mesin"),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "date-filter" }, [
+                _c("div", { staticClass: "input-group" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.filter.start_date,
+                        expression: "filter.start_date",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "date" },
+                    domProps: { value: _vm.filter.start_date },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.filter, "start_date", $event.target.value)
+                      },
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "input-group-text mr-1 ml-1" }, [
+                    _vm._v("s/d"),
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.filter.end_date,
+                        expression: "filter.end_date",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "date" },
+                    domProps: { value: _vm.filter.end_date },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.filter, "end_date", $event.target.value)
+                      },
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary mr-2 ml-2",
+                      on: { click: _vm.applyFilter },
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-filter" }),
+                      _vm._v(" Filter\n                          "),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-secondary",
+                      on: { click: _vm.resetFilter },
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-sync-alt" }),
+                      _vm._v(" Reset\n                          "),
+                    ]
+                  ),
+                ]),
+              ]),
+            ]
+          ),
           _vm._v(" "),
-          !_vm.loading
+          !_vm.isloading
             ? _c("div", { staticClass: "card-body" }, [
+                _vm.progressData.date_range
+                  ? _c("div", { staticClass: "alert alert-info" }, [
+                      _vm._v(
+                        "\n                      Menampilkan data perawatan dari "
+                      ),
+                      _c("strong", [
+                        _vm._v(
+                          _vm._s(
+                            _vm.formatDate(_vm.progressData.date_range.start)
+                          )
+                        ),
+                      ]),
+                      _vm._v(" \n                      sampai "),
+                      _c("strong", [
+                        _vm._v(
+                          _vm._s(
+                            _vm.formatDate(_vm.progressData.date_range.end)
+                          )
+                        ),
+                      ]),
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
                 _c("h4", { staticClass: "small font-weight-bold m-4" }, [
                   _vm._v(
-                    "\n              Belum Dilakukan Perawatan\n              "
+                    "\n                      Belum Dilakukan Perawatan\n                      "
                   ),
                   _c("span", { staticClass: "float-right" }, [
                     _vm._v(
@@ -246654,7 +253327,7 @@ var render = function () {
                 _vm._v(" "),
                 _c("h4", { staticClass: "small font-weight-bold m-4" }, [
                   _vm._v(
-                    "\n              Dalam Proses Perawatan\n              "
+                    "\n                      Dalam Proses Perawatan\n                      "
                   ),
                   _c("span", { staticClass: "float-right" }, [
                     _vm._v(
@@ -246680,7 +253353,9 @@ var render = function () {
                 ]),
                 _vm._v(" "),
                 _c("h4", { staticClass: "small font-weight-bold m-4" }, [
-                  _vm._v("\n              Selesai Perawatan\n              "),
+                  _vm._v(
+                    "\n                      Selesai Perawatan\n                      "
+                  ),
                   _c("span", { staticClass: "float-right" }, [
                     _vm._v(
                       _vm._s(_vm.progressData.selesai) +
@@ -246715,14 +253390,14 @@ var render = function () {
                 ]),
               ])
             : _c("div", { staticClass: "card-body text-center" }, [
-                _vm._m(10),
+                _vm._m(25),
                 _vm._v(" "),
                 _c("p", [_vm._v("Memuat data progress perawatan...")]),
               ]),
         ]),
       ]),
       _vm._v(" "),
-      _vm._m(11),
+      _vm._m(26),
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
@@ -246796,7 +253471,7 @@ var render = function () {
             ]),
             _vm._v(" "),
             _vm.isloading
-              ? _c("div", { staticClass: "text-center py-4" }, [_vm._m(12)])
+              ? _c("div", { staticClass: "text-center py-4" }, [_vm._m(27)])
               : _vm._e(),
             _vm._v(" "),
             _vm.errorMessage
@@ -246885,7 +253560,7 @@ var render = function () {
             ]),
             _vm._v(" "),
             _vm.isloading
-              ? _c("div", { staticClass: "text-center py-4" }, [_vm._m(13)])
+              ? _c("div", { staticClass: "text-center py-4" }, [_vm._m(28)])
               : _vm._e(),
             _vm._v(" "),
             _vm.errorMessagePermintaan
@@ -246927,11 +253602,24 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-auto" }, [
-      _c("i", {
-        staticClass: "bi bi-hourglass-split fa-2x mr-3",
-        staticStyle: { color: "rgba(22, 158, 168, 0.2)" },
-      }),
+    return _c(
+      "div",
+      { staticClass: "spinner-border text-primary", attrs: { role: "status" } },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "thead-light" }, [
+      _c("tr", [
+        _c("th", [_vm._v("Kode")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Alat/Mesin")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Aksi")]),
+      ]),
     ])
   },
   function () {
@@ -246943,6 +253631,83 @@ var staticRenderFns = [
         staticClass: "bi bi-hourglass-split fa-2x mr-3",
         staticStyle: { color: "rgba(22, 158, 168, 0.2)" },
       }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "spinner-border text-primary", attrs: { role: "status" } },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "thead-light" }, [
+      _c("tr", [
+        _c("th", [_vm._v("No. Peminjaman")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Peminjam")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Alat/Mesin")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("No. Seri")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Tgl Pinjam")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Tgl Kembali")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Detail")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Aksi")]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-auto" }, [
+      _c("i", {
+        staticClass: "bi bi-hourglass-split fa-2x mr-3",
+        staticStyle: { color: "rgba(22, 158, 168, 0.2)" },
+      }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "spinner-border text-primary", attrs: { role: "status" } },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "thead-light" }, [
+      _c("tr", [
+        _c("th", [_vm._v("No. Permintaan")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Diminta Oleh")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Alat/Mesin")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("No. Seri")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Tgl Permintaan")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Detail")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Aksi")]),
+      ]),
     ])
   },
   function () {
@@ -246960,11 +253725,67 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "spinner-border text-primary", attrs: { role: "status" } },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "thead-light" }, [
+      _c("tr", [
+        _c("th", [_vm._v("No. Perbaikan")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Alat/Mesin")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("No. Seri")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Tgl Error")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Aksi")]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-auto" }, [
       _c("i", {
         staticClass: "bi bi-exclamation-triangle fa-2x mr-3",
         staticStyle: { color: "rgba(22, 158, 168, 0.2)" },
       }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "spinner-border text-primary", attrs: { role: "status" } },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "thead-light" }, [
+      _c("tr", [
+        _c("th", [_vm._v("No. Kerusakan")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Alat/Mesin")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("No. Seri")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Tgl Rusak")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Aksi")]),
+      ]),
     ])
   },
   function () {
@@ -246982,11 +253803,67 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "spinner-border text-primary", attrs: { role: "status" } },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "thead-light" }, [
+      _c("tr", [
+        _c("th", [_vm._v("No. Pemusnahan")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Alat/Mesin")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("No. Seri")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Tgl Musnah")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Aksi")]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-auto" }, [
       _c("i", {
         staticClass: "bi bi-repeat fa-2x mr-3",
         staticStyle: { color: "rgba(22, 158, 168, 0.2)" },
       }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "spinner-border text-primary", attrs: { role: "status" } },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "thead-light" }, [
+      _c("tr", [
+        _c("th", [_vm._v("No. Kehilangan")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Alat/Mesin")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("No. Seri")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Tgl Hilang")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Aksi")]),
+      ]),
     ])
   },
   function () {
@@ -247004,9 +253881,29 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header py-3" }, [
-      _c("h6", { staticClass: "m-0 font-weight-bold text-primary" }, [
-        _vm._v("Perawatan Alat/Mesin Tahun ini"),
+    return _c(
+      "div",
+      { staticClass: "spinner-border text-primary", attrs: { role: "status" } },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "thead-light" }, [
+      _c("tr", [
+        _c("th", [_vm._v("No. Perawatan")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Alat/Mesin")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("No Seri")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Tgl Perawatan")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Waktu Perawatan")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Aksi")]),
       ]),
     ])
   },
@@ -247044,7 +253941,7 @@ var staticRenderFns = [
             _c("canvas", { attrs: { id: "myPieChart" } }),
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "mb-5 text-center small" }, [
+          _c("div", { staticClass: "mb-5 mt-5 text-center small" }, [
             _c("span", { attrs: { id: "chartLegend" } }),
           ]),
         ]),
@@ -261892,18 +268789,17 @@ var render = function () {
                   _vm._v(" "),
                   _c("td", [
                     _vm._v(
-                      _vm._s(
-                        permintaan.pengguna
-                          ? permintaan.pengguna.nama_pengguna
-                          : "-"
-                      )
+                      _vm._s((permintaan.users && permintaan.users.nama) || "-")
                     ),
                   ]),
                   _vm._v(" "),
                   _c("td", [
                     _vm._v(
                       _vm._s(
-                        permintaan.pengguna ? permintaan.pengguna.divisi : "-"
+                        (permintaan.users &&
+                          permintaan.users.divisi &&
+                          permintaan.users.divisi.divisi) ||
+                          "-"
                       )
                     ),
                   ]),
@@ -304366,7 +311262,8 @@ var routes = [{
   //props: true
 }, {
   path: '/admin-mtc/data-alat',
-  component: DataAlat
+  component: DataAlat,
+  name: 'data-alat'
 }, {
   path: '/admin-mtc/data-alat/edit/:id',
   component: EditAlat

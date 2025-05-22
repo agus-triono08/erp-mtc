@@ -361,4 +361,26 @@ class ErrorController extends Controller
         }
     }
 
+    public function listBelumDiproses()
+    {
+        try {
+            $perbaikan = Error::with(['users', 'noSeri.tools'])
+                ->where('status', 'Belum')
+                ->orderBy('created_at', 'desc')
+                ->get();
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Daftar perbaikan belum diproses',
+                'data' => $perbaikan
+            ], 200);
+            
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal mengambil data: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
 }

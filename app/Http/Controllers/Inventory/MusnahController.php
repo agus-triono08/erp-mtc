@@ -277,13 +277,35 @@ class MusnahController extends Controller
     {
         try {
             // Menghitung jumlah peminjaman dengan status 'Belum Diproses'
-            $count = Musnah::where('status', 'Selesai')->count();
+            $count = Musnah::where('status', 'Proses')->count();
             
             return response()->json([
                 'success' => true,
                 'message' => 'Jumlah Pemusnahan dengan status Selesai',
                 'count' => $count
     
+            ], 200);
+            
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal mengambil data: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function listSelesai()
+    {
+        try {
+            $pemusnahan = Musnah::with(['noSeri.tools'])
+                ->where('status', 'Proses')
+                ->orderBy('created_at', 'desc')
+                ->get();
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Daftar pemusnahan belum selesai',
+                'data' => $pemusnahan
             ], 200);
             
         } catch (\Exception $e) {

@@ -415,7 +415,7 @@ class HilangController extends Controller
             'old_kondisi' => null,
             'new_kondisi' => $request->kondisi ?? 'OK',
             'changed_at' => now(),
-            'changed_by' => auth()->id() ?? 3,
+            'changed_by' => auth()->id() ?? 4,
         ]);
 
         // Buat activity proses penggantian
@@ -525,6 +525,28 @@ class HilangController extends Controller
                 'message' => 'Jumlah Kehilangan dengan status Belum',
                 'count' => $count
     
+            ], 200);
+            
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal mengambil data: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function listBelum()
+    {
+        try {
+            $perbaikan = Hilang::with(['noSeri.tools'])
+                ->where('status', 'Belum')
+                ->orderBy('created_at', 'desc')
+                ->get();
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Daftar perbaikan belum diproses',
+                'data' => $perbaikan
             ], 200);
             
         } catch (\Exception $e) {

@@ -22,6 +22,7 @@ class PermintaanController extends Controller
         // Ambil semua data permintaan beserta tools dan no_seri jika status = Digunakan
         $all = Permintaan::with([
                 'tools',
+                'users',
                 'noSeri' => function ($query) {
                     $query->select('no_seri.id', 'no_seri.no_seri', 'no_seri.kondisi', 'no_seri.kondisi_after')
                         // ->where('kondisi_after', 'Digunakan')
@@ -41,6 +42,7 @@ class PermintaanController extends Controller
         // Ambil data by status
         $byStatus = Permintaan::with([
                 'tools',
+                'users.divisi',
                 'noSeri' => function ($query) {
                     $query->select('no_seri.id', 'no_seri.no_seri', 'no_seri.kondisi', 'no_seri.kondisi_after')
                         ->orderBy('no_seri.created_at', 'asc');
@@ -110,6 +112,7 @@ class PermintaanController extends Controller
             'status' => $status,
             'status_kondisi' => $status,
             'total' => $request->total,
+            'users_id' => auth()->id() ?? 4,
         ];
 
         // Buat Permintaan
@@ -319,6 +322,27 @@ class PermintaanController extends Controller
     
             ], 200);
             
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal mengambil data: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function listBelumDiproses()
+    {
+        try {
+            $permintaan = Permintaan::with(['users', 'tools', 'noSeri'])
+                ->where('status', 'Belum Diproses')
+                ->orderBy('created_at', 'desc')
+                ->get();
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Daftar permintaan belum diproses',
+                'data' => $permintaan
+            ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,

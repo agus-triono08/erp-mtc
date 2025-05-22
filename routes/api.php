@@ -162,8 +162,10 @@ Route::apiResource('v1/tipe', TipeController::class);
 //TOOLS
 Route::apiResource('v1/tools', ToolsController::class);
 Route::get('/v1/tools/{id}/no-seri', [ToolsController::class, 'getNoSeriByTool']);
-Route::get('/v1/tools/low-stock/count', [ToolsController::class, 'apiLowStockTools'])
-        ->name('tools.low-stock-count');
+Route::prefix('/v1/tools')->group(function () {
+    Route::get('/low-stock/count', [ToolsController::class, 'apiLowStockTools']);
+    Route::get('/low-stock/list', [ToolsController::class, 'listLowStockTools']); // Add this line        
+    });
 //NOSeri
 Route::apiResource('v1/noseri', NoseriController::class);
 Route::put('/v1/noseri/editlogs/{id}', [NoSeriController::class, 'editLog']);
@@ -194,8 +196,10 @@ Route::prefix('v1/perawatan')->group(function() {
     Route::post('/status-pelaksanaan', [PerawatanController::class, 'statusPelaksanaan']);
     Route::post('/status-selesai', [PerawatanController::class, 'statusSelesai']);    
 });
-Route::get('/v1/perawatan/belum/count', [PerawatanController::class, 'countBelum'])
-        ->name('perawatan.belum-count');
+Route::prefix('/v1/perawatan')->group(function () {
+    Route::get('/belum/count', [PerawatanController::class, 'countBelum']);
+    Route::get('/belum/list', [PerawatanController::class, 'listBelum']); // Add this line        
+    });
 Route::group(['prefix' => 'inventory', 'as' => 'inventory.'], function() {
         Route::get('/perawatan/progress', [PerawatanController::class, 'getProgressData'])
         ->name('perawatan.progress');});
@@ -207,8 +211,10 @@ Route::prefix('v1/perbaikan')->group(function() {
     Route::post('/add-activity', [ErrorController::class, 'addActivity']);
 });
 Route::apiResource('/v1/activity-perbaikan', ErrorActivityController::class);
-Route::get('/v1/perbaikan/belum/count', [ErrorController::class, 'countBelum'])
-        ->name('perbaikan.belum-count');
+Route::prefix('/v1/perbaikan')->group(function () {
+        Route::get('/belum/count', [ErrorController::class, 'countBelum']);
+        Route::get('/belum-diproses/list', [ErrorController::class, 'listBelumDiproses']); // Add this line        
+        });
 // Kerusakan
 Route::apiResource('v1/kerusakan', RusakController::class);
 Route::get('/v1/kerusakan/getRusak/{noSeri}', [RusakController::class, 'getRusak']);
@@ -217,16 +223,20 @@ Route::prefix('v1/kerusakan')->group(function() {
     Route::post('/pemusnahan-diterima', [RusakController::class, 'pemusnahanDiterima']);
     Route::post('/pemusnahan-ditolak', [RusakController::class, 'pemusnahanDitolak']);
 });
-Route::get('/v1/kerusakan/belum/count', [RusakController::class, 'countBelum'])
-        ->name('kerusakan.belum-count');
+Route::prefix('/v1/kerusakan')->group(function () {
+        Route::get('/belum/count', [RusakController::class, 'countBelum']);
+        Route::get('/belum/list', [RusakController::class, 'listBelum']); // Add this line        
+        });
 // Pemusnahan
 Route::apiResource('v1/pemusnahan', MusnahController::class);
 Route::get('/v1/pemusnahan/getMusnah/{noSeri}', [MusnahController::class, 'getMusnah']);
 Route::prefix('v1/pemusnahan')->group(function() {
     Route::post('/add-activity', [MusnahController::class, 'addActivity']);    
 });
-Route::get('/v1/pemusnahan/selesai/count', [MusnahController::class, 'countSelesai'])
-        ->name('pemusnahan.selesai-count');
+Route::prefix('/v1/pemusnahan')->group(function () {
+        Route::get('/selesai/count', [MusnahController::class, 'countSelesai']);
+        Route::get('/selesai/list', [MusnahController::class, 'listSelesai']); // Add this line        
+        });
 // Kehilangan
 Route::apiResource('v1/kehilangan', HilangController::class);
 Route::get('/v1/kehilangan/getHilang/{noSeri}', [HilangController::class, 'getHilang']);
@@ -238,16 +248,20 @@ Route::prefix('v1/kehilangan')->group(function() {
     Route::post('/alat-diserahkan', [HilangController::class, 'alatDiserahkan']);
     Route::post('/alat-diterima', [HilangController::class, 'alatDiterima']);
 });
-Route::get('/v1/kehilangan/belum/count', [HilangController::class, 'countBelum'])
-        ->name('kehilangan.belum-count');
+Route::prefix('/v1/kehilangan')->group(function () {
+        Route::get('/belum/count', [HilangController::class, 'countBelum']);
+        Route::get('/belum/list', [HilangController::class, 'listBelum']); // Add this line        
+        });
 // Permintaan
 Route::apiResource('v1/permintaan', PermintaanController::class);
 Route::get('/v1/permintaan/getPermintaan/{kodeAlat}', [PermintaanController::class, 'getPermintaan']);
 Route::get('/v1/permintaan/getNoPermintaan/{noPermintaan}', [PermintaanController::class, 'getNoPermintaan']);
 Route::get('/v1/permintaan/getPengajuanNoPermintaan/{noPermintaan}', [PermintaanController::class, 'getPengajuanNoPermintaan']);
 Route::get('/v1/logs-permintaan', [PermintaanLogController::class, 'index']);
-Route::get('/v1/permintaan/belum-diproses/count', [PermintaanController::class, 'countBelumDiproses'])
-        ->name('permintaan.belum-diproses-count');
+Route::prefix('/v1/permintaan')->group(function () {
+        Route::get('/belum-diproses/count', [PermintaanController::class, 'countBelumDiproses']);
+        Route::get('/belum-diproses/list', [PermintaanController::class, 'listBelumDiproses']); // Add this line        
+    });
 Route::get('/v1/permintaan/chart/monthly-completed', [PermintaanController::class, 'monthlyCompletedLoansAlternative']);
 Route::get('/v1/permintaan/chart/available-years', [PermintaanController::class, 'availableYears']);
 // Peminjaman
@@ -256,8 +270,10 @@ Route::get('/v1/peminjaman/getPeminjaman/{kodeAlat}', [PeminjamanController::cla
 Route::get('/v1/peminjaman/getNoPeminjaman/{noPinjam}', [PeminjamanController::class, 'getNoPeminjaman']);
 Route::get('/v1/peminjaman/getPengajuanNoPeminjaman/{noPinjam}', [PeminjamanController::class, 'getPengajuanNoPeminjaman']);
 Route::get('/v1/logs-peminjaman', [PeminjamanLogController::class, 'index']);
-Route::get('/v1/peminjaman/belum-diproses/count', [PeminjamanController::class, 'countBelumDiproses'])
-        ->name('peminjaman.belum-diproses-count');
+Route::prefix('/v1/peminjaman')->group(function () {
+        Route::get('/belum-diproses/count', [PeminjamanController::class, 'countBelumDiproses']);
+        Route::get('/belum-diproses/list', [PeminjamanController::class, 'listBelumDiproses']); // Add this line        
+    });
 Route::get('/v1/peminjaman/chart/monthly-completed', [PeminjamanController::class, 'monthlyCompletedLoans']);
 Route::get('/v1/peminjaman/chart/available-years', [PeminjamanController::class, 'availableYears']);
 // Perubahan Peminjaman

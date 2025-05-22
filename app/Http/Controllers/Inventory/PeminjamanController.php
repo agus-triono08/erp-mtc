@@ -323,17 +323,17 @@ class PeminjamanController extends Controller
         return response()->json($peminjaman);
     }
 
+
+    // Peminjaman Belum Diproses
     public function countBelumDiproses()
     {
         try {
-            // Menghitung jumlah peminjaman dengan status 'Belum Diproses'
             $count = Peminjaman::where('status', 'Belum Diproses')->count();
             
             return response()->json([
                 'success' => true,
                 'message' => 'Jumlah peminjaman dengan status Belum Diproses',
                 'count' => $count
-    
             ], 200);
             
         } catch (\Exception $e) {
@@ -344,6 +344,27 @@ class PeminjamanController extends Controller
         }
     }
 
+    public function listBelumDiproses()
+    {
+        try {
+            $peminjaman = Peminjaman::with(['users', 'tools', 'noSeri'])
+                ->where('status', 'Belum Diproses')
+                ->orderBy('created_at', 'desc')
+                ->get();
+            
+            return response()->json([
+                'success' => true,
+                'message' => 'Daftar peminjaman belum diproses',
+                'data' => $peminjaman
+            ], 200);
+            
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal mengambil data: ' . $e->getMessage()
+            ], 500);
+        }
+    }
 
     // Bisa gunakan ini buat chart Dasboard
     public function monthlyCompletedLoans(Request $request)
