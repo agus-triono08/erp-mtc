@@ -94,24 +94,9 @@
             <td class="text-center p-2 border">{{ item.permintaan.no_permintaan || '-' }}</td>
             <td class="text-center p-2 border">{{ getNamaAlat(item) }}</td>
             <td class="text-center p-2 border">{{ item.permintaan.total }}</td>
-            <!-- <td class="text-center p-2 border">{{ item.no_seri.no_seri || '-' }}</td> -->
             <td class="text-center p-2 border">{{ item.permintaan.tgl_permintaan || '-' }}</td>
-            <td class="text-center p-2 border">-</td>
-            <td class="text-center p-2 border">-</td>
-            <!-- <td class="text-center p-2 border">{{ item.tgl_kembali ||'-'}}</td> -->
-            <!-- <td class="text-center">
-              <div 
-                class="btn-sts"
-                  :class="{'status-active': item.no_seri.kondisi === 'OK', 
-                          'status-error': item.no_seri.kondisi === 'Error',
-                          'status-rusak': item.no_seri.kondisi === 'Rusak',
-                          'status-hilang': item.no_seri.kondisi === 'Hilang',
-                          'status-dipinjam': item.no_seri.kondisi === 'Musnah',
-                }"
-              >
-                {{ item.no_seri.kondisi || '-' }}
-              </div>
-            </td> -->
+            <td class="text-center p-2 border">{{ item.permintaan.users.nama || '-' }}</td>
+            <td class="text-center p-2 border">{{ item.permintaan.users.divisi.divisi || '-' }}</td>
             <td>
               <div
                 class="status-pill parent-element"
@@ -226,20 +211,9 @@ export default {
     };
   },
   computed: {
-    // namaOptions() {
-    //   const names = this.permintaanData.map(item => item.no_seri && item.no_seri.tools.nama);
-    //   return [...new Set(names)];
-    // },
-    // kondisiOptions() {
-    //   const kondisi = this.permintaanData.map(item => item.tools.no_seri.kondisi);
-    //   return [...new Set(kondisi)];
-    // },
     filteredData() {
       let data = this.permintaanData.filter(item => {
         return (
-          // (!this.selectedNama || item.no_seri && item.no_seri.tools.nama === this.selectedNama) &&
-          // (!this.selectedKondisi || item.no_seri.kondisi === this.selectedKondisi) &&
-          // (item.no_seri.no_seri.toLowerCase().includes(this.search.toLowerCase()) ||
           (item.permintaan &&
           item.permintaan.no_seri?.[0]?.tools?.nama?.toLowerCase().includes(this.search.toLowerCase()) ||
           item.permintaan && item.permintaan.no_permintaan.toLowerCase().includes(this.search.toLowerCase()))
@@ -288,12 +262,9 @@ export default {
           'No Permintaan': item.permintaan && item.permintaan.no_permintaan,
           'Nama Alat/Mesin': this.getNamaAlat(item),
           'Total': item.permintaan && item.permintaan.total,
-          // 'No Seri': item.no_seri.no_seri,
           'Tanggal Permintaan': item.permintaan && item.permintaan.tgl_permintaan,
-          'Dipinjam Oleh': '-',
-          'Divisi': '-',
-          // 'Tanggal Kembali': item.tgl_kembali,
-          // 'Kondisi': item.no_seri.kondisi,
+          'Dipinjam Oleh': item.permintaan.users.nama,
+          'Divisi': item.permintaan.users.divisi.divisi,
           'Status': item.new_status,
         }))
       );

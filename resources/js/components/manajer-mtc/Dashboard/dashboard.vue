@@ -9,7 +9,7 @@
           <div class="card-body">
             <div class="row no-gutters align-items-center">
               <div class="col ml-2 mr-2">
-                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                <div class="text-xs font-weight-bold text-gray-900 text-uppercase mb-1">
                   Jumlah Stok Di Bawah Batas Minimum
                 </div>
                 <div class="h5 mb-0 font-weight-bold">
@@ -92,7 +92,7 @@
           <div class="card-body">
             <div class="row no-gutters align-items-center">
               <div class="col ml-2">
-                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                <div class="text-xs font-weight-bold text-gray-900 text-uppercase mb-1">
                   Peminjaman Alat/Mesin yang Menunggu Persetujuan
                 </div>
                 <div class="h5 mb-0 font-weight-bold">
@@ -189,7 +189,7 @@
           <div class="card-body">
             <div class="row no-gutters align-items-center">
               <div class="col ml-2">
-                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                <div class="text-xs font-weight-bold text-gray-900 text-uppercase mb-1">
                   Permintaan Alat/Mesin yang Menunggu Persetujuan
                 </div>
                 <div class="h5 mb-0 font-weight-bold">
@@ -284,7 +284,7 @@
           <div class="card-body">
             <div class="row no-gutters align-items-center">
               <div class="col ml-2">
-                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                <div class="text-xs font-weight-bold text-gray-900 text-uppercase mb-1">
                   Perbaikan Alat/Mesin yang Belum Diperbaiki
                 </div>
                 <div class="h5 mb-0 font-weight-bold">
@@ -374,7 +374,7 @@
           <div class="card-body">
             <div class="row no-gutters align-items-center">
               <div class="col ml-2">
-                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                <div class="text-xs font-weight-bold text-gray-900 text-uppercase mb-1">
                   Alat/Mesin yang Rusak
                 </div>
                 <div class="h5 mb-0 font-weight-bold">
@@ -457,7 +457,7 @@
           <div class="card-body">
             <div class="row no-gutters align-items-center">
               <div class="col ml-2">
-                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                <div class="text-xs font-weight-bold text-gray-900 text-uppercase mb-1">
                   Alat/Mesin yang Sedang Diproses Pemusnahan
                 </div>
                 <div class="h5 mb-0 font-weight-bold">
@@ -541,7 +541,7 @@
           <div class="card-body">
             <div class="row no-gutters align-items-center">
               <div class="col ml-2">
-                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                <div class="text-xs font-weight-bold text-gray-900 text-uppercase mb-1">
                   Alat/Mesin yang Hilang dan Belum Diganti
                 </div>
                 <div class="h5 mb-0 font-weight-bold">
@@ -625,7 +625,7 @@
           <div class="card-body">
             <div class="row no-gutters align-items-center">
               <div class="col ml-2">
-                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                <div class="text-xs font-weight-bold text-gray-900 text-uppercase mb-1">
                   Alat/Mesin yang Belum Dilakukan Perawatan Bulan ini
                 </div>
                 <div class="h5 mb-0 font-weight-bold">
@@ -690,7 +690,7 @@
                       <td>{{ perawatan.tgl_perawatan || '-' }}</td>
                       <td>{{ perawatan.waktu_perawatan || '-' }}</td>
                       <td class="text-center">
-                        <button @click="viewDetailPerawatan(perawatan.id)">
+                        <button class="btn-sm" @click="viewDetailPerawatan(perawatan.id)">
                             <i class="fas fa-eye text-info"></i> Detail
                           </button>
                       </td>
@@ -868,7 +868,6 @@
 		</div>    
   </div>
 </template>
-
 <script>
 import Chart from 'chart.js/auto';
 import axios from 'axios'
@@ -1350,7 +1349,7 @@ export default {
       this.errorMessage = '';
       
       try {
-        const response = await axios.get(`/api/v1/peminjaman/chart/monthly-completed?year=${this.selectedYear}`);
+        const response = await axios.get(`/api/v1/peminjaman/chart/monthly-all-status?year=${this.selectedYear}`);
         this.renderChart(response.data);
       } catch (error) {
         console.error('Error fetching monthly completed loans:', error);
@@ -1381,7 +1380,7 @@ export default {
       this.isloading = true;
       this.errorMessagePermintaan = '';
       try {
-        const response = await axios.get(`/api/v1/permintaan/chart/monthly-completed?year=${this.selectedYearPermintaan}`);
+        const response = await axios.get(`/api/v1/permintaan/chart/monthly-all-status?year=${this.selectedYearPermintaan}`);
         this.renderChartPermintaan(response.data);
       } catch (error) {
         console.error('Error fetching monthly completed loans:', error);
@@ -1396,7 +1395,6 @@ export default {
       }
     },
     renderChart(chartData) {
-      // Hancurkan chart sebelumnya jika ada
       if (this.chart) {
         this.chart.destroy();
       }
@@ -1406,17 +1404,43 @@ export default {
         type: 'bar',
         data: {
           labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Ags', 'Sep', 'Okt', 'Nov', 'Des'],
-          datasets: [{
-            label: `Peminjaman Selesai (${this.selectedYear})`,
-            data: chartData.data,
-            backgroundColor: 'rgba(22, 158, 168, 0.5)',
-            borderColor: 'rgba(22, 158, 168, 1)',
-            borderWidth: 1,
-            pointBackgroundColor: 'rgba(22, 158, 168, 1)',
-            pointBorderColor: '#fff',
-            pointHoverBackgroundColor: '#fff',
-            pointHoverBorderColor: 'rgba(22, 158, 168, 1)'
-          }]
+          datasets: [
+            {
+              label: 'Belum Diproses',
+              data: chartData.belum_diproses,
+              backgroundColor: 'rgba(108, 117, 125, 0.7)',
+              borderColor: 'rgba(108, 117, 125, 1)',
+              borderWidth: 1
+            },
+            {
+              label: 'Menunggu Diambil',
+              data: chartData.menunggu_diambil,
+              backgroundColor: 'rgba(255, 193, 7, 0.7)',
+              borderColor: 'rgba(255, 193, 7, 1)',
+              borderWidth: 1
+            },
+            {
+              label: 'Dipinjam',
+              data: chartData.dipinjam,
+              backgroundColor: 'rgba(0, 123, 255, 0.7)',
+              borderColor: 'rgba(0, 123, 255, 1)',
+              borderWidth: 1
+            },
+            {
+              label: 'Ditolak',
+              data: chartData.ditolak,
+              backgroundColor: 'rgba(220, 53, 69, 0.7)',
+              borderColor: 'rgba(220, 53, 69, 1)',
+              borderWidth: 1
+            },
+            {
+              label: 'Selesai',
+              data: chartData.selesai,
+              backgroundColor: 'rgba(40, 167, 69, 0.7)',
+              borderColor: 'rgba(40, 167, 69, 1)',
+              borderWidth: 1
+            }
+          ]
         },
         options: {
           maintainAspectRatio: false,
@@ -1431,7 +1455,11 @@ export default {
                   }
                 },
                 stepSize: 1
-              }
+              },
+              stacked: false // atau true jika ingin stacked chart
+            },
+            x: {
+              stacked: false // atau true jika ingin stacked chart
             }
           },
           plugins: {
@@ -1449,7 +1477,7 @@ export default {
               },
               callbacks: {
                 label: function(context) {
-                  return `Peminjaman: ${context.raw}`;
+                  return `${context.dataset.label}: ${context.raw}`;
                 },
                 title: function(context) {
                   return `${context[0].label} ${chartData.year}`;
@@ -1471,17 +1499,36 @@ export default {
         type: 'bar', // Anda bisa ganti dengan 'line' untuk chart garis
         data: {
           labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Ags', 'Sep', 'Okt', 'Nov', 'Des'],
-          datasets: [{
-            label: `Permintaan Selesai (${this.selectedYearPermintaan})`,
-            data: chartDataPermintaan.data,
-            backgroundColor: 'rgba(22, 158, 168, 0.5)',
-            borderColor: 'rgba(22, 158, 168, 1)',
-            borderWidth: 1,
-            pointBackgroundColor: 'rgba(22, 158, 168, 1)',
-            pointBorderColor: '#fff',
-            pointHoverBackgroundColor: '#fff',
-            pointHoverBorderColor: 'rgba(22, 158, 168, 1)'
-          }]
+          datasets: [
+          {
+              label: 'Belum Diproses',
+              data: chartDataPermintaan.belum_diproses,
+              backgroundColor: 'rgba(108, 117, 125, 0.7)',
+              borderColor: 'rgba(108, 117, 125, 1)',
+              borderWidth: 1
+            },
+            {
+              label: 'Menunggu Diambil',
+              data: chartDataPermintaan.menunggu_diambil,
+              backgroundColor: 'rgba(255, 193, 7, 0.7)',
+              borderColor: 'rgba(255, 193, 7, 1)',
+              borderWidth: 1
+            },
+            {
+              label: 'Digunakan',
+              data: chartDataPermintaan.digunakan,
+              backgroundColor: 'rgba(0, 123, 255, 0.7)',
+              borderColor: 'rgba(0, 123, 255, 1)',
+              borderWidth: 1
+            },
+            {
+              label: 'Ditolak',
+              data: chartDataPermintaan.ditolak,
+              backgroundColor: 'rgba(220, 53, 69, 0.7)',
+              borderColor: 'rgba(220, 53, 69, 1)',
+              borderWidth: 1
+            },
+          ]
         },
         options: {
           maintainAspectRatio: false,
@@ -1496,7 +1543,11 @@ export default {
                   }
                 },
                 stepSize: 1
-              }
+              },
+              stacked: false // atau true jika ingin stacked chart
+            },
+            x: {
+              stacked: false // atau true jika ingin stacked chart
             }
           },
           plugins: {
@@ -1691,6 +1742,22 @@ export default {
   font-size: 0.875rem;
   line-height: 1.5;
   border-radius: 0.2rem;
+} */
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 1050px;
+  text-align: center;
+}
+
+/* .modal-dialog {
+  position: relative;
+  width: auto;
+  margin: .5rem;
+  pointer-events: none;
 } */
 
 .modal-header .close {

@@ -18,7 +18,7 @@ class PermintaanLogController extends Controller
     public function index()
     {
         try {
-            $logs = PermintaanLog::with('permintaan.noSeri.tools')
+            $logs = PermintaanLog::with('permintaan.noSeri.tools', 'permintaan.users.divisi')
                 ->orderBy('changed_at', 'desc')
                 ->get();
 

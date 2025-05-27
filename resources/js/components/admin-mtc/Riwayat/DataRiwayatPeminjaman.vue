@@ -75,8 +75,8 @@
             <td class="text-center p-2 border">{{ item.peminjaman.total }}</td>
             <td class="text-center p-2 border">{{ item.peminjaman.tgl_pinjam || '-' }}</td>
             <td class="text-center p-2 border">{{ item.peminjaman.tgl_kembali || '-' }}</td>
-            <td class="text-center p-2 border">-</td>
-            <td class="text-center p-2 border">-</td>
+            <td class="text-center p-2 border">{{ item.peminjaman.users.nama || '-' }}</td>
+            <td class="text-center p-2 border">{{ item.peminjaman.users.divisi.divisi }}</td>
             <td>
               <div
                 class="status-pill parent-element"
@@ -243,8 +243,8 @@ export default {
           'Nama Alat/Mesin': this.getNamaAlat(item),
           'Total': item.peminjaman && item.peminjaman.total,
           'Tanggal Peminjaman': item.peminjaman && item.peminjaman.tgl_pinjam,
-          'Dipinjam Oleh': '-',
-          'Divisi': '-',
+          'Dipinjam Oleh': item.peminjaman && item.peminjaman.users.nama,
+          'Divisi': item.peminjaman && item.peminjaman.users && item.peminjaman.users.divisi.divisi,
           'Tanggal Kembali': item.peminjaman && item.peminjaman.tgl_kembali,
           'Status': item.new_status,
         }))
@@ -275,8 +275,8 @@ export default {
       this.selectedNoSeri = [];
     },
     getNamaAlat(item) {
-      const ns = item?.permintaan?.no_seri?.[0];
-      return ns?.tools?.nama || '-';
+      const ns = item?.peminjaman?.no_seri;
+      return ns?.map((n) => n.tools?.nama).join(', ') || '-';
     },
   },
   mounted() {

@@ -61,7 +61,7 @@
               }"></i>
             </th>
             <th @click="sortBy('tgl_kerusakan')" style="cursor: pointer; color: #000;">
-              Tgl Rusak
+              Tgl Hilang
               <i class="fas" :class="{
                 'fa-sort-up': sortKey === 'tgl_kerusakan' && sortDirection === 'asc',
                 'fa-sort-down': sortKey === 'tgl_kerusakan' && sortDirection === 'desc'

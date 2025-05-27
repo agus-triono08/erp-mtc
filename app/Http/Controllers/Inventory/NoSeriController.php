@@ -1066,6 +1066,7 @@ class NoSeriController extends Controller
                 'users_id' => auth()->id() ?? 1,
                 'no_kerusakan' => $no_kerusakan,
                 'tgl_kerusakan' => $request->tgl_pengecekan,
+                'detail_kerusakan' => $request->deskripsi_cek,
             ]);
         }
 

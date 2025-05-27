@@ -64,7 +64,7 @@
         </div>        
         <div class="row align-items-center justify-content-end m-3">
           <button class="btn btn-primary mr-2" @click="showModal = true">Tambah</button>
-          <button class="btn btn-primary mr-2" @click="downloadPJ(dataBaru.length - 1)">Download BA</button>            
+          <button class="btn btn-primary mr-2" @click="downloadPJ(dataBaru.length - 1)">Download PJ</button>            
           <!-- <button class="btn btn-primary mr-3" @click="openAktivitasModal">Tambah Aktivitas</button>           -->          
           <div class="search-wrapper">
             <div class="input-group">

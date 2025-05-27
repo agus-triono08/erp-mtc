@@ -21,10 +21,17 @@
         </li>
       </ul>
     <div class="row align-items-center justify-content-end m-3">
-      <!-- Tambah Data -->
-      <!-- <button class="btn btn-sm btn-outline-primary mr-2 ml-1" @click="openModal('add')">
-        <i class="fa fa-plus-circle"></i> Tambah Data
-      </button> -->
+      <div class="col-md-2">
+        <label>Filter Tanggal Mulai Download</label>
+        <input type="date" class="form-control" v-model="startDate">
+      </div>
+      <div class="col-md-2">
+        <label>Filter Tanggal Selesai Download</label>
+        <input type="date" class="form-control" v-model="endDate">
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-primary mr-2" @click="downloadKartuKehilangan()">Download Kartu Riwayat</button>            
+      </div>
       <div class="search-wrapper">
         <div class="input-group">
           <input type="text" placeholder="Search..." class="form-control"
@@ -60,27 +67,13 @@
                 'fa-sort-down': sortKey === 'no_seri' && sortDirection === 'desc'
               }"></i>
             </th>
-            <th @click="sortBy('tgl_kerusakan')" style="cursor: pointer; color: #000;">
-              Tgl Rusak
+            <th @click="sortBy('tgl_kehilangan')" style="cursor: pointer; color: #000;">
+              Tgl Hilang
               <i class="fas" :class="{
-                'fa-sort-up': sortKey === 'tgl_kerusakan' && sortDirection === 'asc',
-                'fa-sort-down': sortKey === 'tgl_kerusakan' && sortDirection === 'desc'
+                'fa-sort-up': sortKey === 'tgl_kehilangan' && sortDirection === 'asc',
+                'fa-sort-down': sortKey === 'tgl_kehilangan' && sortDirection === 'desc'
               }"></i>
             </th>
-            <!-- <th @click="sortBy('tgl_selesai')" style="cursor: pointer; color: #000;">
-              Target
-              <i class="fas" :class="{
-                'fa-sort-up': sortKey === 'tgl_selesai' && sortDirection === 'asc',
-                'fa-sort-down': sortKey === 'tgl_selesai' && sortDirection === 'desc'
-              }"></i>
-            </th> -->
-            <!-- <th @click="sortBy('pic')" style="cursor: pointer; color: #000;">
-              PIC
-              <i class="fas" :class="{
-                'fa-sort-up': sortKey === 'pic' && sortDirection === 'asc',
-                'fa-sort-down': sortKey === 'pic' && sortDirection === 'desc'
-              }"></i>
-            </th> -->
             <th @click="sortBy('status')" style="cursor: pointer; color: #000;">
               Status
               <i class="fas" :class="{
@@ -103,15 +96,6 @@
             <td>{{ item.no_seri.tools.nama || '-' }}</td>
             <td>{{ item.no_seri.no_seri || '-' }}</td>
             <td>{{ item.tgl_kehilangan || '-' }}</td>
-            <!-- <td>{{ item.tgl_selesai || '-' }} <br>
-              <small>
-                <i :class="{'fas fa-clock': !durasidata[index].includes('hari lewat') && !durasidata[index].includes('hari lagi'), 'fas fa-exclamation-circle text-danger': durasidata[index].includes('hari lewat') || durasidata[index].includes('hari lagi')}"></i>
-                <span :class="{'text-danger': durasidata[index].includes('hari lewat') || durasidata[index].includes('hari lagi')}">
-                  {{ durasidata[index] }}
-                </span>
-              </small>
-            </td> -->
-            <!-- <td>{{ item.PIC || '-' }}</td> -->
             <td>
               <div
                 class="btn-sts"
@@ -142,9 +126,6 @@
                   <router-link :to="{ name: 'data-detail-selesai-hilang', params: { id: item.id } }" class="dropdown-item">
                     <i class="fas fa-eye text-info"></i> Detail
                   </router-link>
-                  <!-- <a class="dropdown-item" @click="deleteData(index, item)">
-                    <i class="fas fa-trash text-danger"></i> Hapus
-                  </a> -->
                 </div>
               </div>
             </td>
@@ -177,6 +158,8 @@
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import vSelect from 'vue-select';
+import jsPDF from "jspdf";
+import 'jspdf-autotable';
 
 export default {
   components: {
@@ -185,6 +168,8 @@ export default {
   data() {
     return {
       searchQuery: '',
+      startDate: '',
+      endDate: '',
       dataKehilangan: [],
       form: {
         jenis: '',
@@ -324,6 +309,101 @@ export default {
     debouncedFetchNoSeri: _.debounce(function () {
         this.fetchData();
       }, 300),
+    downloadKartuKehilangan() {
+      // Filter data by date range if dates are provided
+      let filteredData = this.dataKehilangan;
+      
+      if (this.startDate && this.endDate) {
+        const start = new Date(this.startDate);
+        const end = new Date(this.endDate);
+        
+        filteredData = this.dataKehilangan.filter(item => {
+          if (!item.tgl_kehilangan) return false;
+          const itemDate = new Date(item.tgl_kehilangan);
+          return itemDate >= start && itemDate <= end;
+        });
+      }
+
+      if (filteredData.length === 0) {
+        Swal.fire('Error', 'Tidak ada data kerusakan dalam rentang tanggal yang dipilih', 'error');
+        return;
+      }
+
+      const dateRangeText = this.startDate && this.endDate 
+        ? `${this.startDate} sampai ${this.endDate}` 
+        : 'Semua Data';
+      
+      const filename = `Kartu_Riwayat_Perbaikan_${dateRangeText}.pdf`;
+      const pdf = new jsPDF();
+
+      // Judul dengan informasi rentang tanggal
+      pdf.setFont('helvetica', 'bold');
+      pdf.setFontSize(16);
+      const title = 'Kartu Riwayat Perbaikan';
+      const titleWidth = pdf.getStringUnitWidth(title) * pdf.getFontSize() / pdf.internal.scaleFactor;
+      pdf.text(title, (pdf.internal.pageSize.width - titleWidth) / 2, 10);
+      
+      // Tambahkan informasi rentang tanggal
+      pdf.setFontSize(10);
+      pdf.text(`Periode: ${dateRangeText}`, 14, 25);
+
+      // Header Tabel
+      const headers = [
+        "#", 
+        "No. Kehilangan", 
+        "Nama Alat/Mesin", 
+        "No Seri", 
+        "Tanggal Kehilangan", 
+        "Detail Kehilangan"
+      ];
+
+      // Format data untuk semua row
+      const rows = filteredData.map((item, index) => {
+        const tglKehilangan = item.tgl_kehilangan 
+          ? new Date(item.tgl_kehilangan).toLocaleDateString('id-ID') 
+          : '-';
+
+        return [
+          index + 1,
+          item.no_kehilangan || '-',
+          item.no_seri?.tools?.nama || '-',
+          item.no_seri?.no_seri || '-',
+          tglKehilangan,
+          item.detail_kehilangan || '-'
+        ];
+      });
+
+      // Buat tabel dengan autoTable
+      pdf.autoTable({
+        head: [headers],
+        body: rows,
+        startY: 30,
+        styles: {
+          fontSize: 8,
+          cellPadding: 3
+        },
+        margin: { horizontal: 5 }
+      });
+
+      // Tanda tangan (di halaman terakhir)
+      const lastPageNumber = pdf.getNumberOfPages();
+      pdf.setPage(lastPageNumber);
+      
+      const finalY = pdf.lastAutoTable.finalY + 10;
+      pdf.setFont('helvetica', 'normal');
+      pdf.setFontSize(10);
+      
+      pdf.text("Dibuat oleh,", 14, finalY);
+      pdf.text("Diperiksa oleh,", 90, finalY);
+      pdf.text("Disetujui oleh,", 150, finalY);
+
+      const gapY = finalY + 30;
+      pdf.line(14, gapY, 74, gapY);
+      pdf.line(90, gapY, 140, gapY);
+      pdf.line(150, gapY, 200, gapY);
+
+      pdf.save(filename);
+    }
   }
 }
 </script>

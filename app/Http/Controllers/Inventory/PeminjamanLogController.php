@@ -18,7 +18,7 @@ class PeminjamanLogController extends Controller
     public function index()
     {
         try {
-            $logs = PeminjamanLog::with('peminjaman.noSeri.tools', 'peminjaman.users')
+            $logs = PeminjamanLog::with('peminjaman.noSeri.tools', 'peminjaman.users.divisi')
                 ->orderBy('changed_at', 'desc')
                 ->get();
 

@@ -57,22 +57,6 @@
             </th>
           </tr>
         </thead>
-        <!-- <tbody v-if="paginatedData.length === 0">
-          <tr>
-            <td class="text-center" colspan="8">Tidak Ada Data</td>
-          </tr>
-        </tbody> -->
-        <!-- <tbody>
-          <tr v-for="item in kehilanganData" :key="item.id">
-            <td>{{ item.no_kehilangan }}</td>
-            <td>{{ item.no_seri.tools.nama }}</td>
-            <td>{{ item.hilang_activity_proses[0].no_seri_old }}</td>
-            <td>{{ item.hilang_activity_proses[0].no_seri_new }}</td>
-            <td>{{ item.tgl_kehilangan }}</td>
-            <td>{{ item.users.nama }}</td>
-            <td>{{ item.users.divisi.divisi }}</td>
-          </tr>
-        </tbody> -->
         <tbody v-if="paginatedData.length === 0">
           <tr>
             <td class="text-center" colspan="8">Tidak Ada Data</td>

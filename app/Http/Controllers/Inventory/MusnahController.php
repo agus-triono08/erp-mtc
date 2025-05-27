@@ -23,7 +23,8 @@ class MusnahController extends Controller
     {        
         $all = Musnah::with([
             'noSeri.tools',
-            'noSeri.layout'
+            'noSeri.layout',
+            'musnah_activity'
         ])
         ->orderBy('updated_at', 'desc')
         ->get();
@@ -31,6 +32,7 @@ class MusnahController extends Controller
         $byStatusProses = Musnah::with([
             'noSeri.tools',
             'noSeri.layout',
+            'musnah_activity'
         ])
         ->where('status', 'Proses')
         ->orderBy('updated_at', 'desc')
@@ -39,6 +41,7 @@ class MusnahController extends Controller
         $byStatusSelesai = Musnah::with([
             'noSeri.tools',
             'noSeri.layout',
+            'musnah_activity'
         ])
         ->where('status', 'Selesai')
         ->orderBy('updated_at', 'desc')

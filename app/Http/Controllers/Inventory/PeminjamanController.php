@@ -398,6 +398,52 @@ class PeminjamanController extends Controller
         ]);
     }
 
+    public function monthlyAllStatus(Request $request)
+    {
+        $year = $request->input('year', date('Y'));
+        
+        // Inisialisasi data untuk semua bulan
+        $result = [
+            'belum_diproses' => array_fill(0, 12, 0),
+            'menunggu_diambil' => array_fill(0, 12, 0),
+            'dipinjam' => array_fill(0, 12, 0),
+            'ditolak' => array_fill(0, 12, 0),
+            'selesai' => array_fill(0, 12, 0),
+        ];
+        
+        // Query untuk semua status
+        $data = Peminjaman::select(
+                DB::raw('MONTH(tgl_pinjam) as month'),
+                'status',
+                DB::raw('COUNT(*) as total')
+            )
+            ->whereYear('tgl_pinjam', $year)
+            ->groupBy('month', 'status')
+            ->orderBy('month', 'asc')
+            ->get();
+        
+        // Isi data aktual ke array
+        foreach ($data as $item) {
+            $monthIndex = $item->month - 1;
+            $statusKey = strtolower(str_replace(' ', '_', $item->status));
+            
+            if (array_key_exists($statusKey, $result)) {
+                $result[$statusKey][$monthIndex] = $item->total;
+            }
+        }
+        
+        return response()->json([
+            'labels' => ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Ags', 'Sep', 'Okt', 'Nov', 'Des'],
+            'belum_diproses' => $result['belum_diproses'],
+            'menunggu_diambil' => $result['menunggu_diambil'],
+            'dipinjam' => $result['dipinjam'],
+            'ditolak' => $result['ditolak'],
+            'selesai' => $result['selesai'],
+            'year' => $year,
+            'message' => 'Data peminjaman tahun ' . $year . ' berhasil diambil'
+        ]);
+    }
+
     public function availableYears()
     {
         $years = Peminjaman::select(DB::raw('YEAR(tgl_pinjam) as year'))

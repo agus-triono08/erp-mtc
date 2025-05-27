@@ -87,13 +87,13 @@
                 <th>Aksi</th>
               </tr>
             </thead>
-            <tbody v-if="dataProses.hilang_activity_proses && dataProses.hilang_activity_proses.length === 0">
+            <tbody v-if="!hasData">
               <tr>
-                <td colspan="7" class="text-center">Tidak Ada Data</td>
+                <td colspan="5" class="text-center">Tidak ada data aktivitas</td>
               </tr>
             </tbody>
             <tbody>
-              <tr v-for="(item, index) in dataProses.hilang_activity_proses" :key="item.id" class="text-center">
+              <tr v-for="(item, index) in paginatedData" :key="item.id" class="text-center">
                 <td>{{ index + 1 }}</td>
                 <td>{{ item.tgl_penggantian || '-'}}</td>
                 <td>{{ item.no_seri_old || '-'}}</td>
@@ -220,6 +220,7 @@
 <script>
 import vSelect from 'vue-select';
 import Swal from 'sweetalert2';
+import { hasData } from 'jquery';
 
 export default {
   components: {
@@ -316,27 +317,43 @@ export default {
         }
       })
     },
+    hasData() {
+      return this.dataProses.hilang_activity_proses && this.dataProses.hilang_activity_proses.length > 0;
+    },
     filteredData() {
-      let result = this.dataProses.filter(item => {
+      if (!this.hasData) return [];
+
+      return this.dataProses.hilang_activity_proses.filter(item => {
         return (
-          item.detail_kerusakan.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-          item.kondisi.toLowerCase().includes(this.searchQuery.toLowerCase()) 
+          (item.changed_at && item.changed_at.toLowerCase().includes(this.searchQuery.toLowerCase())) ||
+          (item.kondisi && item.kondisi.toLowerCase().includes(this.searchQuery.toLowerCase())) ||
+          (item.detail_kerusakan && item.detail_kerusakan.toLowerCase().includes(this.searchQuery.toLowerCase()))
         );
       });
-      return result;
     },
+    // filteredData() {
+    //   let result = this.dataProses.filter(item => {
+    //     return (
+    //       item.detail_kerusakan.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+    //       item.kondisi.toLowerCase().includes(this.searchQuery.toLowerCase()) 
+    //     );
+    //   });
+    //   return result;
+    // },
     paginatedData() {
       const start = (this.currentPage - 1) * this.rowsPerPage;
       const end = start + this.rowsPerPage;
       return this.filteredData.slice(start, end);
     },
     totalPages() {
-      return Math.ceil(this.dataProses.length / this.rowsPerPage);
+      return Math.ceil(this.filteredData.length / this.rowsPerPage);
     },
     paginationInfo() {
+      if (!this.hasData) return 'No data available';
+
       const start = (this.currentPage - 1) * this.rowsPerPage + 1;
-      const end = Math.min(start + this.rowsPerPage - 1, this.dataProses.length);
-      return `Showing ${start} to ${end} of ${this.dataProses.length} entries`;
+      const end = Math.min(start + this.rowsPerPage - 1, this.filteredData.length);
+      return `Showing ${start} to ${end} of ${this.filteredData.length} entries`;
     }
   },
   methods: {    

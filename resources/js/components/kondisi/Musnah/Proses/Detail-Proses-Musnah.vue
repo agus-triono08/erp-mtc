@@ -499,10 +499,11 @@ export default {
       pdf.text("Disetujui Oleh,", 150, signatureSectionY);
 
       const gapY = signatureSectionY + 30;
-      const namaStaff = this.dataProses.users.nama || '-';
-      pdf.text(namaStaff.toString(), 17, gapY);
-      pdf.text("Manajer", 95, gapY);
-      pdf.text("Direktur", 155, gapY);
+      // const namaStaff = this.dataProses.users.nama || '-';
+      // Garis tanda tangan (panjang 60)
+      pdf.line(14, gapY + 10, 74, gapY + 10);  // Dibuat Oleh
+      pdf.line(90, gapY + 10, 150, gapY + 10); // Diperiksa Oleh
+      pdf.line(150, gapY + 10, 210, gapY + 10); // Disetujui Oleh
 
       // Unduh PDF
       const pdfData = pdf.output('blob');

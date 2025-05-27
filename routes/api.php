@@ -264,6 +264,7 @@ Route::prefix('/v1/permintaan')->group(function () {
     });
 Route::get('/v1/permintaan/chart/monthly-completed', [PermintaanController::class, 'monthlyCompletedLoansAlternative']);
 Route::get('/v1/permintaan/chart/available-years', [PermintaanController::class, 'availableYears']);
+Route::get('/v1/permintaan/chart/monthly-all-status', [PermintaanController::class, 'monthlyAllStatus']);
 // Peminjaman
 Route::apiResource('v1/peminjaman', PeminjamanController::class);
 Route::get('/v1/peminjaman/getPeminjaman/{kodeAlat}', [PeminjamanController::class, 'getPeminjaman']);
@@ -276,6 +277,7 @@ Route::prefix('/v1/peminjaman')->group(function () {
     });
 Route::get('/v1/peminjaman/chart/monthly-completed', [PeminjamanController::class, 'monthlyCompletedLoans']);
 Route::get('/v1/peminjaman/chart/available-years', [PeminjamanController::class, 'availableYears']);
+Route::get('v1/peminjaman/chart/monthly-all-status', [PeminjamanController::class, 'monthlyAllStatus']);
 // Perubahan Peminjaman
 Route::apiResource('v1/perubahan-perminjaman', PerubahanPeminjamanController::class);
 Route::post('/v1/perubahan-peminjaman/store/{noPinjam}', [PerubahanPeminjamanController::class, 'store']);

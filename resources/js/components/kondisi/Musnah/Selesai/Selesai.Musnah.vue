@@ -1,13 +1,5 @@
 <template>
   <div class="container-fluid">
-    <!-- Loader -->
-    <!-- <div class="loader" v-if="isLoading">
-      <div class="loading-overlay">
-        <div class="loading-spinner">
-            <span class="sr-only">Loading...</span>          
-        </div>
-      </div>
-    </div> -->
     <h1 class="h3 mb-4 mt-4 text-gray-900"><b>Pemusnahan Alat/Mesin</b></h1>
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
@@ -21,10 +13,17 @@
         </li>
       </ul>
     <div class="row align-items-center justify-content-end m-3">
-      <!-- Tambah Data -->
-      <!-- <button class="btn btn-sm btn-outline-primary mr-2 ml-1" @click="openModal('add')">
-        <i class="fa fa-plus-circle"></i> Tambah Data
-      </button> -->
+      <div class="col-md-2">
+        <label>Filter Tanggal Mulai Download</label>
+        <input type="date" class="form-control" v-model="startDate">
+      </div>
+      <div class="col-md-2">
+        <label>Filter Tanggal Selesai Download</label>
+        <input type="date" class="form-control" v-model="endDate">
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-primary mr-2" @click="downloadKartuPemusnahan()">Download Kartu Riwayat</button>            
+      </div>
       <div class="search-wrapper">
         <div class="input-group">
           <input type="text" placeholder="Search..." class="form-control"
@@ -177,6 +176,8 @@
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import vSelect from 'vue-select';
+import jsPDF from "jspdf";
+import 'jspdf-autotable';
 
 export default {
   components: {
@@ -185,6 +186,8 @@ export default {
   data() {
     return {
       searchQuery: '',
+      startDate: '',
+      endDate: '',
       dataPemusnahan: [],
       form: {
         jenis: '',
@@ -324,6 +327,107 @@ export default {
     debouncedFetchNoSeri: _.debounce(function () {
         this.fetchData();
       }, 300),
+
+    downloadKartuPemusnahan() {
+      // Filter data by date range if dates are provided
+      let filteredData = this.dataPemusnahan;
+      
+      if (this.startDate && this.endDate) {
+        const start = new Date(this.startDate);
+        const end = new Date(this.endDate);
+        
+        filteredData = this.dataPemusnahan.filter(item => {
+          if (!item.tgl_pemusnahan) return false;
+          const itemDate = new Date(item.tgl_pemusnahan);
+          return itemDate >= start && itemDate <= end;
+        });
+      }
+
+      if (filteredData.length === 0) {
+        Swal.fire('Error', 'Tidak ada data kerusakan dalam rentang tanggal yang dipilih', 'error');
+        return;
+      }
+
+      const dateRangeText = this.startDate && this.endDate 
+        ? `${this.startDate} sampai ${this.endDate}` 
+        : 'Semua Data';
+      
+      const filename = `Kartu_Riwayat_Pemusnahan_${dateRangeText}.pdf`;
+      const pdf = new jsPDF();
+
+      // Judul dengan informasi rentang tanggal
+      pdf.setFont('helvetica', 'bold');
+      pdf.setFontSize(16);
+      const title = 'Kartu Riwayat Pemusnahan';
+      const titleWidth = pdf.getStringUnitWidth(title) * pdf.getFontSize() / pdf.internal.scaleFactor;
+      pdf.text(title, (pdf.internal.pageSize.width - titleWidth) / 2, 10);
+      
+      // Tambahkan informasi rentang tanggal
+      pdf.setFontSize(10);
+      pdf.text(`Periode: ${dateRangeText}`, 14, 25);
+
+      // Header Tabel
+      const headers = [
+        "#", 
+        "No. Pemusnahan", 
+        "Nama Alat/Mesin", 
+        "No Seri", 
+        "Tanggal Pemusnahan", 
+        "Detail Pemusnahan"
+      ];
+
+      // Format data untuk semua row
+      const rows = filteredData.map((item, index) => {
+        const tglPermusnahan = item.tgl_pemusnahan 
+          ? new Date(item.tgl_pemusnahan).toLocaleDateString('id-ID') 
+          : '-';
+
+        // Perbaikan di sini - akses elemen pertama dari musnah_activity
+        const detailMusnah = item.musnah_activity && item.musnah_activity.length > 0 
+          ? item.musnah_activity[0].detail_pemusnahan 
+          : '-';
+
+        return [
+          index + 1,
+          item.no_pemusnahan || '-',
+          item.no_seri?.tools?.nama || '-',
+          item.no_seri?.no_seri || '-',
+          tglPermusnahan,
+          detailMusnah,
+        ];
+      });
+
+      // Buat tabel dengan autoTable
+      pdf.autoTable({
+        head: [headers],
+        body: rows,
+        startY: 30,
+        styles: {
+          fontSize: 8,
+          cellPadding: 3
+        },
+        margin: { horizontal: 5 }
+      });
+
+      // Tanda tangan (di halaman terakhir)
+      const lastPageNumber = pdf.getNumberOfPages();
+      pdf.setPage(lastPageNumber);
+      
+      const finalY = pdf.lastAutoTable.finalY + 10;
+      pdf.setFont('helvetica', 'normal');
+      pdf.setFontSize(10);
+      
+      pdf.text("Dibuat oleh,", 14, finalY);
+      pdf.text("Diperiksa oleh,", 90, finalY);
+      pdf.text("Disetujui oleh,", 150, finalY);
+
+      const gapY = finalY + 30;
+      pdf.line(14, gapY, 74, gapY);
+      pdf.line(90, gapY, 140, gapY);
+      pdf.line(150, gapY, 200, gapY);
+
+      pdf.save(filename);
+    }
   }
 }
 </script>

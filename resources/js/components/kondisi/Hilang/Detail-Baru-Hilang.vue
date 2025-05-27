@@ -84,13 +84,13 @@
                 <th>Aksi</th>
               </tr>
             </thead>
-            <tbody v-if="dataBaru.hilang_activity_baru && dataBaru.hilang_activity_baru.length === 0">
+            <tbody v-if="!hasData">
               <tr>
-                <td colspan="4" class="text-center">Tidak Ada Data</td>
+                <td colspan="5" class="text-center">Tidak ada data aktivitas</td>
               </tr>
             </tbody>
             <tbody>
-              <tr v-for="(item, index) in dataBaru.hilang_activity_baru" :key="item.id" class="text-center">
+              <tr v-for="(item, index) in paginatedData" :key="item.id" class="text-center">
                 <td>{{ index + 1 }}</td>
                 <td>{{ item.changed_at || '-'}}</td>
                 <td>
@@ -244,12 +244,6 @@ export default {
       aktivitas: {
         id: null,
         alasan_penolakan: '',
-        // waktu_mulai: '',
-        // waktu_selesai: '',
-        // detail_kerusakan: '',
-        // // kondisi: 'Rusak',
-        // // layout: '',
-        // pic: [],
       },
       aktivitasList: [],
       dataBaru: [],
@@ -307,28 +301,44 @@ export default {
         }
       })
     },
+    hasData() {
+      return this.dataBaru.hilang_activity_baru && this.dataBaru.hilang_activity_baru.length > 0;
+    },
+    
     filteredData() {
-      let result = this.dataBaru.filter(item => {
+      if (!this.hasData) return [];
+      
+      return this.dataBaru.hilang_activity_baru.filter(item => {
         return (
-          item.detail_kerusakan.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-          item.kondisi.toLowerCase().includes(this.searchQuery.toLowerCase()) 
+          (item.changed_at && item.changed_at.toLowerCase().includes(this.searchQuery.toLowerCase())) ||
+          (item.alasan_penolakan && item.alasan_penolakan.toLowerCase().includes(this.searchQuery.toLowerCase()))
         );
       });
-      return result;
     },
+    // filteredData() {
+    //   let result = this.dataBaru.filter(item => {
+    //     return (
+    //       item.detail_kerusakan.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+    //       item.kondisi.toLowerCase().includes(this.searchQuery.toLowerCase()) 
+    //     );
+    //   });
+    //   return result;
+    // },
     paginatedData() {
       const start = (this.currentPage - 1) * this.rowsPerPage;
       const end = start + this.rowsPerPage;
       return this.filteredData.slice(start, end);
     },
     totalPages() {
-      return Math.ceil(this.dataBaru.length / this.rowsPerPage);
+      return Math.ceil(this.filteredData.length / this.rowsPerPage);
     },
     paginationInfo() {
+      if (!this.hasData) return 'No data available';
+      
       const start = (this.currentPage - 1) * this.rowsPerPage + 1;
-      const end = Math.min(start + this.rowsPerPage - 1, this.dataBaru.length);
-      return `Showing ${start} to ${end} of ${this.dataBaru.length} entries`;
-    }
+      const end = Math.min(start + this.rowsPerPage - 1, this.filteredData.length);
+      return `Showing ${start} to ${end} of ${this.filteredData.length} entries`;
+    },
   },
   methods: {    
     prevPage() {

@@ -1,8 +1,8 @@
 <template>
   <div class="row align-items-center justify-content-end mr-3 mt-3 mb-2">
     <!-- Modal Input Data -->
-    <div id="app" class="modal-input" :class="{'is-visible': showModalInput}">
-      <div class="modal-content-input">
+    <div id="app" class="modal" :class="{'is-visible': showModalInput}">
+      <div class="modal-content">
         <user-input-permintaan @tutup-modal="tutupModal" @refresh-data="fetchPermintaan"></user-input-permintaan>
       </div>
     </div>
