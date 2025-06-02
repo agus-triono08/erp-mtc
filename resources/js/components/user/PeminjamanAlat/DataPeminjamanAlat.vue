@@ -8,27 +8,7 @@
       </div>
     </div>
 
-
     <h1 class="h3 mb-4 text-gray-800"><b>Peminjaman dan Permintaan</b></h1>
-
-    <!-- <div class="col-md-12">
-      <button 
-        class="btn btn-show m-1"
-        :class="{active: showAlat}"
-        @click="toggleAlat"
-      >
-        <span v-if="showAlat">Alat</span>
-        <span v-else>Alat</span>
-      </button>
-      <button 
-        class="btn btn-show m-1"
-        :class="{active: showMesin}"
-        @click="toggleMesin"
-      >
-        <span v-if="showMesin">Mesin</span>
-        <span v-else>Mesin</span>
-      </button>
-    </div> -->
 
     <!-- Data Peminjaman Alat -->
     <div v-if="showAlat">
@@ -76,18 +56,6 @@
               </label>
             </div>
           </div>
-          <!-- Search -->
-          <!-- <div class="search-wrapper">
-            <div class="input-group">
-              <input 
-                type="text" 
-                placeholder="search..." 
-                class="form-control"
-                v-model="searchQuery"
-                @input="debouncedFetchAlats"
-              />
-            </div>
-          </div> -->
           <input v-model="search" type="text" placeholder="Search..." class="btn btn-sm border p-2 rounded w-1/3" />
         </div>
       </div>
@@ -99,14 +67,6 @@
               No Peminjaman
               <span v-if="sortKey === 'no_peminjaman'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
             </th>
-            <!-- <th class="text-center p-2 border cursor-pointer" @click="sortBy('no_seri.tools.nama')" style="color: #000;">
-              Nama Alat/Mesin
-              <span v-if="sortKey === 'no_seri.tools.nama'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
-            </th>
-            <th class="text-center p-2 border cursor-pointer" @click="sortBy('no_seri')" style="color: #000;">
-              No Seri
-              <span v-if="sortKey === 'no_seri'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
-            </th> -->
             <th class="text-center p-2 border cursor-pointer" @click="sortBy('tanggal_pinjam')" style="color: #000;">
               Tgl Pinjam
               <span v-if="sortKey === 'tanggal_pinjam'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
@@ -122,11 +82,7 @@
             <th class="text-center p-2 border cursor-pointer" @click="sortBy('tanggal_kembali')" style="color: #000;">
               Tgl Kembali
               <span v-if="sortKey === 'tanggal_kembali'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
-            </th>            
-            <!-- <th class="text-center p-2 border cursor-pointer" @click="sortBy('kondisi')" style="color: #000;">
-              Kondisi
-              <span v-if="sortKey === 'kondisi'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
-            </th> -->
+            </th>
             <th class="text-center p-2 border cursor-pointer" @click="sortBy('total')" style="color: #000;">
               Total
               <span v-if="sortKey === 'total'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
@@ -146,25 +102,10 @@
         <tbody v-for="item in paginatedData" :key="item.id">
           <tr class="text-center">
             <td class="text-center p-2 border">{{ item.no_peminjaman || '-' }}</td>
-            <!-- <td class="text-center p-2 border">{{ item.no_seri.tools.nama || '-' }}</td>
-            <td class="text-center p-2 border">{{ item.no_seri.no_seri || '-' }}</td> -->
             <td class="text-center p-2 border">{{ item.tgl_pinjam || '-' }}</td>
-            <td class="text-center p-2 border">{{ item.users && item.users.nama || '-' }}</td>
-            <td class="text-center p-2 border">{{ item.users && item.users.divisi && item.users.divisi.divisi || '-' }}</td>
-            <td class="text-center p-2 border">{{ item.tgl_kembali ||'-'}}</td>
-            <!-- <td class="text-center">
-              <div 
-                class="btn-sts"
-                  :class="{'status-active': item.no_seri.kondisi === 'OK', 
-                          'status-error': item.no_seri.kondisi === 'Error',
-                          'status-rusak': item.no_seri.kondisi === 'Rusak',
-                          'status-hilang': item.no_seri.kondisi === 'Hilang',
-                          'status-dipinjam': item.no_seri.kondisi === 'Musnah',
-                }"
-              >
-                {{ item.no_seri.kondisi || '-' }}
-              </div>
-            </td> -->
+            <td class="text-center p-2 border">{{ item.users && item.users.karyawan && item.users.karyawan.nama || '-' }}</td>
+            <td class="text-center p-2 border">{{ item.users && item.users.divisi && item.users.divisi.nama || '-' }}</td>
+            <td class="text-center p-2 border">{{ item.tgl_kembali ||'-'}}</td>            
             <td class="text-center p-2 border">{{ item.total }}</td>
             <td>
               <div
@@ -251,20 +192,11 @@ export default {
   },
   data() {
     return {
-      // user: {
-      //   nama_pengguna: '',
-      //   divisi: '',
-      // },
-      // peminjamanData: [],
-      // dataPeminjaman: [], // Menyimpan data error
       showModalInput: false, // Tambahkan variabel untuk mengontrol tampilan modal input
       showPeminjaman: true,
       showPermintaan: false,
       showAlat: true,
       showMesin: false,
-      // searchQuery: '',
-      // rowsPerPage: 10,
-      // currentPage: 1,
       peminjamanData: [],
       search: '',
       selectedNama: '',
@@ -326,9 +258,7 @@ export default {
     filteredData() {
       let data = this.peminjamanData.filter(item => {
         return (
-          // (!this.selectedNama || item.no_seri && item.no_seri.tools.nama === this.selectedNama) &&
           (this.selectedStatus === '' || item.status === this.selectedStatus) &&
-          // (item.no_seri.no_seri.toLowerCase().includes(this.search.toLowerCase()) ||
           (item.tools.nama.toLowerCase().includes(this.search.toLowerCase()) ||
           item.no_peminjaman.toLowerCase().includes(this.search.toLowerCase()))
         );
@@ -362,44 +292,6 @@ export default {
     updateSelectedStatus(status) {
       this.selectedStatus = status;
     },
-    // async fetchAlatPeminjaman() {
-    //   try {
-    //     const response = await axios.get(`/api/v1/peminjaman`, {
-    //       params: {
-    //         search: this.searchQuery
-    //       }
-    //     });
-    //     console.log(response.data); // Log data respons
-    //     if (Array.isArray(response.data)) {
-    //       this.dataPeminjaman = response.data.map((peminjaman) => ({
-    //         id: peminjaman.id,
-    //         id_alat: peminjaman.id_alat,
-    //         id_user: peminjaman.id_user,
-    //         kode_alat: peminjaman.kode_alat,
-    //         no_pinjam: peminjaman.no_pinjam,
-    //         stok_dipinjam: peminjaman.stok_dipinjam,
-    //         tanggal_pinjam: peminjaman.tanggal_pinjam,
-    //         tanggal_kembali: peminjaman.tanggal_kembali,
-    //         keterangan: peminjaman.keterangan,
-    //         status: peminjaman.status,
-    //         alat: peminjaman.alat,
-    //         pengguna: peminjaman.pengguna,
-    //       }));
-    //     } else {
-    //       console.error("Data respons tidak valid. Harapkan array.");
-    //       alert("Gagal memuat data. Silakan coba lagi nanti.");
-    //     }
-    //   } catch (error) {
-    //     console.error("Error fetching alat error detail:", error);
-    //     alert("Gagal memuat data. Silakan coba lagi nanti.");
-    //   }
-    // },
-  // debouncedFetchAlats: _.debounce(function () {
-  //   this.fetchAlatPeminjaman();
-  // }, 300),
-    // tambahPeminjamanAlat() {
-    //   this.showModalInput = true;
-    // },
     tutupModal() {
       this.showModalInput = false;
     },
@@ -416,33 +308,6 @@ export default {
         this.currentPage = page;
       }
     },
-    // sortJumlah(order) {
-    //   this.dataPeminjaman.sort((a, b) => {
-    //     if (order === "asc") {
-    //       return a.stok_dipinjam - b.stok_dipinjam;
-    //     } else {
-    //       return b.stok_dipinjam - a.stok_dipinjam;
-    //     }
-    //   });
-    // },
-    // sortTanggalPinjam(order) {
-    //   this.dataPeminjaman.sort((a, b) => {
-    //     if (order === "asc") {
-    //       return new Date(a.tanggal_pinjam) - new Date(b.tanggal_pinjam);
-    //     } else {
-    //       return new Date(b.tanggal_pinjam) - new Date(a.tanggal_pinjam);
-    //     }
-    //   });
-    // },
-    // sortTanggalkembali(order) {
-    //   this.dataPeminjaman.sort((a, b) => {
-    //     if (order === "asc") {
-    //       return new Date(a.tanggal_kembali) - new Date(b.tanggal_kembali);
-    //     } else {
-    //       return new Date(b.tanggal_kembali) - new Date(a.tanggal_kembali);
-    //     }
-    //   });
-    // },
     toggleAlat() {
       if (!this.showAlat) {
         this.showMesin = false;
@@ -490,7 +355,6 @@ export default {
   },
   mounted() {
     this.fetchData();
-    // this.fetchAlatPeminjaman();
   }
 }
 </script>

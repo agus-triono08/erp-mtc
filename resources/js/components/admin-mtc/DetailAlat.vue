@@ -32,7 +32,7 @@
             <div class="card-body text-center" style="border-radius: 10px;"> 
               <div class="image-container" style="width: 100%; height: 220px; overflow: hidden; border-radius: 10px;">
                 <img 
-                  :src="getImageUrl(form.gambar)" 
+                  :src="`/api/get_image/${form.gambar}`" 
                   class="img-fluid shadow-sm hover-effect" 
                   alt="Ini Gambar Sih Harusnya" 
                   style="width: 100%; height: 100%; object-fit: cover; border-radius: 0;" 

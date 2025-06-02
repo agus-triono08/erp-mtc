@@ -716,6 +716,36 @@
       </div>
 
 		</div>
+    <div class="row">
+      <!-- Tanggal Peminjaman Lewat -->
+      <div class="col-lg-6 mb-4">
+        <div class="border-left-primary shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col ml-2">
+                <div class="text-xs font-weight-bold text-gray-900 text-uppercase mb-1">
+                  Tanggal Peminjaman Lewat
+                </div>
+                <div class="h5 mb-0 font-weight-bold">
+                  <a href="#" class="text-decoration-none"
+                    :class="overDatePeminjamanStockCount > 0 ? 'text-danger' : 'text-gray-800'">
+                    {{ overDatePeminjamanStockCount }}
+                  </a>
+                </div>
+                <div class="mt-2">
+                  <a href="#" @click.prevent="showOverDatePeminjamanModal" class="text-primary small text-decoration-none">
+                    <i class="fas fa-eye text-primary"></i><b> Detail</b>
+                  </a>
+                </div> 
+              </div>
+							<div class="col-auto">
+								<i class="bi bi-calendar2-x fa-2x mr-3" style="color: rgba(22, 158, 168, 0.2);"></i>
+							</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- Bar & Chart Pie -->
     <div class="row">
       <!-- Bar Perawatan -->
@@ -944,7 +974,8 @@ export default {
         data: [],
         colors: []
       },
-      pieChart: null
+      pieChart: null,
+      overDatePeminjamanStockCount: 0,
     }
   },
   created() {
@@ -967,8 +998,20 @@ export default {
     this.fetchAvailableYearsPermintaan();
     this.fetchProgressData();
     this.fetchChartData();
+    this.fetchOverDatePeminjaman();
   },
   methods: {
+    async fetchOverDatePeminjaman() {
+      try {
+        const response = await axios.get('/api/v1/peminjaman/tgl-lewat/count');
+        if (response.data.success) {
+          this.overDatePeminjamanStockCount = response.data.count;
+        }
+      } catch (error) {
+        console.error('Error fetching low stock count:', error);
+        this.$toast.error('Gagal memuat jumlah over date peminjaman');
+      }
+    },
     async fetchLowStockCount() {
       try {
         const response = await axios.get('/api/v1/tools/low-stock/count');

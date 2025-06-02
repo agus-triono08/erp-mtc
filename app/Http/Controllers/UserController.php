@@ -3,17 +3,40 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Karyawan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
+
+    public function get_image($file)
+    {
+        $path = 'users/' . $file;
+        if (Storage::disk('ftp')->exists($path)) {
+            $fileStream = Storage::disk('ftp')->readStream($path);
+            return response()->stream(
+                fn() => fpassthru($fileStream),
+                200,
+                [
+                    'Content-Type' => Storage::disk('ftp')->mimeType($path),
+                    'Content-Disposition' => 'inline; filename="' . $file . '"',
+                ]
+            );
+        }
+    }
+
     public function index()
     {
         $all = User::all();
 
-        $byPIC = User::where('divisi_id', 1)
-                    ->whereNotIn('jabatan_id', [1, 2])
+        $byPIC = User::where('divisi_id', 16)
+                    ->with('Karyawan')
+                    // ->whereNotIn('jabatan_id', [1, 2])
                     ->get();
 
         return response()->json([

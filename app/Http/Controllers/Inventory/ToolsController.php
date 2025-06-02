@@ -19,6 +19,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\ImageManager;
 
 class ToolsController extends Controller
 {
@@ -27,6 +29,22 @@ class ToolsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function get_image($file)
+    {
+        $path = 'tools/' . $file;
+        if (Storage::disk('ftp')->exists($path)) {
+            $fileStream = Storage::disk('ftp')->readStream($path);
+            return response()->stream(
+                fn() => fpassthru($fileStream),
+                200,
+                [
+                    'Content-Type' => Storage::disk('ftp')->mimeType($path),
+                    'Content-Disposition' => 'inline; filename="' . $file . '"',
+                ]
+            );
+        }
+    }
 
     public function index(Request $request)
     {
@@ -55,7 +73,10 @@ class ToolsController extends Controller
                 });
             }
         })->orderBy('updated_at', 'desc')->get();
-    
+
+
+
+     
         return response()->json($tools);
     }     
 
@@ -132,11 +153,24 @@ class ToolsController extends Controller
         // Menangani upload gambar (jika ada)
         if ($request->hasFile('gambar')) {
             $file = $request->file('gambar');
-            $filename = time() . '_' . Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME));
-            $extension = $file->getClientOriginalExtension();
-            $path = "tools/{$filename}.{$extension}";
-            Storage::disk('public')->put($path, file_get_contents($file));
-            $data['gambar'] = $path;
+            $filename = time().'_'.Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)).'.jpg';
+            
+            $manager = new ImageManager(new Driver());
+            $image = $manager->read($file);
+
+             // Resize dengan maintain aspect ratio
+            $image->scaleDown(500);
+            
+            // Resize dan crop ke 38x38px
+            // $image->cover(38, 38);
+            
+            // Encode dengan kualitas 60% sebagai JPEG
+            $encodedImage = $image->toJpeg(60);
+            
+            // Simpan ke storage
+            Storage::disk('ftp')->put('/tools/'.$filename, $encodedImage);
+            
+            $data['gambar'] = $filename;
         }
         
         // Membuat alat baru

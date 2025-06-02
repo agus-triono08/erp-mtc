@@ -16,7 +16,13 @@ class CreatePeminjamanTable extends Migration
         Schema::create('peminjaman', function (Blueprint $table) {
             $table->id();
             $table->string('no_peminjaman')->nullable();
-            $table->foreignId('users_id')->nullable()->constrained()->onDelete('cascade');
+            // $table->foreignId('users_id')->nullable()->constrained()->onDelete('cascade');
+            // Foreign key ke users di database erp_spa
+            $table->unsignedBigInteger('users_id')->nullable();
+            $table->foreign('users_id')
+                  ->references('id')
+                  ->on('erp_spa.users')
+                  ->onDelete('cascade');
             $table->foreignId('tools_id')->nullable()->constrained()->onDelete('cascade');
             $table->date('tgl_pinjam')->nullable();
             $table->date('tgl_kembali')->nullable();

@@ -11,29 +11,6 @@
       <button class="btn btn-sm btn-outline-primary mr-2 ml-1" @click="tambahData">
         <i class="fa fa-plus-circle"></i> Tambah Data
       </button>
-      <!-- Status Filter with Checkboxes -->
-      <!-- <div class="status-filter-wrapper">
-        <button
-            class="btn btn-sm btn-primary-1 mr-2"
-            type="button"
-            id="filterDropdown"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-          ><i class="fas fa-filter"></i> Filter</button>
-        <div class="dropdown-menu p-3" aria-labelledby="filterDropdown" style="border-radius: 8px; width: 250px;" @click.stop>
-          <div v-for="status in statusOptions" :key="status" >
-            <label>
-            <input 
-              type="checkbox" 
-              :value="status" 
-              v-model="selectedStatuses" 
-            />
-            {{ status }}</label>
-          </div>
-        </div>
-      </div> -->
-
       <button
         class="btn btn-sm btn-primary-1 mr-2"
         type="button"
@@ -90,8 +67,8 @@
             <td>{{ permintaan.no_permintaan || '-' }}</td>
             <td>{{ permintaan.tgl_permintaan || '-' }}</td>
             <td>{{ permintaan.total || '-' }}</td>
-            <td>{{ permintaan.users && permintaan.users.nama || '-' }}</td>
-            <td>{{ permintaan.users && permintaan.users.divisi && permintaan.users.divisi.divisi || '-' }}</td>       
+            <td>{{ permintaan.users && permintaan.users && permintaan.users.karyawan.nama || '-' }}</td>
+            <td>{{ permintaan.users && permintaan.users.divisi && permintaan.users.divisi.nama || '-' }}</td>       
             <td>
               <div
                 class="btn-sts"

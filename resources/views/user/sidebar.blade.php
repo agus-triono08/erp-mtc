@@ -1,5 +1,5 @@
 <ul class="navbar-nav bg-gradient-white sidebar sidebar-dark accordion" id="accordionSidebar"
-style="position: sticky; height: 100vh; top: 0;">
+    style="position: sticky; top: 0; height: 100vh;">
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard.user') }}">
@@ -9,7 +9,7 @@ style="position: sticky; height: 100vh; top: 0;">
                 alt="LOGO" 
                 style="width: 30px; height: 30px; object-fit: contain;">
         </div>
-        <div class="sidebar-brand-text mx-3" style="text-transform: none; white-space: nowrap;">Sinko Prima Alloy</div>
+        <div class="sidebar-brand-text mx-1" style="text-transform: none; white-space: nowrap; font-size: 13px;">Sinko Prima Alloy</div>
     </a>
 
 

@@ -25,9 +25,9 @@ class LoginController extends Controller
             $user = Auth::user();
 
             // Redirect berdasarkan jabatan_id
-            if ($user->jabatan_id == 1) {
+            if ($user->Divisi->kode  == 'mtc' && $user->Karyawan->jabatan == 'supervisor' ) {
                 $redirectUrl = '/admin-mtc/dashboard';
-            } elseif ($user->jabatan_id == 2) {
+            } elseif ($user->Divisi->kode  == 'mtc' && $user->Karyawan->jabatan == 'manager') {
                 $redirectUrl = '/manajer-mtc/dashboard';
             } else {
                 $redirectUrl = '/user/dashboard';
@@ -58,22 +58,35 @@ class LoginController extends Controller
         ])->onlyInput('username');
     }
 
-    protected function authenticated(Request $request, $user)
-    {
-        switch ($user->jabatan_id) {
-            case 1:
-                return redirect()->route('dashboard.adminmtc');
-            case 2:
-                return redirect()->route('dashboard.manajermtc');
-            case 3:
-                return redirect()->route('dashboard.user-mtc');
-            case 4:
-                return redirect()->route('dashboard.user');
-            default:
-                Auth::logout();
-                return redirect()->route('login')->withErrors(['message' => 'Role tidak valid']);
-        }
-    }
+    // protected function authenticated(Request $request, $user)
+    // {
+
+    //     if ($user->Divisi->kode  == 'mtc' && $user->Karyawan->jabatan == 'supervisor' ) {
+    //         return redirect()->route('dashboard.adminmtc');
+    //     } elseif ($user->Divisi->kode  == 'mtc' && $user->Karyawan->jabatan == 'manager') {
+    //         return redirect()->route('dashboard.manajermtc');
+    //     } elseif ($user->Divisi->kode  == 'mtc' && $user->Karyawan->jabatan == 'user') {
+    //         return redirect()->route('dashboard.user-mtc');
+    //     }
+    //     else {
+    //         return redirect()->route('dashboard.user');
+    //     }
+
+    //     #
+    //     // switch ($user->jabatan_id) {
+    //     //     case 1:
+    //     //         return redirect()->route('dashboard.adminmtc');
+    //     //     case 2:
+    //     //         return redirect()->route('dashboard.manajermtc');
+    //     //     case 3:
+    //     //         return redirect()->route('dashboard.user-mtc');
+    //     //     case 4:
+    //     //         return redirect()->route('dashboard.user');
+    //     //     default:
+    //     //         Auth::logout();
+    //     //         return redirect()->route('login')->withErrors(['message' => 'Role tidak valid']);
+    //     // }
+    // }
 
     public function logout(Request $request)
     {

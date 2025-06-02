@@ -92,8 +92,8 @@
           <tr class="text-center">
             <td class="text-center p-2 border">{{ item.no_peminjaman || '-' }}</td>
             <td class="text-center p-2 border">{{ item.tgl_pinjam || '-' }}</td>
-            <td class="text-center p-2 border">-</td>
-            <td class="text-center p-2 border">-</td>
+            <td>{{ item.users && item.users &&  item.users.karyawan.nama || '-' }}</td>
+            <td>{{ item.users && item.users.divisi && item.users.divisi.nama || '-' }}</td>
             <td class="text-center p-2 border">{{ item.tgl_kembali ||'-'}}</td>
             <td class="text-center p-2 border">{{ item.total }}</td>
             <td>

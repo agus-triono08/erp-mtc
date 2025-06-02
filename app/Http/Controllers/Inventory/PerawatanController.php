@@ -26,24 +26,52 @@ class PerawatanController extends Controller
         $bulanBesok = date('m', strtotime('+1 month'));
         $tahunBesok = date('Y', strtotime('+1 month'));
         
+        $query = Perawatan::with([
+            'noSeri.tools',
+            'noSeri.tools.jenis.kategori.merek.tipe',
+            'users.Karyawan', // Load relasi many-to-many
+            // 'createdBy' // Load user yang membuat perawatan
+        ]);
+
         if ($request->has('all')) {
-            $perawatan = Perawatan::with('noSeri.tools', 'users')
-                ->orderBy('updated_at', 'desc') // Urutkan berdasarkan aktivitas terakhir
-                ->get();
+            $perawatan = $query->orderBy('updated_at', 'desc')->get();
         } elseif ($request->has('bulan_besok')) {
-            $perawatan = Perawatan::with('noSeri.tools.jenis.kategori.merek.tipe', 'users')
-                ->whereMonth('tgl_perawatan', $bulanBesok)
-                ->whereYear('tgl_perawatan', $tahunBesok)
-                ->get();
+            $perawatan = $query->whereMonth('tgl_perawatan', $bulanBesok)
+                            ->whereYear('tgl_perawatan', $tahunBesok)
+                            ->get();
         } else {
-            $perawatan = Perawatan::with('noSeri.tools', 'users:id,nama,username')
-                ->whereMonth('tgl_perawatan', $bulanSekarang)
-                ->whereYear('tgl_perawatan', $tahunSekarang)
-                ->get();
+            $perawatan = $query->whereMonth('tgl_perawatan', $bulanSekarang)
+                            ->whereYear('tgl_perawatan', $tahunSekarang)
+                            ->get();
         }
 
         return response()->json($perawatan);
     }
+    // public function index(Request $request)
+    // {
+    //     $bulanSekarang = date('m');
+    //     $tahunSekarang = date('Y');
+    //     $bulanBesok = date('m', strtotime('+1 month'));
+    //     $tahunBesok = date('Y', strtotime('+1 month'));
+        
+    //     if ($request->has('all')) {
+    //         $perawatan = Perawatan::with('noSeri.tools', 'users')
+    //             ->orderBy('updated_at', 'desc') // Urutkan berdasarkan aktivitas terakhir
+    //             ->get();
+    //     } elseif ($request->has('bulan_besok')) {
+    //         $perawatan = Perawatan::with('noSeri.tools.jenis.kategori.merek.tipe', 'users')
+    //             ->whereMonth('tgl_perawatan', $bulanBesok)
+    //             ->whereYear('tgl_perawatan', $tahunBesok)
+    //             ->get();
+    //     } else {
+    //         $perawatan = Perawatan::with('noSeri.tools', 'users.Karyawan')
+    //             ->whereMonth('tgl_perawatan', $bulanSekarang)
+    //             ->whereYear('tgl_perawatan', $tahunSekarang)
+    //             ->get();
+    //     }
+
+    //     return response()->json($perawatan);
+    // }
 
     // /**
     //  * Show the form for creating a new resource.
@@ -179,7 +207,7 @@ class PerawatanController extends Controller
             'id' => 'required|exists:perawatan,id',
             'status' => 'nullable|string',
             'pic' => 'required|array',
-            'pic.*' => 'integer|exists:users,id',
+            'pic.*' => 'integer|exists:erp.users,id',
         ]);
 
         $perawatan = Perawatan::findOrFail($request->id);
@@ -187,22 +215,23 @@ class PerawatanController extends Controller
         if (strtolower($request->status) !== 'belum di lakukan perawatan') {
             $perawatan->update([
                 'status' => 'Dalam Proses Perawatan',
-                'pic' => implode(',', $request->pic),
-                // 'users_id' => implode(',', $request->pic),
-                // 'pic' => $request->pic,
+                'pic' => implode(',', $request->pic), // Simpan sebagai string jika masih diperlukan
                 'tgl_mulai_perawatan' => now()->format('Y-m-d'),
                 'waktu_mulai' => Carbon::now('Asia/Jakarta')->format('H:i:s')
             ]);
-             // simpan PIC ke tabel pivot
-            $perawatan->users()->sync($request->pic);   // <─ di sinilah multiple ID disimpan
+            
+            // Simpan PIC ke tabel pivot
+            $perawatan->users()->sync($request->pic);
         } else {
             $perawatan->update([
                 'status' => 'Belum Dilakukan Perawatan',
+                'pic' => null // Kosongkan jika status 'Belum Dilakukan Perawatan'
             ]);
-            // kosongkan PIC jika perlu
-            $perawatan->users()->detach();
+            
+            // Kosongkan PIC di tabel pivot
+            $perawatan->users()->sync([]);
         }
-    
+
         return response()->json(['message' => 'Data berhasil diperbarui.']);
     }
 

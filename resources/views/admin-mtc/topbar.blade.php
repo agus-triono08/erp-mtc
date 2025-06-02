@@ -28,14 +28,14 @@
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">
                     @auth
-                        {{ Auth::user()->nama }} 
+                        {{ Auth::user()->Karyawan->nama }} 
                         {{-- ({{ Auth::user()->jabatan->nama ?? 'Unknown Role' }}) --}}
                     @else
                         Guest
                     @endauth
                 </span>
                 <img class="img-profile rounded-circle"
-                    src="{{ Auth::user()->foto ? asset('storage/' . Auth::user()->foto) : asset('vendor/sb-admin/img/undraw_profile.svg') }}">
+                    src="{{ Auth::user()->foto ?  url('/api/user/profile/' . Auth::user()->foto) : asset('vendor/sb-admin/img/undraw_profile.svg') }}">
             </a>
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -103,11 +103,11 @@
                 @auth
                 <div class="text-center mb-3">
                     <img class="img-profile rounded-circle" width="100"
-                        src="{{ Auth::user()->foto ? asset('storage/' . Auth::user()->foto) : asset('vendor/sb-admin/img/undraw_profile.svg') }}">
+                        src="{{ Auth::user()->foto ?  url('/api/user/profile/' . Auth::user()->foto) : asset('vendor/sb-admin/img/undraw_profile.svg') }}">
                 </div>
                 <div class="form-group">
                     <label>Nama:</label>
-                    <input type="text" class="form-control" value="{{ Auth::user()->nama }}" readonly>
+                    <input type="text" class="form-control" value="{{ Auth::user()->karyawan->nama }}" readonly>
                 </div>
                 <div class="form-group">
                     <label>Username:</label>

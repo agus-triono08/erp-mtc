@@ -137,6 +137,7 @@ Route::post('tech-issue', [TechIssueController::class, 'store']);
 //USER
 Route::apiResource('v1/users', UserController::class);
 Route::post('v1/login', [UserController::class, 'login']);
+Route::get('user/profile/{foto}', [UserController::class, 'get_image']);
 
 // LAYOUT
 Route::apiResource('v1/layouts', LayoutController::class);
@@ -161,6 +162,8 @@ Route::get('/v1/kategori-merek/check', [KategoriMerekController::class, 'check']
 Route::apiResource('v1/tipe', TipeController::class);
 //TOOLS
 Route::apiResource('v1/tools', ToolsController::class);
+Route::get('/get_image/{foto}', [ToolsController::class, 'get_image']);
+
 Route::get('/v1/tools/{id}/no-seri', [ToolsController::class, 'getNoSeriByTool']);
 Route::prefix('/v1/tools')->group(function () {
     Route::get('/low-stock/count', [ToolsController::class, 'apiLowStockTools']);
@@ -254,6 +257,11 @@ Route::prefix('/v1/kehilangan')->group(function () {
         });
 // Permintaan
 Route::apiResource('v1/permintaan', PermintaanController::class);
+// Route::prefix('/v1')->group(function () {
+//     Route::get('/permintaan', [PermintaanController::class, 'index']);
+//     Route::middleware('auth:sanctum')->post('/add-permintaan', [PermintaanController::class, 'store']);
+//     Route::get('/permintaan/{id}', [PermintaanController::class, 'show']);
+// });
 Route::get('/v1/permintaan/getPermintaan/{kodeAlat}', [PermintaanController::class, 'getPermintaan']);
 Route::get('/v1/permintaan/getNoPermintaan/{noPermintaan}', [PermintaanController::class, 'getNoPermintaan']);
 Route::get('/v1/permintaan/getPengajuanNoPermintaan/{noPermintaan}', [PermintaanController::class, 'getPengajuanNoPermintaan']);
@@ -273,7 +281,9 @@ Route::get('/v1/peminjaman/getPengajuanNoPeminjaman/{noPinjam}', [PeminjamanCont
 Route::get('/v1/logs-peminjaman', [PeminjamanLogController::class, 'index']);
 Route::prefix('/v1/peminjaman')->group(function () {
         Route::get('/belum-diproses/count', [PeminjamanController::class, 'countBelumDiproses']);
-        Route::get('/belum-diproses/list', [PeminjamanController::class, 'listBelumDiproses']); // Add this line        
+        Route::get('/belum-diproses/list', [PeminjamanController::class, 'listBelumDiproses']); // Add this line
+        Route::get('/tgl-lewat/count', [PeminjamanController::class, 'countOverdueLoans']);
+        Route::get('/tgl-lewat/list', [PeminjamanController::class, 'listOverDate']);
     });
 Route::get('/v1/peminjaman/chart/monthly-completed', [PeminjamanController::class, 'monthlyCompletedLoans']);
 Route::get('/v1/peminjaman/chart/available-years', [PeminjamanController::class, 'availableYears']);

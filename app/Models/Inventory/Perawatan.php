@@ -5,11 +5,13 @@ namespace App\Models\Inventory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use App\Models\Karyawan;
 
 
 class Perawatan extends Model
 {
 
+    protected $connection = 'mysql'; // Tambahkan ini
     protected $table = 'perawatan';
 
     use HasFactory;
@@ -29,11 +31,20 @@ class Perawatan extends Model
         'pic',
     ];
 
+    // public function Karyawan() {
+    //     return $this->belongsTo(Karyawan::class);
+    // }
+    
     public function users()
     {
-        return $this->belongsToMany(User::class, 'perawatan_user')
+        return $this->belongsToMany(User::class, 'erp_mtc.perawatan_user', 'perawatan_id', 'user_id')
                     ->withTimestamps();
     }
+
+    // public function users()
+    // {
+    //     return $this->belongsTo(user::class, 'pic', 'id');
+    // }
 
     public function noSeri()
     {

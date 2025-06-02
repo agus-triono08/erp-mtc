@@ -25005,6 +25005,36 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -25069,7 +25099,8 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         data: [],
         colors: []
       },
-      pieChart: null
+      pieChart: null,
+      overDatePeminjamanStockCount: 0
     };
   },
   created: function created() {
@@ -25092,9 +25123,10 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     this.fetchAvailableYearsPermintaan();
     this.fetchProgressData();
     this.fetchChartData();
+    this.fetchOverDatePeminjaman();
   },
   methods: {
-    fetchLowStockCount: function fetchLowStockCount() {
+    fetchOverDatePeminjaman: function fetchOverDatePeminjaman() {
       var _this = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
         var response;
@@ -25103,11 +25135,11 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             case 0:
               _context.prev = 0;
               _context.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/tools/low-stock/count');
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/peminjaman/tgl-lewat/count');
             case 3:
               response = _context.sent;
               if (response.data.success) {
-                _this.lowStockCount = response.data.total_low_stock;
+                _this.overDatePeminjamanStockCount = response.data.count;
               }
               _context.next = 11;
               break;
@@ -25115,8 +25147,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
               _context.prev = 7;
               _context.t0 = _context["catch"](0);
               console.error('Error fetching low stock count:', _context.t0);
-              _this.$toast.error('Gagal memuat jumlah stok tools <= 1');
-              // Anda bisa menambahkan notifikasi error di sini
+              _this.$toast.error('Gagal memuat jumlah over date peminjaman');
             case 11:
             case "end":
               return _context.stop();
@@ -25124,46 +25155,76 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         }, _callee, null, [[0, 7]]);
       }))();
     },
-    showStokModal: function showStokModal() {
+    fetchLowStockCount: function fetchLowStockCount() {
       var _this2 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-        var response, _error$response;
+        var response;
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) switch (_context2.prev = _context2.next) {
             case 0:
               _context2.prev = 0;
-              _this2.loadingStok = true;
-              _context2.next = 4;
+              _context2.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/tools/low-stock/count');
+            case 3:
+              response = _context2.sent;
+              if (response.data.success) {
+                _this2.lowStockCount = response.data.total_low_stock;
+              }
+              _context2.next = 11;
+              break;
+            case 7:
+              _context2.prev = 7;
+              _context2.t0 = _context2["catch"](0);
+              console.error('Error fetching low stock count:', _context2.t0);
+              _this2.$toast.error('Gagal memuat jumlah stok tools <= 1');
+              // Anda bisa menambahkan notifikasi error di sini
+            case 11:
+            case "end":
+              return _context2.stop();
+          }
+        }, _callee2, null, [[0, 7]]);
+      }))();
+    },
+    showStokModal: function showStokModal() {
+      var _this3 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+        var response, _error$response;
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.prev = 0;
+              _this3.loadingStok = true;
+              _context3.next = 4;
               return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/tools/low-stock/list');
             case 4:
-              response = _context2.sent;
+              response = _context3.sent;
               if (!response.data.success) {
-                _context2.next = 10;
+                _context3.next = 10;
                 break;
               }
-              _this2.stokList = response.data.data;
+              _this3.stokList = response.data.data;
               $('#stokModal').modal('show');
-              _context2.next = 11;
+              _context3.next = 11;
               break;
             case 10:
               throw new Error(response.data.message || 'Invalid response format');
             case 11:
-              _context2.next = 17;
+              _context3.next = 17;
               break;
             case 13:
-              _context2.prev = 13;
-              _context2.t0 = _context2["catch"](0);
-              console.error('Error fetching stok tools list:', _context2.t0);
-              _this2.$toast.error(((_error$response = _context2.t0.response) === null || _error$response === void 0 || (_error$response = _error$response.data) === null || _error$response === void 0 ? void 0 : _error$response.message) || 'Gagal memuat daftar perbaikan');
+              _context3.prev = 13;
+              _context3.t0 = _context3["catch"](0);
+              console.error('Error fetching stok tools list:', _context3.t0);
+              _this3.$toast.error(((_error$response = _context3.t0.response) === null || _error$response === void 0 || (_error$response = _error$response.data) === null || _error$response === void 0 ? void 0 : _error$response.message) || 'Gagal memuat daftar perbaikan');
             case 17:
-              _context2.prev = 17;
-              _this2.loadingStok = false;
-              return _context2.finish(17);
+              _context3.prev = 17;
+              _this3.loadingStok = false;
+              return _context3.finish(17);
             case 20:
             case "end":
-              return _context2.stop();
+              return _context3.stop();
           }
-        }, _callee2, null, [[0, 13, 17, 20]]);
+        }, _callee3, null, [[0, 13, 17, 20]]);
       }))();
     },
     viewDetailStok: function viewDetailStok() {
@@ -25171,74 +25232,74 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       this.$router.push('/admin-mtc/data-alat');
     },
     fetchPeminjamanStokCount: function fetchPeminjamanStokCount() {
-      var _this3 = this;
-      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
-        var response;
-        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
-          while (1) switch (_context3.prev = _context3.next) {
-            case 0:
-              _context3.prev = 0;
-              _context3.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/peminjaman/belum-diproses/count');
-            case 3:
-              response = _context3.sent;
-              if (response.data.success) {
-                _this3.peminjamanStokCount = response.data.count;
-              }
-              _context3.next = 11;
-              break;
-            case 7:
-              _context3.prev = 7;
-              _context3.t0 = _context3["catch"](0);
-              console.error('Error fetching peminjaman count:', _context3.t0);
-              _this3.$toast.error('Gagal memuat jumlah peminjaman');
-            case 11:
-            case "end":
-              return _context3.stop();
-          }
-        }, _callee3, null, [[0, 7]]);
-      }))();
-    },
-    showPeminjamanModal: function showPeminjamanModal() {
       var _this4 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
-        var response, _error$response2;
+        var response;
         return _regeneratorRuntime().wrap(function _callee4$(_context4) {
           while (1) switch (_context4.prev = _context4.next) {
             case 0:
               _context4.prev = 0;
-              _this4.loadingPeminjaman = true;
-              _context4.next = 4;
+              _context4.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/peminjaman/belum-diproses/count');
+            case 3:
+              response = _context4.sent;
+              if (response.data.success) {
+                _this4.peminjamanStokCount = response.data.count;
+              }
+              _context4.next = 11;
+              break;
+            case 7:
+              _context4.prev = 7;
+              _context4.t0 = _context4["catch"](0);
+              console.error('Error fetching peminjaman count:', _context4.t0);
+              _this4.$toast.error('Gagal memuat jumlah peminjaman');
+            case 11:
+            case "end":
+              return _context4.stop();
+          }
+        }, _callee4, null, [[0, 7]]);
+      }))();
+    },
+    showPeminjamanModal: function showPeminjamanModal() {
+      var _this5 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
+        var response, _error$response2;
+        return _regeneratorRuntime().wrap(function _callee5$(_context5) {
+          while (1) switch (_context5.prev = _context5.next) {
+            case 0:
+              _context5.prev = 0;
+              _this5.loadingPeminjaman = true;
+              _context5.next = 4;
               return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/peminjaman/belum-diproses/list');
             case 4:
-              response = _context4.sent;
+              response = _context5.sent;
               if (!response.data.success) {
-                _context4.next = 10;
+                _context5.next = 10;
                 break;
               }
-              _this4.peminjamanList = response.data.data;
+              _this5.peminjamanList = response.data.data;
               $('#peminjamanModal').modal('show');
-              _context4.next = 11;
+              _context5.next = 11;
               break;
             case 10:
               throw new Error(response.data.message || 'Invalid response format');
             case 11:
-              _context4.next = 17;
+              _context5.next = 17;
               break;
             case 13:
-              _context4.prev = 13;
-              _context4.t0 = _context4["catch"](0);
-              console.error('Error fetching peminjaman list:', _context4.t0);
-              _this4.$toast.error(((_error$response2 = _context4.t0.response) === null || _error$response2 === void 0 || (_error$response2 = _error$response2.data) === null || _error$response2 === void 0 ? void 0 : _error$response2.message) || 'Gagal memuat daftar peminjaman');
+              _context5.prev = 13;
+              _context5.t0 = _context5["catch"](0);
+              console.error('Error fetching peminjaman list:', _context5.t0);
+              _this5.$toast.error(((_error$response2 = _context5.t0.response) === null || _error$response2 === void 0 || (_error$response2 = _error$response2.data) === null || _error$response2 === void 0 ? void 0 : _error$response2.message) || 'Gagal memuat daftar peminjaman');
             case 17:
-              _context4.prev = 17;
-              _this4.loadingPeminjaman = false;
-              return _context4.finish(17);
+              _context5.prev = 17;
+              _this5.loadingPeminjaman = false;
+              return _context5.finish(17);
             case 20:
             case "end":
-              return _context4.stop();
+              return _context5.stop();
           }
-        }, _callee4, null, [[0, 13, 17, 20]]);
+        }, _callee5, null, [[0, 13, 17, 20]]);
       }))();
     },
     viewDetailPeminjaman: function viewDetailPeminjaman(id) {
@@ -25273,75 +25334,75 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       $('#perawatanModal').modal('hide');
     },
     fetchPermintaanStokCount: function fetchPermintaanStokCount() {
-      var _this5 = this;
-      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
-        var response;
-        return _regeneratorRuntime().wrap(function _callee5$(_context5) {
-          while (1) switch (_context5.prev = _context5.next) {
-            case 0:
-              _context5.prev = 0;
-              _context5.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/permintaan/belum-diproses/count');
-            case 3:
-              response = _context5.sent;
-              if (response.data.success) {
-                _this5.permintaanStokCount = response.data.count;
-              }
-              _context5.next = 11;
-              break;
-            case 7:
-              _context5.prev = 7;
-              _context5.t0 = _context5["catch"](0);
-              console.error('Error fetching low stock count:', _context5.t0);
-              _this5.$toast.error('Gagal memuat jumlah permintaan');
-              // Anda bisa menambahkan notifikasi error di sini
-            case 11:
-            case "end":
-              return _context5.stop();
-          }
-        }, _callee5, null, [[0, 7]]);
-      }))();
-    },
-    showPermintaanModal: function showPermintaanModal() {
       var _this6 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
-        var response, _error$response3;
+        var response;
         return _regeneratorRuntime().wrap(function _callee6$(_context6) {
           while (1) switch (_context6.prev = _context6.next) {
             case 0:
               _context6.prev = 0;
-              _this6.loadingPermintaan = true;
-              _context6.next = 4;
+              _context6.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/permintaan/belum-diproses/count');
+            case 3:
+              response = _context6.sent;
+              if (response.data.success) {
+                _this6.permintaanStokCount = response.data.count;
+              }
+              _context6.next = 11;
+              break;
+            case 7:
+              _context6.prev = 7;
+              _context6.t0 = _context6["catch"](0);
+              console.error('Error fetching low stock count:', _context6.t0);
+              _this6.$toast.error('Gagal memuat jumlah permintaan');
+              // Anda bisa menambahkan notifikasi error di sini
+            case 11:
+            case "end":
+              return _context6.stop();
+          }
+        }, _callee6, null, [[0, 7]]);
+      }))();
+    },
+    showPermintaanModal: function showPermintaanModal() {
+      var _this7 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee7() {
+        var response, _error$response3;
+        return _regeneratorRuntime().wrap(function _callee7$(_context7) {
+          while (1) switch (_context7.prev = _context7.next) {
+            case 0:
+              _context7.prev = 0;
+              _this7.loadingPermintaan = true;
+              _context7.next = 4;
               return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/permintaan/belum-diproses/list');
             case 4:
-              response = _context6.sent;
+              response = _context7.sent;
               if (!response.data.success) {
-                _context6.next = 10;
+                _context7.next = 10;
                 break;
               }
-              _this6.permintaanList = response.data.data;
+              _this7.permintaanList = response.data.data;
               $('#permintaanModal').modal('show');
-              _context6.next = 11;
+              _context7.next = 11;
               break;
             case 10:
               throw new Error(response.data.message || 'Invalid response format');
             case 11:
-              _context6.next = 17;
+              _context7.next = 17;
               break;
             case 13:
-              _context6.prev = 13;
-              _context6.t0 = _context6["catch"](0);
-              console.error('Error fetching permintaan list:', _context6.t0);
-              _this6.$toast.error(((_error$response3 = _context6.t0.response) === null || _error$response3 === void 0 || (_error$response3 = _error$response3.data) === null || _error$response3 === void 0 ? void 0 : _error$response3.message) || 'Gagal memuat daftar permintaan');
+              _context7.prev = 13;
+              _context7.t0 = _context7["catch"](0);
+              console.error('Error fetching permintaan list:', _context7.t0);
+              _this7.$toast.error(((_error$response3 = _context7.t0.response) === null || _error$response3 === void 0 || (_error$response3 = _error$response3.data) === null || _error$response3 === void 0 ? void 0 : _error$response3.message) || 'Gagal memuat daftar permintaan');
             case 17:
-              _context6.prev = 17;
-              _this6.loadingPermintaan = false;
-              return _context6.finish(17);
+              _context7.prev = 17;
+              _this7.loadingPermintaan = false;
+              return _context7.finish(17);
             case 20:
             case "end":
-              return _context6.stop();
+              return _context7.stop();
           }
-        }, _callee6, null, [[0, 13, 17, 20]]);
+        }, _callee7, null, [[0, 13, 17, 20]]);
       }))();
     },
     viewDetailPermintaan: function viewDetailPermintaan(id) {
@@ -25352,75 +25413,75 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       this.$router.push("/admin-mtc/data-alat/permintaan/detail/".concat(id));
     },
     fetchPerbaikanStokCount: function fetchPerbaikanStokCount() {
-      var _this7 = this;
-      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee7() {
-        var response;
-        return _regeneratorRuntime().wrap(function _callee7$(_context7) {
-          while (1) switch (_context7.prev = _context7.next) {
-            case 0:
-              _context7.prev = 0;
-              _context7.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/perbaikan/belum/count');
-            case 3:
-              response = _context7.sent;
-              if (response.data.success) {
-                _this7.perbaikanStokCount = response.data.count;
-              }
-              _context7.next = 11;
-              break;
-            case 7:
-              _context7.prev = 7;
-              _context7.t0 = _context7["catch"](0);
-              console.error('Error fetching low stock count:', _context7.t0);
-              _this7.$toast.error('Gagal memuat jumlah perbaikan');
-              // Anda bisa menambahkan notifikasi error di sini
-            case 11:
-            case "end":
-              return _context7.stop();
-          }
-        }, _callee7, null, [[0, 7]]);
-      }))();
-    },
-    showPerbaikanModal: function showPerbaikanModal() {
       var _this8 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee8() {
-        var response, _error$response4;
+        var response;
         return _regeneratorRuntime().wrap(function _callee8$(_context8) {
           while (1) switch (_context8.prev = _context8.next) {
             case 0:
               _context8.prev = 0;
-              _this8.loadingPerbaikan = true;
-              _context8.next = 4;
+              _context8.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/perbaikan/belum/count');
+            case 3:
+              response = _context8.sent;
+              if (response.data.success) {
+                _this8.perbaikanStokCount = response.data.count;
+              }
+              _context8.next = 11;
+              break;
+            case 7:
+              _context8.prev = 7;
+              _context8.t0 = _context8["catch"](0);
+              console.error('Error fetching low stock count:', _context8.t0);
+              _this8.$toast.error('Gagal memuat jumlah perbaikan');
+              // Anda bisa menambahkan notifikasi error di sini
+            case 11:
+            case "end":
+              return _context8.stop();
+          }
+        }, _callee8, null, [[0, 7]]);
+      }))();
+    },
+    showPerbaikanModal: function showPerbaikanModal() {
+      var _this9 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee9() {
+        var response, _error$response4;
+        return _regeneratorRuntime().wrap(function _callee9$(_context9) {
+          while (1) switch (_context9.prev = _context9.next) {
+            case 0:
+              _context9.prev = 0;
+              _this9.loadingPerbaikan = true;
+              _context9.next = 4;
               return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/perbaikan/belum-diproses/list');
             case 4:
-              response = _context8.sent;
+              response = _context9.sent;
               if (!response.data.success) {
-                _context8.next = 10;
+                _context9.next = 10;
                 break;
               }
-              _this8.perbaikanList = response.data.data;
+              _this9.perbaikanList = response.data.data;
               $('#perbaikanModal').modal('show');
-              _context8.next = 11;
+              _context9.next = 11;
               break;
             case 10:
               throw new Error(response.data.message || 'Invalid response format');
             case 11:
-              _context8.next = 17;
+              _context9.next = 17;
               break;
             case 13:
-              _context8.prev = 13;
-              _context8.t0 = _context8["catch"](0);
-              console.error('Error fetching perbaikan list:', _context8.t0);
-              _this8.$toast.error(((_error$response4 = _context8.t0.response) === null || _error$response4 === void 0 || (_error$response4 = _error$response4.data) === null || _error$response4 === void 0 ? void 0 : _error$response4.message) || 'Gagal memuat daftar perbaikan');
+              _context9.prev = 13;
+              _context9.t0 = _context9["catch"](0);
+              console.error('Error fetching perbaikan list:', _context9.t0);
+              _this9.$toast.error(((_error$response4 = _context9.t0.response) === null || _error$response4 === void 0 || (_error$response4 = _error$response4.data) === null || _error$response4 === void 0 ? void 0 : _error$response4.message) || 'Gagal memuat daftar perbaikan');
             case 17:
-              _context8.prev = 17;
-              _this8.loadingPerbaikan = false;
-              return _context8.finish(17);
+              _context9.prev = 17;
+              _this9.loadingPerbaikan = false;
+              return _context9.finish(17);
             case 20:
             case "end":
-              return _context8.stop();
+              return _context9.stop();
           }
-        }, _callee8, null, [[0, 13, 17, 20]]);
+        }, _callee9, null, [[0, 13, 17, 20]]);
       }))();
     },
     viewDetailPerbaikan: function viewDetailPerbaikan() {
@@ -25431,75 +25492,75 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       this.$router.push('/kondisi-error');
     },
     fetchKerusakanStockCount: function fetchKerusakanStockCount() {
-      var _this9 = this;
-      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee9() {
-        var response;
-        return _regeneratorRuntime().wrap(function _callee9$(_context9) {
-          while (1) switch (_context9.prev = _context9.next) {
-            case 0:
-              _context9.prev = 0;
-              _context9.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/kerusakan/belum/count');
-            case 3:
-              response = _context9.sent;
-              if (response.data.success) {
-                _this9.kerusakanStockCount = response.data.count;
-              }
-              _context9.next = 11;
-              break;
-            case 7:
-              _context9.prev = 7;
-              _context9.t0 = _context9["catch"](0);
-              console.error('Error fetching low stock count:', _context9.t0);
-              _this9.$toast.error('Gagal memuat jumlah kerusakan');
-              // Anda bisa menambahkan notifikasi error di sini
-            case 11:
-            case "end":
-              return _context9.stop();
-          }
-        }, _callee9, null, [[0, 7]]);
-      }))();
-    },
-    showKerusakanModal: function showKerusakanModal() {
       var _this10 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee10() {
-        var response, _error$response5;
+        var response;
         return _regeneratorRuntime().wrap(function _callee10$(_context10) {
           while (1) switch (_context10.prev = _context10.next) {
             case 0:
               _context10.prev = 0;
-              _this10.loadingKerusakan = true;
-              _context10.next = 4;
+              _context10.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/kerusakan/belum/count');
+            case 3:
+              response = _context10.sent;
+              if (response.data.success) {
+                _this10.kerusakanStockCount = response.data.count;
+              }
+              _context10.next = 11;
+              break;
+            case 7:
+              _context10.prev = 7;
+              _context10.t0 = _context10["catch"](0);
+              console.error('Error fetching low stock count:', _context10.t0);
+              _this10.$toast.error('Gagal memuat jumlah kerusakan');
+              // Anda bisa menambahkan notifikasi error di sini
+            case 11:
+            case "end":
+              return _context10.stop();
+          }
+        }, _callee10, null, [[0, 7]]);
+      }))();
+    },
+    showKerusakanModal: function showKerusakanModal() {
+      var _this11 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee11() {
+        var response, _error$response5;
+        return _regeneratorRuntime().wrap(function _callee11$(_context11) {
+          while (1) switch (_context11.prev = _context11.next) {
+            case 0:
+              _context11.prev = 0;
+              _this11.loadingKerusakan = true;
+              _context11.next = 4;
               return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/kerusakan/belum/list');
             case 4:
-              response = _context10.sent;
+              response = _context11.sent;
               if (!response.data.success) {
-                _context10.next = 10;
+                _context11.next = 10;
                 break;
               }
-              _this10.kerusakanList = response.data.data;
+              _this11.kerusakanList = response.data.data;
               $('#kerusakanModal').modal('show');
-              _context10.next = 11;
+              _context11.next = 11;
               break;
             case 10:
               throw new Error(response.data.message || 'Invalid response format');
             case 11:
-              _context10.next = 17;
+              _context11.next = 17;
               break;
             case 13:
-              _context10.prev = 13;
-              _context10.t0 = _context10["catch"](0);
-              console.error('Error fetching kerusakan list:', _context10.t0);
-              _this10.$toast.error(((_error$response5 = _context10.t0.response) === null || _error$response5 === void 0 || (_error$response5 = _error$response5.data) === null || _error$response5 === void 0 ? void 0 : _error$response5.message) || 'Gagal memuat daftar kerusakan');
+              _context11.prev = 13;
+              _context11.t0 = _context11["catch"](0);
+              console.error('Error fetching kerusakan list:', _context11.t0);
+              _this11.$toast.error(((_error$response5 = _context11.t0.response) === null || _error$response5 === void 0 || (_error$response5 = _error$response5.data) === null || _error$response5 === void 0 ? void 0 : _error$response5.message) || 'Gagal memuat daftar kerusakan');
             case 17:
-              _context10.prev = 17;
-              _this10.loadingKerusakan = false;
-              return _context10.finish(17);
+              _context11.prev = 17;
+              _this11.loadingKerusakan = false;
+              return _context11.finish(17);
             case 20:
             case "end":
-              return _context10.stop();
+              return _context11.stop();
           }
-        }, _callee10, null, [[0, 13, 17, 20]]);
+        }, _callee11, null, [[0, 13, 17, 20]]);
       }))();
     },
     viewDetailKerusakan: function viewDetailKerusakan(id) {
@@ -25515,75 +25576,75 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       });
     },
     fetchPemusnahanStokCount: function fetchPemusnahanStokCount() {
-      var _this11 = this;
-      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee11() {
-        var response;
-        return _regeneratorRuntime().wrap(function _callee11$(_context11) {
-          while (1) switch (_context11.prev = _context11.next) {
-            case 0:
-              _context11.prev = 0;
-              _context11.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/pemusnahan/selesai/count');
-            case 3:
-              response = _context11.sent;
-              if (response.data.success) {
-                _this11.pemusnahanStokCount = response.data.count;
-              }
-              _context11.next = 11;
-              break;
-            case 7:
-              _context11.prev = 7;
-              _context11.t0 = _context11["catch"](0);
-              console.error('Error fetching low stock count:', _context11.t0);
-              _this11.$toast.error('Gagal memuat jumlah pemusnahan');
-              // Anda bisa menambahkan notifikasi error di sini
-            case 11:
-            case "end":
-              return _context11.stop();
-          }
-        }, _callee11, null, [[0, 7]]);
-      }))();
-    },
-    showPemusnahanModal: function showPemusnahanModal() {
       var _this12 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee12() {
-        var response, _error$response6;
+        var response;
         return _regeneratorRuntime().wrap(function _callee12$(_context12) {
           while (1) switch (_context12.prev = _context12.next) {
             case 0:
               _context12.prev = 0;
-              _this12.loadingPemusnahan = true;
-              _context12.next = 4;
+              _context12.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/pemusnahan/selesai/count');
+            case 3:
+              response = _context12.sent;
+              if (response.data.success) {
+                _this12.pemusnahanStokCount = response.data.count;
+              }
+              _context12.next = 11;
+              break;
+            case 7:
+              _context12.prev = 7;
+              _context12.t0 = _context12["catch"](0);
+              console.error('Error fetching low stock count:', _context12.t0);
+              _this12.$toast.error('Gagal memuat jumlah pemusnahan');
+              // Anda bisa menambahkan notifikasi error di sini
+            case 11:
+            case "end":
+              return _context12.stop();
+          }
+        }, _callee12, null, [[0, 7]]);
+      }))();
+    },
+    showPemusnahanModal: function showPemusnahanModal() {
+      var _this13 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee13() {
+        var response, _error$response6;
+        return _regeneratorRuntime().wrap(function _callee13$(_context13) {
+          while (1) switch (_context13.prev = _context13.next) {
+            case 0:
+              _context13.prev = 0;
+              _this13.loadingPemusnahan = true;
+              _context13.next = 4;
               return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/pemusnahan/selesai/list');
             case 4:
-              response = _context12.sent;
+              response = _context13.sent;
               if (!response.data.success) {
-                _context12.next = 10;
+                _context13.next = 10;
                 break;
               }
-              _this12.pemusnahanList = response.data.data;
+              _this13.pemusnahanList = response.data.data;
               $('#pemusnahanModal').modal('show');
-              _context12.next = 11;
+              _context13.next = 11;
               break;
             case 10:
               throw new Error(response.data.message || 'Invalid response format');
             case 11:
-              _context12.next = 17;
+              _context13.next = 17;
               break;
             case 13:
-              _context12.prev = 13;
-              _context12.t0 = _context12["catch"](0);
-              console.error('Error fetching pemusnahan list:', _context12.t0);
-              _this12.$toast.error(((_error$response6 = _context12.t0.response) === null || _error$response6 === void 0 || (_error$response6 = _error$response6.data) === null || _error$response6 === void 0 ? void 0 : _error$response6.message) || 'Gagal memuat daftar pemusnahan');
+              _context13.prev = 13;
+              _context13.t0 = _context13["catch"](0);
+              console.error('Error fetching pemusnahan list:', _context13.t0);
+              _this13.$toast.error(((_error$response6 = _context13.t0.response) === null || _error$response6 === void 0 || (_error$response6 = _error$response6.data) === null || _error$response6 === void 0 ? void 0 : _error$response6.message) || 'Gagal memuat daftar pemusnahan');
             case 17:
-              _context12.prev = 17;
-              _this12.loadingPemusnahan = false;
-              return _context12.finish(17);
+              _context13.prev = 17;
+              _this13.loadingPemusnahan = false;
+              return _context13.finish(17);
             case 20:
             case "end":
-              return _context12.stop();
+              return _context13.stop();
           }
-        }, _callee12, null, [[0, 13, 17, 20]]);
+        }, _callee13, null, [[0, 13, 17, 20]]);
       }))();
     },
     viewDetailPemusnahan: function viewDetailPemusnahan(id) {
@@ -25599,75 +25660,75 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       });
     },
     fetchKehilanganStokCount: function fetchKehilanganStokCount() {
-      var _this13 = this;
-      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee13() {
-        var response;
-        return _regeneratorRuntime().wrap(function _callee13$(_context13) {
-          while (1) switch (_context13.prev = _context13.next) {
-            case 0:
-              _context13.prev = 0;
-              _context13.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/kehilangan/belum/count');
-            case 3:
-              response = _context13.sent;
-              if (response.data.success) {
-                _this13.kehilanganStokCount = response.data.count;
-              }
-              _context13.next = 11;
-              break;
-            case 7:
-              _context13.prev = 7;
-              _context13.t0 = _context13["catch"](0);
-              console.error('Error fetching low stock count:', _context13.t0);
-              _this13.$toast.error('Gagal memuat jumlah kehilangan');
-              // Anda bisa menambahkan notifikasi error di sini
-            case 11:
-            case "end":
-              return _context13.stop();
-          }
-        }, _callee13, null, [[0, 7]]);
-      }))();
-    },
-    showKehilanganModal: function showKehilanganModal() {
       var _this14 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee14() {
-        var response, _error$response7;
+        var response;
         return _regeneratorRuntime().wrap(function _callee14$(_context14) {
           while (1) switch (_context14.prev = _context14.next) {
             case 0:
               _context14.prev = 0;
-              _this14.loadingKehilangan = true;
-              _context14.next = 4;
+              _context14.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/kehilangan/belum/count');
+            case 3:
+              response = _context14.sent;
+              if (response.data.success) {
+                _this14.kehilanganStokCount = response.data.count;
+              }
+              _context14.next = 11;
+              break;
+            case 7:
+              _context14.prev = 7;
+              _context14.t0 = _context14["catch"](0);
+              console.error('Error fetching low stock count:', _context14.t0);
+              _this14.$toast.error('Gagal memuat jumlah kehilangan');
+              // Anda bisa menambahkan notifikasi error di sini
+            case 11:
+            case "end":
+              return _context14.stop();
+          }
+        }, _callee14, null, [[0, 7]]);
+      }))();
+    },
+    showKehilanganModal: function showKehilanganModal() {
+      var _this15 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee15() {
+        var response, _error$response7;
+        return _regeneratorRuntime().wrap(function _callee15$(_context15) {
+          while (1) switch (_context15.prev = _context15.next) {
+            case 0:
+              _context15.prev = 0;
+              _this15.loadingKehilangan = true;
+              _context15.next = 4;
               return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/kehilangan/belum/list');
             case 4:
-              response = _context14.sent;
+              response = _context15.sent;
               if (!response.data.success) {
-                _context14.next = 10;
+                _context15.next = 10;
                 break;
               }
-              _this14.kehilanganList = response.data.data;
+              _this15.kehilanganList = response.data.data;
               $('#kehilanganModal').modal('show');
-              _context14.next = 11;
+              _context15.next = 11;
               break;
             case 10:
               throw new Error(response.data.message || 'Invalid response format');
             case 11:
-              _context14.next = 17;
+              _context15.next = 17;
               break;
             case 13:
-              _context14.prev = 13;
-              _context14.t0 = _context14["catch"](0);
-              console.error('Error fetching kehilangan list:', _context14.t0);
-              _this14.$toast.error(((_error$response7 = _context14.t0.response) === null || _error$response7 === void 0 || (_error$response7 = _error$response7.data) === null || _error$response7 === void 0 ? void 0 : _error$response7.message) || 'Gagal memuat daftar kehilangan');
+              _context15.prev = 13;
+              _context15.t0 = _context15["catch"](0);
+              console.error('Error fetching kehilangan list:', _context15.t0);
+              _this15.$toast.error(((_error$response7 = _context15.t0.response) === null || _error$response7 === void 0 || (_error$response7 = _error$response7.data) === null || _error$response7 === void 0 ? void 0 : _error$response7.message) || 'Gagal memuat daftar kehilangan');
             case 17:
-              _context14.prev = 17;
-              _this14.loadingKehilangan = false;
-              return _context14.finish(17);
+              _context15.prev = 17;
+              _this15.loadingKehilangan = false;
+              return _context15.finish(17);
             case 20:
             case "end":
-              return _context14.stop();
+              return _context15.stop();
           }
-        }, _callee14, null, [[0, 13, 17, 20]]);
+        }, _callee15, null, [[0, 13, 17, 20]]);
       }))();
     },
     viewDetailKehilanagan: function viewDetailKehilanagan(id) {
@@ -25683,75 +25744,75 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       });
     },
     fetchPerawatanStokCount: function fetchPerawatanStokCount() {
-      var _this15 = this;
-      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee15() {
-        var response;
-        return _regeneratorRuntime().wrap(function _callee15$(_context15) {
-          while (1) switch (_context15.prev = _context15.next) {
-            case 0:
-              _context15.prev = 0;
-              _context15.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/perawatan/belum/count');
-            case 3:
-              response = _context15.sent;
-              if (response.data.success) {
-                _this15.perawatanStokCount = response.data.count;
-              }
-              _context15.next = 11;
-              break;
-            case 7:
-              _context15.prev = 7;
-              _context15.t0 = _context15["catch"](0);
-              console.error('Error fetching low stock count:', _context15.t0);
-              _this15.$toast.error('Gagal memuat jumlah perawatan yang belum dilakukan');
-              // Anda bisa menambahkan notifikasi error di sini
-            case 11:
-            case "end":
-              return _context15.stop();
-          }
-        }, _callee15, null, [[0, 7]]);
-      }))();
-    },
-    showPerawatanModal: function showPerawatanModal() {
       var _this16 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee16() {
-        var response, _error$response8;
+        var response;
         return _regeneratorRuntime().wrap(function _callee16$(_context16) {
           while (1) switch (_context16.prev = _context16.next) {
             case 0:
               _context16.prev = 0;
-              _this16.loadingPerawatan = true;
-              _context16.next = 4;
+              _context16.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/perawatan/belum/count');
+            case 3:
+              response = _context16.sent;
+              if (response.data.success) {
+                _this16.perawatanStokCount = response.data.count;
+              }
+              _context16.next = 11;
+              break;
+            case 7:
+              _context16.prev = 7;
+              _context16.t0 = _context16["catch"](0);
+              console.error('Error fetching low stock count:', _context16.t0);
+              _this16.$toast.error('Gagal memuat jumlah perawatan yang belum dilakukan');
+              // Anda bisa menambahkan notifikasi error di sini
+            case 11:
+            case "end":
+              return _context16.stop();
+          }
+        }, _callee16, null, [[0, 7]]);
+      }))();
+    },
+    showPerawatanModal: function showPerawatanModal() {
+      var _this17 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee17() {
+        var response, _error$response8;
+        return _regeneratorRuntime().wrap(function _callee17$(_context17) {
+          while (1) switch (_context17.prev = _context17.next) {
+            case 0:
+              _context17.prev = 0;
+              _this17.loadingPerawatan = true;
+              _context17.next = 4;
               return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/perawatan/belum/list');
             case 4:
-              response = _context16.sent;
+              response = _context17.sent;
               if (!response.data.success) {
-                _context16.next = 10;
+                _context17.next = 10;
                 break;
               }
-              _this16.perawatanList = response.data.data;
+              _this17.perawatanList = response.data.data;
               $('#perawatanModal').modal('show');
-              _context16.next = 11;
+              _context17.next = 11;
               break;
             case 10:
               throw new Error(response.data.message || 'Invalid response format');
             case 11:
-              _context16.next = 17;
+              _context17.next = 17;
               break;
             case 13:
-              _context16.prev = 13;
-              _context16.t0 = _context16["catch"](0);
-              console.error('Error fetching perawatan belum dilakukan perawatan list:', _context16.t0);
-              _this16.$toast.error(((_error$response8 = _context16.t0.response) === null || _error$response8 === void 0 || (_error$response8 = _error$response8.data) === null || _error$response8 === void 0 ? void 0 : _error$response8.message) || 'Gagal memuat daftar perbaikan');
+              _context17.prev = 13;
+              _context17.t0 = _context17["catch"](0);
+              console.error('Error fetching perawatan belum dilakukan perawatan list:', _context17.t0);
+              _this17.$toast.error(((_error$response8 = _context17.t0.response) === null || _error$response8 === void 0 || (_error$response8 = _error$response8.data) === null || _error$response8 === void 0 ? void 0 : _error$response8.message) || 'Gagal memuat daftar perbaikan');
             case 17:
-              _context16.prev = 17;
-              _this16.loadingPerawatan = false;
-              return _context16.finish(17);
+              _context17.prev = 17;
+              _this17.loadingPerawatan = false;
+              return _context17.finish(17);
             case 20:
             case "end":
-              return _context16.stop();
+              return _context17.stop();
           }
-        }, _callee16, null, [[0, 13, 17, 20]]);
+        }, _callee17, null, [[0, 13, 17, 20]]);
       }))();
     },
     viewDetailPerawatan: function viewDetailPerawatan() {
@@ -25759,140 +25820,140 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       this.$router.push('/admin-mtc/jadwal-perawatan');
     },
     fetchAvailableYears: function fetchAvailableYears() {
-      var _this17 = this;
-      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee17() {
-        var response;
-        return _regeneratorRuntime().wrap(function _callee17$(_context17) {
-          while (1) switch (_context17.prev = _context17.next) {
-            case 0:
-              _context17.prev = 0;
-              _context17.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/peminjaman/chart/available-years');
-            case 3:
-              response = _context17.sent;
-              _this17.availableYears = response.data.years;
-              // Set tahun terakhir sebagai tahun yang dipilih secara default
-              if (_this17.availableYears.length > 0) {
-                _this17.selectedYear = Math.max.apply(Math, _toConsumableArray(_this17.availableYears));
-              }
-              _context17.next = 12;
-              break;
-            case 8:
-              _context17.prev = 8;
-              _context17.t0 = _context17["catch"](0);
-              console.error('Error fetching available years:', _context17.t0);
-              _this17.errorMessage = 'Gagal memuat daftar tahun';
-            case 12:
-            case "end":
-              return _context17.stop();
-          }
-        }, _callee17, null, [[0, 8]]);
-      }))();
-    },
-    fetchMonthlyCompletedLoans: function fetchMonthlyCompletedLoans() {
       var _this18 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee18() {
         var response;
         return _regeneratorRuntime().wrap(function _callee18$(_context18) {
           while (1) switch (_context18.prev = _context18.next) {
             case 0:
-              _this18.isloading = true;
-              _this18.errorMessage = '';
-              _context18.prev = 2;
-              _context18.next = 5;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/v1/peminjaman/chart/monthly-all-status?year=".concat(_this18.selectedYear));
-            case 5:
+              _context18.prev = 0;
+              _context18.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/peminjaman/chart/available-years');
+            case 3:
               response = _context18.sent;
-              _this18.renderChart(response.data);
-              _context18.next = 14;
-              break;
-            case 9:
-              _context18.prev = 9;
-              _context18.t0 = _context18["catch"](2);
-              console.error('Error fetching monthly loans:', _context18.t0);
-              _this18.errorMessage = 'Gagal memuat data peminjaman';
-              if (_this18.chart) {
-                _this18.chart.destroy();
-                _this18.chart = null;
+              _this18.availableYears = response.data.years;
+              // Set tahun terakhir sebagai tahun yang dipilih secara default
+              if (_this18.availableYears.length > 0) {
+                _this18.selectedYear = Math.max.apply(Math, _toConsumableArray(_this18.availableYears));
               }
-            case 14:
-              _context18.prev = 14;
-              _this18.isloading = false;
-              return _context18.finish(14);
-            case 17:
+              _context18.next = 12;
+              break;
+            case 8:
+              _context18.prev = 8;
+              _context18.t0 = _context18["catch"](0);
+              console.error('Error fetching available years:', _context18.t0);
+              _this18.errorMessage = 'Gagal memuat daftar tahun';
+            case 12:
             case "end":
               return _context18.stop();
           }
-        }, _callee18, null, [[2, 9, 14, 17]]);
+        }, _callee18, null, [[0, 8]]);
       }))();
     },
-    fetchAvailableYearsPermintaan: function fetchAvailableYearsPermintaan() {
+    fetchMonthlyCompletedLoans: function fetchMonthlyCompletedLoans() {
       var _this19 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee19() {
         var response;
         return _regeneratorRuntime().wrap(function _callee19$(_context19) {
           while (1) switch (_context19.prev = _context19.next) {
             case 0:
-              _context19.prev = 0;
-              _context19.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/permintaan/chart/available-years');
-            case 3:
+              _this19.isloading = true;
+              _this19.errorMessage = '';
+              _context19.prev = 2;
+              _context19.next = 5;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/v1/peminjaman/chart/monthly-all-status?year=".concat(_this19.selectedYear));
+            case 5:
               response = _context19.sent;
-              _this19.availableYearsPermintaan = response.data.years;
-              // Set tahun terakhir sebagai tahun yang dipilih secara default
-              if (_this19.availableYearsPermintaan.length > 0) {
-                _this19.selectedYearPermintaan = Math.max.apply(Math, _toConsumableArray(_this19.availableYearsPermintaan));
-              }
-              _context19.next = 12;
+              _this19.renderChart(response.data);
+              _context19.next = 14;
               break;
-            case 8:
-              _context19.prev = 8;
-              _context19.t0 = _context19["catch"](0);
-              console.error('Error fetching available years:', _context19.t0);
-              _this19.errorMessagePermintaan = 'Gagal memuat daftar tahun';
-            case 12:
+            case 9:
+              _context19.prev = 9;
+              _context19.t0 = _context19["catch"](2);
+              console.error('Error fetching monthly loans:', _context19.t0);
+              _this19.errorMessage = 'Gagal memuat data peminjaman';
+              if (_this19.chart) {
+                _this19.chart.destroy();
+                _this19.chart = null;
+              }
+            case 14:
+              _context19.prev = 14;
+              _this19.isloading = false;
+              return _context19.finish(14);
+            case 17:
             case "end":
               return _context19.stop();
           }
-        }, _callee19, null, [[0, 8]]);
+        }, _callee19, null, [[2, 9, 14, 17]]);
       }))();
     },
-    fetchMonthlyCompletedLoansPermintaan: function fetchMonthlyCompletedLoansPermintaan() {
+    fetchAvailableYearsPermintaan: function fetchAvailableYearsPermintaan() {
       var _this20 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee20() {
         var response;
         return _regeneratorRuntime().wrap(function _callee20$(_context20) {
           while (1) switch (_context20.prev = _context20.next) {
             case 0:
-              _this20.isloading = true;
-              _this20.errorMessagePermintaan = '';
-              _context20.prev = 2;
-              _context20.next = 5;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/v1/permintaan/chart/monthly-all-status?year=".concat(_this20.selectedYearPermintaan));
-            case 5:
+              _context20.prev = 0;
+              _context20.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/permintaan/chart/available-years');
+            case 3:
               response = _context20.sent;
-              _this20.renderChartPermintaan(response.data);
-              _context20.next = 14;
-              break;
-            case 9:
-              _context20.prev = 9;
-              _context20.t0 = _context20["catch"](2);
-              console.error('Error fetching monthly completed loans:', _context20.t0);
-              _this20.errorMessagePermintaan = 'Gagal memuat data permintaan';
-              // Hancurkan chart jika ada error
-              if (_this20.chartPermintaan) {
-                _this20.chartPermintaan.destroy();
-                _this20.chartPermintaan = null;
+              _this20.availableYearsPermintaan = response.data.years;
+              // Set tahun terakhir sebagai tahun yang dipilih secara default
+              if (_this20.availableYearsPermintaan.length > 0) {
+                _this20.selectedYearPermintaan = Math.max.apply(Math, _toConsumableArray(_this20.availableYearsPermintaan));
               }
-            case 14:
-              _context20.prev = 14;
-              _this20.isloading = false;
-              return _context20.finish(14);
-            case 17:
+              _context20.next = 12;
+              break;
+            case 8:
+              _context20.prev = 8;
+              _context20.t0 = _context20["catch"](0);
+              console.error('Error fetching available years:', _context20.t0);
+              _this20.errorMessagePermintaan = 'Gagal memuat daftar tahun';
+            case 12:
             case "end":
               return _context20.stop();
           }
-        }, _callee20, null, [[2, 9, 14, 17]]);
+        }, _callee20, null, [[0, 8]]);
+      }))();
+    },
+    fetchMonthlyCompletedLoansPermintaan: function fetchMonthlyCompletedLoansPermintaan() {
+      var _this21 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee21() {
+        var response;
+        return _regeneratorRuntime().wrap(function _callee21$(_context21) {
+          while (1) switch (_context21.prev = _context21.next) {
+            case 0:
+              _this21.isloading = true;
+              _this21.errorMessagePermintaan = '';
+              _context21.prev = 2;
+              _context21.next = 5;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/v1/permintaan/chart/monthly-all-status?year=".concat(_this21.selectedYearPermintaan));
+            case 5:
+              response = _context21.sent;
+              _this21.renderChartPermintaan(response.data);
+              _context21.next = 14;
+              break;
+            case 9:
+              _context21.prev = 9;
+              _context21.t0 = _context21["catch"](2);
+              console.error('Error fetching monthly completed loans:', _context21.t0);
+              _this21.errorMessagePermintaan = 'Gagal memuat data permintaan';
+              // Hancurkan chart jika ada error
+              if (_this21.chartPermintaan) {
+                _this21.chartPermintaan.destroy();
+                _this21.chartPermintaan = null;
+              }
+            case 14:
+              _context21.prev = 14;
+              _this21.isloading = false;
+              return _context21.finish(14);
+            case 17:
+            case "end":
+              return _context21.stop();
+          }
+        }, _callee21, null, [[2, 9, 14, 17]]);
       }))();
     },
     renderChart: function renderChart(chartData) {
@@ -26073,43 +26134,43 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       this.filter.end_date = this.formatDateForInput(lastDay);
     },
     fetchProgressData: function fetchProgressData() {
-      var _this21 = this;
-      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee21() {
+      var _this22 = this;
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee22() {
         var params, response;
-        return _regeneratorRuntime().wrap(function _callee21$(_context21) {
-          while (1) switch (_context21.prev = _context21.next) {
+        return _regeneratorRuntime().wrap(function _callee22$(_context22) {
+          while (1) switch (_context22.prev = _context22.next) {
             case 0:
-              _context21.prev = 0;
-              _this21.loading = true;
+              _context22.prev = 0;
+              _this22.loading = true;
               params = {
-                start_date: _this21.filter.start_date,
-                end_date: _this21.filter.end_date
+                start_date: _this22.filter.start_date,
+                end_date: _this22.filter.end_date
               };
-              _context21.next = 5;
+              _context22.next = 5;
               return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/inventory/perawatan/progress', {
                 params: params
               });
             case 5:
-              response = _context21.sent;
+              response = _context22.sent;
               if (response.data.success) {
-                _this21.progressData = response.data.data;
+                _this22.progressData = response.data.data;
               }
-              _context21.next = 13;
+              _context22.next = 13;
               break;
             case 9:
-              _context21.prev = 9;
-              _context21.t0 = _context21["catch"](0);
-              console.error('Error fetching progress data:', _context21.t0);
-              _this21.$toast.error('Gagal memuat data progress perawatan');
+              _context22.prev = 9;
+              _context22.t0 = _context22["catch"](0);
+              console.error('Error fetching progress data:', _context22.t0);
+              _this22.$toast.error('Gagal memuat data progress perawatan');
             case 13:
-              _context21.prev = 13;
-              _this21.loading = false;
-              return _context21.finish(13);
+              _context22.prev = 13;
+              _this22.loading = false;
+              return _context22.finish(13);
             case 16:
             case "end":
-              return _context21.stop();
+              return _context22.stop();
           }
-        }, _callee21, null, [[0, 9, 13, 16]]);
+        }, _callee22, null, [[0, 9, 13, 16]]);
       }))();
     },
     applyFilter: function applyFilter() {
@@ -26136,16 +26197,16 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       return date.toISOString().split('T')[0];
     },
     fetchChartData: function fetchChartData() {
-      var _this22 = this;
+      var _this23 = this;
       axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/v1/tool-conditions').then(function (response) {
-        _this22.chartData = response.data;
-        _this22.renderChartNoSeri();
+        _this23.chartData = response.data;
+        _this23.renderChartNoSeri();
       })["catch"](function (error) {
         console.error('Error fetching chart data:', error);
       });
     },
     renderChartNoSeri: function renderChartNoSeri() {
-      var _this23 = this;
+      var _this24 = this;
       if (this.pieChart) {
         this.pieChart.destroy();
       }
@@ -26191,7 +26252,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       legendContainer.style.flexWrap = 'wrap'; // Agar tetap responsif jika panjang
 
       this.chartData.labels.forEach(function (label, index) {
-        var color = _this23.chartData.colors[index];
+        var color = _this24.chartData.colors[index];
         var item = document.createElement('div');
         item.style.display = 'flex';
         item.style.alignItems = 'center';
@@ -26245,58 +26306,6 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -26687,8 +26696,18 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
         }, _callee, null, [[1, 8, 11, 14]]);
       }))();
     },
-    getImageUrl: function getImageUrl(path) {
-      return path ? "".concat(window.location.origin, "/storage/").concat(path) : null;
+    '/api/get_image/': function _api_get_image_(path) {
+      return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
+            case 0:
+              return _context2.abrupt("return", "/api/get_image/".concat(path));
+            case 1:
+            case "end":
+              return _context2.stop();
+          }
+        }, _callee2);
+      }))();
     },
     // async fetchAlats() {
     //   this.isLoading = true;
@@ -40233,71 +40252,6 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -40307,21 +40261,12 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
   },
   data: function data() {
     return {
-      // user: {
-      //   nama_pengguna: '',
-      //   divisi: '',
-      // },
-      // peminjamanData: [],
-      // dataPeminjaman: [], // Menyimpan data error
       showModalInput: false,
       // Tambahkan variabel untuk mengontrol tampilan modal input
       showPeminjaman: true,
       showPermintaan: false,
       showAlat: true,
       showMesin: false,
-      // searchQuery: '',
-      // rowsPerPage: 10,
-      // currentPage: 1,
       peminjamanData: [],
       search: '',
       selectedNama: '',
@@ -40385,12 +40330,7 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
     filteredData: function filteredData() {
       var _this = this;
       var data = this.peminjamanData.filter(function (item) {
-        return (
-          // (!this.selectedNama || item.no_seri && item.no_seri.tools.nama === this.selectedNama) &&
-          (_this.selectedStatus === '' || item.status === _this.selectedStatus) && (
-          // (item.no_seri.no_seri.toLowerCase().includes(this.search.toLowerCase()) ||
-          item.tools.nama.toLowerCase().includes(_this.search.toLowerCase()) || item.no_peminjaman.toLowerCase().includes(_this.search.toLowerCase()))
-        );
+        return (_this.selectedStatus === '' || item.status === _this.selectedStatus) && (item.tools.nama.toLowerCase().includes(_this.search.toLowerCase()) || item.no_peminjaman.toLowerCase().includes(_this.search.toLowerCase()));
       });
       if (this.sortKey) {
         data.sort(function (a, b) {
@@ -40430,7 +40370,6 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
             case 5:
               data = _context.sent;
               _this2.peminjamanData = data.by_status;
-              // console.log(this.peminjamanData);
             case 7:
             case "end":
               return _context.stop();
@@ -40441,41 +40380,6 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
     updateSelectedStatus: function updateSelectedStatus(status) {
       this.selectedStatus = status;
     },
-    // async fetchAlatPeminjaman() {
-    //   try {
-    //     const response = await axios.get(`/api/v1/peminjaman`, {
-    //       params: {
-    //         search: this.searchQuery
-    //       }
-    //     });
-    //     console.log(response.data); // Log data respons
-    //     if (Array.isArray(response.data)) {
-    //       this.dataPeminjaman = response.data.map((peminjaman) => ({
-    //         id: peminjaman.id,
-    //         id_alat: peminjaman.id_alat,
-    //         id_user: peminjaman.id_user,
-    //         kode_alat: peminjaman.kode_alat,
-    //         no_pinjam: peminjaman.no_pinjam,
-    //         stok_dipinjam: peminjaman.stok_dipinjam,
-    //         tanggal_pinjam: peminjaman.tanggal_pinjam,
-    //         tanggal_kembali: peminjaman.tanggal_kembali,
-    //         keterangan: peminjaman.keterangan,
-    //         status: peminjaman.status,
-    //         alat: peminjaman.alat,
-    //         pengguna: peminjaman.pengguna,
-    //       }));
-    //     } else {
-    //       console.error("Data respons tidak valid. Harapkan array.");
-    //       alert("Gagal memuat data. Silakan coba lagi nanti.");
-    //     }
-    //   } catch (error) {
-    //     console.error("Error fetching alat error detail:", error);
-    //     alert("Gagal memuat data. Silakan coba lagi nanti.");
-    //   }
-    // },
-    // debouncedFetchAlats: _.debounce(function () {
-    //   this.fetchAlatPeminjaman();
-    // }, 300),
     tambahPeminjamanAlat: function tambahPeminjamanAlat() {
       this.showModalInput = true;
     },
@@ -40495,33 +40399,6 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
         this.currentPage = page;
       }
     },
-    // sortJumlah(order) {
-    //   this.dataPeminjaman.sort((a, b) => {
-    //     if (order === "asc") {
-    //       return a.stok_dipinjam - b.stok_dipinjam;
-    //     } else {
-    //       return b.stok_dipinjam - a.stok_dipinjam;
-    //     }
-    //   });
-    // },
-    // sortTanggalPinjam(order) {
-    //   this.dataPeminjaman.sort((a, b) => {
-    //     if (order === "asc") {
-    //       return new Date(a.tanggal_pinjam) - new Date(b.tanggal_pinjam);
-    //     } else {
-    //       return new Date(b.tanggal_pinjam) - new Date(a.tanggal_pinjam);
-    //     }
-    //   });
-    // },
-    // sortTanggalkembali(order) {
-    //   this.dataPeminjaman.sort((a, b) => {
-    //     if (order === "asc") {
-    //       return new Date(a.tanggal_kembali) - new Date(b.tanggal_kembali);
-    //     } else {
-    //       return new Date(b.tanggal_kembali) - new Date(a.tanggal_kembali);
-    //     }
-    //   });
-    // },
     toggleAlat: function toggleAlat() {
       if (!this.showAlat) {
         this.showMesin = false;
@@ -40566,7 +40443,6 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
   },
   mounted: function mounted() {
     this.fetchData();
-    // this.fetchAlatPeminjaman();
   }
 });
 
@@ -43497,31 +43373,6 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
 function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -48537,12 +48388,6 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 
 
@@ -48647,6 +48492,15 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     }
   },
   methods: {
+    getUserNames: function getUserNames(users) {
+      if (!users || !users.length) return '–';
+      return users.map(function (u) {
+        return u.karyawan && u.karyawan.nama ? u.karyawan.nama : u.nama;
+      }).join(', ');
+    },
+    getUserLabel: function getUserLabel(user) {
+      return user.karyawan && user.karyawan.nama || user.nama;
+    },
     fetchDataFrom: function fetchDataFrom() {
       var _this = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
@@ -48777,13 +48631,6 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       this.isModalTambahOpen = false;
     },
     showModalEdit: function showModalEdit(item) {
-      // this.id = item.id;
-      // this.tanggal_perawatan = item.tanggal_perawatan;
-      // this.waktu_mulai = item.waktu_mulai;
-      // this.waktu_selesai = item.waktu_selesai;
-      // this.pic = item.pic;
-      // this.detail = item.detail;
-      // this.kondisi = item.kondisi;
       this.aktivitas = {
         id: item.id,
         pic: []
@@ -49008,24 +48855,6 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         }, _callee5, null, [[3, 16]]);
       }))();
     },
-    // simpanSelesai() {
-    //   const index = this.jadwalPerawatan.findIndex((item) => item.id === this.id);
-    //   if (index !== -1) {
-    //     this.jadwalPerawatan[index].detail = this.detail;
-    //     this.jadwalPerawatan[index].tanggal_end = this.tanggal_end;
-    //     const tanggalSekarang = new Date();
-    //     this.getOnlyTanggal[index] = tanggalSekarang.getDate();
-    //     // console.log(this.getOnlyTanggal[index]);
-    //     const tanggalEnd = tanggalSekarang.toISOString().split('T')[0];
-    //     const waktuSekarang = tanggalSekarang.toTimeString().split(' ')[0];
-    //     const tanggalWaktuEnd = `${tanggalEnd} ${waktuSekarang}`;
-    //     this.jadwalPerawatan[index].tanggal_end = tanggalWaktuEnd;
-    //     this.jadwalPerawatan[index].kondisi = this.kondisi;
-    //     this.jadwalPerawatan[index].status = 'Selesai';
-    //   }
-    //   this.closeModalSelesai();
-    //   this.isModalSelesaiOpen = false;
-    // },
     simpanJadwalPerawatan: function simpanJadwalPerawatan() {
       var _this6 = this;
       return _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
@@ -49092,73 +48921,6 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         }, _callee6, null, [[3, 16]]);
       }))();
     },
-    // simpanJadwalPerawatan() {
-    //   const index = this.jadwalPerawatan.findIndex((item) => item.id === this.id);
-    //   if (index !== -1) {
-    //     // Menampilkan SweetAlert dengan ikon peringatan dan tombol konfirmasi/pembatalan
-    //     Swal.fire({
-    //       title: 'Konfirmasi Pengiriman',
-    //       text: 'Apakah kamu yakin ingin mengirim jadwal perawatan ini?',
-    //       icon: 'warning',
-    //       showCancelButton: true,
-    //       confirmButtonText: 'Ya, kirim!',
-    //       cancelButtonText: 'Tidak, batalkan!',
-    //     }).then((result) => {
-    //       if (result.isConfirmed) {
-    //         // Proses jika pengguna memilih "Ya, kirim!"
-    //         // Mendapatkan tanggal dan waktu saat ini
-    //         const moment = require('moment-timezone');
-    //         const tanggalSekarang = moment();
-    //         const waktuGmt7 = tanggalSekarang.tz('Asia/Jakarta').format('HH:mm:ss');
-    //         const tanggal = tanggalSekarang.format('YYYY-MM-DD');
-    //         const tanggalWaktu = `${tanggal} ${waktuGmt7}`;
-    //         // Update the jadwalPerawatan object dengan tanggal dan waktu
-    //         this.jadwalPerawatan[index].tanggal_perawatan = this.tanggal_perawatan;
-    //         this.jadwalPerawatan[index].tanggal_start = tanggalWaktu;
-    //         this.jadwalPerawatan[index].waktu_mulai = this.waktu_mulai;
-    //         this.jadwalPerawatan[index].waktu_selesai = this.waktu_selesai;
-    //         this.jadwalPerawatan[index].pic = this.pic;
-    //         this.jadwalPerawatan[index].detail = this.detail;
-    //         this.jadwalPerawatan[index].kondisi = this.kondisi;
-    //         this.jadwalPerawatan[index].status = 'Pelaksanaan';
-    //         // Menyimpan PIC untuk setiap tanggal perawatan
-    //         const hari = tanggal.split('-')[2];  // Mengambil hari dari tanggal_start
-    //         if (hari) {
-    //           const startTanggal = parseInt(hari, 10);  // Menyimpan PIC untuk tanggal_start
-    //           if (!this.picPerTanggal[this.id]) {
-    //             this.picPerTanggal[this.id] = {}; // Pastikan ada objek untuk setiap id
-    //           }
-    //           this.picPerTanggal[this.id][startTanggal] = this.jadwalPerawatan.pic;  // Menyimpan nama PIC berdasarkan tanggal_start dan id
-    //         }
-    //         // Menampilkan SweetAlert sukses setelah data disimpan
-    //         Swal.fire({
-    //           title: 'Berhasil!',
-    //           text: 'Jadwal perawatan berhasil dikirim.',
-    //           icon: 'success',
-    //           confirmButtonText: 'OK'
-    //         });
-    //       } else {
-    //         // Jika pengguna memilih "Tidak, batalkan!" maka proses dibatalkan dan tidak dilanjutkan
-    //         Swal.fire({
-    //           title: 'Dibatalkan',
-    //           text: 'Pengiriman jadwal perawatan dibatalkan.',
-    //           icon: 'info',
-    //           confirmButtonText: 'OK'
-    //         });
-    //         return; // Membatalkan proses lebih lanjut
-    //       }
-    //     });
-    //   } else {
-    //     // Menampilkan SweetAlert jika tidak ditemukan
-    //     Swal.fire({
-    //       title: 'Gagal!',
-    //       text: 'Jadwal perawatan tidak ditemukan.',
-    //       icon: 'error',
-    //       confirmButtonText: 'OK'
-    //     });
-    //   }
-    //   this.closeModalEdit();
-    // },
     editJadwal: function editJadwal(item) {
       this.id = item.id;
       this.tanggal_perawatan = item.tanggal_perawatan;
@@ -72912,14 +72674,6 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -72952,9 +72706,6 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
     };
   },
   computed: {
-    // availableCategory() {
-    //   return [...new Set(this.alats.map(alat => alat.jenis.kategori.nama_kategori))];
-    // },
     availableCategory: function availableCategory() {
       var _this = this;
       return _toConsumableArray(new Set(this.alats.map(function (alat) {
@@ -72978,42 +72729,6 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
         return statusMatch && unitMatch && jenisMatch && categoryMatch && searchMatch;
       });
     },
-    // filteredAlats() {
-    //   return this.alats.filter(alat => {
-    //     const statusMatch = this.statusFilters.length ? this.statusFilters.includes(alat.status) : true;
-    //     const unitMatch = this.unitFilters.length ? this.unitFilters.includes(alat.unit) : true;
-    //     const categoryMatch = this.categoryFilters.length ? this.categoryFilters.includes(alat.jenis.kategori ? alat.jenis.kategori.nama_kategori : '') : true;
-    //     const jenisMatch = this.jenisFilter.length ? this.jenisFilter.includes(alat.jenis.nama_jenis) : true;
-    //     const searchMatch = alat.nama.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-    //       (alat.jenis.kategori && alat.jenis.kategori.kategori_merek && alat.jenis.kategori.kategori_merek[0].merek && alat.jenis.kategori.kategori_merek[0].merek.nama_merek.toLowerCase().includes(this.searchQuery.toLowerCase())) || 
-    //       alat.kode.toLowerCase().includes(this.searchQuery.toLowerCase());
-    //     return statusMatch && unitMatch && jenisMatch && categoryMatch && searchMatch;
-    //   });
-    // },
-    // filteredAlats() {
-    //   return this.alats.filter(alat => {
-    //     const statusMatch = this.statusFilters.length ? this.statusFilters.includes(alat.status) : true;
-    //     const unitMatch = this.unitFilters.length ? this.unitFilters.includes(alat.unit) : true;
-    //     const categoryMatch = this.categoryFilters.length ? this.categoryFilters.includes(alat.jenis.kategori.nama_kategori) : true;
-    //     const jenisMatch = this.jenisFilter.length ? this.jenisFilter.includes(alat.jenis.nama_jenis) : true;
-    //     const searchMatch = alat.nama.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-    //       alat.jenis.kategori.kategori_merek[0].merek.nama_merek.toLowerCase().includes(this.searchQuery.toLowerCase()) || 
-    //       alat.kode.toLowerCase().includes(this.searchQuery.toLowerCase());
-    //     return statusMatch && unitMatch && jenisMatch && categoryMatch && searchMatch;
-    //   });
-    // },
-    // filteredAlats() {
-    //   return this.alats.filter(alat => {
-    //     const statusMatch = this.statusFilters.length ? this.statusFilters.includes(alat.status) : true;
-    //     const unitMatch = this.unitFilters.length ? this.unitFilters.includes(alat.unit_alat) : true;
-    //     const categoryMatch = this.categoryFilters.length ? this.categoryFilters.includes(alat.kategori) : true;
-    //     const jenisMatch = this.jenisFilter.length ? this.jenisFilter.includes(alat.jenis) : true;
-    //     const searchMatch = alat.nama_alat.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-    //       alat.merek_alat.toLowerCase().includes(this.searchQuery.toLowerCase()) || 
-    //       alat.kode_alat.toLowerCase().includes(this.searchQuery.toLowerCase());
-    //     return statusMatch && unitMatch && jenisMatch && categoryMatch && searchMatch;
-    //   });
-    // },
     filteredGroupedAlats: function filteredGroupedAlats() {
       var grouped = this.paginatedAlats.reduce(function (groups, alat) {
         var _alat$kode, _alat$jenis;
@@ -73036,28 +72751,6 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
       }, {});
       return grouped;
     },
-    // filteredGroupedAlats() {
-    //   const grouped = this.paginatedAlats.reduce((groups, alat) => {
-    //     const kategori = alat.nama_kategori || 'Uncategorized';
-    //     if (!groups[kategori]) {
-    //       groups[kategori] = [];
-    //     }
-    //     groups[kategori].push(alat);
-    //     return groups;
-    //   }, {});
-    //   return grouped;
-    // },
-    // filteredGroupedAlats() {
-    //   const grouped = this.paginatedAlats.reduce((groups, alat) => {
-    //     const kategori = alat.jenis.kategori.nama_kategori || 'Uncategorized';
-    //     if (!groups[kategori]) {
-    //       groups[kategori] = [];
-    //     }
-    //     groups[kategori].push(alat);
-    //     return groups;
-    //   }, {});
-    //   return grouped;
-    // },
     paginatedAlats: function paginatedAlats() {
       var start = (this.currentPage - 1) * this.rowsPerPage;
       return this.filteredAlats.slice(start, start + this.rowsPerPage);
@@ -73108,51 +72801,6 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
     getImageUrl: function getImageUrl(path) {
       return path ? "".concat(window.location.origin, "/storage/").concat(path) : null;
     },
-    // async fetchAlats() {
-    //   this.isLoading = true;
-    //   try {
-    //     const response = await axios.get('/api/v1/tools');
-    //     this.tools = response.data.map((item) => ({
-    //       id: item.id,
-    //       kode: item.kode,
-    //       nama: item.nama,
-    //       jenis: item.jenis,
-    //       stok_awal: item.stok_awal,
-    //       stok_akhir: item.stok_akhir,
-    //       gambar: item.gambar,
-    //     }));
-    //     console.log('Data telah di-fetch:', this.tools);
-    //   } catch (error) {
-    //     console.error('Error fetching tools:', error);
-    //   } finally {
-    //     this.isLoading = false;
-    //   }
-    // },
-    // async fetchAlats() {
-    //   this.isLoading = true;
-    //   try {
-    //     const response = await axios.get(`/api/alats`);
-    //     this.alats = response.data.data.map((alat) => ({
-    //       id: alat.id,
-    //       kode_alat: alat.kode_alat,
-    //       jenis: alat.jenis,
-    //       nama_alat: alat.nama_alat,
-    //       merek_alat: alat.merek_alat,
-    //       tipe_alat: alat.tipe_alat,
-    //       unit_alat: alat.unit_alat,
-    //       status: alat.status,
-    //       stok_awal: alat.stok_awal,
-    //       stok_akhir: alat.stok_akhir,
-    //       gambar_alat: alat.gambar,
-    //       kategori: alat.kategori,
-    //     }));
-    //     //console.log(this.alats);
-    //   } catch (error) {
-    //     console.error("Error fetching data:", error);
-    //   } finally {
-    //     this.isLoading = false; // Hilangkan loader
-    //   }
-    // },
     sortStokAwal: function sortStokAwal(order) {
       this.alats.sort(function (a, b) {
         if (order === 'asc') {
@@ -79204,93 +78852,6 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -79349,42 +78910,6 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
         return statusMatch && unitMatch && jenisMatch && categoryMatch && searchMatch;
       });
     },
-    // filteredAlats() {
-    //   return this.alats.filter(alat => {
-    //     const statusMatch = this.statusFilters.length ? this.statusFilters.includes(alat.status) : true;
-    //     const unitMatch = this.unitFilters.length ? this.unitFilters.includes(alat.unit) : true;
-    //     const categoryMatch = this.categoryFilters.length ? this.categoryFilters.includes(alat.jenis.kategori ? alat.jenis.kategori.nama_kategori : '') : true;
-    //     const jenisMatch = this.jenisFilter.length ? this.jenisFilter.includes(alat.jenis.nama_jenis) : true;
-    //     const searchMatch = alat.nama.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-    //       (alat.jenis.kategori && alat.jenis.kategori.kategori_merek && alat.jenis.kategori.kategori_merek[0].merek && alat.jenis.kategori.kategori_merek[0].merek.nama_merek.toLowerCase().includes(this.searchQuery.toLowerCase())) || 
-    //       alat.kode.toLowerCase().includes(this.searchQuery.toLowerCase());
-    //     return statusMatch && unitMatch && jenisMatch && categoryMatch && searchMatch;
-    //   });
-    // },
-    // filteredAlats() {
-    //   return this.alats.filter(alat => {
-    //     const statusMatch = this.statusFilters.length ? this.statusFilters.includes(alat.status) : true;
-    //     const unitMatch = this.unitFilters.length ? this.unitFilters.includes(alat.unit) : true;
-    //     const categoryMatch = this.categoryFilters.length ? this.categoryFilters.includes(alat.jenis.kategori.nama_kategori) : true;
-    //     const jenisMatch = this.jenisFilter.length ? this.jenisFilter.includes(alat.jenis.nama_jenis) : true;
-    //     const searchMatch = alat.nama.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-    //       alat.jenis.kategori.kategori_merek[0].merek.nama_merek.toLowerCase().includes(this.searchQuery.toLowerCase()) || 
-    //       alat.kode.toLowerCase().includes(this.searchQuery.toLowerCase());
-    //     return statusMatch && unitMatch && jenisMatch && categoryMatch && searchMatch;
-    //   });
-    // },
-    // filteredAlats() {
-    //   return this.alats.filter(alat => {
-    //     const statusMatch = this.statusFilters.length ? this.statusFilters.includes(alat.status) : true;
-    //     const unitMatch = this.unitFilters.length ? this.unitFilters.includes(alat.unit_alat) : true;
-    //     const categoryMatch = this.categoryFilters.length ? this.categoryFilters.includes(alat.kategori) : true;
-    //     const jenisMatch = this.jenisFilter.length ? this.jenisFilter.includes(alat.jenis) : true;
-    //     const searchMatch = alat.nama_alat.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-    //       alat.merek_alat.toLowerCase().includes(this.searchQuery.toLowerCase()) || 
-    //       alat.kode_alat.toLowerCase().includes(this.searchQuery.toLowerCase());
-    //     return statusMatch && unitMatch && jenisMatch && categoryMatch && searchMatch;
-    //   });
-    // },
     filteredGroupedAlats: function filteredGroupedAlats() {
       var grouped = this.paginatedAlats.reduce(function (groups, alat) {
         var _alat$kode, _alat$jenis;
@@ -79407,28 +78932,6 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
       }, {});
       return grouped;
     },
-    // filteredGroupedAlats() {
-    //   const grouped = this.paginatedAlats.reduce((groups, alat) => {
-    //     const kategori = alat.nama_kategori || 'Uncategorized';
-    //     if (!groups[kategori]) {
-    //       groups[kategori] = [];
-    //     }
-    //     groups[kategori].push(alat);
-    //     return groups;
-    //   }, {});
-    //   return grouped;
-    // },
-    // filteredGroupedAlats() {
-    //   const grouped = this.paginatedAlats.reduce((groups, alat) => {
-    //     const kategori = alat.jenis.kategori.nama_kategori || 'Uncategorized';
-    //     if (!groups[kategori]) {
-    //       groups[kategori] = [];
-    //     }
-    //     groups[kategori].push(alat);
-    //     return groups;
-    //   }, {});
-    //   return grouped;
-    // },
     paginatedAlats: function paginatedAlats() {
       var start = (this.currentPage - 1) * this.rowsPerPage;
       return this.filteredAlats.slice(start, start + this.rowsPerPage);
@@ -79479,51 +78982,6 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
     getImageUrl: function getImageUrl(path) {
       return path ? "".concat(window.location.origin, "/storage/").concat(path) : null;
     },
-    // async fetchAlats() {
-    //   this.isLoading = true;
-    //   try {
-    //     const response = await axios.get('/api/v1/tools');
-    //     this.tools = response.data.map((item) => ({
-    //       id: item.id,
-    //       kode: item.kode,
-    //       nama: item.nama,
-    //       jenis: item.jenis,
-    //       stok_awal: item.stok_awal,
-    //       stok_akhir: item.stok_akhir,
-    //       gambar: item.gambar,
-    //     }));
-    //     console.log('Data telah di-fetch:', this.tools);
-    //   } catch (error) {
-    //     console.error('Error fetching tools:', error);
-    //   } finally {
-    //     this.isLoading = false;
-    //   }
-    // },
-    // async fetchAlats() {
-    //   this.isLoading = true;
-    //   try {
-    //     const response = await axios.get(`/api/alats`);
-    //     this.alats = response.data.data.map((alat) => ({
-    //       id: alat.id,
-    //       kode_alat: alat.kode_alat,
-    //       jenis: alat.jenis,
-    //       nama_alat: alat.nama_alat,
-    //       merek_alat: alat.merek_alat,
-    //       tipe_alat: alat.tipe_alat,
-    //       unit_alat: alat.unit_alat,
-    //       status: alat.status,
-    //       stok_awal: alat.stok_awal,
-    //       stok_akhir: alat.stok_akhir,
-    //       gambar_alat: alat.gambar,
-    //       kategori: alat.kategori,
-    //     }));
-    //     //console.log(this.alats);
-    //   } catch (error) {
-    //     console.error("Error fetching data:", error);
-    //   } finally {
-    //     this.isLoading = false; // Hilangkan loader
-    //   }
-    // },
     sortStokAwal: function sortStokAwal(order) {
       this.alats.sort(function (a, b) {
         if (order === 'asc') {
@@ -79891,65 +79349,6 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -79959,21 +79358,12 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
   },
   data: function data() {
     return {
-      // user: {
-      //   nama_pengguna: '',
-      //   divisi: '',
-      // },
-      // peminjamanData: [],
-      // dataPeminjaman: [], // Menyimpan data error
       showModalInput: false,
       // Tambahkan variabel untuk mengontrol tampilan modal input
       showPeminjaman: true,
       showPermintaan: false,
       showAlat: true,
       showMesin: false,
-      // searchQuery: '',
-      // rowsPerPage: 10,
-      // currentPage: 1,
       peminjamanData: [],
       search: '',
       selectedNama: '',
@@ -80037,12 +79427,7 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
     filteredData: function filteredData() {
       var _this = this;
       var data = this.peminjamanData.filter(function (item) {
-        return (
-          // (!this.selectedNama || item.no_seri && item.no_seri.tools.nama === this.selectedNama) &&
-          (_this.selectedStatus === '' || item.status === _this.selectedStatus) && (
-          // (item.no_seri.no_seri.toLowerCase().includes(this.search.toLowerCase()) ||
-          item.tools.nama.toLowerCase().includes(_this.search.toLowerCase()) || item.no_peminjaman.toLowerCase().includes(_this.search.toLowerCase()))
-        );
+        return (_this.selectedStatus === '' || item.status === _this.selectedStatus) && (item.tools.nama.toLowerCase().includes(_this.search.toLowerCase()) || item.no_peminjaman.toLowerCase().includes(_this.search.toLowerCase()));
       });
       if (this.sortKey) {
         data.sort(function (a, b) {
@@ -80093,44 +79478,6 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
     updateSelectedStatus: function updateSelectedStatus(status) {
       this.selectedStatus = status;
     },
-    // async fetchAlatPeminjaman() {
-    //   try {
-    //     const response = await axios.get(`/api/v1/peminjaman`, {
-    //       params: {
-    //         search: this.searchQuery
-    //       }
-    //     });
-    //     console.log(response.data); // Log data respons
-    //     if (Array.isArray(response.data)) {
-    //       this.dataPeminjaman = response.data.map((peminjaman) => ({
-    //         id: peminjaman.id,
-    //         id_alat: peminjaman.id_alat,
-    //         id_user: peminjaman.id_user,
-    //         kode_alat: peminjaman.kode_alat,
-    //         no_pinjam: peminjaman.no_pinjam,
-    //         stok_dipinjam: peminjaman.stok_dipinjam,
-    //         tanggal_pinjam: peminjaman.tanggal_pinjam,
-    //         tanggal_kembali: peminjaman.tanggal_kembali,
-    //         keterangan: peminjaman.keterangan,
-    //         status: peminjaman.status,
-    //         alat: peminjaman.alat,
-    //         pengguna: peminjaman.pengguna,
-    //       }));
-    //     } else {
-    //       console.error("Data respons tidak valid. Harapkan array.");
-    //       alert("Gagal memuat data. Silakan coba lagi nanti.");
-    //     }
-    //   } catch (error) {
-    //     console.error("Error fetching alat error detail:", error);
-    //     alert("Gagal memuat data. Silakan coba lagi nanti.");
-    //   }
-    // },
-    // debouncedFetchAlats: _.debounce(function () {
-    //   this.fetchAlatPeminjaman();
-    // }, 300),
-    // tambahPeminjamanAlat() {
-    //   this.showModalInput = true;
-    // },
     tutupModal: function tutupModal() {
       this.showModalInput = false;
     },
@@ -80147,33 +79494,6 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
         this.currentPage = page;
       }
     },
-    // sortJumlah(order) {
-    //   this.dataPeminjaman.sort((a, b) => {
-    //     if (order === "asc") {
-    //       return a.stok_dipinjam - b.stok_dipinjam;
-    //     } else {
-    //       return b.stok_dipinjam - a.stok_dipinjam;
-    //     }
-    //   });
-    // },
-    // sortTanggalPinjam(order) {
-    //   this.dataPeminjaman.sort((a, b) => {
-    //     if (order === "asc") {
-    //       return new Date(a.tanggal_pinjam) - new Date(b.tanggal_pinjam);
-    //     } else {
-    //       return new Date(b.tanggal_pinjam) - new Date(a.tanggal_pinjam);
-    //     }
-    //   });
-    // },
-    // sortTanggalkembali(order) {
-    //   this.dataPeminjaman.sort((a, b) => {
-    //     if (order === "asc") {
-    //       return new Date(a.tanggal_kembali) - new Date(b.tanggal_kembali);
-    //     } else {
-    //       return new Date(b.tanggal_kembali) - new Date(a.tanggal_kembali);
-    //     }
-    //   });
-    // },
     toggleAlat: function toggleAlat() {
       if (!this.showAlat) {
         this.showMesin = false;
@@ -80221,7 +79541,6 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
   },
   mounted: function mounted() {
     this.fetchData();
-    // this.fetchAlatPeminjaman();
   }
 });
 
@@ -83574,29 +82893,6 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -84640,28 +83936,27 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
     },
     submitForm: function submitForm() {
       var _this2 = this;
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/v1/permintaan', this.form, {
-        headers: {
-          'Authorization': "Bearer ".concat(localStorage.getItem('token')),
-          'Content-Type': 'application/json'
-        }
-      }).then(function (response) {
-        sweetalert2__WEBPACK_IMPORTED_MODULE_2___default().fire({
-          title: 'Berhasil!',
-          text: 'Data berhasil disimpan.',
-          icon: 'success',
-          confirmButtonText: 'OK'
-        });
-        _this2.$emit('tutup-modal');
-        _this2.$emit('refresh-data');
-        _this2.form = {}; // reset form
-      })["catch"](function (error) {
-        console.error('Gagal menyimpan permintaan:', error.response);
-        sweetalert2__WEBPACK_IMPORTED_MODULE_2___default().fire({
-          title: 'Gagal!',
-          text: 'Gagal menyimpan permintaan.',
-          icon: 'error',
-          confirmButtonText: 'OK'
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get('/sanctum/csrf-cookie').then(function () {
+        axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/v1/add-permintaan', _this2.form, {
+          withCredentials: true
+        }).then(function (response) {
+          sweetalert2__WEBPACK_IMPORTED_MODULE_2___default().fire({
+            title: 'Berhasil!',
+            text: 'Data berhasil disimpan.',
+            icon: 'success',
+            confirmButtonText: 'OK'
+          });
+          _this2.$emit('tutup-modal');
+          _this2.$emit('refresh-data');
+          _this2.form = {}; // reset form
+        })["catch"](function (error) {
+          console.error('Gagal menyimpan permintaan:', error.response);
+          sweetalert2__WEBPACK_IMPORTED_MODULE_2___default().fire({
+            title: 'Gagal!',
+            text: 'Gagal menyimpan permintaan.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
         });
       });
     },
@@ -107050,7 +106345,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* Tambahkan CSS untuk garis bawah */\n.table td[data-v-69bbc481] {\r\n  border: 1px solid #fff;\n}\n#pills-tab .nav-link[data-v-69bbc481] {\r\n  color: #000;\n}\n#pills-tab .nav-link.active[data-v-69bbc481] {\r\n  background-color: #169ea8;\r\n  color: #fff;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* Tambahkan CSS untuk garis bawah */\n.table td[data-v-69bbc481] {\r\n  border: 1px solid #fff;\n}\n#pills-tab .nav-link[data-v-69bbc481] {\r\n  color: #000;\n}\n#pills-tab .nav-link.active[data-v-69bbc481] {\r\n  background-color: #169ea8;\r\n  color: #fff;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -205066,6 +204361,77 @@ var render = function () {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-lg-6 mb-4" }, [
+        _c("div", { staticClass: "border-left-primary shadow h-100 py-2" }, [
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "row no-gutters align-items-center" }, [
+              _c("div", { staticClass: "col ml-2" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "text-xs font-weight-bold text-gray-900 text-uppercase mb-1",
+                  },
+                  [
+                    _vm._v(
+                      "\n                  Tanggal Peminjaman Lewat\n                "
+                    ),
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "h5 mb-0 font-weight-bold" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "text-decoration-none",
+                      class:
+                        _vm.overDatePeminjamanStockCount > 0
+                          ? "text-danger"
+                          : "text-gray-800",
+                      attrs: { href: "#" },
+                    },
+                    [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(_vm.overDatePeminjamanStockCount) +
+                          "\n                  "
+                      ),
+                    ]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "mt-2" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "text-primary small text-decoration-none",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function ($event) {
+                          $event.preventDefault()
+                          return _vm.showOverDatePeminjamanModal.apply(
+                            null,
+                            arguments
+                          )
+                        },
+                      },
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-eye text-primary" }),
+                      _c("b", [_vm._v(" Detail")]),
+                    ]
+                  ),
+                ]),
+              ]),
+              _vm._v(" "),
+              _vm._m(25),
+            ]),
+          ]),
+        ]),
+      ]),
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-lg-8 mb-4" }, [
         _c("div", { staticClass: "card shadow mb-4" }, [
           _c(
@@ -205274,14 +204640,14 @@ var render = function () {
                 ]),
               ])
             : _c("div", { staticClass: "card-body text-center" }, [
-                _vm._m(25),
+                _vm._m(26),
                 _vm._v(" "),
                 _c("p", [_vm._v("Memuat data progress perawatan...")]),
               ]),
         ]),
       ]),
       _vm._v(" "),
-      _vm._m(26),
+      _vm._m(27),
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
@@ -205355,7 +204721,7 @@ var render = function () {
             ]),
             _vm._v(" "),
             _vm.isloading
-              ? _c("div", { staticClass: "text-center py-4" }, [_vm._m(27)])
+              ? _c("div", { staticClass: "text-center py-4" }, [_vm._m(28)])
               : _vm._e(),
             _vm._v(" "),
             _vm.errorMessage
@@ -205444,7 +204810,7 @@ var render = function () {
             ]),
             _vm._v(" "),
             _vm.isloading
-              ? _c("div", { staticClass: "text-center py-4" }, [_vm._m(28)])
+              ? _c("div", { staticClass: "text-center py-4" }, [_vm._m(29)])
               : _vm._e(),
             _vm._v(" "),
             _vm.errorMessagePermintaan
@@ -205789,6 +205155,17 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Aksi")]),
       ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-auto" }, [
+      _c("i", {
+        staticClass: "bi bi-calendar2-x fa-2x mr-3",
+        staticStyle: { color: "rgba(22, 158, 168, 0.2)" },
+      }),
     ])
   },
   function () {
@@ -206215,12 +205592,14 @@ var render = function () {
                               _c("td", { staticClass: "text-left" }, [
                                 _c("img", {
                                   staticStyle: {
-                                    "max-width": "50px",
-                                    "max-height": "50px",
+                                    "max-width": "38px",
+                                    "max-height": "38px",
                                     "margin-right": "20px",
                                     "border-radius": "10px",
                                   },
-                                  attrs: { src: _vm.getImageUrl(item.gambar) },
+                                  attrs: {
+                                    src: "/api/get_image/" + item.gambar,
+                                  },
                                 }),
                                 _vm._v(
                                   "\n            " +
@@ -222010,7 +221389,7 @@ var render = function () {
                           "border-radius": "0",
                         },
                         attrs: {
-                          src: _vm.getImageUrl(_vm.form.gambar),
+                          src: "/api/get_image/" + _vm.form.gambar,
                           alt: "Ini Gambar Sih Harusnya",
                         },
                       }),
@@ -224998,7 +224377,12 @@ var render = function () {
                         _vm._v(" "),
                         _c("td", { staticClass: "text-center p-2 border" }, [
                           _vm._v(
-                            _vm._s((item.users && item.users.nama) || "-")
+                            _vm._s(
+                              (item.users &&
+                                item.users.karyawan &&
+                                item.users.karyawan.nama) ||
+                                "-"
+                            )
                           ),
                         ]),
                         _vm._v(" "),
@@ -225007,7 +224391,7 @@ var render = function () {
                             _vm._s(
                               (item.users &&
                                 item.users.divisi &&
-                                item.users.divisi.divisi) ||
+                                item.users.divisi.nama) ||
                                 "-"
                             )
                           ),
@@ -225704,8 +225088,8 @@ var render = function () {
                       [
                         _vm._v(
                           _vm._s(
-                            _vm.peminjaman.pengguna
-                              ? _vm.peminjaman.pengguna.nama_pengguna
+                            _vm.peminjaman.users
+                              ? _vm.peminjaman.users.karyawan.nama
                               : "-"
                           )
                         ),
@@ -225720,8 +225104,8 @@ var render = function () {
                       [
                         _vm._v(
                           _vm._s(
-                            _vm.peminjaman.pengguna
-                              ? _vm.peminjaman.pengguna.divisi
+                            _vm.peminjaman.users
+                              ? _vm.peminjaman.users.divisi.nama
                               : "-"
                           )
                         ),
@@ -229176,7 +228560,7 @@ var render = function () {
                       },
                     },
                   }),
-                  _vm._v("\n           " + _vm._s(sts) + "\n         "),
+                  _vm._v("\n          " + _vm._s(sts) + "\n        "),
                 ]),
               ])
             }),
@@ -229383,7 +228767,12 @@ var render = function () {
                   _vm._v(" "),
                   _c("td", [
                     _vm._v(
-                      _vm._s((permintaan.users && permintaan.users.nama) || "-")
+                      _vm._s(
+                        (permintaan.users &&
+                          permintaan.users &&
+                          permintaan.users.karyawan.nama) ||
+                          "-"
+                      )
                     ),
                   ]),
                   _vm._v(" "),
@@ -229392,7 +228781,7 @@ var render = function () {
                       _vm._s(
                         (permintaan.users &&
                           permintaan.users.divisi &&
-                          permintaan.users.divisi.divisi) ||
+                          permintaan.users.divisi.nama) ||
                           "-"
                       )
                     ),
@@ -229415,9 +228804,9 @@ var render = function () {
                       },
                       [
                         _vm._v(
-                          "\n               " +
+                          "\n              " +
                             _vm._s(permintaan.status || "-") +
-                            "\n             "
+                            "\n            "
                         ),
                       ]
                     ),
@@ -229446,7 +228835,7 @@ var render = function () {
                             },
                             [
                               _c("i", { staticClass: "fas fa-eye text-info" }),
-                              _vm._v(" Detail\n                 "),
+                              _vm._v(" Detail\n                "),
                             ]
                           ),
                         ]
@@ -229474,7 +228863,7 @@ var render = function () {
           },
           [
             _c("div", { staticClass: "ml-3" }, [
-              _vm._v("\n         Rows per page:\n         "),
+              _vm._v("\n        Rows per page:\n        "),
               _c("span", [_vm._v(_vm._s(_vm.rowsPerPage))]),
             ]),
             _vm._v(" "),
@@ -230896,8 +230285,8 @@ var render = function () {
                       [
                         _vm._v(
                           _vm._s(
-                            _vm.dataPermintaan.pengguna
-                              ? _vm.dataPermintaan.pengguna.nama_pengguna
+                            _vm.dataPermintaan.users
+                              ? _vm.dataPermintaan.users.karyawan.nama
                               : "-"
                           )
                         ),
@@ -230915,8 +230304,8 @@ var render = function () {
                       [
                         _vm._v(
                           _vm._s(
-                            _vm.dataPermintaan.pengguna
-                              ? _vm.dataPermintaan.pengguna.divisi
+                            _vm.dataPermintaan.users
+                              ? _vm.dataPermintaan.users.divisi.nama
                               : "-"
                           )
                         ),
@@ -234896,15 +234285,7 @@ var render = function () {
                         _c("td", [
                           _vm._v(
                             "\n            " +
-                              _vm._s(
-                                item.users && item.users.length
-                                  ? item.users
-                                      .map(function (u) {
-                                        return u.nama
-                                      })
-                                      .join(", ")
-                                  : "–"
-                              ) +
+                              _vm._s(_vm.getUserNames(item.users)) +
                               "\n          "
                           ),
                         ]),
@@ -235404,7 +234785,7 @@ var render = function () {
                               multiple: "",
                               placeholder: "Pilih PIC",
                               searchable: true,
-                              label: "nama",
+                              "get-option-label": _vm.getUserLabel,
                               reduce: function (user) {
                                 return user.id
                               },
@@ -266144,12 +265525,14 @@ var render = function () {
                               _c("td", { staticClass: "text-left" }, [
                                 _c("img", {
                                   staticStyle: {
-                                    "max-width": "50px",
-                                    "max-height": "50px",
+                                    "max-width": "38px",
+                                    "max-height": "38px",
                                     "margin-right": "20px",
                                     "border-radius": "10px",
                                   },
-                                  attrs: { src: _vm.getImageUrl(item.gambar) },
+                                  attrs: {
+                                    src: "/api/get_image/" + item.gambar,
+                                  },
                                 }),
                                 _vm._v(
                                   "\n            " +
@@ -269032,12 +268415,26 @@ var render = function () {
                           _vm._v(_vm._s(item.tgl_pinjam || "-")),
                         ]),
                         _vm._v(" "),
-                        _c("td", { staticClass: "text-center p-2 border" }, [
-                          _vm._v("-"),
+                        _c("td", [
+                          _vm._v(
+                            _vm._s(
+                              (item.users &&
+                                item.users &&
+                                item.users.karyawan.nama) ||
+                                "-"
+                            )
+                          ),
                         ]),
                         _vm._v(" "),
-                        _c("td", { staticClass: "text-center p-2 border" }, [
-                          _vm._v("-"),
+                        _c("td", [
+                          _vm._v(
+                            _vm._s(
+                              (item.users &&
+                                item.users.divisi &&
+                                item.users.divisi.nama) ||
+                                "-"
+                            )
+                          ),
                         ]),
                         _vm._v(" "),
                         _c("td", { staticClass: "text-center p-2 border" }, [
@@ -269391,8 +268788,8 @@ var render = function () {
                       [
                         _vm._v(
                           _vm._s(
-                            _vm.peminjaman.pengguna
-                              ? _vm.peminjaman.pengguna.nama_pengguna
+                            _vm.dataPermintaan.users
+                              ? _vm.dataPermintaan.users.karyawan.nama
                               : "-"
                           )
                         ),
@@ -269403,12 +268800,15 @@ var render = function () {
                     _vm._v(" "),
                     _c(
                       "dt",
-                      { staticStyle: { color: "#000", "margin-top": "-10px" } },
+                      {
+                        staticClass: "mb-2",
+                        staticStyle: { color: "#000", "margin-top": "-10px" },
+                      },
                       [
                         _vm._v(
                           _vm._s(
-                            _vm.peminjaman.pengguna
-                              ? _vm.peminjaman.pengguna.divisi
+                            _vm.dataPermintaan.users
+                              ? _vm.dataPermintaan.users.divisi.nama
                               : "-"
                           )
                         ),
@@ -270001,9 +269401,10 @@ var render = function () {
                   _c("td", [
                     _vm._v(
                       _vm._s(
-                        permintaan.pengguna
-                          ? permintaan.pengguna.nama_pengguna
-                          : "-"
+                        (permintaan.users &&
+                          permintaan.users &&
+                          permintaan.users.karyawan.nama) ||
+                          "-"
                       )
                     ),
                   ]),
@@ -270011,7 +269412,10 @@ var render = function () {
                   _c("td", [
                     _vm._v(
                       _vm._s(
-                        permintaan.pengguna ? permintaan.pengguna.divisi : "-"
+                        (permintaan.users &&
+                          permintaan.users.divisi &&
+                          permintaan.users.divisi.nama) ||
+                          "-"
                       )
                     ),
                   ]),
@@ -270340,8 +269744,8 @@ var render = function () {
                       [
                         _vm._v(
                           _vm._s(
-                            _vm.dataPermintaan.pengguna
-                              ? _vm.dataPermintaan.pengguna.nama_pengguna
+                            _vm.dataPermintaan.users
+                              ? _vm.dataPermintaan.users.karyawan.nama
                               : "-"
                           )
                         ),
@@ -270359,8 +269763,8 @@ var render = function () {
                       [
                         _vm._v(
                           _vm._s(
-                            _vm.dataPermintaan.pengguna
-                              ? _vm.dataPermintaan.pengguna.divisi
+                            _vm.dataPermintaan.users
+                              ? _vm.dataPermintaan.users.divisi.nama
                               : "-"
                           )
                         ),
@@ -274855,7 +274259,9 @@ var render = function () {
                                     "margin-right": "20px",
                                     "border-radius": "10px",
                                   },
-                                  attrs: { src: _vm.getImageUrl(item.gambar) },
+                                  attrs: {
+                                    src: "/api/get_image/" + item.gambar,
+                                  },
                                 }),
                                 _vm._v(
                                   "\n            " +
@@ -275408,7 +274814,12 @@ var render = function () {
                         _vm._v(" "),
                         _c("td", { staticClass: "text-center p-2 border" }, [
                           _vm._v(
-                            _vm._s((item.users && item.users.nama) || "-")
+                            _vm._s(
+                              (item.users &&
+                                item.users.karyawan &&
+                                item.users.karyawan.nama) ||
+                                "-"
+                            )
                           ),
                         ]),
                         _vm._v(" "),
@@ -275417,7 +274828,7 @@ var render = function () {
                             _vm._s(
                               (item.users &&
                                 item.users.divisi &&
-                                item.users.divisi.divisi) ||
+                                item.users.divisi.nama) ||
                                 "-"
                             )
                           ),
@@ -276114,8 +275525,8 @@ var render = function () {
                       [
                         _vm._v(
                           _vm._s(
-                            _vm.peminjaman.pengguna
-                              ? _vm.peminjaman.pengguna.nama_pengguna
+                            _vm.peminjaman.users
+                              ? _vm.peminjaman.users.karyawan.nama
                               : "-"
                           )
                         ),
@@ -276130,8 +275541,8 @@ var render = function () {
                       [
                         _vm._v(
                           _vm._s(
-                            _vm.peminjaman.pengguna
-                              ? _vm.peminjaman.pengguna.divisi
+                            _vm.peminjaman.users
+                              ? _vm.peminjaman.users.divisi.nama
                               : "-"
                           )
                         ),
@@ -280142,7 +279553,12 @@ var render = function () {
                   _vm._v(" "),
                   _c("td", [
                     _vm._v(
-                      _vm._s((permintaan.users && permintaan.users.nama) || "-")
+                      _vm._s(
+                        (permintaan.users &&
+                          permintaan.users &&
+                          permintaan.users.karyawan.nama) ||
+                          "-"
+                      )
                     ),
                   ]),
                   _vm._v(" "),
@@ -280151,7 +279567,7 @@ var render = function () {
                       _vm._s(
                         (permintaan.users &&
                           permintaan.users.divisi &&
-                          permintaan.users.divisi.divisi) ||
+                          permintaan.users.divisi.nama) ||
                           "-"
                       )
                     ),
@@ -281138,8 +280554,8 @@ var render = function () {
                       [
                         _vm._v(
                           _vm._s(
-                            _vm.dataPermintaan.pengguna
-                              ? _vm.dataPermintaan.pengguna.nama_pengguna
+                            _vm.dataPermintaan.users
+                              ? _vm.dataPermintaan.users.karyawan.nama
                               : "-"
                           )
                         ),
@@ -281157,8 +280573,8 @@ var render = function () {
                       [
                         _vm._v(
                           _vm._s(
-                            _vm.dataPermintaan.pengguna
-                              ? _vm.dataPermintaan.pengguna.divisi
+                            _vm.dataPermintaan.users
+                              ? _vm.dataPermintaan.users.divisi.nama
                               : "-"
                           )
                         ),
@@ -322211,10 +321627,17 @@ const version = XLSX.version;
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 
 
+
+
+// Wajib untuk Sanctum agar cookie dikirim
+(axios__WEBPACK_IMPORTED_MODULE_0___default().defaults).withCredentials = true;
+(axios__WEBPACK_IMPORTED_MODULE_0___default().defaults).baseURL = 'http://localhost:8000'; // sesuaikan domain backend kamu
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -322224,7 +321647,7 @@ __webpack_require__.r(__webpack_exports__);
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 window.Vue = (__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_2__["default"]);
 
 /**
  * The following block of code may be used to automatically register your
@@ -322237,18 +321660,18 @@ vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vue_router__WEBPACK_IMPORTED_MOD
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('example-component', (__webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('example-component', (__webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]));
 //Vue.component('input-alat', require('./components/admin-mtc/InputAlat.vue').default);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('lapor-kendala', (__webpack_require__(/*! ./components/admin-mtc/LaporKendala.vue */ "./resources/js/components/admin-mtc/LaporKendala.vue")["default"]));
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('alat-rusak', (__webpack_require__(/*! ./components/admin-mtc/DataDetailAlat/DataAlatRusak.vue */ "./resources/js/components/admin-mtc/DataDetailAlat/DataAlatRusak.vue")["default"]));
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('alat-musnah', (__webpack_require__(/*! ./components/admin-mtc/DataDetailAlat/DataAlatMusnah.vue */ "./resources/js/components/admin-mtc/DataDetailAlat/DataAlatMusnah.vue")["default"]));
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('alat-error', (__webpack_require__(/*! ./components/admin-mtc/DataDetailAlat/DataAlatError.vue */ "./resources/js/components/admin-mtc/DataDetailAlat/DataAlatError.vue")["default"]));
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('alat-hilang', (__webpack_require__(/*! ./components/admin-mtc/DataDetailAlat/DataAlatHilang.vue */ "./resources/js/components/admin-mtc/DataDetailAlat/DataAlatHilang.vue")["default"]));
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('rincian-alat', (__webpack_require__(/*! ./components/admin-mtc/DataDetailAlat/DataRincianAlat/DataRincianAlat.vue */ "./resources/js/components/admin-mtc/DataDetailAlat/DataRincianAlat/DataRincianAlat.vue")["default"]));
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('rincian-alat-sudah-digunakan', (__webpack_require__(/*! ./components/admin-mtc/DataDetailAlat/DataRincianAlat/DataRincianAlatSudahDigunakan.vue */ "./resources/js/components/admin-mtc/DataDetailAlat/DataRincianAlat/DataRincianAlatSudahDigunakan.vue")["default"]));
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('rincian-alat-peminjaman', (__webpack_require__(/*! ./components/admin-mtc/DataDetailAlat/DataRincianAlat/DataRincianAlatPeminjaman.vue */ "./resources/js/components/admin-mtc/DataDetailAlat/DataRincianAlat/DataRincianAlatPeminjaman.vue")["default"]));
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('input-rincian-alat', (__webpack_require__(/*! ./components/admin-mtc/InputRincianAlat.vue */ "./resources/js/components/admin-mtc/InputRincianAlat.vue")["default"]));
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('mesin-hilang', (__webpack_require__(/*! ./components/admin-mtc/DataMesin/DetailMesin/Kondisi/DataHilang.vue */ "./resources/js/components/admin-mtc/DataMesin/DetailMesin/Kondisi/DataHilang.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('lapor-kendala', (__webpack_require__(/*! ./components/admin-mtc/LaporKendala.vue */ "./resources/js/components/admin-mtc/LaporKendala.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('alat-rusak', (__webpack_require__(/*! ./components/admin-mtc/DataDetailAlat/DataAlatRusak.vue */ "./resources/js/components/admin-mtc/DataDetailAlat/DataAlatRusak.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('alat-musnah', (__webpack_require__(/*! ./components/admin-mtc/DataDetailAlat/DataAlatMusnah.vue */ "./resources/js/components/admin-mtc/DataDetailAlat/DataAlatMusnah.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('alat-error', (__webpack_require__(/*! ./components/admin-mtc/DataDetailAlat/DataAlatError.vue */ "./resources/js/components/admin-mtc/DataDetailAlat/DataAlatError.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('alat-hilang', (__webpack_require__(/*! ./components/admin-mtc/DataDetailAlat/DataAlatHilang.vue */ "./resources/js/components/admin-mtc/DataDetailAlat/DataAlatHilang.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('rincian-alat', (__webpack_require__(/*! ./components/admin-mtc/DataDetailAlat/DataRincianAlat/DataRincianAlat.vue */ "./resources/js/components/admin-mtc/DataDetailAlat/DataRincianAlat/DataRincianAlat.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('rincian-alat-sudah-digunakan', (__webpack_require__(/*! ./components/admin-mtc/DataDetailAlat/DataRincianAlat/DataRincianAlatSudahDigunakan.vue */ "./resources/js/components/admin-mtc/DataDetailAlat/DataRincianAlat/DataRincianAlatSudahDigunakan.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('rincian-alat-peminjaman', (__webpack_require__(/*! ./components/admin-mtc/DataDetailAlat/DataRincianAlat/DataRincianAlatPeminjaman.vue */ "./resources/js/components/admin-mtc/DataDetailAlat/DataRincianAlat/DataRincianAlatPeminjaman.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('input-rincian-alat', (__webpack_require__(/*! ./components/admin-mtc/InputRincianAlat.vue */ "./resources/js/components/admin-mtc/InputRincianAlat.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('mesin-hilang', (__webpack_require__(/*! ./components/admin-mtc/DataMesin/DetailMesin/Kondisi/DataHilang.vue */ "./resources/js/components/admin-mtc/DataMesin/DetailMesin/Kondisi/DataHilang.vue")["default"]));
 //Vue.component('data-alat', require('./components/admin-mtc/DataAlat.vue').default);
 //Vue.component('detail-alat', require('./components/admin-mtc/DetailAlat.vue').default);
 
@@ -322259,14 +321682,14 @@ var MasterDataM = (__webpack_require__(/*! ./components/manajer-mtc/MasterData/D
 var InputDataM = (__webpack_require__(/*! ./components/manajer-mtc/MasterData/InputMaster.vue */ "./resources/js/components/manajer-mtc/MasterData/InputMaster.vue")["default"]);
 var DetailMasterDataM = (__webpack_require__(/*! ./components/manajer-mtc/MasterData/DetailMaster.vue */ "./resources/js/components/manajer-mtc/MasterData/DetailMaster.vue")["default"]);
 var EditMasterDataM = (__webpack_require__(/*! ./components/manajer-mtc/MasterData/EditMaster.vue */ "./resources/js/components/manajer-mtc/MasterData/EditMaster.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('master-data-musnah', (__webpack_require__(/*! ./components/manajer-mtc/MasterData/KondisiDataMaster/DataMasterMusnah.vue */ "./resources/js/components/manajer-mtc/MasterData/KondisiDataMaster/DataMasterMusnah.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('master-data-musnah', (__webpack_require__(/*! ./components/manajer-mtc/MasterData/KondisiDataMaster/DataMasterMusnah.vue */ "./resources/js/components/manajer-mtc/MasterData/KondisiDataMaster/DataMasterMusnah.vue")["default"]));
 var DataLayoutM = (__webpack_require__(/*! ./components/manajer-mtc/Layout/DataLayout.vue */ "./resources/js/components/manajer-mtc/Layout/DataLayout.vue")["default"]);
 var RiwayatM = (__webpack_require__(/*! ./components/manajer-mtc/Riwayat/DataRiwayat.vue */ "./resources/js/components/manajer-mtc/Riwayat/DataRiwayat.vue")["default"]);
 var RiwayatPeminjamanM = (__webpack_require__(/*! ./components/manajer-mtc/Riwayat/DataRiwayatPeminjaman.vue */ "./resources/js/components/manajer-mtc/Riwayat/DataRiwayatPeminjaman.vue")["default"]);
 var RiwayatPermintaanM = (__webpack_require__(/*! ./components/manajer-mtc/Riwayat/DataRiwayatPermintaan.vue */ "./resources/js/components/manajer-mtc/Riwayat/DataRiwayatPermintaan.vue")["default"]);
 var RiwayatPenggantianM = (__webpack_require__(/*! ./components/manajer-mtc/Riwayat/DataRiwayatPenggantian.vue */ "./resources/js/components/manajer-mtc/Riwayat/DataRiwayatPenggantian.vue")["default"]);
 var PeminjamanM = (__webpack_require__(/*! ./components/manajer-mtc/Peminjaman&Permintaan/Peminjaman/DataPeminjamanAlat.vue */ "./resources/js/components/manajer-mtc/Peminjaman&Permintaan/Peminjaman/DataPeminjamanAlat.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('data-permintaanM', (__webpack_require__(/*! ./components/manajer-mtc/Peminjaman&Permintaan/Permintaan/DataPermintaanAlat.vue */ "./resources/js/components/manajer-mtc/Peminjaman&Permintaan/Permintaan/DataPermintaanAlat.vue")["default"]));
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('data-permintaanM', (__webpack_require__(/*! ./components/manajer-mtc/Peminjaman&Permintaan/Permintaan/DataPermintaanAlat.vue */ "./resources/js/components/manajer-mtc/Peminjaman&Permintaan/Permintaan/DataPermintaanAlat.vue")["default"]));
 var DetailPeminjamanM = (__webpack_require__(/*! ./components/manajer-mtc/Peminjaman&Permintaan/Peminjaman/DetailPeminjamanAlat.vue */ "./resources/js/components/manajer-mtc/Peminjaman&Permintaan/Peminjaman/DetailPeminjamanAlat.vue")["default"]);
 var DetailPermintaanM = (__webpack_require__(/*! ./components/manajer-mtc/Peminjaman&Permintaan/Permintaan/DetailPermintaanAlat.vue */ "./resources/js/components/manajer-mtc/Peminjaman&Permintaan/Permintaan/DetailPermintaanAlat.vue")["default"]);
 var PerawatanM = (__webpack_require__(/*! ./components/manajer-mtc/Perawatan/DataPerawatanAlat.vue */ "./resources/js/components/manajer-mtc/Perawatan/DataPerawatanAlat.vue")["default"]);
@@ -322446,82 +321869,82 @@ var USelesaiHilang = (__webpack_require__(/*! ./components/kondisi/User/Hilang/S
 var UDetailSelesaiHilang = (__webpack_require__(/*! ./components/kondisi/User/Hilang/Selesai/Detail-Selesai-Hilang.vue */ "./resources/js/components/kondisi/User/Hilang/Selesai/Detail-Selesai-Hilang.vue")["default"]);
 
 //Daftarkan Komponen DataAlatError
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('input-alat-error', InputAlatError);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('edit-alat-error', EditAlatError);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('input-alat-error', InputAlatError);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('edit-alat-error', EditAlatError);
 //Daftarkan Komponen DataAlatRusak
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('input-alat-rusak', InputAlatRusak);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('edit-alat-rusak', EditAlatRusak);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('input-alat-rusak', InputAlatRusak);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('edit-alat-rusak', EditAlatRusak);
 //Daftarkan Komponen DataAlatMusnah
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('input-alat-musnah', InputAlatMusnah);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('input-alat-musnah', InputAlatMusnah);
 //Daftarkan Komponen DataAlathilang
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('input-alat-hilang', InputAlatHilang);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('edit-alat-hilang', EditAlatHilang);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('input-alat-hilang', InputAlatHilang);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('edit-alat-hilang', EditAlatHilang);
 
 //Daftarkan Komponen Alat Belum Digunakan
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('input-alat-belum-digunakan', InputAlatBelumDigunakan);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('edit-alat-belum-digunakan', EditAlatBelumDigunakan);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('detail-rincian-alat-belum-digunakan', DetailRincianAlatBelumDigunakan);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('detail-riwayat-rusak', DetailRiwayatRusak);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('detail-riwayat-musnah', DetailRiwayatMusnah);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('detail-riwayat-hilang', DetailRiwayatHilang);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('input-alat-belum-digunakan', InputAlatBelumDigunakan);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('edit-alat-belum-digunakan', EditAlatBelumDigunakan);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('detail-rincian-alat-belum-digunakan', DetailRincianAlatBelumDigunakan);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('detail-riwayat-rusak', DetailRiwayatRusak);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('detail-riwayat-musnah', DetailRiwayatMusnah);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('detail-riwayat-hilang', DetailRiwayatHilang);
 
 //Daftarkan Komponen Alat Sudah Digunakan
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('edit-alat-sudah-digunakan', EditAlatSudahDigunakan);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('edit-alat-sudah-digunakan', EditAlatSudahDigunakan);
 
 //Daftarkan Komponen Perawatan Alat
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('input-perawatan-alats', InputPerawatanAlat);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('edit-perawatan-alat', EditPerawatanAlat);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('detail-rincian-perawatan-alat', DetailRincianPerawatanAlat);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('edit-rincian-perawatan-alat', EditRincianPerawatanAlat);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('input-perawatan-alats', InputPerawatanAlat);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('edit-perawatan-alat', EditPerawatanAlat);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('detail-rincian-perawatan-alat', DetailRincianPerawatanAlat);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('edit-rincian-perawatan-alat', EditRincianPerawatanAlat);
 
 //Daftarkan Komponen Alat Dipinjam
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('edit-alat-dipinjam', EditAlatDipinjam);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('edit-peminjaman-alat', EditPeminjamanAlat);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('data-rincian-peminjaman-alat', DataRincianPeminjamanAlat);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('pengeluaran-peminjaman', DetailPengeluaranPeminjamanAlat);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('pengajuan-peminjaman', DetailPengajuanPeminjamanAlat);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('perubahan-peminjaman', DetailPerubahanPeminjamanAlat);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('pengembalian-peminjaman', DetailPengembalianPeminjamanAlat);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('edit-alat-dipinjam', EditAlatDipinjam);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('edit-peminjaman-alat', EditPeminjamanAlat);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('data-rincian-peminjaman-alat', DataRincianPeminjamanAlat);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('pengeluaran-peminjaman', DetailPengeluaranPeminjamanAlat);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('pengajuan-peminjaman', DetailPengajuanPeminjamanAlat);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('perubahan-peminjaman', DetailPerubahanPeminjamanAlat);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('pengembalian-peminjaman', DetailPengembalianPeminjamanAlat);
 
 //Permintaan Alat
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('data-permintaan-alat', DataPermintaanAlat);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('data-rincian-permintaan-alat', DataRincianPermintaanAlat);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('data-pengajuan', DataPengajuanPermintaanalat);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('data-permintaan-alat', DataPermintaanAlat);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('data-rincian-permintaan-alat', DataRincianPermintaanAlat);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('data-pengajuan', DataPengajuanPermintaanalat);
 
 //Daftarkan komponen Data Mesin
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('data-mesin', DataMesin);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('input-data-mesin', InputMesin);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('edit-data-mesin', EditMesin);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('detail-mesin', DetailMesin);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('data-rincian-mesin-belum-digunakan', DataRincianMesinBelumDigunakan);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('data-rincian-mesin-sudah-digunakan', DataRincianMesinSudahDigunakan);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('data-rincian-peminjaman-mesin', DataRincianMesinPeminjaman);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('data-detail-mesin-error', DataDetailMesinError);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('data-detail-mesin-rusak', DataDetailMesinRusak);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('data-detail-mesin-musnah', DataDetailMesinMusnah);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('peminjaman-mesin', PeminjamanMesin);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('input-data-mesin-belum-digunakan', InputDataMesinBelumDigunakan);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('edit-data-mesin-belum-digunakan', EditDataMesinBelumDigunakan);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('detail-rincian-data-mesin-belum-digunakan', DetailRincianDataMesinBelumDigunakan);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('riwayat-mesin-rusak', DetailRiwayatMesinRusak);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('riwayat-mesin-musnah', DetailRiwayatMesinMusnah);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('riwayat-mesin-hilang', DetailRiwayatMesinHilang);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('data-perawatan-mesin', DataPerawatanMesin);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('data-mesin', DataMesin);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('input-data-mesin', InputMesin);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('edit-data-mesin', EditMesin);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('detail-mesin', DetailMesin);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('data-rincian-mesin-belum-digunakan', DataRincianMesinBelumDigunakan);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('data-rincian-mesin-sudah-digunakan', DataRincianMesinSudahDigunakan);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('data-rincian-peminjaman-mesin', DataRincianMesinPeminjaman);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('data-detail-mesin-error', DataDetailMesinError);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('data-detail-mesin-rusak', DataDetailMesinRusak);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('data-detail-mesin-musnah', DataDetailMesinMusnah);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('peminjaman-mesin', PeminjamanMesin);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('input-data-mesin-belum-digunakan', InputDataMesinBelumDigunakan);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('edit-data-mesin-belum-digunakan', EditDataMesinBelumDigunakan);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('detail-rincian-data-mesin-belum-digunakan', DetailRincianDataMesinBelumDigunakan);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('riwayat-mesin-rusak', DetailRiwayatMesinRusak);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('riwayat-mesin-musnah', DetailRiwayatMesinMusnah);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('riwayat-mesin-hilang', DetailRiwayatMesinHilang);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('data-perawatan-mesin', DataPerawatanMesin);
 
 //Daftarkan Komponen Data Riwayat
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('data-riwayat', DataRiwayat);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('data-riwayat', DataRiwayat);
 
 //Komponen User Peminjaman & Permintaan
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('user-input-peminjaman', UserInputPeminjaman);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('user-detail-pengajuan', UserDetailPengajuan);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('user-detail-pengeluaran', UserDetailPengeluaran);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('user-detail-pengembalian', UserDetailPengembalian);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('user-detail-perubahan', UserDetailPerubahan);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('user-detail-peminjaman', UserDetaiPeminjaman);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('user-data-permintaan', UserDataPermintaan);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('user-input-permintaan', UserInputPermintaan);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('user-permintaan-pengeluaran', UserPermintaanPengeluaran);
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('user-input-perubahan-peminjaman', UserInputPerubahanPeminjaman);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('user-input-peminjaman', UserInputPeminjaman);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('user-detail-pengajuan', UserDetailPengajuan);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('user-detail-pengeluaran', UserDetailPengeluaran);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('user-detail-pengembalian', UserDetailPengembalian);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('user-detail-perubahan', UserDetailPerubahan);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('user-detail-peminjaman', UserDetaiPeminjaman);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('user-data-permintaan', UserDataPermintaan);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('user-input-permintaan', UserInputPermintaan);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('user-permintaan-pengeluaran', UserPermintaanPengeluaran);
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('user-input-perubahan-peminjaman', UserInputPerubahanPeminjaman);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -322912,11 +322335,11 @@ var routes = [{
   component: UDetailSelesaiHilang,
   name: 'user-data-detail-selesai-hilang'
 }];
-var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
+var router = new vue_router__WEBPACK_IMPORTED_MODULE_2__["default"]({
   mode: 'history',
   routes: routes
 });
-var app = new vue__WEBPACK_IMPORTED_MODULE_0__["default"]({
+var app = new vue__WEBPACK_IMPORTED_MODULE_1__["default"]({
   el: '#app',
   router: router
 });

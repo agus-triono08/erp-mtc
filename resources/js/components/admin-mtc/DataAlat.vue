@@ -18,33 +18,7 @@
         </div>
     </div>
 
-    <!-- Modal Tambah Data -->
-    <!--<diV id="app" class="modal-input" :class="{'is-visible': showModalInput}">
-        <div class="modal-content-input">
-          <input-alat @tutup-modal="tutupModal"></input-alat>
-        </div>
-      </diV>-->
-
     <h1 class="h3 mb-4 text-gray-900"><b>Master Data</b></h1>
-
-    <!-- <div class="col-md-12">
-      <button 
-        class="btn btn-show m-1"
-        :class="{active: showAlat}"
-        @click="toggleAlat"
-      >
-        <span v-if="showAlat">Alat</span>
-        <span v-else>Alat</span>
-      </button>
-      <button 
-        class="btn btn-show m-1"
-        :class="{active: showMesin}"
-        @click="toggleMesin"
-      >
-        <span v-if="showMesin">Mesin</span>
-        <span v-else>Mesin</span>
-      </button>
-    </div> -->
 
     <!-- Data Alat -->
     <div v-if="showAlat">
@@ -79,26 +53,6 @@
             style="border-radius: 8px; width: 250px;"
             @click.stop
           >
-            <!-- Status Filter -->
-            <!--<div>
-              <label><strong>Status</strong></label>
-              <div>
-                <label><input type="checkbox" value="active" v-model="statusFilters" /> Active</label>
-              </div>
-              <div>
-                <label><input type="checkbox" value="rusak" v-model="statusFilters" /> Rusak</label>
-              </div>
-              <div>
-                <label><input type="checkbox" value="error" v-model="statusFilters" /> Error</label>
-              </div>
-            </div>-->
-            <!-- Location Filter -->
-            <!--<div>
-              <label><strong>Satuan</strong></label>
-              <div v-for="unit in availableUnits" :key="unit">
-                <label><input type="checkbox" :value="unit" v-model="unitFilters" /> {{ unit }}</label>
-              </div>
-            </div>-->
             <div>
               <label><strong>Kategori</strong></label>
               <v-select
@@ -180,19 +134,13 @@
             <td class="text-center">{{ index + 1 }}</td>
             <td class="text-left">
               <img 
-                :src="getImageUrl(item.gambar)" 
-                style="max-width: 50px; max-height: 50px; margin-right: 20px; border-radius: 10px;" 
+                :src="`/api/get_image/${item.gambar}`" 
+                style="max-width: 38px; max-height: 38px; margin-right: 20px; border-radius: 10px;" 
               />
               {{ item.kode }}
             </td>
             <td class="text-center">{{ getNamaJenis(item) }}</td>
             <td class="text-center">{{ item.nama || '-' }}</td>
-            <!-- <td class="text-center">{{ item.jenis.kategori[0].kategori_merek[0].merek.nama_merek }}</td> -->
-            <!-- <td class="text-center">{{ item.jenis.kategori.kategori_merek && item.jenis.kategori.kategori_merek && item.jenis.kategori.kategori_merek.merek ? item.jenis.kategori.kategori_merek.merek.nama_merek : '-' }}</td>
-            <td class="text-center">{{ item.jenis.kategori.kategori_merek && item.jenis.kategori.kategori_merek && item.jenis.kategori.kategori_merek.tipe ? item.jenis.kategori.kategori_merek.tipe.nama_tipe : '-' }}</td> -->
-            <!-- <td class="text-center">{{ item.jenis.kategori.kategori_merek[0].merek.nama_merek || '-' }}</td>
-            <td class="text-center">{{ item.jenis.kategori.kategori_merek[0].tipe.nama_tipe }}</td> -->
-            <!-- <td class="text-center">{{ item.nama_merek || '-' }}</td> -->
             <td class="text-center">{{ getNamaMerek(item) }}</td>
             <td class="text-center">{{ getNamaTipe(item) || '-' }}</td>
             <td class="text-center">{{ item.stok_awal || '-' }}</td>
@@ -419,8 +367,9 @@ export default {
         this.isLoading = false;
       }
     },
-    getImageUrl(path) {
-      return path ? `${window.location.origin}/storage/${path}` : null;
+    async '/api/get_image/'(path) {
+      return `/api/get_image/${path}`;
+ 
     },
     // async fetchAlats() {
     //   this.isLoading = true;

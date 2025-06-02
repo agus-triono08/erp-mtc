@@ -130,11 +130,9 @@
             <td>{{ item.no_seri.tools.nama }}</td>
             <td>{{ item.no_seri.no_seri }}</td>
             <td>
-              {{ item.users && item.users.length
-                    ? item.users.map(u => u.nama).join(', ')
-                    : '–'
-              }}
+              {{ getUserNames(item.users) }}
             </td>
+            <!-- <td>{{ item.users && item.users.karyawan.nama || '-' }}</td> -->
             <td class="text-center">{{ item.tgl_mulai_perawatan || '-' }} s/d {{ item.tgl_selesai_perawatan || '-' }}<br>
               <small>{{ item.waktu_mulai || '-' }} s/d {{ item.waktu_selesai || '-' }}</small>
               <br><small :style="{ color: getDurasiStatus(item).color }">
@@ -282,7 +280,7 @@
                   multiple
                   placeholder="Pilih PIC"
                   :searchable="true"
-                  label="nama"
+                  :get-option-label="getUserLabel"
                   :reduce="user => user.id"
                 />
               </div>     
@@ -306,11 +304,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <form>              
-              <!-- <div class="form-group">
-                <label>Tanggal End</label>
-                <input v-model="tanggal_end" type="date" class="form-control">
-              </div> -->
+            <form>       
               <div class="form-group">
                 <label><b>Keterangan Perawatan</b><sup style="color: red;"> *</sup></label>
                 <div class="textarea-wrapper">
@@ -454,6 +448,13 @@ export default {
     },
   },
   methods: {
+    getUserNames(users) {
+      if (!users || !users.length) return '–';
+      return users.map(u => (u.karyawan && u.karyawan.nama) ? u.karyawan.nama : u.nama).join(', ');
+    },
+    getUserLabel(user) {
+      return (user.karyawan && user.karyawan.nama) || user.nama;
+    },
     async fetchDataFrom() {
       try {
         const response = await axios.get('/api/v1/perawatan')
@@ -572,13 +573,6 @@ export default {
       this.isModalTambahOpen = false;
     },
     showModalEdit(item) {
-      // this.id = item.id;
-      // this.tanggal_perawatan = item.tanggal_perawatan;
-      // this.waktu_mulai = item.waktu_mulai;
-      // this.waktu_selesai = item.waktu_selesai;
-      // this.pic = item.pic;
-      // this.detail = item.detail;
-      // this.kondisi = item.kondisi;
       this.aktivitas = {
         id: item.id,
         pic: [],
@@ -717,24 +711,6 @@ export default {
         });
       }
     },
-    // simpanSelesai() {
-    //   const index = this.jadwalPerawatan.findIndex((item) => item.id === this.id);
-    //   if (index !== -1) {
-    //     this.jadwalPerawatan[index].detail = this.detail;
-    //     this.jadwalPerawatan[index].tanggal_end = this.tanggal_end;
-    //     const tanggalSekarang = new Date();
-    //     this.getOnlyTanggal[index] = tanggalSekarang.getDate();
-    //     // console.log(this.getOnlyTanggal[index]);
-    //     const tanggalEnd = tanggalSekarang.toISOString().split('T')[0];
-    //     const waktuSekarang = tanggalSekarang.toTimeString().split(' ')[0];
-    //     const tanggalWaktuEnd = `${tanggalEnd} ${waktuSekarang}`;
-    //     this.jadwalPerawatan[index].tanggal_end = tanggalWaktuEnd;
-    //     this.jadwalPerawatan[index].kondisi = this.kondisi;
-    //     this.jadwalPerawatan[index].status = 'Selesai';
-    //   }
-    //   this.closeModalSelesai();
-    //   this.isModalSelesaiOpen = false;
-    // },
     async simpanJadwalPerawatan() {
       if(this.aktivitas.pic.length === 0)
       {
@@ -776,80 +752,6 @@ export default {
         });
       }
     },
-    // simpanJadwalPerawatan() {
-    //   const index = this.jadwalPerawatan.findIndex((item) => item.id === this.id);
-      
-    //   if (index !== -1) {
-    //     // Menampilkan SweetAlert dengan ikon peringatan dan tombol konfirmasi/pembatalan
-    //     Swal.fire({
-    //       title: 'Konfirmasi Pengiriman',
-    //       text: 'Apakah kamu yakin ingin mengirim jadwal perawatan ini?',
-    //       icon: 'warning',
-    //       showCancelButton: true,
-    //       confirmButtonText: 'Ya, kirim!',
-    //       cancelButtonText: 'Tidak, batalkan!',
-    //     }).then((result) => {
-    //       if (result.isConfirmed) {
-    //         // Proses jika pengguna memilih "Ya, kirim!"
-            
-    //         // Mendapatkan tanggal dan waktu saat ini
-    //         const moment = require('moment-timezone');
-    //         const tanggalSekarang = moment();
-    //         const waktuGmt7 = tanggalSekarang.tz('Asia/Jakarta').format('HH:mm:ss');
-
-    //         const tanggal = tanggalSekarang.format('YYYY-MM-DD');
-    //         const tanggalWaktu = `${tanggal} ${waktuGmt7}`;
-            
-    //         // Update the jadwalPerawatan object dengan tanggal dan waktu
-    //         this.jadwalPerawatan[index].tanggal_perawatan = this.tanggal_perawatan;
-    //         this.jadwalPerawatan[index].tanggal_start = tanggalWaktu;
-    //         this.jadwalPerawatan[index].waktu_mulai = this.waktu_mulai;
-    //         this.jadwalPerawatan[index].waktu_selesai = this.waktu_selesai;
-    //         this.jadwalPerawatan[index].pic = this.pic;
-    //         this.jadwalPerawatan[index].detail = this.detail;
-    //         this.jadwalPerawatan[index].kondisi = this.kondisi;
-    //         this.jadwalPerawatan[index].status = 'Pelaksanaan';
-
-    //         // Menyimpan PIC untuk setiap tanggal perawatan
-    //         const hari = tanggal.split('-')[2];  // Mengambil hari dari tanggal_start
-    //         if (hari) {
-    //           const startTanggal = parseInt(hari, 10);  // Menyimpan PIC untuk tanggal_start
-    //           if (!this.picPerTanggal[this.id]) {
-    //             this.picPerTanggal[this.id] = {}; // Pastikan ada objek untuk setiap id
-    //           }
-    //           this.picPerTanggal[this.id][startTanggal] = this.jadwalPerawatan.pic;  // Menyimpan nama PIC berdasarkan tanggal_start dan id
-    //         }
-
-    //         // Menampilkan SweetAlert sukses setelah data disimpan
-    //         Swal.fire({
-    //           title: 'Berhasil!',
-    //           text: 'Jadwal perawatan berhasil dikirim.',
-    //           icon: 'success',
-    //           confirmButtonText: 'OK'
-    //         });
-    //       } else {
-    //         // Jika pengguna memilih "Tidak, batalkan!" maka proses dibatalkan dan tidak dilanjutkan
-    //         Swal.fire({
-    //           title: 'Dibatalkan',
-    //           text: 'Pengiriman jadwal perawatan dibatalkan.',
-    //           icon: 'info',
-    //           confirmButtonText: 'OK'
-    //         });
-    //         return; // Membatalkan proses lebih lanjut
-    //       }
-    //     });
-    //   } else {
-    //     // Menampilkan SweetAlert jika tidak ditemukan
-    //     Swal.fire({
-    //       title: 'Gagal!',
-    //       text: 'Jadwal perawatan tidak ditemukan.',
-    //       icon: 'error',
-    //       confirmButtonText: 'OK'
-    //     });
-    //   }
-
-    //   this.closeModalEdit();
-    // },
     editJadwal(item) {
       this.id = item.id;
       this.tanggal_perawatan = item.tanggal_perawatan;

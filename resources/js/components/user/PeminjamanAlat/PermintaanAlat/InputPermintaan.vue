@@ -133,11 +133,9 @@ export default {
       return tipe ? tipe.nama_tipe : '-';
     },
     submitForm() {
-      axios.post('/api/v1/permintaan', this.form, {
-        headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,
-            'Content-Type': 'application/json'
-          }
+      axios.get('/sanctum/csrf-cookie').then(() => {
+      axios.post('/api/v1/add-permintaan', this.form, {
+        withCredentials: true
         })
         .then(response => {
           Swal.fire({
@@ -158,6 +156,7 @@ export default {
             icon: 'error',
             confirmButtonText: 'OK'
           });
+        });
         });
     },
     tutupModal() {

@@ -35,9 +35,9 @@
             <div class="row m-1">
               <div class="col-2">
                 <dd>Nama Pemohon</dd>
-                <dt style="color: #000; margin-top: -10px;" class="mb-2">{{ peminjaman.pengguna ? peminjaman.pengguna.nama_pengguna : '-' }}</dt>
+                <dt style="color: #000; margin-top: -10px;" class="mb-2">{{ peminjaman.users ? peminjaman.users.karyawan.nama : '-' }}</dt>
                 <dd>Divisi</dd>
-                <dt style="color: #000; margin-top: -10px;">{{ peminjaman.pengguna ? peminjaman.pengguna.divisi : '-' }}</dt>
+                <dt style="color: #000; margin-top: -10px;">{{ peminjaman.users ? peminjaman.users.divisi.nama : '-' }}</dt>
               </div>
               <div class="col-2">
                 <dd>Tujuan Peminjaman</dd>

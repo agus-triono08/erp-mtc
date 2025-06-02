@@ -16,7 +16,11 @@ class CreatePermintaanTable extends Migration
         Schema::create('permintaan', function (Blueprint $table) {
             $table->id();
             $table->string('no_permintaan')->nullable();
-            $table->foreignId('users_id')->nullable()->constrained()->onDelete('cascade');
+            // $table->foreignId('users_id')->nullable()->constrained()->onDelete('cascade');
+            $table->unsignedBigInteger('users_id')->nullable();
+            $table->foreign('users_id')
+                  ->references('id')
+                  ->on('erp_spa.users');
             $table->foreignId('tools_id')->nullable()->constrained()->onDelete('cascade');
             $table->date('tgl_permintaan')->nullable();
             $table->text('alasan_penolakan')->nullable();

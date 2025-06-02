@@ -14,17 +14,17 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('authen.login');
-})->name('login');
+// Route::get('/', function () {
+//     return view('authen.login');
+// })->name('login');
 
 // Route untuk guest (belum login)
-Route::middleware(['auth'])->group(function () {
-    // Anda bisa menambahkan route untuk login/register di sini jika diperlukan
-});
+// Route::middleware(['auth'])->group(function () {
+//     // Anda bisa menambahkan route untuk login/register di sini jika diperlukan
+// });
 
 // Route untuk Admin MTC (harus login)
-Route::middleware(['auth', 'jabatan:1'])->prefix('admin-mtc')->group(function () {
+Route::middleware(['auth', 'checkjabatan:mtc:supervisor'])->prefix('admin-mtc')->group(function () {
     Route::get('/dashboard', function () {
         return view('admin-mtc.Main.dashboard');
     })->name('dashboard.adminmtc');
@@ -96,7 +96,7 @@ Route::middleware(['auth', 'jabatan:1'])->prefix('admin-mtc')->group(function ()
 });
 
 // Route untuk User MTC (harus login)
-Route::middleware(['auth', 'jabatan:3'])->prefix('user-mtc')->group(function () {
+Route::middleware(['auth'])->prefix('user-mtc')->group(function () {
     Route::get('/dashboard', function () {
         return view('user-mtc.Main.dashboard');
     })->name('dashboard.user-mtc');
@@ -111,7 +111,7 @@ Route::middleware(['auth', 'jabatan:3'])->prefix('user-mtc')->group(function () 
 });
 
 // Route untuk User biasa (harus login)
-Route::middleware(['auth', 'jabatan:4'])->prefix('user')->group(function () {
+Route::middleware(['auth', 'checkjabatan:!mtc:manager,!mtc:supervisor'])->prefix('user')->group(function () {
     Route::get('/dashboard', function () {
         return view('user.Main.dashboard');
     })->name('dashboard.user');
@@ -130,7 +130,7 @@ Route::middleware(['auth', 'jabatan:4'])->prefix('user')->group(function () {
 });
 
 // Route untuk Manajer MTC (harus login)
-Route::middleware(['auth', 'jabatan:2'])->prefix('manajer-mtc')->group(function () {
+Route::middleware(['auth', 'checkjabatan:mtc:manager'])->prefix('manajer-mtc')->group(function () {
     Route::get('/dashboard', function () {
         return view('manajer-mtc.Main.dashboard');
     })->name('dashboard.manajermtc');
@@ -194,7 +194,7 @@ Route::middleware(['auth', 'jabatan:2'])->prefix('manajer-mtc')->group(function 
 });
 
 // Route untuk kondisi (bisa disesuaikan apakah perlu guest atau tidak)
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'checkjabatan:mtc:lainnya'])->group(function () {
     Route::get('/kondisi-error', function(){
         return view('admin-mtc.Main.Kondisi.kondisi-error');
     })->name('kondisi-error');

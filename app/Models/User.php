@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class User extends Model implements AuthenticatableContract
 {
     use Authenticatable;
-
+    protected $connection = 'erp';
     protected $fillable = [
         'divisi_id',
         'jabatan_id',
@@ -28,12 +28,17 @@ class User extends Model implements AuthenticatableContract
 
     public function divisi(): BelongsTo
     {
-        return $this->belongsTo(Divisi::class);
+        return $this->belongsTo(DivisiErp::class);
     }
 
     public function jabatan(): BelongsTo
     {
         return $this->belongsTo(Jabatan::class);
+    }
+
+    public function Karyawan()
+    {
+        return $this->belongsTo(Karyawan::class);
     }
     
 }

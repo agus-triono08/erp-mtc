@@ -20,41 +20,44 @@ class PeminjamanController extends Controller
      */
     public function index()
     {
-        // Ambil semua data peminjaman beserta tools dan no_seri jika status = Dipinjam
-        $all = Peminjaman::with([
-                'tools',
-                'users',
-                'noSeri' => function ($query) {
-                    $query->select('no_seri.id', 'no_seri.no_seri', 'no_seri.kondisi', 'no_seri.kondisi_after')
-                        // ->where('kondisi_after', 'Dipinjam')
-                        ->orderBy('no_seri.created_at', 'asc');
-                }
-            ])
+        $user = auth()->user();
+
+        // Cek apakah user divisi MTC dan jabatan Supervisor / Manager
+        $isMtcSupervisorOrManager = strtolower(optional($user->Divisi)->kode) === 'mtc' &&
+            in_array(strtolower(optional($user->Karyawan)->jabatan), ['supervisor', 'manager']);
+
+        $baseQuery = Peminjaman::with([
+            'tools',
+            'users.Karyawan',
+            'users.divisi',
+            'noSeri' => function ($query) {
+                $query->select('no_seri.id', 'no_seri.no_seri', 'no_seri.kondisi', 'no_seri.kondisi_after')
+                    ->orderBy('no_seri.created_at', 'asc');
+            }
+        ])
+        ->when(!$isMtcSupervisorOrManager, function ($query) use ($user) {
+            $query->where('users_id', $user->id); // Filter hanya data miliknya sendiri
+        });
+
+        // Ambil semua
+        $all = (clone $baseQuery)
             ->orderBy('updated_at', 'desc')
             ->get()
             ->map(function ($peminjaman) {
-                // Cek status
                 if ($peminjaman->status !== 'Dipinjam') {
-                    $peminjaman->no_seri = []; // Kosongkan no_seri
+                    $peminjaman->no_seri = [];
                 }
                 return $peminjaman;
             });
 
-        // Ambil data by status
-        $byStatus = Peminjaman::with([
-                'tools',
-                'users.divisi',
-                'noSeri' => function ($query) {
-                    $query->select('no_seri.id', 'no_seri.no_seri', 'no_seri.kondisi', 'no_seri.kondisi_after')
-                        ->orderBy('no_seri.created_at', 'asc');
-                }
-            ])
+        // Ambil berdasarkan status
+        $byStatus = (clone $baseQuery)
             ->orderByRaw("FIELD(status, 'Belum Diproses', 'Menunggu Diambil', 'Dipinjam', 'Ditolak', 'Selesai')")
             ->orderBy('updated_at', 'desc')
             ->get()
             ->map(function ($peminjaman) {
                 if ($peminjaman->status !== 'Dipinjam') {
-                    $peminjaman->no_seri = []; // Kosongkan no_seri
+                    $peminjaman->no_seri = [];
                 }
                 return $peminjaman;
             });
@@ -92,6 +95,14 @@ class PeminjamanController extends Controller
             'total' => 'required|integer|min:1',
         ]);
 
+        $user = auth()->user();
+
+        if(!$user) {
+            return response()->json([
+                'message' => 'Anda harus login untuk membuat peminjaman',
+            ], 401);
+        }
+
         // Ambil nomor urutan terakhir
         $lastPeminjaman = Peminjaman::orderBy('id', 'desc')->first();
         $lastNumber = 0;
@@ -115,7 +126,8 @@ class PeminjamanController extends Controller
             'status' => $status,
             'status_kondisi' => $status,
             'total' => $request->total,
-            'users_id' => auth()->id() ?? 4,
+            'users_id' => $user->id,
+            // 'users_id' => auth()->id(),
         ];
 
         // Buat peminjaman
@@ -173,7 +185,8 @@ class PeminjamanController extends Controller
                 'old_status' => null,
                 'new_status' => $status,
                 'changed_at' => now(),
-                'changed_by' => auth()->id() ?? 1,
+                'changed_by' => $user->id,
+                // 'changed_by' => auth()->id(),
             ]);
         }
 
@@ -191,7 +204,7 @@ class PeminjamanController extends Controller
      */
     public function show($id)
     {
-        $peminjaman = Peminjaman::with('tools.noSeri')->find($id);
+        $peminjaman = Peminjaman::with('tools.noSeri', 'users.divisi', 'users.Karyawan')->find($id);
         if ($peminjaman)
         {
             return response()->json($peminjaman);        
@@ -490,6 +503,52 @@ class PeminjamanController extends Controller
             'year' => $currentYear,
             'message' => 'Data peminjaman selesai tahun ' . $currentYear . ' berhasil diambil'
         ]);
+    }
+
+    // Peminjaman Lewat Dari Proses tanggal Peminjaman
+    public function countOverdueLoans()
+    {
+        try {
+            $today = now()->format('Y-m-d');
+            $count = Peminjaman::where('status', 'Dipinjam')
+                ->whereDate('tgl_kembali', '<', $today)
+                ->count();
+                
+            return response()->json([
+                'success' => true,
+                'message' => 'Jumlah peminjaman yang sudah melewati tanggal kembali',
+                'count' => $count
+            ], 200);
+            
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal mengambil data: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function listOverDate()
+    {
+        try {
+            $today = now()->format('Y-m-d');
+            $peminjaman = Peminjaman::with(['users', 'tools', 'noSeri'])
+                ->where('status', 'Dipinjam')
+                ->whereDate('tgl_kembali', '<', $today)
+                ->orderBy('created_at', 'desc')
+                ->get();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Daftar peminjaman belum diproses',
+                'data' => $peminjaman
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal mengambil data: ' . $e->getMessage()
+            ], 500);
+        }
     }
 
 

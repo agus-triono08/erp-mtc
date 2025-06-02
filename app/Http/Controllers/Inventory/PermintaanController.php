@@ -20,43 +20,46 @@ class PermintaanController extends Controller
      */
     public function index()
     {
-        // Ambil semua data permintaan beserta tools dan no_seri jika status = Digunakan
-        $all = Permintaan::with([
-                'tools',
-                'users',
-                'noSeri' => function ($query) {
-                    $query->select('no_seri.id', 'no_seri.no_seri', 'no_seri.kondisi', 'no_seri.kondisi_after')
-                        // ->where('kondisi_after', 'Digunakan')
-                        ->orderBy('no_seri.created_at', 'asc');
-                }
-            ])
+        $user = auth()->user();
+
+        // Cek apakah user divisi MTC dan jabatan Supervisor / Manager
+        $isMtcSupervisorOrManager = strtolower(optional($user->Divisi)->kode) === 'mtc' &&
+            in_array(strtolower(optional($user->Karyawan)->jabatan), ['supervisor', 'manager']);
+
+        $baseQuery = Permintaan::with([
+            'tools',
+            'users.Karyawan',
+            'users.divisi',
+            'noSeri' => function ($query) {
+                $query->select('no_seri.id', 'no_seri.no_seri', 'no_seri.kondisi', 'no_seri.kondisi_after')
+                    ->orderBy('no_seri.created_at', 'asc');
+            }
+        ])
+        ->when(!$isMtcSupervisorOrManager, function ($query) use ($user) {
+            $query->where('users_id', $user->id); // Filter hanya data miliknya sendiri
+        });
+
+        // Ambil semua
+        $all = (clone $baseQuery)
             ->orderBy('updated_at', 'desc')
             ->get()
-            ->map(function ($permintaan) {
-                // Cek status
-                if ($permintaan->status !== 'Digunakan') {
-                    $permintaan->no_seri = []; // Kosongkan no_seri
+            ->map(function ($peminjaman) {
+                if ($peminjaman->status !== 'Dipinjam') {
+                    $peminjaman->no_seri = [];
                 }
-                return $permintaan;
+                return $peminjaman;
             });
 
-        // Ambil data by status
-        $byStatus = Permintaan::with([
-                'tools',
-                'users.divisi',
-                'noSeri' => function ($query) {
-                    $query->select('no_seri.id', 'no_seri.no_seri', 'no_seri.kondisi', 'no_seri.kondisi_after')
-                        ->orderBy('no_seri.created_at', 'asc');
-                }
-            ])
-            ->orderByRaw("FIELD(status, 'Belum Diproses', 'Menunggu Diambil', 'Digunakan', 'Ditolak', 'Selesai')")
+        // Ambil berdasarkan status
+        $byStatus = (clone $baseQuery)
+            ->orderByRaw("FIELD(status, 'Belum Diproses', 'Menunggu Diambil', 'Dipinjam', 'Ditolak', 'Selesai')")
             ->orderBy('updated_at', 'desc')
             ->get()
-            ->map(function ($permintaan) {
-                if ($permintaan->status !== 'Digunakan') {
-                    $permintaan->no_seri = []; // Kosongkan no_seri
+            ->map(function ($peminjaman) {
+                if ($peminjaman->status !== 'Dipinjam') {
+                    $peminjaman->no_seri = [];
                 }
-                return $permintaan;
+                return $peminjaman;
             });
 
         return response()->json([
@@ -91,6 +94,15 @@ class PermintaanController extends Controller
             'total' => 'required|integer|min:1',
         ]);
 
+        // Ambil user yang sedang login
+        $user = auth()->user();
+        
+        if (!$user) {
+            return response()->json([
+                'message' => 'Anda harus login untuk membuat permintaan.'
+            ], 401);
+        }
+
         // Ambil nomor urutan terakhir
         $lastPermintaan = Permintaan::orderBy('id', 'desc')->first();
         $lastNumber = 0;
@@ -106,6 +118,7 @@ class PermintaanController extends Controller
         $status = $request->status ?? 'Belum Diproses';
 
         $data = [
+            'users_id' => $user->id, // Tambahkan user_id dari user yang login
             'tools_id' => $request->tools_id,
             'no_permintaan' => $no_permintaan,
             'tgl_permintaan' => $request->tgl_permintaan,
@@ -113,7 +126,6 @@ class PermintaanController extends Controller
             'status' => $status,
             'status_kondisi' => $status,
             'total' => $request->total,
-            'users_id' => auth()->id() ?? 4,
         ];
 
         // Buat Permintaan
@@ -162,12 +174,9 @@ class PermintaanController extends Controller
                 'old_status' => null,
                 'new_status' => $status,
                 'changed_at' => now(),
-                'changed_by' => auth()->id() ?? 1,
+                'changed_by' => $user->id, // Gunakan ID user yang login
             ]);
         }
-
-        // $permintaan->status = $request->status;
-        // $permintaan->save();
 
         return response()->json([
             'message' => 'Data permintaan berhasil disimpan.',
@@ -183,7 +192,7 @@ class PermintaanController extends Controller
      */
     public function show($id)
     {
-        $permintaan = Permintaan::with('tools.noSeri')->find($id);
+        $permintaan = Permintaan::with('tools.noSeri', 'users.divisi', 'users.Karyawan')->find($id);
         if ($permintaan)
         {
             return response()->json($permintaan);

@@ -16,7 +16,13 @@ class CreatePerawatanUserTable extends Migration
         Schema::create('perawatan_user', function (Blueprint $table) {
             $table->id();
             $table->foreignId('perawatan_id')->constrained('perawatan')->onDelete('cascade');
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            // $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->unsignedBigInteger('user_id');
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('erp_spa.users')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

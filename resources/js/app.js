@@ -1,7 +1,10 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import axios from 'axios';
 
-
+// Wajib untuk Sanctum agar cookie dikirim
+axios.defaults.withCredentials = true;
+axios.defaults.baseURL = 'http://localhost:8000'; // sesuaikan domain backend kamu
 
 
 /**

@@ -35,9 +35,9 @@
             <div class="row m-1">
               <div class="col-3">
                 <dd>Nama Pemohon</dd>
-                <dt style="color: #000; margin-top: -10px;" class="mb-2">{{ dataPermintaan.pengguna ? dataPermintaan.pengguna.nama_pengguna : '-' }}</dt>
+                <dt style="color: #000; margin-top: -10px;" class="mb-2">{{ dataPermintaan.users ? dataPermintaan.users.karyawan.nama : '-' }}</dt>
                 <dd>Divisi</dd>
-                <dt style="color: #000; margin-top: -10px;" class="mb-2">{{ dataPermintaan.pengguna ? dataPermintaan.pengguna.divisi : '-' }}</dt>              
+                <dt style="color: #000; margin-top: -10px;" class="mb-2">{{ dataPermintaan.users ? dataPermintaan.users.divisi.nama : '-' }}</dt>           
               </div>
               <div class="col-3">
                 <dd>Tujuan Permintaan</dd>
