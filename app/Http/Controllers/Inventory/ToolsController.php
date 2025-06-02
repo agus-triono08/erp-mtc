@@ -121,6 +121,15 @@ class ToolsController extends Controller
             'jumlah_orang_perawatan' => 'nullable|integer|min:0',
             'jadwal_mulai_perawatan' => 'nullable|date', // Validasi baru
         ]);
+
+        // Ambil user yang sedang login
+        $user = auth()->user();
+        
+        if (!$user) {
+            return response()->json([
+                'message' => 'Anda harus login untuk membuat permintaan.'
+            ], 401);
+        }
         
         $jenis = Jenis::find($request->jenis_id);
         $kategori = Kategori::find($request->kategori_id);
@@ -189,7 +198,8 @@ class ToolsController extends Controller
         $jadwalPerawatan = (int) $request->jadwal_perawatan;  // Interval perawatan yang dimasukkan oleh user (dalam bulan)
         
         // ID pengguna yang akan membuat perawatan
-        $userId = auth()->id() ?? $request->users_id ?? 1; 
+        // $userId = auth()->id() ?? $request->users_id ?? 1; 
+        $userId = $user->id;
         
         // if ($jadwalPerawatan > 0 && $waktuPerNoSeri > 0 && $jumlahOrang > 0) {
         //     // Hitung waktu perawatan dengan interval
@@ -468,8 +478,18 @@ class ToolsController extends Controller
             ? Carbon::parse($request->jadwal_mulai_perawatan)
             : now();
 
+        // Ambil user yang sedang login
+        $user = auth()->user();
+        
+        if (!$user) {
+            return response()->json([
+                'message' => 'Anda harus login untuk membuat permintaan.'
+            ], 401);
+        }
+
         // ID pengguna yang akan membuat perawatan
-        $userId = auth()->id() ?? $request->users_id ?? 1;
+        // $userId = auth()->id() ?? $request->users_id ?? 1;
+        $userId = $user->id;
 
         // Dapatkan semua nomor seri yang terkait dengan alat ini
         $noSeriRecords = NoSeri::where('tools_id', $tool->id)->get();
