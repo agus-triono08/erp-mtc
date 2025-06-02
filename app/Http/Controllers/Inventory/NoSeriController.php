@@ -363,6 +363,15 @@ class NoSeriController extends Controller
             'reason' => 'required|string|max:255',
         ]);
 
+        // Ambil user yang sedang login
+        $user = auth()->user();
+        
+        if (!$user) {
+            return response()->json([
+                'message' => 'Anda harus login untuk membuat permintaan.'
+            ], 401);
+        }
+
         // Tambahan validasi manual jika status adalah "Ditolak"
         if ($request->status === 'Ditolak' && empty($request->reason)) {
             return response()->json(['message' => 'Alasan penolakan harus diisi.'], 422);
@@ -388,7 +397,8 @@ class NoSeriController extends Controller
                         'old_status' => $oldStatus,
                         'new_status' => $newStatus,
                         'changed_at'  => now(),
-                        'changed_by'  => auth()->id() ?? 1,
+                        // 'changed_by'  => auth()->id() ?? 1,
+                        'changed_by' => $user->id,
                     ]);
                 }
     
@@ -412,6 +422,15 @@ class NoSeriController extends Controller
             'reason' => 'nullable|string|max:255',
         ]);
 
+        // Ambil user yang sedang login
+        $user = auth()->user();
+        
+        if (!$user) {
+            return response()->json([
+                'message' => 'Anda harus login untuk membuat permintaan.'
+            ], 401);
+        }
+
         $noseri = NoSeri::findOrFail($request->id);
         $noseri->update([
             'kondisi_after' => $request->status,
@@ -431,7 +450,8 @@ class NoSeriController extends Controller
                         'old_status' => $oldStatus,
                         'new_status' => $newStatus,
                         'changed_at'  => now(),
-                        'changed_by'  => auth()->id() ?? 1, // pastikan user sudah login
+                        // 'changed_by'  => auth()->id() ?? 1, // pastikan user sudah login
+                        'changed_by' => $user->id,
                     ]);
                 }
         
@@ -455,6 +475,15 @@ class NoSeriController extends Controller
             'status' => 'required|string|max:255',
         ]);
 
+        // Ambil user yang sedang login
+        $user = auth()->user();
+        
+        if (!$user) {
+            return response()->json([
+                'message' => 'Anda harus login untuk membuat permintaan.'
+            ], 401);
+        }
+
         foreach ($request->ids as $id) {
             $noseri = NoSeri::findOrFail($id);
             $noseri->update([
@@ -475,7 +504,8 @@ class NoSeriController extends Controller
                             'old_status' => $oldStatus,
                             'new_status' => $newStatus,
                             'changed_at'  => now(),
-                            'changed_by'  => auth()->id() ?? 1, // pastikan user sudah login
+                            // 'changed_by'  => auth()->id() ?? 1, // pastikan user sudah login
+                            'changed_by' => $user->id,
                         ]);
                     }
             
@@ -499,6 +529,15 @@ class NoSeriController extends Controller
             'status' => 'required|string|max:255',
             'reason' => 'nullable|string|max:255',
         ]);
+
+        // Ambil user yang sedang login
+        $user = auth()->user();
+        
+        if (!$user) {
+            return response()->json([
+                'message' => 'Anda harus login untuk membuat permintaan.'
+            ], 401);
+        }
     
         // Tambahan validasi manual jika status adalah "Ditolak"
         if ($request->status === 'Ditolak' && empty($request->reason)) {
@@ -523,7 +562,8 @@ class NoSeriController extends Controller
                         'old_status' => $oldStatus,
                         'new_status' => $newStatus,
                         'changed_at'  => now(),
-                        'changed_by'  => auth()->id() ?? 1,
+                        // 'changed_by'  => auth()->id() ?? 1,
+                        'changed_by' => $user->id,
                     ]);
                 }
     
@@ -547,6 +587,15 @@ class NoSeriController extends Controller
             'reason' => 'nullable|string|max:255',
         ]);
 
+        // Ambil user yang sedang login
+        $user = auth()->user();
+        
+        if (!$user) {
+            return response()->json([
+                'message' => 'Anda harus login untuk membuat permintaan.'
+            ], 401);
+        }
+
         $noseri = NoSeri::findOrFail($request->id);
         $noseri->update([
             'kondisi_after' => $request->status,
@@ -566,7 +615,8 @@ class NoSeriController extends Controller
                         'old_status' => $oldStatus,
                         'new_status' => $newStatus,
                         'changed_at'  => now(),
-                        'changed_by'  => auth()->id() ?? 1, // pastikan user sudah login
+                        // 'changed_by'  => auth()->id() ?? 1, // pastikan user sudah login
+                        'changed_by' => $user->id,
                     ]);
                 }
         
@@ -590,6 +640,15 @@ class NoSeriController extends Controller
             'status' => 'required|string|max:255',
         ]);
 
+        // Ambil user yang sedang login
+        $user = auth()->user();
+        
+        if (!$user) {
+            return response()->json([
+                'message' => 'Anda harus login untuk membuat permintaan.'
+            ], 401);
+        }
+
         foreach ($request->ids as $id) {
             $noseri = NoSeri::findOrFail($id);
             $noseri->update([
@@ -610,7 +669,8 @@ class NoSeriController extends Controller
                             'old_status' => $oldStatus,
                             'new_status' => $newStatus,
                             'changed_at'  => now(),
-                            'changed_by'  => auth()->id() ?? 1, // pastikan user sudah login
+                            // 'changed_by'  => auth()->id() ?? 1, // pastikan user sudah login
+                            'changed_by' => $user->id,
                         ]);
                     }
             
@@ -633,6 +693,15 @@ class NoSeriController extends Controller
         $oldKondisi = $noseri->kondisi;
         $newKondisi = $request->input('kondisi');
 
+        // Ambil user yang sedang login
+        $user = auth()->user();
+        
+        if (!$user) {
+            return response()->json([
+                'message' => 'Anda harus login untuk membuat permintaan.'
+            ], 401);
+        }
+
         if ($oldKondisi !== $newKondisi) {
             // update Kondisi
             $noseri->update(['kondisi' => $newKondisi]);
@@ -644,7 +713,8 @@ class NoSeriController extends Controller
                 'new_kondisi' => $newKondisi,
                 'changed_at' => now(),
                 // 'changed_by' => auth()->user()->id, // tambahkan nilai untuk kolom changed_by
-                'changed_by' => auth()->id() ?? 1, // ID default (misalnya admin)
+                // 'changed_by' => auth()->id() ?? 1, // ID default (misalnya admin)
+                'changed_by' => $user->id,
             ]);
         }
 
@@ -658,6 +728,15 @@ class NoSeriController extends Controller
             'status' => 'required|string|max:255',
             'reason' => 'nullable|string|max:255',
         ]);
+
+        // Ambil user yang sedang login
+        $user = auth()->user();
+        
+        if (!$user) {
+            return response()->json([
+                'message' => 'Anda harus login untuk membuat permintaan.'
+            ], 401);
+        }
 
         $noseri = NoSeri::findOrFail($request->id);
         $noseri->update([
@@ -678,7 +757,8 @@ class NoSeriController extends Controller
                         'old_status' => $oldStatus,
                         'new_status' => $newStatus,
                         'changed_at'  => now(),
-                        'changed_by'  => auth()->id() ?? 4, // pastikan user sudah login
+                        // 'changed_by'  => auth()->id() ?? 4, // pastikan user sudah login
+                        'changed_by'  => $user->id,
                     ]);
 
                     // Kurangi stok akhir pada tabel tools
@@ -710,6 +790,15 @@ class NoSeriController extends Controller
             'status' => 'required|string|max:255',
         ]);
 
+        // Ambil user yang sedang login
+        $user = auth()->user();
+        
+        if (!$user) {
+            return response()->json([
+                'message' => 'Anda harus login untuk membuat permintaan.'
+            ], 401);
+        };
+
         foreach ($request->ids as $id) {
             $noseri = NoSeri::findOrFail($id);
             $noseri->update([
@@ -730,7 +819,8 @@ class NoSeriController extends Controller
                             'old_status' => $oldStatus,
                             'new_status' => $newStatus,
                             'changed_at'  => now(),
-                            'changed_by'  => auth()->id() ?? 1, // pastikan user sudah login
+                            // 'changed_by'  => auth()->id() ?? 1, // pastikan user sudah login
+                            'changed_by' => $user->id,
                         ]);
                     }
             
@@ -755,6 +845,15 @@ class NoSeriController extends Controller
             'reason' => 'nullable|string|max:255',
         ]);
 
+        // Ambil user yang sedang login
+        $user = auth()->user();
+        
+        if (!$user) {
+            return response()->json([
+                'message' => 'Anda harus login untuk membuat permintaan.'
+            ], 401);
+        };
+
         $noseri = NoSeri::findOrFail($request->id);
         $noseri->update([
             'kondisi_after' => $request->status,
@@ -774,7 +873,8 @@ class NoSeriController extends Controller
                         'old_status' => $oldStatus,
                         'new_status' => $newStatus,
                         'changed_at'  => now(),
-                        'changed_by'  => auth()->id() ?? 4, // pastikan user sudah login
+                        // 'changed_by'  => auth()->id() ?? 4, // pastikan user sudah login
+                        'changed_by' => $user->id,
                     ]);
 
                     // Kurangi stok akhir pada tabel tools
@@ -805,6 +905,15 @@ class NoSeriController extends Controller
             'status' => 'required|string|max:255',
         ]);
 
+        // Ambil user yang sedang login
+        $user = auth()->user();
+        
+        if (!$user) {
+            return response()->json([
+                'message' => 'Anda harus login untuk membuat permintaan.'
+            ], 401);
+        };
+
         foreach ($request->ids as $id) {
             $noseri = NoSeri::findOrFail($id);
             $noseri->update([
@@ -826,7 +935,8 @@ class NoSeriController extends Controller
                             'old_status' => $oldStatus,
                             'new_status' => $newStatus,
                             'changed_at'  => now(),
-                            'changed_by'  => auth()->id() ?? 1, // pastikan user sudah login
+                            // 'changed_by'  => auth()->id() ?? 1, // pastikan user sudah login
+                            'changed_by' => $user->id,
                         ]);
 
                         // Kurangi stok akhir pada tabel tools
@@ -1002,6 +1112,15 @@ class NoSeriController extends Controller
             'deskripsi_cek' => 'required|string|max:255',
         ]);
 
+        // Ambil user yang sedang login
+        $user = auth()->user();
+        
+        if (!$user) {
+            return response()->json([
+                'message' => 'Anda harus login untuk membuat permintaan.'
+            ], 401);
+        };
+
         $noseri = NoSeri::findOrFail($request->id);
         $oldKondisi = $noseri->kondisi;
         $newKondisi = $request->kondisi;
@@ -1022,7 +1141,8 @@ class NoSeriController extends Controller
             'old_kondisi' => $oldKondisi,
             'new_kondisi' => $newKondisi,
             'changed_at' => now(),
-            'changed_by' => auth()->id() ?? 1,
+            // 'changed_by' => auth()->id() ?? 1,
+            'changed_by' => $user->id,
         ]);
 
         // Jika kondisi Error, simpan ke tabel Error
@@ -1041,7 +1161,8 @@ class NoSeriController extends Controller
             Error::create([
                 'no_seri_id' => $noseri->id,
                 'kondisi' => 'Error',
-                'users_id' => auth()->id() ?? 1,
+                // 'users_id' => auth()->id() ?? 1,
+                'users_id' => $user->id,
                 'no_perbaikan' => $no_perbaikan,
                 'tgl_perbaikan' => $request->tgl_pengecekan,
             ]);
@@ -1063,7 +1184,8 @@ class NoSeriController extends Controller
             Rusak::create([
                 'no_seri_id' => $noseri->id,
                 'kondisi' => 'Rusak',
-                'users_id' => auth()->id() ?? 1,
+                // 'users_id' => auth()->id() ?? 1,
+                'users_id' => $user->id,
                 'no_kerusakan' => $no_kerusakan,
                 'tgl_kerusakan' => $request->tgl_pengecekan,
                 'detail_kerusakan' => $request->deskripsi_cek,
@@ -1085,7 +1207,8 @@ class NoSeriController extends Controller
             Hilang::create([
                 'no_seri_id' => $noseri->id,
                 'kondisi' => 'Hilang',
-                'users_id' => auth()->id() ?? 4,
+                // 'users_id' => auth()->id() ?? 4,
+                'users_id' => $user->id,
                 'no_kehilangan' => $no_kehilangan,
                 'tgl_kehilangan' => $request->tgl_pengecekan,
                 'detail_hilang' => $request->deskripsi_cek,
@@ -1103,7 +1226,8 @@ class NoSeriController extends Controller
                     'old_status' => $oldStatus,
                     'new_status' => $newStatus,
                     'changed_at'  => now(),
-                    'changed_by'  => auth()->id() ?? 4,
+                    // 'changed_by'  => auth()->id() ?? 4,
+                    'changed_by'  => $user->id,
                 ]);
 
                 // Kurangi stok akhir pada tabel tools

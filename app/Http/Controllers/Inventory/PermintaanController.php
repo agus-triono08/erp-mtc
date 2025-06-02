@@ -101,7 +101,7 @@ class PermintaanController extends Controller
             return response()->json([
                 'message' => 'Anda harus login untuk membuat permintaan.'
             ], 401);
-        }
+        };
 
         // Ambil nomor urutan terakhir
         $lastPermintaan = Permintaan::orderBy('id', 'desc')->first();
