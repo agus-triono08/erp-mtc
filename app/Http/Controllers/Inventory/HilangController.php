@@ -95,7 +95,14 @@ class HilangController extends Controller
             'kondisi' => 'required|string',
         ]);
 
+        // Ambil user yang sedang login
+        $user = auth()->user();
         
+        if (!$user) {
+            return response()->json([
+                'message' => 'Anda harus login untuk membuat permintaan.'
+            ], 401);
+        }
 
         // Ambil nomor urutan terakhir
         $lastHilang = Hilang::orderBy('id', 'desc')->first();
@@ -116,6 +123,7 @@ class HilangController extends Controller
             'kondisi' => $request->kondisi,
             // 'status' => $request->status ?? 'Pending',
             // 'users_id' => auth()->id(),
+            'users_id' => $user->id,
         ]);
 
         // Update kondisi pada tabel no_seri
@@ -132,7 +140,8 @@ class HilangController extends Controller
                     'old_kondisi' => $oldKondisi,
                     'new_kondisi' => $newKondisi,
                     'changed_at'  => now(),
-                    'changed_by'  => auth()->id() ?? 1, // pastikan user sudah login
+                    // 'changed_by'  => auth()->id() ?? 1, // pastikan user sudah login
+                    'changed_by'  => $user->id,
                 ]);
             }
 
@@ -294,6 +303,16 @@ class HilangController extends Controller
             'id' => 'required|exists:hilang_activity_baru,id', // ID milik RusakActivity
             'status' => 'nullable|string',
         ]);
+
+        // Ambil user yang sedang login
+        $user = auth()->user();
+        
+        if (!$user) {
+            return response()->json([
+                'message' => 'Anda harus login untuk membuat permintaan.'
+            ], 401);
+        }
+
         $aktivitas = HilangActivityBaru::findOrFail($request->id); // Ambil aktivitas
         $kehilangan = $aktivitas->hilang; // Ambil relasi ke Hilang
         if (!$kehilangan) {
@@ -323,8 +342,8 @@ class HilangController extends Controller
             'old_kondisi' => $oldKondisi,
             'new_kondisi' => 'Hilang',
             'changed_at' => Carbon::today()->format('Y-m-d'),
-            'changed_by' => auth()->id() ?? 1,
-        ]);
+            // 'changed_by' => auth()->id() ?? 1,
+            'changed_by' => $user->id,        ]);
         return response()->json(['message' => 'Data berhasil diperbarui']);
     }
 
@@ -362,6 +381,15 @@ class HilangController extends Controller
             'harga' => 'nullable|numeric',
             'kondisi' => 'nullable|string',
         ]);
+
+        // Ambil user yang sedang login
+        $user = auth()->user();
+        
+        if (!$user) {
+            return response()->json([
+                'message' => 'Anda harus login untuk membuat permintaan.'
+            ], 401);
+        }
 
         $kehilangan = Hilang::with('noSeri')->findOrFail($request->id);
         $tools = $kehilangan->noSeri->tools;
@@ -417,7 +445,8 @@ class HilangController extends Controller
             'old_kondisi' => null,
             'new_kondisi' => $request->kondisi ?? 'OK',
             'changed_at' => now(),
-            'changed_by' => auth()->id() ?? 4,
+            // 'changed_by' => auth()->id() ?? 4,
+            'changed_by' => $user->id,
         ]);
 
         // Buat activity proses penggantian
@@ -462,6 +491,16 @@ class HilangController extends Controller
             'id' => 'required|exists:hilang_activity_proses,id', // ID milik RusakActivity
             'status' => 'nullable|string',
         ]);
+
+        // Ambil user yang sedang login
+        $user = auth()->user();
+        
+        if (!$user) {
+            return response()->json([
+                'message' => 'Anda harus login untuk membuat permintaan.'
+            ], 401);
+        }
+
         $aktivitas = HilangActivityProses::findOrFail($request->id); // Ambil aktivitas
         $kehilangan = $aktivitas->hilang; // Ambil relasi ke Hilang
         if (!$kehilangan) {
@@ -486,7 +525,8 @@ class HilangController extends Controller
             'old_kondisi' => $oldKondisi,
             'new_kondisi' => 'Hilang',
             'changed_at' => Carbon::today()->format('Y-m-d'),
-            'changed_by' => auth()->id() ?? 1,
+            // 'changed_by' => auth()->id() ?? 1,
+            'changed_by' => $user->id,
         ]);
         foreach ($kehilangan->noSeri->peminjaman as $peminjaman) {
             if ($peminjaman) {
@@ -498,7 +538,8 @@ class HilangController extends Controller
                     'old_status' => $oldStatus,
                     'new_status' => $newStatus,
                     'changed_at'  => now(),
-                    'changed_by'  => auth()->id() ?? 1,
+                    // 'changed_by'  => auth()->id() ?? 1,
+                    'changed_by'  => $user->id,
                 ]);
                 // Kurangi stok akhir pada tabel tools
                 // $tool = Tools::find($kehilangan->noSeri->tools_id);
