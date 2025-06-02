@@ -70,6 +70,15 @@ class RusakController extends Controller
             'kondisi' => 'required|string',
         ]);
 
+        // Ambil user yang sedang login
+        $user = auth()->user();
+        
+        if (!$user) {
+            return response()->json([
+                'message' => 'Anda harus login untuk membuat permintaan.'
+            ], 401);
+        }
+
         // Ambil nomor urutan terakhir
         $lastRusak = Rusak::orderBy('id', 'desc')->first();
         $lastNumber = 0;
@@ -89,6 +98,7 @@ class RusakController extends Controller
             'kondisi' => $request->kondisi,
             // 'status' => $request->status ?? 'Pending',
             // 'users_id' => auth()->id(),
+            'users_id' => $user->id,
         ]);
 
         // Update kondisi pada tabel no_seri
@@ -105,7 +115,8 @@ class RusakController extends Controller
                     'old_kondisi' => $oldKondisi,
                     'new_kondisi' => $newKondisi,
                     'changed_at'  => now(),
-                    'changed_by'  => auth()->id() ?? 1, // pastikan user sudah login
+                    // 'changed_by'  => auth()->id() ?? 1, // pastikan user sudah login
+                    'changed_by'  => $user->id,
                 ]);
             }
 
@@ -259,6 +270,15 @@ class RusakController extends Controller
             'catatan' => 'nullable|string',
         ]);
 
+        // Ambil user yang sedang login
+        $user = auth()->user();
+        
+        if (!$user) {
+            return response()->json([
+                'message' => 'Anda harus login untuk membuat permintaan.'
+            ], 401);
+        }
+
         $aktivitas = RusakActivity::findOrFail($request->id); // Ambil aktivitas
         $kerusakan = $aktivitas->rusak; // Ambil relasi ke Rusak
 
@@ -296,7 +316,8 @@ class RusakController extends Controller
             'old_kondisi' => $oldKondisi,
             'new_kondisi' => 'Musnah',
             'changed_at' => Carbon::today()->format('Y-m-d'),
-            'changed_by' => auth()->id() ?? 2,
+            // 'changed_by' => auth()->id() ?? 2,
+            'changed_by' => $user->id,
         ]);
 
         // Penomoran otomatis untuk PM...
@@ -315,7 +336,8 @@ class RusakController extends Controller
             'kondisi' => 'Musnah',
             'status' => 'Proses',
             'no_pemusnahan' => $no_pemusnahan,
-            'users_id' => auth()->id() ?? 2,
+            // 'users_id' => auth()->id() ?? 2,
+            'users_id' => $user->id,
             'tgl_pemusnahan' => Carbon::today()->format('Y-m-d'),
         ]);
 
