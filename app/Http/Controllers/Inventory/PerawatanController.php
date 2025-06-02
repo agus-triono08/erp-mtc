@@ -243,6 +243,15 @@ class PerawatanController extends Controller
             'kondisi' => 'nullable|string',
         ]);
 
+        // Ambil user yang sedang login
+        $user = auth()->user();
+        
+        if (!$user) {
+            return response()->json([
+                'message' => 'Anda harus login untuk membuat permintaan.'
+            ], 401);
+        }
+
         $perawatan = Perawatan::findOrFail($request->id);
 
         $oldKondisi = $perawatan->noSeri->kondisi;
@@ -269,7 +278,8 @@ class PerawatanController extends Controller
             'old_kondisi' => $oldKondisi,
             'new_kondisi' => $request->kondisi,
             'changed_at' => Carbon::today()->format('Y-m-d'),
-            'changed_by' => auth()->id() ?? 1,
+            // 'changed_by' => auth()->id() ?? 1,
+            'changed_by' => $user->id,
         ]);
 
         return response()->json(['message' => 'Data berhasil diperbarui']);
