@@ -95,6 +95,8 @@ class HilangController extends Controller
             'kondisi' => 'required|string',
         ]);
 
+        
+
         // Ambil nomor urutan terakhir
         $lastHilang = Hilang::orderBy('id', 'desc')->first();
         $lastNumber = 0;

@@ -87,6 +87,15 @@ class ErrorController extends Controller
             'kondisi' => 'required|string',
         ]);
 
+        // Ambil user yang sedang login
+        $user = auth()->user();
+        
+        if (!$user) {
+            return response()->json([
+                'message' => 'Anda harus login untuk membuat permintaan.'
+            ], 401);
+        }
+
         // Ambil nomor urutan terakhir
         $lastError = Error::orderBy('id', 'desc')->first();
         $lastNumber = 0;
@@ -106,6 +115,7 @@ class ErrorController extends Controller
             'kondisi' => $request->kondisi,
             // 'status' => $request->status ?? 'Pending',
             // 'users_id' => auth()->id(),
+            'users_id' => $user->id,
         ]);
 
         // Update kondisi pada tabel no_seri
@@ -121,7 +131,8 @@ class ErrorController extends Controller
                     'old_kondisi' => $oldKondisi,
                     'new_kondisi' => $newKondisi,
                     'changed_at'  => now(),
-                    'changed_by'  => auth()->id() ?? 1, // pastikan user sudah login
+                    // 'changed_by'  => auth()->id() ?? 1, // pastikan user sudah login
+                    'changed_by' => $user->id,
                 ]);
             }
 
@@ -262,6 +273,15 @@ class ErrorController extends Controller
             'layout' => 'nullable|integer|exists:layouts,id',
         ]);
 
+        // Ambil user yang sedang login
+        $user = auth()->user();
+        
+        if (!$user) {
+            return response()->json([
+                'message' => 'Anda harus login untuk membuat permintaan.'
+            ], 401);
+        }
+
         $perbaikan = Error::findOrFail($request->id);
 
         // Simpan kondisi lama sebelum update
@@ -313,7 +333,8 @@ class ErrorController extends Controller
             'old_kondisi' => $oldKondisi,
             'new_kondisi' => $request->kondisi,
             'changed_at'  => Carbon::today(),
-            'changed_by'  => auth()->id() ?? 1,
+            // 'changed_by'  => auth()->id() ?? 1,
+            'changed_by' => $user->id,
         ]);
 
         if (strtolower($request->kondisi) === 'rusak') {
@@ -330,7 +351,8 @@ class ErrorController extends Controller
             Rusak::create([
                 'no_seri_id' => $perbaikan->no_seri_id,
                 'kondisi' => 'Rusak',
-                'users_id' => auth()->id() ?? 1,
+                // 'users_id' => auth()->id() ?? 1,
+                'users_id' => $user->id,
                 'no_kerusakan' => $no_kerusakan,
                 'detail_kerusakan' => $request->detail_perbaikan,
                 'tgl_kerusakan' => Carbon::today()->format('Y-m-d'),

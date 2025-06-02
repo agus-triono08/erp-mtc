@@ -98,7 +98,7 @@ class MusnahController extends Controller
             'detail_pemusnahan' => $request->detail_pemusnahan,
             'kondisi' => $request->kondisi,
             // 'status' => $request->status ?? 'Pending',
-            // 'users_id' => auth()->id(),
+            // 'users_id' => (),
         ]);
 
         // Update kondisi pada tabel no_seri
@@ -115,7 +115,7 @@ class MusnahController extends Controller
                     'old_kondisi' => $oldKondisi,
                     'new_kondisi' => $newKondisi,
                     'changed_at'  => now(),
-                    'changed_by'  => auth()->id() ?? 1, // pastikan user sudah login
+                    'changed_by'  => () ?? 1, // pastikan user sudah login
                 ]);
             }
 
