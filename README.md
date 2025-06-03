@@ -144,6 +144,7 @@ Gantilah /path/to/artisan dengan path sebenarnya ke file artisan Laravel di serv
 
 #### NOTE
 Jangan lupa menyesuaikan dengan domaian Anda pada bagian:
+
 ```.env```
 ```
 SESSION_DOMAIN=192.168.13.154  # atau domain kamu (tanpa http://)
