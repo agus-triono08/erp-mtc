@@ -144,14 +144,16 @@ Gantilah /path/to/artisan dengan path sebenarnya ke file artisan Laravel di serv
 
 #### NOTE
 Jangan lupa menyesuaikan dengan domaian Anda pada bagian:
-```.env
+```.env```
+```
 SESSION_DOMAIN=192.168.13.154  # atau domain kamu (tanpa http://)
 SANCTUM_STATEFUL_DOMAINS=localhost:8000,localhost:8080,127.0.0.1,192.168.13.154:8000
 ```
 
 lalu
 
-```app.js
+```app.js```
+```
 axios.defaults.baseURL = 'http://192.168.13.154:8000'; // sesuaikan domain backend kamu
 ```
 
