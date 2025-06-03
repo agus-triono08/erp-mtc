@@ -256,7 +256,7 @@ export default {
         };
 
         if (data.gambar) {
-          this.previewImage = `/storage/${data.gambar}`;
+          this.previewImage = `/api/get_image/${data.gambar}`;
         }
       } catch (error) {
         console.error("Gagal mengambil data alat:", error);

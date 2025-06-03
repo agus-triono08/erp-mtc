@@ -52293,8 +52293,8 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             'No Seri Lama': '-',
             'No Seri Baru': '-',
             'Tgl Kehilangan': item.tgl_kehilangan || '-',
-            'Dipinjam Oleh': ((_item$users3 = item.users) === null || _item$users3 === void 0 ? void 0 : _item$users3.nama) || '-',
-            'Divisi': ((_item$users4 = item.users) === null || _item$users4 === void 0 || (_item$users4 = _item$users4.divisi) === null || _item$users4 === void 0 ? void 0 : _item$users4.divisi) || '-'
+            'Dipinjam Oleh': ((_item$users3 = item.users) === null || _item$users3 === void 0 || (_item$users3 = _item$users3.karyawan) === null || _item$users3 === void 0 ? void 0 : _item$users3.nama) || '-',
+            'Divisi': ((_item$users4 = item.users) === null || _item$users4 === void 0 || (_item$users4 = _item$users4.divisi) === null || _item$users4 === void 0 ? void 0 : _item$users4.nama) || '-'
           });
         }
       });
@@ -52970,7 +52970,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
                 jumlah_orang_perawatan: ((_data$jumlah_orang_pe = data.jumlah_orang_perawatan) === null || _data$jumlah_orang_pe === void 0 ? void 0 : _data$jumlah_orang_pe.toString()) || ''
               });
               if (data.gambar) {
-                _this.previewImage = "/storage/".concat(data.gambar);
+                _this.previewImage = "/api/get_image/".concat(data.gambar);
               }
               _context.next = 14;
               break;
@@ -77257,8 +77257,8 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
           'Nama Alat/Mesin': _this3.getNamaAlat(item),
           'Total': item.peminjaman && item.peminjaman.total,
           'Tanggal Peminjaman': item.peminjaman && item.peminjaman.tgl_pinjam,
-          'Dipinjam Oleh': item.peminjaman && item.peminjaman.users.nama,
-          'Divisi': item.peminjaman && item.peminjaman.users && item.peminjaman.users.divisi.divisi,
+          'Dipinjam Oleh': item.peminjaman && item.peminjaman.users.karyawan.nama,
+          'Divisi': item.peminjaman && item.peminjaman.users && item.peminjaman.users.divisi.nama,
           'Tanggal Kembali': item.peminjaman && item.peminjaman.tgl_kembali,
           'Status': item.new_status
         };
@@ -77553,8 +77553,8 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
               'No Seri Lama': proses.no_seri_old || '-',
               'No Seri Baru': proses.no_seri_new || '-',
               'Tgl Kehilangan': item.tgl_kehilangan || '-',
-              'Dipinjam Oleh': ((_item$users = item.users) === null || _item$users === void 0 ? void 0 : _item$users.nama) || '-',
-              'Divisi': ((_item$users2 = item.users) === null || _item$users2 === void 0 || (_item$users2 = _item$users2.divisi) === null || _item$users2 === void 0 ? void 0 : _item$users2.divisi) || '-'
+              'Dipinjam Oleh': ((_item$users = item.users) === null || _item$users === void 0 || (_item$users = _item$users.karyawan) === null || _item$users === void 0 ? void 0 : _item$users.nama) || '-',
+              'Divisi': ((_item$users2 = item.users) === null || _item$users2 === void 0 || (_item$users2 = _item$users2.divisi) === null || _item$users2 === void 0 ? void 0 : _item$users2.nama) || '-'
             });
           });
         } else {
@@ -272570,11 +272570,11 @@ var render = function () {
                 ]),
                 _vm._v(" "),
                 _c("td", { staticClass: "text-center p-2 border" }, [
-                  _vm._v(_vm._s(item.peminjaman.users.nama || "-")),
+                  _vm._v(_vm._s(item.peminjaman.users.karyawan.nama || "-")),
                 ]),
                 _vm._v(" "),
                 _c("td", { staticClass: "text-center p-2 border" }, [
-                  _vm._v(_vm._s(item.peminjaman.users.divisi.divisi)),
+                  _vm._v(_vm._s(item.peminjaman.users.divisi.nama)),
                 ]),
                 _vm._v(" "),
                 _c("td", [
@@ -273224,7 +273224,9 @@ var render = function () {
                   ]),
                   _vm._v(" "),
                   _c("td", { staticClass: "text-center p-2 border" }, [
-                    _vm._v(_vm._s((item.users && item.users.nama) || "-")),
+                    _vm._v(
+                      _vm._s((item.users && item.users.karyawan.nama) || "-")
+                    ),
                   ]),
                   _vm._v(" "),
                   _c("td", { staticClass: "text-center p-2 border" }, [
@@ -273232,7 +273234,7 @@ var render = function () {
                       _vm._s(
                         (item.users &&
                           item.users.divisi &&
-                          item.users.divisi.divisi) ||
+                          item.users.divisi.nama) ||
                           "-"
                       )
                     ),
@@ -273808,11 +273810,11 @@ var render = function () {
                 ]),
                 _vm._v(" "),
                 _c("td", { staticClass: "text-center p-2 border" }, [
-                  _vm._v(_vm._s(item.permintaan.users.nama || "-")),
+                  _vm._v(_vm._s(item.permintaan.users.karyawan.nama || "-")),
                 ]),
                 _vm._v(" "),
                 _c("td", { staticClass: "text-center p-2 border" }, [
-                  _vm._v(_vm._s(item.permintaan.users.divisi.divisi || "-")),
+                  _vm._v(_vm._s(item.permintaan.users.divisi.nama || "-")),
                 ]),
                 _vm._v(" "),
                 _c("td", [

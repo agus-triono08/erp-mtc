@@ -123,13 +123,13 @@ class ToolsController extends Controller
         ]);
 
         // Ambil user yang sedang login
-        $user = auth()->user();
+        // $user = auth()->user();
         
-        if (!$user) {
-            return response()->json([
-                'message' => 'Anda harus login untuk membuat permintaan.'
-            ], 401);
-        }
+        // if (!$user) {
+        //     return response()->json([
+        //         'message' => 'Anda harus login untuk membuat permintaan.'
+        //     ], 401);
+        // }
         
         $jenis = Jenis::find($request->jenis_id);
         $kategori = Kategori::find($request->kategori_id);
@@ -198,8 +198,8 @@ class ToolsController extends Controller
         $jadwalPerawatan = (int) $request->jadwal_perawatan;  // Interval perawatan yang dimasukkan oleh user (dalam bulan)
         
         // ID pengguna yang akan membuat perawatan
-        // $userId = auth()->id() ?? $request->users_id ?? 1; 
-        $userId = $user->id;
+        $userId = auth()->id() ?? $request->users_id ?? 1; 
+        // $userId = $user->id;
         
         // if ($jadwalPerawatan > 0 && $waktuPerNoSeri > 0 && $jumlahOrang > 0) {
         //     // Hitung waktu perawatan dengan interval
@@ -262,6 +262,11 @@ class ToolsController extends Controller
                 // Buat perawatan berulang selama tahun ini
                 $currentDate = $waktuSelesai->copy()->addMonths($jadwalPerawatan);
                 while ($currentDate->year == now()->year) {
+                    // Pastikan perawatan tidak jatuh di hari Sabtu/Minggu
+                    while ($currentDate->isWeekend()) {
+                        $currentDate->addDay();
+                    }
+                    
                     Perawatan::create([
                         'no_seri_id' => $noSeriRecord->id,
                         'users_id' => $user->id ?? null,
@@ -315,6 +320,12 @@ class ToolsController extends Controller
         ];
 
         while (true) {
+            // Lewati hari Sabtu (6) dan Minggu (0)
+            if ($currentStart->isWeekend()) {
+                $currentStart = $currentStart->copy()->addDay()->setTime(8, 0);
+                continue;
+            }
+
             foreach ($workPeriods as $period) {
                 $start = $period['start']->copy()->setDateFrom($currentStart);
                 $end = $period['end']->copy()->setDateFrom($currentStart);
@@ -436,18 +447,39 @@ class ToolsController extends Controller
                             'jadwal_perawatan', 'waktu_perawatan', 'jumlah_orang_perawatan', 'note_perubahan_jadwal']);
 
         // Menangani upload gambar (jika ada)
-        if ($request->hasFile('gambar')) {
-            // Hapus gambar lama jika ada
-            if ($tool->gambar && Storage::disk('public')->exists($tool->gambar)) {
-                Storage::disk('public')->delete($tool->gambar);
-            }
+        // if ($request->hasFile('gambar')) {
+        //     // Hapus gambar lama jika ada
+        //     if ($tool->gambar && Storage::disk('public')->exists($tool->gambar)) {
+        //         Storage::disk('public')->delete($tool->gambar);
+        //     }
             
+        //     $file = $request->file('gambar');
+        //     $filename = time() . '_' . Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME));
+        //     $extension = $file->getClientOriginalExtension();
+        //     $path = "tools/{$filename}.{$extension}";
+        //     Storage::disk('public')->put($path, file_get_contents($file));
+        //     $data['gambar'] = $path;
+        // }
+        if ($request->hasFile('gambar')) {
             $file = $request->file('gambar');
-            $filename = time() . '_' . Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME));
-            $extension = $file->getClientOriginalExtension();
-            $path = "tools/{$filename}.{$extension}";
-            Storage::disk('public')->put($path, file_get_contents($file));
-            $data['gambar'] = $path;
+            $filename = time().'_'.Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)).'.jpg';
+            
+            $manager = new ImageManager(new Driver());
+            $image = $manager->read($file);
+
+             // Resize dengan maintain aspect ratio
+            $image->scaleDown(500);
+            
+            // Resize dan crop ke 38x38px
+            // $image->cover(38, 38);
+            
+            // Encode dengan kualitas 60% sebagai JPEG
+            $encodedImage = $image->toJpeg(60);
+            
+            // Simpan ke storage
+            Storage::disk('ftp')->put('/tools/'.$filename, $encodedImage);
+            
+            $data['gambar'] = $filename;
         }
 
         // Update data alat
@@ -489,7 +521,7 @@ class ToolsController extends Controller
 
         // ID pengguna yang akan membuat perawatan
         // $userId = auth()->id() ?? $request->users_id ?? 1;
-        $userId = $user->id;
+        // $userId = $user->id;
 
         // Dapatkan semua nomor seri yang terkait dengan alat ini
         $noSeriRecords = NoSeri::where('tools_id', $tool->id)->get();
@@ -511,7 +543,7 @@ class ToolsController extends Controller
 
             Perawatan::create([
                 'no_seri_id' => $noSeriRecord->id,
-                'users_id' => $userId,
+                // 'users_id' => $user->id,
                 'no_perawatan' => $noPerawatan,
                 'tgl_perawatan' => $waktuMulai,
                 'waktu_perawatan' => gmdate('H:i:s', $waktuPerNoSeri * 60),
@@ -522,7 +554,7 @@ class ToolsController extends Controller
             while ($currentDate->year == now()->year) {
                 Perawatan::create([
                     'no_seri_id' => $noSeriRecord->id,
-                    'users_id' => $userId,
+                    // 'users_id' => $user->id,
                     'no_perawatan' => $noPerawatan,
                     'tgl_perawatan' => $currentDate,
                     'waktu_perawatan' => gmdate('H:i:s', $waktuPerNoSeri * 60),

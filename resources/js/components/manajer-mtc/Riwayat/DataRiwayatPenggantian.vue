@@ -70,8 +70,8 @@
             <td class="text-center p-2 border">{{ proses.no_seri_old || '-' }}</td>            
             <td class="text-center p-2 border">{{ proses.no_seri_new || '-' }}</td>
             <td class="text-center p-2 border">{{ item.tgl_kehilangan }}</td>
-            <td class="text-center p-2 border">{{ item.users && item.users.nama || '-' }}</td>
-            <td class="text-center p-2 border">{{ item.users && item.users.divisi && item.users.divisi.divisi || '-' }}</td>            
+            <td class="text-center p-2 border">{{ item.users && item.users.karyawan.nama || '-' }}</td>
+            <td class="text-center p-2 border">{{ item.users && item.users.divisi && item.users.divisi.nama || '-' }}</td>            
           </tr>
         </tbody>
       </table>
@@ -213,8 +213,8 @@ export default {
               'No Seri Lama': proses.no_seri_old || '-',
               'No Seri Baru': proses.no_seri_new || '-',
               'Tgl Kehilangan': item.tgl_kehilangan || '-',
-              'Dipinjam Oleh': item.users?.nama || '-',
-              'Divisi': item.users?.divisi?.divisi || '-',
+              'Dipinjam Oleh': item.users?.karyawan?.nama || '-',
+              'Divisi': item.users?.divisi?.nama || '-',
             });
           });
         } else {

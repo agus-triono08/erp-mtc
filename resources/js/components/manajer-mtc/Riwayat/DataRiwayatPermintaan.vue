@@ -95,8 +95,8 @@
             <td class="text-center p-2 border">{{ getNamaAlat(item) }}</td>
             <td class="text-center p-2 border">{{ item.permintaan.total }}</td>
             <td class="text-center p-2 border">{{ item.permintaan.tgl_permintaan || '-' }}</td>
-            <td class="text-center p-2 border">{{ item.permintaan.users.nama || '-' }}</td>
-            <td class="text-center p-2 border">{{ item.permintaan.users.divisi.divisi || '-' }}</td>
+            <td class="text-center p-2 border">{{ item.permintaan.users.karyawan.nama || '-' }}</td>
+            <td class="text-center p-2 border">{{ item.permintaan.users.divisi.nama || '-' }}</td>
             <td>
               <div
                 class="status-pill parent-element"

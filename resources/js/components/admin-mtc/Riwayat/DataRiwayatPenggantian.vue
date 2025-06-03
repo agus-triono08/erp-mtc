@@ -226,8 +226,8 @@ export default {
             'No Seri Lama': '-',
             'No Seri Baru': '-',
             'Tgl Kehilangan': item.tgl_kehilangan || '-',
-            'Dipinjam Oleh': item.users?.nama || '-',
-            'Divisi': item.users?.divisi?.divisi || '-',
+            'Dipinjam Oleh': item.users?.karyawan?.nama || '-',
+            'Divisi': item.users?.divisi?.nama || '-',
           });
         }
       });
