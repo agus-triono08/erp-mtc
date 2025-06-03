@@ -83897,7 +83897,6 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         tools_id: '',
         tgl_permintaan: '',
         detail_permintaan: '',
-        // status: '',
         total: 1
       }
     };
@@ -83916,7 +83915,6 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
             label: "".concat(nama, " - ").concat(namaTipe)
           });
         });
-        //console.log(this.tools);
       })["catch"](function (error) {
         console.error('Gagal mengambil data alat:', error);
       });
@@ -83924,7 +83922,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
     getNamaTipe: function getNamaTipe(item) {
       var _item$kode, _item$jenis;
       var parts = ((_item$kode = item.kode) === null || _item$kode === void 0 ? void 0 : _item$kode.split('-')) || [];
-      var kodeTipe = parts[3]; // ambil bagian tipe dari kode, misal "T0" dari "1-S3-G0-T0-001"
+      var kodeTipe = parts[3];
       var tipe = (_item$jenis = item.jenis) === null || _item$jenis === void 0 || (_item$jenis = _item$jenis.kategori) === null || _item$jenis === void 0 ? void 0 : _item$jenis.flatMap(function (k) {
         return k.merek || [];
       }).flatMap(function (m) {
@@ -83937,7 +83935,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
     submitForm: function submitForm() {
       var _this2 = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default().get('/sanctum/csrf-cookie').then(function () {
-        axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/v1/add-permintaan', _this2.form, {
+        axios__WEBPACK_IMPORTED_MODULE_0___default().post('/api/v1/permintaan', _this2.form, {
           withCredentials: true
         }).then(function (response) {
           sweetalert2__WEBPACK_IMPORTED_MODULE_2___default().fire({
@@ -83948,7 +83946,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
           });
           _this2.$emit('tutup-modal');
           _this2.$emit('refresh-data');
-          _this2.form = {}; // reset form
+          _this2.form = {};
         })["catch"](function (error) {
           console.error('Gagal menyimpan permintaan:', error.response);
           sweetalert2__WEBPACK_IMPORTED_MODULE_2___default().fire({
@@ -321637,7 +321635,7 @@ __webpack_require__.r(__webpack_exports__);
 
 // Wajib untuk Sanctum agar cookie dikirim
 (axios__WEBPACK_IMPORTED_MODULE_0___default().defaults).withCredentials = true;
-(axios__WEBPACK_IMPORTED_MODULE_0___default().defaults).baseURL = 'http://localhost:8000'; // sesuaikan domain backend kamu
+(axios__WEBPACK_IMPORTED_MODULE_0___default().defaults).baseURL = 'http://192.168.13.154:8000'; // sesuaikan domain backend kamu
 
 /**
  * First we will load all of this project's JavaScript dependencies which

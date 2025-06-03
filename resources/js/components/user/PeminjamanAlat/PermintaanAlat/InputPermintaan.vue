@@ -89,6 +89,7 @@ export default {
   components: {
     vSelect,
   },
+  
   data() {
     return {
       tools: [],
@@ -97,14 +98,15 @@ export default {
         tools_id: '',
         tgl_permintaan: '',
         detail_permintaan: '',
-        // status: '',
         total: 1
       }
     };
   },
+
   mounted() {
     this.fetchTools();
   },
+
   methods: {
     fetchTools() {
       axios.get('/api/v1/tools')
@@ -117,26 +119,29 @@ export default {
               label: `${nama} - ${namaTipe}`
             };
           });
-          //console.log(this.tools);
         })
         .catch(error => {
           console.error('Gagal mengambil data alat:', error);
         });
     },
+
     getNamaTipe(item) {
       const parts = item.kode?.split('-') || [];
-      const kodeTipe = parts[3]; // ambil bagian tipe dari kode, misal "T0" dari "1-S3-G0-T0-001"
+      const kodeTipe = parts[3];
       const tipe = item.jenis?.kategori
         ?.flatMap(k => k.merek || [])
         .flatMap(m => m.tipe || [])
         .find(t => t.kode_tipe === kodeTipe);
       return tipe ? tipe.nama_tipe : '-';
     },
+
+    
+
     submitForm() {
       axios.get('/sanctum/csrf-cookie').then(() => {
-      axios.post('/api/v1/add-permintaan', this.form, {
-        withCredentials: true
-        })
+        axios.post('/api/v1/permintaan', this.form
+          ,{withCredentials: true}
+        )
         .then(response => {
           Swal.fire({
             title: 'Berhasil!',
@@ -146,7 +151,7 @@ export default {
           });
           this.$emit('tutup-modal');
           this.$emit('refresh-data');
-          this.form = {}; // reset form
+          this.form = {};
         })
         .catch(error => {
           console.error('Gagal menyimpan permintaan:', error.response);
@@ -157,11 +162,12 @@ export default {
             confirmButtonText: 'OK'
           });
         });
-        });
+      });
     },
+
     tutupModal() {
       this.$emit('tutup-modal');
-    },
+    }
   }
-};
+}
 </script>

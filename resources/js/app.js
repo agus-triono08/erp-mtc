@@ -4,7 +4,7 @@ import axios from 'axios';
 
 // Wajib untuk Sanctum agar cookie dikirim
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = 'http://localhost:8000'; // sesuaikan domain backend kamu
+axios.defaults.baseURL = 'http://192.168.13.154:8000'; // sesuaikan domain backend kamu
 
 
 /**

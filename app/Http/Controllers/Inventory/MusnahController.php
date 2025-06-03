@@ -115,7 +115,7 @@ class MusnahController extends Controller
                     'old_kondisi' => $oldKondisi,
                     'new_kondisi' => $newKondisi,
                     'changed_at'  => now(),
-                    'changed_by'  => () ?? 1, // pastikan user sudah login
+                    'changed_by'  => auth()->id ?? 1, // pastikan user sudah login
                 ]);
             }
 

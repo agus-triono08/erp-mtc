@@ -142,6 +142,19 @@ Gantilah /path/to/artisan dengan path sebenarnya ke file artisan Laravel di serv
 
 - ">> /dev/null 2>&1 = redirect output supaya tidak membanjiri log."
 
+#### NOTE
+Jangan lupa menyesuaikan dengan domaian Anda pada bagian:
+```.env
+SESSION_DOMAIN=192.168.13.154  # atau domain kamu (tanpa http://)
+SANCTUM_STATEFUL_DOMAINS=localhost:8000,localhost:8080,127.0.0.1,192.168.13.154:8000
+```
+
+lalu
+
+```app.js
+axios.defaults.baseURL = 'http://192.168.13.154:8000'; // sesuaikan domain backend kamu
+```
+
 ### 8. Jalankan Aplikasi Laravel
 
 Setelah langkah-langkah di atas selesai, Anda dapat menjalankan aplikasi menggunakan perintah berikut:
