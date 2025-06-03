@@ -28,6 +28,7 @@ class HilangController extends Controller
             'noSeri.tools',
             'noSeri.layout',
             'users.divisi',
+            'users.Karyawan',
             'hilang_activity_baru',
             'hilang_activity_proses'
         ])

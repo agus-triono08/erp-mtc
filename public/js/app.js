@@ -51983,8 +51983,8 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
           'Nama Alat/Mesin': _this3.getNamaAlat(item),
           'Total': item.peminjaman && item.peminjaman.total,
           'Tanggal Peminjaman': item.peminjaman && item.peminjaman.tgl_pinjam,
-          'Dipinjam Oleh': item.peminjaman && item.peminjaman.users.nama,
-          'Divisi': item.peminjaman && item.peminjaman.users && item.peminjaman.users.divisi.divisi,
+          'Dipinjam Oleh': item.peminjaman && item.peminjaman.users.karyawan.nama,
+          'Divisi': item.peminjaman && item.peminjaman.users && item.peminjaman.users.divisi.nama,
           'Tanggal Kembali': item.peminjaman && item.peminjaman.tgl_kembali,
           'Status': item.new_status
         };
@@ -52636,8 +52636,8 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
           'Nama Alat/Mesin': _this3.getNamaAlat(item),
           'Total': item.permintaan && item.permintaan.total,
           'Tanggal Permintaan': item.permintaan && item.permintaan.tgl_permintaan,
-          'Dipinjam Oleh': item.permintaan.users.nama,
-          'Divisi': item.permintaan.users.divisi.divisi,
+          'Dipinjam Oleh': item.permintaan.users.karyawan.nama,
+          'Divisi': item.permintaan.users.divisi.nama,
           'Status': item.new_status
         };
       }));
@@ -240341,11 +240341,11 @@ var render = function () {
                 ]),
                 _vm._v(" "),
                 _c("td", { staticClass: "text-center p-2 border" }, [
-                  _vm._v(_vm._s(item.peminjaman.users.nama || "-")),
+                  _vm._v(_vm._s(item.peminjaman.users.karyawan.nama || "-")),
                 ]),
                 _vm._v(" "),
                 _c("td", { staticClass: "text-center p-2 border" }, [
-                  _vm._v(_vm._s(item.peminjaman.users.divisi.divisi)),
+                  _vm._v(_vm._s(item.peminjaman.users.divisi.nama)),
                 ]),
                 _vm._v(" "),
                 _c("td", [
@@ -240995,7 +240995,9 @@ var render = function () {
                   ]),
                   _vm._v(" "),
                   _c("td", { staticClass: "text-center p-2 border" }, [
-                    _vm._v(_vm._s((item.users && item.users.nama) || "-")),
+                    _vm._v(
+                      _vm._s((item.users && item.users.karyawan.nama) || "-")
+                    ),
                   ]),
                   _vm._v(" "),
                   _c("td", { staticClass: "text-center p-2 border" }, [
@@ -241003,7 +241005,7 @@ var render = function () {
                       _vm._s(
                         (item.users &&
                           item.users.divisi &&
-                          item.users.divisi.divisi) ||
+                          item.users.divisi.nama) ||
                           "-"
                       )
                     ),
@@ -241579,11 +241581,11 @@ var render = function () {
                 ]),
                 _vm._v(" "),
                 _c("td", { staticClass: "text-center p-2 border" }, [
-                  _vm._v(_vm._s(item.permintaan.users.nama || "-")),
+                  _vm._v(_vm._s(item.permintaan.users.karyawan.nama || "-")),
                 ]),
                 _vm._v(" "),
                 _c("td", { staticClass: "text-center p-2 border" }, [
-                  _vm._v(_vm._s(item.permintaan.users.divisi.divisi || "-")),
+                  _vm._v(_vm._s(item.permintaan.users.divisi.nama || "-")),
                 ]),
                 _vm._v(" "),
                 _c("td", [

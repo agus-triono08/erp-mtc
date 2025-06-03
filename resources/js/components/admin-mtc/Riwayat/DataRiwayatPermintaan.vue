@@ -95,8 +95,8 @@
             <td class="text-center p-2 border">{{ getNamaAlat(item) }}</td>
             <td class="text-center p-2 border">{{ item.permintaan.total }}</td>
             <td class="text-center p-2 border">{{ item.permintaan.tgl_permintaan || '-' }}</td>
-            <td class="text-center p-2 border">{{ item.permintaan.users.nama || '-' }}</td>
-            <td class="text-center p-2 border">{{ item.permintaan.users.divisi.divisi || '-' }}</td>
+            <td class="text-center p-2 border">{{ item.permintaan.users.karyawan.nama || '-' }}</td>
+            <td class="text-center p-2 border">{{ item.permintaan.users.divisi.nama || '-' }}</td>
             <td>
               <div
                 class="status-pill parent-element"
@@ -263,8 +263,8 @@ export default {
           'Nama Alat/Mesin': this.getNamaAlat(item),
           'Total': item.permintaan && item.permintaan.total,
           'Tanggal Permintaan': item.permintaan && item.permintaan.tgl_permintaan,
-          'Dipinjam Oleh': item.permintaan.users.nama,
-          'Divisi': item.permintaan.users.divisi.divisi,
+          'Dipinjam Oleh': item.permintaan.users.karyawan.nama,
+          'Divisi': item.permintaan.users.divisi.nama,
           'Status': item.new_status,
         }))
       );
