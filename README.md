@@ -147,15 +147,15 @@ Jangan lupa menyesuaikan dengan domaian Anda pada bagian:
 
 ```.env```
 ```
-SESSION_DOMAIN=192.168.13.154  # atau domain kamu (tanpa http://)
-SANCTUM_STATEFUL_DOMAINS=localhost:8000,localhost:8080,127.0.0.1,192.168.13.154:8000
+SESSION_DOMAIN=localhost  # atau domain kamu (tanpa http://)
+SANCTUM_STATEFUL_DOMAINS=localhost:8000,localhost:8080,127.0.0.1
 ```
 
 lalu
 
 ```app.js```
 ```
-axios.defaults.baseURL = 'http://192.168.13.154:8000'; // sesuaikan domain backend kamu
+axios.defaults.baseURL = 'http://localhost:8000'; // sesuaikan domain backend kamu
 ```
 
 ### 8. Jalankan Aplikasi Laravel
