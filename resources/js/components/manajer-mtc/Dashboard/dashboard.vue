@@ -704,6 +704,102 @@
       </div>
 
 		</div>
+    <!-- Card 3 -->
+    <div class="row">
+      <!-- Tanggal Peminjaman Lewat -->
+      <div class="col-lg-12 mb-4">
+        <div class="border-left-primary shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col ml-2">
+                <div class="text-xs font-weight-bold text-gray-900 text-uppercase mb-1">
+                  Tanggal Peminjaman Lewat
+                </div>
+                <div class="h5 mb-0 font-weight-bold">
+                  <a href="#" class="text-decoration-none"
+                    :class="overDatePeminjamanStockCount > 0 ? 'text-danger' : 'text-gray-800'">
+                    {{ overDatePeminjamanStockCount }}
+                  </a>
+                </div>
+                <div class="mt-2">
+                  <a href="#" @click.prevent="showOverDatePeminjamanModal" class="text-primary small text-decoration-none">
+                    <i class="fas fa-eye text-primary"></i><b> Detail</b>
+                  </a>
+                </div> 
+              </div>
+							<div class="col-auto">
+								<i class="bi bi-calendar2-x fa-2x mr-3" style="color: rgba(22, 158, 168, 0.2);"></i>
+							</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Tanggal Peminjaman Lewat -->
+      <div class="modal fade" id="tglpeminjamanModal" tabindex="-1" role="dialog" aria-labelledby="tglpeminjamanModalLabel" aria-hidden="true" style="overflow-y: auto;">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+              <h5 class="modal-title" id="tglpeminjamanModalLabel">Daftar Tanggal Peminjaman yang Lewat</h5>
+              <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close" @click="closeModalTanggalPeminjaman">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div v-if="loadingTanggalPeminjaman" class="text-center py-4">
+                <div class="spinner-border text-primary" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+                <p>Memuat data tanggal peminjaman yang lewat...</p>
+              </div>
+
+              <div v-else>
+                <div v-if="tglpeminjamanList.length === 0" class="alert alert-info">
+                  Tidak ada tanggal peminjaman yang lewat.
+                </div>
+
+                <div v-else class="table-responsive">
+                  <table class="table table-bordered table-hover">
+                    <thead class="thead-light">
+                      <tr>
+                        <th>No. Peminjaman</th>
+                        <th>Peminjam</th>
+                        <th>Alat/Mesin</th>
+                        <th>No. Seri</th>
+                        <th>Tgl Pinjam</th>
+                        <th>Tgl Kembali</th>
+                        <th>Detail</th>
+                        <th>Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="peminjaman in tglpeminjamanList" :key="peminjaman.id">
+                        <td>{{ peminjaman.no_peminjaman }}</td>
+                        <td>{{ peminjaman.users ? peminjaman.users.karyawan.nama : '-' }}</td>
+                        <td>{{ peminjaman.tools ? peminjaman.tools.nama : '-' }}</td>
+                        <td>
+                          <span v-for="(noSeri, index) in peminjaman.no_seri" :key="noSeri.id">
+                            {{ noSeri.no_seri }}<span v-if="index < peminjaman.no_seri.length - 1">, </span>
+                          </span>
+                        </td>
+                        <td>{{ formatDate(peminjaman.tgl_pinjam) }}</td>
+                        <td>{{ formatDate(peminjaman.tgl_kembali) }}</td>
+                        <td>{{ peminjaman.detail_peminjaman || '-' }}</td>
+                        <td class="text-center">
+                          <button class="btn-sm btn-primary" @click="viewDetailTanggalPeminjaman(peminjaman.id)">
+                            <i class="fas fa-eye text-white"></i> Detail
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- Bar & Chart Pie -->
     <div class="row">
       <!-- Bar Perawatan -->
@@ -932,7 +1028,10 @@ export default {
         data: [],
         colors: []
       },
-      pieChart: null
+      pieChart: null,
+      overDatePeminjamanStockCount: 0,
+      loadingTanggalPeminjaman: false,
+      tglpeminjamanList: [],
     }
   },
   created() {
@@ -955,8 +1054,47 @@ export default {
     this.fetchAvailableYearsPermintaan();
     this.fetchProgressData();
     this.fetchChartData();
+    this.fetchOverDatePeminjaman();
   },
   methods: {
+    async fetchOverDatePeminjaman() {
+      try {
+        const response = await axios.get('/api/v1/peminjaman/tgl-lewat/count');
+        if (response.data.success) {
+          this.overDatePeminjamanStockCount = response.data.count;
+        }
+      } catch (error) {
+        console.error('Error fetching low stock count:', error);
+        this.$toast.error('Gagal memuat jumlah over date peminjaman');
+      }
+    },
+
+    async showOverDatePeminjamanModal() {
+      try {
+        this.loadingTanggalPeminjaman = true;
+        const response = await axios.get('/api/v1/peminjaman/tgl-lewat/list');
+        
+
+        if (response.data.success) {
+          this.tglpeminjamanList = response.data.data;
+          // console.log(this.tglpeminjamanList);
+          $('#tglpeminjamanModal').modal('show');
+        } else {
+          throw new Error( response.data.message || 'Invalid response format');
+        }
+      } catch (error) {
+        console.error('Error fetching tanggal peminjaman list:', error);
+        this.$toast.error(error.response?.data?.message || 'Gagal memuat tanggal peminjaman');
+      } finally {
+        this.loadingTanggalPeminjaman = false;
+      }
+    },
+
+    viewDetailTanggalPeminjaman(id) {
+      $('#tglpeminjamanModal').modal('hide');
+      this.$router.push(`/manajer-mtc/peminjaman/detail/${id}`);
+    },
+
     async fetchLowStockCount() {
       try {
         const response = await axios.get('/api/v1/tools/low-stock/count');
@@ -1068,6 +1206,10 @@ export default {
 
     closeModalPerawatan() {
       $('#perawatanModal').modal('hide');
+    },
+
+    closeModalTanggalPeminjaman() {
+      $('#tglpeminjamanModal').modal('hide');
     },
 
 		async fetchPermintaanStokCount() {

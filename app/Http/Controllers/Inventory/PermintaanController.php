@@ -343,7 +343,7 @@ class PermintaanController extends Controller
     public function listBelumDiproses()
     {
         try {
-            $permintaan = Permintaan::with(['users', 'tools', 'noSeri'])
+            $permintaan = Permintaan::with(['users.Karyawan', 'tools', 'noSeri'])
                 ->where('status', 'Belum Diproses')
                 ->orderBy('created_at', 'desc')
                 ->get();

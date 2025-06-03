@@ -360,7 +360,7 @@ class PeminjamanController extends Controller
     public function listBelumDiproses()
     {
         try {
-            $peminjaman = Peminjaman::with(['users', 'tools', 'noSeri'])
+            $peminjaman = Peminjaman::with(['users.Karyawan', 'tools', 'noSeri'])
                 ->where('status', 'Belum Diproses')
                 ->orderBy('created_at', 'desc')
                 ->get();
@@ -532,7 +532,7 @@ class PeminjamanController extends Controller
     {
         try {
             $today = now()->format('Y-m-d');
-            $peminjaman = Peminjaman::with(['users', 'tools', 'noSeri'])
+            $peminjaman = Peminjaman::with(['users.Karyawan', 'tools', 'noSeri'])
                 ->where('status', 'Dipinjam')
                 ->whereDate('tgl_kembali', '<', $today)
                 ->orderBy('created_at', 'desc')
@@ -540,7 +540,7 @@ class PeminjamanController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Daftar peminjaman belum diproses',
+                'message' => 'Daftar tanggal peminjaman lewat',
                 'data' => $peminjaman
             ], 200);
         } catch (\Exception $e) {
