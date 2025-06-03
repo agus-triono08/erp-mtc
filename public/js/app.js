@@ -28687,24 +28687,28 @@ function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length)
     // },
     getNilaiBuku: function getNilaiBuku(noseri) {
       if (noseri.tools.kode && noseri.tools.kode.startsWith('2-')) {
-        var harga = noseri.harga;
+        var harga = parseFloat(noseri.harga);
         var tanggalMasuk = new Date(noseri.tanggal_masuk);
         var tanggalSekarang = new Date();
-        var bulanMasuk = tanggalMasuk.getMonth();
-        var bulanSekarang = tanggalSekarang.getMonth();
-        var tahunMasuk = tanggalMasuk.getFullYear();
-        var tahunSekarang = tanggalSekarang.getFullYear();
-        var depresiasi = harga / (8 * 12);
-        var nilaiBuku = harga;
-        var tahunBerlalu = tahunSekarang - tahunMasuk;
-        var bulanBerlalu = (tahunSekarang - tahunMasuk) * 12 + bulanSekarang - bulanMasuk;
-        nilaiBuku -= depresiasi * bulanBerlalu;
+
+        // Hitung selisih bulan
+        var bulanBerlalu = (tanggalSekarang.getFullYear() - tanggalMasuk.getFullYear()) * 12 + (tanggalSekarang.getMonth() - tanggalMasuk.getMonth());
+
+        // Hitung depresiasi per bulan (harga dibagi 8 tahun kemudian dibagi 12 bulan)
+        var depresiasiPerBulan = harga / 8 / 12;
+
+        // Hitung nilai buku
+        var nilaiBuku = harga - depresiasiPerBulan * bulanBerlalu;
+
+        // Pastikan nilai tidak negatif
+        nilaiBuku = Math.max(0, nilaiBuku);
         if (nilaiBuku <= 0) {
           return 'Sudah Tidak Bernilai';
         } else {
           return "".concat(this.formatRupiah(nilaiBuku));
         }
       } else {
+        // Untuk aset non-depresiasi, kembalikan harga asli
         return noseri.harga;
       }
     },
